@@ -1,0 +1,17 @@
+artifact_kind: specgraph_project_config
+schema_version: 1
+project_id: gitview
+display_name: GitView
+governance_profile: product_workspace
+workspace:
+  specs_root: specs/
+  proposals_root: docs/proposals/
+  runs_root: runs/
+  publish_root: projects/gitview/
+supervisor:
+  allow_project_spec_refinement: true
+  allow_project_proposals: true
+  allow_project_retrospectives: true
+  allow_core_policy_mutation: false
+  allow_core_tooling_mutation: false
+  allow_self_evolution_proposals: false
