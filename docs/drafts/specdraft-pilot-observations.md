@@ -12,14 +12,15 @@ completed product implementation.
   `references/usage.md`.
 - Local sketch `conversation_memory/sketches/gitview/` is ignored by Git.
   Eight attributed notes were read back at revision
-  `98af2794d14b4c588b7fe1dfffcc1559`, with `canonical: false` and no review
+  `1396c542e64749d1bdad985fb1f732b2`, with `canonical: false` and no review
   records.
 - A human-readable, bounded proposal was prepared manually in
   `zoomable-grid-proposal.md`; no exporter or canonical materializer was run.
-- The installed runtime served the selected sketch on loopback; `/api/notes`
-  returned `display_state: current` and the captured revision. The server was
-  stopped after the check. Visual browser verification was unavailable because
-  local browser use was disabled in Work settings.
+- Before the quotation correction, the installed runtime served the selected
+  sketch on loopback; `/api/notes` returned `display_state: current` and then
+  revision `98af2794d14b4c588b7fe1dfffcc1559`. The server was stopped after the
+  check. Visual browser verification was unavailable because local browser use
+  was disabled in Work settings.
 
 ## Manual steps and friction
 
@@ -37,6 +38,10 @@ completed product implementation.
 5. A proposal still requires the agent to select sources, preserve the sketch
    revision, separate user statements from interpretations, and formulate
    review questions. This handoff is manual.
+6. The first `foundations` source (`excerpt-08`) encoded line breaks as literal
+   `\n` characters instead of preserving them. A `revise` operation added the
+   exact quotation as `excerpt-08-corrected`. The erroneous source remains in
+   immutable history and must not be treated as the exact quotation.
 
 ## Limits
 

@@ -7,7 +7,7 @@ created by this document.
 ## Source and trace
 
 - Project sketch: `conversation_memory/sketches/gitview/` (local and ignored).
-- Sketch revision: `98af2794d14b4c588b7fe1dfffcc1559`.
+- Sketch revision: `1396c542e64749d1bdad985fb1f732b2`.
 - Selected note IDs: `zoom-grid`, `calendar`, `pr-depth`.
 - Source references are local excerpt labels, not authenticated chat IDs.
 - Target canonical spec: none selected; `specs/nodes/` currently contains no
