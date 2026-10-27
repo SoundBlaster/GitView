@@ -4,3 +4,4 @@ DerivedData/
 .swiftpm/
 .worktrees/
 runs/
+conversation_memory/sketches/

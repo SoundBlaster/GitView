@@ -15,6 +15,9 @@ behavior has been implemented or tested on a device.
   SpecGraph's initializer.
 - [Spec ID policy](.specgraph/spec-id-policy.json) — reserves the
   `GITVIEW-SPEC` namespace for future spec allocation; it does not create specs.
+- [Zoomable grid proposal](docs/drafts/zoomable-grid-proposal.md) and
+  [SpecDraft pilot observations](docs/drafts/specdraft-pilot-observations.md)
+  — pre-canonical inputs for review.
 
 ## Working with SpecGraph
 
@@ -32,6 +35,11 @@ Initialization captures intent for review; it does not create or approve a
 canonical specification. Use the product workspace workflow and explicitly
 review the next materialization step. Do not rerun the initializer blindly
 after other project files have been added: it validates the workspace layout.
+
+For conversational capture, the installed project-local SpecDraft skill and
+runtime are described in [AGENTS.md](AGENTS.md). The local sketch is ignored by
+Git, so preserve it separately; a normal clone does not restore its quotations
+or revision history.
 
 ## Intended foundations
 
