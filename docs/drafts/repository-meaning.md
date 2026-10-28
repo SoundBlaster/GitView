@@ -29,6 +29,14 @@ also contain other files; whether GitView's definition should be limited to
 source code is open. These distinctions are an agent interpretation to review,
 not additional owner decisions.
 
+The user suggested distinguishing `Repository → GitHub Repository` using
+roles or composition (`conversation:gitview/excerpt-19`). The arrow expresses
+the distinction to explore; it does not yet establish inheritance, composition,
+role semantics, or an identity relationship. A possible discussion split is
+versioned content/history on the Repository side and GitHub-specific work
+objects and access context on the GitHub side. Whether those describe one
+entity in a context or related entities is undecided.
+
 ## Ontology approach
 
 The user rejected defining an entity through higher-level entities and noted
