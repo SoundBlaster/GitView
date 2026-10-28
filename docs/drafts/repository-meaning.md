@@ -14,12 +14,13 @@ GitHub organizations are metadata and a project may contain repositories from
 different organizations. Project is the concept used for this relationship;
 a separate Group concept is presently redundant.
 
-## Proposed interpretation
+## Ontology approach
 
-Repository is an identifiable GitHub source of work and activity. It connects
-the GitView project view to the PRs, issues and other information available
-from that repository. Its role in GitView is a proposal for discussion; it
-does not imply that GitView must model all of GitHub or clone repository files.
+The user rejected defining an entity through higher-level entities and noted
+that the previous Repository definition mixed meaning, characteristics,
+properties and relations (`conversation:gitview/excerpt-16`). Its definition
+remains open. Describe these aspects separately, and distinguish the domain
+concept from GitView's presentation and use of it.
 
 Possible aspects to explore:
 
@@ -63,8 +64,8 @@ presentation direction; it does not establish a common ontology entity.
 
 ## Questions
 
-1. Is Repository primarily a navigable source of work, or does its own
-   lifecycle and health deserve equal attention in the product?
+1. What essential characteristics distinguish a Repository, independently of
+   its relationship to a GitView Project and its role in the application?
 2. Which repository-level facts should be visible before opening its PRs and
    issues? Which can stay in details?
 3. When one repository appears in multiple projects, should a project-specific

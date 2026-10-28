@@ -22,7 +22,7 @@ These are working definitions for discussion, not accepted ontology terms:
 | Concept | Working meaning | Boundary / question |
 | --- | --- | --- |
 | Account | GitHub identity whose accessible work is viewed | Multiple accounts and organization access are open |
-| Repository | GitHub container for issues and PRs | Can belong to multiple GitView projects |
+| Repository | Definition under discussion | Can belong to multiple GitView projects; relationship is separate from its definition |
 | Project | A GitView project contains one or more repositories | Default: one project per repository; membership is many-to-many |
 | GitHub organization | GitHub metadata associated with repositories | A project may contain repositories from different organizations |
 | Work item | A PR or issue shown in context | Other object types are not excluded yet |
@@ -47,6 +47,10 @@ could be defined but is currently redundant; revisit if a distinct need arises.
 Details of how
 default projects are created, named, edited or synchronized remain open. No
 identity with the separate GitHub Projects feature is assumed.
+Per `conversation:gitview/excerpt-16`, definitions, characteristics,
+properties and relations should not be conflated or defined through
+higher-level entities. The table is an inventory for discussion, not a formal
+ontology; its working descriptions need review against that distinction.
 
 ## Application boundary
 
