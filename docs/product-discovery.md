@@ -24,10 +24,11 @@ repositories and a high volume of contributions and pull requests.
 - SpecGraph manages the product specification workflow; FSD iOS informs
   application architecture; SpecificationCore is an intended Swift policy
   library.
-- A GitView project groups one or more repositories. A repository may belong to
+- A GitView project contains one or more repositories. A repository may belong to
   several projects; by default there is one project per repository. GitHub
   organizations are metadata, and a project may include repositories from
-  different organizations (conversation `excerpt-10`).
+  different organizations (conversation `excerpt-10`). Project is the domain
+  concept; do not introduce a separate Group entity (`excerpt-11`).
 
 ## Ideas to refine
 

@@ -2,7 +2,7 @@
 
 Status: exploratory foundation for review, not canonical specs or implemented
 behavior. The source is `.specgraph/root_intent.md` and the Git-tracked
-conversation sketch at revision `ce034d4141564fa68cfac3998589e7aa`, especially
+conversation sketch at revision `59dec939544e4e44a9e273341ae97cf3`, especially
 `overview`, `attention`, `metrics`, `zoom-grid`, `calendar`, `apple-look`,
 `foundations`, `foundation-first`, `project-repository` and
 `github-organizations`.
@@ -23,7 +23,7 @@ These are working definitions for discussion, not accepted ontology terms:
 | --- | --- | --- |
 | Account | GitHub identity whose accessible work is viewed | Multiple accounts and organization access are open |
 | Repository | GitHub container for issues and PRs | Can belong to multiple GitView projects |
-| Project | A GitView group containing one or more repositories | Default: one project per repository; membership is many-to-many |
+| Project | A GitView project contains one or more repositories | Default: one project per repository; membership is many-to-many |
 | GitHub organization | GitHub metadata associated with repositories | A project may contain repositories from different organizations |
 | Work item | A PR or issue shown in context | Other object types are not excluded yet |
 | Pull request | Proposed code change with review and checks | Review and CI do not alone prove readiness |
@@ -39,8 +39,11 @@ application's derived state and any local annotations need their own explicit
 provenance and freshness. An agent may produce work, but its identity cannot be
 inferred reliably merely from a PR author.
 
-The project/repository relationship and cross-organization grouping are the
-user's clarification in `conversation:gitview/excerpt-10`. Details of how
+The project/repository relationship and cross-organization membership are the
+user's clarification in `conversation:gitview/excerpt-10`. In
+`conversation:gitview/excerpt-11` the user clarified that **Project** is the
+domain concept; do not introduce a separate Group entity for this relationship.
+Details of how
 default projects are created, named, edited or synchronized remain open. No
 identity with the separate GitHub Projects feature is assumed.
 
