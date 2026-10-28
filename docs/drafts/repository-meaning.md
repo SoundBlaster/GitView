@@ -58,6 +58,12 @@ Do not treat a generic Issue–PR link as a fully specified relation or infer
 causality or actor identity from it alone. This is the user's conceptual
 direction for discussion, not a formalized ontology package.
 
+The user further clarified that the Issue → PR connection is a **motive for
+the actor** (`conversation:gitview/excerpt-22`): the issue provides the motive,
+the actor acts, and the PR is the result. How motive is evidenced for a
+particular instance remains open; a generic source reference alone is not an
+independent proof of the actor's intent.
+
 For comparison, Ontology's event-responsibility core proposal says that
 relations *can* arise from earlier actions and persist; it does not establish
 the stronger universal claim for all relations. Reconcile the formulations

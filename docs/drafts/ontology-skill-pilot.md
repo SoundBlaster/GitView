@@ -37,9 +37,10 @@ not be silently used as its definition. Compact UI presentation and a link to
 the source are a separate product direction (`excerpt-15`).
 
 The user distinguishes generic links from Ontology relations arising during an
-actor's action on an object (`excerpt-21`). An Issue–PR link alone does not
-identify an actor or establish a causal explanation. Whether a process or script
-qualifies as an actor in a particular case remains a question from the user.
+actor's action on an object (`excerpt-21`), and describes Issue → PR as the
+actor's motive (`excerpt-22`). The evidence for the motive and actor in a given
+case remains open. Whether a process or script qualifies as an actor in a
+particular case remains a question from the user.
 
 ## Observations and next questions
 
