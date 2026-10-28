@@ -10,7 +10,7 @@ for governed specification artifacts.
 Use the project-local skill
 `.codex/skills/specgraph-conversation-notes/SKILL.md` when discussing product
 or design ideas. The local runtime installed for this pilot is
-`/Users/egor/.local/share/specgraph/runtime-ae423c62/specgraph-runtime`.
+`/Users/egor/.local/share/specgraph/runtime-562342bb/specgraph-runtime`.
 For its standalone `specgraph` CLI, use the executable in the same installation
 at `venv/bin/specgraph`, or invoke the runtime's `draft` subcommand. If that
 installation is unavailable, report it and choose or install a compatible
@@ -33,3 +33,10 @@ checkout. The sketch contains conversation quotations and remains local-only
 unless the user explicitly authorizes a destination for publication. Capturing
 a revision does not itself create a Git commit; commit it with its full ancestry.
 Other sketches and local `runs/` remain excluded from this repository.
+
+## Product ontology
+
+Use `.codex/skills/specgraph-project-ontology/SKILL.md` when discussing,
+drafting or reviewing domain terminology and relationships. Its installed
+version is supplied by the runtime above. Project terminology in notes and
+drafts is not automatically an accepted ontology; preserve gaps and sources.
