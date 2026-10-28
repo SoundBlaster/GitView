@@ -24,7 +24,7 @@ in those help surfaces, so this is manual analysis, not a compiler result.
 | Item | Source and current reading | Open point |
 | --- | --- | --- |
 | Project | User identifies Project as the concept, rather than introducing Group (`excerpt-10`, `excerpt-11`, `excerpt-12`). Candidate term, not an accepted ontology term. | Definition and identity are not yet agreed. Do not equate it with GitHub Projects. |
-| Repository | User asks to explore its meaning (`excerpt-13`). Definition remains open; do not define it through Project membership (`excerpt-16`). | Which characteristics distinguish it in this domain? |
+| Repository | User describes access to source-code change history through Git and highlights PRs and issues (`excerpt-18`). Do not define it through Project membership (`excerpt-16`). | Distinguish Git history from GitHub work objects and clarify whether versioned content includes more than source code. |
 | Project–Repository relation | A Project contains one or more repositories; a repository can belong to multiple projects (`excerpt-10`). | Relation name and formal cardinality notation remain proposals; creation and persistence behavior are open. |
 | Default | One project per repository by default (`excerpt-10`). | How defaults are created, named and changed is not yet decided. It is not a claim that a repository cannot be in multiple projects. |
 | GitHub organization | User describes organizations as metadata; projects can contain repositories from different organizations (`excerpt-10`). | Exact relation to repository ownership and needed presentation are open. It is not the GitView Project. |

@@ -14,6 +14,21 @@ GitHub organizations are metadata and a project may contain repositories from
 different organizations. Project is the concept used for this relationship;
 a separate Group concept is presently redundant.
 
+## Working direction from the user
+
+In `conversation:gitview/excerpt-18`, the user describes Repository as an
+entity providing access to the history of changes to source code through Git,
+with PRs, issues and similar objects central to the GitView perspective. This
+is the source statement, not an approved formal definition.
+
+For discussion, distinguish Git's versioned content and history from GitHub's
+associated PRs and issues. A PR can refer to proposed changes and commits; an
+issue tracks a topic or work and does not necessarily represent a code change.
+PRs and issues do not constitute the complete Git history. Git repositories may
+also contain other files; whether GitView's definition should be limited to
+source code is open. These distinctions are an agent interpretation to review,
+not additional owner decisions.
+
 ## Ontology approach
 
 The user rejected defining an entity through higher-level entities and noted
@@ -64,8 +79,9 @@ presentation direction; it does not establish a common ontology entity.
 
 ## Questions
 
-1. What essential characteristics distinguish a Repository, independently of
-   its relationship to a GitView Project and its role in the application?
+1. Should the definition refer to versioned content generally, or specifically
+   to source code? How should Git history and the GitHub work objects be
+   described separately?
 2. Which repository-level facts should be visible before opening its PRs and
    issues? Which can stay in details?
 3. When one repository appears in multiple projects, should a project-specific
