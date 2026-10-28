@@ -52,6 +52,10 @@ identity with the separate GitHub Projects feature is assumed.
 
 Proposed responsibilities: discover selected work, present its current state and
 changes, let the user inspect and share it, and calculate understandable metrics.
+GitView is a compact overview rather than a replacement for GitHub. The user
+can navigate from an entity to its original source; the intended presentation
+is minimal: title, ID, badges and text (`conversation:gitview/excerpt-15`).
+The fields and actions applicable to each entity remain to be determined.
 Authentication, refresh, storage, notifications and write actions remain open.
 FSD iOS is the intended architectural approach; SpecificationCore is intended
 for suitable domain decisions. Neither is an implemented integration yet.

@@ -21,6 +21,9 @@ repositories and a high volume of contributions and pull requests.
 - A broad view of activity, work awaiting review, ready work, and problems
   including failed CI and long or unresolved review threads.
 - Charts and metrics, lightweight review, and convenient sharing.
+- GitView offers a minimal overview rather than replacing GitHub: entities can
+  link to their original source, with title, ID, badges and text as the user's
+  examples of compact content (`excerpt-15`).
 - SpecGraph manages the product specification workflow; FSD iOS informs
   application architecture; SpecificationCore is an intended Swift policy
   library.

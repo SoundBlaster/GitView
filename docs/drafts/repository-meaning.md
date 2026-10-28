@@ -53,6 +53,14 @@ different meanings, units, availability and freshness of PR, repository,
 check and thread data. These considerations are agent interpretations, not
 accepted requirements. No common entity or inheritance relationship is adopted.
 
+## Compact overview and source
+
+The user clarified that GitView does not replace GitHub: an entity can link to
+its original source. The intended display is minimal: title, ID, badges and
+text (`conversation:gitview/excerpt-15`). Which fields apply to each entity,
+what text to show, and how the link is presented remain open. This is a
+presentation direction; it does not establish a common ontology entity.
+
 ## Questions
 
 1. Is Repository primarily a navigable source of work, or does its own
