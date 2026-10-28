@@ -52,6 +52,12 @@ properties and relations should not be conflated or defined through
 higher-level entities. The table is an inventory for discussion, not a formal
 ontology; its working descriptions need review against that distinction.
 
+The user's intended role for Ontology is to keep terminology consistent across
+specifications and prevent unsupported, invented entities from appearing
+(`conversation:gitview/excerpt-17`). It is not a requirement to model every UI
+button. A proposed new domain concept needs a reason and a review; its use in a
+draft does not itself make it an accepted ontology term.
+
 ## Application boundary
 
 Proposed responsibilities: discover selected work, present its current state and
