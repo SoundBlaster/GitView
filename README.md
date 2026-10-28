@@ -40,6 +40,8 @@ For conversational capture, the installed project-local SpecDraft skill and
 runtime are described in [AGENTS.md](AGENTS.md). The local sketch is ignored by
 Git, so preserve it separately; a normal clone does not restore its quotations
 or revision history.
+The [local history check](docs/drafts/specdraft-history-check.md) records one
+verified point-in-time backup and its recovery test.
 
 ## Intended foundations
 
