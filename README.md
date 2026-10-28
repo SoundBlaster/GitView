@@ -37,11 +37,12 @@ review the next materialization step. Do not rerun the initializer blindly
 after other project files have been added: it validates the workspace layout.
 
 For conversational capture, the installed project-local SpecDraft skill and
-runtime are described in [AGENTS.md](AGENTS.md). The local sketch is ignored by
-Git, so preserve it separately; a normal clone does not restore its quotations
-or revision history.
-The [local history check](docs/drafts/specdraft-history-check.md) records one
-verified point-in-time backup and its recovery test.
+runtime are described in [AGENTS.md](AGENTS.md). The GitView sketch and its
+complete published revision chain are kept in this local Git repository; runtime
+lock and temporary files remain excluded. Future revisions need to be committed
+with their complete ancestry. A commit does not approve a draft or publish it.
+The [local history check](docs/drafts/specdraft-history-check.md) records the
+earlier backup and recovery test.
 
 ## Intended foundations
 

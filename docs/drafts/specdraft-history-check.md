@@ -1,6 +1,6 @@
 # SpecDraft local history check
 
-Status: local backup and recovery observation. This is not a specification,
+Status: historical local backup and recovery observation. This is not a specification,
 an approval of the sketch, or permission to publish its quotations.
 
 ## Verified snapshot
@@ -24,8 +24,10 @@ an approval of the sketch, or permission to publish its quotations.
 The backup and restored copy have owner-only directory permissions. They contain
 the full quoted history, including the original incorrectly encoded excerpt and
 its later correction. Both remain local. The backup is a point-in-time snapshot:
-later note updates are not copied into it automatically. GitView's existing
-sketch exclusion remains in place, and a GitView clone alone cannot recover it.
+later note updates are not copied into it automatically. At the time of this
+check GitView excluded the sketch. The owner has since chosen to track the
+published sketch history in GitView itself; see `AGENTS.md` for the current
+storage policy. This older backup remains a point-in-time copy.
 
 ## Future recovery and updates
 

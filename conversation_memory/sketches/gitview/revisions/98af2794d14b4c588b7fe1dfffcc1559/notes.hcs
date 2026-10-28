@@ -1,0 +1,24 @@
+'#overview':
+  label: "Обзор GitHub"
+  detail: ""
+'#attention':
+  label: "Review и проблемы"
+  detail: ""
+'#metrics':
+  label: "Метрики с графиками"
+  detail: ""
+'#zoom-grid':
+  label: "Сетка с масштабированием"
+  detail: ""
+'#calendar':
+  label: "Возможный календарь активности"
+  detail: ""
+'#pr-depth':
+  label: "Возможное углубление внутри PR"
+  detail: ""
+'#apple-look':
+  label: "Apple Look"
+  detail: ""
+'#foundations':
+  label: "SpecificationCore и FSD-iOS"
+  detail: ""

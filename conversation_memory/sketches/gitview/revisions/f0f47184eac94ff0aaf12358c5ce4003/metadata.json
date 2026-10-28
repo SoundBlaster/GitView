@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "revision": "f0f47184eac94ff0aaf12358c5ce4003",
+  "parent_revision": "9402b6f2d57b4044b710053367061ffd",
+  "captured_at": "2026-10-27T22:13:33.798993+00:00",
+  "source": {
+    "ref": "conversation:gitview/excerpt-05",
+    "quote": "Возможно кстати клетчатый календарь гитхаба неплох как самый максимальный уровень отдаления от деталей",
+    "speaker": "human"
+  },
+  "sources": {
+    "overview": [
+      {
+        "ref": "conversation:gitview/excerpt-01",
+        "quote": "Пока теоретически: реально ли написать себе iOS клиента для GitHub где просто дашборд по PRs, issues и прочему что без устали генерируют мне кодинговые агенты?",
+        "speaker": "human"
+      }
+    ],
+    "attention": [
+      {
+        "ref": "conversation:gitview/excerpt-02",
+        "quote": "Где проблемы в виде тредов долгих или красного ci…",
+        "speaker": "human"
+      }
+    ],
+    "metrics": [
+      {
+        "ref": "conversation:gitview/excerpt-03",
+        "quote": "Метрик с графиками",
+        "speaker": "human"
+      }
+    ],
+    "zoom-grid": [
+      {
+        "ref": "conversation:gitview/excerpt-04",
+        "quote": "Можно было бы сделать очень оригинально: как Photos app - сетка квадратиков которую можно pinch to zoom и обратно и погружаться в карточки или отдаляться, чтобы видеть больше",
+        "speaker": "human"
+      }
+    ],
+    "calendar": [
+      {
+        "ref": "conversation:gitview/excerpt-05",
+        "quote": "Возможно кстати клетчатый календарь гитхаба неплох как самый максимальный уровень отдаления от деталей",
+        "speaker": "human"
+      }
+    ]
+  },
+  "links": [],
+  "reviews": [],
+  "content_hashes": {
+    "notes.hc": "3aebb694d45d0d63ff80d1f436e137f1d9b4cd529ada5ef552d116ff49157430",
+    "notes.hcs": "312efbed58bae88f8a43de3bbbfa439ed0991cdf2f847c07577b239825fff907"
+  }
+}

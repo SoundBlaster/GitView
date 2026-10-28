@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "revision": "37fcdaf1a5b64c42b4b30cf35353cd6c",
+  "parent_revision": "73c8c499d2d045ecbefc786c12023d4e",
+  "captured_at": "2026-10-27T22:13:33.512729+00:00",
+  "source": {
+    "ref": "conversation:gitview/excerpt-03",
+    "quote": "Метрик с графиками",
+    "speaker": "human"
+  },
+  "sources": {
+    "overview": [
+      {
+        "ref": "conversation:gitview/excerpt-01",
+        "quote": "Пока теоретически: реально ли написать себе iOS клиента для GitHub где просто дашборд по PRs, issues и прочему что без устали генерируют мне кодинговые агенты?",
+        "speaker": "human"
+      }
+    ],
+    "attention": [
+      {
+        "ref": "conversation:gitview/excerpt-02",
+        "quote": "Где проблемы в виде тредов долгих или красного ci…",
+        "speaker": "human"
+      }
+    ],
+    "metrics": [
+      {
+        "ref": "conversation:gitview/excerpt-03",
+        "quote": "Метрик с графиками",
+        "speaker": "human"
+      }
+    ]
+  },
+  "links": [],
+  "reviews": [],
+  "content_hashes": {
+    "notes.hc": "4d2132668b52224e7235a1b14a100b6d2455c051444e83ec5c4c7e87298afcdb",
+    "notes.hcs": "201e5dce76a1671ee4a2a05c9f2d7b94a0d783bc58d35f30b9e51bee5c4a1614"
+  }
+}

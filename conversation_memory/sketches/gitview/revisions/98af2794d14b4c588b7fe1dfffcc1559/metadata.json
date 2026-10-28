@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "revision": "98af2794d14b4c588b7fe1dfffcc1559",
+  "parent_revision": "4c55c5c5849140d397756ba70906fb79",
+  "captured_at": "2026-10-27T22:13:34.154460+00:00",
+  "source": {
+    "ref": "conversation:gitview/excerpt-08",
+    "quote": "Ещё я хочу использовать \n\n~/Development/GitHub/Specification Projects/SpecificationCore\n~/Development/GitHub/FSD-iOS",
+    "speaker": "human"
+  },
+  "sources": {
+    "overview": [
+      {
+        "ref": "conversation:gitview/excerpt-01",
+        "quote": "Пока теоретически: реально ли написать себе iOS клиента для GitHub где просто дашборд по PRs, issues и прочему что без устали генерируют мне кодинговые агенты?",
+        "speaker": "human"
+      }
+    ],
+    "attention": [
+      {
+        "ref": "conversation:gitview/excerpt-02",
+        "quote": "Где проблемы в виде тредов долгих или красного ci…",
+        "speaker": "human"
+      }
+    ],
+    "metrics": [
+      {
+        "ref": "conversation:gitview/excerpt-03",
+        "quote": "Метрик с графиками",
+        "speaker": "human"
+      }
+    ],
+    "zoom-grid": [
+      {
+        "ref": "conversation:gitview/excerpt-04",
+        "quote": "Можно было бы сделать очень оригинально: как Photos app - сетка квадратиков которую можно pinch to zoom и обратно и погружаться в карточки или отдаляться, чтобы видеть больше",
+        "speaker": "human"
+      }
+    ],
+    "calendar": [
+      {
+        "ref": "conversation:gitview/excerpt-05",
+        "quote": "Возможно кстати клетчатый календарь гитхаба неплох как самый максимальный уровень отдаления от деталей",
+        "speaker": "human"
+      }
+    ],
+    "pr-depth": [
+      {
+        "ref": "conversation:gitview/excerpt-07",
+        "quote": "Может быть потом ещё уровень добавить - внутри PR что-то, но пока так ок.",
+        "speaker": "human"
+      }
+    ],
+    "apple-look": [
+      {
+        "ref": "conversation:gitview/excerpt-06",
+        "quote": "Только дизайн хочу максимально Apple Look. Liquid Glass и минимум кастомных компонент и всяких рюшек. SF symbols, системные цвета.",
+        "speaker": "human"
+      }
+    ],
+    "foundations": [
+      {
+        "ref": "conversation:gitview/excerpt-08",
+        "quote": "Ещё я хочу использовать \n\n~/Development/GitHub/Specification Projects/SpecificationCore\n~/Development/GitHub/FSD-iOS",
+        "speaker": "human"
+      }
+    ]
+  },
+  "links": [],
+  "reviews": [],
+  "content_hashes": {
+    "notes.hc": "94f5e60eef298dff018e04fee6b156b3e0cc4f5c7c697977461e76e8c4f225f4",
+    "notes.hcs": "56be4314547f86b63ed997ed8b7a72eacdc3c5a4cd48b7a6696ca163975dd361"
+  }
+}

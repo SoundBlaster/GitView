@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "revision": "4c55c5c5849140d397756ba70906fb79",
+  "parent_revision": "6b18895cda5f4dbfbdf18de9b367f82e",
+  "captured_at": "2026-10-27T22:13:34.045934+00:00",
+  "source": {
+    "ref": "conversation:gitview/excerpt-07",
+    "quote": "Может быть потом ещё уровень добавить - внутри PR что-то, но пока так ок.",
+    "speaker": "human"
+  },
+  "sources": {
+    "overview": [
+      {
+        "ref": "conversation:gitview/excerpt-01",
+        "quote": "Пока теоретически: реально ли написать себе iOS клиента для GitHub где просто дашборд по PRs, issues и прочему что без устали генерируют мне кодинговые агенты?",
+        "speaker": "human"
+      }
+    ],
+    "attention": [
+      {
+        "ref": "conversation:gitview/excerpt-02",
+        "quote": "Где проблемы в виде тредов долгих или красного ci…",
+        "speaker": "human"
+      }
+    ],
+    "metrics": [
+      {
+        "ref": "conversation:gitview/excerpt-03",
+        "quote": "Метрик с графиками",
+        "speaker": "human"
+      }
+    ],
+    "zoom-grid": [
+      {
+        "ref": "conversation:gitview/excerpt-04",
+        "quote": "Можно было бы сделать очень оригинально: как Photos app - сетка квадратиков которую можно pinch to zoom и обратно и погружаться в карточки или отдаляться, чтобы видеть больше",
+        "speaker": "human"
+      }
+    ],
+    "calendar": [
+      {
+        "ref": "conversation:gitview/excerpt-05",
+        "quote": "Возможно кстати клетчатый календарь гитхаба неплох как самый максимальный уровень отдаления от деталей",
+        "speaker": "human"
+      }
+    ],
+    "pr-depth": [
+      {
+        "ref": "conversation:gitview/excerpt-07",
+        "quote": "Может быть потом ещё уровень добавить - внутри PR что-то, но пока так ок.",
+        "speaker": "human"
+      }
+    ],
+    "apple-look": [
+      {
+        "ref": "conversation:gitview/excerpt-06",
+        "quote": "Только дизайн хочу максимально Apple Look. Liquid Glass и минимум кастомных компонент и всяких рюшек. SF symbols, системные цвета.",
+        "speaker": "human"
+      }
+    ]
+  },
+  "links": [],
+  "reviews": [],
+  "content_hashes": {
+    "notes.hc": "19cdf06a92ce9ae754d4b4232144da2068b27b70e0e656ee6c029b80c4606afb",
+    "notes.hcs": "92f92b9a2204162d95b6b34aeedae49a06ac7458024d11567830025a027ddde2"
+  }
+}

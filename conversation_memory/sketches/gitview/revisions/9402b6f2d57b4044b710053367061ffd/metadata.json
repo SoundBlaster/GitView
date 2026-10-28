@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "revision": "9402b6f2d57b4044b710053367061ffd",
+  "parent_revision": "37fcdaf1a5b64c42b4b30cf35353cd6c",
+  "captured_at": "2026-10-27T22:13:33.665756+00:00",
+  "source": {
+    "ref": "conversation:gitview/excerpt-04",
+    "quote": "Можно было бы сделать очень оригинально: как Photos app - сетка квадратиков которую можно pinch to zoom и обратно и погружаться в карточки или отдаляться, чтобы видеть больше",
+    "speaker": "human"
+  },
+  "sources": {
+    "overview": [
+      {
+        "ref": "conversation:gitview/excerpt-01",
+        "quote": "Пока теоретически: реально ли написать себе iOS клиента для GitHub где просто дашборд по PRs, issues и прочему что без устали генерируют мне кодинговые агенты?",
+        "speaker": "human"
+      }
+    ],
+    "attention": [
+      {
+        "ref": "conversation:gitview/excerpt-02",
+        "quote": "Где проблемы в виде тредов долгих или красного ci…",
+        "speaker": "human"
+      }
+    ],
+    "metrics": [
+      {
+        "ref": "conversation:gitview/excerpt-03",
+        "quote": "Метрик с графиками",
+        "speaker": "human"
+      }
+    ],
+    "zoom-grid": [
+      {
+        "ref": "conversation:gitview/excerpt-04",
+        "quote": "Можно было бы сделать очень оригинально: как Photos app - сетка квадратиков которую можно pinch to zoom и обратно и погружаться в карточки или отдаляться, чтобы видеть больше",
+        "speaker": "human"
+      }
+    ]
+  },
+  "links": [],
+  "reviews": [],
+  "content_hashes": {
+    "notes.hc": "6e42febcc56a58f557911388c6a5cf691b943d8ab7684bc7330453537f58530d",
+    "notes.hcs": "da3db616ba3a3c0633dc15e0c2c20f110725c9af46a207b0451d7feca1ae4cc7"
+  }
+}

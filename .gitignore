@@ -4,4 +4,9 @@ DerivedData/
 .swiftpm/
 .worktrees/
 runs/
-conversation_memory/sketches/
+# GitView's sketch is versioned; unrelated sketches remain local.
+/conversation_memory/sketches/*
+!/conversation_memory/sketches/gitview/
+/conversation_memory/sketches/gitview/.lock
+/conversation_memory/sketches/gitview/.CURRENT-*
+/conversation_memory/sketches/gitview/revisions/.pending-*/

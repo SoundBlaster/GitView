@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "revision": "bc64057b20754e9aae8f7a04a7f02bae",
+  "parent_revision": null,
+  "captured_at": "2026-10-27T22:13:33.194386+00:00",
+  "source": {
+    "ref": "conversation:gitview/excerpt-01",
+    "quote": "Пока теоретически: реально ли написать себе iOS клиента для GitHub где просто дашборд по PRs, issues и прочему что без устали генерируют мне кодинговые агенты?",
+    "speaker": "human"
+  },
+  "sources": {
+    "overview": [
+      {
+        "ref": "conversation:gitview/excerpt-01",
+        "quote": "Пока теоретически: реально ли написать себе iOS клиента для GitHub где просто дашборд по PRs, issues и прочему что без устали генерируют мне кодинговые агенты?",
+        "speaker": "human"
+      }
+    ]
+  },
+  "links": [],
+  "reviews": [],
+  "content_hashes": {
+    "notes.hc": "73276f9ad6f9e8b1854bdb83da6179be47467a41ac692d6b51ae428f95799c53",
+    "notes.hcs": "6f87c91f15b0e0c99c4618b06d885fd7523f175bc142d19d2913b40147dd05ec"
+  }
+}

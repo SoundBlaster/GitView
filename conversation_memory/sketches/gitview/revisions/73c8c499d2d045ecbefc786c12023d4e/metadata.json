@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "revision": "73c8c499d2d045ecbefc786c12023d4e",
+  "parent_revision": "bc64057b20754e9aae8f7a04a7f02bae",
+  "captured_at": "2026-10-27T22:13:33.309026+00:00",
+  "source": {
+    "ref": "conversation:gitview/excerpt-02",
+    "quote": "Где проблемы в виде тредов долгих или красного ci…",
+    "speaker": "human"
+  },
+  "sources": {
+    "overview": [
+      {
+        "ref": "conversation:gitview/excerpt-01",
+        "quote": "Пока теоретически: реально ли написать себе iOS клиента для GitHub где просто дашборд по PRs, issues и прочему что без устали генерируют мне кодинговые агенты?",
+        "speaker": "human"
+      }
+    ],
+    "attention": [
+      {
+        "ref": "conversation:gitview/excerpt-02",
+        "quote": "Где проблемы в виде тредов долгих или красного ci…",
+        "speaker": "human"
+      }
+    ]
+  },
+  "links": [],
+  "reviews": [],
+  "content_hashes": {
+    "notes.hc": "4f91cd2a29e4905f1330d9c66b92f69c6dfe10292e44d8f4e57af0f9aa9a5dc8",
+    "notes.hcs": "9127ad327a001cd58539dda881aaad27377f8758f8a468698beb54c6ab42271e"
+  }
+}

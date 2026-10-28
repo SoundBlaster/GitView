@@ -10,7 +10,8 @@ completed product implementation.
 - Installed runtime: local `runtime-538271c0-py312`; Python 3.12.11.
 - Project-local skill installed through the runtime, including its bundled
   `references/usage.md`.
-- Local sketch `conversation_memory/sketches/gitview/` is ignored by Git.
+- At the time of capture the local sketch `conversation_memory/sketches/gitview/`
+  was ignored by Git; it is now tracked in GitView at the owner's request.
   Eight attributed notes were read back at revision
   `1396c542e64749d1bdad985fb1f732b2`, with `canonical: false` and no review
   records.
@@ -48,5 +49,6 @@ completed product implementation.
 The local runtime was exercised on real, source-attributed conversation input.
 The recorded references are local excerpt labels, not authenticated source
 retrieval. The sketch was not approved as a whole, and no canonical graph
-mutation or real application validation was performed. The ignored sketch is
-not backed up by Git.
+mutation or real application validation was performed. At the time of the
+pilot the sketch was not backed up by Git; its complete published history is
+now tracked in GitView.

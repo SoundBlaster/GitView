@@ -6,7 +6,7 @@ created by this document.
 
 ## Source and trace
 
-- Project sketch: `conversation_memory/sketches/gitview/` (local and ignored).
+- Project sketch: `conversation_memory/sketches/gitview/` (tracked locally).
 - Sketch revision: `1396c542e64749d1bdad985fb1f732b2`.
 - Selected note IDs: `zoom-grid`, `calendar`, `pr-depth`.
 - Source references are local excerpt labels, not authenticated chat IDs.
