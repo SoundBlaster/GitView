@@ -22,7 +22,7 @@ These are working definitions for discussion, not accepted ontology terms:
 | Concept | Working meaning | Boundary / question |
 | --- | --- | --- |
 | Account | GitHub identity whose accessible work is viewed | Multiple accounts and organization access are open |
-| Repository | Definition under discussion | Can belong to multiple GitView projects; relationship is separate from its definition |
+| Repository | Code in which a version control system acts; code is essentially a folder with files (`excerpt-24`, `excerpt-25`) | Can belong to multiple GitView projects; membership is separate from this formulation |
 | Project | A GitView project contains one or more repositories | Default: one project per repository; membership is many-to-many |
 | GitHub organization | GitHub metadata associated with repositories | A project may contain repositories from different organizations |
 | Work item | A PR or issue shown in context | Other object types are not excluded yet |

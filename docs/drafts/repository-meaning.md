@@ -16,6 +16,13 @@ a separate Group concept is presently redundant.
 
 ## Working direction from the user
 
+The user now formulates Repository as code in which a version control system
+acts (`conversation:gitview/excerpt-24`) and describes code, in essence, as a
+folder with files (`excerpt-25`). Git was named earlier as the version control
+system relevant to GitView. This is the current conceptual formulation in the
+conversation, not a formal ontology package or an implementation/storage
+decision.
+
 In `conversation:gitview/excerpt-18`, the user describes Repository as an
 entity providing access to the history of changes to source code through Git,
 with PRs, issues and similar objects central to the GitView perspective. This
@@ -24,10 +31,9 @@ is the source statement, not an approved formal definition.
 For discussion, distinguish Git's versioned content and history from GitHub's
 associated PRs and issues. A PR can refer to proposed changes and commits; an
 issue tracks a topic or work and does not necessarily represent a code change.
-PRs and issues do not constitute the complete Git history. Git repositories may
-also contain other files; whether GitView's definition should be limited to
-source code is open. These distinctions are an agent interpretation to review,
-not additional owner decisions.
+PRs and issues do not constitute the complete Git history. These distinctions
+are an agent interpretation to review, not additional owner decisions. The
+specific contents and boundary of the folder have not been formalized.
 
 The user suggested distinguishing `Repository → GitHub Repository` using
 roles or composition (`conversation:gitview/excerpt-19`). They then clarified
@@ -45,9 +51,9 @@ specified. These are distinctions for clarification, not new user decisions.
 
 The user rejected defining an entity through higher-level entities and noted
 that the previous Repository definition mixed meaning, characteristics,
-properties and relations (`conversation:gitview/excerpt-16`). Its definition
-remains open. Describe these aspects separately, and distinguish the domain
-concept from GitView's presentation and use of it.
+properties and relations (`conversation:gitview/excerpt-16`). Their newer
+formulation is captured above. Describe these aspects separately, and
+distinguish the domain concept from GitView's presentation and use of it.
 
 The user further distinguished a broad **link** from an Ontology **relation**:
 in their formulation, a relation is a property arising in the course of an
@@ -114,9 +120,8 @@ presentation direction; it does not establish a common ontology entity.
 
 ## Questions
 
-1. Should the definition refer to versioned content generally, or specifically
-   to source code? How should Git history and the GitHub work objects be
-   described separately?
+1. What is the boundary of Code as a folder with files, and how should Git
+   history and GitHub work objects be described separately?
 2. Which repository-level facts should be visible before opening its PRs and
    issues? Which can stay in details?
 3. When one repository appears in multiple projects, should a project-specific

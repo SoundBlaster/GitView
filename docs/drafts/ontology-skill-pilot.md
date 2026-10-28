@@ -24,7 +24,7 @@ in those help surfaces, so this is manual analysis, not a compiler result.
 | Item | Source and current reading | Open point |
 | --- | --- | --- |
 | Project | User identifies Project as the concept, rather than introducing Group (`excerpt-10`, `excerpt-11`, `excerpt-12`). Candidate term, not an accepted ontology term. | Definition and identity are not yet agreed. Do not equate it with GitHub Projects. |
-| Repository | User describes access to source-code change history through Git and highlights PRs and issues (`excerpt-18`). Do not define it through Project membership (`excerpt-16`). | Distinguish Git history from GitHub work objects and clarify whether versioned content includes more than source code. |
+| Repository | User describes code in which a version control system acts (`excerpt-24`), with code essentially a folder of files (`excerpt-25`). Do not define it through Project membership (`excerpt-16`). | Formal boundaries of the folder and the semantics of the version-control action remain to be explored. |
 | Project–Repository membership | A Project contains one or more repositories; a repository can belong to multiple projects (`excerpt-10`). | Under `excerpt-21`, examine the actor, action and resulting property before calling this an Ontology relation; creation and persistence are open. |
 | Default | One project per repository by default (`excerpt-10`). | How defaults are created, named and changed is not yet decided. It is not a claim that a repository cannot be in multiple projects. |
 | GitHub organization | User describes organizations as metadata; projects can contain repositories from different organizations (`excerpt-10`). | Exact relation to repository ownership and needed presentation are open. It is not the GitView Project. |
@@ -52,10 +52,9 @@ from the user.
 - It cannot check whether GitView terminology is consistent with an accepted
   ontology when no such project package or import was found. Future package
   status, version, sources and available validation need explicit inspection.
-- Next discussion: identify Repository's essential characteristics independent
-  of Project, and distinguish those characteristics from fields such as name or
-  URL. Separately clarify whether a Project is defined by membership alone or
-  has additional meaning.
+- Next discussion: distinguish the version-control action and resulting history
+  from Repository fields such as name or URL. Separately clarify whether a
+  Project is defined by membership alone or has additional meaning.
 
 No package, ontology binding, canonical node, or acceptance decision was
 created by this pilot.

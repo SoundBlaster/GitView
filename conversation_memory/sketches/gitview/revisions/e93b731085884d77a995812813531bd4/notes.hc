@@ -1,0 +1,20 @@
+Note#overview
+  Note#attention
+  Note#metrics
+  Note#zoom-grid
+    Note#calendar
+    Note#pr-depth
+  Note#apple-look
+  Note#foundations
+  Note#foundation-first
+    Note#ontology-role
+  Note#project-repository
+    Note#github-organizations
+  Note#repository-semantics
+    Note#common-metadata-hypothesis
+    Note#ontology-separation
+      Note#relation-versus-link
+        Note#issue-pr-motive
+    Note#repository-github-repository
+    Note#code-folder
+  Note#compact-source-overview
