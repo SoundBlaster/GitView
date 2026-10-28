@@ -1,0 +1,33 @@
+'#overview':
+  label: "Обзор GitHub"
+  detail: ""
+'#attention':
+  label: "Review и проблемы"
+  detail: ""
+'#metrics':
+  label: "Метрики с графиками"
+  detail: ""
+'#zoom-grid':
+  label: "Сетка с масштабированием"
+  detail: ""
+'#calendar':
+  label: "Возможный календарь активности"
+  detail: ""
+'#pr-depth':
+  label: "Возможное углубление внутри PR"
+  detail: ""
+'#apple-look':
+  label: "Apple Look"
+  detail: ""
+'#foundations':
+  label: "SpecificationCore и FSD-iOS"
+  detail: ""
+'#foundation-first':
+  label: "Сначала каркас: идея, онтология, приложение, UX"
+  detail: ""
+'#project-repository':
+  label: "Проект и репозитории"
+  detail: "Проект содержит один или несколько репозиториев; репозиторий может входить в несколько проектов. По умолчанию один проект — один репозиторий. Отдельное понятие Группа сейчас избыточно."
+'#github-organizations':
+  label: "GitHub organizations — метаданные"
+  detail: "Проект может включать репозитории разных организаций."

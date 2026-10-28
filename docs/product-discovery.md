@@ -28,7 +28,8 @@ repositories and a high volume of contributions and pull requests.
   several projects; by default there is one project per repository. GitHub
   organizations are metadata, and a project may include repositories from
   different organizations (conversation `excerpt-10`). Project is the domain
-  concept; do not introduce a separate Group entity (`excerpt-11`).
+  concept; a separate Group concept is currently redundant, though it could be
+  defined if needed (`excerpt-11`, `excerpt-12`).
 
 ## Ideas to refine
 

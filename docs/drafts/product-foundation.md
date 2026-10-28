@@ -2,7 +2,7 @@
 
 Status: exploratory foundation for review, not canonical specs or implemented
 behavior. The source is `.specgraph/root_intent.md` and the Git-tracked
-conversation sketch at revision `59dec939544e4e44a9e273341ae97cf3`, especially
+conversation sketch at revision `998677aa29ca4a7597997b7e751cc546`, especially
 `overview`, `attention`, `metrics`, `zoom-grid`, `calendar`, `apple-look`,
 `foundations`, `foundation-first`, `project-repository` and
 `github-organizations`.
@@ -42,7 +42,8 @@ inferred reliably merely from a PR author.
 The project/repository relationship and cross-organization membership are the
 user's clarification in `conversation:gitview/excerpt-10`. In
 `conversation:gitview/excerpt-11` the user clarified that **Project** is the
-domain concept; do not introduce a separate Group entity for this relationship.
+domain concept. In `excerpt-12` the user noted that a separate Group concept
+could be defined but is currently redundant; revisit if a distinct need arises.
 Details of how
 default projects are created, named, edited or synchronized remain open. No
 identity with the separate GitHub Projects feature is assumed.
