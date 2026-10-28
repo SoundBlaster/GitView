@@ -49,6 +49,20 @@ properties and relations (`conversation:gitview/excerpt-16`). Its definition
 remains open. Describe these aspects separately, and distinguish the domain
 concept from GitView's presentation and use of it.
 
+The user further distinguished a broad **link** from an Ontology **relation**:
+in their formulation, a relation is a property arising in the course of an
+actor's action upon an object (`conversation:gitview/excerpt-21`). An issue may
+be a reason for a PR, but the action is performed by an actor. A human or agent
+is an example; the user also asks whether a process or script can be an actor.
+Do not treat a generic Issue–PR link as a fully specified relation or infer
+causality or actor identity from it alone. This is the user's conceptual
+direction for discussion, not a formalized ontology package.
+
+For comparison, Ontology's event-responsibility core proposal says that
+relations *can* arise from earlier actions and persist; it does not establish
+the stronger universal claim for all relations. Reconcile the formulations
+before claiming that the existing package enforces the user's principle.
+
 Possible aspects to explore:
 
 - Identity and context: repository identity, display name and GitHub owner.

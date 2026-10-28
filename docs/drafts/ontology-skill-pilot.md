@@ -25,7 +25,7 @@ in those help surfaces, so this is manual analysis, not a compiler result.
 | --- | --- | --- |
 | Project | User identifies Project as the concept, rather than introducing Group (`excerpt-10`, `excerpt-11`, `excerpt-12`). Candidate term, not an accepted ontology term. | Definition and identity are not yet agreed. Do not equate it with GitHub Projects. |
 | Repository | User describes access to source-code change history through Git and highlights PRs and issues (`excerpt-18`). Do not define it through Project membership (`excerpt-16`). | Distinguish Git history from GitHub work objects and clarify whether versioned content includes more than source code. |
-| Project–Repository relation | A Project contains one or more repositories; a repository can belong to multiple projects (`excerpt-10`). | Relation name and formal cardinality notation remain proposals; creation and persistence behavior are open. |
+| Project–Repository membership | A Project contains one or more repositories; a repository can belong to multiple projects (`excerpt-10`). | Under `excerpt-21`, examine the actor, action and resulting property before calling this an Ontology relation; creation and persistence are open. |
 | Default | One project per repository by default (`excerpt-10`). | How defaults are created, named and changed is not yet decided. It is not a claim that a repository cannot be in multiple projects. |
 | GitHub organization | User describes organizations as metadata; projects can contain repositories from different organizations (`excerpt-10`). | Exact relation to repository ownership and needed presentation are open. It is not the GitView Project. |
 | Group | User considers a separate Group concept redundant at present (`excerpt-11`, `excerpt-12`). | Do not introduce it as a separate entity without a distinct need; not a permanent prohibition. |
@@ -35,6 +35,11 @@ discuss, not established essential characteristics. PRs and issues are
 associated work to explore separately; their relationship to Repository must
 not be silently used as its definition. Compact UI presentation and a link to
 the source are a separate product direction (`excerpt-15`).
+
+The user distinguishes generic links from Ontology relations arising during an
+actor's action on an object (`excerpt-21`). An Issue–PR link alone does not
+identify an actor or establish a causal explanation. Whether a process or script
+qualifies as an actor in a particular case remains a question from the user.
 
 ## Observations and next questions
 
