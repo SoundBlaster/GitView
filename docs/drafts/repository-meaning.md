@@ -30,12 +30,16 @@ source code is open. These distinctions are an agent interpretation to review,
 not additional owner decisions.
 
 The user suggested distinguishing `Repository → GitHub Repository` using
-roles or composition (`conversation:gitview/excerpt-19`). The arrow expresses
-the distinction to explore; it does not yet establish inheritance, composition,
-role semantics, or an identity relationship. A possible discussion split is
-versioned content/history on the Repository side and GitHub-specific work
-objects and access context on the GitHub side. Whether those describe one
-entity in a context or related entities is undecided.
+roles or composition (`conversation:gitview/excerpt-19`). They then clarified
+that a repository becomes a GitHub Repository when GitHub manages it and
+controls the flow of changes through issues and PRs: GitHub is an actor in the
+relationship (`excerpt-20`). The precise formalization, identity and lifecycle
+of this relationship remain open; no inheritance or composition is adopted.
+
+For discussion, GitHub provides mechanisms for this workflow, while people and
+agents can also participate in it. An issue need not lead to a code change, and
+the precise extent to which particular changes must go through PRs is not yet
+specified. These are distinctions for clarification, not new user decisions.
 
 ## Ontology approach
 
