@@ -61,7 +61,9 @@ for suitable domain decisions. Neither is an implemented integration yet.
 The accepted direction is an Apple-like native interface with system components,
 SF Symbols, system colors and Liquid Glass. A Photos-inspired zoomable grid is
 the central idea. A calendar at the farthest level and a deeper view inside a
-PR are possibilities, not fixed requirements. Pinch behavior, navigation,
+PR was suggested as a future possibility; the user subsequently clarified
+that the current scope does not delve inside a PR and should show its metrics
+instead (`conversation:gitview/excerpt-14`). Pinch behavior, navigation,
 accessibility alternatives and what appears at each scale need design review.
 
 ## Proposed specification map

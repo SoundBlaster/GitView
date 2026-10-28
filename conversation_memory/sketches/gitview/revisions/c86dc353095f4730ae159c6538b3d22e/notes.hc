@@ -1,0 +1,13 @@
+Note#overview
+  Note#attention
+  Note#metrics
+  Note#zoom-grid
+    Note#calendar
+    Note#pr-depth
+  Note#apple-look
+  Note#foundations
+  Note#foundation-first
+  Note#project-repository
+    Note#github-organizations
+  Note#repository-semantics
+    Note#common-metadata-hypothesis

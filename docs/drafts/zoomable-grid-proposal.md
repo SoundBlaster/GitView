@@ -23,7 +23,9 @@ The user also said, in `conversation:gitview/excerpt-05`:
 > Возможно кстати клетчатый календарь гитхаба неплох как самый максимальный уровень отдаления от деталей
 
 The calendar is a possibility to investigate, rather than an accepted
-requirement. The deeper PR level in `pr-depth` was deferred as a possibility.
+requirement. After this proposal's source revision, the user clarified in
+`conversation:gitview/excerpt-14` that the current scope does not delve into a
+PR and should display its metrics. The historical source revision remains intact.
 
 ## Proposed bounded change
 

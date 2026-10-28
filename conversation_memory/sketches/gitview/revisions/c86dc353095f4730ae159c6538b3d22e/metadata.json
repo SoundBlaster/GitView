@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "revision": "c86dc353095f4730ae159c6538b3d22e",
+  "parent_revision": "80e5a2b7cb0c437c85caecd0a947e95d",
+  "captured_at": "2026-10-28T11:33:00.885705+00:00",
+  "source": {
+    "ref": "conversation:gitview/excerpt-14",
+    "quote": "Не погружаемся внутрь PR, но должны уметь отображать метрики: строки, коммиты, прогоны, треды. Возможно в онтологии можно объединить эти вещи под метасущностью как бы, у неё есть базовые имя, ссылка возможно, набор динамических свойств… не уверен что стоит так усложнять пока нет спек.",
+    "speaker": "human"
+  },
+  "sources": {
+    "overview": [
+      {
+        "ref": "conversation:gitview/excerpt-01",
+        "quote": "Пока теоретически: реально ли написать себе iOS клиента для GitHub где просто дашборд по PRs, issues и прочему что без устали генерируют мне кодинговые агенты?",
+        "speaker": "human"
+      }
+    ],
+    "attention": [
+      {
+        "ref": "conversation:gitview/excerpt-02",
+        "quote": "Где проблемы в виде тредов долгих или красного ci…",
+        "speaker": "human"
+      }
+    ],
+    "metrics": [
+      {
+        "ref": "conversation:gitview/excerpt-03",
+        "quote": "Метрик с графиками",
+        "speaker": "human"
+      }
+    ],
+    "zoom-grid": [
+      {
+        "ref": "conversation:gitview/excerpt-04",
+        "quote": "Можно было бы сделать очень оригинально: как Photos app - сетка квадратиков которую можно pinch to zoom и обратно и погружаться в карточки или отдаляться, чтобы видеть больше",
+        "speaker": "human"
+      }
+    ],
+    "calendar": [
+      {
+        "ref": "conversation:gitview/excerpt-05",
+        "quote": "Возможно кстати клетчатый календарь гитхаба неплох как самый максимальный уровень отдаления от деталей",
+        "speaker": "human"
+      }
+    ],
+    "pr-depth": [
+      {
+        "ref": "conversation:gitview/excerpt-07",
+        "quote": "Может быть потом ещё уровень добавить - внутри PR что-то, но пока так ок.",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-14",
+        "quote": "Не погружаемся внутрь PR, но должны уметь отображать метрики: строки, коммиты, прогоны, треды. Возможно в онтологии можно объединить эти вещи под метасущностью как бы, у неё есть базовые имя, ссылка возможно, набор динамических свойств… не уверен что стоит так усложнять пока нет спек.",
+        "speaker": "human"
+      }
+    ],
+    "apple-look": [
+      {
+        "ref": "conversation:gitview/excerpt-06",
+        "quote": "Только дизайн хочу максимально Apple Look. Liquid Glass и минимум кастомных компонент и всяких рюшек. SF symbols, системные цвета.",
+        "speaker": "human"
+      }
+    ],
+    "foundations": [
+      {
+        "ref": "conversation:gitview/excerpt-08",
+        "quote": "Ещё я хочу использовать \n\n~/Development/GitHub/Specification Projects/SpecificationCore\n~/Development/GitHub/FSD-iOS",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-08-corrected",
+        "quote": "Ещё я хочу использовать \n\n~/Development/GitHub/Specification Projects/SpecificationCore\n~/Development/GitHub/FSD-iOS",
+        "speaker": "human"
+      }
+    ],
+    "foundation-first": [
+      {
+        "ref": "conversation:gitview/excerpt-09",
+        "quote": "Я бы начал всё же с базы: идея, онтология, приложение, UX. Чтобы у нас появился каркас проекта, а потом наполняем его уже «мясом» подробных спек. Пока без кода.",
+        "speaker": "human"
+      }
+    ],
+    "project-repository": [
+      {
+        "ref": "conversation:gitview/excerpt-10",
+        "quote": "В общем проект - это четко группа репозиториев (в том числе один репозиторий).\n\nРепозиторий может были в разных проектах.\n\nПо умолчанию один проект - один репозиторий.\n\nВ GitHub есть organizations. Это некая мета. Проекты могут содержать репозитории разных организаций.",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-11",
+        "quote": "Ты ввел слово группы - с точки зрения SpecGraph это должно быть в онтологии, но мы уже оперируем словом проект.",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-12",
+        "quote": "Мы можем конечно в онтологии определить Группа, но это избыточно.",
+        "speaker": "human"
+      }
+    ],
+    "github-organizations": [
+      {
+        "ref": "conversation:gitview/excerpt-10",
+        "quote": "В общем проект - это четко группа репозиториев (в том числе один репозиторий).\n\nРепозиторий может были в разных проектах.\n\nПо умолчанию один проект - один репозиторий.\n\nВ GitHub есть organizations. Это некая мета. Проекты могут содержать репозитории разных организаций.",
+        "speaker": "human"
+      }
+    ],
+    "repository-semantics": [
+      {
+        "ref": "conversation:gitview/excerpt-13",
+        "quote": "Ага, теперь надо понять что внутри смысла Repository",
+        "speaker": "human"
+      }
+    ],
+    "common-metadata-hypothesis": [
+      {
+        "ref": "conversation:gitview/excerpt-14",
+        "quote": "Не погружаемся внутрь PR, но должны уметь отображать метрики: строки, коммиты, прогоны, треды. Возможно в онтологии можно объединить эти вещи под метасущностью как бы, у неё есть базовые имя, ссылка возможно, набор динамических свойств… не уверен что стоит так усложнять пока нет спек.",
+        "speaker": "human"
+      }
+    ]
+  },
+  "links": [],
+  "reviews": [],
+  "content_hashes": {
+    "notes.hc": "46f6e139678a6e136fd872971436983179019fa51425a39e0e4268e94e8dd453",
+    "notes.hcs": "7e176f10d37fd07a32a9fc8b884f891f93fade9d2044e035fe4b9b8b9438cbc9"
+  }
+}

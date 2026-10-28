@@ -3,7 +3,8 @@
 Status: questions and agent proposals for discussion; not an accepted ontology
 or specification. The user's request to examine the meaning of Repository is
 captured in `conversation:gitview/excerpt-13`, note `repository-semantics`,
-sketch revision `80e5a2b7cb0c437c85caecd0a947e95d`.
+and the clarification below in `excerpt-14`, sketch revision
+`c86dc353095f4730ae159c6538b3d22e`.
 
 ## Established context
 
@@ -35,6 +36,22 @@ Possible aspects to explore:
 
 Branches, releases, source browsing, workflow runs and deployments may also be
 relevant, but their product scope has not been decided.
+
+## PR overview and possible shared abstraction
+
+The user clarified that the application should not delve inside a PR, while it
+should display PR metrics such as lines, commits, runs and threads. The exact
+definitions (for example additions versus deletions, which runs and which
+threads) remain open. The earlier idea of a deeper PR view is deferred, not a
+current product obligation.
+
+The user suggested a possible meta-entity with a name, perhaps a link, and
+dynamic properties, while questioning whether it is useful before there are
+specifications. Treat this as an open hypothesis. A shared presentation shape
+could reduce repetition, but a generic bag of properties could obscure the
+different meanings, units, availability and freshness of PR, repository,
+check and thread data. These considerations are agent interpretations, not
+accepted requirements. No common entity or inheritance relationship is adopted.
 
 ## Questions
 
