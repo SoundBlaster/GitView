@@ -59,10 +59,13 @@ causality or actor identity from it alone. This is the user's conceptual
 direction for discussion, not a formalized ontology package.
 
 The user further clarified that the Issue → PR connection is a **motive for
-the actor** (`conversation:gitview/excerpt-22`): the issue provides the motive,
-the actor acts, and the PR is the result. How motive is evidenced for a
-particular instance remains open; a generic source reference alone is not an
-independent proof of the actor's intent.
+the actor** (`conversation:gitview/excerpt-22`) and described the sequence:
+the actor, motivated by the Issue, acts by changing code, with the PR as
+consequence (`excerpt-23`). This is the user's working conceptual description;
+it does not imply a PR has already been merged. How motive is evidenced in a
+particular instance and how this consequence maps to Ontology's state/delta
+concepts remain open; a generic source reference alone does not independently
+prove intent.
 
 For comparison, Ontology's event-responsibility core proposal says that
 relations *can* arise from earlier actions and persist; it does not establish

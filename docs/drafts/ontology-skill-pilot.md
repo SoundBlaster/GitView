@@ -38,9 +38,11 @@ the source are a separate product direction (`excerpt-15`).
 
 The user distinguishes generic links from Ontology relations arising during an
 actor's action on an object (`excerpt-21`), and describes Issue → PR as the
-actor's motive (`excerpt-22`). The evidence for the motive and actor in a given
-case remains open. Whether a process or script qualifies as an actor in a
-particular case remains a question from the user.
+actor's motive (`excerpt-22`): the actor changes code, motivated by the Issue,
+and PR is the consequence (`excerpt-23`). The evidence for the motive and actor
+in a given case and the mapping to formal states/deltas remain open. Whether a
+process or script qualifies as an actor in a particular case remains a question
+from the user.
 
 ## Observations and next questions
 
