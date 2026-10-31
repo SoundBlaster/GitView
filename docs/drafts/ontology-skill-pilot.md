@@ -2,6 +2,9 @@
 
 Status: exploratory, agent-authored application of the installed
 `specgraph-project-ontology` skill; not an accepted ontology or specification.
+This document describes the earlier runtime `562342bb` pilot. For the later
+runtime and its `ontology-context` operation, see
+[`ontology-runtime-pilot-39b66a60.md`](ontology-runtime-pilot-39b66a60.md).
 Workspace: GitView. Sources: `.specgraph/root_intent.md`,
 `docs/product-discovery.md`, `docs/drafts/repository-meaning.md`, and
 `conversation_memory/sketches/gitview` revision
