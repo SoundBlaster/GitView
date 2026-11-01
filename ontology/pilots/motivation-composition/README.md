@@ -83,10 +83,25 @@ macOS arm64 `ontologyc` [Ontology 0.5.0](https://github.com/0al-spec/Ontology/re
 запуска сохранены на TB5:
 `/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/`.
 
-## Ограничение для будущих спецификаций GitView
+## Повторная проверка project spec ID после [PR #856](https://github.com/0al-spec/SpecGraph/pull/856)
 
-Текущий target-scoped Supervisor принимает только `SG-SPEC-NNNN`. На отдельном
-synthetic файле с ID `GITVIEW-SPEC-0001`, соответствующим
-`.specgraph/spec-id-policy.json`, команда вернула exit 2 и
-`--target-spec must be SG-SPEC-NNNN`. Это отдельное от отсутствующего
-multi-member inventory ограничение; настоящие узлы GitView пока не создавались.
+На runtime `8e39d784` target-scoped Supervisor отклонил отдельный synthetic
+файл `GITVIEW-SPEC-0001.yaml` с exit 2 и сообщением
+`--target-spec must be SG-SPEC-NNNN`. После обновления до `710c4f60` тот же
+файл, побайтно совпадающий с исходным контрольным примером, был повторно
+проверен в отдельных временных workspace на TB5. В каждый также скопирована
+реальная политика `.specgraph/spec-id-policy.json` с префиксом `GITVIEW-SPEC`.
+
+| Контекст | Результат для `GITVIEW-SPEC-0001` |
+| --- | --- |
+| Основной `ontology/context.yaml` | ID принят, context `verified`, target `checked`, inventory `analyzed`, exit 0. |
+| Композиция из этого пилота | ID принят, context `verified`; target и inventory `unavailable`, exit 1, поскольку совместный multi-member inventory пока не поддержан. |
+
+Это проверка **synthetic** файла, а не созданная или утверждённая спецификация
+GitView. Дополнительный synthetic контроль с перечисленными терминами дал
+`Project`, `Repository`, `Issue`, `PullRequest` и `Metric` как кандидатов
+совпадения, а намеренно добавленный `Group` — как неизвестный термин. Проверки
+не изменили исходный файл или политику ID; смысл терминов не утверждён.
+Несовпадение ID в имени и YAML и недопустимый путь были отдельно отклонены с
+exit 2. Полные отчёты и контрольные данные сохранены на TB5:
+`/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/gitview-target-retest-710c4f60/`.
