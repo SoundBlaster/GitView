@@ -105,3 +105,83 @@ GitView. Дополнительный synthetic контроль с перечи
 Несовпадение ID в имени и YAML и недопустимый путь были отдельно отклонены с
 exit 2. Полные отчёты и контрольные данные сохранены на TB5:
 `/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/gitview-target-retest-710c4f60/`.
+
+## Проектный черновик после [PR #857](https://github.com/0al-spec/SpecGraph/pull/857)
+
+У GitView ещё не было spec-файла: предыдущий `GITVIEW-SPEC-0001` был только
+synthetic fixture. Для этой проверки создан содержательный
+[проектный черновик](../../../docs/drafts/GITVIEW-SPEC-0001.yaml) по root intent,
+discovery и сохранённым заметкам. Его ID предварительный, он не принят и не
+перенесён в канонический граф. `spec_yaml_lint.py` установленного runtime
+прошёл; этот lint не проверяет полноту или правильность содержания.
+
+Побайтовая копия черновика с SHA-256
+`56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f`
+помещалась в `specs/nodes/` только **изолированных** workspace на TB5: сейчас
+target-scoped check читает именно этот путь. Каждый workspace получил реальные
+project ID policy и выбранные файлы онтологии. Использован тот же release
+`ontologyc` и SHA-256, что указаны выше.
+
+| Runtime и контекст | Результат для одинакового черновика |
+| --- | --- |
+| `710c4f60`, составной | Context `verified`, target и inventory `unavailable`, exit 1. |
+| `54db6fb9`, составной | Context `verified`, target `checked`, bundle и inventory `analyzed`, exit 0. |
+| `54db6fb9`, основной | Context `verified`, target `checked`, bundle и inventory `analyzed`, exit 0; см. ограничение для `motivcore` ниже. |
+
+В составном контексте inventory нашёл 10 совпадений имён с проектным пакетом
+`local.gitview.domain` `0.2.0-pilot.1` как `spelling_candidate`, разрешил
+`motivcore:Motive` из `org.0al.motivation.core` `0.1.0` как
+`structurally_resolved_candidate` и оставил `Activity` как `unknown`. `Activity`
+здесь обозначает используемое в discovery слово, а не автоматически новую
+доменную сущность. Для каждого кандидата отчёт сохраняет происхождение и версию
+пакета. В `validation_report` при этом **четыре warning**: отсутствует binding
+`sgcore:Spec`, неизвестны служебные `spec` и `node`, а также `Activity`. Пакет
+`sgcore` не выбран в этом проектном контексте. Имя `accepted_bindings` в legacy
+binding index не означает семантическое принятие; весь отчёт `report_only`.
+
+### Наблюдение для SpecGraph
+
+Основной контекст не включает `motivcore`: его inventory корректно показывает
+`motivcore:Motive` как `unknown`. При этом для **того же** файла в single-member
+binding index и validation report эта ссылка не появляется ни в bindings, ни в
+gaps/findings. Результат остаётся `checked` с четырьмя перечисленными выше
+warning. При отдельном отрицательном контроле в составном контексте замена на
+`motivcore:DefinitelyMissing` дала `unknown` в inventory, `missing_ontology_ref`
+в binding index и дополнительный warning в validation report; target и тогда
+остался `checked`. Контроль менял только отдельную копию файла на TB5.
+
+Это расхождение важно при просмотре отдельных частей отчёта: отсутствие ссылки
+в single-member validation не доказывает, что она разрешена. Общий результат
+`checked` подтверждает выполнение advisory-процесса, не отсутствие gaps и не
+семантическое соответствие. Prose не анализируется, `semantic_approval` остаётся
+`not_established`, `full_spec_conformance` — `not_assessed`, canonical mutation
+и активация policy не разрешены. Переход к составному контексту по умолчанию не
+производился.
+
+Для воспроизведения нужен установленный runtime `54db6fb9`, проверенный выше
+`ontologyc` и новый пустой `SCRATCH` на TB5. Команда ниже показывает
+single-member расхождение; чтобы повторить составной вариант, замените путь
+selection на `ontology/pilots/motivation-composition/context.yaml`:
+
+```sh
+PRODUCT=/Users/egor/Development/GitHub/GitView
+SPECGRAPH=/Users/egor/.local/share/specgraph/runtime-54db6fb9/specgraph-runtime
+SCRATCH=/path/to/a/new/empty/tb5-workspace
+ONTOLOGYC=/path/to/ontologyc-0.5.0-macos-arm64/ontologyc
+mkdir -p "$SCRATCH/.specgraph" "$SCRATCH/specs/nodes"
+cp -R "$PRODUCT/ontology" "$SCRATCH/ontology"
+cp "$PRODUCT/.specgraph/spec-id-policy.json" "$SCRATCH/.specgraph/"
+cp "$PRODUCT/specgraph.project.yaml" "$SCRATCH/"
+cp "$PRODUCT/docs/drafts/GITVIEW-SPEC-0001.yaml" "$SCRATCH/specs/nodes/"
+"$SPECGRAPH" --workspace "$SCRATCH" supervisor -- \
+  --build-project-ontology-context-check --ontology-context-project-id gitview \
+  --target-spec GITVIEW-SPEC-0001 --ontology-context-selection ontology/context.yaml \
+  --ontologyc "$ONTOLOGYC" \
+  --ontologyc-sha256 dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168 \
+  --output-mode full > "$SCRATCH/report.json"
+```
+
+Отчёты всех четырёх прогонов и проверенные входные hash сохранены на TB5:
+`/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/gitview-real-spec-check-54db6fb9-utcdqqc5/`.
+Они являются локальными диагностическими результатами, а не резервной копией
+проектных заметок.

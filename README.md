@@ -13,6 +13,8 @@ behavior has been implemented or tested on a device.
   unresolved questions from the initial conversation.
 - [Product foundation draft](docs/drafts/product-foundation.md) — idea,
   candidate vocabulary, application boundary, UX and proposed spec map.
+- [Product overview specification candidate](docs/drafts/GITVIEW-SPEC-0001.yaml)
+  — a source-attributed, pre-canonical draft for review and scoped checks.
 - [Repository exploration](docs/drafts/repository-meaning.md) — proposed domain
   meaning and open questions.
 - [Project ontology draft](ontology/packages/gitview/README.md) — candidate

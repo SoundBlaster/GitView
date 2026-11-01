@@ -1,0 +1,96 @@
+id: GITVIEW-SPEC-0001
+title: GitView - product overview and domain boundary
+kind: spec
+created_at: '2026-11-01T08:52:37Z'
+updated_at: '2026-11-01T08:52:37Z'
+status: idea
+draft_status: pre_canonical
+sources:
+  root_intent: .specgraph/root_intent.md
+  discovery: docs/product-discovery.md
+  foundation: docs/drafts/product-foundation.md
+  sketch:
+    path: conversation_memory/sketches/gitview
+    revision: fae218b80fa3496c94df47560997b2c6
+  ontology_draft: ontology/packages/gitview/README.md
+  ontology_composition_pilot: ontology/pilots/motivation-composition/README.md
+specification:
+  objective: Give the owner of many GitHub repositories a compact, native iOS overview of current work,
+    review and problems, including work produced by coding agents, with a path to the original GitHub
+    object.
+  terminology:
+    Project: A GitView project; the membership rules below are distinct from the meaning of the term itself.
+    Repository: Code in which a version control system acts, in the owner's working formulation. Identity
+      and boundaries remain to be specified.
+    Code: Code is essentially a folder with files in the owner's working formulation; its precise boundary
+      remains open.
+    VersionControlSystem: A system that acts on code to manage versions; Git is an example.
+    GitHub: GitHub can act as the manager of a repository and its change workflow; the formal actor and
+      role model remains open.
+    Issue: A GitHub issue shown in the overview; an issue may provide a motive for an actor but does not
+      itself act.
+    PullRequest: A GitHub pull request associated with proposed code changes. Creating a pull request
+      does not imply merging it.
+    ReviewThread: A discussion relevant to review. Duration and resolution are separate; thresholds and
+      data availability remain open.
+    CIStatus: An observed CI result; its source, freshness and contribution to a readiness decision remain
+      open.
+    Metric: A measurement used in the overview. Its population, period and units need a separate definition
+      for each metric.
+    Activity: Work or changes viewed over time. This is vocabulary used in discovery, not yet a proposed
+      domain entity or a defined measurement.
+  ontology_refs:
+  - motivcore:Motive
+  ontology_reference_scope: The Motive reference is a review candidate for the owner's Issue-to-actor
+    example, using org.0al.motivation.core 0.1.0 in the opt-in composition. It does not assert that an
+    individual Issue motivated a particular action, settle the Issue-to-Motive mapping, establish causation
+    or approve a term. All terminology above remains draft, even when a name matches a package.
+  project_membership:
+    contains: A project contains one or more repositories.
+    reuse: A repository can belong to more than one project.
+    default: By default one project corresponds to one repository.
+    organization: GitHub organizations are metadata; a project may contain repositories from different
+      organizations.
+    undecided: Project identity and lifecycle, and the mechanics of creating, naming, editing and synchronizing
+      default projects, remain open.
+  overview_scope:
+    includes:
+    - Current work, work awaiting review, ready work and visible problems.
+    - Pull requests and issues with compact title, ID, badges and text as applicable.
+    - Metrics such as changed lines, commits, runs and review threads.
+    - Navigation from an object to its original source in GitHub.
+    - Metrics and charts, lightweight review and convenient sharing.
+    boundaries:
+    - GitView is an overview, not a replacement for GitHub.
+    - Internal pull-request exploration is deferred; its later scope is open.
+    - A ready label, a failed check, review status and activity volume are not interchangeable.
+    - Unknown or stale information must not be presented as confirmed ready.
+    undecided: Readiness criteria, thresholds, data freshness, sharing content, supported accounts, access
+      and synchronization need further specification.
+  experience:
+    direction: A Photos-inspired grid that can zoom between broader and more detailed views, using native
+      iOS system components, SF Symbols, system colors and Liquid Glass with minimal custom decoration.
+    optional_calendar: A contribution-style calendar is a possible farthest view; its time cells and repository
+      or project cells have different meanings.
+    undecided: Zoom levels, gesture behavior, navigation, accessibility alternatives and the calendar-to-project
+      transition need design review.
+  action_and_motive:
+    source: conversation:gitview/excerpt-21 through conversation:gitview/excerpt-23
+    working_example: An actor acts on Code under a motive associated with an Issue, with a PullRequest
+      described as a consequence. This is a conceptual example, not an observed instance or a complete
+      event or state model.
+    distinction: A general link and an Ontology relation are distinct in the owner's formulation; an Ontology
+      relation is a property arising through an actor's action on an object. The Issue is not the acting
+      participant.
+    undecided: Formal actor roles, the nature of the consequence, relation lifetime, provenance and mapping
+      to shared packages require review.
+  review_examples:
+  - A project can include repositories from two GitHub organizations, while either repository also belongs
+    to another project.
+  - A pull request overview can show a failed CI result and review-thread information and provide a link
+    to the original GitHub object.
+  - An activity calendar and the repository overview must not be treated as the same type of cell merely
+    because both use a grid.
+  authority_boundary: This is a source-attributed product specification candidate for human review. Its
+    ID is provisional, examples are not executed tests, and neither a structural check nor a local commit
+    accepts the specification, ontology, behavior, implementation or associated causal claims.
