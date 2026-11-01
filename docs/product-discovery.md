@@ -36,6 +36,11 @@ repositories and a high volume of contributions and pull requests.
 
 ## Ideas to refine
 
+- `Activity` likely concerns actions, distinguished for now from the current
+  state of PRs and CI. The owner agreed not to introduce a separate Activity
+  entity yet and suggested observing the project before settling its meaning
+  (`conversation:gitview/excerpt-28-reply`, responding to the two linked agent
+  proposals). This remains a working hypothesis, not a settled definition.
 - A GitHub-style activity calendar may be the most distant view. A calendar
   cell represents a day, whereas a project-grid cell represents a repository;
   a transition between them needs explicit time and scope semantics.
