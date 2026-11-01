@@ -13,7 +13,9 @@ technical representation of `GitHubRepository` need review. Its intended meaning
 has been clarified: GitHub acts on Repository, establishing a management relation
 in which that Repository is called GitHubRepository (`excerpt-31`). The product
 currently expects GitHub-specific properties; generalized management systems and
-other providers are deferred. See the project ontology discussion below.
+other providers are deferred. The owner suggests Decorator as a conceptual
+analogy: GitHub decorates Repository (`excerpt-32`). Implementation remains an
+independent architecture choice. See the project ontology discussion below.
 The checked pair below is the
 earlier agent-authored example, retained for comparison, not the owner's new view.
 
