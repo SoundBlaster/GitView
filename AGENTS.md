@@ -40,3 +40,6 @@ Use `.codex/skills/specgraph-project-ontology/SKILL.md` when discussing,
 drafting or reviewing domain terminology and relationships. Its installed
 version is supplied by the runtime above. Project terminology in notes and
 drafts is not automatically an accepted ontology; preserve gaps and sources.
+Read `ontology/packages/gitview/README.md` for the current project draft and
+its source map. `ontology/context.yaml` selects that draft for structural
+checks; selection and successful checks do not approve its meanings.

@@ -1,0 +1,195 @@
+{
+  "classes" : [
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "An observed CI status, including a failing status; source and readiness semantics remain open.",
+      "extends" : "sg:ValueObject",
+      "fqid" : "gitview:CIStatus",
+      "id" : "CIStatus",
+      "implements" : [
+
+      ],
+      "kind" : "ValueObject",
+      "uri" : "ontology://local.gitview.domain/0.1.0/classes/CIStatus"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "Code, described by the owner as essentially a folder with files. Its precise boundary remains open.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:Code",
+      "id" : "Code",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.1.0/classes/Code"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "GitHub, which can occupy the actor role when managing a repository and its change workflow.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:GitHub",
+      "id" : "GitHub",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.1.0/classes/GitHub"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A GitHub issue; in the discussed example it provides a motive for an actor's action.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:Issue",
+      "id" : "Issue",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.1.0/classes/Issue"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A measurement for overview; the meaning, scope and units of each metric remain to be specified.",
+      "extends" : "sg:ValueObject",
+      "fqid" : "gitview:Metric",
+      "id" : "Metric",
+      "implements" : [
+
+      ],
+      "kind" : "ValueObject",
+      "uri" : "ontology://local.gitview.domain/0.1.0/classes/Metric"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A GitView project. Membership, identity and lifecycle are discussed separately.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:Project",
+      "id" : "Project",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.1.0/classes/Project"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A GitHub pull request associated with proposed code changes; creation does not imply merging.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:PullRequest",
+      "id" : "PullRequest",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.1.0/classes/PullRequest"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "Code in which a version control system acts, in the owner's working formulation.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:Repository",
+      "id" : "Repository",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.1.0/classes/Repository"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A discussion thread relevant to review; duration and resolution semantics need clarification.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:ReviewThread",
+      "id" : "ReviewThread",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.1.0/classes/ReviewThread"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A system that acts on code to manage versions; Git is the example named for GitView.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:VersionControlSystem",
+      "id" : "VersionControlSystem",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.1.0/classes/VersionControlSystem"
+    }
+  ],
+  "diagnostics" : [
+
+  ],
+  "id" : "local.gitview.domain",
+  "imports" : [
+    {
+      "id" : "specgraph.foundation",
+      "namespace" : "sg",
+      "version" : "0.1.0"
+    }
+  ],
+  "namespace" : "gitview",
+  "policies" : [
+
+  ],
+  "protocols" : [
+
+  ],
+  "relations" : [
+    {
+      "description" : "Candidate declaration for GitHub acting as manager of a repository; contextual role and resulting property require further modeling.",
+      "domain" : "gitview:GitHub",
+      "fqid" : "gitview:managesRepository",
+      "id" : "managesRepository",
+      "range" : "gitview:Repository",
+      "uri" : "ontology://local.gitview.domain/0.1.0/relations/managesRepository"
+    },
+    {
+      "description" : "Candidate declaration for a version-control system acting on code; the originating action and resulting property require further modeling.",
+      "domain" : "gitview:VersionControlSystem",
+      "fqid" : "gitview:versionControlsCode",
+      "id" : "versionControlsCode",
+      "range" : "gitview:Code",
+      "uri" : "ontology://local.gitview.domain/0.1.0/relations/versionControlsCode"
+    }
+  ],
+  "sourceDigest" : "sha256:c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+  "stateMachines" : [
+
+  ],
+  "version" : "0.1.0"
+}
