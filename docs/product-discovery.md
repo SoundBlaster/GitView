@@ -33,6 +33,12 @@ repositories and a high volume of contributions and pull requests.
   different organizations (conversation `excerpt-10`). Project is the domain
   concept; a separate Group concept is currently redundant, though it could be
   defined if needed (`excerpt-11`, `excerpt-12`).
+- Current product scope is specifically GitHub-managed repositories. GitHub
+  acts on Repository, establishing a management relation in which it is called
+  `GitHubRepository` (`excerpt-31`). The application expects GitHub-specific
+  properties, whose exact set remains open. GitLab and BitBucket may be added
+  later; `GitManagementSystem` and `ManagedRepository` are unnecessary
+  generalizations for the current product.
 
 ## Ideas to refine
 

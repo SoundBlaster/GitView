@@ -9,7 +9,12 @@ It is an unbound draft: `GitView`,
 and the current overview exporter requires an explicit versioned ontology
 binding for each occurrence. Do not invent bindings or add ontology
 entities just to make it export. The meaning of its nesting and the appropriate
-representation of `GitHubRepository` need review. The checked pair below is the
+technical representation of `GitHubRepository` need review. Its intended meaning
+has been clarified: GitHub acts on Repository, establishing a management relation
+in which that Repository is called GitHubRepository (`excerpt-31`). The product
+currently expects GitHub-specific properties; generalized management systems and
+other providers are deferred. See the project ontology discussion below.
+The checked pair below is the
 earlier agent-authored example, retained for comparison, not the owner's new view.
 
 The readable [HC](gitview.hc) and its technical [HCS](gitview.hcs) are a
