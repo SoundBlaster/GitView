@@ -1,0 +1,61 @@
+apiVersion: ontology.specgraph.io/v1alpha1
+kind: DomainOntologyPackage
+metadata:
+  id: local.gitview.domain
+  namespace: gitview
+  version: 0.2.0-pilot.1
+  publisher: GitView
+  source: conversation_memory/sketches/gitview
+  approvalStatus: draft
+spec:
+  imports:
+    - id: specgraph.foundation
+      namespace: sg
+      version: 0.1.0
+    - id: org.0al.motivation.core
+      namespace: motivcore
+      version: 0.1.0
+  classes:
+    Project:
+      extends: sg:DomainEntity
+      description: A GitView project. Membership, identity and lifecycle are discussed separately.
+    Code:
+      extends: sg:DomainEntity
+      description: Code, described by the owner as essentially a folder with files. Its precise boundary remains open.
+    VersionControlSystem:
+      extends: sg:DomainEntity
+      description: A system that acts on code to manage versions; Git is the example named for GitView.
+    Repository:
+      extends: sg:DomainEntity
+      description: Code in which a version control system acts, in the owner's working formulation.
+    GitHub:
+      extends: sg:DomainEntity
+      description: GitHub, which can occupy the actor role when managing a repository and its change workflow.
+    Issue:
+      extends: sg:DomainEntity
+      description: A GitHub issue; in the discussed example it provides a motive for an actor's action.
+    PullRequest:
+      extends: sg:DomainEntity
+      description: A GitHub pull request associated with proposed code changes; creation does not imply merging.
+    ReviewThread:
+      extends: sg:DomainEntity
+      description: A discussion thread relevant to review; duration and resolution semantics need clarification.
+    CIStatus:
+      extends: sg:ValueObject
+      description: An observed CI status, including a failing status; source and readiness semantics remain open.
+    Metric:
+      extends: sg:ValueObject
+      description: A measurement for overview; the meaning, scope and units of each metric remain to be specified.
+  relations:
+    versionControlsCode:
+      domain: VersionControlSystem
+      range: Code
+      description: Candidate declaration for a version-control system acting on code; the originating action and resulting property require further modeling.
+    managesRepository:
+      domain: GitHub
+      range: Repository
+      description: Candidate declaration for GitHub acting as manager of a repository; contextual role and resulting property require further modeling.
+    issueMotiveLink:
+      domain: Issue
+      range: motivcore:Motive
+      description: Candidate typed link from an issue to motive content for an actor contribution; it does not assert an actor, action, relation instance or causal attribution.

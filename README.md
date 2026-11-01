@@ -17,6 +17,8 @@ behavior has been implemented or tested on a device.
   meaning and open questions.
 - [Project ontology draft](ontology/packages/gitview/README.md) — candidate
   vocabulary, source map, open questions and structural verification.
+- [Motivation composition pilot](ontology/pilots/motivation-composition/README.md)
+  — an opt-in experiment with the existing Ontology motive vocabulary.
 - [Product workspace configuration](specgraph.project.yaml) — initialized by
   SpecGraph and configured to select the draft ontology context.
 - [Spec ID policy](.specgraph/spec-id-policy.json) — reserves the

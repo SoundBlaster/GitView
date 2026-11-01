@@ -10,7 +10,7 @@ for governed specification artifacts.
 Use the project-local skill
 `.codex/skills/specgraph-conversation-notes/SKILL.md` when discussing product
 or design ideas. The local runtime installed for this pilot is
-`/Users/egor/.local/share/specgraph/runtime-39b66a60/specgraph-runtime`.
+`/Users/egor/.local/share/specgraph/runtime-8e39d784/specgraph-runtime`.
 For its standalone `specgraph` CLI, use the executable in the same installation
 at `venv/bin/specgraph`, or invoke the runtime's `draft` subcommand. If that
 installation is unavailable, report it and choose or install a compatible
@@ -43,3 +43,6 @@ drafts is not automatically an accepted ontology; preserve gaps and sources.
 Read `ontology/packages/gitview/README.md` for the current project draft and
 its source map. `ontology/context.yaml` selects that draft for structural
 checks; selection and successful checks do not approve its meanings.
+An opt-in, versioned composition experiment lives at
+`ontology/pilots/motivation-composition/`; it does not replace the selected
+foundation-only context or establish actor, motive or causal facts.
