@@ -1,5 +1,14 @@
 # GitView ontology overview
 
+The owner's newer [proposed composition](gitview-proposed.hc) supersedes the
+reading arrangement below for discussion. It is an unbound draft: `GitView`,
+`User`, and `GitHubRepository` are not classes in the selected 0.1.0 package,
+and the current overview exporter requires one root and an explicit versioned
+ontology binding for each occurrence. Do not invent bindings or add ontology
+entities just to make it export. The meaning of its nesting and the appropriate
+representation of `GitHubRepository` need review. The checked pair below is the
+earlier agent-authored example, retained for comparison, not the owner's new view.
+
 The readable [HC](gitview.hc) and its technical [HCS](gitview.hcs) are a
 **proposed, review-only** selection from the project ontology draft 0.1.0.
 The editable inputs are [selection HC](gitview.selection.hc) and

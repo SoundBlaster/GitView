@@ -137,6 +137,9 @@ references; ontology meaning and composition acceptance remain review decisions.
 ### GitView project example
 
 The project-owned example is `ontology/views/gitview.hc` and `gitview.hcs`.
+The owner's later `ontology/views/gitview-proposed.hc` is the preferred draft
+for discussion but has unresolved roots and bindings; do not portray the older
+checked pair as reflecting it, or fabricate missing ontology declarations.
 Its editable source is the adjacent `gitview.selection.hc` and
 `gitview.selection.hcs`; see `ontology/views/README.md` for the pinned inputs
 and exact preparation command. Edit the selection first, export into a new
