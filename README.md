@@ -19,6 +19,8 @@ behavior has been implemented or tested on a device.
   meaning and open questions.
 - [Project ontology draft](ontology/packages/gitview/README.md) — candidate
   vocabulary, source map, open questions and structural verification.
+- [Readable ontology composition](ontology/views/README.md) — a review-only
+  HC/HCS pair and its reproducible source selection.
 - [Motivation composition pilot](ontology/pilots/motivation-composition/README.md)
   — an opt-in experiment with the existing Ontology motive vocabulary.
 - [Product workspace configuration](specgraph.project.yaml) — initialized by

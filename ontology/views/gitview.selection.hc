@@ -1,0 +1,10 @@
+Project#project
+  Repository#repository
+    Code#code
+    VersionControlSystem#version-control
+    GitHub#github
+    Issue#issue
+    PullRequest#pull-request
+      ReviewThread#review-thread
+      CIStatus#ci-status
+      Metric#metric

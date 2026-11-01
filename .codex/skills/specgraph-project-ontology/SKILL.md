@@ -134,6 +134,20 @@ identities and implementation navigation. Explain important omissions and
 unresolved meanings. `exported` confirms structural export and checked
 references; ontology meaning and composition acceptance remain review decisions.
 
+### GitView project example
+
+The project-owned example is `ontology/views/gitview.hc` and `gitview.hcs`.
+Its editable source is the adjacent `gitview.selection.hc` and
+`gitview.selection.hcs`; see `ontology/views/README.md` for the pinned inputs
+and exact preparation command. Edit the selection first, export into a new
+temporary directory on verified TB5, inspect both outputs and compare them to
+the tracked pair before replacing them. Commit the selection and exported pair
+together. Do not infer relations, cardinalities or actor actions from nesting;
+the user's project membership and actor semantics remain separate source facts.
+`Activity` is a working hypothesis, not an approved entity. This project-local
+section extends the distributed skill, so an installer may refuse to overwrite
+it on upgrade; compare the new distributed version and preserve this section.
+
 ## Tool boundary and handoff
 
 Use actual project-supported ontology inspection, validation and review tools
