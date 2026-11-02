@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru" data-prototype="peek-pop">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>GitView · Peek and Pop</title>
+  <link rel="stylesheet" href="../shared/prototype.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="../shared/vendor/lucide-1.17.0.js" defer></script>
+  <script src="../shared/state.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+<div id="gv-peek-pop" class="viz-dotted-background">
+  <div class="viz-controls" aria-label="Состояния макета">
+    <button type="button" class="btn" data-scene="grid" aria-pressed="true">Сетка</button>
+    <button type="button" class="btn" data-scene="peek" aria-pressed="false">Предпросмотр</button>
+    <button type="button" class="btn" data-scene="detail" aria-pressed="false">Объект</button>
+  </div>
+  <div class="gv-stage">
+    <section class="gv-app" aria-label="GitView — сетка, preview и объект">
+      <div class="gv-base">
+        <header class="gv-header">
+          <div class="gv-context"><i data-lucide="folder" aria-hidden="true"></i> Apple Apps <span>/</span> demo</div>
+          <h1>GitView</h1>
+          <p class="gv-subtitle">4 PR · 2 Issue <span>·</span> <span class="gv-red">1 PR с красным CI</span></p>
+          <div class="gv-segment" role="group" aria-label="Тип объектов">
+            <button type="button" data-filter="all" aria-pressed="true">Все</button>
+            <button type="button" data-filter="pr" aria-pressed="false">PR</button>
+            <button type="button" data-filter="issue" aria-pressed="false">Issue</button>
+          </div>
+        </header>
+        <div class="gv-grid" aria-label="Карточки PR и Issue"></div>
+        <footer class="gv-footer"><span><i data-lucide="refresh-cw" aria-hidden="true"></i> Обновлено сейчас</span><span>Демо-данные</span></footer>
+      </div>
+      <div class="gv-overlay" hidden>
+        <button type="button" class="gv-backdrop" aria-label="Закрыть предпросмотр"></button>
+        <div class="gv-preview" role="dialog" aria-modal="true" aria-label="Предпросмотр объекта">
+          <div class="gv-preview-card"></div>
+          <div class="gv-menu">
+            <button type="button" data-action="pop">Открыть<i data-lucide="arrow-up-right" aria-hidden="true"></i></button>
+            <button type="button" data-action="dismiss">Закрыть<i data-lucide="x" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="gv-detail" hidden></div>
+    </section>
+  </div>
+  <div class="gv-state-label" aria-live="polite">Сетка</div>
+</div>
+  </main>
+</body>
+</html>

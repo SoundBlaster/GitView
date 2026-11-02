@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "exported_on": "2026-11-02",
+  "renderer": "visualize 1.0.66",
+  "prototypes": [
+    {
+      "id": "peek-pop",
+      "source_file": "gitview-peek-pop.html",
+      "source_sha256": "49f6f14e0036ff3712095c4c746f630c9e0b582e6fb4520611ddfea98ae91a7e",
+      "renderer_export_sha256": "881dc91b7c7e94dcc0d72e8c735dc298ddeda8868232566dc7025321b834182b",
+      "files": {
+        "index.html": "2c8dc61022b711986e0ac637fb7b673d6cbabb06c93a9b94a9258aaad26fb142",
+        "styles.css": "6a3a16282157669e6925ceab8d8882756ec61a4c9424bf97e466da161dba1af5",
+        "app.js": "d2874d9d2261c9a5423597dacd85dfd002cae3ecf1e8ebb14e423f8b731d5ac9"
+      }
+    },
+    {
+      "id": "dense-overview",
+      "source_file": "gitview-dense-overview.html",
+      "source_sha256": "94924863e27b21787d6f1b467b38bcb152a6eb5fc427ca63e0a69544b8b88a82",
+      "renderer_export_sha256": "758d68e2c9a9a670516d27e55b9590c1ca4f67bbc11363e22b49c327719c1397",
+      "files": {
+        "index.html": "ab372164d968e8e835b6a30cd7767007e99104294a14ee0eace3253eeaf04fd9",
+        "styles.css": "e4b1bec53a33476901ee4ca175063ac6b0b92e7651fce68226b54726aab75010",
+        "app.js": "e788038fb4b8392e2516929a7c5e419a8c28314fd72e7c900f8c21af104788db"
+      }
+    }
+  ],
+  "shared": {
+    "shared/prototype.css": "479505fde4fdf7728c294f72a4b6912b98ae684cdabd5d49f1dd34af52f58103",
+    "shared/page-template.html": "5b93e679310d57282e4c98bd16138f2bdeef52ef1824ba47ab702d6a5b558f12",
+    "shared/state.js": "de2264e35485d24d95d240f01e5ac3065bff0916df9db8c82eaf551a971f777e",
+    "shared/vendor/lucide-1.17.0.js": "fde878a4f7aebe548b071eaaf343d898f66d275e93970abe95d8ca5fda290b51",
+    "shared/vendor/lucide-package.json": "d90415b275738e2536dc9ed72cbcfa3c6f860958e767cbe95d125dbff5e26c0c",
+    "shared/vendor/lucide-LICENSE": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+  }
+}

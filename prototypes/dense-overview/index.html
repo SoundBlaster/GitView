@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru" data-prototype="dense-overview">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'">
+  <title>GitView · Плотный обзор</title>
+  <link rel="stylesheet" href="../shared/prototype.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="../shared/vendor/lucide-1.17.0.js" defer></script>
+  <script src="../shared/state.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+<div id="gv-dense-overview" class="viz-dotted-background">
+  <div class="gd-stage">
+    <section class="gd-app" aria-label="GitView — плотность сетки и скользящий preview">
+      <main class="gd-overview">
+        <header class="gd-header">
+          <p class="gd-context">Apple Apps <span>/</span> GitView</p>
+          <h1>GitView</h1>
+          <div class="gd-counts"><span>80 PR · 20 Issue</span><span>Демо · 100 объектов</span></div>
+          <div class="gd-zoom-head"><span>Масштаб</span><output class="gd-columns" for="gd-density">8 в ряд</output></div>
+          <div class="gd-zoom">
+            <i data-lucide="grid-3x3" aria-hidden="true"></i>
+            <input id="gd-density" aria-label="Приближение сетки" type="range" min="0" max="8" step="1" value="2">
+            <i data-lucide="square" aria-hidden="true"></i>
+          </div>
+        </header>
+        <div class="gd-viewport" aria-label="Сто карточек; удерживайте для скользящего предпросмотра">
+          <div class="gd-cells"></div>
+        </div>
+        <footer class="gd-footer">
+          <div class="gd-legend"><span class="gd-red">● CI</span><span class="gd-yellow">● CI</span><span class="gd-green">● CI</span><span class="gd-grey">○ Issue / нет данных</span></div>
+          <div class="gd-location"><span class="gd-visible">1–100 из 100</span><span>Область не меняется</span></div>
+        </footer>
+      </main>
+      <aside class="gd-lens" aria-label="Подробности выбранной карточки" hidden></aside>
+      <section class="gd-object" aria-label="Обзор объекта" hidden></section>
+    </section>
+  </div>
+  <p class="gd-status" aria-live="polite">8 колонок · общий обзор</p>
+</div>
+  </main>
+</body>
+</html>
