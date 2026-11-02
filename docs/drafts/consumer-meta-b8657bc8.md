@@ -143,3 +143,32 @@ JSON внутри workspace и передать его для freshness-повт
 Следующий шаг — передать независимые результаты владельцу #871, включая
 диагностику schema-2 previous report; переключение основного runtime GitView
 в этот прогон не входит.
+
+## Узкий повтор после исправления — 20a31d8b
+
+2026-11-02 независимо проверен candidate
+`20a31d8b6895178c06a9b7fdff6a4077c658887e` в новой установленной копии на TB5.
+Повторён только валидный `schema2-previous` в составном контексте, включая
+подготовительный domain-only запуск для получения свежего schema-2 отчёта.
+Актуальный документ сохранил SHA-256 `e3b75460…`; compiler pin не менялся.
+
+Результат: target `checked`, domain и meta `analyzed`, previous freshness
+`unavailable`, diagnostic:
+
+```text
+schema 2 domain report has no metamodel freshness evidence
+```
+
+Оба CLI-вызова завершились exit 0. Ранее обнаруженное ограничение классификации
+валидного schema-2 previous report на этом head исправлено. Повреждённый отчёт
+и остальные сценарии прежнего набора повторно не проверялись; их результаты
+не переносятся автоматически на новый head.
+
+Точные команды, полные target/compiler hashes, producer, outcomes и hashes
+локальных stdout сохранены в
+[receipt повторного прогона](evidence/consumer-schema2-20a31d8b.json).
+Compiler provenance осталась `not_verified`. Основной runtime `3131f3c1`,
+исходный draft, domain selections и canonical graph не менялись.
+
+Следующий шаг — использовать это подтверждение при завершении review #871;
+обновление основного runtime выполняется отдельно.
