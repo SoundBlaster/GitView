@@ -1,4 +1,4 @@
-<!-- Draft template. Proposed section names; see README.md before adoption. -->
+<!-- Agreed description format. See README.md for status and deployment scope. -->
 
 ## Problem
 
