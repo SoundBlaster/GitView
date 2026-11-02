@@ -1,0 +1,328 @@
+{
+  "artifact_kind": "gitview_scoped_check_observation_summary",
+  "schema_version": 1,
+  "profile_meta_check_executed": false,
+  "cases": [
+    {
+      "case": "default-domain",
+      "exit_code": 0,
+      "target_outcome": "checked",
+      "assessments": {
+        "domain_vocabulary": {
+          "outcome": "analyzed",
+          "diagnostics": [],
+          "summary": {
+            "binding_index": {
+              "spec_count": 1,
+              "accepted_binding_count": 10,
+              "relation_candidate_count": 0,
+              "gap_count": 2,
+              "next_gap": "review_legacy_spec_ontology_bindings"
+            },
+            "validation_report": {
+              "spec_count": 1,
+              "finding_count": 2,
+              "warning_count": 2,
+              "passed_check_count": 0,
+              "next_gap": "review_spec_ontology_validation_findings"
+            }
+          }
+        },
+        "specification_metamodel": {
+          "outcome": "not_requested",
+          "diagnostics": [],
+          "summary": null
+        }
+      },
+      "findings": [
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.Activity",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "Activity",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-activity",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.motivcore:Motive",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "motivcore:Motive",
+          "source": "specification.ontology_refs[0]",
+          "gap_ref": "ontology-gap-gitview-spec-0001-motivcore-motive",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        }
+      ],
+      "target": {
+        "id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f"
+      },
+      "producer": {
+        "identity": "specgraph-scoped-ontology-advisory-v1:sha256:bf87be47d73bdb3a3b6db7c171bbc8b93eb189bf12f63f171934eee4361c63a4",
+        "source_sha256": {
+          "spec_ontology_context_reports.py": "8521842b084d0c574501fc9b8a55395b7f280002126f9d300af87e50d693073d",
+          "spec_ontology_binding_index.py": "6bbd1d5a8cf4934c6183a2543fb85bddc04afb06e89376eccc64a5547790791a",
+          "spec_ontology_validation_report.py": "027ae37334ddc212a66571d82bb2a36921896bb2c20e80b3675b755ddc2c8a55",
+          "project_ontology_check_scopes.py": "a319f375d3f5a38961e0a590d6e42043cc7a50ecbd860f153e3807794f2a9ba7",
+          "project_ontology_scope_outcome_spec.py": "e4c6fa5ea5c57d45418f112f76f5eb2734d16773070f5b029c2e604f18a2911e",
+          "ontology_imports.py": "878fd62376ef6003b74f756758cbd0984d789ad03f86108e5d7a0375669f9983",
+          "ontology_snapshot.py": "51f64cf69e69532cda5dfdd44a71b4872af8d1b7cb6c106b97c0bb20ade05fae",
+          "project_ontology_context/vocabulary.py": "7a6b8969d9a23b6f7dd01d578c46ecf09093d24d34c788d8456ade48a7b0d511",
+          "project_ontology_context/composition.py": "dff003828d8726717ef7444842c046ceb29b0cce7d80082b0609cc8145be1b5f",
+          "project_ontology_context/foundation.py": "d9e0725d30c5a12bede4baa9260bfa7e375fd91a27ec18aa3caeaf414fe4a24a"
+        },
+        "provenance": "caller_attributed_not_attested"
+      },
+      "raw_report": {
+        "path": "default-domain.json",
+        "sha256": "578770cbdbce5c39f8ba3a7e3d31c01b20ea87063773add82ccc2015c3ab9e6f"
+      },
+      "domain_inventory_absent": false,
+      "full_spec_conformance": "not_assessed",
+      "semantic_approval": "not_established"
+    },
+    {
+      "case": "composition-domain",
+      "exit_code": 0,
+      "target_outcome": "checked",
+      "assessments": {
+        "domain_vocabulary": {
+          "outcome": "analyzed",
+          "diagnostics": [],
+          "summary": {
+            "binding_index": {
+              "spec_count": 1,
+              "accepted_binding_count": 11,
+              "relation_candidate_count": 0,
+              "gap_count": 1,
+              "next_gap": "review_legacy_spec_ontology_bindings"
+            },
+            "validation_report": {
+              "spec_count": 1,
+              "finding_count": 1,
+              "warning_count": 1,
+              "passed_check_count": 0,
+              "next_gap": "review_spec_ontology_validation_findings"
+            }
+          }
+        },
+        "specification_metamodel": {
+          "outcome": "not_requested",
+          "diagnostics": [],
+          "summary": null
+        }
+      },
+      "findings": [
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.Activity",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "Activity",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-activity",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        }
+      ],
+      "target": {
+        "id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f"
+      },
+      "producer": {
+        "identity": "specgraph-scoped-ontology-advisory-v1:sha256:bf87be47d73bdb3a3b6db7c171bbc8b93eb189bf12f63f171934eee4361c63a4",
+        "source_sha256": {
+          "spec_ontology_context_reports.py": "8521842b084d0c574501fc9b8a55395b7f280002126f9d300af87e50d693073d",
+          "spec_ontology_binding_index.py": "6bbd1d5a8cf4934c6183a2543fb85bddc04afb06e89376eccc64a5547790791a",
+          "spec_ontology_validation_report.py": "027ae37334ddc212a66571d82bb2a36921896bb2c20e80b3675b755ddc2c8a55",
+          "project_ontology_check_scopes.py": "a319f375d3f5a38961e0a590d6e42043cc7a50ecbd860f153e3807794f2a9ba7",
+          "project_ontology_scope_outcome_spec.py": "e4c6fa5ea5c57d45418f112f76f5eb2734d16773070f5b029c2e604f18a2911e",
+          "ontology_imports.py": "878fd62376ef6003b74f756758cbd0984d789ad03f86108e5d7a0375669f9983",
+          "ontology_snapshot.py": "51f64cf69e69532cda5dfdd44a71b4872af8d1b7cb6c106b97c0bb20ade05fae",
+          "project_ontology_context/vocabulary.py": "7a6b8969d9a23b6f7dd01d578c46ecf09093d24d34c788d8456ade48a7b0d511",
+          "project_ontology_context/composition.py": "dff003828d8726717ef7444842c046ceb29b0cce7d80082b0609cc8145be1b5f",
+          "project_ontology_context/foundation.py": "d9e0725d30c5a12bede4baa9260bfa7e375fd91a27ec18aa3caeaf414fe4a24a"
+        },
+        "provenance": "caller_attributed_not_attested"
+      },
+      "raw_report": {
+        "path": "composition-domain.json",
+        "sha256": "be333c8e7efe68473aea1a026b18a0685f09f9680f44219c363d4a7394788b3c"
+      },
+      "domain_inventory_absent": false,
+      "full_spec_conformance": "not_assessed",
+      "semantic_approval": "not_established"
+    },
+    {
+      "case": "default-both",
+      "exit_code": 1,
+      "target_outcome": "unavailable",
+      "assessments": {
+        "domain_vocabulary": {
+          "outcome": "analyzed",
+          "diagnostics": [],
+          "summary": {
+            "binding_index": {
+              "spec_count": 1,
+              "accepted_binding_count": 10,
+              "relation_candidate_count": 0,
+              "gap_count": 2,
+              "next_gap": "review_legacy_spec_ontology_bindings"
+            },
+            "validation_report": {
+              "spec_count": 1,
+              "finding_count": 2,
+              "warning_count": 2,
+              "passed_check_count": 0,
+              "next_gap": "review_spec_ontology_validation_findings"
+            }
+          }
+        },
+        "specification_metamodel": {
+          "outcome": "unavailable",
+          "diagnostics": [
+            "Meta source, applicability profile and supported checking are not established."
+          ],
+          "summary": null
+        }
+      },
+      "findings": [
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.Activity",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "Activity",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-activity",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.motivcore:Motive",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "motivcore:Motive",
+          "source": "specification.ontology_refs[0]",
+          "gap_ref": "ontology-gap-gitview-spec-0001-motivcore-motive",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        }
+      ],
+      "target": {
+        "id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f"
+      },
+      "producer": null,
+      "raw_report": {
+        "path": "default-both.json",
+        "sha256": "23c7784b311eb810b8783cc3e4747bb32d44c8d923a9be60bc9d914c2315b656"
+      },
+      "domain_inventory_absent": false,
+      "full_spec_conformance": "not_assessed",
+      "semantic_approval": "not_established"
+    },
+    {
+      "case": "composition-both",
+      "exit_code": 1,
+      "target_outcome": "unavailable",
+      "assessments": {
+        "domain_vocabulary": {
+          "outcome": "analyzed",
+          "diagnostics": [],
+          "summary": {
+            "binding_index": {
+              "spec_count": 1,
+              "accepted_binding_count": 11,
+              "relation_candidate_count": 0,
+              "gap_count": 1,
+              "next_gap": "review_legacy_spec_ontology_bindings"
+            },
+            "validation_report": {
+              "spec_count": 1,
+              "finding_count": 1,
+              "warning_count": 1,
+              "passed_check_count": 0,
+              "next_gap": "review_spec_ontology_validation_findings"
+            }
+          }
+        },
+        "specification_metamodel": {
+          "outcome": "unavailable",
+          "diagnostics": [
+            "Meta source, applicability profile and supported checking are not established."
+          ],
+          "summary": null
+        }
+      },
+      "findings": [
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.Activity",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "Activity",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-activity",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        }
+      ],
+      "target": {
+        "id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f"
+      },
+      "producer": null,
+      "raw_report": {
+        "path": "composition-both.json",
+        "sha256": "72d7d93b9ecc7901d913023c08cf666f3f0cd9bd6293d62dbc87abeb6701e1a4"
+      },
+      "domain_inventory_absent": false,
+      "full_spec_conformance": "not_assessed",
+      "semantic_approval": "not_established"
+    },
+    {
+      "case": "composition-meta",
+      "exit_code": 1,
+      "target_outcome": "unavailable",
+      "assessments": {
+        "domain_vocabulary": {
+          "outcome": "not_requested",
+          "diagnostics": [],
+          "summary": null
+        },
+        "specification_metamodel": {
+          "outcome": "unavailable",
+          "diagnostics": [
+            "Meta source, applicability profile and supported checking are not established."
+          ],
+          "summary": null
+        }
+      },
+      "findings": [],
+      "target": {
+        "id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f"
+      },
+      "producer": null,
+      "raw_report": {
+        "path": "composition-meta.json",
+        "sha256": "908c85dc8bf6196ed504d6919550b6aa429f8324bdef884d093c4924050f3451"
+      },
+      "domain_inventory_absent": true,
+      "full_spec_conformance": "not_assessed",
+      "semantic_approval": "not_established"
+    }
+  ]
+}

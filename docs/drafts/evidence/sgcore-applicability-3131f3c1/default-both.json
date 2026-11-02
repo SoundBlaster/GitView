@@ -1,0 +1,1251 @@
+{
+  "artifact_kind": "project_ontology_target_check",
+  "schema_version": 1,
+  "project_id": "gitview",
+  "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/sgcore-applicability-3131f3c1-k38z_okn/default",
+  "target_spec_id": "GITVIEW-SPEC-0001",
+  "outcome": "unavailable",
+  "diagnostics": [
+    "Meta source, applicability profile and supported checking are not established."
+  ],
+  "requested_scopes": [
+    "domain_vocabulary",
+    "specification_metamodel"
+  ],
+  "assessments": {
+    "domain_vocabulary": {
+      "check_scope": "domain_vocabulary",
+      "outcome": "analyzed",
+      "diagnostics": [],
+      "project_context": {
+        "project_id": "gitview",
+        "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/sgcore-applicability-3131f3c1-k38z_okn/default",
+        "context_revision": "sha256:4689c23e30301e0cb22573e57272107f328b4387ac9a6eed3ffbebf568b6f491",
+        "context_outcome": "verified",
+        "scope": "single_member_local_symbols",
+        "verified_closure": false,
+        "analysis_profile": "specgraph-local-symbol-advisory-v3",
+        "semantic_approval": "not_established",
+        "binding_authority": "structural_advisory_only",
+        "selected_member": {
+          "id": "local.gitview.domain",
+          "namespace": "gitview",
+          "version": "0.1.0"
+        },
+        "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+        "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+        "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "compiler_provenance": "not_verified"
+      },
+      "analysis_profile": "specgraph-scoped-ontology-advisory-v1",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 10,
+          "relation_candidate_count": 0,
+          "gap_count": 2,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 2,
+          "warning_count": 2,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    "specification_metamodel": {
+      "check_scope": "specification_metamodel",
+      "outcome": "unavailable",
+      "diagnostics": [
+        "Meta source, applicability profile and supported checking are not established."
+      ],
+      "project_context": null,
+      "analysis_profile": null,
+      "summary": null
+    }
+  },
+  "target": {
+    "id": "GITVIEW-SPEC-0001",
+    "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+    "sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f"
+  },
+  "context": {
+    "artifact_kind": "project_ontology_context_report",
+    "schema_version": 1,
+    "project_id": "gitview",
+    "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/sgcore-applicability-3131f3c1-k38z_okn/default",
+    "selection_path": "ontology/context.yaml",
+    "outcome": "verified",
+    "context_revision": "sha256:4689c23e30301e0cb22573e57272107f328b4387ac9a6eed3ffbebf568b6f491",
+    "members": [
+      {
+        "id": "local.gitview.domain",
+        "namespace": "gitview",
+        "version": "0.1.0"
+      }
+    ],
+    "profiles": [
+      "ontologyc-foundation-v1"
+    ],
+    "resolved_imports": [
+      {
+        "id": "specgraph.foundation",
+        "namespace": "sg",
+        "version": "0.1.0",
+        "source_uri": "https://github.com/0al-spec/Ontology/blob/0fcc94469d971aaf39fcc182bc5c6b8acff37fd2/SPECS/ontology/foundation/0.1.0/exports.json",
+        "source_sha256": "ef07cf4e8dd4cdc8c8dd583971fc3cabfe82e4b00fb0e680b6d1db48cfe262ad"
+      }
+    ],
+    "composition": {
+      "dependency_rule": "explicit",
+      "name_resolution_rule": "qualified"
+    },
+    "snapshots": [
+      {
+        "id": "local.gitview.domain",
+        "namespace": "gitview",
+        "version": "0.1.0",
+        "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+        "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+        "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "compiler_provenance": "not_verified"
+      }
+    ],
+    "checks": [
+      {
+        "check": "profile",
+        "outcome": "verified",
+        "detail": "supported structural checking profile",
+        "package": null
+      },
+      {
+        "check": "selection",
+        "outcome": "verified",
+        "detail": "explicit package selection parsed",
+        "package": null
+      },
+      {
+        "check": "compiler",
+        "outcome": "verified",
+        "detail": "operator-provided executable available; provenance not verified",
+        "package": null
+      },
+      {
+        "check": "member_capture",
+        "outcome": "verified",
+        "detail": "source, IR and package identity checked",
+        "package": "local.gitview.domain"
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Project/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/Project/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Code/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/Code/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/VersionControlSystem/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/VersionControlSystem/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Repository/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/Repository/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/GitHub/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/GitHub/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Issue/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/Issue/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/PullRequest/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/PullRequest/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/ReviewThread/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/ReviewThread/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/CIStatus/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/CIStatus/extends",
+          "name": "sg:ValueObject",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Metric/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/Metric/extends",
+          "name": "sg:ValueObject",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+        }
+      },
+      {
+        "check": "dependency_closure",
+        "outcome": "verified",
+        "detail": "Pinned foundation vocabulary and qualified references checked",
+        "package": "local.gitview.domain"
+      }
+    ],
+    "semantic_approval": "not_established",
+    "canonical_mutations_allowed": false
+  },
+  "bundle": {
+    "schema_version": 2,
+    "analysis_profile": "specgraph-scoped-ontology-advisory-v1",
+    "requested_scopes": [
+      "domain_vocabulary",
+      "specification_metamodel"
+    ],
+    "assessments": {
+      "domain_vocabulary": {
+        "check_scope": "domain_vocabulary",
+        "outcome": "analyzed",
+        "diagnostics": [],
+        "project_context": {
+          "project_id": "gitview",
+          "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/sgcore-applicability-3131f3c1-k38z_okn/default",
+          "context_revision": "sha256:4689c23e30301e0cb22573e57272107f328b4387ac9a6eed3ffbebf568b6f491",
+          "context_outcome": "verified",
+          "scope": "single_member_local_symbols",
+          "verified_closure": false,
+          "analysis_profile": "specgraph-local-symbol-advisory-v3",
+          "semantic_approval": "not_established",
+          "binding_authority": "structural_advisory_only",
+          "selected_member": {
+            "id": "local.gitview.domain",
+            "namespace": "gitview",
+            "version": "0.1.0"
+          },
+          "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+          "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+          "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+          "compiler_provenance": "not_verified"
+        },
+        "analysis_profile": "specgraph-scoped-ontology-advisory-v1",
+        "summary": {
+          "binding_index": {
+            "spec_count": 1,
+            "accepted_binding_count": 10,
+            "relation_candidate_count": 0,
+            "gap_count": 2,
+            "next_gap": "review_legacy_spec_ontology_bindings"
+          },
+          "validation_report": {
+            "spec_count": 1,
+            "finding_count": 2,
+            "warning_count": 2,
+            "passed_check_count": 0,
+            "next_gap": "review_spec_ontology_validation_findings"
+          }
+        }
+      },
+      "specification_metamodel": {
+        "check_scope": "specification_metamodel",
+        "outcome": "unavailable",
+        "diagnostics": [
+          "Meta source, applicability profile and supported checking are not established."
+        ],
+        "project_context": null,
+        "analysis_profile": null,
+        "summary": null
+      }
+    },
+    "outcome": "unavailable",
+    "diagnostics": [
+      "Meta source, applicability profile and supported checking are not established."
+    ],
+    "inputs": {
+      "specs_root": "specs/nodes",
+      "specs": [
+        {
+          "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+          "sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f"
+        }
+      ]
+    },
+    "binding_index": {
+      "artifact_kind": "spec_ontology_binding_index",
+      "check_scope": "domain_vocabulary",
+      "analysis_profile": "specgraph-scoped-ontology-advisory-v1",
+      "schema_version": 2,
+      "proposal_id": "0134",
+      "status": "report_only",
+      "review_state": "ready_for_review",
+      "canonical_mutations_allowed": false,
+      "tracked_artifacts_written": false,
+      "legacy_corpus": false,
+      "ontology_ir_ref": null,
+      "ontology_verification": {
+        "status": "compiler_checked",
+        "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+        "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+        "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "compiler_provenance": "not_verified"
+      },
+      "summary": {
+        "spec_count": 1,
+        "accepted_binding_count": 10,
+        "relation_candidate_count": 0,
+        "gap_count": 2,
+        "next_gap": "review_legacy_spec_ontology_bindings"
+      },
+      "entries": [
+        {
+          "spec_id": "GITVIEW-SPEC-0001",
+          "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+          "status": "domain_report_only",
+          "accepted_bindings": [
+            {
+              "term": "CIStatus",
+              "ontology_ref": "gitview:CIStatus",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:CIStatus",
+                  "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/CIStatus",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+                  "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Code",
+              "ontology_ref": "gitview:Code",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Code",
+                  "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/Code",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+                  "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "GitHub",
+              "ontology_ref": "gitview:GitHub",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:GitHub",
+                  "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/GitHub",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+                  "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Issue",
+              "ontology_ref": "gitview:Issue",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Issue",
+                  "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/Issue",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+                  "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Metric",
+              "ontology_ref": "gitview:Metric",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Metric",
+                  "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/Metric",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+                  "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Project",
+              "ontology_ref": "gitview:Project",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Project",
+                  "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/Project",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+                  "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "PullRequest",
+              "ontology_ref": "gitview:PullRequest",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:PullRequest",
+                  "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/PullRequest",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+                  "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Repository",
+              "ontology_ref": "gitview:Repository",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Repository",
+                  "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/Repository",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+                  "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "ReviewThread",
+              "ontology_ref": "gitview:ReviewThread",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:ReviewThread",
+                  "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/ReviewThread",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+                  "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "VersionControlSystem",
+              "ontology_ref": "gitview:VersionControlSystem",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:VersionControlSystem",
+                  "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/VersionControlSystem",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+                  "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            }
+          ],
+          "relation_candidates": [],
+          "gaps": [
+            {
+              "gap_id": "ontology-gap-gitview-spec-0001-activity",
+              "term": "Activity",
+              "source": "specification.terminology",
+              "classification": "legacy_unknown_term",
+              "resolution": "unknown",
+              "candidates": [],
+              "candidate_origins": []
+            },
+            {
+              "gap_id": "ontology-gap-gitview-spec-0001-motivcore-motive",
+              "term": "motivcore:Motive",
+              "source": "specification.ontology_refs[0]",
+              "classification": "missing_ontology_ref",
+              "resolution": "unknown",
+              "candidates": [],
+              "candidate_origins": []
+            }
+          ]
+        }
+      ],
+      "project_context": {
+        "project_id": "gitview",
+        "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/sgcore-applicability-3131f3c1-k38z_okn/default",
+        "context_revision": "sha256:4689c23e30301e0cb22573e57272107f328b4387ac9a6eed3ffbebf568b6f491",
+        "context_outcome": "verified",
+        "scope": "single_member_local_symbols",
+        "verified_closure": false,
+        "analysis_profile": "specgraph-local-symbol-advisory-v3",
+        "semantic_approval": "not_established",
+        "binding_authority": "structural_advisory_only",
+        "selected_member": {
+          "id": "local.gitview.domain",
+          "namespace": "gitview",
+          "version": "0.1.0"
+        },
+        "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+        "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+        "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "compiler_provenance": "not_verified"
+      },
+      "inputs": {
+        "specs_root": "specs/nodes",
+        "specs": [
+          {
+            "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+            "sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f"
+          }
+        ]
+      }
+    },
+    "validation_report": {
+      "artifact_kind": "spec_ontology_validation_report",
+      "check_scope": "domain_vocabulary",
+      "analysis_profile": "specgraph-scoped-ontology-advisory-v1",
+      "schema_version": 2,
+      "proposal_id": "0135",
+      "status": "report_only",
+      "review_state": "ready_for_review",
+      "canonical_mutations_allowed": false,
+      "tracked_artifacts_written": false,
+      "ontology_ir_ref": null,
+      "ontology_verification": {
+        "status": "compiler_checked",
+        "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+        "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+        "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "compiler_provenance": "not_verified"
+      },
+      "source_binding_index_kind": "spec_ontology_binding_index",
+      "validation_modes": {
+        "legacy_specs": "report_only",
+        "generated_artifacts": "review_required",
+        "hard_gate_enabled": false
+      },
+      "summary": {
+        "spec_count": 1,
+        "finding_count": 2,
+        "warning_count": 2,
+        "passed_check_count": 0,
+        "next_gap": "review_spec_ontology_validation_findings"
+      },
+      "entries": [
+        {
+          "spec_id": "GITVIEW-SPEC-0001",
+          "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+          "validation_status": "report_only_findings",
+          "checks": [],
+          "findings": [
+            {
+              "finding_id": "GITVIEW-SPEC-0001.gap.Activity",
+              "severity": "warning",
+              "classification": "unknown_legacy_term",
+              "term": "Activity",
+              "source": "specification.terminology",
+              "gap_ref": "ontology-gap-gitview-spec-0001-activity",
+              "candidates": [],
+              "candidate_origins": [],
+              "suggested_action": "review_ontology_gap"
+            },
+            {
+              "finding_id": "GITVIEW-SPEC-0001.gap.motivcore:Motive",
+              "severity": "warning",
+              "classification": "unknown_legacy_term",
+              "term": "motivcore:Motive",
+              "source": "specification.ontology_refs[0]",
+              "gap_ref": "ontology-gap-gitview-spec-0001-motivcore-motive",
+              "candidates": [],
+              "candidate_origins": [],
+              "suggested_action": "review_ontology_gap"
+            }
+          ]
+        }
+      ],
+      "project_context": {
+        "project_id": "gitview",
+        "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/sgcore-applicability-3131f3c1-k38z_okn/default",
+        "context_revision": "sha256:4689c23e30301e0cb22573e57272107f328b4387ac9a6eed3ffbebf568b6f491",
+        "context_outcome": "verified",
+        "scope": "single_member_local_symbols",
+        "verified_closure": false,
+        "analysis_profile": "specgraph-local-symbol-advisory-v3",
+        "semantic_approval": "not_established",
+        "binding_authority": "structural_advisory_only",
+        "selected_member": {
+          "id": "local.gitview.domain",
+          "namespace": "gitview",
+          "version": "0.1.0"
+        },
+        "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+        "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+        "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "compiler_provenance": "not_verified"
+      },
+      "inputs": {
+        "specs_root": "specs/nodes",
+        "specs": [
+          {
+            "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+            "sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f"
+          }
+        ]
+      }
+    },
+    "semantic_approval": "not_established",
+    "full_spec_conformance": "not_assessed"
+  },
+  "inventory": {
+    "artifact_kind": "project_ontology_term_inventory",
+    "schema_version": 1,
+    "outcome": "analyzed",
+    "diagnostics": [],
+    "analysis_profile": "specgraph-explicit-terms-v1",
+    "project_context": {
+      "project_id": "gitview",
+      "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/sgcore-applicability-3131f3c1-k38z_okn/default",
+      "context_revision": "sha256:4689c23e30301e0cb22573e57272107f328b4387ac9a6eed3ffbebf568b6f491",
+      "context_outcome": "verified",
+      "scope": "single_member_local_symbols",
+      "verified_closure": false,
+      "analysis_profile": "specgraph-local-symbol-advisory-v3",
+      "semantic_approval": "not_established",
+      "binding_authority": "structural_advisory_only",
+      "selected_member": {
+        "id": "local.gitview.domain",
+        "namespace": "gitview",
+        "version": "0.1.0"
+      },
+      "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+      "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+      "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+      "compiler_provenance": "not_verified"
+    },
+    "inputs": {
+      "specs_root": "specs/nodes",
+      "specs": [
+        {
+          "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+          "sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f"
+        }
+      ]
+    },
+    "entries": [
+      {
+        "term": "Project",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"Project\"]",
+        "location": {
+          "start": {
+            "line": 22,
+            "column": 5,
+            "offset": 824
+          },
+          "end": {
+            "line": 22,
+            "column": 12,
+            "offset": 831
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "spelling_candidate",
+        "candidates": [
+          "gitview:Project"
+        ],
+        "candidate_origins": [
+          {
+            "ontology_ref": "gitview:Project",
+            "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/Project",
+            "package": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.1.0"
+            },
+            "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+            "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        ],
+        "authority": "structural_advisory_only"
+      },
+      {
+        "term": "Repository",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"Repository\"]",
+        "location": {
+          "start": {
+            "line": 23,
+            "column": 5,
+            "offset": 933
+          },
+          "end": {
+            "line": 23,
+            "column": 15,
+            "offset": 943
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "spelling_candidate",
+        "candidates": [
+          "gitview:Repository"
+        ],
+        "candidate_origins": [
+          {
+            "ontology_ref": "gitview:Repository",
+            "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/Repository",
+            "package": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.1.0"
+            },
+            "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+            "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        ],
+        "authority": "structural_advisory_only"
+      },
+      {
+        "term": "Code",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"Code\"]",
+        "location": {
+          "start": {
+            "line": 25,
+            "column": 5,
+            "offset": 1084
+          },
+          "end": {
+            "line": 25,
+            "column": 9,
+            "offset": 1088
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "spelling_candidate",
+        "candidates": [
+          "gitview:Code"
+        ],
+        "candidate_origins": [
+          {
+            "ontology_ref": "gitview:Code",
+            "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/Code",
+            "package": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.1.0"
+            },
+            "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+            "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        ],
+        "authority": "structural_advisory_only"
+      },
+      {
+        "term": "VersionControlSystem",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"VersionControlSystem\"]",
+        "location": {
+          "start": {
+            "line": 27,
+            "column": 5,
+            "offset": 1211
+          },
+          "end": {
+            "line": 27,
+            "column": 25,
+            "offset": 1231
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "spelling_candidate",
+        "candidates": [
+          "gitview:VersionControlSystem"
+        ],
+        "candidate_origins": [
+          {
+            "ontology_ref": "gitview:VersionControlSystem",
+            "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/VersionControlSystem",
+            "package": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.1.0"
+            },
+            "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+            "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        ],
+        "authority": "structural_advisory_only"
+      },
+      {
+        "term": "GitHub",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"GitHub\"]",
+        "location": {
+          "start": {
+            "line": 28,
+            "column": 5,
+            "offset": 1303
+          },
+          "end": {
+            "line": 28,
+            "column": 11,
+            "offset": 1309
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "spelling_candidate",
+        "candidates": [
+          "gitview:GitHub"
+        ],
+        "candidate_origins": [
+          {
+            "ontology_ref": "gitview:GitHub",
+            "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/GitHub",
+            "package": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.1.0"
+            },
+            "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+            "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        ],
+        "authority": "structural_advisory_only"
+      },
+      {
+        "term": "Issue",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"Issue\"]",
+        "location": {
+          "start": {
+            "line": 30,
+            "column": 5,
+            "offset": 1438
+          },
+          "end": {
+            "line": 30,
+            "column": 10,
+            "offset": 1443
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "spelling_candidate",
+        "candidates": [
+          "gitview:Issue"
+        ],
+        "candidate_origins": [
+          {
+            "ontology_ref": "gitview:Issue",
+            "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/Issue",
+            "package": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.1.0"
+            },
+            "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+            "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        ],
+        "authority": "structural_advisory_only"
+      },
+      {
+        "term": "PullRequest",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"PullRequest\"]",
+        "location": {
+          "start": {
+            "line": 32,
+            "column": 5,
+            "offset": 1561
+          },
+          "end": {
+            "line": 32,
+            "column": 16,
+            "offset": 1572
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "spelling_candidate",
+        "candidates": [
+          "gitview:PullRequest"
+        ],
+        "candidate_origins": [
+          {
+            "ontology_ref": "gitview:PullRequest",
+            "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/PullRequest",
+            "package": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.1.0"
+            },
+            "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+            "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        ],
+        "authority": "structural_advisory_only"
+      },
+      {
+        "term": "ReviewThread",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"ReviewThread\"]",
+        "location": {
+          "start": {
+            "line": 34,
+            "column": 5,
+            "offset": 1696
+          },
+          "end": {
+            "line": 34,
+            "column": 17,
+            "offset": 1708
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "spelling_candidate",
+        "candidates": [
+          "gitview:ReviewThread"
+        ],
+        "candidate_origins": [
+          {
+            "ontology_ref": "gitview:ReviewThread",
+            "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/ReviewThread",
+            "package": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.1.0"
+            },
+            "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+            "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        ],
+        "authority": "structural_advisory_only"
+      },
+      {
+        "term": "CIStatus",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"CIStatus\"]",
+        "location": {
+          "start": {
+            "line": 36,
+            "column": 5,
+            "offset": 1837
+          },
+          "end": {
+            "line": 36,
+            "column": 13,
+            "offset": 1845
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "spelling_candidate",
+        "candidates": [
+          "gitview:CIStatus"
+        ],
+        "candidate_origins": [
+          {
+            "ontology_ref": "gitview:CIStatus",
+            "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/CIStatus",
+            "package": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.1.0"
+            },
+            "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+            "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        ],
+        "authority": "structural_advisory_only"
+      },
+      {
+        "term": "Metric",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"Metric\"]",
+        "location": {
+          "start": {
+            "line": 38,
+            "column": 5,
+            "offset": 1956
+          },
+          "end": {
+            "line": 38,
+            "column": 11,
+            "offset": 1962
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "spelling_candidate",
+        "candidates": [
+          "gitview:Metric"
+        ],
+        "candidate_origins": [
+          {
+            "ontology_ref": "gitview:Metric",
+            "ontology_uri": "ontology://local.gitview.domain/0.1.0/classes/Metric",
+            "package": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.1.0"
+            },
+            "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+            "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        ],
+        "authority": "structural_advisory_only"
+      },
+      {
+        "term": "Activity",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.terminology",
+        "field_path": "specification.terminology[\"Activity\"]",
+        "location": {
+          "start": {
+            "line": 40,
+            "column": 5,
+            "offset": 2087
+          },
+          "end": {
+            "line": 40,
+            "column": 13,
+            "offset": 2095
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "unknown",
+        "candidates": [],
+        "candidate_origins": [],
+        "authority": "structural_advisory_only",
+        "gap_id": "ontology-gap-gitview-spec-0001-activity",
+        "classification": "legacy_unknown_term"
+      },
+      {
+        "term": "motivcore:Motive",
+        "spec_id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "source": "specification.ontology_refs[0]",
+        "field_path": "specification.ontology_refs[0]",
+        "location": {
+          "start": {
+            "line": 43,
+            "column": 5,
+            "offset": 2255
+          },
+          "end": {
+            "line": 43,
+            "column": 21,
+            "offset": 2271
+          }
+        },
+        "source_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+        "resolution": "unknown",
+        "candidates": [],
+        "candidate_origins": [],
+        "authority": "structural_advisory_only",
+        "gap_id": "ontology-gap-gitview-spec-0001-motivcore-motive",
+        "classification": "missing_ontology_ref"
+      }
+    ],
+    "prose": "unassessed",
+    "grounded": false,
+    "full_spec_conformance": "not_assessed",
+    "canonical_mutations_allowed": false
+  },
+  "input_binding": null,
+  "producer": null,
+  "previous_freshness": null,
+  "previous_freshness_scope": "binding_validation_bundle",
+  "inventory_freshness": "not_assessed",
+  "scope": "explicit_target_advisory_check",
+  "semantic_approval": "not_established",
+  "full_spec_conformance": "not_assessed",
+  "canonical_mutations_allowed": false,
+  "policy_activation_allowed": false
+}
