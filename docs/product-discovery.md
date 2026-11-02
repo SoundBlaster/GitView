@@ -39,6 +39,14 @@ repositories and a high volume of contributions and pull requests.
   properties, whose exact set remains open. GitLab and BitBucket may be added
   later; `GitManagementSystem` and `ManagedRepository` are unnecessary
   generalizations for the current product.
+- Project properties and summary are agreed in `conversation:gitview/excerpt-41`:
+  local ID, name, optional description and repository membership; combined
+  PR/Issue counts, attention signals, period results and graphs with visible
+  data coverage. Navigation supports both the repository grid and direct
+  filtered work selections from Project counters. A single-repository Project
+  opens its PR/Issue contents without a duplicate repository screen. Portfolio
+  totals count shared repositories once. Exact computation and navigation rules
+  remain specification work; see `docs/drafts/project-summary-proposal.md`.
 
 ## Ideas to refine
 
