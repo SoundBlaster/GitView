@@ -18,6 +18,10 @@ repositories and a high volume of contributions and pull requests.
 - A zoomable grid inspired by Photos, moving between a portfolio of projects,
   project contents, and a pull request or issue. Pinch is a primary interaction;
   accessible alternatives also matter.
+- Within one scope, zoom has many density steps, including roughly eight small
+  cells per row and about a hundred visible objects. The two-column prototype
+  showed only a large scale. Sliding preview is especially useful for dense
+  cells: it reveals details while preserving the bird's-eye view (`excerpt-46`).
 - A broad view of activity, work awaiting review, ready work, and problems
   including failed CI and long or unresolved review threads.
 - Charts and metrics, lightweight review, and convenient sharing.
