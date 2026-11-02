@@ -1,0 +1,15 @@
+artifact_kind: specgraph_project_ontology_selection
+schema_version: 1
+packages:
+- id: org.0al.specgraph.core
+  namespace: sgcore
+  version: 0.1.0
+  source: ontology/packages/specgraph-core/domain-ontology-package.yaml
+  source_sha256: 5bfa2ff40b6174def589546ab2fea2501e1f256c4f1446f36c45c7f3fffcd929
+  ir: ontology/packages/specgraph-core/generated/ontology.normalized.json
+  ir_sha256: 7a9d1cb640f154c32a2a15a4ec8868349bee04be30a0b5da886422c0d3eb638f
+profiles:
+- ontologyc-foundation-v1
+composition:
+  dependency_rule: explicit
+  name_resolution_rule: qualified
