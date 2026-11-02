@@ -21,6 +21,11 @@ repositories and a high volume of contributions and pull requests.
 - A broad view of activity, work awaiting review, ready work, and problems
   including failed CI and long or unresolved review threads.
 - Charts and metrics, lightweight review, and convenient sharing.
+- First-version requirement: long-press Peek and Pop on cards, with a preview
+  before opening the object (`excerpt-43`). A later sliding rich preview should
+  follow the object under the finger across cards. Long press as its activation
+  is a tentative user hypothesis (`excerpt-44`); exact pan/hover behavior remains
+  to be specified. See `docs/drafts/ux-preview-interactions.md`.
 - GitView offers a minimal overview rather than replacing GitHub: entities can
   link to their original source, with title, ID, badges and text as the user's
   examples of compact content (`excerpt-15`).
