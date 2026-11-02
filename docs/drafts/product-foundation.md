@@ -1,5 +1,10 @@
 # GitView: product foundation
 
+Later decisions are consolidated in `ontology/domain-model.md` and its
+completeness audit. The vocabulary below is historical exploratory material;
+in particular Activity remains a hypothesis and User now means the GitView
+operator, separately from GitHub identities. See those later sources first.
+
 Status: exploratory foundation for review, not canonical specs or implemented
 behavior. The source is `.specgraph/root_intent.md` and the Git-tracked
 conversation sketch at revision `998677aa29ca4a7597997b7e751cc546`, especially

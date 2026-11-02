@@ -36,6 +36,11 @@ Other sketches and local `runs/` remain excluded from this repository.
 
 ## Product ontology
 
+Read `ontology/domain-model.md` for the consolidated semantic model and
+`ontology/review/completeness.md` for its current gaps. These reconcile later
+decisions beyond the pinned package. Current priority is ontology completeness,
+then the specification graph; visual review-indicator work is deferred.
+
 Use `.codex/skills/specgraph-project-ontology/SKILL.md` when discussing,
 drafting or reviewing domain terminology and relationships. Its installed
 version is supplied by the runtime above. Project terminology in notes and

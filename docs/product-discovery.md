@@ -13,6 +13,10 @@ repositories and a high volume of contributions and pull requests.
 
 ## Agreed direction
 
+- `User` means the operator of GitView. GitHub identities remain separate;
+  authors, reviewers and assignees are not automatically that operator
+  (`conversation:gitview/excerpt-53-reply`).
+
 - Native iOS with an Apple Look: system components and colors, SF Symbols,
   Liquid Glass, and minimal custom decorative UI.
 - A zoomable grid inspired by Photos, moving between a portfolio of projects,
@@ -75,6 +79,11 @@ repositories and a high volume of contributions and pull requests.
 - Add a deeper view inside a PR later; its scope is not defined yet.
 
 ## Open questions
+
+Current priority is ontology completeness first, then the specification graph
+built on it (`excerpt-52`). Further visual review-indicator work is deferred.
+See `ontology/domain-model.md`, `ontology/review/completeness.md` and
+`docs/drafts/specification-coverage-map.md` for the consolidation and gaps.
 
 1. What is the smallest first useful version, and which actions must it support?
 2. What is the precise meaning of ready, blocked, awaiting review, and unknown?

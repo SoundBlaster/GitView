@@ -1,5 +1,11 @@
 # GitView ontology overview
 
+The later [consolidated domain model](../domain-model.md) and
+[completeness audit](../review/completeness.md) reconcile the conversation beyond
+the pinned package. The owner has clarified `User` as the GitView operator;
+GitHub identities remain separate (`excerpt-53-reply`). This resolves its intended
+meaning, not its technical ontology binding. The proposed HC remains unchanged.
+
 The owner's newer [proposed composition](gitview-proposed.hc) supersedes the
 reading arrangement below for discussion. The owner corrected the indentation:
 `GitView` is the single root; `User` and `Project` are its children. The earlier
