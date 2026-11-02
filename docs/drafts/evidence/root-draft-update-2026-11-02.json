@@ -1,0 +1,317 @@
+{
+  "artifact_kind": "gitview_root_draft_update_observation",
+  "schema_version": 1,
+  "base_commit": "5cd14e21b2fb04f0111db9b670b951af92fc66ef",
+  "target_path": "docs/drafts/GITVIEW-SPEC-0001.yaml",
+  "target_sha256": "e3b75460f71a8946267132037d051f4a33b76030b2a3692528a3c9c2573cd09f",
+  "historical_control_sha256": "56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f",
+  "sketch_revision": "0bbeb16ed68e4cd6a5e660743e225325",
+  "runtime_commit": "3131f3c170c49fc416ff73745aad076e15ba53f2",
+  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+  "compiler_provenance": "not_verified",
+  "canonical_mutations_allowed": false,
+  "semantic_approval": "not_established",
+  "profile_meta_check_executed": false,
+  "cases": [
+    {
+      "name": "default",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-3131f3c1/specgraph-runtime",
+        "--workspace",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/root-draft-update-6zuw7i4l/default",
+        "supervisor",
+        "--",
+        "--build-project-ontology-context-check",
+        "--ontology-context-project-id",
+        "gitview",
+        "--target-spec",
+        "GITVIEW-SPEC-0001",
+        "--ontology-context-selection",
+        "ontology/context.yaml",
+        "--ontology-context-check-scope",
+        "domain_vocabulary",
+        "--ontologyc",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+        "--ontologyc-sha256",
+        "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "--output-mode",
+        "full"
+      ],
+      "exit_code": 0,
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "domain_assessment": {
+        "check_scope": "domain_vocabulary",
+        "outcome": "analyzed",
+        "diagnostics": [],
+        "project_context": {
+          "project_id": "gitview",
+          "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/root-draft-update-6zuw7i4l/default",
+          "context_revision": "sha256:4689c23e30301e0cb22573e57272107f328b4387ac9a6eed3ffbebf568b6f491",
+          "context_outcome": "verified",
+          "scope": "single_member_local_symbols",
+          "verified_closure": false,
+          "analysis_profile": "specgraph-local-symbol-advisory-v3",
+          "semantic_approval": "not_established",
+          "binding_authority": "structural_advisory_only",
+          "selected_member": {
+            "id": "local.gitview.domain",
+            "namespace": "gitview",
+            "version": "0.1.0"
+          },
+          "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+          "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097",
+          "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+          "compiler_provenance": "not_verified"
+        },
+        "analysis_profile": "specgraph-scoped-ontology-advisory-v1",
+        "summary": {
+          "binding_index": {
+            "spec_count": 1,
+            "accepted_binding_count": 10,
+            "relation_candidate_count": 0,
+            "gap_count": 4,
+            "next_gap": "review_legacy_spec_ontology_bindings"
+          },
+          "validation_report": {
+            "spec_count": 1,
+            "finding_count": 4,
+            "warning_count": 4,
+            "passed_check_count": 0,
+            "next_gap": "review_spec_ontology_validation_findings"
+          }
+        }
+      },
+      "meta_assessment": {
+        "check_scope": "specification_metamodel",
+        "outcome": "not_requested",
+        "diagnostics": [],
+        "project_context": null,
+        "analysis_profile": null,
+        "summary": null
+      },
+      "findings": [
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.GitHubRepository",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "GitHubRepository",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-githubrepository",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.GitView",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "GitView",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-gitview",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.User",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "User",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-user",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.motivcore:Motive",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "motivcore:Motive",
+          "source": "specification.ontology_refs[0]",
+          "gap_ref": "ontology-gap-gitview-spec-0001-motivcore-motive",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        }
+      ],
+      "producer": {
+        "identity": "specgraph-scoped-ontology-advisory-v1:sha256:bf87be47d73bdb3a3b6db7c171bbc8b93eb189bf12f63f171934eee4361c63a4",
+        "source_sha256": {
+          "spec_ontology_context_reports.py": "8521842b084d0c574501fc9b8a55395b7f280002126f9d300af87e50d693073d",
+          "spec_ontology_binding_index.py": "6bbd1d5a8cf4934c6183a2543fb85bddc04afb06e89376eccc64a5547790791a",
+          "spec_ontology_validation_report.py": "027ae37334ddc212a66571d82bb2a36921896bb2c20e80b3675b755ddc2c8a55",
+          "project_ontology_check_scopes.py": "a319f375d3f5a38961e0a590d6e42043cc7a50ecbd860f153e3807794f2a9ba7",
+          "project_ontology_scope_outcome_spec.py": "e4c6fa5ea5c57d45418f112f76f5eb2734d16773070f5b029c2e604f18a2911e",
+          "ontology_imports.py": "878fd62376ef6003b74f756758cbd0984d789ad03f86108e5d7a0375669f9983",
+          "ontology_snapshot.py": "51f64cf69e69532cda5dfdd44a71b4872af8d1b7cb6c106b97c0bb20ade05fae",
+          "project_ontology_context/vocabulary.py": "7a6b8969d9a23b6f7dd01d578c46ecf09093d24d34c788d8456ade48a7b0d511",
+          "project_ontology_context/composition.py": "dff003828d8726717ef7444842c046ceb29b0cce7d80082b0609cc8145be1b5f",
+          "project_ontology_context/foundation.py": "d9e0725d30c5a12bede4baa9260bfa7e375fd91a27ec18aa3caeaf414fe4a24a"
+        },
+        "provenance": "caller_attributed_not_attested"
+      },
+      "raw_report_path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/root-draft-update-6zuw7i4l/default.json",
+      "raw_report_sha256": "edc01c0da417e8a03f547bdc8dc130b76231b9f967b3e003c6944a631a6a6f7c"
+    },
+    {
+      "name": "composition",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-3131f3c1/specgraph-runtime",
+        "--workspace",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/root-draft-update-6zuw7i4l/composition",
+        "supervisor",
+        "--",
+        "--build-project-ontology-context-check",
+        "--ontology-context-project-id",
+        "gitview",
+        "--target-spec",
+        "GITVIEW-SPEC-0001",
+        "--ontology-context-selection",
+        "ontology/pilots/motivation-composition/context.yaml",
+        "--ontology-context-check-scope",
+        "domain_vocabulary",
+        "--ontologyc",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+        "--ontologyc-sha256",
+        "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "--output-mode",
+        "full"
+      ],
+      "exit_code": 0,
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "domain_assessment": {
+        "check_scope": "domain_vocabulary",
+        "outcome": "analyzed",
+        "diagnostics": [],
+        "project_context": {
+          "project_id": "gitview",
+          "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/root-draft-update-6zuw7i4l/composition",
+          "context_revision": "sha256:5915bdd93ad17b781ae01c82d1f7652007661ef797653cfc7bed7eb5b64100e6",
+          "context_outcome": "verified",
+          "scope": "selected_composition_symbols",
+          "verified_closure": true,
+          "analysis_profile": "specgraph-composed-symbol-advisory-v2",
+          "semantic_approval": "not_established",
+          "binding_authority": "structural_advisory_only",
+          "members": [
+            {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.2.0-pilot.1",
+              "source_sha256": "7ff602772e283d178b63c01fa2ab470f3db0f8a787922a51cfa49ab6347afa6a",
+              "ir_sha256": "c1aaeb649730160c2022f31482b1ef2249a22d3685c725b548c0f6d6e809882e",
+              "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+              "compiler_provenance": "not_verified"
+            },
+            {
+              "id": "org.0al.events.core",
+              "namespace": "eventcore",
+              "version": "0.2.0",
+              "source_sha256": "92a3245fc9acd15748fd1fa3cfb8e4fdc8fda429a5fd6cffd7a97bc13f2f359e",
+              "ir_sha256": "e6c932ad8c492d168b63dbe112335c270d88ff758e016f3502031aefe9dea916",
+              "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+              "compiler_provenance": "not_verified"
+            },
+            {
+              "id": "org.0al.motivation.core",
+              "namespace": "motivcore",
+              "version": "0.1.0",
+              "source_sha256": "3061eca33ddc2296c2c292695d98daf6697e92fb582da544bc1d5107721ae955",
+              "ir_sha256": "25da040f4bd0b014014b1ed996250cd4c17a64503355f6f558917bec9ddd1fe9",
+              "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+              "compiler_provenance": "not_verified"
+            }
+          ],
+          "foundation_catalog": {
+            "id": "specgraph.foundation",
+            "namespace": "sg",
+            "version": "0.1.0",
+            "source_uri": "https://github.com/0al-spec/Ontology/blob/0fcc94469d971aaf39fcc182bc5c6b8acff37fd2/SPECS/ontology/foundation/0.1.0/exports.json",
+            "source_sha256": "ef07cf4e8dd4cdc8c8dd583971fc3cabfe82e4b00fb0e680b6d1db48cfe262ad"
+          }
+        },
+        "analysis_profile": "specgraph-scoped-ontology-advisory-v1",
+        "summary": {
+          "binding_index": {
+            "spec_count": 1,
+            "accepted_binding_count": 11,
+            "relation_candidate_count": 0,
+            "gap_count": 3,
+            "next_gap": "review_legacy_spec_ontology_bindings"
+          },
+          "validation_report": {
+            "spec_count": 1,
+            "finding_count": 3,
+            "warning_count": 3,
+            "passed_check_count": 0,
+            "next_gap": "review_spec_ontology_validation_findings"
+          }
+        }
+      },
+      "meta_assessment": {
+        "check_scope": "specification_metamodel",
+        "outcome": "not_requested",
+        "diagnostics": [],
+        "project_context": null,
+        "analysis_profile": null,
+        "summary": null
+      },
+      "findings": [
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.GitHubRepository",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "GitHubRepository",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-githubrepository",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.GitView",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "GitView",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-gitview",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.User",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "User",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-user",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        }
+      ],
+      "producer": {
+        "identity": "specgraph-scoped-ontology-advisory-v1:sha256:bf87be47d73bdb3a3b6db7c171bbc8b93eb189bf12f63f171934eee4361c63a4",
+        "source_sha256": {
+          "spec_ontology_context_reports.py": "8521842b084d0c574501fc9b8a55395b7f280002126f9d300af87e50d693073d",
+          "spec_ontology_binding_index.py": "6bbd1d5a8cf4934c6183a2543fb85bddc04afb06e89376eccc64a5547790791a",
+          "spec_ontology_validation_report.py": "027ae37334ddc212a66571d82bb2a36921896bb2c20e80b3675b755ddc2c8a55",
+          "project_ontology_check_scopes.py": "a319f375d3f5a38961e0a590d6e42043cc7a50ecbd860f153e3807794f2a9ba7",
+          "project_ontology_scope_outcome_spec.py": "e4c6fa5ea5c57d45418f112f76f5eb2734d16773070f5b029c2e604f18a2911e",
+          "ontology_imports.py": "878fd62376ef6003b74f756758cbd0984d789ad03f86108e5d7a0375669f9983",
+          "ontology_snapshot.py": "51f64cf69e69532cda5dfdd44a71b4872af8d1b7cb6c106b97c0bb20ade05fae",
+          "project_ontology_context/vocabulary.py": "7a6b8969d9a23b6f7dd01d578c46ecf09093d24d34c788d8456ade48a7b0d511",
+          "project_ontology_context/composition.py": "dff003828d8726717ef7444842c046ceb29b0cce7d80082b0609cc8145be1b5f",
+          "project_ontology_context/foundation.py": "d9e0725d30c5a12bede4baa9260bfa7e375fd91a27ec18aa3caeaf414fe4a24a"
+        },
+        "provenance": "caller_attributed_not_attested"
+      },
+      "raw_report_path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/root-draft-update-6zuw7i4l/composition.json",
+      "raw_report_sha256": "d8bacb38511ba3ffa14b7c4b5ffcd778a44427286f8df597ec174b7377813a77"
+    }
+  ]
+}
