@@ -10,7 +10,7 @@ for governed specification artifacts.
 Use the project-local skill
 `.codex/skills/specgraph-conversation-notes/SKILL.md` when discussing product
 or design ideas. The local runtime installed for this pilot is
-`/Users/egor/.local/share/specgraph/runtime-3131f3c1/specgraph-runtime`.
+`/Users/egor/.local/share/specgraph/runtime-dc35597b/specgraph-runtime`.
 For its standalone `specgraph` CLI, use the executable in the same installation
 at `venv/bin/specgraph`, or invoke the runtime's `draft` subcommand. If that
 installation is unavailable, report it and choose or install a compatible

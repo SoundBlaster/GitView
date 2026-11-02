@@ -1,0 +1,425 @@
+{
+  "artifact_kind": "gitview_installed_merge_meta_only_observation",
+  "schema_version": 1,
+  "gitview_base_commit": "6ce623efc2ee55f569725a04ecb93d9cd61cd19c",
+  "runtime_receipt": {
+    "artifact_kind": "specgraph_native_runtime",
+    "schema_version": 1,
+    "status": "installed",
+    "source_commit": "dc35597b7c29528f68cf74502fb3b379b284478c",
+    "python_version": "3.12.11"
+  },
+  "target": {
+    "id": "GITVIEW-SPEC-0001",
+    "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+    "sha256": "e3b75460f71a8946267132037d051f4a33b76030b2a3692528a3c9c2573cd09f"
+  },
+  "source_draft_path": "docs/drafts/GITVIEW-SPEC-0001.yaml",
+  "argv": [
+    "/Users/egor/.local/share/specgraph/runtime-dc35597b/specgraph-runtime",
+    "--workspace",
+    "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/meta-merge-dc35597b-1ykhpn1e/workspace",
+    "supervisor",
+    "--",
+    "--build-project-ontology-context-check",
+    "--ontology-context-project-id",
+    "gitview",
+    "--target-spec",
+    "GITVIEW-SPEC-0001",
+    "--ontology-context-check-scope",
+    "specification_metamodel",
+    "--ontology-context-metamodel-selection",
+    "ontology/metamodel-context.yaml",
+    "--ontology-context-map-spec-artifact",
+    "--ontologyc",
+    "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+    "--ontologyc-sha256",
+    "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+    "--output-mode",
+    "full"
+  ],
+  "exit_code": 0,
+  "outcome": "checked",
+  "assessments": {
+    "domain_vocabulary": {
+      "check_scope": "domain_vocabulary",
+      "outcome": "not_requested",
+      "diagnostics": [],
+      "project_context": null,
+      "analysis_profile": null,
+      "summary": null
+    },
+    "specification_metamodel": {
+      "check_scope": "specification_metamodel",
+      "outcome": "analyzed",
+      "diagnostics": [],
+      "project_context": {
+        "project_id": "gitview",
+        "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/meta-merge-dc35597b-1ykhpn1e/workspace",
+        "context_revision": "sha256:c981a69d1033213e2c7292148794e93ac72f06965ef85d02f48679536df5d404",
+        "context_outcome": "verified",
+        "scope": "single_member_local_symbols",
+        "verified_closure": false,
+        "analysis_profile": "specgraph-local-symbol-advisory-v3",
+        "semantic_approval": "not_established",
+        "binding_authority": "structural_advisory_only",
+        "selected_member": {
+          "id": "org.0al.specgraph.core",
+          "namespace": "sgcore",
+          "version": "0.1.0"
+        },
+        "source_sha256": "5bfa2ff40b6174def589546ab2fea2501e1f256c4f1446f36c45c7f3fffcd929",
+        "ir_sha256": "7a9d1cb640f154c32a2a15a4ec8868349bee04be30a0b5da886422c0d3eb638f",
+        "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "compiler_provenance": "not_verified"
+      },
+      "analysis_profile": "specgraph-external-specification-artifact-v1",
+      "summary": {
+        "document": {
+          "id": "GITVIEW-SPEC-0001",
+          "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+          "sha256": "e3b75460f71a8946267132037d051f4a33b76030b2a3692528a3c9c2573cd09f"
+        },
+        "mapping_sha256": "f186af3ebc1b6d4242a9af0cf4358d298fd5ea6bae4a9f7ddbf746eeb3336a70",
+        "decision_sha256": "6e7906ec69fd95d0749717a42ffc16d7bdc7532e6985d8608bb7c0a2850a64b7",
+        "decision_provenance": "caller_attributed_not_attested",
+        "class_check": {
+          "ontology_ref": "sgcore:Spec",
+          "source": "/kind",
+          "result": "matched",
+          "origin": {
+            "ontology_ref": "sgcore:Spec",
+            "ontology_uri": "ontology://org.0al.specgraph.core/0.1.0/classes/Spec",
+            "package": {
+              "id": "org.0al.specgraph.core",
+              "namespace": "sgcore",
+              "version": "0.1.0"
+            },
+            "source_sha256": "5bfa2ff40b6174def589546ab2fea2501e1f256c4f1446f36c45c7f3fffcd929",
+            "ir_sha256": "7a9d1cb640f154c32a2a15a4ec8868349bee04be30a0b5da886422c0d3eb638f",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "source_uri": null,
+            "verification": "compiler_checked"
+          }
+        },
+        "node_membership": "not_assessed",
+        "lifecycle": "not_assessed",
+        "semantic_approval": "not_established",
+        "canonical_mutations_allowed": false
+      }
+    }
+  },
+  "metamodel_context": {
+    "artifact_kind": "project_ontology_context_report",
+    "schema_version": 1,
+    "project_id": "gitview",
+    "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/meta-merge-dc35597b-1ykhpn1e/workspace",
+    "selection_path": "ontology/metamodel-context.yaml",
+    "outcome": "verified",
+    "context_revision": "sha256:c981a69d1033213e2c7292148794e93ac72f06965ef85d02f48679536df5d404",
+    "members": [
+      {
+        "id": "org.0al.specgraph.core",
+        "namespace": "sgcore",
+        "version": "0.1.0"
+      }
+    ],
+    "profiles": [
+      "ontologyc-foundation-v1"
+    ],
+    "resolved_imports": [
+      {
+        "id": "specgraph.foundation",
+        "namespace": "sg",
+        "version": "0.1.0",
+        "source_uri": "https://github.com/0al-spec/Ontology/blob/0fcc94469d971aaf39fcc182bc5c6b8acff37fd2/SPECS/ontology/foundation/0.1.0/exports.json",
+        "source_sha256": "ef07cf4e8dd4cdc8c8dd583971fc3cabfe82e4b00fb0e680b6d1db48cfe262ad"
+      }
+    ],
+    "composition": {
+      "dependency_rule": "explicit",
+      "name_resolution_rule": "qualified"
+    },
+    "snapshots": [
+      {
+        "id": "org.0al.specgraph.core",
+        "namespace": "sgcore",
+        "version": "0.1.0",
+        "source_sha256": "5bfa2ff40b6174def589546ab2fea2501e1f256c4f1446f36c45c7f3fffcd929",
+        "ir_sha256": "7a9d1cb640f154c32a2a15a4ec8868349bee04be30a0b5da886422c0d3eb638f",
+        "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "compiler_provenance": "not_verified"
+      }
+    ],
+    "checks": [
+      {
+        "check": "profile",
+        "outcome": "verified",
+        "detail": "supported structural checking profile",
+        "package": null
+      },
+      {
+        "check": "selection",
+        "outcome": "verified",
+        "detail": "explicit package selection parsed",
+        "package": null
+      },
+      {
+        "check": "compiler",
+        "outcome": "verified",
+        "detail": "operator-provided executable available; provenance not verified",
+        "package": null
+      },
+      {
+        "check": "member_capture",
+        "outcome": "verified",
+        "detail": "source, IR and package identity checked",
+        "package": "org.0al.specgraph.core"
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/SpecGraph/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/SpecGraph/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Intent/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Intent/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Spec/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Spec/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Node/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Node/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Edge/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Edge/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Requirement/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Requirement/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/AcceptanceCriterion/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/AcceptanceCriterion/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Decision/extends: sg:Command -> ontology://specgraph.foundation/0.1.0/classes/Command",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Decision/extends",
+          "name": "sg:Command",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/Command"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Constraint/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Constraint/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Invariant/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Invariant/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Evidence/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Evidence/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/CodeSurface/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/CodeSurface/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Test/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Test/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Release/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/classes/Release/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/policies/DraftAuthorityBoundary/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+        "package": "org.0al.specgraph.core",
+        "reference": {
+          "pointer": "/spec/policies/DraftAuthorityBoundary/extends",
+          "name": "sg:Policy",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+        }
+      },
+      {
+        "check": "dependency_closure",
+        "outcome": "verified",
+        "detail": "Pinned foundation vocabulary and qualified references checked",
+        "package": "org.0al.specgraph.core"
+      }
+    ],
+    "semantic_approval": "not_established",
+    "canonical_mutations_allowed": false
+  },
+  "producer": {
+    "identity": "specgraph-scoped-ontology-advisory-v1:sha256:f6ea80616fef763a635b8aabd3f13e8ccb1b897d2e845123853e3216e85c23aa",
+    "source_sha256": {
+      "project_ontology_supervisor_check.py": "b7d9e8868784ec1948c9f3cd81630be04ad10ee1f43b0f3e2f466ca4656ae95f",
+      "project_ontology_supervisor_cli.py": "4d66d47449dcffdeafa1f105e6dc59c0257c0b6ca5c98506e51cdce96a037f8f",
+      "spec_ontology_context_reports.py": "97e4f53999595d5fe8ae55fe257bfada0e29a8dfe681dd31addd95ae6b38c0e8",
+      "spec_ontology_binding_index.py": "6bbd1d5a8cf4934c6183a2543fb85bddc04afb06e89376eccc64a5547790791a",
+      "spec_ontology_validation_report.py": "027ae37334ddc212a66571d82bb2a36921896bb2c20e80b3675b755ddc2c8a55",
+      "project_ontology_check_scopes.py": "a319f375d3f5a38961e0a590d6e42043cc7a50ecbd860f153e3807794f2a9ba7",
+      "project_ontology_scope_outcome_spec.py": "e4c6fa5ea5c57d45418f112f76f5eb2734d16773070f5b029c2e604f18a2911e",
+      "ontology_imports.py": "878fd62376ef6003b74f756758cbd0984d789ad03f86108e5d7a0375669f9983",
+      "ontology_snapshot.py": "51f64cf69e69532cda5dfdd44a71b4872af8d1b7cb6c106b97c0bb20ade05fae",
+      "project_ontology_context/vocabulary.py": "7a6b8969d9a23b6f7dd01d578c46ecf09093d24d34c788d8456ade48a7b0d511",
+      "project_ontology_context/composition.py": "dff003828d8726717ef7444842c046ceb29b0cce7d80082b0609cc8145be1b5f",
+      "project_ontology_context/foundation.py": "d9e0725d30c5a12bede4baa9260bfa7e375fd91a27ec18aa3caeaf414fe4a24a",
+      "spec_ontology_metamodel_check.py": "cde72e542fee6c1aba64ccff86b2b5203313599bd20400e0f7a9c44fae6553e8",
+      "project_ontology_meta_freshness.py": "dd218ee0c842060c57fd27ae0cb40e2f85aed448223ce73f473f60159c85bd79"
+    },
+    "provenance": "caller_attributed_not_attested"
+  },
+  "bundle_schema_version": 3,
+  "domain_inventory_binding_validation_absent": true,
+  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+  "compiler_provenance": "not_verified",
+  "full_spec_conformance": "not_assessed",
+  "semantic_approval": "not_established",
+  "canonical_mutations_allowed": false,
+  "history_verification": {
+    "artifact_kind": "conversation_notes_history_verification",
+    "schema_version": 1,
+    "revision": "0bbeb16ed68e4cd6a5e660743e225325",
+    "revision_count": 74,
+    "status": "complete",
+    "canonical": false
+  },
+  "history_verification_argv": [
+    "/Users/egor/.local/share/specgraph/runtime-dc35597b/specgraph-runtime",
+    "--workspace",
+    "/Users/egor/Development/GitHub/GitView",
+    "draft",
+    "--",
+    "notes",
+    "verify_history",
+    "--workspace",
+    "/Users/egor/Development/GitHub/GitView/conversation_memory/sketches/gitview"
+  ],
+  "skills": [
+    {
+      "name": "specgraph-conversation-notes",
+      "file": "SKILL.md",
+      "distributed_sha256": "6f4b419571e8ea45e286e7c21161ad4fc6c2d223098f5054f4d909f2c4226851",
+      "local_sha256": "6f4b419571e8ea45e286e7c21161ad4fc6c2d223098f5054f4d909f2c4226851",
+      "local_extension_preserved": false
+    },
+    {
+      "name": "specgraph-conversation-notes",
+      "file": "references/usage.md",
+      "distributed_sha256": "0105e3076f7ba65ffccbe03dceaa2bf908ec69b421beed80fe25d87d876f603a",
+      "local_sha256": "0105e3076f7ba65ffccbe03dceaa2bf908ec69b421beed80fe25d87d876f603a",
+      "local_extension_preserved": false
+    },
+    {
+      "name": "specgraph-project-ontology",
+      "file": "SKILL.md",
+      "distributed_sha256": "05915bd41b332417d68d2f86204617eb37a86b31a26f84470f8e33cf2eb67b28",
+      "local_sha256": "df49a60af64afe4cd510c55ac2ed253ed3c609ee01fd43456f34314d9770f4b9",
+      "local_extension_preserved": true
+    }
+  ],
+  "raw_report_path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/specgraph-runtime/meta-merge-dc35597b-1ykhpn1e/meta-only.json",
+  "raw_report_sha256": "f4027c26b4feef66b00e45120fd75b0ecc1e633621e9ecf6dbe0c172309d1b49"
+}
