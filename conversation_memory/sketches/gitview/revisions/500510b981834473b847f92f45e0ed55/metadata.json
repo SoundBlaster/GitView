@@ -1,0 +1,362 @@
+{
+  "schema_version": 1,
+  "revision": "500510b981834473b847f92f45e0ed55",
+  "parent_revision": "3c2db812bea648d7b4b0d062b5122d18",
+  "captured_at": "2026-11-02T00:12:11.687695+00:00",
+  "source": {
+    "ref": "conversation:gitview/excerpt-34",
+    "quote": "A - целиком\nB - целиком\nC - целиком\nD - 1 и 3\nE - нужны только счетчики чтобы показать что красные/желтые/зеленые/всего - 3/4/8/15\nF - только счетчики\nG - целиком",
+    "speaker": "human"
+  },
+  "sources": {
+    "overview": [
+      {
+        "ref": "conversation:gitview/excerpt-01",
+        "quote": "Пока теоретически: реально ли написать себе iOS клиента для GitHub где просто дашборд по PRs, issues и прочему что без устали генерируют мне кодинговые агенты?",
+        "speaker": "human"
+      }
+    ],
+    "attention": [
+      {
+        "ref": "conversation:gitview/excerpt-02",
+        "quote": "Где проблемы в виде тредов долгих или красного ci…",
+        "speaker": "human"
+      }
+    ],
+    "metrics": [
+      {
+        "ref": "conversation:gitview/excerpt-03",
+        "quote": "Метрик с графиками",
+        "speaker": "human"
+      }
+    ],
+    "zoom-grid": [
+      {
+        "ref": "conversation:gitview/excerpt-04",
+        "quote": "Можно было бы сделать очень оригинально: как Photos app - сетка квадратиков которую можно pinch to zoom и обратно и погружаться в карточки или отдаляться, чтобы видеть больше",
+        "speaker": "human"
+      }
+    ],
+    "calendar": [
+      {
+        "ref": "conversation:gitview/excerpt-05",
+        "quote": "Возможно кстати клетчатый календарь гитхаба неплох как самый максимальный уровень отдаления от деталей",
+        "speaker": "human"
+      }
+    ],
+    "pr-depth": [
+      {
+        "ref": "conversation:gitview/excerpt-07",
+        "quote": "Может быть потом ещё уровень добавить - внутри PR что-то, но пока так ок.",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-14",
+        "quote": "Не погружаемся внутрь PR, но должны уметь отображать метрики: строки, коммиты, прогоны, треды. Возможно в онтологии можно объединить эти вещи под метасущностью как бы, у неё есть базовые имя, ссылка возможно, набор динамических свойств… не уверен что стоит так усложнять пока нет спек.",
+        "speaker": "human"
+      }
+    ],
+    "pr-ontology-selection-request": [
+      {
+        "ref": "conversation:gitview/excerpt-33",
+        "quote": "Сделай мне заготовку, а я выберу",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-34",
+        "quote": "A - целиком\nB - целиком\nC - целиком\nD - 1 и 3\nE - нужны только счетчики чтобы показать что красные/желтые/зеленые/всего - 3/4/8/15\nF - только счетчики\nG - целиком",
+        "speaker": "human"
+      }
+    ],
+    "pr-ontology-options-proposal": [
+      {
+        "ref": "file:docs/drafts/pull-request-ontology-options.md@82f00c7",
+        "quote": "# PullRequest: заготовка для выбора\n\nСтатус: предложение агента для обсуждения. Все пункты ниже — кандидаты;\nгалочки оставлены пустыми. Это не принятые требования приложения или изменения\nontology package. Можно выбрать блок целиком или отдельные номера.\n\nКандидатное значение: запрос на рассмотрение предлагаемых изменений кода и их\nвозможное включение в целевую ветку. Формулировка также требует выбора.\n\n## A. Идентификация и описание\n\n- [ ] A1. Идентификатор в источнике и номер PR в контексте репозитория.\n- [ ] A2. Название.\n- [ ] A3. Описание / текст.\n- [ ] A4. Ссылка на первоисточник.\n\n## B. Состояние PR\n\n- [ ] B1. Жизненный цикл: открыт, закрыт без merge, merged.\n- [ ] B2. Признак draft отдельно от жизненного цикла.\n- [ ] B3. Метки / labels как дополнительные характеристики.\n\nB1 — кандидатный набор по GitHub; это ещё не полная state machine переходов,\nкоманд, условий и акторов. Draft не образует с review и CI одну общую шкалу.\n\n## C. Контекст и участники\n\n- [ ] C1. Целевой GitHubRepository.\n- [ ] C2. Исходная и целевая ветки, ссылка на текущую ревизию изменений.\n- [ ] C3. Автор / создатель PR как роль участника.\n- [ ] C4. Запрошенные reviewers.\n- [ ] C5. Связанные Issue.\n\nЭто кандидаты ссылок и ролей, а не скалярные поля или объявленные типы отношений\nв пользовательском смысле Ontology. Их происхождение через действия надо\nрассматривать отдельно. Автор PR не автоматически User приложения или coding\nagent. Ссылка на Issue сама по себе не устанавливает мотив актора. Названия\nветок и технических ссылок не вводят новые ontology entities автоматически.\n\n## D. Review\n\n- [ ] D1. Доступная итоговая оценка review со смыслом, заданным источником.\n- [ ] D2. Связанные ReviewThread.\n- [ ] D3. Число тредов и число незакрытых тредов как отдельные метрики.\n\nОтсутствие доступной оценки, отсутствие reviews и требование review различаются.\nИтоговая оценка не заменяет состояние отдельных тредов.\n\n## E. CI\n\n- [ ] E1. Связанные CIStatus / результаты проверок для определённой ревизии.\n- [ ] E2. Связанные прогоны и их состояние: например, ожидает, выполняется, завершён.\n- [ ] E3. Результат завершённого прогона: например, успех, ошибка, отмена.\n- [ ] E4. Число прогонов как метрика.\n\nСписки E2/E3 иллюстративные, не исчерпывающий enum GitHub. Итоговый CI и отдельные\nпрогоны не тождественны; неизвестность данных не означает успех или отсутствие\nпроверок. Связь результата с ревизией нужна для понимания, к чему он относится.\n\n## F. Объём предлагаемых изменений\n\n- [ ] F1. Число добавленных и удалённых строк отдельно.\n- [ ] F2. Число изменённых файлов.\n- [ ] F3. Число коммитов.\n\nЭто измерения с конкретной областью подсчёта, а не стадии жизненного цикла PR.\n\n## G. Время\n\n- [ ] G1. Время создания и последнего обновления.\n- [ ] G2. Время закрытия или merge, когда применимо.\n- [ ] G3. Время получения наблюдения и его источник.\n\nВремена предметных событий отличаются от времени наблюдения GitView. Точный\nсостав достаточного состояния и способ представления неполных данных открыты;\nэту заготовку нельзя считать полным eventcore:StateSnapshot.\n\n## Граница следующего шага\n\nПосле выбора уточняем смысл, типы значений, роли, допустимые состояния и\nнеизвестность для выбранных пунктов. Отдельно спецификации GitView определят\nполучение, обновление, вычисление и показ этих данных. «Готов к merge»,\n«застрял» и «требует внимания» требуют собственных правил и пока не объявлены\nисходными состояниями PR. Реализация просмотра внутреннего diff не предлагается.\n\nИсточник для сверки GitHub lifecycle / draft / review:\n[GitHub GraphQL: Pull requests](https://docs.github.com/en/graphql/reference/pulls).\nОстальная группировка — предложение агента на основе беседы, а не перенос\nAPI-схемы в онтологию. Запрос пользователя: conversation:gitview/excerpt-33.\n",
+        "speaker": "agent"
+      }
+    ],
+    "apple-look": [
+      {
+        "ref": "conversation:gitview/excerpt-06",
+        "quote": "Только дизайн хочу максимально Apple Look. Liquid Glass и минимум кастомных компонент и всяких рюшек. SF symbols, системные цвета.",
+        "speaker": "human"
+      }
+    ],
+    "foundations": [
+      {
+        "ref": "conversation:gitview/excerpt-08",
+        "quote": "Ещё я хочу использовать \n\n~/Development/GitHub/Specification Projects/SpecificationCore\n~/Development/GitHub/FSD-iOS",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-08-corrected",
+        "quote": "Ещё я хочу использовать \n\n~/Development/GitHub/Specification Projects/SpecificationCore\n~/Development/GitHub/FSD-iOS",
+        "speaker": "human"
+      }
+    ],
+    "foundation-first": [
+      {
+        "ref": "conversation:gitview/excerpt-09",
+        "quote": "Я бы начал всё же с базы: идея, онтология, приложение, UX. Чтобы у нас появился каркас проекта, а потом наполняем его уже «мясом» подробных спек. Пока без кода.",
+        "speaker": "human"
+      }
+    ],
+    "ontology-role": [
+      {
+        "ref": "conversation:gitview/excerpt-17",
+        "quote": "Ага, всё так. Но важно не пытаться моделировать каждую кнопочку через Ontology, её роль в удержании консистентности терминологии в спецификациях. Чтобы из ниоткуда не появлялись нагаллюцинированные сущности.",
+        "speaker": "human"
+      }
+    ],
+    "ontology-draft-proposal": [
+      {
+        "ref": "conversation:gitview/excerpt-26-proposal",
+        "quote": "Следующий шаг — собрать из наших заметок проектный черновик онтологии GitView, чтобы затем проверить уже его, а не изолированный тестовый пакет.",
+        "speaker": "agent"
+      }
+    ],
+    "ontology-draft-request": [
+      {
+        "ref": "conversation:gitview/excerpt-26-reply",
+        "quote": "Это хорошо.\nСобирай.",
+        "speaker": "human"
+      }
+    ],
+    "user-ontology-composition": [
+      {
+        "ref": "conversation:gitview/excerpt-29",
+        "quote": "```Hypercode\n// Ontology\nGitView\nUser\nProject\n  GitHubRepository\n    Repository\n      Code\n      VersionControlSystem\n    GitHub\n      Issue\n      PullRequest\n      ReviewThread\n      CIStatus\n      Metric\n``` \n\nВот я бы так это видел",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-30",
+        "quote": "Ты как-то легко подхватил мою опечатку, возможно она и имеет смысл, если размышлять шире одного приложения, но суть в том, что должно было быть так:\n\n```Hypercode\n// Ontology\nGitView\n  User\n  Project\n    GitHubRepository\n      Repository\n        Code\n        VersionControlSystem\n      GitHub\n        Issue\n        PullRequest\n        ReviewThread\n        CIStatus\n        Metric\n``` \n\nИзвини, что запутал сходу.",
+        "speaker": "human"
+      }
+    ],
+    "project-repository": [
+      {
+        "ref": "conversation:gitview/excerpt-10",
+        "quote": "В общем проект - это четко группа репозиториев (в том числе один репозиторий).\n\nРепозиторий может были в разных проектах.\n\nПо умолчанию один проект - один репозиторий.\n\nВ GitHub есть organizations. Это некая мета. Проекты могут содержать репозитории разных организаций.",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-11",
+        "quote": "Ты ввел слово группы - с точки зрения SpecGraph это должно быть в онтологии, но мы уже оперируем словом проект.",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-12",
+        "quote": "Мы можем конечно в онтологии определить Группа, но это избыточно.",
+        "speaker": "human"
+      }
+    ],
+    "github-organizations": [
+      {
+        "ref": "conversation:gitview/excerpt-10",
+        "quote": "В общем проект - это четко группа репозиториев (в том числе один репозиторий).\n\nРепозиторий может были в разных проектах.\n\nПо умолчанию один проект - один репозиторий.\n\nВ GitHub есть organizations. Это некая мета. Проекты могут содержать репозитории разных организаций.",
+        "speaker": "human"
+      }
+    ],
+    "repository-semantics": [
+      {
+        "ref": "conversation:gitview/excerpt-13",
+        "quote": "Ага, теперь надо понять что внутри смысла Repository",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-18",
+        "quote": "Репозиторий это некая сущность обеспечивающая доступ к истории изменения исходному коду через нижележающую системную контроля версий - Git, главным образом через совокупность PR и Issues ну и тп",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-24",
+        "quote": "Репозиторий это Код, в котором действует Система Контроля Версий, вот",
+        "speaker": "human"
+      }
+    ],
+    "common-metadata-hypothesis": [
+      {
+        "ref": "conversation:gitview/excerpt-14",
+        "quote": "Не погружаемся внутрь PR, но должны уметь отображать метрики: строки, коммиты, прогоны, треды. Возможно в онтологии можно объединить эти вещи под метасущностью как бы, у неё есть базовые имя, ссылка возможно, набор динамических свойств… не уверен что стоит так усложнять пока нет спек.",
+        "speaker": "human"
+      }
+    ],
+    "ontology-separation": [
+      {
+        "ref": "conversation:gitview/excerpt-16",
+        "quote": "Я бы не стал давать определение сущностям через более верхнеуровневые сущности.\n\nЕсть признаки, есть свойства, есть отношения. Это твое определение смешивает всё.",
+        "speaker": "human"
+      }
+    ],
+    "relation-versus-link": [
+      {
+        "ref": "conversation:gitview/excerpt-21",
+        "quote": "Вообще связь и отношение это нечто разное\nОтношение в Ontology это по сути всегда свойство возникающее в процессе действия актора над объектом\n\nСвязь это что-то менее конкретное, issue может быть причиной существования pr но так или иначе действует не issue а некий актор - человек или агент или процесс (скрипт?).",
+        "speaker": "human"
+      }
+    ],
+    "issue-pr-motive": [
+      {
+        "ref": "conversation:gitview/excerpt-22",
+        "quote": "Связь Issue → PR это Мотив для Актора",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-23",
+        "quote": "Актор - Действует, меняя под Мотивом Issue - Код → наступает Последствие PR",
+        "speaker": "human"
+      }
+    ],
+    "repository-github-repository": [
+      {
+        "ref": "conversation:gitview/excerpt-19",
+        "quote": "Можно разделить сущности через какие-то роли или просто за счет композиции\n\nRepository → GitHub Repository",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-20",
+        "quote": "Согласен, repository становится GitHub Repository когда GitHub им управляет и контролирует поток изменений через Issue/PR. То есть возникает отношение, где GitHub это актор.",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-31",
+        "quote": "Репозиториев может быть много и разных, не все из них управляются GitHub - какие-то иные на GitLab, на BitBucket и так далее. То есть для нашего проекта важна именно привязка к GitHub - другие можем потом добавить, позже. То есть приложение ожидает определенные свойства от репозитория в проекте.\n\nС точки зрения онтологии\n \n`GitHub → Action on → Repository`  - отношения управления.\nИ такой Repository находясь в таких отношениях становится GitHubRepository.\n\nМы можем называть GitHub более общим словом, типа GitManagementSystem или ещё как-то, тогда Repository станет ManagedRepository, но для GitView сейчас это лишние абстракции с точки зрения продукта.",
+        "speaker": "human"
+      },
+      {
+        "ref": "conversation:gitview/excerpt-32",
+        "quote": "Могу сказать что к этому можно относиться как к паттерну Декоратор. GitHub как бы декорирует Repository.",
+        "speaker": "human"
+      }
+    ],
+    "code-folder": [
+      {
+        "ref": "conversation:gitview/excerpt-25",
+        "quote": "Код это по сути папка с файлами",
+        "speaker": "human"
+      }
+    ],
+    "compact-source-overview": [
+      {
+        "ref": "conversation:gitview/excerpt-15",
+        "quote": "В целом мы не заменяет сам гитхаб - из сущности можно перейти на первоисточник. Показываем минимум. Название, ID, бейджи, текст.",
+        "speaker": "human"
+      }
+    ],
+    "activity-investigation-proposal": [
+      {
+        "ref": "conversation:gitview/excerpt-27-proposal",
+        "quote": "Следующий шаг — вернуться к содержанию черновика и разобрать, что означает Activity в GitView и нужно ли ему самостоятельное понятие.",
+        "speaker": "agent"
+      }
+    ],
+    "activity-investigation-request": [
+      {
+        "ref": "conversation:gitview/excerpt-27-reply",
+        "quote": "Ok, давай разбираться",
+        "speaker": "human"
+      }
+    ],
+    "activity-entity-proposal": [
+      {
+        "ref": "conversation:gitview/excerpt-28-proposal-entity",
+        "quote": "Моё предложение: пока не вводить Activity как самостоятельную сущность.",
+        "speaker": "agent"
+      }
+    ],
+    "activity-state-distinction-proposal": [
+      {
+        "ref": "conversation:gitview/excerpt-28-proposal-state",
+        "quote": "Тебе ближе такое разделение: Activity — происходившие действия и изменения, а открытые PR и состояние CI — отдельная картина «что сейчас»?",
+        "speaker": "agent"
+      }
+    ],
+    "activity-direction-28": [
+      {
+        "ref": "conversation:gitview/excerpt-28-reply",
+        "quote": "Согласен. \n\nActivity это вероятно действия.\nНо пока возможно надо понаблюдать за развитием проекта, чтобы определиться.",
+        "speaker": "human"
+      }
+    ]
+  },
+  "links": [
+    {
+      "source_id": "ontology-draft-request",
+      "target_id": "ontology-draft-proposal",
+      "label": "responds to",
+      "sources": [
+        {
+          "ref": "conversation:gitview/excerpt-26-reply",
+          "quote": "Это хорошо.\nСобирай.",
+          "speaker": "human"
+        }
+      ]
+    },
+    {
+      "source_id": "activity-investigation-request",
+      "target_id": "activity-investigation-proposal",
+      "label": "responds to",
+      "sources": [
+        {
+          "ref": "conversation:gitview/excerpt-27-reply",
+          "quote": "Ok, давай разбираться",
+          "speaker": "human"
+        }
+      ]
+    },
+    {
+      "source_id": "activity-direction-28",
+      "target_id": "activity-entity-proposal",
+      "label": "responds to",
+      "sources": [
+        {
+          "ref": "conversation:gitview/excerpt-28-reply",
+          "quote": "Согласен. \n\nActivity это вероятно действия.\nНо пока возможно надо понаблюдать за развитием проекта, чтобы определиться.",
+          "speaker": "human"
+        }
+      ]
+    },
+    {
+      "source_id": "activity-direction-28",
+      "target_id": "activity-state-distinction-proposal",
+      "label": "responds to",
+      "sources": [
+        {
+          "ref": "conversation:gitview/excerpt-28-reply",
+          "quote": "Согласен. \n\nActivity это вероятно действия.\nНо пока возможно надо понаблюдать за развитием проекта, чтобы определиться.",
+          "speaker": "human"
+        }
+      ]
+    },
+    {
+      "source_id": "repository-github-repository",
+      "target_id": "user-ontology-composition",
+      "label": "clarifies",
+      "sources": [
+        {
+          "ref": "conversation:gitview/excerpt-31",
+          "quote": "Репозиториев может быть много и разных, не все из них управляются GitHub - какие-то иные на GitLab, на BitBucket и так далее. То есть для нашего проекта важна именно привязка к GitHub - другие можем потом добавить, позже. То есть приложение ожидает определенные свойства от репозитория в проекте.\n\nС точки зрения онтологии\n \n`GitHub → Action on → Repository`  - отношения управления.\nИ такой Repository находясь в таких отношениях становится GitHubRepository.\n\nМы можем называть GitHub более общим словом, типа GitManagementSystem или ещё как-то, тогда Repository станет ManagedRepository, но для GitView сейчас это лишние абстракции с точки зрения продукта.",
+          "speaker": "human"
+        }
+      ]
+    },
+    {
+      "source_id": "pr-ontology-selection-request",
+      "target_id": "pr-ontology-options-proposal",
+      "label": "responds to",
+      "sources": [
+        {
+          "ref": "conversation:gitview/excerpt-34",
+          "quote": "A - целиком\nB - целиком\nC - целиком\nD - 1 и 3\nE - нужны только счетчики чтобы показать что красные/желтые/зеленые/всего - 3/4/8/15\nF - только счетчики\nG - целиком",
+          "speaker": "human"
+        }
+      ]
+    }
+  ],
+  "reviews": [],
+  "content_hashes": {
+    "notes.hc": "ff4ddd9abe4f1089c3b88e13eee9ae2851aa103ec3aaba53f84b1c4449416242",
+    "notes.hcs": "e8da7cd619733ba73f06e2c84859ca89f96218ee0e7e2c4e003766e773c1a896"
+  }
+}
