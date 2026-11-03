@@ -1,0 +1,15 @@
+artifact_kind: specgraph_project_ontology_selection
+schema_version: 1
+packages:
+- id: local.gitview.domain
+  namespace: gitview
+  version: 0.2.0-draft.1
+  source: ontology/candidates/domain-v0.2.0-draft.1/domain-ontology-package.yaml
+  source_sha256: 0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd
+  ir: ontology/candidates/domain-v0.2.0-draft.1/generated/ontology.normalized.json
+  ir_sha256: ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4
+profiles:
+- ontologyc-foundation-v1
+composition:
+  dependency_rule: explicit
+  name_resolution_rule: qualified

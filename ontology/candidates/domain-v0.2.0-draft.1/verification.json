@@ -1,0 +1,3469 @@
+{
+  "artifact_kind": "gitview_ontology_candidate_verification",
+  "schema_version": 1,
+  "runtime_commit": "dc35597b7c29528f68cf74502fb3b379b284478c",
+  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+  "compiler_provenance": "not_verified",
+  "semantic_approval": "not_established",
+  "canonical_mutations_allowed": false,
+  "default_context_changed": false,
+  "compiler_invocations": [
+    {
+      "argv": [
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+        "check",
+        "/Users/egor/Development/GitHub/GitView/ontology/candidates/domain-v0.2.0-draft.1/domain-ontology-package.yaml"
+      ],
+      "exit_code": 0,
+      "stdout": "ontologyc check: PASS /Users/egor/Development/GitHub/GitView/ontology/candidates/domain-v0.2.0-draft.1/domain-ontology-package.yaml\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+        "compile",
+        "/Users/egor/Development/GitHub/GitView/ontology/candidates/domain-v0.2.0-draft.1/domain-ontology-package.yaml",
+        "--target",
+        "typescript",
+        "--out",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-draft-v02-r5gnqvl9/foundation"
+      ],
+      "exit_code": 0,
+      "stdout": "ontologyc compile: PASS /Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-draft-v02-r5gnqvl9/foundation\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+        "check",
+        "/Users/egor/Development/GitHub/GitView/ontology/candidates/domain-v0.2.0-draft.1/composition/domain-ontology-package.yaml"
+      ],
+      "exit_code": 0,
+      "stdout": "ontologyc check: PASS /Users/egor/Development/GitHub/GitView/ontology/candidates/domain-v0.2.0-draft.1/composition/domain-ontology-package.yaml\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+        "compile",
+        "/Users/egor/Development/GitHub/GitView/ontology/candidates/domain-v0.2.0-draft.1/composition/domain-ontology-package.yaml",
+        "--target",
+        "typescript",
+        "--out",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-draft-v02-r5gnqvl9/composition"
+      ],
+      "exit_code": 0,
+      "stdout": "ontologyc compile: PASS /Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-draft-v02-r5gnqvl9/composition\n",
+      "stderr": ""
+    }
+  ],
+  "target_checks": [
+    {
+      "name": "foundation",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-dc35597b/specgraph-runtime",
+        "--workspace",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-v02-context-h4yxy_be/foundation",
+        "supervisor",
+        "--",
+        "--build-project-ontology-context-check",
+        "--ontology-context-project-id",
+        "gitview",
+        "--target-spec",
+        "GITVIEW-SPEC-0001",
+        "--ontology-context-selection",
+        "ontology/candidates/domain-v0.2.0-draft.1/foundation-context.yaml",
+        "--ontology-context-check-scope",
+        "domain_vocabulary",
+        "--ontologyc",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+        "--ontologyc-sha256",
+        "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "--output-mode",
+        "full"
+      ],
+      "outcome": "checked",
+      "target": {
+        "id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "sha256": "e3b75460f71a8946267132037d051f4a33b76030b2a3692528a3c9c2573cd09f"
+      },
+      "context": {
+        "artifact_kind": "project_ontology_context_report",
+        "schema_version": 1,
+        "project_id": "gitview",
+        "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-v02-context-h4yxy_be/foundation",
+        "selection_path": "ontology/candidates/domain-v0.2.0-draft.1/foundation-context.yaml",
+        "outcome": "verified",
+        "context_revision": "sha256:c9c9288194c94a7df3ae6a32cdd198c3be2e3f8b7404e16202214ae4cfaf2df2",
+        "members": [
+          {
+            "id": "local.gitview.domain",
+            "namespace": "gitview",
+            "version": "0.2.0-draft.1"
+          }
+        ],
+        "profiles": [
+          "ontologyc-foundation-v1"
+        ],
+        "resolved_imports": [
+          {
+            "id": "specgraph.foundation",
+            "namespace": "sg",
+            "version": "0.1.0",
+            "source_uri": "https://github.com/0al-spec/Ontology/blob/0fcc94469d971aaf39fcc182bc5c6b8acff37fd2/SPECS/ontology/foundation/0.1.0/exports.json",
+            "source_sha256": "ef07cf4e8dd4cdc8c8dd583971fc3cabfe82e4b00fb0e680b6d1db48cfe262ad"
+          }
+        ],
+        "composition": {
+          "dependency_rule": "explicit",
+          "name_resolution_rule": "qualified"
+        },
+        "snapshots": [
+          {
+            "id": "local.gitview.domain",
+            "namespace": "gitview",
+            "version": "0.2.0-draft.1",
+            "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+            "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "compiler_provenance": "not_verified"
+          }
+        ],
+        "checks": [
+          {
+            "check": "profile",
+            "outcome": "verified",
+            "detail": "supported structural checking profile",
+            "package": null
+          },
+          {
+            "check": "selection",
+            "outcome": "verified",
+            "detail": "explicit package selection parsed",
+            "package": null
+          },
+          {
+            "check": "compiler",
+            "outcome": "verified",
+            "detail": "operator-provided executable available; provenance not verified",
+            "package": null
+          },
+          {
+            "check": "member_capture",
+            "outcome": "verified",
+            "detail": "source, IR and package identity checked",
+            "package": "local.gitview.domain"
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Project/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/Project/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Code/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/Code/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/VersionControlSystem/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/VersionControlSystem/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Repository/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/Repository/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/GitHub/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/GitHub/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Issue/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/Issue/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/PullRequest/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/PullRequest/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/ReviewThread/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/ReviewThread/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/CIStatus/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/CIStatus/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Metric/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/Metric/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/GitHubRepositoryContext/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/GitHubRepositoryContext/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PartialObservationBoundary/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/PartialObservationBoundary/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "dependency_closure",
+            "outcome": "verified",
+            "detail": "Pinned foundation vocabulary and qualified references checked",
+            "package": "local.gitview.domain"
+          }
+        ],
+        "semantic_approval": "not_established",
+        "canonical_mutations_allowed": false
+      },
+      "assessments": {
+        "domain_vocabulary": {
+          "check_scope": "domain_vocabulary",
+          "outcome": "analyzed",
+          "diagnostics": [],
+          "project_context": {
+            "project_id": "gitview",
+            "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-v02-context-h4yxy_be/foundation",
+            "context_revision": "sha256:c9c9288194c94a7df3ae6a32cdd198c3be2e3f8b7404e16202214ae4cfaf2df2",
+            "context_outcome": "verified",
+            "scope": "single_member_local_symbols",
+            "verified_closure": false,
+            "analysis_profile": "specgraph-local-symbol-advisory-v3",
+            "semantic_approval": "not_established",
+            "binding_authority": "structural_advisory_only",
+            "selected_member": {
+              "id": "local.gitview.domain",
+              "namespace": "gitview",
+              "version": "0.2.0-draft.1"
+            },
+            "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+            "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "compiler_provenance": "not_verified"
+          },
+          "analysis_profile": "specgraph-scoped-ontology-advisory-v1",
+          "summary": {
+            "binding_index": {
+              "spec_count": 1,
+              "accepted_binding_count": 10,
+              "relation_candidate_count": 0,
+              "gap_count": 4,
+              "next_gap": "review_legacy_spec_ontology_bindings"
+            },
+            "validation_report": {
+              "spec_count": 1,
+              "finding_count": 4,
+              "warning_count": 4,
+              "passed_check_count": 0,
+              "next_gap": "review_spec_ontology_validation_findings"
+            }
+          }
+        },
+        "specification_metamodel": {
+          "check_scope": "specification_metamodel",
+          "outcome": "not_requested",
+          "diagnostics": [],
+          "project_context": null,
+          "analysis_profile": null,
+          "summary": null
+        }
+      },
+      "findings": [
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.GitHubRepository",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "GitHubRepository",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-githubrepository",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.GitView",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "GitView",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-gitview",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.User",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "User",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-user",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.motivcore:Motive",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "motivcore:Motive",
+          "source": "specification.ontology_refs[0]",
+          "gap_ref": "ontology-gap-gitview-spec-0001-motivcore-motive",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        }
+      ],
+      "binding_entries": [
+        {
+          "spec_id": "GITVIEW-SPEC-0001",
+          "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+          "status": "domain_report_only",
+          "accepted_bindings": [
+            {
+              "term": "CIStatus",
+              "ontology_ref": "gitview:CIStatus",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:CIStatus",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/CIStatus",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft.1"
+                  },
+                  "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+                  "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Code",
+              "ontology_ref": "gitview:Code",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Code",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/Code",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft.1"
+                  },
+                  "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+                  "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "GitHub",
+              "ontology_ref": "gitview:GitHub",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:GitHub",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/GitHub",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft.1"
+                  },
+                  "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+                  "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Issue",
+              "ontology_ref": "gitview:Issue",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Issue",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/Issue",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft.1"
+                  },
+                  "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+                  "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Metric",
+              "ontology_ref": "gitview:Metric",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Metric",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/Metric",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft.1"
+                  },
+                  "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+                  "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Project",
+              "ontology_ref": "gitview:Project",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Project",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/Project",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft.1"
+                  },
+                  "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+                  "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "PullRequest",
+              "ontology_ref": "gitview:PullRequest",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:PullRequest",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/PullRequest",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft.1"
+                  },
+                  "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+                  "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Repository",
+              "ontology_ref": "gitview:Repository",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Repository",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/Repository",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft.1"
+                  },
+                  "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+                  "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "ReviewThread",
+              "ontology_ref": "gitview:ReviewThread",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:ReviewThread",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/ReviewThread",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft.1"
+                  },
+                  "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+                  "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "VersionControlSystem",
+              "ontology_ref": "gitview:VersionControlSystem",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:VersionControlSystem",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/VersionControlSystem",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft.1"
+                  },
+                  "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+                  "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            }
+          ],
+          "relation_candidates": [],
+          "gaps": [
+            {
+              "gap_id": "ontology-gap-gitview-spec-0001-githubrepository",
+              "term": "GitHubRepository",
+              "source": "specification.terminology",
+              "classification": "legacy_unknown_term",
+              "resolution": "unknown",
+              "candidates": [],
+              "candidate_origins": []
+            },
+            {
+              "gap_id": "ontology-gap-gitview-spec-0001-gitview",
+              "term": "GitView",
+              "source": "specification.terminology",
+              "classification": "legacy_unknown_term",
+              "resolution": "unknown",
+              "candidates": [],
+              "candidate_origins": []
+            },
+            {
+              "gap_id": "ontology-gap-gitview-spec-0001-user",
+              "term": "User",
+              "source": "specification.terminology",
+              "classification": "legacy_unknown_term",
+              "resolution": "unknown",
+              "candidates": [],
+              "candidate_origins": []
+            },
+            {
+              "gap_id": "ontology-gap-gitview-spec-0001-motivcore-motive",
+              "term": "motivcore:Motive",
+              "source": "specification.ontology_refs[0]",
+              "classification": "missing_ontology_ref",
+              "resolution": "unknown",
+              "candidates": [],
+              "candidate_origins": []
+            }
+          ]
+        }
+      ],
+      "raw_report_path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-v02-context-h4yxy_be/foundation.json",
+      "raw_report_sha256": "477951a89d458864e061a055169295c98fd24c5b239997a08b583ce374944d8f",
+      "producer": {
+        "identity": "specgraph-scoped-ontology-advisory-v1:sha256:f6ea80616fef763a635b8aabd3f13e8ccb1b897d2e845123853e3216e85c23aa",
+        "source_sha256": {
+          "project_ontology_supervisor_check.py": "b7d9e8868784ec1948c9f3cd81630be04ad10ee1f43b0f3e2f466ca4656ae95f",
+          "project_ontology_supervisor_cli.py": "4d66d47449dcffdeafa1f105e6dc59c0257c0b6ca5c98506e51cdce96a037f8f",
+          "spec_ontology_context_reports.py": "97e4f53999595d5fe8ae55fe257bfada0e29a8dfe681dd31addd95ae6b38c0e8",
+          "spec_ontology_binding_index.py": "6bbd1d5a8cf4934c6183a2543fb85bddc04afb06e89376eccc64a5547790791a",
+          "spec_ontology_validation_report.py": "027ae37334ddc212a66571d82bb2a36921896bb2c20e80b3675b755ddc2c8a55",
+          "project_ontology_check_scopes.py": "a319f375d3f5a38961e0a590d6e42043cc7a50ecbd860f153e3807794f2a9ba7",
+          "project_ontology_scope_outcome_spec.py": "e4c6fa5ea5c57d45418f112f76f5eb2734d16773070f5b029c2e604f18a2911e",
+          "ontology_imports.py": "878fd62376ef6003b74f756758cbd0984d789ad03f86108e5d7a0375669f9983",
+          "ontology_snapshot.py": "51f64cf69e69532cda5dfdd44a71b4872af8d1b7cb6c106b97c0bb20ade05fae",
+          "project_ontology_context/vocabulary.py": "7a6b8969d9a23b6f7dd01d578c46ecf09093d24d34c788d8456ade48a7b0d511",
+          "project_ontology_context/composition.py": "dff003828d8726717ef7444842c046ceb29b0cce7d80082b0609cc8145be1b5f",
+          "project_ontology_context/foundation.py": "d9e0725d30c5a12bede4baa9260bfa7e375fd91a27ec18aa3caeaf414fe4a24a",
+          "spec_ontology_metamodel_check.py": "cde72e542fee6c1aba64ccff86b2b5203313599bd20400e0f7a9c44fae6553e8",
+          "project_ontology_meta_freshness.py": "dd218ee0c842060c57fd27ae0cb40e2f85aed448223ce73f473f60159c85bd79"
+        },
+        "provenance": "caller_attributed_not_attested"
+      }
+    },
+    {
+      "name": "composition",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-dc35597b/specgraph-runtime",
+        "--workspace",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-v02-context-h4yxy_be/composition",
+        "supervisor",
+        "--",
+        "--build-project-ontology-context-check",
+        "--ontology-context-project-id",
+        "gitview",
+        "--target-spec",
+        "GITVIEW-SPEC-0001",
+        "--ontology-context-selection",
+        "ontology/candidates/domain-v0.2.0-draft.1/composition-context.yaml",
+        "--ontology-context-check-scope",
+        "domain_vocabulary",
+        "--ontologyc",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+        "--ontologyc-sha256",
+        "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "--output-mode",
+        "full"
+      ],
+      "outcome": "checked",
+      "target": {
+        "id": "GITVIEW-SPEC-0001",
+        "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+        "sha256": "e3b75460f71a8946267132037d051f4a33b76030b2a3692528a3c9c2573cd09f"
+      },
+      "context": {
+        "artifact_kind": "project_ontology_context_report",
+        "schema_version": 1,
+        "project_id": "gitview",
+        "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-v02-context-h4yxy_be/composition",
+        "selection_path": "ontology/candidates/domain-v0.2.0-draft.1/composition-context.yaml",
+        "outcome": "verified",
+        "context_revision": "sha256:e94789b9de81e253ba1589c770d63970f2b61e90af445ae0e0197b6882684341",
+        "members": [
+          {
+            "id": "local.gitview.domain",
+            "namespace": "gitview",
+            "version": "0.2.0-draft-composition.1"
+          },
+          {
+            "id": "org.0al.events.core",
+            "namespace": "eventcore",
+            "version": "0.2.0"
+          },
+          {
+            "id": "org.0al.motivation.core",
+            "namespace": "motivcore",
+            "version": "0.1.0"
+          }
+        ],
+        "profiles": [
+          "ontologyc-motivation-composition-v1"
+        ],
+        "resolved_imports": [
+          {
+            "id": "specgraph.foundation",
+            "namespace": "sg",
+            "version": "0.1.0",
+            "source_uri": "https://github.com/0al-spec/Ontology/blob/0fcc94469d971aaf39fcc182bc5c6b8acff37fd2/SPECS/ontology/foundation/0.1.0/exports.json",
+            "source_sha256": "ef07cf4e8dd4cdc8c8dd583971fc3cabfe82e4b00fb0e680b6d1db48cfe262ad"
+          },
+          {
+            "id": "org.0al.events.core",
+            "namespace": "eventcore",
+            "version": "0.2.0",
+            "source_uri": "ontology/pilots/motivation-composition/dependencies/events-core/domain-ontology-package.yaml",
+            "source_sha256": "92a3245fc9acd15748fd1fa3cfb8e4fdc8fda429a5fd6cffd7a97bc13f2f359e"
+          },
+          {
+            "id": "org.0al.motivation.core",
+            "namespace": "motivcore",
+            "version": "0.1.0",
+            "source_uri": "ontology/pilots/motivation-composition/dependencies/motivation-core/domain-ontology-package.yaml",
+            "source_sha256": "3061eca33ddc2296c2c292695d98daf6697e92fb582da544bc1d5107721ae955"
+          }
+        ],
+        "composition": {
+          "dependency_rule": "explicit",
+          "name_resolution_rule": "qualified"
+        },
+        "snapshots": [
+          {
+            "id": "local.gitview.domain",
+            "namespace": "gitview",
+            "version": "0.2.0-draft-composition.1",
+            "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+            "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "compiler_provenance": "not_verified"
+          },
+          {
+            "id": "org.0al.events.core",
+            "namespace": "eventcore",
+            "version": "0.2.0",
+            "source_sha256": "92a3245fc9acd15748fd1fa3cfb8e4fdc8fda429a5fd6cffd7a97bc13f2f359e",
+            "ir_sha256": "e6c932ad8c492d168b63dbe112335c270d88ff758e016f3502031aefe9dea916",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "compiler_provenance": "not_verified"
+          },
+          {
+            "id": "org.0al.motivation.core",
+            "namespace": "motivcore",
+            "version": "0.1.0",
+            "source_sha256": "3061eca33ddc2296c2c292695d98daf6697e92fb582da544bc1d5107721ae955",
+            "ir_sha256": "25da040f4bd0b014014b1ed996250cd4c17a64503355f6f558917bec9ddd1fe9",
+            "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+            "compiler_provenance": "not_verified"
+          }
+        ],
+        "checks": [
+          {
+            "check": "profile",
+            "outcome": "verified",
+            "detail": "supported structural checking profile",
+            "package": null
+          },
+          {
+            "check": "selection",
+            "outcome": "verified",
+            "detail": "explicit package selection parsed",
+            "package": null
+          },
+          {
+            "check": "compiler",
+            "outcome": "verified",
+            "detail": "operator-provided executable available; provenance not verified",
+            "package": null
+          },
+          {
+            "check": "member_capture",
+            "outcome": "verified",
+            "detail": "source, IR and package identity checked",
+            "package": "local.gitview.domain"
+          },
+          {
+            "check": "member_capture",
+            "outcome": "verified",
+            "detail": "source, IR and package identity checked",
+            "package": "org.0al.events.core"
+          },
+          {
+            "check": "member_capture",
+            "outcome": "verified",
+            "detail": "source, IR and package identity checked",
+            "package": "org.0al.motivation.core"
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Project/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/Project/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Code/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/Code/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/VersionControlSystem/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/VersionControlSystem/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Repository/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/Repository/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/GitHub/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/GitHub/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Issue/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/Issue/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/PullRequest/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/PullRequest/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/ReviewThread/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/ReviewThread/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/CIStatus/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/CIStatus/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Metric/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/classes/Metric/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/versionControlsCode/domain: VersionControlSystem -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/VersionControlSystem",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/versionControlsCode/domain",
+              "name": "VersionControlSystem",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/VersionControlSystem"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/versionControlsCode/range: Code -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Code",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/versionControlsCode/range",
+              "name": "Code",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Code"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/managesRepository/domain: GitHub -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/GitHub",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/managesRepository/domain",
+              "name": "GitHub",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/GitHub"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/managesRepository/range: Repository -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/managesRepository/range",
+              "name": "Repository",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/projectIncludesRepository/domain: Project -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Project",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/projectIncludesRepository/domain",
+              "name": "Project",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Project"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/projectIncludesRepository/range: Repository -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/projectIncludesRepository/range",
+              "name": "Repository",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/pullRequestRepository/domain: PullRequest -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/pullRequestRepository/domain",
+              "name": "PullRequest",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/pullRequestRepository/range: Repository -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/pullRequestRepository/range",
+              "name": "Repository",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueRepository/domain: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueRepository/domain",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueRepository/range: Repository -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueRepository/range",
+              "name": "Repository",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/pullRequestIssueLink/domain: PullRequest -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/pullRequestIssueLink/domain",
+              "name": "PullRequest",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/pullRequestIssueLink/range: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/pullRequestIssueLink/range",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueClosingPullRequest/domain: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueClosingPullRequest/domain",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueClosingPullRequest/range: PullRequest -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueClosingPullRequest/range",
+              "name": "PullRequest",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueMentionedPullRequest/domain: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueMentionedPullRequest/domain",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueMentionedPullRequest/range: PullRequest -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueMentionedPullRequest/range",
+              "name": "PullRequest",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueParent/domain: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueParent/domain",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueParent/range: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueParent/range",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueSubIssue/domain: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueSubIssue/domain",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueSubIssue/range: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueSubIssue/range",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueBlockedBy/domain: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueBlockedBy/domain",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueBlockedBy/range: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueBlockedBy/range",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueBlocks/domain: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueBlocks/domain",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueBlocks/range: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueBlocks/range",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueMotiveLink/domain: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueMotiveLink/domain",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/issueMotiveLink/range: motivcore:Motive -> ontology://org.0al.motivation.core/0.1.0/classes/Motive",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/relations/issueMotiveLink/range",
+              "name": "motivcore:Motive",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/Motive"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/GitHubRepositoryContext/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/GitHubRepositoryContext/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/GitHubRepositoryContext/appliesTo/0: Repository -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/GitHubRepositoryContext/appliesTo/0",
+              "name": "Repository",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/GitHubRepositoryContext/appliesTo/1: Project -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Project",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/GitHubRepositoryContext/appliesTo/1",
+              "name": "Project",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Project"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/GitHubRepositoryContext/appliesTo/2: PullRequest -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/GitHubRepositoryContext/appliesTo/2",
+              "name": "PullRequest",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/GitHubRepositoryContext/appliesTo/3: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/GitHubRepositoryContext/appliesTo/3",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PartialObservationBoundary/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/PartialObservationBoundary/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PartialObservationBoundary/appliesTo/0: Project -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Project",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/PartialObservationBoundary/appliesTo/0",
+              "name": "Project",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Project"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PartialObservationBoundary/appliesTo/1: PullRequest -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/PartialObservationBoundary/appliesTo/1",
+              "name": "PullRequest",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PartialObservationBoundary/appliesTo/2: Issue -> ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+            "package": "local.gitview.domain",
+            "reference": {
+              "pointer": "/spec/policies/PartialObservationBoundary/appliesTo/2",
+              "name": "Issue",
+              "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Entity/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/Entity/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Episode/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/Episode/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/ActionKind/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/ActionKind/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/EventRegistry/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/EventRegistry/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/RecordedEvent/extends: sg:Event -> ontology://specgraph.foundation/0.1.0/classes/Event",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/RecordedEvent/extends",
+              "name": "sg:Event",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Event"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/EventCandidate/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/EventCandidate/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Interpretation/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/Interpretation/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/InterpretationCandidate/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/InterpretationCandidate/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/RoleBinding/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/RoleBinding/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/RelationInstance/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/RelationInstance/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/StateObservation/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/StateObservation/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/StateSnapshot/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/StateSnapshot/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Fact/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/Fact/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Delta/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/Delta/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/SourceAssertion/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/SourceAssertion/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/CausalHypothesis/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/CausalHypothesis/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/ReviewProposal/extends: sg:Command -> ontology://specgraph.foundation/0.1.0/classes/Command",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/ReviewProposal/extends",
+              "name": "sg:Command",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Command"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/RejectProposal/extends: sg:Command -> ontology://specgraph.foundation/0.1.0/classes/Command",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/RejectProposal/extends",
+              "name": "sg:Command",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Command"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/SourceSnapshotOrigin/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/SourceSnapshotOrigin/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/DirectObservationOrigin/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/DirectObservationOrigin/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/OperatorSnapshotOrigin/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/classes/OperatorSnapshotOrigin/extends",
+              "name": "sg:ValueObject",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordInEpisode/domain: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordInEpisode/domain",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordInEpisode/range: Episode -> ontology://org.0al.events.core/0.2.0/classes/Episode",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordInEpisode/range",
+              "name": "Episode",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Episode"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordOfActionKind/domain: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordOfActionKind/domain",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordOfActionKind/range: ActionKind -> ontology://org.0al.events.core/0.2.0/classes/ActionKind",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordOfActionKind/range",
+              "name": "ActionKind",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/ActionKind"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordInRegistry/domain: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordInRegistry/domain",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordInRegistry/range: EventRegistry -> ontology://org.0al.events.core/0.2.0/classes/EventRegistry",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordInRegistry/range",
+              "name": "EventRegistry",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/EventRegistry"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordBeforeSnapshot/domain: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordBeforeSnapshot/domain",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordBeforeSnapshot/range: StateSnapshot -> ontology://org.0al.events.core/0.2.0/classes/StateSnapshot",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordBeforeSnapshot/range",
+              "name": "StateSnapshot",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateSnapshot"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordAfterSnapshot/domain: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordAfterSnapshot/domain",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordAfterSnapshot/range: StateSnapshot -> ontology://org.0al.events.core/0.2.0/classes/StateSnapshot",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordAfterSnapshot/range",
+              "name": "StateSnapshot",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateSnapshot"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/observationSnapshot/domain: StateObservation -> ontology://org.0al.events.core/0.2.0/classes/StateObservation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/observationSnapshot/domain",
+              "name": "StateObservation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateObservation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/observationSnapshot/range: StateSnapshot -> ontology://org.0al.events.core/0.2.0/classes/StateSnapshot",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/observationSnapshot/range",
+              "name": "StateSnapshot",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateSnapshot"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/observationSuppliesFact/domain: StateObservation -> ontology://org.0al.events.core/0.2.0/classes/StateObservation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/observationSuppliesFact/domain",
+              "name": "StateObservation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateObservation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/observationSuppliesFact/range: Fact -> ontology://org.0al.events.core/0.2.0/classes/Fact",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/observationSuppliesFact/range",
+              "name": "Fact",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Fact"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/snapshotContainsFact/domain: StateSnapshot -> ontology://org.0al.events.core/0.2.0/classes/StateSnapshot",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/snapshotContainsFact/domain",
+              "name": "StateSnapshot",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateSnapshot"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/snapshotContainsFact/range: Fact -> ontology://org.0al.events.core/0.2.0/classes/Fact",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/snapshotContainsFact/range",
+              "name": "Fact",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Fact"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/deltaOfRecord/domain: Delta -> ontology://org.0al.events.core/0.2.0/classes/Delta",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/deltaOfRecord/domain",
+              "name": "Delta",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Delta"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/deltaOfRecord/range: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/deltaOfRecord/range",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/deltaAddsFact/domain: Delta -> ontology://org.0al.events.core/0.2.0/classes/Delta",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/deltaAddsFact/domain",
+              "name": "Delta",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Delta"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/deltaAddsFact/range: Fact -> ontology://org.0al.events.core/0.2.0/classes/Fact",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/deltaAddsFact/range",
+              "name": "Fact",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Fact"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/deltaRemovesFact/domain: Delta -> ontology://org.0al.events.core/0.2.0/classes/Delta",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/deltaRemovesFact/domain",
+              "name": "Delta",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Delta"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/deltaRemovesFact/range: Fact -> ontology://org.0al.events.core/0.2.0/classes/Fact",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/deltaRemovesFact/range",
+              "name": "Fact",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Fact"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/interpretsRecord/domain: Interpretation -> ontology://org.0al.events.core/0.2.0/classes/Interpretation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/interpretsRecord/domain",
+              "name": "Interpretation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Interpretation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/interpretsRecord/range: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/interpretsRecord/range",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/interpretationBindsRole/domain: Interpretation -> ontology://org.0al.events.core/0.2.0/classes/Interpretation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/interpretationBindsRole/domain",
+              "name": "Interpretation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Interpretation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/interpretationBindsRole/range: RoleBinding -> ontology://org.0al.events.core/0.2.0/classes/RoleBinding",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/interpretationBindsRole/range",
+              "name": "RoleBinding",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RoleBinding"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/roleBoundEntity/domain: RoleBinding -> ontology://org.0al.events.core/0.2.0/classes/RoleBinding",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/roleBoundEntity/domain",
+              "name": "RoleBinding",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RoleBinding"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/roleBoundEntity/range: Entity -> ontology://org.0al.events.core/0.2.0/classes/Entity",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/roleBoundEntity/range",
+              "name": "Entity",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Entity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateInEpisode/domain: EventCandidate -> ontology://org.0al.events.core/0.2.0/classes/EventCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateInEpisode/domain",
+              "name": "EventCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/EventCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateInEpisode/range: Episode -> ontology://org.0al.events.core/0.2.0/classes/Episode",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateInEpisode/range",
+              "name": "Episode",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Episode"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateBeforeObservation/domain: EventCandidate -> ontology://org.0al.events.core/0.2.0/classes/EventCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateBeforeObservation/domain",
+              "name": "EventCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/EventCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateBeforeObservation/range: StateObservation -> ontology://org.0al.events.core/0.2.0/classes/StateObservation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateBeforeObservation/range",
+              "name": "StateObservation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateObservation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateAfterObservation/domain: EventCandidate -> ontology://org.0al.events.core/0.2.0/classes/EventCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateAfterObservation/domain",
+              "name": "EventCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/EventCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateAfterObservation/range: StateObservation -> ontology://org.0al.events.core/0.2.0/classes/StateObservation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateAfterObservation/range",
+              "name": "StateObservation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateObservation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/describesCandidateEvent/domain: InterpretationCandidate -> ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/describesCandidateEvent/domain",
+              "name": "InterpretationCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/describesCandidateEvent/range: EventCandidate -> ontology://org.0al.events.core/0.2.0/classes/EventCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/describesCandidateEvent/range",
+              "name": "EventCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/EventCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateBindsRole/domain: InterpretationCandidate -> ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateBindsRole/domain",
+              "name": "InterpretationCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateBindsRole/range: RoleBinding -> ontology://org.0al.events.core/0.2.0/classes/RoleBinding",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateBindsRole/range",
+              "name": "RoleBinding",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RoleBinding"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateCitesAssertion/domain: InterpretationCandidate -> ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateCitesAssertion/domain",
+              "name": "InterpretationCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateCitesAssertion/range: SourceAssertion -> ontology://org.0al.events.core/0.2.0/classes/SourceAssertion",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateCitesAssertion/range",
+              "name": "SourceAssertion",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/SourceAssertion"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordCitesAssertion/domain: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordCitesAssertion/domain",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/recordCitesAssertion/range: SourceAssertion -> ontology://org.0al.events.core/0.2.0/classes/SourceAssertion",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/recordCitesAssertion/range",
+              "name": "SourceAssertion",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/SourceAssertion"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateEnrichedByRecord/domain: EventCandidate -> ontology://org.0al.events.core/0.2.0/classes/EventCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateEnrichedByRecord/domain",
+              "name": "EventCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/EventCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateEnrichedByRecord/range: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateEnrichedByRecord/range",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateResolvedAsInterpretation/domain: InterpretationCandidate -> ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateResolvedAsInterpretation/domain",
+              "name": "InterpretationCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/candidateResolvedAsInterpretation/range: Interpretation -> ontology://org.0al.events.core/0.2.0/classes/Interpretation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/candidateResolvedAsInterpretation/range",
+              "name": "Interpretation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Interpretation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/relationBindsRole/domain: RelationInstance -> ontology://org.0al.events.core/0.2.0/classes/RelationInstance",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/relationBindsRole/domain",
+              "name": "RelationInstance",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RelationInstance"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/relationBindsRole/range: RoleBinding -> ontology://org.0al.events.core/0.2.0/classes/RoleBinding",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/relationBindsRole/range",
+              "name": "RoleBinding",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RoleBinding"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/relationOriginRecord/domain: RelationInstance -> ontology://org.0al.events.core/0.2.0/classes/RelationInstance",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/relationOriginRecord/domain",
+              "name": "RelationInstance",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RelationInstance"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/relationOriginRecord/range: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/relationOriginRecord/range",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisCauseView/domain: CausalHypothesis -> ontology://org.0al.events.core/0.2.0/classes/CausalHypothesis",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisCauseView/domain",
+              "name": "CausalHypothesis",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/CausalHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisCauseView/range: Interpretation -> ontology://org.0al.events.core/0.2.0/classes/Interpretation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisCauseView/range",
+              "name": "Interpretation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Interpretation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisEffectView/domain: CausalHypothesis -> ontology://org.0al.events.core/0.2.0/classes/CausalHypothesis",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisEffectView/domain",
+              "name": "CausalHypothesis",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/CausalHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisEffectView/range: Interpretation -> ontology://org.0al.events.core/0.2.0/classes/Interpretation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisEffectView/range",
+              "name": "Interpretation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Interpretation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisCitesAssertion/domain: CausalHypothesis -> ontology://org.0al.events.core/0.2.0/classes/CausalHypothesis",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisCitesAssertion/domain",
+              "name": "CausalHypothesis",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/CausalHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisCitesAssertion/range: SourceAssertion -> ontology://org.0al.events.core/0.2.0/classes/SourceAssertion",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisCitesAssertion/range",
+              "name": "SourceAssertion",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/SourceAssertion"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/snapshotSourceOrigin/domain: StateSnapshot -> ontology://org.0al.events.core/0.2.0/classes/StateSnapshot",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/snapshotSourceOrigin/domain",
+              "name": "StateSnapshot",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateSnapshot"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/snapshotSourceOrigin/range: SourceSnapshotOrigin -> ontology://org.0al.events.core/0.2.0/classes/SourceSnapshotOrigin",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/snapshotSourceOrigin/range",
+              "name": "SourceSnapshotOrigin",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/SourceSnapshotOrigin"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/snapshotDirectOrigin/domain: StateSnapshot -> ontology://org.0al.events.core/0.2.0/classes/StateSnapshot",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/snapshotDirectOrigin/domain",
+              "name": "StateSnapshot",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateSnapshot"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/snapshotDirectOrigin/range: DirectObservationOrigin -> ontology://org.0al.events.core/0.2.0/classes/DirectObservationOrigin",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/snapshotDirectOrigin/range",
+              "name": "DirectObservationOrigin",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/DirectObservationOrigin"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/snapshotOperatorOrigin/domain: StateSnapshot -> ontology://org.0al.events.core/0.2.0/classes/StateSnapshot",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/snapshotOperatorOrigin/domain",
+              "name": "StateSnapshot",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateSnapshot"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/snapshotOperatorOrigin/range: OperatorSnapshotOrigin -> ontology://org.0al.events.core/0.2.0/classes/OperatorSnapshotOrigin",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/snapshotOperatorOrigin/range",
+              "name": "OperatorSnapshotOrigin",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/OperatorSnapshotOrigin"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/originCitesAssertion/domain: SourceSnapshotOrigin -> ontology://org.0al.events.core/0.2.0/classes/SourceSnapshotOrigin",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/originCitesAssertion/domain",
+              "name": "SourceSnapshotOrigin",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/SourceSnapshotOrigin"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/originCitesAssertion/range: SourceAssertion -> ontology://org.0al.events.core/0.2.0/classes/SourceAssertion",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/relations/originCitesAssertion/range",
+              "name": "SourceAssertion",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/SourceAssertion"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PreserveRecordedObservations/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/PreserveRecordedObservations/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PreserveRecordedObservations/appliesTo/0: EventRegistry -> ontology://org.0al.events.core/0.2.0/classes/EventRegistry",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/PreserveRecordedObservations/appliesTo/0",
+              "name": "EventRegistry",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/EventRegistry"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PreserveRecordedObservations/appliesTo/1: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/PreserveRecordedObservations/appliesTo/1",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PreserveRecordedObservations/appliesTo/2: Interpretation -> ontology://org.0al.events.core/0.2.0/classes/Interpretation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/PreserveRecordedObservations/appliesTo/2",
+              "name": "Interpretation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Interpretation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/KnownStatesForExactDelta/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/KnownStatesForExactDelta/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/KnownStatesForExactDelta/appliesTo/0: StateObservation -> ontology://org.0al.events.core/0.2.0/classes/StateObservation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/KnownStatesForExactDelta/appliesTo/0",
+              "name": "StateObservation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateObservation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/KnownStatesForExactDelta/appliesTo/1: StateSnapshot -> ontology://org.0al.events.core/0.2.0/classes/StateSnapshot",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/KnownStatesForExactDelta/appliesTo/1",
+              "name": "StateSnapshot",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateSnapshot"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/KnownStatesForExactDelta/appliesTo/2: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/KnownStatesForExactDelta/appliesTo/2",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/KnownStatesForExactDelta/appliesTo/3: Delta -> ontology://org.0al.events.core/0.2.0/classes/Delta",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/KnownStatesForExactDelta/appliesTo/3",
+              "name": "Delta",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Delta"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/KnownStatesForExactDelta/appliesTo/4: EventCandidate -> ontology://org.0al.events.core/0.2.0/classes/EventCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/KnownStatesForExactDelta/appliesTo/4",
+              "name": "EventCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/EventCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ScopedSourceAttribution/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/ScopedSourceAttribution/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ScopedSourceAttribution/appliesTo/0: SourceAssertion -> ontology://org.0al.events.core/0.2.0/classes/SourceAssertion",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/ScopedSourceAttribution/appliesTo/0",
+              "name": "SourceAssertion",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/SourceAssertion"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ScopedSourceAttribution/appliesTo/1: InterpretationCandidate -> ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/ScopedSourceAttribution/appliesTo/1",
+              "name": "InterpretationCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/CandidateAuthorityBoundary/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/CandidateAuthorityBoundary/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/CandidateAuthorityBoundary/appliesTo/0: EventCandidate -> ontology://org.0al.events.core/0.2.0/classes/EventCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/CandidateAuthorityBoundary/appliesTo/0",
+              "name": "EventCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/EventCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/CandidateAuthorityBoundary/appliesTo/1: InterpretationCandidate -> ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/CandidateAuthorityBoundary/appliesTo/1",
+              "name": "InterpretationCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/CandidateAuthorityBoundary/appliesTo/2: Interpretation -> ontology://org.0al.events.core/0.2.0/classes/Interpretation",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/CandidateAuthorityBoundary/appliesTo/2",
+              "name": "Interpretation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Interpretation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/BoundedCausalHypothesis/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/BoundedCausalHypothesis/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/BoundedCausalHypothesis/appliesTo/0: CausalHypothesis -> ontology://org.0al.events.core/0.2.0/classes/CausalHypothesis",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/BoundedCausalHypothesis/appliesTo/0",
+              "name": "CausalHypothesis",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/CausalHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SnapshotOriginAdmission/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/SnapshotOriginAdmission/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SnapshotOriginAdmission/appliesTo/0: StateSnapshot -> ontology://org.0al.events.core/0.2.0/classes/StateSnapshot",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/SnapshotOriginAdmission/appliesTo/0",
+              "name": "StateSnapshot",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/StateSnapshot"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SnapshotOriginAdmission/appliesTo/1: SourceSnapshotOrigin -> ontology://org.0al.events.core/0.2.0/classes/SourceSnapshotOrigin",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/SnapshotOriginAdmission/appliesTo/1",
+              "name": "SourceSnapshotOrigin",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/SourceSnapshotOrigin"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SnapshotOriginAdmission/appliesTo/2: DirectObservationOrigin -> ontology://org.0al.events.core/0.2.0/classes/DirectObservationOrigin",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/SnapshotOriginAdmission/appliesTo/2",
+              "name": "DirectObservationOrigin",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/DirectObservationOrigin"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SnapshotOriginAdmission/appliesTo/3: OperatorSnapshotOrigin -> ontology://org.0al.events.core/0.2.0/classes/OperatorSnapshotOrigin",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/SnapshotOriginAdmission/appliesTo/3",
+              "name": "OperatorSnapshotOrigin",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/OperatorSnapshotOrigin"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ExplicitEnrichmentAdmission/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/ExplicitEnrichmentAdmission/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ExplicitEnrichmentAdmission/appliesTo/0: EventCandidate -> ontology://org.0al.events.core/0.2.0/classes/EventCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/ExplicitEnrichmentAdmission/appliesTo/0",
+              "name": "EventCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/EventCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ExplicitEnrichmentAdmission/appliesTo/1: InterpretationCandidate -> ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/ExplicitEnrichmentAdmission/appliesTo/1",
+              "name": "InterpretationCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ExplicitEnrichmentAdmission/appliesTo/2: RecordedEvent -> ontology://org.0al.events.core/0.2.0/classes/RecordedEvent",
+            "package": "org.0al.events.core",
+            "reference": {
+              "pointer": "/spec/policies/ExplicitEnrichmentAdmission/appliesTo/2",
+              "name": "RecordedEvent",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RecordedEvent"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/Motive/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/classes/Motive/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/MotivationHypothesis/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/classes/MotivationHypothesis/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/OperatorMotivationSupport/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/classes/OperatorMotivationSupport/extends",
+              "name": "sg:DomainEntity",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/ReviewMotivation/extends: sg:Command -> ontology://specgraph.foundation/0.1.0/classes/Command",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/classes/ReviewMotivation/extends",
+              "name": "sg:Command",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Command"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/classes/RejectMotivation/extends: sg:Command -> ontology://specgraph.foundation/0.1.0/classes/Command",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/classes/RejectMotivation/extends",
+              "name": "sg:Command",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Command"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisMotive/domain: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisMotive/domain",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisMotive/range: Motive -> ontology://org.0al.motivation.core/0.1.0/classes/Motive",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisMotive/range",
+              "name": "Motive",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/Motive"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisView/domain: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisView/domain",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisView/range/oneOf/0: eventcore:Interpretation -> ontology://org.0al.events.core/0.2.0/classes/Interpretation",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisView/range/oneOf/0",
+              "name": "eventcore:Interpretation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Interpretation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisView/range/oneOf/1: eventcore:InterpretationCandidate -> ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisView/range/oneOf/1",
+              "name": "eventcore:InterpretationCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisActorRole/domain: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisActorRole/domain",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisActorRole/range: eventcore:RoleBinding -> ontology://org.0al.events.core/0.2.0/classes/RoleBinding",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisActorRole/range",
+              "name": "eventcore:RoleBinding",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/RoleBinding"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisPromptingEntity/domain: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisPromptingEntity/domain",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisPromptingEntity/range: eventcore:Entity -> ontology://org.0al.events.core/0.2.0/classes/Entity",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisPromptingEntity/range",
+              "name": "eventcore:Entity",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Entity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisPromptingFact/domain: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisPromptingFact/domain",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisPromptingFact/range: eventcore:Fact -> ontology://org.0al.events.core/0.2.0/classes/Fact",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisPromptingFact/range",
+              "name": "eventcore:Fact",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Fact"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisPromptingView/domain: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisPromptingView/domain",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisPromptingView/range/oneOf/0: eventcore:Interpretation -> ontology://org.0al.events.core/0.2.0/classes/Interpretation",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisPromptingView/range/oneOf/0",
+              "name": "eventcore:Interpretation",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Interpretation"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisPromptingView/range/oneOf/1: eventcore:InterpretationCandidate -> ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisPromptingView/range/oneOf/1",
+              "name": "eventcore:InterpretationCandidate",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/InterpretationCandidate"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisPositiveSupport/domain: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisPositiveSupport/domain",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisPositiveSupport/range/oneOf/0: eventcore:SourceAssertion -> ontology://org.0al.events.core/0.2.0/classes/SourceAssertion",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisPositiveSupport/range/oneOf/0",
+              "name": "eventcore:SourceAssertion",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/SourceAssertion"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisPositiveSupport/range/oneOf/1: OperatorMotivationSupport -> ontology://org.0al.motivation.core/0.1.0/classes/OperatorMotivationSupport",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisPositiveSupport/range/oneOf/1",
+              "name": "OperatorMotivationSupport",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/OperatorMotivationSupport"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisNegativeSupport/domain: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisNegativeSupport/domain",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisNegativeSupport/range/oneOf/0: eventcore:SourceAssertion -> ontology://org.0al.events.core/0.2.0/classes/SourceAssertion",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisNegativeSupport/range/oneOf/0",
+              "name": "eventcore:SourceAssertion",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/SourceAssertion"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/hypothesisNegativeSupport/range/oneOf/1: OperatorMotivationSupport -> ontology://org.0al.motivation.core/0.1.0/classes/OperatorMotivationSupport",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/hypothesisNegativeSupport/range/oneOf/1",
+              "name": "OperatorMotivationSupport",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/OperatorMotivationSupport"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/operatorSupportAuthor/domain: OperatorMotivationSupport -> ontology://org.0al.motivation.core/0.1.0/classes/OperatorMotivationSupport",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/operatorSupportAuthor/domain",
+              "name": "OperatorMotivationSupport",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/OperatorMotivationSupport"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/relations/operatorSupportAuthor/range: eventcore:Entity -> ontology://org.0al.events.core/0.2.0/classes/Entity",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/relations/operatorSupportAuthor/range",
+              "name": "eventcore:Entity",
+              "uri": "ontology://org.0al.events.core/0.2.0/classes/Entity"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ActorScopedMotivation/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/ActorScopedMotivation/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ActorScopedMotivation/appliesTo/0: Motive -> ontology://org.0al.motivation.core/0.1.0/classes/Motive",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/ActorScopedMotivation/appliesTo/0",
+              "name": "Motive",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/Motive"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ActorScopedMotivation/appliesTo/1: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/ActorScopedMotivation/appliesTo/1",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/IndependentMotivationSupport/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/IndependentMotivationSupport/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/IndependentMotivationSupport/appliesTo/0: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/IndependentMotivationSupport/appliesTo/0",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SourceAndOperatorMotivation/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/SourceAndOperatorMotivation/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SourceAndOperatorMotivation/appliesTo/0: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/SourceAndOperatorMotivation/appliesTo/0",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SourceAndOperatorMotivation/appliesTo/1: OperatorMotivationSupport -> ontology://org.0al.motivation.core/0.1.0/classes/OperatorMotivationSupport",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/SourceAndOperatorMotivation/appliesTo/1",
+              "name": "OperatorMotivationSupport",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/OperatorMotivationSupport"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SeparateContributionAndConsequence/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/SeparateContributionAndConsequence/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SeparateContributionAndConsequence/appliesTo/0: Motive -> ontology://org.0al.motivation.core/0.1.0/classes/Motive",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/SeparateContributionAndConsequence/appliesTo/0",
+              "name": "Motive",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/Motive"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/SeparateContributionAndConsequence/appliesTo/1: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/SeparateContributionAndConsequence/appliesTo/1",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PromptingReasonBoundary/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/PromptingReasonBoundary/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/PromptingReasonBoundary/appliesTo/0: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/PromptingReasonBoundary/appliesTo/0",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ReviewIsNotMotiveTruth/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/ReviewIsNotMotiveTruth/extends",
+              "name": "sg:Policy",
+              "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+            }
+          },
+          {
+            "check": "name_resolution",
+            "outcome": "verified",
+            "detail": "/spec/policies/ReviewIsNotMotiveTruth/appliesTo/0: MotivationHypothesis -> ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis",
+            "package": "org.0al.motivation.core",
+            "reference": {
+              "pointer": "/spec/policies/ReviewIsNotMotiveTruth/appliesTo/0",
+              "name": "MotivationHypothesis",
+              "uri": "ontology://org.0al.motivation.core/0.1.0/classes/MotivationHypothesis"
+            }
+          },
+          {
+            "check": "dependency_closure",
+            "outcome": "verified",
+            "detail": "Pinned project/motivation/events/foundation closure and references checked",
+            "package": null
+          }
+        ],
+        "semantic_approval": "not_established",
+        "canonical_mutations_allowed": false
+      },
+      "assessments": {
+        "domain_vocabulary": {
+          "check_scope": "domain_vocabulary",
+          "outcome": "analyzed",
+          "diagnostics": [],
+          "project_context": {
+            "project_id": "gitview",
+            "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-v02-context-h4yxy_be/composition",
+            "context_revision": "sha256:e94789b9de81e253ba1589c770d63970f2b61e90af445ae0e0197b6882684341",
+            "context_outcome": "verified",
+            "scope": "selected_composition_symbols",
+            "verified_closure": true,
+            "analysis_profile": "specgraph-composed-symbol-advisory-v2",
+            "semantic_approval": "not_established",
+            "binding_authority": "structural_advisory_only",
+            "members": [
+              {
+                "id": "local.gitview.domain",
+                "namespace": "gitview",
+                "version": "0.2.0-draft-composition.1",
+                "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                "compiler_provenance": "not_verified"
+              },
+              {
+                "id": "org.0al.events.core",
+                "namespace": "eventcore",
+                "version": "0.2.0",
+                "source_sha256": "92a3245fc9acd15748fd1fa3cfb8e4fdc8fda429a5fd6cffd7a97bc13f2f359e",
+                "ir_sha256": "e6c932ad8c492d168b63dbe112335c270d88ff758e016f3502031aefe9dea916",
+                "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                "compiler_provenance": "not_verified"
+              },
+              {
+                "id": "org.0al.motivation.core",
+                "namespace": "motivcore",
+                "version": "0.1.0",
+                "source_sha256": "3061eca33ddc2296c2c292695d98daf6697e92fb582da544bc1d5107721ae955",
+                "ir_sha256": "25da040f4bd0b014014b1ed996250cd4c17a64503355f6f558917bec9ddd1fe9",
+                "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                "compiler_provenance": "not_verified"
+              }
+            ],
+            "foundation_catalog": {
+              "id": "specgraph.foundation",
+              "namespace": "sg",
+              "version": "0.1.0",
+              "source_uri": "https://github.com/0al-spec/Ontology/blob/0fcc94469d971aaf39fcc182bc5c6b8acff37fd2/SPECS/ontology/foundation/0.1.0/exports.json",
+              "source_sha256": "ef07cf4e8dd4cdc8c8dd583971fc3cabfe82e4b00fb0e680b6d1db48cfe262ad"
+            }
+          },
+          "analysis_profile": "specgraph-scoped-ontology-advisory-v1",
+          "summary": {
+            "binding_index": {
+              "spec_count": 1,
+              "accepted_binding_count": 11,
+              "relation_candidate_count": 0,
+              "gap_count": 3,
+              "next_gap": "review_legacy_spec_ontology_bindings"
+            },
+            "validation_report": {
+              "spec_count": 1,
+              "finding_count": 3,
+              "warning_count": 3,
+              "passed_check_count": 0,
+              "next_gap": "review_spec_ontology_validation_findings"
+            }
+          }
+        },
+        "specification_metamodel": {
+          "check_scope": "specification_metamodel",
+          "outcome": "not_requested",
+          "diagnostics": [],
+          "project_context": null,
+          "analysis_profile": null,
+          "summary": null
+        }
+      },
+      "findings": [
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.GitHubRepository",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "GitHubRepository",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-githubrepository",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.GitView",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "GitView",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-gitview",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        },
+        {
+          "finding_id": "GITVIEW-SPEC-0001.gap.User",
+          "severity": "warning",
+          "classification": "unknown_legacy_term",
+          "term": "User",
+          "source": "specification.terminology",
+          "gap_ref": "ontology-gap-gitview-spec-0001-user",
+          "candidates": [],
+          "candidate_origins": [],
+          "suggested_action": "review_ontology_gap"
+        }
+      ],
+      "binding_entries": [
+        {
+          "spec_id": "GITVIEW-SPEC-0001",
+          "path": "specs/nodes/GITVIEW-SPEC-0001.yaml",
+          "status": "domain_report_only",
+          "accepted_bindings": [
+            {
+              "term": "motivcore:Motive",
+              "ontology_ref": "motivcore:Motive",
+              "kind": "class",
+              "source": "specification.ontology_refs[0]",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "motivcore:Motive",
+                  "ontology_uri": "ontology://org.0al.motivation.core/0.1.0/classes/Motive",
+                  "package": {
+                    "id": "org.0al.motivation.core",
+                    "namespace": "motivcore",
+                    "version": "0.1.0"
+                  },
+                  "source_sha256": "3061eca33ddc2296c2c292695d98daf6697e92fb582da544bc1d5107721ae955",
+                  "ir_sha256": "25da040f4bd0b014014b1ed996250cd4c17a64503355f6f558917bec9ddd1fe9",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": "ontology/pilots/motivation-composition/dependencies/motivation-core/domain-ontology-package.yaml",
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "CIStatus",
+              "ontology_ref": "gitview:CIStatus",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:CIStatus",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/CIStatus",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft-composition.1"
+                  },
+                  "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                  "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Code",
+              "ontology_ref": "gitview:Code",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Code",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Code",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft-composition.1"
+                  },
+                  "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                  "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "GitHub",
+              "ontology_ref": "gitview:GitHub",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:GitHub",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/GitHub",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft-composition.1"
+                  },
+                  "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                  "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Issue",
+              "ontology_ref": "gitview:Issue",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Issue",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Issue",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft-composition.1"
+                  },
+                  "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                  "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Metric",
+              "ontology_ref": "gitview:Metric",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Metric",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Metric",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft-composition.1"
+                  },
+                  "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                  "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Project",
+              "ontology_ref": "gitview:Project",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Project",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Project",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft-composition.1"
+                  },
+                  "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                  "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "PullRequest",
+              "ontology_ref": "gitview:PullRequest",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:PullRequest",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/PullRequest",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft-composition.1"
+                  },
+                  "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                  "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "Repository",
+              "ontology_ref": "gitview:Repository",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:Repository",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/Repository",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft-composition.1"
+                  },
+                  "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                  "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "ReviewThread",
+              "ontology_ref": "gitview:ReviewThread",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:ReviewThread",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/ReviewThread",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft-composition.1"
+                  },
+                  "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                  "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            },
+            {
+              "term": "VersionControlSystem",
+              "ontology_ref": "gitview:VersionControlSystem",
+              "kind": "class",
+              "source": "specification.terminology",
+              "candidate_origins": [
+                {
+                  "ontology_ref": "gitview:VersionControlSystem",
+                  "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft-composition.1/classes/VersionControlSystem",
+                  "package": {
+                    "id": "local.gitview.domain",
+                    "namespace": "gitview",
+                    "version": "0.2.0-draft-composition.1"
+                  },
+                  "source_sha256": "82147bdbdb536683508c0f660b44d1c399324fcc4ba36203b89ff3f3b95d5d96",
+                  "ir_sha256": "045cd30858a87d4ca5d05aa5b35ab0c91632b51de51a3862b36ce0ecbacb7682",
+                  "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+                  "source_uri": null,
+                  "verification": "compiler_checked"
+                }
+              ]
+            }
+          ],
+          "relation_candidates": [],
+          "gaps": [
+            {
+              "gap_id": "ontology-gap-gitview-spec-0001-githubrepository",
+              "term": "GitHubRepository",
+              "source": "specification.terminology",
+              "classification": "legacy_unknown_term",
+              "resolution": "unknown",
+              "candidates": [],
+              "candidate_origins": []
+            },
+            {
+              "gap_id": "ontology-gap-gitview-spec-0001-gitview",
+              "term": "GitView",
+              "source": "specification.terminology",
+              "classification": "legacy_unknown_term",
+              "resolution": "unknown",
+              "candidates": [],
+              "candidate_origins": []
+            },
+            {
+              "gap_id": "ontology-gap-gitview-spec-0001-user",
+              "term": "User",
+              "source": "specification.terminology",
+              "classification": "legacy_unknown_term",
+              "resolution": "unknown",
+              "candidates": [],
+              "candidate_origins": []
+            }
+          ]
+        }
+      ],
+      "raw_report_path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-v02-context-h4yxy_be/composition.json",
+      "raw_report_sha256": "9b441a7926d36cfa1646fc5fcceea76cec413e3af6e69184f3ff3fab1d4f0673",
+      "producer": {
+        "identity": "specgraph-scoped-ontology-advisory-v1:sha256:f6ea80616fef763a635b8aabd3f13e8ccb1b897d2e845123853e3216e85c23aa",
+        "source_sha256": {
+          "project_ontology_supervisor_check.py": "b7d9e8868784ec1948c9f3cd81630be04ad10ee1f43b0f3e2f466ca4656ae95f",
+          "project_ontology_supervisor_cli.py": "4d66d47449dcffdeafa1f105e6dc59c0257c0b6ca5c98506e51cdce96a037f8f",
+          "spec_ontology_context_reports.py": "97e4f53999595d5fe8ae55fe257bfada0e29a8dfe681dd31addd95ae6b38c0e8",
+          "spec_ontology_binding_index.py": "6bbd1d5a8cf4934c6183a2543fb85bddc04afb06e89376eccc64a5547790791a",
+          "spec_ontology_validation_report.py": "027ae37334ddc212a66571d82bb2a36921896bb2c20e80b3675b755ddc2c8a55",
+          "project_ontology_check_scopes.py": "a319f375d3f5a38961e0a590d6e42043cc7a50ecbd860f153e3807794f2a9ba7",
+          "project_ontology_scope_outcome_spec.py": "e4c6fa5ea5c57d45418f112f76f5eb2734d16773070f5b029c2e604f18a2911e",
+          "ontology_imports.py": "878fd62376ef6003b74f756758cbd0984d789ad03f86108e5d7a0375669f9983",
+          "ontology_snapshot.py": "51f64cf69e69532cda5dfdd44a71b4872af8d1b7cb6c106b97c0bb20ade05fae",
+          "project_ontology_context/vocabulary.py": "7a6b8969d9a23b6f7dd01d578c46ecf09093d24d34c788d8456ade48a7b0d511",
+          "project_ontology_context/composition.py": "dff003828d8726717ef7444842c046ceb29b0cce7d80082b0609cc8145be1b5f",
+          "project_ontology_context/foundation.py": "d9e0725d30c5a12bede4baa9260bfa7e375fd91a27ec18aa3caeaf414fe4a24a",
+          "spec_ontology_metamodel_check.py": "cde72e542fee6c1aba64ccff86b2b5203313599bd20400e0f7a9c44fae6553e8",
+          "project_ontology_meta_freshness.py": "dd218ee0c842060c57fd27ae0cb40e2f85aed448223ce73f473f60159c85bd79"
+        },
+        "provenance": "caller_attributed_not_attested"
+      }
+    }
+  ]
+}

@@ -1,0 +1,523 @@
+artifact_kind: gitview_selected_scope_candidate_coverage
+schema_version: 1
+status: agent_proposal_not_accepted
+sketch_revision: 0bbeb16ed68e4cd6a5e660743e225325
+root_draft_sha256: e3b75460f71a8946267132037d051f4a33b76030b2a3692528a3c9c2573cd09f
+boundary: 59 selected checklist items, not atomic requirement count or completeness percentage; structural proposals
+  do not establish acceptance.
+items:
+- set: project
+  source_item: A1. Stable local ID.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: &id001
+  - conversation:gitview/excerpt-40
+  - conversation:gitview/excerpt-41
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Local identity representation is not selected; generated class id is not silently adopted.
+- set: project
+  source_item: A2. Name.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers:
+  - /spec/classes/Project/fields/name
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: project
+  source_item: A3. Optional purpose description.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers:
+  - /spec/classes/Project/fields/description
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: project
+  source_item: A4. Membership through references to GitHubRepository identities.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers:
+  - /spec/relations/projectIncludesRepository
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: project
+  source_item: B1. Repository count and data coverage, such as available data for four of five repositories.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Derived count/coverage semantics belong to a bounded specification.
+- set: project
+  source_item: B2. Open PR, draft subset and open Issue counts, separately.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Derived summary uses member PR/Issue; not a new ontology entity.
+- set: project
+  source_item: B3. Attention signals for CI, review, unresolved threads and Issue blockers.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Signals need policy definitions; input properties/links do not settle their computation.
+- set: project
+  source_item: B4. A checks-and-review-passed selection only if the separate Repository D rule is later selected.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Conditional Repository D predicate has not been selected.
+- set: project
+  source_item: B5. Merged PR and closed Issue counts by reason for one selected period.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Periods, closure reasons and sufficient historical observations remain open.
+- set: project
+  source_item: B6. Charts of those indicators when sufficient history exists.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Chart is a UX representation; sufficient history and metric definitions required.
+- set: project
+  source_item: C1. Navigate through the repository grid into PR and Issue; a single-repository Project skips the
+    duplicate repository screen without becoming identical to Repository.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Navigation behavior over existing Project/Repository/PR/Issue, not a new entity.
+- set: project
+  source_item: C2. Navigate directly from a Project counter to the corresponding filtered objects across its repositories,
+    retaining each object's source repository context.
+  source_document: docs/drafts/project-summary-proposal.md
+  source_refs: *id001
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Filtered navigation behavior over existing objects; exact filtering rules pending.
+- set: pull_request
+  source_item: A1. Source ID and PR number within its repository.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: &id002
+  - conversation:gitview/excerpt-33
+  - conversation:gitview/excerpt-34
+  - conversation:gitview/excerpt-35-reply
+  - conversation:gitview/excerpt-38
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/sourceId
+  - /spec/classes/PullRequest/fields/number
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: A2. Title.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/title
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: A3. Description text with the selected PR sections.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/body
+  - /spec/classes/PullRequest/fields/problemText
+  - /spec/classes/PullRequest/fields/motivationText
+  - /spec/classes/PullRequest/fields/expectedOutcomeText
+  - /spec/classes/PullRequest/fields/changesText
+  - /spec/classes/PullRequest/fields/validationText
+  - /spec/classes/PullRequest/fields/referencesText
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: A4. URL of the original object.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/url
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: B1. Open, closed without merge, or merged lifecycle state.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/lifecycleState
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: B2. Draft flag separately from lifecycle, CI and review.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/isDraft
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: B3. Labels.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Label collection/reference representation is not encoded by scalar fields.
+- set: pull_request
+  source_item: C1. Target GitHubRepository.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/relations/pullRequestRepository
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: C2. Source and target branches and reference to the current change revision.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/baseBranch
+  - /spec/classes/PullRequest/fields/headBranch
+  - /spec/classes/PullRequest/fields/revisionRef
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: C3. Author or creator as a source participant role.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Source creator is a contextual participant reference, not automatically User.
+- set: pull_request
+  source_item: C4. Requested reviewers.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Requested-reviewer collection/reference representation remains open.
+- set: pull_request
+  source_item: C5. Linked Issues.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/relations/pullRequestIssueLink
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: D1. Available aggregate review assessment with the source's meaning.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/reviewAssessment
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: D3. Total review-thread count and unresolved review-thread count, separately.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/reviewThreadCount
+  - /spec/classes/PullRequest/fields/unresolvedReviewThreadCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: E.red. Current red-check count.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/redCheckCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: E.yellow. Current yellow-check count.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/yellowCheckCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: E.green. Current green-check count.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/greenCheckCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: E.total. Total current-check count.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/totalCheckCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: F1. Added and removed lines, separately.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/addedLineCount
+  - /spec/classes/PullRequest/fields/deletedLineCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: F2. Changed-file count.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/changedFileCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: F3. Commit count.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers:
+  - /spec/classes/PullRequest/fields/commitCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: pull_request
+  source_item: G1. Created and last-updated times.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Instant values and source/time semantics remain conceptual, not coerced to epoch integer or unspecified
+    string.
+- set: pull_request
+  source_item: G2. Closed or merged time when applicable.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Conditional close/merge Instants not encoded.
+- set: pull_request
+  source_item: G3. Observation time and source.
+  source_document: docs/drafts/pull-request-ontology-options.md
+  source_refs: *id002
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Observation Instant, source and completeness need an explicit observation contract.
+- set: issue
+  source_item: A1. Source ID and Issue number within its repository.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: &id003
+  - conversation:gitview/excerpt-36
+  - conversation:gitview/excerpt-38
+  candidate_pointers:
+  - /spec/classes/Issue/fields/sourceId
+  - /spec/classes/Issue/fields/number
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: A2. Title.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/classes/Issue/fields/title
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: A3. Description text with the selected Issue sections.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/classes/Issue/fields/body
+  - /spec/classes/Issue/fields/problemText
+  - /spec/classes/Issue/fields/motivationText
+  - /spec/classes/Issue/fields/expectedOutcomeText
+  - /spec/classes/Issue/fields/referencesText
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: A4. URL of the original object.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/classes/Issue/fields/url
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: B1. Open or closed state.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/classes/Issue/fields/lifecycleState
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: B2. State or closure reason when provided by the source.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/classes/Issue/fields/stateReason
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: B3. Labels.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Label collection/reference representation remains open.
+- set: issue
+  source_item: B4. Issue type when present.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/classes/Issue/fields/issueType
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: C1. Source GitHubRepository.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/relations/issueRepository
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: C2. Author or creator as a participant role.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Source creator role/reference is not automatically User.
+- set: issue
+  source_item: C3. Assignees.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Assignee collection/reference representation remains open.
+- set: issue
+  source_item: D1. Linked PR with closing links distinguished from mentions where available.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/relations/issueClosingPullRequest
+  - /spec/relations/issueMentionedPullRequest
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: D2. Parent Issue and sub-issues.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/relations/issueParent
+  - /spec/relations/issueSubIssue
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: D3. Blocking and blocked Issues.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/relations/issueBlockedBy
+  - /spec/relations/issueBlocks
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: D4. Milestone when present.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Milestone is source metadata/reference; no invented local class.
+- set: issue
+  source_item: E1. Comment count.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/classes/Issue/fields/commentCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: E2. Discussion participant count.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/classes/Issue/fields/participantCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: F1. Total direct sub-issue count.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/classes/Issue/fields/directSubIssueCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: F2. Closed direct sub-issue count.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers:
+  - /spec/classes/Issue/fields/closedDirectSubIssueCount
+  status: partial_structural_proposal
+  note: Candidate typing/link declaration only; source mapping, availability and semantics still require specification
+    and review.
+- set: issue
+  source_item: G1. Created and last-updated times.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Created/updated Instants not encoded as arbitrary strings.
+- set: issue
+  source_item: G2. Closed time when applicable.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Conditional close Instant not encoded.
+- set: issue
+  source_item: G3. Observation time and source.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Observation Instant/source/completeness need an explicit contract.
+- set: issue
+  source_item: G4. Last-comment time when available.
+  source_document: docs/drafts/issue-ontology-options.md
+  source_refs: *id003
+  candidate_pointers: []
+  status: unencoded_or_spec_behavior
+  note: Last-comment Instant is separate from updatedAt; representation open.

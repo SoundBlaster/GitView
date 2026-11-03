@@ -1,0 +1,626 @@
+{
+  "classes" : [
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "An observed CI status, including a failing status; source and readiness semantics remain open.",
+      "extends" : "sg:ValueObject",
+      "fqid" : "gitview:CIStatus",
+      "id" : "CIStatus",
+      "implements" : [
+
+      ],
+      "kind" : "ValueObject",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/classes/CIStatus"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "Code, described by the owner as essentially a folder with files. Its precise boundary remains open.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:Code",
+      "id" : "Code",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/classes/Code"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "GitHub, which can occupy the actor role when managing a repository and its change workflow.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:GitHub",
+      "id" : "GitHub",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/classes/GitHub"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A GitHub issue; in the discussed example it provides a motive for an actor's action.",
+      "extends" : "sg:DomainEntity",
+      "fields" : [
+        {
+          "description" : "Original description text; missing text is not generated.",
+          "id" : "body",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Closed direct sub-issues; known nonnegative count, no default for unavailable data.",
+          "id" : "closedDirectSubIssueCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Comments; known nonnegative count, no default for unavailable data.",
+          "id" : "commentCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Direct sub-issues; known nonnegative count, no default for unavailable data.",
+          "id" : "directSubIssueCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Intended result section; not evidence of achievement.",
+          "id" : "expectedOutcomeText",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Source Issue type when present; not the labels collection.",
+          "id" : "issueType",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Selected lifecycle vocabulary; mapping and enum constraints require review.",
+          "id" : "lifecycleState",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Authored Motivation section; does not prove an actor motive.",
+          "id" : "motivationText",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Number within the source repository; not a portfolio-wide identifier.",
+          "id" : "number",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Discussion participants; known nonnegative count, no default for unavailable data.",
+          "id" : "participantCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Problem section text, if present.",
+          "id" : "problemText",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Raw References section text, not a serialized structured link collection.",
+          "id" : "referencesText",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Opaque identifier as observed in GitHub; not a decision about stable cross-owner identity or framework id mapping.",
+          "id" : "sourceId",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "State/closure reason if supplied; closed is not automatically completed.",
+          "id" : "stateReason",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Title from the source.",
+          "id" : "title",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Original object link; URL identity and normalization rules remain open.",
+          "id" : "url",
+          "required" : false,
+          "type" : "string"
+        }
+      ],
+      "fqid" : "gitview:Issue",
+      "id" : "Issue",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/classes/Issue"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A measurement for overview; the meaning, scope and units of each metric remain to be specified.",
+      "extends" : "sg:ValueObject",
+      "fqid" : "gitview:Metric",
+      "id" : "Metric",
+      "implements" : [
+
+      ],
+      "kind" : "ValueObject",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/classes/Metric"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A GitView project. Membership, identity and lifecycle are discussed separately.",
+      "extends" : "sg:DomainEntity",
+      "fields" : [
+        {
+          "description" : "Optional selected purpose description.",
+          "id" : "description",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Selected display name; optional here only for a partial projection, not a completed-project creation rule.",
+          "id" : "name",
+          "required" : false,
+          "type" : "string"
+        }
+      ],
+      "fqid" : "gitview:Project",
+      "id" : "Project",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/classes/Project"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A GitHub pull request associated with proposed code changes; creation does not imply merging.",
+      "extends" : "sg:DomainEntity",
+      "fields" : [
+        {
+          "description" : "Added lines; known nonnegative count, no default for unavailable data.",
+          "id" : "addedLineCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Source-provided target branch name/reference; no branch entity introduced.",
+          "id" : "baseBranch",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Original description text; missing text is not generated.",
+          "id" : "body",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Changed files; known nonnegative count, no default for unavailable data.",
+          "id" : "changedFileCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Authored Changes section.",
+          "id" : "changesText",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Commits; known nonnegative count, no default for unavailable data.",
+          "id" : "commitCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Deleted lines; known nonnegative count, no default for unavailable data.",
+          "id" : "deletedLineCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Intended result section; not evidence of achievement.",
+          "id" : "expectedOutcomeText",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Current green individual checks; known nonnegative count, no default for unavailable data.",
+          "id" : "greenCheckCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Source-provided source branch name/reference.",
+          "id" : "headBranch",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Draft flag separately from lifecycle, review and CI.",
+          "id" : "isDraft",
+          "required" : false,
+          "type" : "boolean"
+        },
+        {
+          "description" : "Selected lifecycle vocabulary; mapping and enum constraints require review.",
+          "id" : "lifecycleState",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Authored Motivation section; does not prove an actor motive.",
+          "id" : "motivationText",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Number within the source repository; not a portfolio-wide identifier.",
+          "id" : "number",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Problem section text, if present.",
+          "id" : "problemText",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Current red individual checks; known nonnegative count, no default for unavailable data.",
+          "id" : "redCheckCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Raw References section text, not a serialized structured link collection.",
+          "id" : "referencesText",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Source aggregate review assessment; unavailable assessment is not approval.",
+          "id" : "reviewAssessment",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "All review threads; known nonnegative count, no default for unavailable data.",
+          "id" : "reviewThreadCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Reference to the observed current change revision; relevance/attempt rules remain open.",
+          "id" : "revisionRef",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Opaque identifier as observed in GitHub; not a decision about stable cross-owner identity or framework id mapping.",
+          "id" : "sourceId",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Title from the source.",
+          "id" : "title",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "All current individual checks; known nonnegative count, no default for unavailable data.",
+          "id" : "totalCheckCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Unresolved review threads; known nonnegative count, no default for unavailable data.",
+          "id" : "unresolvedReviewThreadCount",
+          "required" : false,
+          "type" : "integer"
+        },
+        {
+          "description" : "Original object link; URL identity and normalization rules remain open.",
+          "id" : "url",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Authored Validation section; not independently verified evidence.",
+          "id" : "validationText",
+          "required" : false,
+          "type" : "string"
+        },
+        {
+          "description" : "Current yellow individual checks; known nonnegative count, no default for unavailable data.",
+          "id" : "yellowCheckCount",
+          "required" : false,
+          "type" : "integer"
+        }
+      ],
+      "fqid" : "gitview:PullRequest",
+      "id" : "PullRequest",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/classes/PullRequest"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "Code in which a version control system acts, in the owner's working formulation.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:Repository",
+      "id" : "Repository",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/classes/Repository"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A discussion thread relevant to review; duration and resolution semantics need clarification.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:ReviewThread",
+      "id" : "ReviewThread",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/classes/ReviewThread"
+    },
+    {
+      "aliases" : [
+
+      ],
+      "central" : false,
+      "description" : "A system that acts on code to manage versions; Git is the example named for GitView.",
+      "extends" : "sg:DomainEntity",
+      "fqid" : "gitview:VersionControlSystem",
+      "id" : "VersionControlSystem",
+      "implements" : [
+
+      ],
+      "kind" : "DomainEntity",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/classes/VersionControlSystem"
+    }
+  ],
+  "diagnostics" : [
+
+  ],
+  "id" : "local.gitview.domain",
+  "imports" : [
+    {
+      "id" : "specgraph.foundation",
+      "namespace" : "sg",
+      "version" : "0.1.0"
+    }
+  ],
+  "namespace" : "gitview",
+  "policies" : [
+    {
+      "appliesTo" : [
+        "gitview:Issue",
+        "gitview:Project",
+        "gitview:PullRequest",
+        "gitview:Repository"
+      ],
+      "enforceability" : "manual",
+      "extends" : "sg:Policy",
+      "fqid" : "gitview:GitHubRepositoryContext",
+      "id" : "GitHubRepositoryContext",
+      "text" : "Review contract: current GitView repository membership/source contexts require management by GitHub. GitHubRepository names this contextual contract on the same Repository, not a new identity or a globally inferred implementation. Compiler relations used for membership/source links do not establish actor-action-derived relation occurrences."
+    },
+    {
+      "appliesTo" : [
+        "gitview:Issue",
+        "gitview:Project",
+        "gitview:PullRequest"
+      ],
+      "enforceability" : "manual",
+      "extends" : "sg:Policy",
+      "fqid" : "gitview:PartialObservationBoundary",
+      "id" : "PartialObservationBoundary",
+      "text" : "Candidate fields are optional partial projections, not complete entity snapshots or creation requirements. Missing is not zero, false, empty, unchanged, or not applicable. Counts are nonnegative when known; enum/range/availability/freshness semantics need separate specifications and are not enforced by scalar typing. No identity from the implicit generated id is adopted as the source/project key."
+    }
+  ],
+  "protocols" : [
+    {
+      "description" : "Candidate contextual contract for the same Repository under management by GitHub; not a subclass or duplicate repository.",
+      "fqid" : "gitview:GitHubRepository",
+      "id" : "GitHubRepository",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/protocols/GitHubRepository"
+    },
+    {
+      "description" : "Candidate role contract for the operator of GitView, as selected by the owner; not a new person/account entity.",
+      "fqid" : "gitview:User",
+      "id" : "User",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/protocols/User"
+    }
+  ],
+  "relations" : [
+    {
+      "cardinality" : {
+        "max" : "*",
+        "min" : 0
+      },
+      "description" : "Selected link to blocking Issue; unknown blocker state is not proof of active blocking.",
+      "domain" : "gitview:Issue",
+      "fqid" : "gitview:issueBlockedBy",
+      "id" : "issueBlockedBy",
+      "range" : "gitview:Issue",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/issueBlockedBy"
+    },
+    {
+      "cardinality" : {
+        "max" : "*",
+        "min" : 0
+      },
+      "description" : "Selected link to an Issue blocked by this Issue; not an actor action.",
+      "domain" : "gitview:Issue",
+      "fqid" : "gitview:issueBlocks",
+      "id" : "issueBlocks",
+      "range" : "gitview:Issue",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/issueBlocks"
+    },
+    {
+      "cardinality" : {
+        "max" : "*",
+        "min" : 0
+      },
+      "description" : "Explicit source closing link, distinct from a mention; no completed outcome inferred.",
+      "domain" : "gitview:Issue",
+      "fqid" : "gitview:issueClosingPullRequest",
+      "id" : "issueClosingPullRequest",
+      "range" : "gitview:PullRequest",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/issueClosingPullRequest"
+    },
+    {
+      "cardinality" : {
+        "max" : "*",
+        "min" : 0
+      },
+      "description" : "Source mention without an inferred closing relation or motive.",
+      "domain" : "gitview:Issue",
+      "fqid" : "gitview:issueMentionedPullRequest",
+      "id" : "issueMentionedPullRequest",
+      "range" : "gitview:PullRequest",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/issueMentionedPullRequest"
+    },
+    {
+      "cardinality" : {
+        "max" : "*",
+        "min" : 0
+      },
+      "description" : "Selected parent link; hierarchy rules and inverse consistency remain to be specified.",
+      "domain" : "gitview:Issue",
+      "fqid" : "gitview:issueParent",
+      "id" : "issueParent",
+      "range" : "gitview:Issue",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/issueParent"
+    },
+    {
+      "cardinality" : {
+        "max" : 1,
+        "min" : 1
+      },
+      "description" : "Selected source repository context for this Issue, restricted to GitHubRepository by the contextual contract.",
+      "domain" : "gitview:Issue",
+      "fqid" : "gitview:issueRepository",
+      "id" : "issueRepository",
+      "range" : "gitview:Repository",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/issueRepository"
+    },
+    {
+      "cardinality" : {
+        "max" : "*",
+        "min" : 0
+      },
+      "description" : "Selected direct sub-issue link, not a transitive work-completion measure.",
+      "domain" : "gitview:Issue",
+      "fqid" : "gitview:issueSubIssue",
+      "id" : "issueSubIssue",
+      "range" : "gitview:Issue",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/issueSubIssue"
+    },
+    {
+      "description" : "Candidate declaration for GitHub acting as manager of a repository; contextual role and resulting property require further modeling.",
+      "domain" : "gitview:GitHub",
+      "fqid" : "gitview:managesRepository",
+      "id" : "managesRepository",
+      "range" : "gitview:Repository",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/managesRepository"
+    },
+    {
+      "cardinality" : {
+        "max" : "*",
+        "min" : 1
+      },
+      "description" : "Selected membership link. Current product requires the GitHubRepository context; reverse membership can span Projects. Does not assert the actor/action that established membership.",
+      "domain" : "gitview:Project",
+      "fqid" : "gitview:projectIncludesRepository",
+      "id" : "projectIncludesRepository",
+      "range" : "gitview:Repository",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/projectIncludesRepository"
+    },
+    {
+      "cardinality" : {
+        "max" : "*",
+        "min" : 0
+      },
+      "description" : "Selected source link to Issue; no motive or causal attribution inferred.",
+      "domain" : "gitview:PullRequest",
+      "fqid" : "gitview:pullRequestIssueLink",
+      "id" : "pullRequestIssueLink",
+      "range" : "gitview:Issue",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/pullRequestIssueLink"
+    },
+    {
+      "cardinality" : {
+        "max" : 1,
+        "min" : 1
+      },
+      "description" : "Selected target/source-host repository context for this PR, restricted to GitHubRepository by the contextual contract; not its head-fork identity.",
+      "domain" : "gitview:PullRequest",
+      "fqid" : "gitview:pullRequestRepository",
+      "id" : "pullRequestRepository",
+      "range" : "gitview:Repository",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/pullRequestRepository"
+    },
+    {
+      "description" : "Candidate declaration for a version-control system acting on code; the originating action and resulting property require further modeling.",
+      "domain" : "gitview:VersionControlSystem",
+      "fqid" : "gitview:versionControlsCode",
+      "id" : "versionControlsCode",
+      "range" : "gitview:Code",
+      "uri" : "ontology://local.gitview.domain/0.2.0-draft.1/relations/versionControlsCode"
+    }
+  ],
+  "sourceDigest" : "sha256:0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+  "stateMachines" : [
+
+  ],
+  "version" : "0.2.0-draft.1"
+}

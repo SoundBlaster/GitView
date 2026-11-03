@@ -1,0 +1,10 @@
+id: GITVIEW-SPEC-9001
+kind: spec
+status: idea
+draft_status: synthetic_control_only
+specification:
+  objective: Synthetic symbol-kind diagnostic control, not a product specification.
+  ontology_refs:
+  - gitview:Project
+  - gitview:User
+  - gitview:GitHubRepository

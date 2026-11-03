@@ -82,3 +82,29 @@ JSON или вымышленными классами ради прохожде�
 Вывод: содержательная основа значительно полнее выбранного package, но ещё
 не замкнута. Канонический spec graph не построен. Процент полноты и статус
 «онтология завершена» этому аудиту не присваиваются.
+
+## Продолжение 2026-11-03
+
+Root draft уже обновлён до подтверждённых решений; его frozen digest —
+`e3b75460f71a8946267132037d051f4a33b76030b2a3692528a3c9c2573cd09f`.
+Основной пакет/selection 0.1.0 сохраняются как контроль.
+
+Отдельный [candidate](../candidates/domain-v0.2.0-draft.1/README.md) содержит
+10 прежних классов, 45 предложенных scalar fields, 2 protocol-contracts,
+12 compiler links/relations и 2 manual policies. Оба варианта source/IR и
+candidate selections согласованы; check/compile и native context/target checks
+выполнены. Это структурная проверка предложения, не принятие типов или смысла.
+
+| Gap | Продвижение | Что остаётся |
+| --- | --- | --- |
+| User | Смысл оператора сохранён; предложен contextual protocol, без Person/Account. | Role binding/identity не выбраны; vocabulary tooling не включает protocols. |
+| GitHubRepository | Предложен contextual contract на тот же Repository. | Правило identity при rename/transfer, основания management, применение contract. |
+| Project/PR/Issue | 59 выбранных пунктов внесены в coverage; у 36 частичные structural mappings. | 23 unencoded/spec-behavior entries, enums/ranges/source bindings, review. |
+| Коллекции/время/наблюдения | Явно выделены без фиктивных классов или JSON-строк. | Typed reference/time/availability contract. |
+| Motive | Не дублируется; composition разрешает общий термин. | Основной context его не выбирает; смысл Issue-to-Motive остаётся candidate. |
+| Tooling | Воспроизведены protocol refs, ошибочно выглядящие как unknown vocabulary. | Source-bound observation передан в существующую линию 0232; fix/closure не заявлены. |
+
+Ни отсутствие новых классов, ни сохранение warnings не означают провал предметной
+модели. Но данный срез также не замыкает обязательные gaps. Materialization
+canonical graph остаётся отложенной до достаточной готовности выбранного объёма
+и соответствующего разрешения пользователя.

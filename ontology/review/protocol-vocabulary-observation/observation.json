@@ -1,0 +1,88 @@
+{
+  "artifact_kind": "specgraph_source_bound_defect_observation",
+  "schema_version": 1,
+  "spec_id": "SG-SPEC-0072",
+  "proposal_id": "0232",
+  "status": "observed_not_fixed",
+  "classification": "declared_protocol_symbols_reported_unknown_by_class_relation_only_projection",
+  "source": {
+    "project": "GitView",
+    "specgraph_head": "dc35597b7c29528f68cf74502fb3b379b284478c",
+    "candidate_source": {
+      "path": "/Users/egor/Development/GitHub/GitView/ontology/candidates/domain-v0.2.0-draft.1/domain-ontology-package.yaml",
+      "sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd"
+    },
+    "candidate_ir": {
+      "path": "/Users/egor/Development/GitHub/GitView/ontology/candidates/domain-v0.2.0-draft.1/generated/ontology.normalized.json",
+      "sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4"
+    },
+    "fixture": {
+      "path": "/Users/egor/Development/GitHub/GitView/ontology/review/protocol-vocabulary-observation/synthetic-protocol-refs.yaml",
+      "sha256": "b6ce96df47f672e9e2439bd3b95c4f20c021ee6f3248bdccf7a79e47755a94c1"
+    }
+  },
+  "observation": "ontologyc exports gitview:User and gitview:GitHubRepository as protocols. Verified SpecGraph context reports both qualified references as unknown_legacy_term with empty candidates; gitview:Project class reference resolves.",
+  "cause": "Pinned project_ontology_context/vocabulary.py capture_vocabulary iterates only classes and relations. Protocols are not part of this projection.",
+  "expected_review": "Either support this declared symbol kind or distinguish declared-but-unsupported kind from unknown name. Whether a general protocol contract is the best GitView role representation remains a separate product review, not fixed by this tooling observation.",
+  "authority_boundary": {
+    "canonical_mutations_allowed": false,
+    "ontology_accepted": false,
+    "upstream_fix_or_registration_claimed": false
+  },
+  "reproduction": {
+    "argv": [
+      "/Users/egor/.local/share/specgraph/runtime-dc35597b/specgraph-runtime",
+      "--workspace",
+      "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-v02-context-h4yxy_be/foundation",
+      "supervisor",
+      "--",
+      "--build-project-ontology-context-check",
+      "--ontology-context-project-id",
+      "gitview",
+      "--target-spec",
+      "GITVIEW-SPEC-9001",
+      "--ontology-context-selection",
+      "ontology/candidates/domain-v0.2.0-draft.1/foundation-context.yaml",
+      "--ontology-context-check-scope",
+      "domain_vocabulary",
+      "--ontologyc",
+      "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+      "--ontologyc-sha256",
+      "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+      "--output-mode",
+      "full"
+    ],
+    "exit_code": 0,
+    "context_outcome": "verified",
+    "target_outcome": "checked",
+    "findings": [
+      {
+        "finding_id": "GITVIEW-SPEC-9001.gap.gitview:User",
+        "severity": "warning",
+        "classification": "unknown_legacy_term",
+        "term": "gitview:User",
+        "source": "specification.ontology_refs[1]",
+        "gap_ref": "ontology-gap-gitview-spec-9001-gitview-user",
+        "candidates": [],
+        "candidate_origins": [],
+        "suggested_action": "review_ontology_gap"
+      },
+      {
+        "finding_id": "GITVIEW-SPEC-9001.gap.gitview:GitHubRepository",
+        "severity": "warning",
+        "classification": "unknown_legacy_term",
+        "term": "gitview:GitHubRepository",
+        "source": "specification.ontology_refs[2]",
+        "gap_ref": "ontology-gap-gitview-spec-9001-gitview-githubrepository",
+        "candidates": [],
+        "candidate_origins": [],
+        "suggested_action": "review_ontology_gap"
+      }
+    ],
+    "raw_report": {
+      "path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/ontology-v02-context-h4yxy_be/protocol-control.json",
+      "sha256": "e43bc7b5396f77c2ff025227e576b805a49a4b33ce90e8122b159987d7eeefdf"
+    }
+  },
+  "upstream_handoff": "Existing proposal 0232 / SG-SPEC-0072; .0al local coordination is not upstream canonical defect closure."
+}

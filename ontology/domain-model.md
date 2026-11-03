@@ -140,3 +140,13 @@ events-core 0.2.0 остаётся отдельным draft-контекстом
 термины или явно сохраняет unresolved gap. UI-полировка не условие перехода.
 
 Ссылки excerpt — локальные фрагменты, не удостоверенные ID сообщений.
+
+## Следующая техническая итерация — 2026-11-03
+
+Подготовлен отдельный [candidate 0.2.0-draft.1](candidates/domain-v0.2.0-draft.1/README.md):
+45 предложенных scalar fields, membership/source links и contextual contracts
+User/GitHubRepository без новых entity classes. Это вариант агента для review;
+основной 0.1.0 context и его HC/HCS не изменены. Все 59 выбранных checklist-пунктов
+имеют запись в coverage, включая незакодированные/поведенческие пункты.
+Идентичность при rename/transfer, типы reference/time/availability и применение
+contracts к контексту не решены молча. Подробности и tooling observation — в candidate.
