@@ -54,4 +54,4 @@ foundation-only context or establish actor, motive or causal facts.
 
 For the selected context, pass the released compiler at `git config --get gitview.ontologyc` to the installed runtime.
 For the operator action, use the [draft.3 package and verification command](ontology/candidates/domain-v0.2.0-draft.3/README.md).
-It pins a separate compiler with foundation 0.2.0, available locally at `git config --get gitview.actorOntologyc`.
+Use the same ontologyc 0.7.0 release for both checks. The local `gitview.actorOntologyc` key also points to that release.

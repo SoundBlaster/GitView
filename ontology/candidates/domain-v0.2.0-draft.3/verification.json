@@ -9,27 +9,15 @@
   "scenario_authority": "executable example only",
   "compilers": {
     "stable": {
-      "release": "0.6.0",
-      "source_commit": "c52553f872f440dde26c61abf9193f5fff171d98",
-      "release_url": "https://github.com/0al-spec/Ontology/releases/tag/0.6.0",
-      "foundation": "ontology.foundation@0.1.0",
-      "platform": "macos-arm64",
-      "archive_sha256": "65b0d874123abd18112c7baa705a608db983dee354319baf3a6640068cb23346",
-      "binary_sha256": "ed79a676c6bdc0cb67bd24edb8d7ca11f67eab33eba1f854439edb5ce22e8aa8"
-    },
-    "actor_candidate": {
-      "pr": 97,
-      "source_commit": "b02810e99762631a1dd159866ddfa48d8a9abff7",
-      "source_ref": "pr-97",
-      "workflow_run": 41686278784,
-      "artifact_id": 13255402539,
-      "run_url": "https://github.com/0al-spec/Ontology/actions/runs/41686278784",
-      "platform": "macos-arm64",
+      "release": "0.7.0",
+      "source_commit": "40672c189f33dee2b8c6fdac903758e90d9fba86",
+      "release_url": "https://github.com/0al-spec/Ontology/releases/tag/0.7.0",
       "foundation": "ontology.foundation@0.2.0",
-      "artifact_zip_sha256": "7c87f602cd383e7e34905c3120f0ca91c83a929339df2d0dfaa9ae330980a70e",
-      "archive_sha256": "0b927349902e74bc85338d07491bbc8b092a897a339737ed3a374b1e24fbfc4d",
-      "binary_sha256": "35e898deba18addd3eb8d1cd73d2fd55f15d496da2685263705549435634c7a0"
-    }
+      "platform": "macos-arm64",
+      "archive_sha256": "a5099a8e59fbc53009a4d5a03b69a536093187a615f7198396d81fd08e6a17d7",
+      "binary_sha256": "f4d5691e7308e61b49316b2c0017a33943664b58d62771cbc84802d64e48a051"
+    },
+    "action_runtime": "stable"
   },
   "controls": {
     "protocol_in_new_subject": {
@@ -103,43 +91,43 @@
   },
   "installed_specgraph": {
     "revision": "b1583e580856012ad57748cc4d61dd29e7b1c8ec",
-    "default_with_stable": {
+    "default_with_release": {
       "exit_code": 0,
       "outcome": "verified",
       "reasons": []
     },
-    "candidate_foundation_with_pr97": {
+    "candidate_foundation_with_release": {
       "exit_code": 1,
       "outcome": "unavailable",
       "reasons": [
         {
           "check": "dependency_closure",
-          "detail": "Profile requires one member importing specgraph.foundation@0.1.0 as sg",
           "outcome": "unavailable",
+          "detail": "Profile requires one member importing specgraph.foundation@0.1.0 as sg",
           "package": "local.gitview.domain"
         }
       ]
     },
-    "candidate_composition_with_pr97": {
+    "candidate_composition_with_release": {
       "exit_code": 2,
       "outcome": "invalid",
       "reasons": [
         {
           "check": "member_capture",
-          "detail": "'domain'",
           "outcome": "invalid",
+          "detail": "'domain'",
           "package": "local.gitview.domain"
         },
         {
           "check": "dependency_closure",
-          "detail": "Not all selected package declarations were captured",
           "outcome": "unavailable",
+          "detail": "Not all selected package declarations were captured",
           "package": null
         },
         {
           "check": "context_capture",
-          "detail": "selected context capture is incomplete",
           "outcome": "unavailable",
+          "detail": "selected context capture is incomplete",
           "package": null
         }
       ]
