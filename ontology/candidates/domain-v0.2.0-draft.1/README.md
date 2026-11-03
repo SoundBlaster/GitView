@@ -103,6 +103,13 @@ protocol refs подтвердил, что class разрешается, а prot
 
 В обоих contexts GitView остаётся непривязанным названием продукта. Motive
 остаётся gap в foundation-варианте и разрешается из общего пакета в composition.
+
+После merge #873 выполнена [повторная проверка на b1583e58](../../review/protocol-vocabulary-observation/merged-b1583e58.md):
+protocol names разрешаются с kind `protocol` и корректными origins в обоих
+candidate contexts. Описанное выше ограничение относится к прежнему runtime
+dc35597b и сохранено как историческое наблюдение. Основной runtime обновлён;
+предметный candidate и default selection 0.1.0 этим не принимаются и не заменяются.
+
 Нормализованный IR protocol сохраняет имя/описание; его source semanticConstraints
 не проверены и не воспроизведены полностью в IR. Поэтому compilation не
 подтверждает выполнение контекстных условий.

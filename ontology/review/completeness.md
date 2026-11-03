@@ -102,7 +102,7 @@ candidate selections согласованы; check/compile и native context/tar
 | Project/PR/Issue | 59 выбранных пунктов внесены в coverage; у 36 частичные structural mappings. | 23 unencoded/spec-behavior entries, enums/ranges/source bindings, review. |
 | Коллекции/время/наблюдения | Явно выделены без фиктивных классов или JSON-строк. | Typed reference/time/availability contract. |
 | Motive | Не дублируется; composition разрешает общий термин. | Основной context его не выбирает; смысл Issue-to-Motive остаётся candidate. |
-| Tooling | Воспроизведены protocol refs, ошибочно выглядящие как unknown vocabulary. | Source-bound observation передан в существующую линию 0232; fix/closure не заявлены. |
+| Tooling | Protocol vocabulary fix проверен на влитом runtime b1583e58 в обоих candidate contexts. | Структурное разрешение protocols не подтверждает смысл contextual contracts; см. merged consumer receipt. |
 
 Ни отсутствие новых классов, ни сохранение warnings не означают провал предметной
 модели. Но данный срез также не замыкает обязательные gaps. Materialization
