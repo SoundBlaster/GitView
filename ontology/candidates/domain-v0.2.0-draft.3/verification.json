@@ -1,0 +1,148 @@
+{
+  "kind": "gitview_operator_candidate_verification",
+  "schema_version": 1,
+  "status": "draft",
+  "parent_project_commit": "777f90d69b7b0da23c8fa780028da8d922f5831b",
+  "selected_meaning_ref": "conversation:gitview/excerpt-53-reply",
+  "correction_ref": "conversation:gitview/actor-pilot-package-correction",
+  "sketch_revision": "f7c0ae6bc12849eba02d53201dd4ac26",
+  "scenario_authority": "executable example only",
+  "compilers": {
+    "stable": {
+      "release": "0.6.0",
+      "source_commit": "c52553f872f440dde26c61abf9193f5fff171d98",
+      "release_url": "https://github.com/0al-spec/Ontology/releases/tag/0.6.0",
+      "foundation": "ontology.foundation@0.1.0",
+      "platform": "macos-arm64",
+      "archive_sha256": "65b0d874123abd18112c7baa705a608db983dee354319baf3a6640068cb23346",
+      "binary_sha256": "ed79a676c6bdc0cb67bd24edb8d7ca11f67eab33eba1f854439edb5ce22e8aa8"
+    },
+    "actor_candidate": {
+      "pr": 97,
+      "source_commit": "b02810e99762631a1dd159866ddfa48d8a9abff7",
+      "source_ref": "pr-97",
+      "workflow_run": 41686278784,
+      "artifact_id": 13255402539,
+      "run_url": "https://github.com/0al-spec/Ontology/actions/runs/41686278784",
+      "platform": "macos-arm64",
+      "foundation": "ontology.foundation@0.2.0",
+      "artifact_zip_sha256": "7c87f602cd383e7e34905c3120f0ca91c83a929339df2d0dfaa9ae330980a70e",
+      "archive_sha256": "0b927349902e74bc85338d07491bbc8b092a897a339737ed3a374b1e24fbfc4d",
+      "binary_sha256": "35e898deba18addd3eb8d1cd73d2fd55f15d496da2685263705549435634c7a0"
+    }
+  },
+  "controls": {
+    "protocol_in_new_subject": {
+      "code": "relation.subject.unresolved",
+      "path": "spec.relations.addsRepositoryTo.subject"
+    },
+    "protocol_in_old_domain": {
+      "code": "relation.domain.unresolved",
+      "path": "spec.relations.operatorProbe.domain"
+    },
+    "class_in_old_domain": "passed"
+  },
+  "execution": {
+    "foundation-context.yaml": {
+      "actor": "operator-1",
+      "project": "p",
+      "repository": "r2",
+      "before": {
+        "p": [
+          "r1"
+        ],
+        "q": [
+          "r2"
+        ]
+      },
+      "after": {
+        "p": [
+          "r1",
+          "r2"
+        ],
+        "q": [
+          "r2"
+        ]
+      },
+      "successfulCalls": 1,
+      "unknownReferenceRejected": true
+    },
+    "composition-context.yaml": {
+      "actor": "operator-1",
+      "project": "p",
+      "repository": "r2",
+      "before": {
+        "p": [
+          "r1"
+        ],
+        "q": [
+          "r2"
+        ]
+      },
+      "after": {
+        "p": [
+          "r1",
+          "r2"
+        ],
+        "q": [
+          "r2"
+        ]
+      },
+      "successfulCalls": 1,
+      "unknownReferenceRejected": true
+    }
+  },
+  "sdk_check": {
+    "typescript": "6.0.3",
+    "zod": "4.4.3",
+    "options": [
+      "strict",
+      "exactOptionalPropertyTypes"
+    ],
+    "stored_ir_byte_equal": true
+  },
+  "installed_specgraph": {
+    "revision": "b1583e580856012ad57748cc4d61dd29e7b1c8ec",
+    "default_with_stable": {
+      "exit_code": 0,
+      "outcome": "verified",
+      "reasons": []
+    },
+    "candidate_foundation_with_pr97": {
+      "exit_code": 1,
+      "outcome": "unavailable",
+      "reasons": [
+        {
+          "check": "dependency_closure",
+          "detail": "Profile requires one member importing specgraph.foundation@0.1.0 as sg",
+          "outcome": "unavailable",
+          "package": "local.gitview.domain"
+        }
+      ]
+    },
+    "candidate_composition_with_pr97": {
+      "exit_code": 2,
+      "outcome": "invalid",
+      "reasons": [
+        {
+          "check": "member_capture",
+          "detail": "'domain'",
+          "outcome": "invalid",
+          "package": "local.gitview.domain"
+        },
+        {
+          "check": "dependency_closure",
+          "detail": "Not all selected package declarations were captured",
+          "outcome": "unavailable",
+          "package": null
+        },
+        {
+          "check": "context_capture",
+          "detail": "selected context capture is incomplete",
+          "outcome": "unavailable",
+          "package": null
+        }
+      ]
+    }
+  }
+}

@@ -19,6 +19,7 @@ behavior has been implemented or tested on a device.
   meaning and open questions.
 - [Project ontology draft](ontology/packages/gitview/README.md) — candidate
   vocabulary, source map, open questions and structural verification.
+- [Executable operator candidate](ontology/candidates/domain-v0.2.0-draft.3/README.md) — a GitView User adds an existing Repository to one Project.
 - [Readable ontology composition](ontology/views/README.md) — a review-only
   HC/HCS pair and its reproducible source selection.
 - [Motivation composition pilot](ontology/pilots/motivation-composition/README.md)
