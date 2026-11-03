@@ -1,0 +1,412 @@
+{
+  "artifact_kind": "gitview_protocol_vocabulary_consumer_recheck",
+  "schema_version": 1,
+  "candidate_commit": "54e61eff88716b4d5b173de44cb31e8944910c09",
+  "gitview_input_commit": "0f0fc8e3b943d0462b55423429a80e8e40fae8e3",
+  "runtime_receipt": {
+    "artifact_kind": "specgraph_native_runtime",
+    "schema_version": 1,
+    "status": "installed",
+    "source_commit": "54e61eff88716b4d5b173de44cb31e8944910c09",
+    "python_version": "3.12.11"
+  },
+  "scope": "One original synthetic consumer control with the foundation candidate context only; no composition/negative controls or upstream test suite replay.",
+  "argv": [
+    "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/protocol-consumer-54e61eff-r7h5efvt/runtime/specgraph-runtime",
+    "--workspace",
+    "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/protocol-consumer-54e61eff-r7h5efvt/workspace",
+    "supervisor",
+    "--",
+    "--build-project-ontology-context-check",
+    "--ontology-context-project-id",
+    "gitview",
+    "--target-spec",
+    "GITVIEW-SPEC-9001",
+    "--ontology-context-selection",
+    "ontology/candidates/domain-v0.2.0-draft.1/foundation-context.yaml",
+    "--ontology-context-check-scope",
+    "domain_vocabulary",
+    "--ontologyc",
+    "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/motivation-composition-je20hetf/release-0.5.0/ontologyc-0.5.0-macos-arm64/ontologyc",
+    "--ontologyc-sha256",
+    "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+    "--output-mode",
+    "full"
+  ],
+  "exit_code": 0,
+  "target": {
+    "id": "GITVIEW-SPEC-9001",
+    "path": "specs/nodes/GITVIEW-SPEC-9001.yaml",
+    "sha256": "b6ce96df47f672e9e2439bd3b95c4f20c021ee6f3248bdccf7a79e47755a94c1"
+  },
+  "context": {
+    "artifact_kind": "project_ontology_context_report",
+    "schema_version": 1,
+    "project_id": "gitview",
+    "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/protocol-consumer-54e61eff-r7h5efvt/workspace",
+    "selection_path": "ontology/candidates/domain-v0.2.0-draft.1/foundation-context.yaml",
+    "outcome": "verified",
+    "context_revision": "sha256:c9c9288194c94a7df3ae6a32cdd198c3be2e3f8b7404e16202214ae4cfaf2df2",
+    "members": [
+      {
+        "id": "local.gitview.domain",
+        "namespace": "gitview",
+        "version": "0.2.0-draft.1"
+      }
+    ],
+    "profiles": [
+      "ontologyc-foundation-v1"
+    ],
+    "resolved_imports": [
+      {
+        "id": "specgraph.foundation",
+        "namespace": "sg",
+        "version": "0.1.0",
+        "source_uri": "https://github.com/0al-spec/Ontology/blob/0fcc94469d971aaf39fcc182bc5c6b8acff37fd2/SPECS/ontology/foundation/0.1.0/exports.json",
+        "source_sha256": "ef07cf4e8dd4cdc8c8dd583971fc3cabfe82e4b00fb0e680b6d1db48cfe262ad"
+      }
+    ],
+    "composition": {
+      "dependency_rule": "explicit",
+      "name_resolution_rule": "qualified"
+    },
+    "snapshots": [
+      {
+        "id": "local.gitview.domain",
+        "namespace": "gitview",
+        "version": "0.2.0-draft.1",
+        "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+        "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+        "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "compiler_provenance": "not_verified"
+      }
+    ],
+    "checks": [
+      {
+        "check": "profile",
+        "outcome": "verified",
+        "detail": "supported structural checking profile",
+        "package": null
+      },
+      {
+        "check": "selection",
+        "outcome": "verified",
+        "detail": "explicit package selection parsed",
+        "package": null
+      },
+      {
+        "check": "compiler",
+        "outcome": "verified",
+        "detail": "operator-provided executable available; provenance not verified",
+        "package": null
+      },
+      {
+        "check": "member_capture",
+        "outcome": "verified",
+        "detail": "source, IR and package identity checked",
+        "package": "local.gitview.domain"
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Project/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/Project/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Code/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/Code/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/VersionControlSystem/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/VersionControlSystem/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Repository/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/Repository/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/GitHub/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/GitHub/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Issue/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/Issue/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/PullRequest/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/PullRequest/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/ReviewThread/extends: sg:DomainEntity -> ontology://specgraph.foundation/0.1.0/classes/DomainEntity",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/ReviewThread/extends",
+          "name": "sg:DomainEntity",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/DomainEntity"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/CIStatus/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/CIStatus/extends",
+          "name": "sg:ValueObject",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/classes/Metric/extends: sg:ValueObject -> ontology://specgraph.foundation/0.1.0/classes/ValueObject",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/classes/Metric/extends",
+          "name": "sg:ValueObject",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/ValueObject"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/policies/GitHubRepositoryContext/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/policies/GitHubRepositoryContext/extends",
+          "name": "sg:Policy",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+        }
+      },
+      {
+        "check": "name_resolution",
+        "outcome": "verified",
+        "detail": "/spec/policies/PartialObservationBoundary/extends: sg:Policy -> ontology://specgraph.foundation/0.1.0/classes/Policy",
+        "package": "local.gitview.domain",
+        "reference": {
+          "pointer": "/spec/policies/PartialObservationBoundary/extends",
+          "name": "sg:Policy",
+          "uri": "ontology://specgraph.foundation/0.1.0/classes/Policy"
+        }
+      },
+      {
+        "check": "dependency_closure",
+        "outcome": "verified",
+        "detail": "Pinned foundation vocabulary and qualified references checked",
+        "package": "local.gitview.domain"
+      }
+    ],
+    "semantic_approval": "not_established",
+    "canonical_mutations_allowed": false
+  },
+  "assessments": {
+    "domain_vocabulary": {
+      "check_scope": "domain_vocabulary",
+      "outcome": "analyzed",
+      "diagnostics": [],
+      "project_context": {
+        "project_id": "gitview",
+        "workspace": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/protocol-consumer-54e61eff-r7h5efvt/workspace",
+        "context_revision": "sha256:c9c9288194c94a7df3ae6a32cdd198c3be2e3f8b7404e16202214ae4cfaf2df2",
+        "context_outcome": "verified",
+        "scope": "single_member_local_symbols",
+        "verified_closure": false,
+        "analysis_profile": "specgraph-local-symbol-advisory-v4",
+        "semantic_approval": "not_established",
+        "binding_authority": "structural_advisory_only",
+        "selected_member": {
+          "id": "local.gitview.domain",
+          "namespace": "gitview",
+          "version": "0.2.0-draft.1"
+        },
+        "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+        "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+        "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+        "compiler_provenance": "not_verified"
+      },
+      "analysis_profile": "specgraph-scoped-ontology-advisory-v1",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 3,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    "specification_metamodel": {
+      "check_scope": "specification_metamodel",
+      "outcome": "not_requested",
+      "diagnostics": [],
+      "project_context": null,
+      "analysis_profile": null,
+      "summary": null
+    }
+  },
+  "accepted_bindings": [
+    {
+      "term": "gitview:Project",
+      "ontology_ref": "gitview:Project",
+      "kind": "class",
+      "source": "specification.ontology_refs[0]",
+      "candidate_origins": [
+        {
+          "ontology_ref": "gitview:Project",
+          "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/classes/Project",
+          "kind": "class",
+          "package": {
+            "id": "local.gitview.domain",
+            "namespace": "gitview",
+            "version": "0.2.0-draft.1"
+          },
+          "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+          "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+          "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+          "source_uri": null,
+          "verification": "compiler_checked"
+        }
+      ]
+    },
+    {
+      "term": "gitview:User",
+      "ontology_ref": "gitview:User",
+      "kind": "protocol",
+      "source": "specification.ontology_refs[1]",
+      "candidate_origins": [
+        {
+          "ontology_ref": "gitview:User",
+          "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/protocols/User",
+          "kind": "protocol",
+          "package": {
+            "id": "local.gitview.domain",
+            "namespace": "gitview",
+            "version": "0.2.0-draft.1"
+          },
+          "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+          "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+          "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+          "source_uri": null,
+          "verification": "compiler_checked"
+        }
+      ]
+    },
+    {
+      "term": "gitview:GitHubRepository",
+      "ontology_ref": "gitview:GitHubRepository",
+      "kind": "protocol",
+      "source": "specification.ontology_refs[2]",
+      "candidate_origins": [
+        {
+          "ontology_ref": "gitview:GitHubRepository",
+          "ontology_uri": "ontology://local.gitview.domain/0.2.0-draft.1/protocols/GitHubRepository",
+          "kind": "protocol",
+          "package": {
+            "id": "local.gitview.domain",
+            "namespace": "gitview",
+            "version": "0.2.0-draft.1"
+          },
+          "source_sha256": "0cdf42f607438739315a95b239a45ef3648a54389e91d39a14d9f13e167ed8cd",
+          "ir_sha256": "ee19051689b9e7b1a5746407e4b51d8027481a30303733b2ee993bab5abceee4",
+          "compiler_sha256": "dcdc37216246f9acebca7387e14b61300d9dec4367f7c1630445b97280c80168",
+          "source_uri": null,
+          "verification": "compiler_checked"
+        }
+      ]
+    }
+  ],
+  "validation": [
+    {
+      "spec_id": "GITVIEW-SPEC-9001",
+      "path": "specs/nodes/GITVIEW-SPEC-9001.yaml",
+      "validation_status": "report_only_clean",
+      "checks": [],
+      "findings": []
+    }
+  ],
+  "producer": {
+    "identity": "specgraph-scoped-ontology-advisory-v1:sha256:73e089571ae3fa8f39c5c02a2a4bec270ffcd5f459f9a97140a5f6db9be6d2e1",
+    "source_sha256": {
+      "project_ontology_supervisor_check.py": "d4887681615a9cdaae8a05d55d7e61b5cf006406419bb1528dd6813786c1d432",
+      "project_ontology_supervisor_cli.py": "4d66d47449dcffdeafa1f105e6dc59c0257c0b6ca5c98506e51cdce96a037f8f",
+      "spec_ontology_context_reports.py": "97e4f53999595d5fe8ae55fe257bfada0e29a8dfe681dd31addd95ae6b38c0e8",
+      "spec_ontology_binding_index.py": "6bbd1d5a8cf4934c6183a2543fb85bddc04afb06e89376eccc64a5547790791a",
+      "spec_ontology_validation_report.py": "027ae37334ddc212a66571d82bb2a36921896bb2c20e80b3675b755ddc2c8a55",
+      "project_ontology_check_scopes.py": "a319f375d3f5a38961e0a590d6e42043cc7a50ecbd860f153e3807794f2a9ba7",
+      "project_ontology_scope_outcome_spec.py": "e4c6fa5ea5c57d45418f112f76f5eb2734d16773070f5b029c2e604f18a2911e",
+      "ontology_imports.py": "878fd62376ef6003b74f756758cbd0984d789ad03f86108e5d7a0375669f9983",
+      "ontology_snapshot.py": "51f64cf69e69532cda5dfdd44a71b4872af8d1b7cb6c106b97c0bb20ade05fae",
+      "project_ontology_context/vocabulary.py": "b6fb83b70eb3c09acde62f5e81a780a188761d0246aba5f2917477e52e615bd1",
+      "project_ontology_context/composition.py": "dff003828d8726717ef7444842c046ceb29b0cce7d80082b0609cc8145be1b5f",
+      "project_ontology_context/foundation.py": "d9e0725d30c5a12bede4baa9260bfa7e375fd91a27ec18aa3caeaf414fe4a24a",
+      "spec_ontology_metamodel_check.py": "cde72e542fee6c1aba64ccff86b2b5203313599bd20400e0f7a9c44fae6553e8",
+      "project_ontology_meta_freshness.py": "ee981ecd71d9f2d2759c114efe3857202b8cad8845c353e2036ddaa5126714a3",
+      "project_ontology_meta_authority_spec.py": "63ebcb14d40a96971c8aef28f72200f33a5f9e570371db16f006094e2d6836ec"
+    },
+    "provenance": "caller_attributed_not_attested"
+  },
+  "raw_report_path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/protocol-consumer-54e61eff-r7h5efvt/report.json",
+  "raw_report_sha256": "7013ad467906130bd935fad636efbd19192305bf2f2cc76d0d6b72b3aea33f53",
+  "primary_runtime_changed": false,
+  "canonical_mutations_allowed": false,
+  "semantic_approval": "not_established",
+  "compiler_provenance": "not_verified",
+  "original_observation_sha256": "90cf5f6bc54247d5a4d4e11f1b79495692702aae06175782d5df0374d2003fcf",
+  "original_input_hashes_unchanged": true
+}
