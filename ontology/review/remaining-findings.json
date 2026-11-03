@@ -1,0 +1,156 @@
+{
+  "artifact_kind": "gitview_remaining_finding_source_triage",
+  "schema_version": 1,
+  "observed_date": "2026-11-03",
+  "runtime_commit": "b1583e580856012ad57748cc4d61dd29e7b1c8ec",
+  "root_draft_sha256": "728f2af8f135dbdc1fc9747282b4ad83fb606066e34c8e33318f9926999d45c0",
+  "older_frozen_native_evidence": {
+    "path": "ontology/review/protocol-vocabulary-observation/merged-b1583e58.json",
+    "sha256": "9aee92a98729ae1d642d3997f2b112e2defc3ee6d0dd8a9975050a0df0c8ad9a",
+    "root_draft_sha256": "e3b75460f71a8946267132037d051f4a33b76030b2a3692528a3c9c2573cd09f"
+  },
+  "static_selected_symbol_audit": [
+    {
+      "name": "active_default",
+      "selection": "ontology/context.yaml",
+      "selection_sha256": "730c3757cc196f6b3485f07e6f99be14f9893243e44ffa7c4371143085668a2e",
+      "members": [
+        {
+          "id": "local.gitview.domain",
+          "version": "0.1.0",
+          "source_sha256": "c869adb2c0188dfc9eba1f8ccc419791588117137586f0e69a144c4ea89bc1bc",
+          "ir_sha256": "f1f23c8c1a50422ddc49c48fced0373474b73fde9922d7f9969eaad9c1a06097"
+        }
+      ],
+      "GitView": {
+        "root_pointer": "/specification/terminology/GitView",
+        "human_product_definition_exists": true,
+        "exported_declaration_present": false,
+        "disposition": "product_context_label_unbound_not_a_required_new_entity"
+      },
+      "motivcore:Motive": {
+        "root_pointer": "/specification/ontology_refs/0",
+        "selected_declaration": [],
+        "known_external_definition_exists": true,
+        "disposition": "known_shared_package_not_selected"
+      }
+    },
+    {
+      "name": "older_composition_pilot",
+      "selection": "ontology/pilots/motivation-composition/context.yaml",
+      "selection_sha256": "33d47ac32cba541f5cdab1c4de3433ec6af62270c4f5e1c94144cc7834a73ad4",
+      "members": [
+        {
+          "id": "local.gitview.domain",
+          "version": "0.2.0-pilot.1",
+          "source_sha256": "7ff602772e283d178b63c01fa2ab470f3db0f8a787922a51cfa49ab6347afa6a",
+          "ir_sha256": "c1aaeb649730160c2022f31482b1ef2249a22d3685c725b548c0f6d6e809882e"
+        },
+        {
+          "id": "org.0al.motivation.core",
+          "version": "0.1.0",
+          "source_sha256": "3061eca33ddc2296c2c292695d98daf6697e92fb582da544bc1d5107721ae955",
+          "ir_sha256": "25da040f4bd0b014014b1ed996250cd4c17a64503355f6f558917bec9ddd1fe9"
+        },
+        {
+          "id": "org.0al.events.core",
+          "version": "0.2.0",
+          "source_sha256": "92a3245fc9acd15748fd1fa3cfb8e4fdc8fda429a5fd6cffd7a97bc13f2f359e",
+          "ir_sha256": "e6c932ad8c492d168b63dbe112335c270d88ff758e016f3502031aefe9dea916"
+        }
+      ],
+      "GitView": {
+        "root_pointer": "/specification/terminology/GitView",
+        "human_product_definition_exists": true,
+        "exported_declaration_present": false,
+        "disposition": "product_context_label_unbound_not_a_required_new_entity"
+      },
+      "motivcore:Motive": {
+        "root_pointer": "/specification/ontology_refs/0",
+        "selected_declaration": [
+          {
+            "name": "Motive",
+            "reference": "motivcore:Motive",
+            "kind": "classes",
+            "package": "org.0al.motivation.core"
+          }
+        ],
+        "known_external_definition_exists": true,
+        "disposition": "resolved_from_selected_shared_package"
+      }
+    },
+    {
+      "name": "identity_foundation",
+      "selection": "ontology/candidates/domain-v0.2.0-draft.2/foundation-context.yaml",
+      "selection_sha256": "e3742bc6aed04d9cd78082c0ee00912293fa3371785df8e7c1d0e9f700fde58a",
+      "members": [
+        {
+          "id": "local.gitview.domain",
+          "version": "0.2.0-draft.2",
+          "source_sha256": "b5358f463ac0d4c5e0efb33fb4729385c35bea98dd9f3a13fd7857ccea68a0f4",
+          "ir_sha256": "a0273dfba11fb3894eb378fc109cf3992d36986701bde5bf44f5a00cafd22e76"
+        }
+      ],
+      "GitView": {
+        "root_pointer": "/specification/terminology/GitView",
+        "human_product_definition_exists": true,
+        "exported_declaration_present": false,
+        "disposition": "product_context_label_unbound_not_a_required_new_entity"
+      },
+      "motivcore:Motive": {
+        "root_pointer": "/specification/ontology_refs/0",
+        "selected_declaration": [],
+        "known_external_definition_exists": true,
+        "disposition": "known_shared_package_not_selected"
+      }
+    },
+    {
+      "name": "identity_composition",
+      "selection": "ontology/candidates/domain-v0.2.0-draft.2/composition-context.yaml",
+      "selection_sha256": "01d2678da8e8ce90af51233cc0fc7f1a69cc87c52de1a20e12e437ecf8592a6d",
+      "members": [
+        {
+          "id": "local.gitview.domain",
+          "version": "0.2.0-draft-composition.2",
+          "source_sha256": "625a26f935ba8f6c395b5ff97f3f1377a66589ba49fe86bb9780acbee0d95457",
+          "ir_sha256": "e18576ff05998d61c75d1f805f0b34eee2fa9785150ef8b069dbef2fe34c5f25"
+        },
+        {
+          "id": "org.0al.motivation.core",
+          "version": "0.1.0",
+          "source_sha256": "3061eca33ddc2296c2c292695d98daf6697e92fb582da544bc1d5107721ae955",
+          "ir_sha256": "25da040f4bd0b014014b1ed996250cd4c17a64503355f6f558917bec9ddd1fe9"
+        },
+        {
+          "id": "org.0al.events.core",
+          "version": "0.2.0",
+          "source_sha256": "92a3245fc9acd15748fd1fa3cfb8e4fdc8fda429a5fd6cffd7a97bc13f2f359e",
+          "ir_sha256": "e6c932ad8c492d168b63dbe112335c270d88ff758e016f3502031aefe9dea916"
+        }
+      ],
+      "GitView": {
+        "root_pointer": "/specification/terminology/GitView",
+        "human_product_definition_exists": true,
+        "exported_declaration_present": false,
+        "disposition": "product_context_label_unbound_not_a_required_new_entity"
+      },
+      "motivcore:Motive": {
+        "root_pointer": "/specification/ontology_refs/0",
+        "selected_declaration": [
+          {
+            "name": "Motive",
+            "reference": "motivcore:Motive",
+            "kind": "classes",
+            "package": "org.0al.motivation.core"
+          }
+        ],
+        "known_external_definition_exists": true,
+        "disposition": "resolved_from_selected_shared_package"
+      }
+    }
+  ],
+  "new_native_checks_ref": "ontology/candidates/domain-v0.2.0-draft.2/verification.json",
+  "warning_suppression_applied": false,
+  "new_entity_added_for_findings": false,
+  "limits": "unknown_legacy_term is a scoped lookup classification; it alone does not distinguish a missing export, a product label or an available but unselected external package. Static audit covers four selections; fresh native target runs cover the two new candidate contexts only."
+}

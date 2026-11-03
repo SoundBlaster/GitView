@@ -108,3 +108,19 @@ candidate selections согласованы; check/compile и native context/tar
 модели. Но данный срез также не замыкает обязательные gaps. Materialization
 canonical graph остаётся отложенной до достаточной готовности выбранного объёма
 и соответствующего разрешения пользователя.
+
+## Выбор identity и source triage — 2026-11-03
+
+В `excerpt-54-reply` выбран вариант A: same-source-object rename/transfer
+сохраняют Repository, историю и членство в Projects. Вопрос о непрерывности
+закрыт в этом scope; concrete key/encoding/aliases остаются открыты.
+Новый [draft.2](../candidates/domain-v0.2.0-draft.2/README.md) добавляет manual
+policy без новых классов и сохраняет draft.1 как контроль.
+
+Оба новых contexts проходят check/compile и native target check нового root
+draft. [Source triage](remaining-findings.md) объясняет GitView как product label
+без exported symbol, а Motive — как существующий общий термин вне foundation
+selection, разрешённый в composition. Generic warning не диктует добавление entity.
+
+Rule selection не завершает typed reference/time/availability contract и
+не утверждает все прочие решения candidate. Canonical graph остаётся отложенным.

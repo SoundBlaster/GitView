@@ -1,6 +1,6 @@
 # GitView: консолидированная предметная модель
 
-Статус: содержательный черновик по решениям пользователя на 2026-11-02.
+Статус: содержательный черновик по решениям пользователя на 2026-11-03.
 Формулировки агента и открытые решения указаны отдельно. Это не новый compiler
 package, не утверждение всего документа и не canonical specification.
 Выбранные source/IR/selection пакета 0.1.0 не менялись.
@@ -150,3 +150,17 @@ User/GitHubRepository без новых entity classes. Это вариант а
 имеют запись в coverage, включая незакодированные/поведенческие пункты.
 Идентичность при rename/transfer, типы reference/time/availability и применение
 contracts к контексту не решены молча. Подробности и tooling observation — в candidate.
+
+## Решение identity — 2026-11-03
+
+Пользователь выбрал A (`excerpt-54-reply`): если источник подтверждает тот же
+GitHub-объект, rename и transfer сохраняют один Repository, его историю и
+членство в Projects. Конкретный API ID, encoding/storage и alias handling не
+выбраны этим ответом. См. [decision review](review/repository-identity.md) и
+[draft.2](candidates/domain-v0.2.0-draft.2/README.md). Предыдущая формулировка
+об открытом identity-вопросе относится к более ранней итерации.
+
+GitView в glossary остаётся названием продукта, не обязательным новым entity
+class. Motive определён в общем пакете, но намеренно не выбран в foundation.
+[Разбор происхождения findings](review/remaining-findings.md) не заменяет
+принятие всего package или materialization spec graph.

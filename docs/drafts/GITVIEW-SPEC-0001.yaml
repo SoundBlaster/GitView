@@ -2,7 +2,7 @@ id: GITVIEW-SPEC-0001
 title: GitView - product overview and domain boundary
 kind: spec
 created_at: '2026-11-01T08:52:37Z'
-updated_at: '2026-11-02T15:16:51Z'
+updated_at: '2026-11-03T10:05:44Z'
 status: idea
 draft_status: pre_canonical
 sources:
@@ -11,7 +11,7 @@ sources:
   foundation: docs/drafts/product-foundation.md
   sketch:
     path: conversation_memory/sketches/gitview
-    revision: 0bbeb16ed68e4cd6a5e660743e225325
+    revision: 7fa3afce25204e24ae8b11fc1fec618f
   project_sources_commit: 5cd14e21b2fb04f0111db9b670b951af92fc66ef
   domain_model: ontology/domain-model.md
   completeness_audit: ontology/review/completeness.md
@@ -29,39 +29,50 @@ sources:
     sha256: 56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f
   ontology_draft: ontology/packages/gitview/README.md
   ontology_composition_pilot: ontology/pilots/motivation-composition/README.md
+  project_sources_commit_scope: Pins the earlier background source documents; the later identity decision is
+    separately pinned by sketch revision, excerpt refs and review document digest.
+  repository_identity_decision:
+    path: ontology/review/repository-identity.md
+    sha256: bb52a1c5bdaf61402b7dfe5ae8b3759178dfaf5e6114634da29dfa7609653833
+    sketch_revision: 7fa3afce25204e24ae8b11fc1fec618f
+    source_ref: conversation:gitview/excerpt-54-reply
+  identity_candidate:
+    path: ontology/candidates/domain-v0.2.0-draft.2/domain-ontology-package.yaml
+    sha256: b5358f463ac0d4c5e0efb33fb4729385c35bea98dd9f3a13fd7857ccea68a0f4
+    status: draft_not_selected_as_default
 specification:
-  objective: Give the owner of many GitHub repositories a compact, native iOS overview of current work,
-    review and problems, including work produced by coding agents, with a path to the original GitHub
-    object.
-  reconciliation_scope: This agent-authored consolidation records explicitly selected product directions
-    and property sets from the pinned conversation and project sources. Selection of one topic does not
-    approve the whole document, ontology package or implementation. Source refs identify local excerpts,
-    not authenticated message IDs. Open questions and agent proposals retain their separate statuses.
+  objective: Give the owner of many GitHub repositories a compact, native iOS overview of current work, review
+    and problems, including work produced by coding agents, with a path to the original GitHub object.
+  reconciliation_scope: This agent-authored consolidation records explicitly selected product directions and
+    property sets from the pinned conversation and project sources. Selection of one topic does not approve
+    the whole document, ontology package or implementation. Source refs identify local excerpts, not authenticated
+    message IDs. Open questions and agent proposals retain their separate statuses.
   terminology:
-    GitView: The product and root of the owner's authored composition, not an automatically declared
-      DomainEntity or a replacement for GitHub.
-    User: The operator of GitView, as explicitly selected by the owner. GitHub identities and source
-      authors, reviewers and assignees are separate roles or references; identity details remain open.
+    GitView: The product and root of the owner's authored composition, not an automatically declared DomainEntity
+      or a replacement for GitHub.
+    User: The operator of GitView, as explicitly selected by the owner. GitHub identities and source authors,
+      reviewers and assignees are separate roles or references; identity details remain open.
     Project: A GitView project; the membership rules below are distinct from the meaning of the term itself.
-    Repository: Code in which a version control system acts, in the owner's working formulation. Identity
-      and boundaries remain to be specified.
+    Repository: Code in which a version control system acts, in the owner's working formulation. For the same
+      GitHub object confirmed by the source, rename/transfer preserve one Repository, history and Project membership.
+      Concrete identifiers and remaining boundaries are still open.
     Code: Code is essentially a folder with files in the owner's working formulation; its precise boundary
       remains open.
     VersionControlSystem: A system that acts on code to manage versions; Git is an example.
-    GitHub: GitHub can act as the manager of a repository and its change workflow; the formal actor and
-      role model remains open.
-    GitHubRepository: Repository in the management relation established by GitHub acting on it. This
-      meaning is agreed; the technical role or classification is not selected. It does not require a
-      duplicate Repository identity, inheritance or an implementation of the Decorator pattern.
-    Issue: A GitHub issue shown in the overview; an issue may provide a motive for an actor but does not
-      itself act.
-    PullRequest: A GitHub pull request associated with proposed code changes. Creating a pull request
-      does not imply merging it.
-    ReviewThread: A discussion relevant to review. Duration and resolution are separate; thresholds and
-      data availability remain open.
-    CIStatus: Working term for observed check state. The owner selected counters of current individual
-      PR checks following GitHub's behavior, not counts of workflow runs or accumulated attempts. Exact
-      source mapping, special states, freshness and readiness interpretation remain open.
+    GitHub: GitHub can act as the manager of a repository and its change workflow; the formal actor and role
+      model remains open.
+    GitHubRepository: Repository in the management relation established by GitHub acting on it. This meaning
+      is agreed; the technical role or classification is not selected. It does not require a duplicate Repository
+      identity, inheritance or an implementation of the Decorator pattern.
+    Issue: A GitHub issue shown in the overview; an issue may provide a motive for an actor but does not itself
+      act.
+    PullRequest: A GitHub pull request associated with proposed code changes. Creating a pull request does
+      not imply merging it.
+    ReviewThread: A discussion relevant to review. Duration and resolution are separate; thresholds and data
+      availability remain open.
+    CIStatus: Working term for observed check state. The owner selected counters of current individual PR checks
+      following GitHub's behavior, not counts of workflow runs or accumulated attempts. Exact source mapping,
+      special states, freshness and readiness interpretation remain open.
     Metric: A measurement used in the overview. Its population, period and units need a separate definition
       for each metric.
   terminology_status:
@@ -73,25 +84,25 @@ specification:
     - conversation:gitview/excerpt-31
     - conversation:gitview/excerpt-32
     - conversation:gitview/excerpt-53-reply
-    boundary: Meanings, distinguishing characteristics, properties and relations are separate concerns.
-      Ontology keeps specification vocabulary consistent; ordinary controls do not become entities by
-      default. Matching a selected package name does not approve a meaning or establish an instance binding.
+    boundary: Meanings, distinguishing characteristics, properties and relations are separate concerns. Ontology
+      keeps specification vocabulary consistent; ordinary controls do not become entities by default. Matching
+      a selected package name does not approve a meaning or establish an instance binding.
     unresolved_bindings:
     - User is not declared in the selected compiler package; do not invent a package URI.
     - GitHubRepository has agreed contextual meaning but no selected technical representation or binding.
     - GitView need not become an ontology class merely to export the authored composition.
-    candidate_definitions: Full definitions of PullRequest and Issue remain under review separately
-      from the selected property sets below. CIStatus and Metric are working terms with unresolved boundaries.
+    candidate_definitions: Full definitions of PullRequest and Issue remain under review separately from the
+      selected property sets below. CIStatus and Metric are working terms with unresolved boundaries.
     deferred_concepts: Activity likely concerns actions, but remains a hypothesis rather than a standalone
-      entity or metric. Organization is metadata. Group is currently redundant; generalized management
-      systems and non-GitHub providers are deferred.
+      entity or metric. Organization is metadata. Group is currently redundant; generalized management systems
+      and non-GitHub providers are deferred.
     activity_source_ref: conversation:gitview/excerpt-28-reply
   ontology_refs:
   - motivcore:Motive
-  ontology_reference_scope: The Motive reference is a review candidate for the owner's Issue-to-actor
-    example, using org.0al.motivation.core 0.1.0 in the opt-in composition. It does not assert that an
-    individual Issue motivated a particular action, settle the Issue-to-Motive mapping, establish causation
-    or approve a term. All terminology above remains draft, even when a name matches a package.
+  ontology_reference_scope: The Motive reference is a review candidate for the owner's Issue-to-actor example,
+    using org.0al.motivation.core 0.1.0 in the opt-in composition. It does not assert that an individual Issue
+    motivated a particular action, settle the Issue-to-Motive mapping, establish causation or approve a term.
+    All terminology above remains draft, even when a name matches a package.
   project_membership:
     source_refs:
     - conversation:gitview/excerpt-10
@@ -101,16 +112,15 @@ specification:
     contains: A project contains one or more repositories.
     reuse: A repository can belong to more than one project.
     default: By default one project corresponds to one repository.
-    organization: GitHub organizations are metadata; a project may contain repositories from different
-      organizations.
-    undecided: Project identity representation and lifecycle, and the mechanics of creating, naming, editing and synchronizing
-      default projects, remain open.
-    provider_scope: Current projects expect GitHub-managed repositories and their GitHub-specific
-      properties. GitLab and BitBucket are possible later providers, not included integrations.
+    organization: GitHub organizations are metadata; a project may contain repositories from different organizations.
+    undecided: Project identity representation and lifecycle, and the mechanics of creating, naming, editing
+      and synchronizing default projects, remain open.
+    provider_scope: Current projects expect GitHub-managed repositories and their GitHub-specific properties.
+      GitLab and BitBucket are possible later providers, not included integrations.
   selected_property_sets:
     status: User-selected scope for further specification; not a complete typed schema or state machine.
-    counting_boundary: Item counts below refer to the source checklists, not atomic fields, requirements,
-      completion percentages or new canonical specification IDs.
+    counting_boundary: Item counts below refer to the source checklists, not atomic fields, requirements, completion
+      percentages or new canonical specification IDs.
     project:
       source_document: docs/drafts/project-summary-proposal.md
       source_refs:
@@ -127,18 +137,18 @@ specification:
       - B4. A checks-and-review-passed selection only if the separate Repository D rule is later selected.
       - B5. Merged PR and closed Issue counts by reason for one selected period.
       - B6. Charts of those indicators when sufficient history exists.
-      - C1. Navigate through the repository grid into PR and Issue; a single-repository Project skips
-        the duplicate repository screen without becoming identical to Repository.
-      - C2. Navigate directly from a Project counter to the corresponding filtered objects across its
-        repositories, retaining each object's source repository context.
-      summary_boundary: A repository may contribute to each Project containing it, but portfolio totals
-        count shared repositories and their objects once. Project totals cannot simply be added. PR and
-        Issue counts are not a count of independent tasks. A Project summary is derived from membership,
-        not an additional source state or a new Aggregate entity.
-      conditional_rule: The Repository summary and its D readiness-like predicate remain agent proposals.
-        Selecting Project B4 did not activate that predicate or choose default reporting periods.
-      open: Identity representation, membership edits, default-project creation, filter rules, periods,
-        aggregation, freshness and navigation mechanics need bounded specifications.
+      - C1. Navigate through the repository grid into PR and Issue; a single-repository Project skips the duplicate
+        repository screen without becoming identical to Repository.
+      - C2. Navigate directly from a Project counter to the corresponding filtered objects across its repositories,
+        retaining each object's source repository context.
+      summary_boundary: A repository may contribute to each Project containing it, but portfolio totals count
+        shared repositories and their objects once. Project totals cannot simply be added. PR and Issue counts
+        are not a count of independent tasks. A Project summary is derived from membership, not an additional
+        source state or a new Aggregate entity.
+      conditional_rule: The Repository summary and its D readiness-like predicate remain agent proposals. Selecting
+        Project B4 did not activate that predicate or choose default reporting periods.
+      open: Identity representation, membership edits, default-project creation, filter rules, periods, aggregation,
+        freshness and navigation mechanics need bounded specifications.
     pull_request:
       source_document: docs/drafts/pull-request-ontology-options.md
       source_refs:
@@ -171,11 +181,11 @@ specification:
       - G1. Created and last-updated times.
       - G2. Closed or merged time when applicable.
       - G3. Observation time and source.
-      excluded_detail: D2 individual ReviewThread objects/content were not selected. CI and change-size
-        sections are counters only; no run, log, file, commit or diff viewer is implied.
+      excluded_detail: D2 individual ReviewThread objects/content were not selected. CI and change-size sections
+        are counters only; no run, log, file, commit or diff viewer is implied.
       open: Value types, unknown/null representation, source identities and bindings, review applicability,
-        timing and state transitions remain to be specified. Creator identity does not prove coding-agent
-        provenance, User identity or who changed Code.
+        timing and state transitions remain to be specified. Creator identity does not prove coding-agent provenance,
+        User identity or who changed Code.
     issue:
       source_document: docs/drafts/issue-ontology-options.md
       source_refs:
@@ -205,10 +215,10 @@ specification:
       - G2. Closed time when applicable.
       - G3. Observation time and source.
       - G4. Last-comment time when available.
-      interpretation_boundary: Issue comments are not PR review threads. Closed does not necessarily mean
-        completed; assigning someone does not establish that work started. An update is not necessarily
-        a comment. The closed sub-issue ratio is not a work-completion percentage. CI and diff metrics
-        belong to related PR, not automatically to Issue itself.
+      interpretation_boundary: Issue comments are not PR review threads. Closed does not necessarily mean completed;
+        assigning someone does not establish that work started. An update is not necessarily a comment. The
+        closed sub-issue ratio is not a work-completion percentage. CI and diff metrics belong to related PR,
+        not automatically to Issue itself.
       open: Exact source bindings, availability, types, unknown values, linked-object semantics and timing
         rules remain to be specified. Source links do not alone establish actor actions or causation.
   description_format:
@@ -216,15 +226,25 @@ specification:
     source_refs:
     - conversation:gitview/excerpt-37
     - conversation:gitview/excerpt-38
-    selected_issue_sections: [Problem, Motivation, Expected outcome, References]
-    selected_pr_sections: [Problem, Motivation, Expected outcome, Changes, Validation, References]
-    process_requirement: The owner requires Issue and PR templates with the selected sections. Deployment
-      repositories, enforcement mechanism and format version remain open; the saved templates are not active
-      GitHub configuration. The requirement does not imply rejecting objects with older or other descriptions.
-    meaning_boundary: These are properties of description content, not six ontology entities. Motivation
-      is a sourced author statement, not proof of every actor's motive. Expected outcome is an intention,
-      not an achieved result. Validation is an author statement, separately from observed CI or executed
-      evidence. Missing text must not be filled with an invented motive.
+    selected_issue_sections:
+    - Problem
+    - Motivation
+    - Expected outcome
+    - References
+    selected_pr_sections:
+    - Problem
+    - Motivation
+    - Expected outcome
+    - Changes
+    - Validation
+    - References
+    process_requirement: The owner requires Issue and PR templates with the selected sections. Deployment repositories,
+      enforcement mechanism and format version remain open; the saved templates are not active GitHub configuration.
+      The requirement does not imply rejecting objects with older or other descriptions.
+    meaning_boundary: These are properties of description content, not six ontology entities. Motivation is
+      a sourced author statement, not proof of every actor's motive. Expected outcome is an intention, not
+      an achieved result. Validation is an author statement, separately from observed CI or executed evidence.
+      Missing text must not be filled with an invented motive.
     open: Parsing, edits, missing sections, provenance and handling repositories without the template need
       specification. Specific creation-time gates have not been selected or implemented.
   ci_counter_direction:
@@ -232,15 +252,19 @@ specification:
     - conversation:gitview/excerpt-34
     - conversation:gitview/excerpt-35-proposal
     - conversation:gitview/excerpt-35-reply
-    selected_direction: Count current individual PR checks following GitHub's check list behavior. Do
-      not count workflow runs or add earlier failed attempts to a later success for the same check.
-    illustrative_counts: {red: 3, yellow: 4, green: 8, total: 15}
-    example_boundary: These are the owner's example numbers, not live data or an invariant that the
-      three colors always sum to total. Unavailable data is not zero.
+    selected_direction: Count current individual PR checks following GitHub's check list behavior. Do not count
+      workflow runs or add earlier failed attempts to a later success for the same check.
+    illustrative_counts:
+      red: 3
+      yellow: 4
+      green: 8
+      total: 15
+    example_boundary: These are the owner's example numbers, not live data or an invariant that the three colors
+      always sum to total. Unavailable data is not zero.
     open: Relevant revision, check identity, latest attempt, sources, color mapping, cancelled/skipped/neutral
       states, incompleteness and freshness require specification and verification against GitHub.
-    readiness_boundary: Review assessment, unresolved threads and CI are distinct properties. No merge
-      readiness predicate is accepted by this counter selection. Review glyphs remain deferred UX proposals.
+    readiness_boundary: Review assessment, unresolved threads and CI are distinct properties. No merge readiness
+      predicate is accepted by this counter selection. Review glyphs remain deferred UX proposals.
   overview_scope:
     source_refs:
     - conversation:gitview/excerpt-01
@@ -270,42 +294,41 @@ specification:
     - conversation:gitview/excerpt-44
     - conversation:gitview/excerpt-46
     - conversation:gitview/excerpt-47
-    direction: A Photos-inspired grid that can zoom between broader and more detailed views, using native
-      iOS system components, SF Symbols, system colors and Liquid Glass with minimal custom decoration.
+    direction: A Photos-inspired grid that can zoom between broader and more detailed views, using native iOS
+      system components, SF Symbols, system colors and Liquid Glass with minimal custom decoration.
     optional_calendar: A contribution-style calendar is a possible farthest view; its time cells and repository
       or project cells have different meanings.
-    selected_density_direction: Many zoom densities exist within the same scope, not just one density
-      per Project/Repository/object level. Around eight cells per row and around one hundred objects
-      illustrate a dense view, not fixed layout constants or a complete performance requirement.
+    selected_density_direction: Many zoom densities exist within the same scope, not just one density per Project/Repository/object
+      level. Around eight cells per row and around one hundred objects illustrate a dense view, not fixed layout
+      constants or a complete performance requirement.
     first_version_preview: Long-press Peek and Pop on cards, showing a preview before opening the object.
-    later_preview_direction: A single sliding rich preview changes details with the object under the
-      finger, allowing inspection without leaving the dense bird's-eye view. Hover is a possible pointer
-      counterpart, not a required assumption about every target device.
+    later_preview_direction: A single sliding rich preview changes details with the object under the finger,
+      allowing inspection without leaving the dense bird's-eye view. Hover is a possible pointer counterpart,
+      not a required assumption about every target device.
     activation_hypothesis: Long press to activate the later sliding mode is the owner's tentative proposal,
       not a settled gesture contract. The first-version long press requirement is distinct.
-    proposal_boundary: The full scale-level proposal, exact preview contents/actions, focus restoration,
-      gesture thresholds, animation, hover/pan arbitration and accessibility mechanics are not approved
-      by agreement with a prototype. Saved HTML/CSS/JS prototypes are exploratory examples, not app code
-      or evidence of native component behavior. Calendar and deeper PR exploration remain optional/deferred.
-    undecided: Complete navigation and return behavior, scope-versus-density transitions, accessibility
-      alternatives, preview mechanics, calendar transitions and the iOS deployment target need review.
+    proposal_boundary: The full scale-level proposal, exact preview contents/actions, focus restoration, gesture
+      thresholds, animation, hover/pan arbitration and accessibility mechanics are not approved by agreement
+      with a prototype. Saved HTML/CSS/JS prototypes are exploratory examples, not app code or evidence of
+      native component behavior. Calendar and deeper PR exploration remain optional/deferred.
+    undecided: Complete navigation and return behavior, scope-versus-density transitions, accessibility alternatives,
+      preview mechanics, calendar transitions and the iOS deployment target need review.
   action_and_motive:
     source: conversation:gitview/excerpt-21 through conversation:gitview/excerpt-23
-    working_example: An actor acts on Code under a motive associated with an Issue, with a PullRequest
-      described as a consequence. This is a conceptual example, not an observed instance or a complete
-      event or state model.
+    working_example: An actor acts on Code under a motive associated with an Issue, with a PullRequest described
+      as a consequence. This is a conceptual example, not an observed instance or a complete event or state
+      model.
     distinction: A general link and an Ontology relation are distinct in the owner's formulation; an Ontology
-      relation is a property arising through an actor's action on an object. The Issue is not the acting
-      participant.
+      relation is a property arising through an actor's action on an object. The Issue is not the acting participant.
     undecided: Formal actor roles, the nature of the consequence, relation lifetime, provenance and mapping
       to shared packages require review.
   review_examples:
   - A project can include repositories from two GitHub organizations, while either repository also belongs
     to another project.
-  - A pull request overview can show a failed CI result and review-thread information and provide a link
-    to the original GitHub object.
-  - An activity calendar and the repository overview must not be treated as the same type of cell merely
-    because both use a grid.
+  - A pull request overview can show a failed CI result and review-thread information and provide a link to
+    the original GitHub object.
+  - An activity calendar and the repository overview must not be treated as the same type of cell merely because
+    both use a grid.
   review_examples_status: Agent-authored illustrations for review, not acceptance criteria, executed tests
     or evidence that a result was achieved.
   specification_work_order:
@@ -317,14 +340,30 @@ specification:
     selected_priority: Establish the idea, ontology, application boundary and UX without application code;
       complete the bounded product ontology, then build the specification graph on it. Visual review-glyph
       polishing is deferred.
-    tooling_direction: SpecGraph supports specification work; FSD-iOS informs application architecture;
-      SpecificationCore is intended for suitable domain decisions. No integration, package version or
-      resulting implementation architecture is claimed here.
-    next_bounded_step: Resolve required meaning and identity gaps, type the selected properties and
-      relationships, and prepare a reviewed compiler candidate before governed graph materialization.
-    technical_boundary: The selected package and optional composition remain draft. User and
-      GitHubRepository are not silently inserted into them. This update does not select sgcore as a
-      domain vocabulary or activate the proposed external specification-artifact meta-check.
-  authority_boundary: This is a source-attributed product specification candidate for human review. Its
-    ID is provisional, examples are not executed tests, and neither a structural check nor a local commit
-    accepts the specification, ontology, behavior, implementation or associated causal claims.
+    tooling_direction: SpecGraph supports specification work; FSD-iOS informs application architecture; SpecificationCore
+      is intended for suitable domain decisions. No integration, package version or resulting implementation
+      architecture is claimed here.
+    next_bounded_step: Resolve required meaning and identity gaps, type the selected properties and relationships,
+      and prepare a reviewed compiler candidate before governed graph materialization.
+    technical_boundary: The selected package and optional composition remain draft. User and GitHubRepository
+      are not silently inserted into them. This update does not select sgcore as a domain vocabulary or activate
+      the proposed external specification-artifact meta-check.
+  authority_boundary: This is a source-attributed product specification candidate for human review. Its ID
+    is provisional, examples are not executed tests, and neither a structural check nor a local commit accepts
+    the specification, ontology, behavior, implementation or associated causal claims.
+  repository_identity:
+    status: user_selected_scoped_rule_not_whole_spec_approval
+    source_refs:
+    - conversation:gitview/excerpt-54-proposal
+    - conversation:gitview/excerpt-54-reply
+    condition: The source confirms that observations refer to the same GitHub repository object.
+    selected_rule: Rename and transfer preserve one Repository, its history and its memberships in Projects.
+    example: egor/OldName -> egor/NewName -> team/NewName, under the same-object condition, remains one Repository.
+    address_boundary: Observed name, owner and address may change; no literal address is selected as the identity
+      key.
+    agent_implications_for_review:
+    - Do not rewrite historical observations with the current owner/name.
+    - A reused old URL is not by itself evidence that a different source object inherits the old history.
+    - Losing access after transfer does not prove object deletion or a new identity.
+    not_selected: Concrete REST/GraphQL ID, host/provider key scope, wire format/alias migration, persistence,
+      automatic Project renaming and independent-object reconciliation remain specification work.

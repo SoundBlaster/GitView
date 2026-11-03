@@ -61,6 +61,12 @@ repositories and a high volume of contributions and pull requests.
   totals count shared repositories once. Exact computation and navigation rules
   remain specification work; see `docs/drafts/project-summary-proposal.md`.
 
+- Identity clarification (`conversation:gitview/excerpt-54-reply`): when the source
+confirms the same GitHub repository object, rename/transfer preserve one Repository,
+its history and Project memberships. API ID representation, aliases and storage
+remain open. See `ontology/review/repository-identity.md`; this is one selected rule,
+not acceptance of the whole ontology.
+
 ## Ideas to refine
 
 - `Activity` likely concerns actions, distinguished for now from the current

@@ -151,3 +151,9 @@ Ontology ещё не объявлена достаточно готовой дл
 ограниченный шаг — решение об identity/context и затем typed observation/reference
 contract для текущего обзора. Протоколы и scalar typing этого среза не заменяют
 такое решение.
+
+Позднейшее решение: пользователь выбрал непрерывность Repository при подтверждённом
+rename/transfer. Оно отражено отдельно в [draft.2](../domain-v0.2.0-draft.2/README.md)
+и [decision review](../../review/repository-identity.md). Вопрос выше сохранён
+как история draft.1, а не как утверждение, что ответа по-прежнему нет.
+Source/IR/version/selections draft.1 не изменены.
