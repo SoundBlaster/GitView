@@ -1,0 +1,236 @@
+{
+  "project": "GitView",
+  "input_commit": "553e401e2b463113f95ea3f190d15518214e8738",
+  "previous_runtime": "/Users/egor/.local/share/specgraph/runtime-b1583e58",
+  "runtime": "/Users/egor/.local/share/specgraph/runtime-002eb069",
+  "runtime_receipt": {
+    "artifact_kind": "specgraph_native_runtime",
+    "schema_version": 1,
+    "status": "installed",
+    "source_commit": "002eb0691b39ea2ccdcc50d0c5c31fc84022e3bf",
+    "python_version": "3.12.11"
+  },
+  "project_extension_sha256": "1c6169ac64b00edab289849419e6a95d7a23b04dbf284f4d4c004397f03ef5f9",
+  "checks": [
+    {
+      "label": "version",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-002eb069/specgraph-runtime",
+        "--workspace",
+        "/Users/egor/Development/GitHub/GitView",
+        "draft",
+        "--",
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "29c516343acb18f2ee3890e08403708f48cefdacf0327748c047ca5b8bf82dd2",
+      "text": "specgraph 0.2.0\n"
+    },
+    {
+      "label": "notes",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-002eb069/specgraph-runtime",
+        "--workspace",
+        "/Users/egor/Development/GitHub/GitView",
+        "draft",
+        "--",
+        "notes",
+        "read_notes",
+        "--workspace",
+        "conversation_memory/sketches/gitview",
+        "--history-limit",
+        "1"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "a4557474779adf2e02347eccfc11ecbb5984acb8514fe14f139edc73139cf4fe",
+      "revision": "f7c0ae6bc12849eba02d53201dd4ac26",
+      "canonical": false
+    },
+    {
+      "label": "history",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-002eb069/specgraph-runtime",
+        "--workspace",
+        "/Users/egor/Development/GitHub/GitView",
+        "draft",
+        "--",
+        "notes",
+        "verify_history",
+        "--workspace",
+        "conversation_memory/sketches/gitview"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "aa6edba8468cf5c121a9cf6179de3fc2fd69dfd9503eff8439b20a96a6e24bda",
+      "status": "complete",
+      "revision": "f7c0ae6bc12849eba02d53201dd4ac26",
+      "revision_count": 79,
+      "canonical": false
+    },
+    {
+      "label": "context-0",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-002eb069/specgraph-runtime",
+        "--workspace",
+        "/Users/egor/Development/GitHub/GitView",
+        "ontology-context",
+        "--",
+        "--selection",
+        "ontology/context.yaml",
+        "--ontologyc",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/toolchains/0.7.0-40672c18-macos-arm64/ontologyc",
+        "--compiler-sha256",
+        "f4d5691e7308e61b49316b2c0017a33943664b58d62771cbc84802d64e48a051"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "0563c16fe35ef648f66d57eb58e3088c2bb68172095e1b4b66a8fa926f6268ab",
+      "outcome": "verified"
+    },
+    {
+      "label": "context-1",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-002eb069/specgraph-runtime",
+        "--workspace",
+        "/Users/egor/Development/GitHub/GitView",
+        "ontology-context",
+        "--",
+        "--selection",
+        "ontology/pilots/motivation-composition/context.yaml",
+        "--ontologyc",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/toolchains/0.7.0-40672c18-macos-arm64/ontologyc",
+        "--compiler-sha256",
+        "f4d5691e7308e61b49316b2c0017a33943664b58d62771cbc84802d64e48a051"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "2702bed9b48d3f985ee12fcd545646eeb031ded966ffc475968d7ca21f1961fb",
+      "outcome": "verified"
+    },
+    {
+      "label": "context-2",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-002eb069/specgraph-runtime",
+        "--workspace",
+        "/Users/egor/Development/GitHub/GitView",
+        "ontology-context",
+        "--",
+        "--selection",
+        "ontology/candidates/domain-v0.2.0-draft.3/foundation-context.yaml",
+        "--ontologyc",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/toolchains/0.7.0-40672c18-macos-arm64/ontologyc",
+        "--compiler-sha256",
+        "f4d5691e7308e61b49316b2c0017a33943664b58d62771cbc84802d64e48a051"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "59efd956ad928fab6ca25843c6781305923414732d0ddb301c0d977f55c8e87b",
+      "outcome": "verified"
+    },
+    {
+      "label": "context-3",
+      "argv": [
+        "/Users/egor/.local/share/specgraph/runtime-002eb069/specgraph-runtime",
+        "--workspace",
+        "/Users/egor/Development/GitHub/GitView",
+        "ontology-context",
+        "--",
+        "--selection",
+        "ontology/candidates/domain-v0.2.0-draft.3/composition-context.yaml",
+        "--ontologyc",
+        "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/toolchains/0.7.0-40672c18-macos-arm64/ontologyc",
+        "--compiler-sha256",
+        "f4d5691e7308e61b49316b2c0017a33943664b58d62771cbc84802d64e48a051"
+      ],
+      "exit_code": 0,
+      "stdout_sha256": "cffdf493b890739fd5d3c824fc0124b68c1120578b9d967d4d287b406ff39a85",
+      "outcome": "verified"
+    }
+  ],
+  "restored_history": {
+    "artifact_kind": "conversation_notes_history_verification",
+    "schema_version": 1,
+    "revision": "f7c0ae6bc12849eba02d53201dd4ac26",
+    "revision_count": 79,
+    "status": "complete",
+    "canonical": false
+  },
+  "protected_files_unchanged": 302,
+  "local_artifacts": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/runtime-update-002eb069",
+  "scope": "local_installed_runtime_check",
+  "semantic_approval": false,
+  "notes_mutated": false,
+  "draft_check": {
+    "draft_sha256": "728f2af8f135dbdc1fc9747282b4ad83fb606066e34c8e33318f9926999d45c0",
+    "results": [
+      {
+        "label": "selected",
+        "argv": [
+          "/Users/egor/.local/share/specgraph/runtime-002eb069/specgraph-runtime",
+          "--workspace",
+          "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/runtime-update-002eb069/checkout",
+          "supervisor",
+          "--",
+          "--build-project-ontology-context-check",
+          "--target-spec",
+          "GITVIEW-SPEC-0001",
+          "--ontology-context-project-id",
+          "gitview",
+          "--ontology-context-selection",
+          "ontology/context.yaml",
+          "--ontologyc",
+          "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/toolchains/0.7.0-40672c18-macos-arm64/ontologyc",
+          "--output-mode",
+          "summary"
+        ],
+        "exit_code": 0,
+        "status": "checked",
+        "assessments": {
+          "domain_vocabulary": {
+            "check_scope": "domain_vocabulary",
+            "outcome": "analyzed",
+            "diagnostics": []
+          },
+          "specification_metamodel": {
+            "check_scope": "specification_metamodel",
+            "outcome": "not_requested",
+            "diagnostics": []
+          }
+        }
+      },
+      {
+        "label": "composition",
+        "argv": [
+          "/Users/egor/.local/share/specgraph/runtime-002eb069/specgraph-runtime",
+          "--workspace",
+          "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/runtime-update-002eb069/checkout",
+          "supervisor",
+          "--",
+          "--build-project-ontology-context-check",
+          "--target-spec",
+          "GITVIEW-SPEC-0001",
+          "--ontology-context-project-id",
+          "gitview",
+          "--ontology-context-selection",
+          "ontology/pilots/motivation-composition/context.yaml",
+          "--ontologyc",
+          "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/ontology/toolchains/0.7.0-40672c18-macos-arm64/ontologyc",
+          "--output-mode",
+          "summary"
+        ],
+        "exit_code": 0,
+        "status": "checked",
+        "assessments": {
+          "domain_vocabulary": {
+            "check_scope": "domain_vocabulary",
+            "outcome": "analyzed",
+            "diagnostics": []
+          },
+          "specification_metamodel": {
+            "check_scope": "specification_metamodel",
+            "outcome": "not_requested",
+            "diagnostics": []
+          }
+        }
+      }
+    ]
+  },
+  "skill_sha256": "e240c643de0f7f1ef0c705b0361b22c1f7063bc0fe3ba7857ad2ecf166d4d5fc",
+  "previous_installation_retained": true
+}
