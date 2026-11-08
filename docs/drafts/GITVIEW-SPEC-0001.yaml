@@ -294,6 +294,7 @@ specification:
     - conversation:gitview/excerpt-44
     - conversation:gitview/excerpt-46
     - conversation:gitview/excerpt-47
+    - conversation:gitview/excerpt-55-reply
     direction: A Photos-inspired grid that can zoom between broader and more detailed views, using native iOS
       system components, SF Symbols, system colors and Liquid Glass with minimal custom decoration.
     optional_calendar: A contribution-style calendar is a possible farthest view; its time cells and repository
@@ -301,6 +302,12 @@ specification:
     selected_density_direction: Many zoom densities exist within the same scope, not just one density per Project/Repository/object
       level. Around eight cells per row and around one hundred objects illustrate a dense view, not fixed layout
       constants or a complete performance requirement.
+    selected_timeline_grid:
+      default: Show PR and Issue cards in all lifecycle states within the current scope and time group.
+      lifecycle_change: Merging or closing an object updates its card while retaining it in the same group
+        in the unfiltered view.
+      filtering: Users can explicitly exclude states such as Merged and Closed to focus on open work.
+      undecided: The date or event that assigns an object to a time group and the specific filter control.
     first_version_preview: Long-press Peek and Pop on cards, showing a preview before opening the object.
     later_preview_direction: A single sliding rich preview changes details with the object under the finger,
       allowing inspection without leaving the dense bird's-eye view. Hover is a possible pointer counterpart,
