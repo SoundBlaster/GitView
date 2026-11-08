@@ -27,10 +27,11 @@ repositories and a high volume of contributions and pull requests.
   showed only a large scale. Sliding preview is especially useful for dense
   cells: it reveals details while preserving the bird's-eye view (`excerpt-46`).
 - The PR/Issue timeline grid starts with all lifecycle states in the current
-  scope and time group. After a merge or closure, the card shows the new state
-  within the same group. Users can explicitly hide states such as Merged or Closed
-  (`conversation:gitview/excerpt-55-reply`). The rule for assigning objects to
-  time groups and the exact filter control remain open.
+  scope and time group. Users can explicitly hide states such as Merged or Closed
+  (`conversation:gitview/excerpt-55-reply`). Today includes unfinished work from
+  earlier days (`conversation:gitview/excerpt-56-reply`). The working interpretation
+  keeps today's results in the same view. The precise boundary of unfinished work,
+  grouping of past outcomes, and filter control remain open.
 - A broad view of activity, work awaiting review, ready work, and problems
   including failed CI and long or unresolved review threads.
 - Charts and metrics, lightweight review, and convenient sharing.
