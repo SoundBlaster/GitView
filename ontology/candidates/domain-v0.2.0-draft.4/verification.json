@@ -1,0 +1,97 @@
+{
+  "results": {
+    "foundation": {
+      "selection": "ontology/candidates/domain-v0.2.0-draft.4/foundation-context.yaml",
+      "member": {
+        "id": "local.gitview.domain",
+        "namespace": "gitview",
+        "version": "0.2.0-draft.4",
+        "source": "ontology/candidates/domain-v0.2.0-draft.4/domain-ontology-package.yaml",
+        "source_sha256": "2f08e1652a01b0d113b0ce97a84619b306f4cdf1933d50b673255b3bbba0c238",
+        "ir": "ontology/candidates/domain-v0.2.0-draft.4/generated/ontology.normalized.json",
+        "ir_sha256": "549555cc2bd64f34a20a52f9cd4a0227d914b993a0671f7f2ac8237420f47299"
+      },
+      "compiler_check": "passed",
+      "code_generation": "passed",
+      "normalized_relation": {
+        "action": "gitview:RegisterRepository",
+        "description": "Registering a Repository with GitHub establishes GitHub's management of that same Repository. In this context the Repository plays the GitHubRepository role.",
+        "domain": "gitview:GitHub",
+        "fqid": "gitview:managesRepository",
+        "id": "managesRepository",
+        "range": "gitview:Repository",
+        "uri": "ontology://local.gitview.domain/0.2.0-draft.4/relations/managesRepository"
+      }
+    },
+    "composition": {
+      "selection": "ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml",
+      "member": {
+        "id": "local.gitview.domain",
+        "namespace": "gitview",
+        "version": "0.2.0-draft-composition.4",
+        "source": "ontology/candidates/domain-v0.2.0-draft.4/composition/domain-ontology-package.yaml",
+        "source_sha256": "157c9d3294c9f346b2badd898eaff10209d67d666f2b0113e636b57a421232b0",
+        "ir": "ontology/candidates/domain-v0.2.0-draft.4/composition/generated/ontology.normalized.json",
+        "ir_sha256": "f6ceff6b6864dccc75ce60aa5030867ece09bb8ce6ecd74187f3491dddce5788"
+      },
+      "compiler_check": "passed",
+      "code_generation": "passed",
+      "normalized_relation": {
+        "action": "gitview:RegisterRepository",
+        "description": "Registering a Repository with GitHub establishes GitHub's management of that same Repository. In this context the Repository plays the GitHubRepository role.",
+        "domain": "gitview:GitHub",
+        "fqid": "gitview:managesRepository",
+        "id": "managesRepository",
+        "range": "gitview:Repository",
+        "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.4/relations/managesRepository"
+      }
+    }
+  },
+  "compiler_sha256": "f4d5691e7308e61b49316b2c0017a33943664b58d62771cbc84802d64e48a051",
+  "projection": {
+    "action": "gitview:RegisterRepository",
+    "description": "Registering a Repository with GitHub establishes GitHub's management of that same Repository. In this context the Repository plays the GitHubRepository role.",
+    "domain": "gitview:GitHub",
+    "fqid": "gitview:managesRepository",
+    "id": "managesRepository",
+    "range": "gitview:Repository",
+    "source": {
+      "id": "local.gitview.domain",
+      "pointer": "/spec/relations/managesRepository",
+      "sourceByteDigest": "sha256:157c9d3294c9f346b2badd898eaff10209d67d666f2b0113e636b57a421232b0",
+      "sourceDigest": "sha256:157c9d3294c9f346b2badd898eaff10209d67d666f2b0113e636b57a421232b0",
+      "version": "0.2.0-draft-composition.4"
+    },
+    "uri": "ontology://local.gitview.domain/0.2.0-draft-composition.4/relations/managesRepository"
+  },
+  "native": {
+    "foundation": {
+      "context": "verified",
+      "target": "checked",
+      "warnings": [
+        "GitView",
+        "motivcore:Motive"
+      ],
+      "action_check": "/spec/relations/managesRepository/action: RegisterRepository -> ontology://local.gitview.domain/0.2.0-draft.4/classes/RegisterRepository"
+    },
+    "composition": {
+      "context": "verified",
+      "target": "checked",
+      "warnings": [
+        "GitView"
+      ],
+      "action_check": "/spec/relations/managesRepository/action: RegisterRepository -> ontology://local.gitview.domain/0.2.0-draft-composition.4/classes/RegisterRepository"
+    }
+  },
+  "target_sha256": "f3a14ed77d2cc8046da18fe835b25e33840d2b888f86df5f9c8e03cd0bf31ea1",
+  "kind": "gitview_repository_registration_candidate_verification",
+  "schema_version": 1,
+  "status": "draft",
+  "decision_ref": "conversation:gitview/excerpt-58-reply",
+  "compiler_version": "0.7.0",
+  "visualizer_version": "0.9.1",
+  "visualizer_sha256": "dbd5d12c59f92c27324c060d159b3f55beab00d8881de63e85f7fab225e95886",
+  "specgraph_revision": "002eb0691b39ea2ccdcc50d0c5c31fc84022e3bf",
+  "specspace_revision": "73fb3ff1d844656015c21b3ce2d7ac084230bda5",
+  "scope": "structural_checks_and_local_viewer"
+}
