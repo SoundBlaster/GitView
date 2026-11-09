@@ -1,9 +1,8 @@
 # Оператор добавляет Repository в Project
 
-Составной вариант `0.2.0-draft-composition.3` выбран в
-[`specgraph.project.yaml`](../../../specgraph.project.yaml) как рабочий контекст
-для подготовки графа спецификаций (`conversation:gitview/excerpt-57-reply`).
-Пакет сохраняет статус `draft`.
+Составной вариант `0.2.0-draft-composition.3` ранее выбрали рабочим контекстом
+(`conversation:gitview/excerpt-57-reply`). Сейчас проект использует
+[составной draft.4](../domain-v0.2.0-draft.4/README.md).
 
 В пакете GitView `0.2.0-draft.3` термин `User` обозначает конкретного оператора приложения. Он объявлен в `classes` с базой `ont:DomainEntity`. В [предыдущем кандидате](../domain-v0.2.0-draft.2/README.md) то же имя использовалось как protocol. Основание для смысла термина — `conversation:gitview/excerpt-53-reply`. Просьба исправить именно проектный пакет сохранена в SpecDraft как `conversation:gitview/actor-pilot-package-correction`. Выбор представления и сценарий остаются черновыми.
 

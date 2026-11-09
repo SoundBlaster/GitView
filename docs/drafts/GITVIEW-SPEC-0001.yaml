@@ -2,7 +2,7 @@ id: GITVIEW-SPEC-0001
 title: GitView - product overview and domain boundary
 kind: spec
 created_at: '2026-11-01T08:52:37Z'
-updated_at: '2026-11-03T10:05:44Z'
+updated_at: '2026-11-09T19:04:22Z'
 status: idea
 draft_status: pre_canonical
 sources:
@@ -29,6 +29,7 @@ sources:
     sha256: 56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f
   ontology_draft: ontology/packages/gitview/README.md
   ontology_composition_pilot: ontology/pilots/motivation-composition/README.md
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
   project_sources_commit_scope: Pins the earlier background source documents; the later identity decision is
     separately pinned by sketch revision, excerpt refs and review document digest.
   repository_identity_decision:
@@ -59,11 +60,9 @@ specification:
     Code: Code is essentially a folder with files in the owner's working formulation; its precise boundary
       remains open.
     VersionControlSystem: A system that acts on code to manage versions; Git is an example.
-    GitHub: GitHub can act as the manager of a repository and its change workflow; the formal actor and role
-      model remains open.
-    GitHubRepository: Repository in the management relation established by GitHub acting on it. This meaning
-      is agreed; the technical role or classification is not selected. It does not require a duplicate Repository
-      identity, inheritance or an implementation of the Decorator pattern.
+    GitHub: The actor that establishes repository management through RegisterRepository.
+    GitHubRepository: The contextual role of a Repository under GitHub management. The working ontology
+      represents it as a protocol over the same Repository identity.
     Issue: A GitHub issue shown in the overview; an issue may provide a motive for an actor but does not itself
       act.
     PullRequest: A GitHub pull request associated with proposed code changes. Creating a pull request does
@@ -84,12 +83,12 @@ specification:
     - conversation:gitview/excerpt-31
     - conversation:gitview/excerpt-32
     - conversation:gitview/excerpt-53-reply
+    - conversation:gitview/excerpt-58-reply
+    - conversation:gitview/excerpt-59-reply
     boundary: Meanings, distinguishing characteristics, properties and relations are separate concerns. Ontology
       keeps specification vocabulary consistent; ordinary controls do not become entities by default. Matching
       a selected package name does not approve a meaning or establish an instance binding.
     unresolved_bindings:
-    - User is not declared in the selected compiler package; do not invent a package URI.
-    - GitHubRepository has agreed contextual meaning but no selected technical representation or binding.
     - GitView need not become an ontology class merely to export the authored composition.
     candidate_definitions: Full definitions of PullRequest and Issue remain under review separately from the
       selected property sets below. CIStatus and Metric are working terms with unresolved boundaries.
@@ -100,7 +99,7 @@ specification:
   ontology_refs:
   - motivcore:Motive
   ontology_reference_scope: The Motive reference is a review candidate for the owner's Issue-to-actor example,
-    using org.0al.motivation.core 0.1.0 in the opt-in composition. It does not assert that an individual Issue
+    using org.0al.motivation.core 0.1.0 in the working composition. It does not assert that an individual Issue
     motivated a particular action, settle the Issue-to-Motive mapping, establish causation or approve a term.
     All terminology above remains draft, even when a name matches a package.
   project_membership:

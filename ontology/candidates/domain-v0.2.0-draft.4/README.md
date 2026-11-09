@@ -22,4 +22,6 @@ managesRepository:
 контекстов и `checked` для `GITVIEW-SPEC-0001`. Для составного варианта также
 проверены импорты на Ontology 0.9.1 и проекция в инспекторе SpecSpace.
 [Результаты проверки](verification.json) описывают структуру и отображение.
-Действующий рабочий контекст проекта — составной [draft.3](../domain-v0.2.0-draft.3/README.md).
+Составной вариант выбран рабочим контекстом в
+[`specgraph.project.yaml`](../../../specgraph.project.yaml)
+(`conversation:gitview/excerpt-59-reply`). Пакет сохраняет статус `draft`.

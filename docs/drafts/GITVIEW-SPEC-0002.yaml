@@ -1,0 +1,74 @@
+id: GITVIEW-SPEC-0002
+title: GitView - Repository identity across rename and transfer
+kind: spec
+created_at: '2026-11-09T19:03:26Z'
+updated_at: '2026-11-09T19:03:26Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  identity_decision:
+    path: ontology/review/repository-identity.md
+    sha256: bb52a1c5bdaf61402b7dfe5ae8b3759178dfaf5e6114634da29dfa7609653833
+    ref: conversation:gitview/excerpt-54-reply
+  management_decision: conversation:gitview/excerpt-58-reply
+  ontology_selection:
+    path: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+    sha256: f346b1a369cc491606d7da5731eeb0f3cba948ddb8a769315787e8c14b0bc221
+    package: local.gitview.domain@0.2.0-draft-composition.4
+acceptance:
+- Rename and transfer preserve the same GitView Repository, its history and every Project membership
+  when GitHub confirms the same repository object.
+- The current source address follows a confirmed change while prior observations retain the address
+  recorded at their observation time.
+acceptance_evidence:
+- criterion: Rename and transfer preserve the same GitView Repository, its history and every Project membership
+    when GitHub confirms the same repository object.
+  evidence: The confirmed_rename and confirmed_transfer scenarios below define expected outcomes for future verification.
+- criterion: The current source address follows a confirmed change while prior observations retain the address
+    recorded at their observation time.
+  evidence: The confirmed_rename and confirmed_transfer scenarios distinguish the latest address from historical snapshots.
+specification:
+  objective: Keep repository history and all Project memberships intact when GitHub confirms a repository
+    has changed name or owner.
+  scope:
+    in:
+    - Rename or transfer between owners within GitHub with source-confirmed object continuity.
+    - Current address, previously recorded observations and Project memberships across that change.
+    out:
+    - Choosing an API identifier or storage key, alias resolution and ID-format migration.
+    - Cross-provider migration, repository deletion, and automatic renaming of Projects.
+    - Changes to GitHub permissions or replaying repository registration.
+  ontology_refs:
+  - gitview:GitHub
+  - gitview:Repository
+  - gitview:GitHubRepository
+  - gitview:Project
+  - gitview:managesRepository
+  - gitview:projectIncludesRepository
+  identity_rule: GitView preserves one Repository when the source confirms the same GitHub object.
+    A GitHubRepository context and each Project membership continue to refer to that Repository.
+  scenarios:
+    confirmed_rename:
+      given: Repository R is tracked in Projects P and Q at egor/OldName.
+      when: GitHub identifies egor/NewName as that same object.
+      then: R remains in P and Q with its existing history. The current address becomes egor/NewName.
+        Prior observations keep egor/OldName.
+    confirmed_transfer:
+      given: The same R is tracked in P and Q at egor/NewName.
+      when: GitHub identifies team/NewName as that same object after transfer.
+      then: R remains in P and Q with its history and GitHub management context. The current owner and
+        address become team and team/NewName. Prior observations keep their recorded owners and addresses.
+  guardrails_for_review:
+    reused_address: When the source confirms a different object at egor/OldName, the address alone
+      provides no basis for attaching R's history or membership to it.
+    unavailable_observation: When the source cannot confirm the object because access was lost, current
+      availability is unknown. This observation alone provides no basis to delete, merge or replace R.
+  unresolved:
+  - Which API field and provider scope give sufficient evidence of the same object.
+  - How to reconcile ID-format changes and aliases, and how to represent observation availability.
+  provenance_boundary: The owner selected continuity of identity, history and membership. Address history,
+    reuse and access-loss details are proposed requirements or guardrails for review. The examples are
+    specification scenarios awaiting execution.
