@@ -45,8 +45,9 @@ Issue ── кандидатная типизированная ссылка �
 
 [`context.yaml`](context.yaml) выбирает проектный кандидат и обе зависимости по
 точным source/IR SHA-256 с профилем `ontologyc-motivation-composition-v1`.
-Основной `ontology/context.yaml` остаётся выбранным по умолчанию и не изменён.
-Он также проверен новым runtime и release-компилятором: `verified`, exit 0.
+На момент пилота `ontology/context.yaml` был выбран по умолчанию и прошёл
+проверку (`verified`, exit 0). Сейчас конфигурация проекта выбирает
+[составной draft.3](../../candidates/domain-v0.2.0-draft.3/README.md).
 
 ```sh
 specgraph-runtime --workspace /path/to/GitView ontology-context -- \

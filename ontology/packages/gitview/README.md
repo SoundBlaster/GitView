@@ -116,9 +116,9 @@ Issue — мотив → актор — меняет → Code → последс
 ## Проверка и использование
 
 [`ontology/context.yaml`](../../context.yaml) выбирает этот пакет и закрепляет
-SHA-256 исходника и нормализованного IR. Он указан в `specgraph.project.yaml`
-как текущий **черновой** контекст. Выбор контекста не означает утверждения
-терминов и не включает автоматический gate.
+SHA-256 исходника и нормализованного IR. Это прежний черновой контекст, который
+можно выбрать явно для контрольного прогона. Текущий контекст указан в
+[`specgraph.project.yaml`](../../../specgraph.project.yaml).
 
 Проверка 1 ноября 2026 года: `ontologyc check` и `ontologyc compile` прошли;
 native runtime SpecGraph `39b66a60` при вызове `ontology-context` в самом
@@ -142,6 +142,7 @@ GitView вернул `verified`, `semantic_approval: not_established` и
 
 ```sh
 specgraph-runtime --workspace /path/to/GitView ontology-context -- \
+  --selection ontology/context.yaml \
   --ontologyc /path/to/ontologyc --compiler-sha256 <sha256-исполняемого-файла>
 ```
 

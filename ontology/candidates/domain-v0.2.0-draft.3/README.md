@@ -1,5 +1,10 @@
 # Оператор добавляет Repository в Project
 
+Составной вариант `0.2.0-draft-composition.3` выбран в
+[`specgraph.project.yaml`](../../../specgraph.project.yaml) как рабочий контекст
+для подготовки графа спецификаций (`conversation:gitview/excerpt-57-reply`).
+Пакет сохраняет статус `draft`.
+
 В пакете GitView `0.2.0-draft.3` термин `User` обозначает конкретного оператора приложения. Он объявлен в `classes` с базой `ont:DomainEntity`. В [предыдущем кандидате](../domain-v0.2.0-draft.2/README.md) то же имя использовалось как protocol. Основание для смысла термина — `conversation:gitview/excerpt-53-reply`. Просьба исправить именно проектный пакет сохранена в SpecDraft как `conversation:gitview/actor-pilot-package-correction`. Выбор представления и сценарий остаются черновыми.
 
 ```yaml
@@ -30,4 +35,4 @@ python3 ontology/candidates/domain-v0.2.0-draft.3/operator/verify.py
 
 Проверка сопоставляет source/IR SHA-256, сравнивает заново сгенерированный IR с сохранёнными байтами, компилирует строгий TypeScript и исполняет пример для обоих пакетов. В отрицательном контроле возврат прежнего `protocols.User` даёт `relation.subject.unresolved`. Аналогичная проверка с релизом 0.7.0 на прежней форме связи даёт `relation.domain.unresolved`, а конкретный класс проходит.
 
-Установленный SpecGraph `b1583e58` подтверждает действующий `ontology/context.yaml` с релизом 0.7.0. Для нового основного кандидата он возвращает `unavailable` из-за версии foundation, а для составного — `invalid` при чтении ожидаемого поля `domain`. Кандидат проверяется напрямую через `ontologyc` и SDK. Выбор его контекстом проекта требует поддержки новых объявлений в SpecGraph.
+В историческом прогоне SpecGraph `b1583e58` подтвердил прежний `ontology/context.yaml` с релизом 0.7.0. Для варианта draft.3 на foundation он вернул `unavailable` из-за версии foundation, а для составного — `invalid` при чтении ожидаемого поля `domain`. Установленный `002eb069` с Ontology 0.7.0 и отдельный прогон `88126b61` с Ontology 0.9.1 подтвердили оба варианта (`verified`), а root draft — `checked`.

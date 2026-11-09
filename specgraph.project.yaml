@@ -5,7 +5,7 @@ display_name: GitView
 governance_profile: product_workspace
 # Selection is a draft context; it does not approve its terms or activate a gate.
 ontology_context:
-  selection: ontology/context.yaml
+  selection: ontology/candidates/domain-v0.2.0-draft.3/composition-context.yaml
 workspace:
   specs_root: specs/
   proposals_root: docs/proposals/
