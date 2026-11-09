@@ -2,7 +2,7 @@ id: GITVIEW-SPEC-0001
 title: GitView - product overview and domain boundary
 kind: spec
 created_at: '2026-11-01T08:52:37Z'
-updated_at: '2026-11-09T19:04:22Z'
+updated_at: '2026-11-09T19:30:21Z'
 status: idea
 draft_status: pre_canonical
 sources:
@@ -37,6 +37,7 @@ sources:
     sha256: bb52a1c5bdaf61402b7dfe5ae8b3759178dfaf5e6114634da29dfa7609653833
     sketch_revision: 7fa3afce25204e24ae8b11fc1fec618f
     source_ref: conversation:gitview/excerpt-54-reply
+  repository_identity_spec: docs/drafts/GITVIEW-SPEC-0002.yaml
   identity_candidate:
     path: ontology/candidates/domain-v0.2.0-draft.2/domain-ontology-package.yaml
     sha256: b5358f463ac0d4c5e0efb33fb4729385c35bea98dd9f3a13fd7857ccea68a0f4
@@ -56,7 +57,7 @@ specification:
     Project: A GitView project; the membership rules below are distinct from the meaning of the term itself.
     Repository: Code in which a version control system acts, in the owner's working formulation. For the same
       GitHub object confirmed by the source, rename/transfer preserve one Repository, history and Project membership.
-      Concrete identifiers and remaining boundaries are still open.
+      The numeric GitHub REST repository id is compared within one GitHub instance.
     Code: Code is essentially a folder with files in the owner's working formulation; its precise boundary
       remains open.
     VersionControlSystem: A system that acts on code to manage versions; Git is an example.
@@ -364,14 +365,17 @@ specification:
     source_refs:
     - conversation:gitview/excerpt-54-proposal
     - conversation:gitview/excerpt-54-reply
-    condition: The source confirms that observations refer to the same GitHub repository object.
+    - conversation:gitview/excerpt-60-reply
+    condition: Observations with the same numeric GitHub REST repository id from the same GitHub instance
+      identify one Repository.
     selected_rule: Rename and transfer preserve one Repository, its history and its memberships in Projects.
     example: egor/OldName -> egor/NewName -> team/NewName, under the same-object condition, remains one Repository.
     address_boundary: Observed name, owner and address may change; no literal address is selected as the identity
       key.
+    reused_address: A different numeric id from the same GitHub instance identifies a separate Repository
+      with independent history and memberships.
+    unavailable_observation: HTTP 404 leaves current state unknown and preserves the last known record.
     agent_implications_for_review:
-    - Do not rewrite historical observations with the current owner/name.
-    - A reused old URL is not by itself evidence that a different source object inherits the old history.
-    - Losing access after transfer does not prove object deletion or a new identity.
-    not_selected: Concrete REST/GraphQL ID, host/provider key scope, wire format/alias migration, persistence,
-      automatic Project renaming and independent-object reconciliation remain specification work.
+    - Preserve the owner and name recorded in each historical observation.
+    open: Local persistence keys, alias and ID-format migration, cross-instance identity and automatic
+      Project renaming remain specification work.
