@@ -1,0 +1,57 @@
+id: GITVIEW-SPEC-0004
+title: GitView - Main screen
+kind: spec
+created_at: '2026-11-09T22:16:41Z'
+updated_at: '2026-11-09T22:16:41Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0003
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  start_from_main_screen: conversation:gitview/excerpt-66
+  project_summary: docs/drafts/project-summary-proposal.md
+  zoom_levels_proposal: docs/drafts/ux-zoom-levels-proposal.md
+  observations: docs/drafts/GITVIEW-SPEC-0003.yaml
+  ontology_selection:
+    path: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+    sha256: f346b1a369cc491606d7da5731eeb0f3cba948ddb8a769315787e8c14b0bc221
+    package: local.gitview.domain@0.2.0-draft-composition.4
+specification:
+  objective: Help the user see which Projects have activity or need attention and choose where to look next.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  proposal:
+    starting_view: Use the project overview as the main screen. The user sees their Projects and
+      can identify them by name. Restoring the last opened screen at launch is a separate decision.
+    signals: A project entry can surface a small set of signals, such as review waiting or failed CI.
+      The exact signals shown by default remain open.
+    navigation: Open a Project from its entry. A signal can provide a direct path to the
+      corresponding filtered PR or Issue view within that Project.
+    incomplete_data: Keep the affected Project visible and distinguish partial or stale observations
+      from an observed absence of work. The refresh and failure rules are described in GITVIEW-SPEC-0003.
+  review_scenarios:
+    choose_project:
+      given: The user has several Projects.
+      when: The main overview is visible.
+      then: The user can identify a Project and open its contents.
+    follow_signal:
+      given: A Project entry shows a failed-CI signal for some of its PRs.
+      when: The user opens that signal.
+      then: The filtered view stays scoped to the selected Project and identifies each PR's Repository.
+    incomplete_overview:
+      given: One Project has an older or partial observation.
+      when: The user reads the main overview.
+      then: The Project remains available with an indication of the observation's limits.
+  deferred:
+  - Default density and arrangement, sorting, and exact card contents.
+  - First-launch experience and launch restoration.
+  - Contents of a Project, Repository, PR or Issue screen after navigation.
+  provenance_boundary: The owner suggested specifying the product from its main screen downward.
+    The proposed starting view and scenarios are for review.
