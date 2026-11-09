@@ -2,7 +2,7 @@ id: GITVIEW-SPEC-0004
 title: GitView - Main screen
 kind: spec
 created_at: '2026-11-09T22:16:41Z'
-updated_at: '2026-11-09T22:16:41Z'
+updated_at: '2026-11-09T22:21:15Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -12,8 +12,14 @@ depends_on:
 sources:
   root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
   start_from_main_screen: conversation:gitview/excerpt-66
+  reuse_existing_prototype: conversation:gitview/excerpt-67
   project_summary: docs/drafts/project-summary-proposal.md
   zoom_levels_proposal: docs/drafts/ux-zoom-levels-proposal.md
+  prototypes:
+    dense_overview: prototypes/dense-overview/index.html
+    dense_overview_scope: docs/drafts/dense-overview-prototype.md
+    peek_and_pop: prototypes/peek-pop/index.html
+    peek_and_pop_scope: docs/drafts/inline-peek-pop-prototype.md
   observations: docs/drafts/GITVIEW-SPEC-0003.yaml
   ontology_selection:
     path: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
@@ -27,11 +33,17 @@ specification:
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
+  prototype_coverage: Both interactive prototypes show a PR and Issue grid scoped to one Repository,
+    preview, opening an item and returning to the grid. The dense prototype represents a Project
+    with a single Repository. The existing zoom-level proposal describes the preceding overview
+    of multiple Projects.
   proposal:
     starting_view: Use the project overview as the main screen. The user sees their Projects and
       can identify them by name. Restoring the last opened screen at launch is a separate decision.
-    signals: A project entry can surface a small set of signals, such as review waiting or failed CI.
-      The exact signals shown by default remain open.
+    project_entry: Start from the existing compact proposal with the Project name and Repository count.
+      When space permits, surface open PRs and Issues separately, failed CI, review waiting and recent
+      results. The Project summary already defines the scope of these signals. The subset shown at
+      the initial density remains open.
     navigation: Open a Project from its entry. A signal can provide a direct path to the
       corresponding filtered PR or Issue view within that Project.
     incomplete_data: Keep the affected Project visible and distinguish partial or stale observations
@@ -50,8 +62,9 @@ specification:
       when: The user reads the main overview.
       then: The Project remains available with an indication of the observation's limits.
   deferred:
-  - Default density and arrangement, sorting, and exact card contents.
+  - Default density and arrangement, sorting, and which of the existing signals fit at that density.
   - First-launch experience and launch restoration.
   - Contents of a Project, Repository, PR or Issue screen after navigation.
-  provenance_boundary: The owner suggested specifying the product from its main screen downward.
-    The proposed starting view and scenarios are for review.
+  provenance_boundary: The owner suggested starting from the main screen and reusing the interactive
+    prototype. Prototype observations describe the view inside a Project. The overview of multiple
+    Projects uses the previously described layout proposal and Project summary.
