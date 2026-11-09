@@ -2,7 +2,7 @@ id: GITVIEW-SPEC-0003
 title: GitView - Stored GitHub observations and refresh
 kind: spec
 created_at: '2026-11-09T19:40:20Z'
-updated_at: '2026-11-09T19:41:39Z'
+updated_at: '2026-11-09T19:45:22Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -14,6 +14,13 @@ sources:
   repository_identity: docs/drafts/GITVIEW-SPEC-0002.yaml
   persistence_assumption: conversation:gitview/excerpt-61
   refresh_failure_feedback: conversation:gitview/excerpt-62
+  refresh_triggers_and_limits: conversation:gitview/excerpt-63
+  platform_references:
+    apple_background_refresh: https://developer.apple.com/documentation/backgroundtasks/choosing-background-strategies-for-your-app
+    github_rest_pr_pages: https://docs.github.com/en/rest/pulls/pulls#list-pull-requests
+    github_graphql_pages: https://docs.github.com/en/graphql/guides/using-pagination-in-the-graphql-api
+    github_graphql_budget: https://docs.github.com/en/graphql/overview/rate-limits-and-query-limits-for-the-graphql-api
+    github_rest_retry: https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api#handle-rate-limit-errors-appropriately
   ontology_selection:
     path: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
     sha256: f346b1a369cc491606d7da5731eeb0f3cba948ddb8a769315787e8c14b0bc221
@@ -46,6 +53,19 @@ specification:
       separately so a failed attempt does not make older values appear current.
     no_observation: Show that GitView has no data for the scope yet. An empty result requires a
       successful observation with enough coverage to confirm it.
+  refresh_triggers:
+    background: Request short background refreshes through iOS BackgroundTasks. iOS decides when
+      to grant execution time. Use each opportunity for a bounded batch that can stop on expiration.
+    foreground: When the app opens with stale data, show stored data and start an update of the
+      stale scope as the request budget permits.
+  request_budget_proposal:
+    priority: Refresh data for the visible project and the current period first, including recently
+      completed PRs needed by the timeline. Fetch older history in separate batches.
+    pagination: Request pages within the endpoint limit and the available budget. A successful
+      first page confirms only its coverage. When a batch stops early, preserve older observations
+      and keep the unfinished scope marked incomplete.
+    rate_limits: Limit concurrent requests and account for API rate limits and query cost.
+      Pause on rate-limit responses and respect GitHub retry or reset headers when present.
   review_scenarios:
     open_from_storage:
       given: GitView previously saved observations for a repository and its PRs.
@@ -64,11 +84,23 @@ specification:
       given: GitView has never successfully observed this Issue list.
       when: The first request fails.
       then: The view indicates that the refresh failed and that the Issue list has not been loaded yet.
+    stale_on_open:
+      given: The app has stored observations, and iOS has not granted a recent background refresh.
+      when: The app opens and the visible scope is stale.
+      then: The app shows the stored data and starts a bounded refresh if the request budget permits.
+    page_budget_exhausted:
+      given: More pages exist than the current refresh budget can fetch.
+      when: The refresh reaches its budget after successful partial retrieval.
+      then: The view can use newly observed records and retain older ones. Coverage for the unfinished
+        scope remains incomplete.
   unresolved:
-  - What starts a refresh and how old an observation can be before GitView labels it stale.
-  - How refresh scopes, pagination and incremental retrieval are chosen.
+  - How old an observation can be before GitView labels it stale, and which scopes get priority in the background.
+  - Whether the PR-related refresh means a manual gesture, a targeted refresh of a PR, or both.
+  - Which REST or GraphQL queries to use, their cost and payload on representative repositories,
+    and how to resume pagination or retrieve changes incrementally.
   - Whether the visible error uses a toolbar indicator, snackbar, alert or another component.
   - How account permissions constrain access to previously stored private content.
-  provenance_boundary: The owner proposed retaining fetched data in an app-owned database and requested
-    a visible error and last successful update time when a refresh fails. Local placement, refresh behavior
-    and the specific UI component are proposals for review. The scenarios are intended checks awaiting execution.
+  provenance_boundary: The owner proposed retaining fetched data, requested visible failure feedback,
+    and identified background refresh, refresh on stale open and API limits as design inputs. Local
+    placement, priority, batching and the specific UI component are proposals for review. The scenarios
+    are intended checks awaiting execution.
