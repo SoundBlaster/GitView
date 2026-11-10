@@ -50,7 +50,7 @@ Ontology checkout — `4c5027b`. Компилятор собран из этог
 
 ```sh
 COMPILER="$(git config --get gitview.ontologyc)"
-RUNTIME=/Users/egor/.local/share/specgraph/runtime-8303a681/specgraph-runtime
+RUNTIME=/Users/egor/.local/share/specgraph/runtime-3593bd75/specgraph-runtime
 "$COMPILER" check ontology/candidates/domain-v0.2.0-draft.5/domain-ontology-package.yaml
 "$COMPILER" check ontology/candidates/domain-v0.2.0-draft.5/composition/domain-ontology-package.yaml
 "$RUNTIME" --workspace "$PWD" ontology-context -- --project-id gitview \

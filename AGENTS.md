@@ -10,7 +10,7 @@ for governed specification artifacts.
 Use the project-local skill
 `.codex/skills/specgraph-conversation-notes/SKILL.md` when discussing product
 or design ideas. The local runtime installed for this pilot is
-`/Users/egor/.local/share/specgraph/runtime-8303a681/specgraph-runtime`.
+`/Users/egor/.local/share/specgraph/runtime-3593bd75/specgraph-runtime`.
 For its standalone `specgraph` CLI, use the executable in the same installation
 at `venv/bin/specgraph`, or invoke the runtime's `draft` subcommand. If that
 installation is unavailable, report it and choose or install a compatible
@@ -33,6 +33,13 @@ checkout. The sketch contains conversation quotations and remains local-only
 unless the user explicitly authorizes a destination for publication. Capturing
 a revision does not itself create a Git commit; commit it with its full ancestry.
 Other sketches and local `runs/` remain excluded from this repository.
+
+For a single YAML proposal under `docs/drafts/`, use the read-only candidate
+check directly in this workspace:
+`/Users/egor/.local/share/specgraph/runtime-3593bd75/specgraph-runtime --workspace "$PWD" next-move -- --candidate-file docs/drafts/GITVIEW-SPEC-0004.yaml`.
+The report checks YAML mapping, spec kind and filename/ID consistency; it does
+not validate ontology, dependencies, acceptance or maturity and does not
+materialize the draft into `specs/nodes/`.
 
 ## Product ontology
 
