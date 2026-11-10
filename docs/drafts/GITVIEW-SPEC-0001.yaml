@@ -43,6 +43,7 @@ sources:
     sha256: b5358f463ac0d4c5e0efb33fb4729385c35bea98dd9f3a13fd7857ccea68a0f4
     status: draft_not_selected_as_default
   autonomous_pilot: conversation:gitview/excerpt-72
+  specification_first_clarification: conversation:gitview/excerpt-75
   pilot_acceptance: docs/drafts/GITVIEW-SPEC-0020.yaml
   pilot_access: docs/drafts/GITVIEW-SPEC-0019.yaml
   pilot_architecture: docs/drafts/GITVIEW-SPEC-0021.yaml
@@ -361,8 +362,10 @@ specification:
     tooling_direction: SpecGraph supports specification work; FSD-iOS informs application architecture;
       SpecificationCore is intended for suitable domain decisions. No integration, package version or
       resulting implementation architecture is claimed here.
-    next_bounded_step: Use the pilot acceptance node GITVIEW-SPEC-0020 to prepare implementation planning,
-      verify API and platform assumptions, and retain the explicit unresolved details.
+    next_bounded_step: Refine the product specification graph top-down, including parent obligations and
+      dependencies, until leaves in scope are sufficiently specified for implementation and verification.
+      Defer pilot implementation and premature API budget decisions; assess readiness using the complete
+      branch and its dependencies, not leaf position or a structural check alone.
     technical_boundary: The selected package and optional composition remain draft. User and GitHubRepository
       are not silently inserted into them. This update does not select sgcore as a domain vocabulary or
       activate the proposed external specification-artifact meta-check.
