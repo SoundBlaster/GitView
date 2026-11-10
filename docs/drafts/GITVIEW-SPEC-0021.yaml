@@ -21,6 +21,7 @@ sources:
   specification_core: /Users/egor/Development/GitHub/Specification Project/SpecificationCore/README.md
   specification_core_source_commit: 483214469828c42f7b615654aa70d0acbecc4dbf
   autonomous_pilot: conversation:gitview/excerpt-72
+  testability_request: conversation:gitview/excerpt-74
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
 acceptance:
 - Organize the app according to the selected FSD iOS responsibility and dependency direction without requiring
@@ -29,6 +30,9 @@ acceptance:
 - Evaluate SpecificationCore for stable named domain policies; do not create a specification for every
   control-flow branch.
 - Preserve source, scope, freshness and uncertainty through domain decisions and presentations.
+- Design product code for testability and inject replaceable network and data dependencies at explicit boundaries.
+- Develop product behavior using TDD and provide deterministic network and data test doubles.
+- Verify adapter behavior and essential integration paths separately; passing mocks alone does not prove GitHub integration.
 acceptance_evidence:
 - criterion: Architecture boundaries and policy outcomes can be reviewed independently.
   evidence: The scenarios below describe future architecture and behavioral checks, not an implemented
@@ -56,6 +60,19 @@ specification:
       and integration method are implementation work. No compiled dependency or concrete module is claimed.
 
       '
+    testability: 'Use dependency injection to supply networking, data storage and other nondeterministic
+      dependencies where needed. Select a simple composition mechanism during implementation; no DI
+      framework, global service locator or protocol per type is mandated. Domain decisions can be tested
+      independently of network, disk and UI. Provide mocks, stubs or fakes appropriate to each test, with
+      deterministic data and controllable failures and time where relevant.
+
+      '
+    development_workflow: 'Use TDD for product behavior: establish a failing behavioral test, implement
+      the smallest change to pass it, then refactor with tests green. Keep tests focused on observable
+      behavior and meaningful failure modes. Supplement isolated tests with adapter, integration and
+      device checks as appropriate; test doubles do not establish live API, OS or device behavior.
+
+      '
     evidence: 'Architecture checks and policy tests should examine actual production boundaries when code
       exists; source references and this draft are not proof of compliance.
 
@@ -69,6 +86,14 @@ specification:
       given: Two Projects share one Repository.
       when: A portfolio total is computed.
       then: The decision receives identities and coverage explicitly and counts that Repository once.
+    offline_refresh_test:
+      given: A test injects saved observations and a network dependency that fails deterministically.
+      when: The application refreshes the observations.
+      then: It preserves the last known data and reports the failure and last successful update time.
+    real_adapter_check:
+      given: Isolated behavior tests pass using test doubles.
+      when: The actual adapter and authorized GitHub integration are checked separately.
+      then: Evidence distinguishes those results from the isolated tests and does not infer live success from mocks.
   unresolved:
   - Concrete module layout, resolved package versions and actual architecture-tool integration.
   - Exact policy types and test strategy after implementation technology is selected.
