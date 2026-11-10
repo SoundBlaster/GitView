@@ -1,8 +1,8 @@
 id: GITVIEW-SPEC-0010
-title: "GitView - Issue and PR description formats"
+title: GitView - Issue and PR description formats
 kind: spec
 created_at: '2026-11-10T00:00:00Z'
-updated_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -14,21 +14,57 @@ sources:
   root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
   topic: docs/drafts/github-templates/README.md
   authorization: conversation:gitview/excerpt-68
-  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+  pilot_autonomy: conversation:gitview/excerpt-72
 specification:
-  objective: "Use the agreed structured descriptions and preserve the original authored content."
+  objective: Use the agreed structured descriptions and preserve the original authored content.
   ontology_refs:
   - gitview:Issue
   - gitview:PullRequest
   requirements:
-  - "Issue description format contains Problem, Motivation, Expected outcome and References."
-  - "PR description format contains Problem, Motivation, Expected outcome, Changes, Validation and References."
-  - "Use templates and agent instructions to request these sections when creating Issue and PR descriptions in participating repositories."
-  - "Existing or external objects remain visible when their descriptions use another format or sections are missing; do not invent missing text."
-  - "Treat Motivation, Expected outcome and Validation as authored statements, not independently proved motive, achievement or test evidence."
+  - Issue description format contains Problem, Motivation, Expected outcome and References.
+  - PR description format contains Problem, Motivation, Expected outcome, Changes, Validation and References.
+  - Use templates and agent instructions to request these sections when creating Issue and PR descriptions
+    in participating repositories.
+  - Existing or external objects remain visible when their descriptions use another format or sections
+    are missing; do not invent missing text.
+  - Treat Motivation, Expected outcome and Validation as authored statements, not independently proved
+    motive, achievement or test evidence.
   review_scenarios:
-  - "Given an external Issue with no Motivation section, retain its text and indicate absence rather than fabricate a motivation."
-  - "Given a PR Validation statement, show it separately from observed CI."
+  - Given an external Issue with no Motivation section, retain its text and indicate absence rather than
+    fabricate a motivation.
+  - Given a PR Validation statement, show it separately from observed CI.
   unresolved:
-  - "Participating repositories, template enforcement, parsing and migration of older descriptions remain open."
-  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."
+  - Template installation targets, enforcement, parsing and versioning remain outside this reading contract.
+  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
+    selection and specification remain drafts; implementation is not claimed.
+  pilot_contract:
+  - Issue sections are Problem, Motivation, Expected outcome and References; PR adds Changes and Validation.
+  - Repository process should provide the selected templates and agent instructions. Any automated enforcement
+    is a separate deployment decision.
+  - Display original text when a section cannot be reliably extracted, and never invent missing sections
+    or suppress nonconforming external objects.
+  - Treat declared motivation, expected outcome and validation as author statements, distinct from proved
+    causal motives, actual outcomes and observed CI.
+  pilot_scenarios:
+    legacy_description:
+      given: A legacy PR contains unstructured text and no section headings.
+      when: It is opened in GitView.
+      then: Its original text remains available and missing sections are not invented.
+    claimed_validation:
+      given: A PR description says validation passed but the observed CI failed.
+      when: Both are available.
+      then: The description and failed CI remain separate and the CI failure is visible.
+  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
+    are specification choices, not claims that the app exists or that every detail was separately discussed.
+acceptance:
+- Issue sections are Problem, Motivation, Expected outcome and References; PR adds Changes and Validation.
+- Repository process should provide the selected templates and agent instructions. Any automated enforcement
+  is a separate deployment decision.
+- Display original text when a section cannot be reliably extracted, and never invent missing sections
+  or suppress nonconforming external objects.
+- Treat declared motivation, expected outcome and validation as author statements, distinct from proved
+  causal motives, actual outcomes and observed CI.
+acceptance_evidence:
+- criterion: The pilot contract and its boundary scenarios are independently checkable.
+  evidence: The pilot_scenarios describe expected results for future verification; no app test has run.

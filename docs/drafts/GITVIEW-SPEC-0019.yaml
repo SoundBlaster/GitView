@@ -1,0 +1,98 @@
+id: GITVIEW-SPEC-0019
+title: GitView - GitHub access and repository discovery
+kind: spec
+created_at: '2026-11-10T07:33:00Z'
+updated_at: '2026-11-10T07:33:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0005
+sources:
+  root_intent: .specgraph/root_intent.md
+  discovery: docs/product-discovery.md
+  autonomous_pilot: conversation:gitview/excerpt-72
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+acceptance:
+- The operator can authorize GitView to read GitHub data and identify the connected source account.
+- Repository discovery and selection respect the connected account's available access and show incomplete
+  discovery distinctly.
+- Credentials are protected using platform-provided secure storage and are not included in shared content
+  or ordinary diagnostic logs.
+- A network failure preserves previously observed data and reports refresh failure; explicit authentication
+  or permission denial is distinguished from a successful empty result.
+- The operator can reconnect or disconnect the account; disconnection does not issue GitHub mutations
+  or silently delete source repositories.
+acceptance_evidence:
+- criterion: Authorization, partial access, disconnection and recovery are checkable.
+  evidence: The scenarios below describe expectations for future verification; no GitHub connection has
+    been implemented.
+specification:
+  objective: Give the operator a safe path from first launch to authorized GitHub repository data.
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Repository
+  - gitview:Project
+  pilot_contract:
+    account: 'Support one connected GitHub identity in the initial pilot. GitView User means the operator,
+      not necessarily the author or assignee of a source object. Multiple accounts and GitHub Enterprise
+      are not required for this first slice.
+
+      '
+    access: 'Request only access needed for the selected repositories and supported read-only overview.
+      The exact authorization method, scope names and GitHub API mapping require implementation research.
+      The app does not create, review, merge or otherwise mutate GitHub objects in this pilot.
+
+      '
+    discovery: 'Once authorized, let the operator find and select accessible GitHub repositories. Source
+      identity follows GITVIEW-SPEC-0002; the default Project relationship follows GITVIEW-SPEC-0005.
+      An inaccessible or unobserved repository is not treated as a confirmed empty or deleted repository.
+
+      '
+    credentials: 'Protect credentials using platform secure storage; do not place secrets in diagnostics,
+      sharing, exported descriptions or version-controlled configuration.
+
+      '
+    failure: Distinguish temporary network or rate failures from observed authentication and authorization
+      failures. Temporary failures follow the last-known-data contract in GITVIEW-SPEC-0003. A 404 alone
+      cannot prove deletion or revocation. After explicit access denial, lock affected private cached
+      content from display but retain records until the user clears them. Successful reauthorization for
+      the same source identity may restore access. A temporary network failure alone does not lock previously
+      authorized data.
+    disconnect: Provide a deliberate local disconnect action that removes the app's credential and stops
+      refresh for that account. Lock its private cached content while disconnected and retain records
+      until the user explicitly clears local data. Reconnecting the same source identity and re-establishing
+      access may unlock content. No GitHub object is deleted.
+  scenarios:
+    first_connection:
+      given: No GitHub account is connected.
+      when: The operator authorizes access and selects a repository.
+      then: Its source identity is recorded and the operator can enter a default Project after data is
+        observed.
+    temporary_offline:
+      given: A connected account has stored observations.
+      when: A refresh fails because the network is unavailable.
+      then: The last-known data and observation time remain available with a visible refresh failure.
+    explicit_access_denial:
+      given: A previously observed private repository is explicitly denied by the source.
+      when: Its refresh is attempted.
+      then: The app distinguishes denial from an empty repository, locks the affected private cache and
+        preserves it for reauthorization or explicit clearing.
+    disconnected:
+      given: One GitHub account is connected.
+      when: The operator disconnects it.
+      then: The local credential is removed, refresh stops, private cached content is locked, and no repository
+        is deleted from GitHub.
+  unresolved:
+  - Exact authorization method, least-required GitHub permissions, token lifecycle and account recovery.
+  - Exact local clear-data interaction and behavior after device change.
+  - Repository discovery pagination and first-launch layout.
+  provenance_boundary: 'Single-account scope and the default privacy posture are pilot choices made under
+    the owner''s autonomous authorization; they are not claims about implemented security or accepted
+    API details.
+
+    '

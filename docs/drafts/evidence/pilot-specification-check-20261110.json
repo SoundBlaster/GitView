@@ -1,0 +1,182 @@
+{
+  "artifact_kind": "gitview_pilot_specification_check",
+  "schema_version": 1,
+  "runtime_source_commit": "3593bd759c429425cb68030da2b5431b21513f42",
+  "ontology_context": "ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml",
+  "compiler_sha256": "30dd324aa1f641e7274a49fd6f158cced5ed95d810b6b275353d3d10f19a27cb",
+  "candidate_scope": "YAML mapping, spec kind, filename and ID",
+  "ontology_scope": "domain_vocabulary; isolated scratch workspace",
+  "known_finding": "0001: GitView is a product label not declared as an ontology class.",
+  "semantic_approval": "not_established",
+  "scenarios_executed": false,
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0001",
+      "sha256": "05242d5c36dfcdc2f9a20bfd4537ceed1201d9e2a8997bd8106021078deafbec",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 1,
+      "ontology_gaps": 1
+    },
+    {
+      "id": "GITVIEW-SPEC-0002",
+      "sha256": "d0ff4c1853547d2088cb992aec94ec1428384195710492dfe1e18cbba4f5b6f3",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0003",
+      "sha256": "12567dfda6a23875ed2aef3d1f73f3e12cb271967d1655faae4128ac6f858497",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0004",
+      "sha256": "5a940eaa890847a22f9512ba680ebab482647348e2c662a5e452c10a13c64d48",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0005",
+      "sha256": "3ff5e0f1295581c26cfb7191efc5a60d3fbff90f5b9906afb2dc41bcd938070d",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0006",
+      "sha256": "eea120e26acd8552eff34ce67a0f4242b92101033bcc787f62ef0e024b6a3023",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0007",
+      "sha256": "fbd68bbcf633e1d7b6cba430129ad06e38c697a32a3cf33fcb5019ae88d2098c",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0008",
+      "sha256": "716906ef3e174de12236fe7d5e01e7efe0e0850ae5f698aba60033612db841eb",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0009",
+      "sha256": "4542725c09701a036294589792f9b5b12ef90143938afc76a5ca40fc7ea5ee10",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0010",
+      "sha256": "df6a07d3ec02545d07479d7a3ce2610b6de675ba640683e626f74af392bc598f",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0011",
+      "sha256": "bf7fff9083d8837460b77e856164a404783285c31aefe57c25c77fe8fde54b56",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0012",
+      "sha256": "fa93c29ec0cabc9d017fec65cfe98f427d72bb06dc2d6a9c05d84e18245ecc21",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0013",
+      "sha256": "f4fde1a152a99cda82da5a42a25bc4256ccad6597c03550d2ad395a27867208b",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0014",
+      "sha256": "94afcc16ac26ab32faa54a2bde90863b933f2a1c6da314c708317c1a2f7d9015",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0015",
+      "sha256": "37239477f7c3e83e0a7887dddfb9cc645003b4d23a34d25644b8bb80f31addcc",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0016",
+      "sha256": "0eaa8cb85b595c69f6fcbc051959ac1fcd35a4857a6c8dd683e1911ebab019e2",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0017",
+      "sha256": "ecbff55d7e45840bd537c2f48a29c02a96fe60620b4122ca23bc494ec2aa0478",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0018",
+      "sha256": "e2271fcbc61d6c75e7fc103b40627a0bf83cc945d1a999cf2bb3928a65040f48",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0019",
+      "sha256": "837303680bf77f04d194a2895d9aa660c99e0937ea6bee36be14bc8004dd625b",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0020",
+      "sha256": "1adaacaa8335a88dbcf279784dd0ebf6cb3bd47afd502a2625ef33b60ed7153b",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0021",
+      "sha256": "d539325cd66e02d19916ea9b83f4c41e4e087be70db751e26b7543b0a9755c62",
+      "candidate": "checked",
+      "ontology": "checked",
+      "ontology_findings": 0,
+      "ontology_gaps": 0
+    }
+  ]
+}

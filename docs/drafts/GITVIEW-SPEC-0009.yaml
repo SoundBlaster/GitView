@@ -1,8 +1,8 @@
 id: GITVIEW-SPEC-0009
-title: "GitView - Issue overview"
+title: GitView - Issue overview
 kind: spec
 created_at: '2026-11-10T00:00:00Z'
-updated_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -14,22 +14,60 @@ sources:
   root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
   topic: docs/drafts/issue-ontology-options.md
   authorization: conversation:gitview/excerpt-68
-  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+  pilot_autonomy: conversation:gitview/excerpt-72
 specification:
-  objective: "Present the selected Issue properties and relationships without inferring motives."
+  objective: Present the selected Issue properties and relationships without inferring motives.
   ontology_refs:
   - gitview:Issue
   - gitview:Repository
   - gitview:PullRequest
   requirements:
-  - "Present source ID and repository-local number, title, description, URL, open or closed state, state reason, labels and source type when available."
-  - "Retain repository, author, assignees, milestone and linked PRs, distinguishing a closing link from a mention when the source permits."
-  - "Show parent and direct sub-issues, blocking links, comment and participant counts, direct and closed sub-issue counts."
-  - "Keep creation, update, closure, observation and last-comment times distinct where available."
-  - "A closed issue is not automatically completed; linked objects do not prove actor motivation."
+  - Present source ID and repository-local number, title, description, URL, open or closed state, state
+    reason, labels and source type when available.
+  - Retain repository, author, assignees, milestone and linked PRs, distinguishing a closing link from
+    a mention when the source permits.
+  - Show parent and direct sub-issues, blocking links, comment and participant counts, direct and closed
+    sub-issue counts.
+  - Keep creation, update, closure, observation and last-comment times distinct where available.
+  - A closed issue is not automatically completed; linked objects do not prove actor motivation.
   review_scenarios:
-  - "Given an Issue closed with a non-completion reason, show its closure and reason without calling it completed."
-  - "Given a mentioned PR without an explicit closing link, do not display it as a closing PR."
+  - Given an Issue closed with a non-completion reason, show its closure and reason without calling it
+    completed.
+  - Given a mentioned PR without an explicit closing link, do not display it as a closing PR.
   unresolved:
-  - "Precise source mapping, missing fields and historical relationship availability remain open."
-  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."
+  - API support and display priorities for individual fields.
+  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
+    selection and specification remain drafts; implementation is not claimed.
+  pilot_contract:
+  - An Issue overview presents repository, source ID/number, title, description, source link, state and
+    available state reason.
+  - Expose selected labels, type, author, assignees, milestone, related Issues and PRs, discussion and
+    direct-sub-issue counts when available.
+  - Differentiate an explicit closing PR reference from a mention; do not infer motive or actor from the
+    link.
+  - A closed Issue with unknown or non-completion reason is not labeled completed; unknown counts are
+    not zero.
+  pilot_scenarios:
+    linked_pr:
+      given: An Issue mentions PR A and has an explicit closing reference to PR B.
+      when: Its relationships are shown.
+      then: A is a mention and B is a closing reference; no actor motive is inferred.
+    unknown_reason:
+      given: An Issue is closed but its reason is unavailable.
+      when: Its summary is shown.
+      then: The state is closed, and completion remains unknown.
+  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
+    are specification choices, not claims that the app exists or that every detail was separately discussed.
+acceptance:
+- An Issue overview presents repository, source ID/number, title, description, source link, state and
+  available state reason.
+- Expose selected labels, type, author, assignees, milestone, related Issues and PRs, discussion and direct-sub-issue
+  counts when available.
+- Differentiate an explicit closing PR reference from a mention; do not infer motive or actor from the
+  link.
+- A closed Issue with unknown or non-completion reason is not labeled completed; unknown counts are not
+  zero.
+acceptance_evidence:
+- criterion: The pilot contract and its boundary scenarios are independently checkable.
+  evidence: The pilot_scenarios describe expected results for future verification; no app test has run.

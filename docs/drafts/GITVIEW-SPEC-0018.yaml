@@ -1,8 +1,8 @@
 id: GITVIEW-SPEC-0018
-title: "GitView - Calendar overview and future depth"
+title: GitView - Calendar overview and future depth
 kind: spec
 created_at: '2026-11-10T00:00:00Z'
-updated_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -14,9 +14,11 @@ sources:
   root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
   topic: docs/drafts/ux-zoom-levels-proposal.md
   authorization: conversation:gitview/excerpt-68
-  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+  pilot_autonomy: conversation:gitview/excerpt-72
 specification:
-  objective: "Record the discussed farther-out time view and deeper PR exploration without making them first-version prerequisites."
+  objective: Record the discussed farther-out time view and deeper PR exploration without making them
+    first-version prerequisites.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
@@ -24,13 +26,38 @@ specification:
   - gitview:Issue
   - gitview:Metric
   requirements:
-  - "A contribution-style calendar is a possible farther overview of time; its cells represent time, not repositories or PRs."
-  - "Calendar measures must identify period, scope, source and missing coverage."
-  - "Exploration inside a PR may be considered later; current scope ends at the object overview and original GitHub link."
-  - "Neither a calendar nor deep PR exploration blocks the first-version grid and Peek and Pop."
+  - A contribution-style calendar is a possible farther overview of time; its cells represent time, not
+    repositories or PRs.
+  - Calendar measures must identify period, scope, source and missing coverage.
+  - Exploration inside a PR may be considered later; current scope ends at the object overview and original
+    GitHub link.
+  - Neither a calendar nor deep PR exploration blocks the first-version grid and Peek and Pop.
   review_scenarios:
-  - "Given a calendar day with unavailable history, do not label it a day with zero activity."
-  - "Given a PR overview, offer the source without implying an in-app diff viewer exists."
+  - Given a calendar day with unavailable history, do not label it a day with zero activity.
+  - Given a PR overview, offer the source without implying an in-app diff viewer exists.
   unresolved:
-  - "Calendar measure, navigation and later PR depth are unresolved future decisions."
-  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."
+  - Calendar metric, data source, navigation and future PR depth remain undefined.
+  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
+    selection and specification remain drafts; implementation is not claimed.
+  pilot_contract:
+  - The calendar is a possible later time-oriented view; day cells have time semantics and are not Project
+    or Repository identity cells.
+  - Do not equate contribution activity with completed work, CI success or review approval.
+  - Deeper in-app PR exploration and sliding rich preview are later scopes; the first pilot does not depend
+    on them.
+  pilot_scenarios:
+    calendar_missing:
+      given: Historical activity for a day is unavailable.
+      when: A later calendar is displayed.
+      then: The day is not represented as an observed zero.
+  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
+    are specification choices, not claims that the app exists or that every detail was separately discussed.
+acceptance:
+- The calendar is a possible later time-oriented view; day cells have time semantics and are not Project
+  or Repository identity cells.
+- Do not equate contribution activity with completed work, CI success or review approval.
+- Deeper in-app PR exploration and sliding rich preview are later scopes; the first pilot does not depend
+  on them.
+acceptance_evidence:
+- criterion: The pilot contract and its boundary scenarios are independently checkable.
+  evidence: The pilot_scenarios describe expected results for future verification; no app test has run.

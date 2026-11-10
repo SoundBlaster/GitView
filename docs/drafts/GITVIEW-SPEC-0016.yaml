@@ -1,8 +1,8 @@
 id: GITVIEW-SPEC-0016
-title: "GitView - Original source and sharing"
+title: GitView - Original source and sharing
 kind: spec
 created_at: '2026-11-10T00:00:00Z'
-updated_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -14,9 +14,10 @@ sources:
   root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
   topic: docs/drafts/product-foundation.md
   authorization: conversation:gitview/excerpt-68
-  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+  pilot_autonomy: conversation:gitview/excerpt-72
 specification:
-  objective: "Let the operator leave the overview for GitHub and share useful object context."
+  objective: Let the operator leave the overview for GitHub and share useful object context.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -24,13 +25,44 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   requirements:
-  - "Where an original GitHub URL is available, offer a direct route to the source object."
-  - "Provide lightweight sharing using the platform's native sharing experience."
-  - "Keep source URLs and source data associated with the correct object and repository."
-  - "Do not imply access to private content for a recipient merely because a link is shared."
+  - Where an original GitHub URL is available, offer a direct route to the source object.
+  - Provide lightweight sharing using the platform's native sharing experience.
+  - Keep source URLs and source data associated with the correct object and repository.
+  - Do not imply access to private content for a recipient merely because a link is shared.
   review_scenarios:
-  - "Given a PR with an available source URL, opening its source leads to that PR in GitHub."
-  - "Given no source URL, do not construct an unverified URL and present it as confirmed."
+  - Given a PR with an available source URL, opening its source leads to that PR in GitHub.
+  - Given no source URL, do not construct an unverified URL and present it as confirmed.
   unresolved:
-  - "Exact shared payload, private-context safeguards and missing-link presentation remain open."
-  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."
+  - Exact UI affordance and optional additional payload require product and privacy review.
+  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
+    selection and specification remain drafts; implementation is not claimed.
+  pilot_contract:
+  - Offer an original GitHub source link for a Repository, PR or Issue when the source URL is available;
+    do not manufacture an unverified URL.
+  - Use the native share flow for an available source link; sharing a link does not grant recipient access.
+  - For the pilot, default to sharing the source link and avoid automatically exporting private descriptions,
+    repository contents or screenshots. Additional share payload is a later decision.
+  - If a URL is absent, indicate that source opening or link sharing is unavailable, rather than opening
+    a different object.
+  pilot_scenarios:
+    private_link:
+      given: A PR belongs to a private repository and has a source URL.
+      when: The operator shares it.
+      then: The system share flow receives the link; access remains subject to GitHub permissions.
+    missing_url:
+      given: An Issue has no known source URL.
+      when: The operator invokes source navigation.
+      then: The app does not invent a URL or navigate to a different issue.
+  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
+    are specification choices, not claims that the app exists or that every detail was separately discussed.
+acceptance:
+- Offer an original GitHub source link for a Repository, PR or Issue when the source URL is available;
+  do not manufacture an unverified URL.
+- Use the native share flow for an available source link; sharing a link does not grant recipient access.
+- For the pilot, default to sharing the source link and avoid automatically exporting private descriptions,
+  repository contents or screenshots. Additional share payload is a later decision.
+- If a URL is absent, indicate that source opening or link sharing is unavailable, rather than opening
+  a different object.
+acceptance_evidence:
+- criterion: The pilot contract and its boundary scenarios are independently checkable.
+  evidence: The pilot_scenarios describe expected results for future verification; no app test has run.

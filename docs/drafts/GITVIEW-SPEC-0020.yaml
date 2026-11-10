@@ -1,0 +1,102 @@
+id: GITVIEW-SPEC-0020
+title: GitView - Pilot end-to-end acceptance
+kind: spec
+created_at: '2026-11-10T07:33:00Z'
+updated_at: '2026-11-10T07:33:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0004
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0006
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+- GITVIEW-SPEC-0010
+- GITVIEW-SPEC-0011
+- GITVIEW-SPEC-0012
+- GITVIEW-SPEC-0013
+- GITVIEW-SPEC-0014
+- GITVIEW-SPEC-0015
+- GITVIEW-SPEC-0016
+- GITVIEW-SPEC-0017
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0021
+sources:
+  root_intent: .specgraph/root_intent.md
+  specification_graph: docs/drafts/specification-graph.md
+  autonomous_pilot: conversation:gitview/excerpt-72
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+acceptance:
+- An authorized operator can discover repositories, form Projects, open a Project and inspect its PR and
+  Issue work.
+- Today retains unfinished work and same-day results while explicit filters and zoom preserve the intended
+  scope.
+- The operator can inspect a card through a first-version preview, open its overview and navigate or share
+  its GitHub source.
+- Current CI, review and thread counts remain distinct; incomplete, stale, failed and unauthorized data
+  are not represented as successful empty data.
+- Summaries and available charts use explicit scopes and do not double-count shared repository identities
+  in portfolio totals.
+- Essential navigation is accessible without relying solely on color or a gesture.
+acceptance_evidence:
+- criterion: Each acceptance item has an executable verification plan.
+  evidence: The scenarios below and linked nodes define future checks; no app build, UI run or source
+    integration has been observed.
+specification:
+  objective: Define the coherent first useful GitView pilot and its observable end-to-end outcomes.
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  first_slice:
+  - One authorized GitHub identity; selected repositories and local Projects, including overlap.
+  - Project overview, member or signal navigation, Today selection and explicit lifecycle filters.
+  - Multi-density native grid, first-version Peek and Pop, PR/Issue overview, original source and link
+    sharing.
+  - Persisted observations, scoped refresh, failure and coverage signals; available metrics and charts
+    when data supports them.
+  - Accessibility alternatives and native iOS visual conventions.
+  later:
+  - Sliding rich preview; gesture hypothesis needs native prototyping.
+  - Calendar overview, deeper PR internals, additional Git hosting providers and multiple accounts.
+  - GitHub write operations such as merge, approve and editing Issues.
+  scenarios:
+    happy_path:
+      given: An authorized operator selects two repositories in a Project and data is observed.
+      when: The operator opens the Project, filters failed CI, zooms the grid and previews a PR.
+      then: Matching PRs retain repository context, the preview identifies the selected PR, and the operator
+        can open its GitHub source.
+    completed_work:
+      given: Today contains 100 PRs within a known complete scope.
+      when: Ninety-five are merged today.
+      then: All 100 remain visible without state exclusions, with current states; filtering merged leaves
+        the remaining matching work.
+    offline_resume:
+      given: The app has previously stored observations and the network is unavailable.
+      when: The operator reopens a Project and requests refresh.
+      then: Known data and its last-success time remain visible with a refresh failure and without claiming
+        unavailable data is current.
+    overlap:
+      given: One repository belongs to two Projects.
+      when: Each Project and the portfolio summary are shown.
+      then: The repository contributes to both Projects but is counted once in the unique portfolio total.
+    access_revoked:
+      given: A source explicitly denies access to a previously observed private repository.
+      when: Refresh occurs.
+      then: GitView shows an access problem and follows the private-cache access policy without claiming
+        the repository is empty.
+  unresolved:
+  - Exact iOS deployment target, performance thresholds and device-based usability evidence.
+  - Concrete authorization method, GitHub API mappings, cache schema and private cache retention policy.
+  - Precise chart definitions and historical data requirements for each supported metric.
+  boundary: This is a pilot specification and verification plan, not evidence of implementation or executed
+    acceptance tests.

@@ -1,0 +1,75 @@
+id: GITVIEW-SPEC-0021
+title: GitView - Pilot architecture and decision boundaries
+kind: spec
+created_at: '2026-11-10T07:33:00Z'
+updated_at: '2026-11-10T07:33:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0011
+- GITVIEW-SPEC-0019
+sources:
+  root_intent: .specgraph/root_intent.md
+  fsd_layers: /Users/egor/Development/GitHub/FSD_iOS/FSDDemoApp/docs/rules/fsd-layers.md
+  fsd_dependencies: /Users/egor/Development/GitHub/FSD_iOS/FSDDemoApp/docs/rules/fsd-imports.md
+  fsd_source_commit: 58a9d54751c122b9c290fc173b770401ee2229c5
+  specification_core: /Users/egor/Development/GitHub/Specification Project/SpecificationCore/README.md
+  specification_core_source_commit: 483214469828c42f7b615654aa70d0acbecc4dbf
+  autonomous_pilot: conversation:gitview/excerpt-72
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+acceptance:
+- Organize the app according to the selected FSD iOS responsibility and dependency direction without requiring
+  empty layers or premature modules.
+- Separate GitHub and persistence adapters, typed observed facts, domain decisions and UI effects.
+- Evaluate SpecificationCore for stable named domain policies; do not create a specification for every
+  control-flow branch.
+- Preserve source, scope, freshness and uncertainty through domain decisions and presentations.
+acceptance_evidence:
+- criterion: Architecture boundaries and policy outcomes can be reviewed independently.
+  evidence: The scenarios below describe future architecture and behavioral checks, not an implemented
+    dependency graph.
+specification:
+  objective: Define initial responsibility and policy boundaries without prescribing a concrete app implementation.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  pilot_contract:
+    layers: 'Follow FSD iOS direction app to pages to widgets to features to entities to shared, composing
+      sibling slices above their layer. Create a layer or module only when its responsibility exists.
+
+      '
+    decisions: 'Candidate domain decisions include Today inclusion, filter match with unknown, repository
+      identity continuity and summary coverage. Keep external I/O, parsing, serialization and UI actions
+      outside the decision itself. Evaluate SpecificationCore for stable named policies where it makes
+      them clearer and independently testable.
+
+      '
+    dependency: 'SpecificationCore and FSD iOS are intended tools; exact versions, module decomposition
+      and integration method are implementation work. No compiled dependency or concrete module is claimed.
+
+      '
+    evidence: 'Architecture checks and policy tests should examine actual production boundaries when code
+      exists; source references and this draft are not proof of compliance.
+
+      '
+  scenarios:
+    unknown_filter:
+      given: A PR's CI state is unavailable.
+      when: A failed-CI selection is evaluated.
+      then: A decision can preserve unknown rather than return a misleading confirmed match or non-match.
+    project_scope:
+      given: Two Projects share one Repository.
+      when: A portfolio total is computed.
+      then: The decision receives identities and coverage explicitly and counts that Repository once.
+  unresolved:
+  - Concrete module layout, resolved package versions and actual architecture-tool integration.
+  - Exact policy types and test strategy after implementation technology is selected.
+  boundary: These are proposed architecture obligations, not application code or measured compliance.

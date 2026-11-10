@@ -1,8 +1,8 @@
 id: GITVIEW-SPEC-0013
-title: "GitView - Metrics, history and charts"
+title: GitView - Metrics, history and charts
 kind: spec
 created_at: '2026-11-10T00:00:00Z'
-updated_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -14,9 +14,10 @@ sources:
   root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
   topic: docs/drafts/project-summary-proposal.md
   authorization: conversation:gitview/excerpt-68
-  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+  pilot_autonomy: conversation:gitview/excerpt-72
 specification:
-  objective: "Make workload and completion trends interpretable without inventing historical data."
+  objective: Make workload and completion trends interpretable without inventing historical data.
   ontology_refs:
   - gitview:Metric
   - gitview:Project
@@ -24,14 +25,51 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   requirements:
-  - "Provide metrics and charts for current work and outcomes where sufficient observations or source history are available."
-  - "Define each metric by subject, unit, scope, period and available coverage; distinguish snapshots from events."
-  - "Display merged PRs and closed Issues as distinct series and preserve closure reasons."
-  - "Missing observations and unavailable history are gaps, not zeroes; do not claim a historical trend from one current snapshot."
-  - "A burndown-style understanding of unfinished work and completion is desired; exact calculation and graph form remain open."
+  - Provide metrics and charts for current work and outcomes where sufficient observations or source history
+    are available.
+  - Define each metric by subject, unit, scope, period and available coverage; distinguish snapshots from
+    events.
+  - Display merged PRs and closed Issues as distinct series and preserve closure reasons.
+  - Missing observations and unavailable history are gaps, not zeroes; do not claim a historical trend
+    from one current snapshot.
+  - A burndown-style understanding of unfinished work and completion is desired; exact calculation and
+    graph form remain open.
   review_scenarios:
-  - "Given missing observations for a day, a chart shows a gap rather than a zero."
-  - "Given a PR and an Issue describing the same work, series remain separate and are not called two completed tasks."
+  - Given missing observations for a day, a chart shows a gap rather than a zero.
+  - Given a PR and an Issue describing the same work, series remain separate and are not called two completed
+    tasks.
   unresolved:
-  - "History retention, event availability, period defaults and formal burndown definition remain open."
-  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."
+  - Retention, event reconstruction, metric period and burn-down definition.
+  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
+    selection and specification remain drafts; implementation is not claimed.
+  pilot_contract:
+  - Metric descriptions identify subject, unit, scope, time period, source and coverage; current snapshots
+    are distinct from historical events.
+  - Show current open PR and Issue counts separately; when adequate history exists show merged PR and
+    closed Issue outcomes separately with source closure reasons.
+  - Missing historical observations remain gaps; a single current snapshot is not backfilled as past history.
+  - The desired burn-down view is completion and unfinished-work visibility; its formal formula and cohort
+    are not assumed.
+  pilot_scenarios:
+    history_gap:
+      given: There is no reliable observation for Tuesday.
+      when: A trend spanning Monday through Wednesday is drawn.
+      then: Tuesday is a gap, not a zero or interpolation presented as observed.
+    reopen:
+      given: An Issue closes, reopens and later closes again.
+      when: Historical metrics are requested.
+      then: A count requiring event history is only asserted if the source or retained history supports
+        the rule.
+  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
+    are specification choices, not claims that the app exists or that every detail was separately discussed.
+acceptance:
+- Metric descriptions identify subject, unit, scope, time period, source and coverage; current snapshots
+  are distinct from historical events.
+- Show current open PR and Issue counts separately; when adequate history exists show merged PR and closed
+  Issue outcomes separately with source closure reasons.
+- Missing historical observations remain gaps; a single current snapshot is not backfilled as past history.
+- The desired burn-down view is completion and unfinished-work visibility; its formal formula and cohort
+  are not assumed.
+acceptance_evidence:
+- criterion: The pilot contract and its boundary scenarios are independently checkable.
+  evidence: The pilot_scenarios describe expected results for future verification; no app test has run.

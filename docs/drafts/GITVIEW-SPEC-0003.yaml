@@ -2,7 +2,7 @@ id: GITVIEW-SPEC-0003
 title: GitView - Stored GitHub observations and refresh
 kind: spec
 created_at: '2026-11-09T19:40:20Z'
-updated_at: '2026-11-09T22:08:06Z'
+updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -23,18 +23,16 @@ sources:
     github_graphql_pages: https://docs.github.com/en/graphql/guides/using-pagination-in-the-graphql-api
     github_graphql_budget: https://docs.github.com/en/graphql/overview/rate-limits-and-query-limits-for-the-graphql-api
     github_rest_retry: https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api#handle-rate-limit-errors-appropriately
-  ontology_selection:
-    path: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
-    sha256: f346b1a369cc491606d7da5731eeb0f3cba948ddb8a769315787e8c14b0bc221
-    package: local.gitview.domain@0.2.0-draft-composition.4
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   partial_observation_policy:
     path: ontology/candidates/domain-v0.2.0-draft.4/composition/domain-ontology-package.yaml
     pointer: /spec/policies/PartialObservationBoundary
+  pilot_autonomy: conversation:gitview/excerpt-72
 specification:
-  objective: Open the overview using observations GitView already holds and refresh from GitHub when
-    needed, so reading an existing view does not require downloading its data again.
-  working_assumption: GitView keeps previously fetched observations in an app-owned database across
-    launches. The draft assumes local storage on the device. Storage technology and schema are open.
+  objective: Open the overview using observations GitView already holds and refresh from GitHub when needed,
+    so reading an existing view does not require downloading its data again.
+  working_assumption: GitView keeps previously fetched observations in an app-owned database across launches.
+    The draft assumes local storage on the device. Storage technology and schema are open.
   ontology_refs:
   - gitview:GitHub
   - gitview:Repository
@@ -42,35 +40,36 @@ specification:
   - gitview:Issue
   failed_refresh_feedback:
     required: Show the last successful update time for the affected data and a visible indication that
-      the GitHub refresh failed. If there has been no successful update, show that no data has been loaded yet.
-    example: 'Updated at 14:32 · Could not refresh GitHub data'
+      the GitHub refresh failed. If there has been no successful update, show that no data has been loaded
+      yet.
+    example: Updated at 14:32 · Could not refresh GitHub data
     proposed_placement: A visible status in the affected view, such as a warning icon with a text label
       in the toolbar. The exact component remains open.
   proposed_behavior:
-    read: Render available stored data without waiting for a GitHub request. A refresh may run
-      separately; opening a view does not require a new fetch for every visible object.
-    refresh: Apply a successful observation to the scope it covers and record the time that scope
-      was observed. For example, reading repository metadata alone does not refresh its PR or Issue lists.
-    failed_refresh: Keep last known data and its observation time. Record the outcome of the refresh
-      separately so a failed attempt does not make older values appear current.
-    no_observation: Show that GitView has no data for the scope yet. An empty result requires a
-      successful observation with enough coverage to confirm it.
+    read: Render available stored data without waiting for a GitHub request. A refresh may run separately;
+      opening a view does not require a new fetch for every visible object.
+    refresh: Apply a successful observation to the scope it covers and record the time that scope was
+      observed. For example, reading repository metadata alone does not refresh its PR or Issue lists.
+    failed_refresh: Keep last known data and its observation time. Record the outcome of the refresh separately
+      so a failed attempt does not make older values appear current.
+    no_observation: Show that GitView has no data for the scope yet. An empty result requires a successful
+      observation with enough coverage to confirm it.
   refresh_triggers:
-    background: Request short background refreshes through iOS BackgroundTasks. iOS decides when
-      to grant execution time. Use each opportunity for a bounded batch that can stop on expiration.
-    foreground: When the app opens with stale data, show stored data and start an update of the
-      stale scope as the request budget permits.
-    manual: Let users request a refresh through pull-to-refresh where it fits the screen's
-      interaction, or an equivalent Refresh action elsewhere. A manual request can refresh
-      the current view before its data becomes stale, subject to the same API budget.
+    background: Request short background refreshes through iOS BackgroundTasks. iOS decides when to grant
+      execution time. Use each opportunity for a bounded batch that can stop on expiration.
+    foreground: When the app opens with stale data, show stored data and start an update of the stale
+      scope as the request budget permits.
+    manual: Let users request a refresh through pull-to-refresh where it fits the screen's interaction,
+      or an equivalent Refresh action elsewhere. A manual request can refresh the current view before
+      its data becomes stale, subject to the same API budget.
   request_budget_proposal:
-    priority: Refresh data for the visible project and the current period first, including recently
-      completed PRs needed by the timeline. Fetch older history in separate batches.
-    pagination: Request pages within the endpoint limit and the available budget. A successful
-      first page confirms only its coverage. When a batch stops early, preserve older observations
-      and keep the unfinished scope marked incomplete.
-    rate_limits: Limit concurrent requests and account for API rate limits and query cost.
-      Pause on rate-limit responses and respect GitHub retry or reset headers when present.
+    priority: Refresh data for the visible project and the current period first, including recently completed
+      PRs needed by the timeline. Fetch older history in separate batches.
+    pagination: Request pages within the endpoint limit and the available budget. A successful first page
+      confirms only its coverage. When a batch stops early, preserve older observations and keep the unfinished
+      scope marked incomplete.
+    rate_limits: Limit concurrent requests and account for API rate limits and query cost. Pause on rate-limit
+      responses and respect GitHub retry or reset headers when present.
   review_scenarios:
     open_from_storage:
       given: GitView previously saved observations for a repository and its PRs.
@@ -79,12 +78,13 @@ specification:
     successful_scoped_refresh:
       given: Repository metadata and PR observations are stored with earlier timestamps.
       when: A refresh successfully returns only repository metadata.
-      then: The repository metadata and its observation time update. The PR observation time stays as recorded.
+      then: The repository metadata and its observation time update. The PR observation time stays as
+        recorded.
     failed_refresh:
       given: A PR list has a previous successful observation.
       when: The next refresh fails.
-      then: The previous list remains available. The view shows the previous successful update time and a visible
-        GitHub refresh error.
+      then: The previous list remains available. The view shows the previous successful update time and
+        a visible GitHub refresh error.
     first_load_without_data:
       given: GitView has never successfully observed this Issue list.
       when: The first request fails.
@@ -101,16 +101,47 @@ specification:
     manual_refresh:
       given: The current view has stored observations and supports an explicit refresh action.
       when: The user pulls to refresh or invokes the equivalent action.
-      then: GitView requests an update for the current view subject to the API budget. If it fails,
-        the last successful update time and the visible failure indication follow the same rules as other refreshes.
+      then: GitView requests an update for the current view subject to the API budget. If it fails, the
+        last successful update time and the visible failure indication follow the same rules as other
+        refreshes.
   unresolved:
-  - Which data scopes get priority in the background.
-  - Which control each screen uses for manual refresh, and whether a PR detail view refreshes only that PR.
-  - Whether the visible error uses a toolbar indicator, snackbar, alert or another component.
-  - How account permissions constrain access to previously stored private content.
+  - The mechanism and policy for account revocation and retained private data depend on the access specification
+    GITVIEW-SPEC-0019.
+  - Durable storage schema, retry scheduling, exact freshness and API budget are implementation choices.
   deferred_to_implementation: Exact staleness thresholds, REST or GraphQL query selection, request and
     payload measurements, page size, pagination resumption and incremental retrieval.
   provenance_boundary: The owner proposed retaining fetched data, requested visible failure feedback,
-    and identified background refresh, refresh on stale open and API limits as design inputs. Manual
-    refresh is required with an interaction appropriate to each screen. Local placement, priority,
-    batching and individual controls are proposals for review. The scenarios are intended checks awaiting execution.
+    and identified background refresh, refresh on stale open and API limits as design inputs. Manual refresh
+    is required with an interaction appropriate to each screen. Local placement, priority, batching and
+    individual controls are proposals for review. The scenarios are intended checks awaiting execution.
+  pilot_contract:
+  - Read previously stored observations first; record source scope, successful observation time, completeness
+    and failed refresh separately.
+  - A failed or interrupted refresh cannot erase last successful data or advance its success timestamp;
+    a never-loaded collection is distinct from confirmed empty.
+  - Manual refresh, stale-on-open refresh and system-granted background refresh use the same budget and
+    observable outcome; iOS background execution is opportunistic.
+  - A page-limited result remains partial, and unavailable private source data is not proof of deletion.
+  pilot_scenarios:
+    partial_refresh:
+      given: Two repositories have last-known PR lists.
+      when: Refreshing the first succeeds and the second fails.
+      then: The first list receives its own observation time; the second retains its earlier data and
+        shows failure and time.
+    interrupted_page:
+      given: A list spans several pages.
+      when: The budget expires before all pages are read.
+      then: Fetched information remains usable and the list is marked incomplete, not empty.
+  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
+    are specification choices, not claims that the app exists or that every detail was separately discussed.
+acceptance:
+- Read previously stored observations first; record source scope, successful observation time, completeness
+  and failed refresh separately.
+- A failed or interrupted refresh cannot erase last successful data or advance its success timestamp;
+  a never-loaded collection is distinct from confirmed empty.
+- Manual refresh, stale-on-open refresh and system-granted background refresh use the same budget and
+  observable outcome; iOS background execution is opportunistic.
+- A page-limited result remains partial, and unavailable private source data is not proof of deletion.
+acceptance_evidence:
+- criterion: The pilot contract and its boundary scenarios are independently checkable.
+  evidence: The pilot_scenarios describe expected results for future verification; no app test has run.

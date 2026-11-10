@@ -1,8 +1,8 @@
 id: GITVIEW-SPEC-0011
-title: "GitView - Current checks and review signals"
+title: GitView - Current checks and review signals
 kind: spec
 created_at: '2026-11-10T00:00:00Z'
-updated_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -13,22 +13,60 @@ sources:
   root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
   topic: docs/drafts/pull-request-ontology-options.md
   authorization: conversation:gitview/excerpt-68
-  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+  pilot_autonomy: conversation:gitview/excerpt-72
 specification:
-  objective: "Keep check results, review assessment and review-thread counts independently interpretable."
+  objective: Keep check results, review assessment and review-thread counts independently interpretable.
   ontology_refs:
   - gitview:PullRequest
   - gitview:ReviewThread
   - gitview:CIStatus
   requirements:
-  - "Count current individual checks for the PR, following the GitHub check list, as red, yellow, green and total."
-  - "Do not sum workflow runs or historical attempts as independent current checks; retain special or unknown cases without pretending all categories sum to total."
-  - "Show aggregate review assessment and total/unresolved thread counts separately from CI."
-  - "Do not derive merge readiness from a successful review, zero visible threads, CI color or a single glyph alone."
-  - "Unknown, stale or partial data must not be represented as a confirmed zero or pass."
+  - Count current individual checks for the PR, following the GitHub check list, as red, yellow, green
+    and total.
+  - Do not sum workflow runs or historical attempts as independent current checks; retain special or unknown
+    cases without pretending all categories sum to total.
+  - Show aggregate review assessment and total/unresolved thread counts separately from CI.
+  - Do not derive merge readiness from a successful review, zero visible threads, CI color or a single
+    glyph alone.
+  - Unknown, stale or partial data must not be represented as a confirmed zero or pass.
   review_scenarios:
-  - "Given a check that later succeeds, its previous failed attempt is not added as a second current check."
-  - "Given a change request without a corresponding open thread, preserve the change request independently of the thread count."
+  - Given a check that later succeeds, its previous failed attempt is not added as a second current check.
+  - Given a change request without a corresponding open thread, preserve the change request independently
+    of the thread count.
   unresolved:
-  - "Exact source revision, retry identity, cancelled/skipped/neutral mapping and status freshness need GitHub-oriented implementation design."
-  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."
+  - Exact GitHub status mappings, check identity, head revision and retry equivalence require API verification.
+  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
+    selection and specification remain drafts; implementation is not claimed.
+  pilot_contract:
+  - Count current individual PR checks, not workflow runs or every historical attempt; retain total as
+    a separate count from red/yellow/green.
+  - Preserve review assessment, review request and unresolved thread count independently; neither status
+    implies the other.
+  - Pending or unavailable signals do not establish success; special check conclusions are not silently
+    counted as green without a defined mapping.
+  - A complete zero-check result is distinguishable from unobserved checks and is not automatically a
+    merge-ready verdict.
+  pilot_scenarios:
+    retry:
+      given: A check failed and a current later attempt succeeds.
+      when: Current checks are counted.
+      then: The failed old attempt is not added as another current check.
+    review_without_thread:
+      given: A reviewer requests changes without an unresolved thread.
+      when: The review summary is displayed.
+      then: The change request and zero known unresolved threads remain separate.
+  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
+    are specification choices, not claims that the app exists or that every detail was separately discussed.
+acceptance:
+- Count current individual PR checks, not workflow runs or every historical attempt; retain total as a
+  separate count from red/yellow/green.
+- Preserve review assessment, review request and unresolved thread count independently; neither status
+  implies the other.
+- Pending or unavailable signals do not establish success; special check conclusions are not silently
+  counted as green without a defined mapping.
+- A complete zero-check result is distinguishable from unobserved checks and is not automatically a merge-ready
+  verdict.
+acceptance_evidence:
+- criterion: The pilot contract and its boundary scenarios are independently checkable.
+  evidence: The pilot_scenarios describe expected results for future verification; no app test has run.

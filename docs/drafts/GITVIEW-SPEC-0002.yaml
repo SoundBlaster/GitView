@@ -20,27 +20,30 @@ sources:
     sha256: f346b1a369cc491606d7da5731eeb0f3cba948ddb8a769315787e8c14b0bc221
     package: local.gitview.domain@0.2.0-draft-composition.4
 acceptance:
-- Matching numeric repository IDs from the same GitHub instance preserve one Repository, its history
-  and every Project membership across rename or transfer.
-- The current source address follows a confirmed change while prior observations retain the address
-  recorded at their observation time.
-- A different numeric repository ID from the same GitHub instance identifies a separate Repository
-  with independent history and membership, even when it uses a previous address.
+- Matching numeric repository IDs from the same GitHub instance preserve one Repository, its history and
+  every Project membership across rename or transfer.
+- The current source address follows a confirmed change while prior observations retain the address recorded
+  at their observation time.
+- A different numeric repository ID from the same GitHub instance identifies a separate Repository with
+  independent history and membership, even when it uses a previous address.
 - A repository lookup that returns HTTP 404 leaves the current source state unknown and preserves the
   last known Repository, history and Project memberships.
 acceptance_evidence:
-- criterion: Matching numeric repository IDs from the same GitHub instance preserve one Repository, its history
-    and every Project membership across rename or transfer.
-  evidence: The confirmed_rename and confirmed_transfer scenarios define expected outcomes for future verification.
-- criterion: The current source address follows a confirmed change while prior observations retain the address
-    recorded at their observation time.
-  evidence: The confirmed_rename and confirmed_transfer scenarios distinguish the latest address from historical snapshots.
+- criterion: Matching numeric repository IDs from the same GitHub instance preserve one Repository, its
+    history and every Project membership across rename or transfer.
+  evidence: The confirmed_rename and confirmed_transfer scenarios define expected outcomes for future
+    verification.
+- criterion: The current source address follows a confirmed change while prior observations retain the
+    address recorded at their observation time.
+  evidence: The confirmed_rename and confirmed_transfer scenarios distinguish the latest address from
+    historical snapshots.
 - criterion: A different numeric repository ID from the same GitHub instance identifies a separate Repository
     with independent history and membership, even when it uses a previous address.
   evidence: The reused_address scenario separates the records for IDs 42 and 99.
-- criterion: A repository lookup that returns HTTP 404 leaves the current source state unknown and preserves the
-    last known Repository, history and Project memberships.
-  evidence: The unavailable_observation scenario keeps the stored record intact while recording uncertainty about the source.
+- criterion: A repository lookup that returns HTTP 404 leaves the current source state unknown and preserves
+    the last known Repository, history and Project memberships.
+  evidence: The unavailable_observation scenario keeps the stored record intact while recording uncertainty
+    about the source.
 specification:
   objective: Keep repository history and all Project memberships intact when GitHub confirms a repository
     has changed name or owner.
@@ -60,13 +63,13 @@ specification:
   - gitview:Project
   - gitview:managesRepository
   - gitview:projectIncludesRepository
-  identity_rule: Two valid GitHub REST repository observations with the same numeric id from the
-    same GitHub instance identify one Repository. A different numeric id in that scope identifies a
-    different object. The GitHubRepository context and every Project membership follow the Repository identity.
+  identity_rule: Two valid GitHub REST repository observations with the same numeric id from the same
+    GitHub instance identify one Repository. A different numeric id in that scope identifies a different
+    object. The GitHubRepository context and every Project membership follow the Repository identity.
   address_rule: Owner, name and URL describe the source address. GitView compares the source identity
     before applying an address change or associating history and memberships with a repository.
-  unavailable_rule: HTTP 404 supplies no current repository object. Keep the last known record and
-    distinguish unknown current state from a confirmed change.
+  unavailable_rule: HTTP 404 supplies no current repository object. Keep the last known record and distinguish
+    unknown current state from a confirmed change.
   scenarios:
     confirmed_rename:
       given: Repository R with REST id 42 is tracked in Projects P and Q at egor/OldName.
@@ -81,7 +84,8 @@ specification:
     reused_address:
       given: R with id 42 was previously observed at egor/OldName and belongs to Projects P and Q.
       when: The same GitHub instance returns id 99 at egor/OldName.
-      then: GitView treats id 99 as a separate Repository. The history and memberships of R remain with id 42.
+      then: GitView treats id 99 as a separate Repository. The history and memberships of R remain with
+        id 42.
     unavailable_observation:
       given: GitView has a last known record for R with id 42 and its history and memberships.
       when: GitHub returns HTTP 404 for a lookup at R's last known address.
