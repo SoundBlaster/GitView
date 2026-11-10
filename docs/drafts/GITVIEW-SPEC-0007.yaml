@@ -1,36 +1,192 @@
 id: GITVIEW-SPEC-0007
-title: "GitView - Timeline and filters"
+title: GitView - Timeline and filters
 kind: spec
 created_at: '2026-11-10T00:00:00Z'
-updated_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T07:17:00Z'
 status: idea
 draft_status: pre_canonical
 refines:
 - GITVIEW-SPEC-0006
 depends_on:
+- GITVIEW-SPEC-0003
 - GITVIEW-SPEC-0008
 - GITVIEW-SPEC-0009
 sources:
   root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
   topic: docs/drafts/ux-zoom-levels-proposal.md
-  authorization: conversation:gitview/excerpt-68
-  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+  today_all_states: conversation:gitview/excerpt-55-reply
+  today_unfinished_work: conversation:gitview/excerpt-56-reply
+  autonomous_specification: conversation:gitview/excerpt-68
+  refinement_request: conversation:gitview/excerpt-71-reply
+  ontology_selection:
+    path: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+    sha256: 71bf2c7a1486e895ea5283fe7294d4e72b87d7510ba1f698f8eeb8006463c774
+    package: local.gitview.domain@0.2.0-draft-composition.5
+acceptance:
+- The unfiltered Today view includes unfinished PRs and Issues, including those created before today.
+- PRs merged or closed and Issues closed today remain visible in the unfiltered Today view with their
+  current source state.
+- All lifecycle states in the current scope and time group are included by default; the user can explicitly
+  exclude states.
+- Each PR or Issue occurs once in a selection, retains its repository identity and is not conflated with
+  a linked object.
+- Filters, scope and selected time group remain identifiable and survive density changes and return navigation.
+- Incomplete, stale or unknown observations do not become a confirmed empty result or a successful current
+  state.
+acceptance_evidence:
+- criterion: Unfinished work and same-day completion remain in Today
+  evidence: older_open_item, completion_in_view, many_completed and closed_without_merge are expectations
+    for future verification.
+- criterion: Explicit filtering and stable navigation
+  evidence: exclude_completed, exclude_every_state and zoom_and_return are expectations for future verification.
+- criterion: Identity and changing source observations
+  evidence: cross_repository_identity, reopened_item and incomplete_observation are expectations for future
+    verification.
 specification:
-  objective: "Show the work and outcomes in the selected scope and period, including completed objects."
+  objective: Let the user see work and its completion in the selected Project or Repository and time group,
+    with explicit filters.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
-  requirements:
-  - "By default include PRs and Issues in all lifecycle states within the current scope and time group."
-  - "Today includes unfinished work created before today as well as work shown for today."
-  - "Keep objects merged or closed today visible in the unfiltered Today view, with their current state."
-  - "Allow explicit filters such as excluding merged and closed objects; identify the applied scope and filters."
-  - "Missing or incomplete observations do not imply that no objects exist."
+  selection_contract:
+    scope: 'The input is the selected Project''s member repositories or a selected Repository. Show each
+      object in its source Repository context. A PR and a linked Issue are different objects; equal numbers
+      in different repositories do not identify the same object.
+
+      '
+    today_unfinished: 'Treat a source-observed open PR, including a draft PR, and an open Issue as unfinished
+      work for this first selection. Include them even when created before today. Draft is a flag, not
+      a lifecycle state. Other possible interpretations of unfinished work remain open.
+
+      '
+    today_results: 'Include a PR merged or closed without merge today and an Issue closed today, even
+      if it was created before today. Show the current state. Closing an Issue is not automatically successful
+      completion; keep its source reason when available. When the source provides a creation time within
+      today, retain that object''s card within the current day''s unfiltered selection.
+
+      '
+    same_day_continuity: 'When an observed open item closes or merges today, update its card rather than
+      removing it merely because its lifecycle state changed. For example, if 95 of today''s 100 PRs merge,
+      the unfiltered selection still contains the 100 PRs, subject to the same scope and observation coverage.
+
+      '
+    identity: 'An object appears at most once within one selection even if several inclusion conditions
+      match. Repository identity is stable across source-confirmed rename or transfer as in GITVIEW-SPEC-0002.
+      Membership in multiple Projects does not merge their contexts.
+
+      '
+    reopened: 'A currently open object is included as unfinished even if it previously closed. Show its
+      current source state. Do not assert a complete sequence of reopenings or historical results without
+      the corresponding source history.
+
+      '
+    time_boundary_proposal: 'For this working draft, interpret Today as the current local calendar day
+      on the device, from its start through the start of the next local day. Re-evaluate the date grouping
+      when that day or the device time zone changes; do not change stored event timestamps. The treatment
+      of time-zone changes during an active interaction and historical grouping remains to be refined.
+
+      '
+    incomplete: 'A missing lifecycle state, relevant timestamp, repository observation or page is not
+      evidence of exclusion or of an empty period. Use known observations without presenting unknown or
+      stale values as current facts; expose affected coverage or freshness according to GITVIEW-SPEC-0003.
+      A confirmed empty result requires sufficient coverage of the active scope and filters.
+
+      '
+  filters:
+    initial: 'In an unfiltered scope and time group, do not hide an object solely because it is open,
+      merged or closed. Lifecycle filtering is explicit. The interface need not show every control simultaneously.
+
+      '
+    state: 'Let the operator exclude merged PRs or closed PRs and Issues to focus on unfinished work,
+      without changing the underlying objects. PR closed without merge and Issue closed retain their distinct
+      meanings; neither is silently equated with merged.
+
+      '
+    composition: 'Apply selected scope, time group and explicit type or lifecycle filters together. A
+      Project signal can establish an additional condition, such as failed CI, across its member repositories.
+      Its originating scope and active condition remain identifiable.
+
+      '
+    uncertainty: 'If an object''s state or another active filter input is unknown, do not classify it
+      as a confirmed match or non-match. Keep the uncertainty or incomplete coverage visible rather than
+      presenting the resulting list as exhaustively filtered.
+
+      '
+    all_excluded: 'If the user explicitly excludes every applicable lifecycle state, show an intentional
+      filtered empty result and make the active exclusions identifiable. This differs from no data or
+      a failed load.
+
+      '
+    interaction: 'Changing density does not silently reset scope, time group or filters. Returning from
+      an object restores these choices and the prior position when available. An open object overview
+      does not disappear merely because a refresh changes whether it matches the originating filtered
+      list; update the list predictably when returning.
+
+      '
   review_scenarios:
-  - "Given 100 PRs for today and 95 merged today, all 100 remain visible with their respective current states until filtered."
-  - "Given an unfinished PR created yesterday, it appears in Today."
+    older_open_item:
+      given: An Issue was created yesterday and is currently observed open.
+      when: The operator opens the unfiltered Today view for its Repository.
+      then: The Issue appears as unfinished work even though it was created yesterday.
+    completion_in_view:
+      given: An open PR from an earlier day is visible in today's unfiltered selection.
+      when: A successful observation reports that it was merged today.
+      then: The same card remains in Today and now shows merged.
+    many_completed:
+      given: Today contains 100 distinct PRs in the current scope and the observation coverage is complete.
+      when: Ninety-five of those PRs are observed merged today.
+      then: The unfiltered selection still shows all 100 with their current states.
+    closed_without_merge:
+      given: A PR is closed without merge today and an Issue is closed today with a non-completion reason.
+      when: Today is shown without lifecycle exclusions.
+      then: Both are visible with their respective source states and the Issue reason if available; neither
+        is presented as merged.
+    exclude_completed:
+      given: Today contains open PRs, merged PRs and closed Issues.
+      when: The operator excludes merged and closed states.
+      then: Open work remains and known merged or closed objects are hidden while the exclusions remain
+        identifiable.
+    exclude_every_state:
+      given: The operator excludes every applicable lifecycle state.
+      when: The filtered view is displayed.
+      then: It indicates an intentional filtered empty result rather than a load error or confirmed absence
+        of source work.
+    reopened_item:
+      given: An Issue closed earlier was reopened and is currently observed open.
+      when: Today is shown.
+      then: The Issue appears once as unfinished and no unsupported historical completion is inferred.
+    cross_repository_identity:
+      given: Two different repositories in one Project each have an Issue numbered 42, and one Issue is
+        linked to a PR.
+      when: The Project's unfiltered selection is shown.
+      then: The two Issues remain distinguishable by repository and the linked PR remains a separate object.
+    incomplete_observation:
+      given: One Project repository has not completed its Issue retrieval and an earlier observation may
+        be stale.
+      when: The operator filters the Project's Issues.
+      then: Known objects remain usable and the affected coverage or freshness is visible; the view does
+        not claim an exhaustive empty result.
+    zoom_and_return:
+      given: The operator opens a PR from a filtered Today grid at a chosen density.
+      when: The operator returns after the PR no longer matches the active filter.
+      then: The Project, Today, filter and density remain; the list reflects the updated state predictably
+        and restores position where possible.
+    date_boundary:
+      given: The device's local calendar day changes while the app is open.
+      when: The Today selection is next updated.
+      then: The selected day is re-evaluated without rewriting the stored event timestamps.
   unresolved:
-  - "Boundary of unfinished work, time zone, grouping past outcomes and filter control remain open."
-  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."
+  - Precise grouping and inclusion rules for older completed outcomes and historical reopening sequences.
+  - Whether other non-open states should count as unfinished beyond the working first-selection rule.
+  - Exact filtering control, sort order, position fallback and interaction during a clock or time-zone
+    change.
+  - Source mapping, pagination, history availability and exact freshness thresholds; see GITVIEW-SPEC-0003.
+  provenance_boundary: 'All lifecycle states by default, retaining today''s completed work, older unfinished
+    work and explicit state filtering follow the user''s discussion. The local-day interpretation and
+    detailed interaction and uncertainty rules are working specification choices, not previously observed
+    app behavior. Scenarios are expected behavior for later checks; no app implementation or executed
+    UI test is claimed.
+
+    '
