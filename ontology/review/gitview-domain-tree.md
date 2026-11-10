@@ -1,7 +1,7 @@
 # GitView — предметная карта для графа спецификаций
 
 Эта карта объединяет обсуждённые смыслы и показывает их представление в
-выбранном `local.gitview.domain@0.2.0-draft-composition.4`. Она не заменяет
+выбранном `local.gitview.domain@0.2.0-draft-composition.5`. Она не заменяет
 исходный package и не утверждает, что все нужные типы уже формализованы.
 Утверждённые пользователем направления используются как основа графа;
 точность технических bindings и отдельных границ ещё уточняется.
@@ -53,9 +53,8 @@ GitView — приложение / граница продукта
   `managesRepository`; Repository выступает как GitHubRepository в этом контексте.
 - `User → AddRepository(repository) → Project`: добавление существующего
   Repository меняет состав Project; один Repository может входить в несколько
-  Projects. В выбранном draft.4 поле действия пока `repositoryId: string`;
-  желаемый typed `Ref<Repository>` проверялся отдельно и не должен молча
-  считаться действующим в данном package.
+  Projects. В draft.5 поле действия — обязательный typed `Ref<Repository>`;
+  приложение отвечает за разрешение ссылки и проверку существования объекта.
 - Project содержит один или более репозиториев; по умолчанию одному Repository
   соответствует один Project. Organizations — метаданные источника, и Project
   может охватывать разные organizations.
@@ -94,5 +93,5 @@ merge readiness или исторического ряда из одной сс�
 Структурная проверка выбранной композиции проверяет разрешение и согласованность
 артефактов, а не истинность модели. Источники и оставшиеся gaps:
 [domain-model](../domain-model.md), [completeness](completeness.md),
-[draft.4](../candidates/domain-v0.2.0-draft.4/README.md) и
+[draft.5](../candidates/domain-v0.2.0-draft.5/README.md) и
 [дерево спецификаций](../../docs/drafts/specification-graph.md).

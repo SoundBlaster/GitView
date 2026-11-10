@@ -45,16 +45,18 @@ Use `.codex/skills/specgraph-project-ontology/SKILL.md` when discussing,
 drafting or reviewing domain terminology and relationships. Its installed
 version is supplied by the runtime above. Project terminology in notes and
 drafts is not automatically an accepted ontology; preserve gaps and sources.
-Read [the draft.4 package guide](ontology/candidates/domain-v0.2.0-draft.4/README.md)
+Read [the draft.5 package guide](ontology/candidates/domain-v0.2.0-draft.5/README.md)
 for the working ontology context. `specgraph.project.yaml` selects its
 `composition-context.yaml` for preparing the specification graph. The package
 remains a draft. Structural checks do not establish actor, motive or causal
-facts. The former selection at `ontology/context.yaml` and the original
+facts. The preceding draft.4 remains available as a control. The former selection at `ontology/context.yaml` and the original
 `ontology/pilots/motivation-composition/` are available as controls.
 
-For the selected context, pass the released compiler at `git config --get gitview.ontologyc` to the installed runtime.
+For the selected context, pass the compiler at `git config --get gitview.ontologyc` to the installed runtime.
+The compiler is a locally built, SHA-256-pinned snapshot of Ontology commit
+`4c5027b`; see the draft.5 guide. It is not a verified release binary.
 The `ontology-context` command reads the selection from project configuration.
 For a target check via `supervisor`, pass that same path explicitly with
 `--ontology-context-selection`.
-For the operator action, use the [draft.3 package and verification command](ontology/candidates/domain-v0.2.0-draft.3/README.md).
-Use the same ontologyc 0.7.0 release for both checks. The local `gitview.actorOntologyc` key also points to that release.
+For the earlier operator-action control, use the [draft.3 package and verification command](ontology/candidates/domain-v0.2.0-draft.3/README.md).
+The old ontologyc 0.7.0 release does not support the draft.5 typed reference.

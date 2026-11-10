@@ -2,7 +2,7 @@ id: GITVIEW-SPEC-0004
 title: GitView - Main screen
 kind: spec
 created_at: '2026-11-09T22:16:41Z'
-updated_at: '2026-11-09T22:21:15Z'
+updated_at: '2026-11-10T06:08:00Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -22,32 +22,62 @@ sources:
     peek_and_pop_scope: docs/drafts/inline-peek-pop-prototype.md
   observations: docs/drafts/GITVIEW-SPEC-0003.yaml
   ontology_selection:
-    path: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
-    sha256: f346b1a369cc491606d7da5731eeb0f3cba948ddb8a769315787e8c14b0bc221
-    package: local.gitview.domain@0.2.0-draft-composition.4
+    path: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+    sha256: 71bf2c7a1486e895ea5283fe7294d4e72b87d7510ba1f698f8eeb8006463c774
+    package: local.gitview.domain@0.2.0-draft-composition.5
+  autonomous_refinement: conversation:gitview/excerpt-69-reply
+acceptance:
+- The overview identifies each Project and makes its available work and attention signals inspectable.
+- Opening a Project preserves its identity; opening a signal shows the corresponding objects in that Project.
+- A failed refresh preserves last-known data and indicates the error and the last successful update time.
+- A repository shared by Projects contributes to each Project and only once to a unique portfolio total.
+- The overview is usable without relying exclusively on a specific gesture or on color.
+acceptance_evidence:
+- criterion: Project and signal navigation
+  evidence: The choose_project and follow_signal scenarios describe expected behavior; they have not been
+    executed.
+- criterion: Failure and incomplete observations
+  evidence: The failed_refresh and unobserved_scope scenarios describe expected behavior; they have not
+    been executed.
+- criterion: Shared repository counting
+  evidence: The shared_repository scenario describes expected behavior; it has not been executed.
 specification:
-  objective: Help the user see which Projects have activity or need attention and choose where to look next.
+  objective: Help the user see which Projects have activity or need attention and choose where to look
+    next.
   ontology_refs:
   - gitview:User
   - gitview:Project
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
-  prototype_coverage: Both interactive prototypes show a PR and Issue grid scoped to one Repository,
-    preview, opening an item and returning to the grid. The dense prototype represents a Project
-    with a single Repository. The existing zoom-level proposal describes the preceding overview
-    of multiple Projects.
+  prototype_coverage: Both interactive prototypes show a PR and Issue grid scoped to one Repository, preview,
+    opening an item and returning to the grid. The dense prototype represents a Project with a single
+    Repository. The existing zoom-level proposal describes the preceding overview of multiple Projects.
+  screen_contract:
+    scope: The overview concerns GitView Projects, not GitHub organizations or GitHub Projects. Repository
+      identity and membership are described in GITVIEW-SPEC-0002 and GITVIEW-SPEC-0005.
+    entry: Identify a Project by name and show its repository count. PR and Issue counts, attention signals
+      and period results are distinct; their placement depends on available space and data.
+    states: Distinguish a confirmed empty Project collection, not-yet-loaded or incomplete observations,
+      stale data and refresh failures. An unavailable observation is not a confirmed empty collection.
+    freshness: Keep the applicable observation scope and time when components have different freshness.
+      The exact placement and component of an error indication are open.
+    navigation: Opening a Project enters that Project. An actionable signal opens the corresponding filtered
+      objects in the same Project; their repository identities remain available.
+    visual_direction: Use system iOS typography, colors and components, SF Symbols and restrained Liquid
+      Glass. Color alone must not carry a necessary distinction.
+    boundary: This screen does not require mutation of GitHub data or prescribe API request sizes.
   proposal:
-    starting_view: Use the project overview as the main screen. The user sees their Projects and
-      can identify them by name. Restoring the last opened screen at launch is a separate decision.
+    starting_view: Use the project overview as the main screen. The user sees their Projects and can identify
+      them by name. Restoring the last opened screen at launch is a separate decision.
     project_entry: Start from the existing compact proposal with the Project name and Repository count.
       When space permits, surface open PRs and Issues separately, failed CI, review waiting and recent
-      results. The Project summary already defines the scope of these signals. The subset shown at
-      the initial density remains open.
-    navigation: Open a Project from its entry. A signal can provide a direct path to the
-      corresponding filtered PR or Issue view within that Project.
-    incomplete_data: Keep the affected Project visible and distinguish partial or stale observations
-      from an observed absence of work. The refresh and failure rules are described in GITVIEW-SPEC-0003.
+      results. The Project summary already defines the scope of these signals. The subset shown at the
+      initial density remains open.
+    navigation: Open a Project from its entry. A signal can provide a direct path to the corresponding
+      filtered PR or Issue view within that Project.
+    incomplete_data: Keep the affected Project visible and distinguish partial or stale observations from
+      an observed absence of work. The refresh and failure rules are described in GITVIEW-SPEC-0003.
   review_scenarios:
     choose_project:
       given: The user has several Projects.
@@ -61,10 +91,28 @@ specification:
       given: One Project has an older or partial observation.
       when: The user reads the main overview.
       then: The Project remains available with an indication of the observation's limits.
+    failed_refresh:
+      given: A Project summary has previously observed PR data.
+      when: Refreshing the PR scope fails.
+      then: The saved information remains visible with the last successful update time and an explicit
+        GitHub refresh error for the affected scope.
+    unobserved_scope:
+      given: The Issue list for a Project has never been obtained.
+      when: The summary is shown.
+      then: The Issue count is unknown or not loaded, not zero.
+    shared_repository:
+      given: Repository R belongs to Projects P and Q.
+      when: The overview shows both projects and a unique portfolio total.
+      then: R contributes to both Project summaries and is counted once in the portfolio total.
+    confirmed_empty:
+      given: The locally configured Project collection is known to be empty.
+      when: The main overview opens.
+      then: The empty state is distinct from a loading failure.
   deferred:
   - Default density and arrangement, sorting, and which of the existing signals fit at that density.
   - First-launch experience and launch restoration.
-  - Contents of a Project, Repository, PR or Issue screen after navigation.
-  provenance_boundary: The owner suggested starting from the main screen and reusing the interactive
-    prototype. Prototype observations describe the view inside a Project. The overview of multiple
-    Projects uses the previously described layout proposal and Project summary.
+  - Exact default density, sorting, control placement and empty-state wording.
+  - Detailed Project navigation is specified separately in GITVIEW-SPEC-0006.
+  provenance_boundary: The owner suggested starting from the main screen and reusing the interactive prototype.
+    Prototype observations describe the view inside a Project. The overview of multiple Projects uses
+    the previously described layout proposal and Project summary.

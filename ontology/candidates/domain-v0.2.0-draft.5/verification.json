@@ -1,0 +1,52 @@
+{
+  "artifact_kind": "gitview_ontology_candidate_verification",
+  "date": "2026-11-10",
+  "runtime_revision": "8303a681d8f2b33989b004de6954dc371c86da51",
+  "ontology_source_revision": "4c5027b7fe075e80d141e77f576eaa58ca0d3679",
+  "compiler_sha256": "30dd324aa1f641e7274a49fd6f158cced5ed95d810b6b275353d3d10f19a27cb",
+  "compiler_provenance": "locally built from clean checkout; not verified release",
+  "contexts": {
+    "foundation": {
+      "source_sha256": "babac663a65c9f313c541e80fcc77658d6efd90610bbcffa5015fcdf185e2847",
+      "ir_sha256": "cf3453d9d32d327ae9010f41ee6f7507314163ecf119cdb8fe2f26d4b82e5be9",
+      "check": "passed",
+      "compile": "passed",
+      "runtime": "verified",
+      "sdk_consumer": "passed"
+    },
+    "composition": {
+      "source_sha256": "af793e611b0cc1818dae7efd666e368ec6e92eb90fb796b716508a517933db0e",
+      "ir_sha256": "77501d22fb732b281bb356c72eba4fe91a324d35802504004756faca755d30e3",
+      "selection_sha256": "71bf2c7a1486e895ea5283fe7294d4e72b87d7510ba1f698f8eeb8006463c774",
+      "check": "passed",
+      "compile": "passed",
+      "runtime": "verified",
+      "sdk_consumer": "passed"
+    }
+  },
+  "graph_check": {
+    "before_selection_change": {
+      "count": 18,
+      "checked": 18,
+      "findings": 1,
+      "known_finding": "GitView product label absent from ontology"
+    },
+    "final_targets": [
+      {
+        "id": "GITVIEW-SPEC-0004",
+        "sha256": "5a940eaa890847a22f9512ba680ebab482647348e2c662a5e452c10a13c64d48",
+        "outcome": "checked",
+        "findings": 0
+      },
+      {
+        "id": "GITVIEW-SPEC-0006",
+        "sha256": "eea120e26acd8552eff34ce67a0f4242b92101033bcc787f62ef0e024b6a3023",
+        "outcome": "checked",
+        "findings": 0
+      }
+    ],
+    "scope": "domain_vocabulary; isolated scratch workspace; not full conformance"
+  },
+  "semantic_approval": "not_established",
+  "implementation": "not_claimed"
+}

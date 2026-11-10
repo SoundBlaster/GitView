@@ -1,8 +1,8 @@
 id: GITVIEW-SPEC-0006
-title: "GitView - Project contents and navigation"
+title: GitView - Project contents and navigation
 kind: spec
 created_at: '2026-11-10T00:00:00Z'
-updated_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T06:09:00Z'
 status: idea
 draft_status: pre_canonical
 refines:
@@ -13,22 +13,80 @@ sources:
   root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
   topic: docs/drafts/ux-zoom-levels-proposal.md
   authorization: conversation:gitview/excerpt-68
-  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+  autonomous_refinement: conversation:gitview/excerpt-69-reply
+acceptance:
+- A multi-repository Project exposes its members and a route to each member's PR and Issue objects.
+- A single-repository Project reaches its work without a redundant repository step; Project and Repository
+  remain distinct.
+- A Project signal opens matching objects across its member repositories and identifies their source repositories.
+- Changing density does not silently change Project, repository scope, period or filter; return restores
+  context and location when possible.
+- Incomplete observations do not remove a member or present unknown work as an empty repository.
+acceptance_evidence:
+- criterion: Project entry for one or several repositories
+  evidence: single_repository and multiple_repositories scenarios specify expected outcomes, not executed
+    tests.
+- criterion: Cross-repository signal filtering
+  evidence: signal_across_repositories is an expected outcome, not an executed test.
+- criterion: Navigation continuity and incomplete observations
+  evidence: return_to_origin and incomplete_project specify expected outcomes, not executed tests.
 specification:
-  objective: "Navigate from project overview to its repositories and work without losing context."
+  objective: Navigate from project overview to its repositories and work without losing context.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
+  navigation_contract:
+    entry: The visible context identifies the GitView Project. Membership follows repository identity,
+      not organization or the current owner and name.
+    multiple: Offer the Project's repositories and a route to the PR and Issue collection of each member.
+      Repositories from different organizations remain in the same Project.
+    single: Skip a redundant intermediate repository screen while retaining Project and Repository as
+      separate identities and retaining sufficient source context.
+    signal_route: A Project signal opens matching objects across its member repositories. The active signal
+      or filter and each object's repository are identifiable.
+    return: Restore the originating Project, filter and scale, and prior location when still available.
+      If data or membership changed, retain Project and filter and provide an understandable position;
+      exact mechanics remain open.
+    zoom: Changing density within a scope does not itself change membership or filters. Entry into a different
+      scope is distinguishable from a density change.
+    unknown: An unavailable member remains in the Project; unknown data is not an observed empty result.
   requirements:
-  - "A multi-repository project can reveal its repositories and their PRs and Issues."
-  - "A single-repository project opens its work without a redundant intermediate repository screen, while retaining both identities."
-  - "A project summary signal opens the corresponding filtered work across project repositories, with each object's repository identifiable."
-  - "Returning from an object restores the originating scope, filters, position and scale where feasible."
+  - A multi-repository project can reveal its repositories and their PRs and Issues.
+  - A single-repository project opens its work without a redundant intermediate repository screen, while
+    retaining both identities.
+  - A project summary signal opens the corresponding filtered work across project repositories, with each
+    object's repository identifiable.
+  - Returning from an object restores the originating scope, filters, position and scale where feasible.
   review_scenarios:
-  - "Given a project with two repositories, selecting failed CI opens the matching PRs from both with repository context."
-  - "Given a single-repository project, entering its work does not require traversing two equivalent screens."
+  - Given a project with two repositories, selecting failed CI opens the matching PRs from both with repository
+    context.
+  - Given a single-repository project, entering its work does not require traversing two equivalent screens.
+  scenarios:
+    single_repository:
+      given: Project P contains Repository R.
+      when: The operator opens P.
+      then: Its PR and Issue collection is reachable without a duplicate Project/Repository screen; R
+        remains identifiable.
+    multiple_repositories:
+      given: P includes R1 and R2 from different organizations.
+      when: The operator opens P.
+      then: Both repositories remain accessible under P.
+    signal_across_repositories:
+      given: P has failed-CI PRs in R1 and R2.
+      when: The operator opens the failed-CI Project signal.
+      then: The filtered collection uses P's scope and distinguishes R1 from R2.
+    return_to_origin:
+      given: The operator opens an object from a filtered and zoomed collection in P.
+      when: The operator returns.
+      then: The Project, filter and density remain, and the previous location is restored when available.
+    incomplete_project:
+      given: P contains two repositories and one has incomplete observations.
+      when: The operator enters P.
+      then: Both members remain represented and missing work is not presented as an observed empty repository.
   unresolved:
-  - "Exact transition, restoration behavior after data changes, and ordering remain to be refined."
-  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."
+  - Exact transition, restoration behavior after data changes, and ordering remain to be refined.
+  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
+    selection and specification remain drafts; implementation is not claimed.
