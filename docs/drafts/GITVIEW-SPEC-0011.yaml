@@ -1,0 +1,34 @@
+id: GITVIEW-SPEC-0011
+title: "GitView - Current checks and review signals"
+kind: spec
+created_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T00:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0008
+depends_on:
+- GITVIEW-SPEC-0003
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  topic: docs/drafts/pull-request-ontology-options.md
+  authorization: conversation:gitview/excerpt-68
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+specification:
+  objective: "Keep check results, review assessment and review-thread counts independently interpretable."
+  ontology_refs:
+  - gitview:PullRequest
+  - gitview:ReviewThread
+  - gitview:CIStatus
+  requirements:
+  - "Count current individual checks for the PR, following the GitHub check list, as red, yellow, green and total."
+  - "Do not sum workflow runs or historical attempts as independent current checks; retain special or unknown cases without pretending all categories sum to total."
+  - "Show aggregate review assessment and total/unresolved thread counts separately from CI."
+  - "Do not derive merge readiness from a successful review, zero visible threads, CI color or a single glyph alone."
+  - "Unknown, stale or partial data must not be represented as a confirmed zero or pass."
+  review_scenarios:
+  - "Given a check that later succeeds, its previous failed attempt is not added as a second current check."
+  - "Given a change request without a corresponding open thread, preserve the change request independently of the thread count."
+  unresolved:
+  - "Exact source revision, retry identity, cancelled/skipped/neutral mapping and status freshness need GitHub-oriented implementation design."
+  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."

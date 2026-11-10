@@ -1,0 +1,41 @@
+id: GITVIEW-SPEC-0012
+title: "GitView - Repository and project summaries"
+kind: spec
+created_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T00:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+- GITVIEW-SPEC-0011
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  topic: docs/drafts/project-summary-proposal.md
+  authorization: conversation:gitview/excerpt-68
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+specification:
+  objective: "Summarize current work, attention and outcomes within an explicit scope."
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  requirements:
+  - "Distinguish open PRs, draft subset and open Issues, plus CI, review, unresolved-thread and Issue-blocker attention signals."
+  - "Count affected PRs separately from individual checks and affected repositories; do not add overlapping attention categories as if disjoint."
+  - "Show merged PRs and closed Issues by reason for a selected period; do not conflate PR and Issue totals with independent tasks."
+  - "A project summary includes all member repositories, including those shared with other projects; portfolio totals deduplicate repository and object identities."
+  - "Expose partial coverage and freshness rather than treating an unavailable repository as zero."
+  - "A preliminary passed-checks-and-review selection remains conditional until its predicate is defined; do not label it merge-ready."
+  review_scenarios:
+  - "Given a repository in two projects, it contributes to each project but once to a portfolio-wide unique total."
+  - "Given two PRs with five failed checks, report two affected PRs and keep check count separate."
+  unresolved:
+  - "Default period, coverage-specific aggregation and readiness predicate remain open."
+  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."

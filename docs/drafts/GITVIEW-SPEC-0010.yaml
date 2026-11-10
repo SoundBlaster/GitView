@@ -1,0 +1,34 @@
+id: GITVIEW-SPEC-0010
+title: "GitView - Issue and PR description formats"
+kind: spec
+created_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T00:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  topic: docs/drafts/github-templates/README.md
+  authorization: conversation:gitview/excerpt-68
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+specification:
+  objective: "Use the agreed structured descriptions and preserve the original authored content."
+  ontology_refs:
+  - gitview:Issue
+  - gitview:PullRequest
+  requirements:
+  - "Issue description format contains Problem, Motivation, Expected outcome and References."
+  - "PR description format contains Problem, Motivation, Expected outcome, Changes, Validation and References."
+  - "Use templates and agent instructions to request these sections when creating Issue and PR descriptions in participating repositories."
+  - "Existing or external objects remain visible when their descriptions use another format or sections are missing; do not invent missing text."
+  - "Treat Motivation, Expected outcome and Validation as authored statements, not independently proved motive, achievement or test evidence."
+  review_scenarios:
+  - "Given an external Issue with no Motivation section, retain its text and indicate absence rather than fabricate a motivation."
+  - "Given a PR Validation statement, show it separately from observed CI."
+  unresolved:
+  - "Participating repositories, template enforcement, parsing and migration of older descriptions remain open."
+  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."

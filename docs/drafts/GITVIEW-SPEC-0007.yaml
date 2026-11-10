@@ -1,0 +1,36 @@
+id: GITVIEW-SPEC-0007
+title: "GitView - Timeline and filters"
+kind: spec
+created_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T00:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0006
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  topic: docs/drafts/ux-zoom-levels-proposal.md
+  authorization: conversation:gitview/excerpt-68
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+specification:
+  objective: "Show the work and outcomes in the selected scope and period, including completed objects."
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  requirements:
+  - "By default include PRs and Issues in all lifecycle states within the current scope and time group."
+  - "Today includes unfinished work created before today as well as work shown for today."
+  - "Keep objects merged or closed today visible in the unfiltered Today view, with their current state."
+  - "Allow explicit filters such as excluding merged and closed objects; identify the applied scope and filters."
+  - "Missing or incomplete observations do not imply that no objects exist."
+  review_scenarios:
+  - "Given 100 PRs for today and 95 merged today, all 100 remain visible with their respective current states until filtered."
+  - "Given an unfinished PR created yesterday, it appears in Today."
+  unresolved:
+  - "Boundary of unfinished work, time zone, grouping past outcomes and filter control remain open."
+  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."

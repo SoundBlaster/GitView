@@ -1,0 +1,35 @@
+id: GITVIEW-SPEC-0014
+title: "GitView - Zoomable grid"
+kind: spec
+created_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T00:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0006
+depends_on:
+- GITVIEW-SPEC-0007
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  topic: docs/drafts/dense-overview-prototype.md
+  authorization: conversation:gitview/excerpt-68
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+specification:
+  objective: "Support a Photos-inspired overview that scales density within a stable scope."
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  requirements:
+  - "Allow multiple grid densities within the same project or object scope and use pinch to increase or decrease detail."
+  - "Support a dense bird's-eye view on the order of eight cells per row and around 100 items as an illustrative target, not fixed constants."
+  - "Distinguish PR and Issue at compact scale; reveal more information as cells grow without silently changing the selected set."
+  - "Offer a way to inspect and open an object while retaining scope, filters and meaningful return position."
+  - "Use native iOS appearance, system colors and typography, SF Symbols and restrained Liquid Glass."
+  review_scenarios:
+  - "Given a project with 100 items, zooming from a dense grid to larger cards preserves the same scope and selected filter."
+  - "Given a compact cell, the user can reach its object overview without needing to identify it by color alone."
+  unresolved:
+  - "Exact layout, zoom stops, animation, color mapping and platform APIs remain open."
+  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."

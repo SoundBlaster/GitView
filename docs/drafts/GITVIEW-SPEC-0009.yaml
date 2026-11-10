@@ -1,0 +1,35 @@
+id: GITVIEW-SPEC-0009
+title: "GitView - Issue overview"
+kind: spec
+created_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T00:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0003
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  topic: docs/drafts/issue-ontology-options.md
+  authorization: conversation:gitview/excerpt-68
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+specification:
+  objective: "Present the selected Issue properties and relationships without inferring motives."
+  ontology_refs:
+  - gitview:Issue
+  - gitview:Repository
+  - gitview:PullRequest
+  requirements:
+  - "Present source ID and repository-local number, title, description, URL, open or closed state, state reason, labels and source type when available."
+  - "Retain repository, author, assignees, milestone and linked PRs, distinguishing a closing link from a mention when the source permits."
+  - "Show parent and direct sub-issues, blocking links, comment and participant counts, direct and closed sub-issue counts."
+  - "Keep creation, update, closure, observation and last-comment times distinct where available."
+  - "A closed issue is not automatically completed; linked objects do not prove actor motivation."
+  review_scenarios:
+  - "Given an Issue closed with a non-completion reason, show its closure and reason without calling it completed."
+  - "Given a mentioned PR without an explicit closing link, do not display it as a closing PR."
+  unresolved:
+  - "Precise source mapping, missing fields and historical relationship availability remain open."
+  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."

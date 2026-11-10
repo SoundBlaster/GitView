@@ -1,0 +1,36 @@
+id: GITVIEW-SPEC-0015
+title: "GitView - Peek and Pop and future sliding preview"
+kind: spec
+created_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T00:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0014
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  topic: docs/drafts/ux-preview-interactions.md
+  authorization: conversation:gitview/excerpt-68
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+specification:
+  objective: "Inspect a card quickly without losing the bird's-eye overview."
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  requirements:
+  - "In the first version, long press opens an expanded preview, from which the user can open the same object."
+  - "Dismissing the preview returns to the originating grid and scope."
+  - "Later, support a single rich preview that changes the shown object as the finger moves from cell to cell, without navigating into each object."
+  - "Long press is a hypothesis for activating the sliding interaction; resolve its conflict with scrolling and Peek and Pop through native prototyping."
+  - "Optional pointer hover must not be assumed on all devices."
+  review_scenarios:
+  - "Given a PR cell, long press previews that PR; opening it retains the identity of that PR."
+  - "Given the later sliding mode, moving across three cells updates one preview without opening three object screens."
+  unresolved:
+  - "Sliding mode is later scope; gesture arbitration, release behavior and accessibility mechanism remain open."
+  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."

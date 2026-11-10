@@ -1,0 +1,37 @@
+id: GITVIEW-SPEC-0013
+title: "GitView - Metrics, history and charts"
+kind: spec
+created_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T00:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0012
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  topic: docs/drafts/project-summary-proposal.md
+  authorization: conversation:gitview/excerpt-68
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+specification:
+  objective: "Make workload and completion trends interpretable without inventing historical data."
+  ontology_refs:
+  - gitview:Metric
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  requirements:
+  - "Provide metrics and charts for current work and outcomes where sufficient observations or source history are available."
+  - "Define each metric by subject, unit, scope, period and available coverage; distinguish snapshots from events."
+  - "Display merged PRs and closed Issues as distinct series and preserve closure reasons."
+  - "Missing observations and unavailable history are gaps, not zeroes; do not claim a historical trend from one current snapshot."
+  - "A burndown-style understanding of unfinished work and completion is desired; exact calculation and graph form remain open."
+  review_scenarios:
+  - "Given missing observations for a day, a chart shows a gap rather than a zero."
+  - "Given a PR and an Issue describing the same work, series remain separate and are not called two completed tasks."
+  unresolved:
+  - "History retention, event availability, period defaults and formal burndown definition remain open."
+  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."

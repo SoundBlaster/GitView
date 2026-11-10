@@ -1,0 +1,36 @@
+id: GITVIEW-SPEC-0008
+title: "GitView - Pull request overview"
+kind: spec
+created_at: '2026-11-10T00:00:00Z'
+updated_at: '2026-11-10T00:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0003
+sources:
+  root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  topic: docs/drafts/pull-request-ontology-options.md
+  authorization: conversation:gitview/excerpt-68
+  ontology_selection: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
+specification:
+  objective: "Present the selected PR properties for rapid review and source navigation."
+  ontology_refs:
+  - gitview:PullRequest
+  - gitview:Repository
+  - gitview:ReviewThread
+  - gitview:CIStatus
+  requirements:
+  - "Present source ID and repository-local number, title, description and source URL when available."
+  - "Keep lifecycle and draft flag distinct; include labels, target repository, source and target branches, observed revision, author, requested reviewers and linked Issues."
+  - "Show the source review assessment and counts of total and unresolved review threads separately."
+  - "Show CI counts and change counts: additions, deletions, changed files and commits; preserve creation, update, closure or merge and observation times when available."
+  - "Do not include diff, thread content, logs or commit-by-commit browsing in this scope; open the source for detail."
+  review_scenarios:
+  - "Given an open draft PR with a failed check and unresolved threads, its draft, CI and thread indicators remain distinct."
+  - "Given unavailable thread count, do not present it as zero."
+  unresolved:
+  - "Exact source mappings, property availability and presentation priority remain open."
+  evidence_boundary: "Scenarios are expectations for future verification, not executed tests. The ontology selection and specification remain drafts; implementation is not claimed."
