@@ -2,6 +2,8 @@
 
 Статус: **кандидат для review**, не изменённый ontology package. Выбранный
 `local.gitview.domain@0.2.0-draft-composition.5` остаётся `draft`.
+Это исторический разбор draft.5; сейчас рабочий context — draft.10. Уточнение
+VCS-действия для него находится в [отдельном разборе](version-control-action-boundary-20261114.md).
 
 ## Исходное различение
 
