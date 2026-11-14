@@ -488,3 +488,10 @@ GitHub App user authorization — кандидат, а не подтверждё
 0088 уточняет работу обзора при неполном grant, не выбирая конкретные запросы;
 реальный source и нативный интерфейс не проверялись. [Проверка словаря](evidence/autonomous-goal-ontology-check-capability-coverage-20261114.json)
 для 0043 и 0088 не нашла findings и gaps.
+
+[Сверка Today и доступа](today-filter-access-review-20261114.md) исправила
+обещание показывать любой uncertain candidate: доступ ограниченного объекта
+имеет приоритет. 0049 явно согласован с немедленным применением privacy во
+время отложенной перестановки. [Проверка словаря](evidence/autonomous-goal-ontology-check-today-access-20261114.json)
+для 0027, 0042, 0043 и 0049 не нашла findings и gaps. Это проектные сценарии,
+не native tests.
