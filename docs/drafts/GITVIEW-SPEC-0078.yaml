@@ -13,7 +13,6 @@ depends_on:
 - GITVIEW-SPEC-0038
 - GITVIEW-SPEC-0044
 - GITVIEW-SPEC-0053
-- GITVIEW-SPEC-0063
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0039.yaml
   selected_fields: docs/drafts/issue-ontology-options.md

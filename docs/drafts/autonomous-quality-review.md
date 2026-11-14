@@ -378,3 +378,9 @@ Candidate 0078 уточняет связи Issue и ограничения до�
 с возможной ошибкой удаления credential. [Проверка словаря](evidence/autonomous-goal-ontology-check-issue-links-20261114.json)
 не нашла findings и gaps. [Аудит зависимостей 0078](issue-links-readiness-20261114.md)
 не установил его готовность к реализации.
+
+[Разбор зависимостей](dependency-semantics-review-20261114.md) разделяет
+семантику `depends_on` и `refines`, исправляет избыточное ребро 0078 → 0063
+и фиксирует воспроизводимые counts без вывода о готовности. Изменённый 0078
+прошёл [проверку словаря](evidence/autonomous-goal-ontology-check-issue-links-edge-20261114.json);
+она не подтверждает необходимость остальных рёбер.
