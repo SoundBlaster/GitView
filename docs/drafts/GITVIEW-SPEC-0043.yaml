@@ -83,6 +83,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    project_summary_at_dense_scale:
+      given: A two-Repository Project is represented at dense scale; one Repository has known open PRs and the other's CI scope is unobserved.
+      when: The operator opens the same Project's summary and then requests its open-PR history without a pinch or long press.
+      then: Available facts and their coverage remain attributable to that Project, unobserved CI is not a healthy zero, and missing historical evidence is shown as a gap or incomplete rather than backfilled from the current count.
     discovery_search_and_custom_intent:
       given: Existing Projects are visible and the operator starts custom Project creation, selects Repository A, then searches a partially observed discovery scope for B.
       when: The current search has no observed matches and a late response for an earlier query arrives.
