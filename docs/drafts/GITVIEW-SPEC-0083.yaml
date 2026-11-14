@@ -1,0 +1,73 @@
+id: GITVIEW-SPEC-0083
+title: GitView - Review and retry a conflicting Project edit
+kind: spec
+created_at: '2026-11-14T17:11:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0082
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0052
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0082.yaml
+  project_review: docs/drafts/project-lifecycle-branch-review-20261114.md
+  cross_cutting: docs/drafts/GITVIEW-SPEC-0079.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- After a stale edit conflict, the operator can identify the last confirmed saved Project and review their still-pending permitted intentions without treating the pending edit as saved.
+- A retry is an explicit new submission based on a confirmed current configuration and applies only the operator-reviewed desired changes.
+- A second intervening change, an unreadable current configuration or an indeterminate prior submission cannot be bypassed by replaying an old draft.
+- Conflict recovery does not recreate a confirmed deleted Project or reveal restricted source-derived details.
+- A resulting Project remains named, nonempty and consistent with default-association and Repository identity rules.
+- Review, retry and exit are accessible without relying solely on color, long press or a timed gesture.
+specification:
+  objective: Propose a review-first recovery interaction for conflicting local Project edits while preserving confirmed work and the operator's explicit intent.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  contract:
+    scope: This interaction follows a detected stale-base edit under 0082. It concerns an existing local Project and its name, optional description and Repository membership; it does not mutate GitHub. The saved Project identity is independent of names and source addresses. Project creation, default setup and deletion retain their own contracts.
+    preserve_pending: As an agent-authored initial proposal, keep the operator's unsaved permitted draft available for review during the active editing session after a confirmed stale-base rejection. A retained draft is an intention, not a saved configuration or proof that a previously submitted write failed. Recovery across process termination and retention duration remain open; never promise durable draft recovery without confirmation.
+    current_base: Before a retry, read and identify the latest confirmed valid saved Project and its applicable default association. An unreadable, inconsistent, deleted or indeterminate state is not a current base. If a prior submission may still commit, first reconcile its outcome and any late write under 0082; do not submit a replacement merely because an acknowledgement was absent.
+    compare: Offer the operator an understandable comparison of the confirmed current state and the relevant permitted pending intentions, using the original base only where it is available and needed to explain the change. Distinguish what is already saved from what the operator proposes to change. A comparison is not an automatic merge, an authorization to expose restricted source details or proof that the state will remain current.
+    revision: The operator may discard the pending edit and keep the confirmed saved Project, or construct a revised pending edit against that confirmed base. A proposal may retain intended changes only where the operator can understand and explicitly review the resulting valid configuration; do not silently reapply an old full Project snapshot or label a guessed merge as the operator's choice. The exact control and presentation remain open.
+    examples_of_intent: If a draft removed B from an earlier A-B Project while another confirmed edit added C, a reviewed retry may remove B from the current A-B-C state, yielding A-C, if the operator chooses it. It must not silently restore A-only or discard C. If the same name was changed in both edits, neither name is chosen automatically as the operator's final choice; present the conflict and require a reviewed result.
+    revalidation: Submitting the revised edit requires an explicit action, a still-current confirmed base, valid nonempty name and membership, sufficient identity and access evidence for newly added Repositories, and a consistent default association under 0025 and 0052. Coordinate revalidation with commit so a third change after review cannot be overwritten by the retry. If the base changed again, return to conflict or uncertainty rather than claiming success.
+    removal: If the Project was durably deleted while an edit was pending, do not retry the old edit against a new Project, silently recreate the old identity or select another Project with the same Repository. Explain the origin change and offer a permitted route out under 0024. Any later Project creation is a separate explicit operation with its own identity and validation.
+    unknown_and_cancel: If the preceding write's outcome or the saved configuration is unknown, show the uncertainty and recovery route, not a fabricated comparison or a claim of rollback. Cancelling an unsubmitted revised draft leaves the confirmed saved Project unchanged; cancelling after submission does not prove that submission was rolled back.
+    privacy: Apply current access policy before showing source-derived Project names, Repository identities, addresses, proposed differences or counts. If restricted details cannot be shown, use a non-sensitive recovery state; do not ask the operator to approve a hidden change as though its effects were understood. Reconnection and source identity evidence follow 0036 and 0038.
+    accessible: Make the saved-versus-pending distinction, conflict, relevant actions and failure or uncertainty available through accessible paths without depending solely on color, a timed gesture or visual position. Dynamic Type and native focus behavior are subject to 0017 and 0032; exact controls require evaluation.
+    provenance: The owner selected shared Repository membership and requested autonomous specification. This review-first conflict workflow and temporary draft retention are agent-authored proposals, not a claim of a selected editor, storage model or implemented behavior.
+  scenarios:
+    preserve_unrelated_addition:
+      given: P was A-B when the operator drafted removal of B; another confirmed edit changed P to A-B-C.
+      when: The operator reviews the current state and explicitly resubmits removal of B against it.
+      then: A valid confirmed result is A-C, C is not silently discarded, and the pending action is not presented as saved before confirmation.
+    name_conflict:
+      given: P was named Old, one pending edit proposes Blue and a different edit has durably renamed it Green.
+      when: The stale edit is reviewed.
+      then: Green is identified as saved and Blue as pending where permitted; no name is silently chosen as the operator's resolved intent.
+    third_change_before_commit:
+      given: The operator reviews a revised edit against confirmed P state V2, and another operation durably changes P to V3 before the revised edit commits.
+      when: The revised save reaches its commit boundary.
+      then: It does not overwrite V3 based on the stale V2 review; conflict or uncertainty is presented again.
+    unknown_previous_submission:
+      given: An earlier save may have committed and local configuration cannot establish its result.
+      when: The operator asks to retry the proposed edit.
+      then: The outcome remains unresolved and no replacement write is submitted as if the earlier one were confirmed absent.
+    deleted_project:
+      given: The operator has a stale edit of P and P's local deletion is durably confirmed.
+      when: The operator returns to the edit.
+      then: The old Project is not silently recreated or replaced with another Project sharing a Repository; a permitted exit or separate creation route is available.
+    hidden_membership:
+      given: The saved and pending configurations differ in private source-derived membership details that the operator is no longer allowed to see.
+      when: The conflict is displayed.
+      then: Restricted facts are not exposed and the operator is not asked to confirm an undisclosed membership change; an access-safe recovery path remains.
+  unresolved:
+  - Exact difference presentation, review controls, accessibility focus and retention of unsaved drafts across restart require product and native evaluation.
+  - Atomic compare-and-save, failure reconciliation and explicit merge semantics require storage design and independent evidence.
+  - The exact source-access evidence for adding a Repository and default-association behavior require separate validation.

@@ -46,6 +46,7 @@ depends_on:
 - GITVIEW-SPEC-0080
 - GITVIEW-SPEC-0081
 - GITVIEW-SPEC-0082
+- GITVIEW-SPEC-0083
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -71,6 +72,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    review_conflicting_project_edit:
+      given: The operator drafted removal of Repository B from Project P while another confirmed edit added Repository C.
+      when: The operator reviews the newer saved configuration and explicitly retries removal of B against it.
+      then: A valid confirmed result retains C, removes B only from P, and does not change another Project or the source Repositories.
     conflicting_project_edits:
       given: Two edits of the same Project start from the same saved membership, and the first adds a Repository shared with another Project.
       when: The first edit is confirmed and the second stale edit attempts to save.
