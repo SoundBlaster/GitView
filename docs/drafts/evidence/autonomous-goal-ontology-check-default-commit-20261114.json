@@ -1,0 +1,76 @@
+{
+  "runtime": "3593bd75",
+  "context_revision": "sha256:802242a9ca08f9aca0a49768a7de0c8ac9d618878c93bdde3ed79c0f333304d1",
+  "compiler_provenance": "not_verified",
+  "semantic_approval": "not_established",
+  "scope": "candidate format and domain vocabulary structural advisory; no storage implementation, concurrency, fault injection, restart, UI or GitHub access executed",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-default-commit-8omgd6cb",
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0052",
+      "sha256": "aa961517e13cf6483538637fdeadfa5e54d669ea0c4127fccd14ab2c5821a77c",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 3,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0104",
+      "sha256": "c1dd9594c23fc1f6dc7dbbfc5a2b8c849f6db209f9fd38d69eee7f15f67c2439",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 3,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0108",
+      "sha256": "3ea2ee31d7c86955838320241ca4104df1c39bf4fc1850961bcd571f3b5681e8",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 4,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    }
+  ]
+}
