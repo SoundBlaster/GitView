@@ -539,3 +539,10 @@ Candidate 0093 и [сверка preview](first-preview-content-review-20261114.m
 evidence; модель повторного открытия Issue снова привязана к bytes 0043.
 [Проверка словаря](evidence/autonomous-goal-ontology-check-preview-content-20261114.json)
 для 0043, 0050 и 0093 не нашла findings и gaps.
+
+Candidate 0094 и [сверка длительных review threads](long-review-thread-review-20261114.md)
+разделяют возраст треда, время непрерывно незакрытого состояния и время с
+последней активности. Критерий долгого треда и поддержка источника остаются
+открытыми; сценарии не являются выполненными тестами. [Проверка словаря](evidence/autonomous-goal-ontology-check-thread-age-20261114.json)
+для 0043, 0057, 0062 и 0094 не нашла findings или gaps. Привязанный к bytes
+0043 пример повторного открытия Issue выполнен повторно без расширения его границ.

@@ -1,0 +1,60 @@
+id: GITVIEW-SPEC-0094
+title: GitView - Age of unresolved review threads
+kind: spec
+created_at: '2026-11-14T18:37:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0062
+depends_on:
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0047
+- GITVIEW-SPEC-0057
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0062.yaml
+  project_summary: docs/drafts/project-summary-proposal.md
+  owner_intent: conversation:gitview/excerpt-02
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- An age-based attention signal identifies its time origin, reference time, threshold, scope and unit; unknown evidence is not a confirmed zero.
+- Thread creation age, duration continuously unresolved and time since last activity are distinct and are not substituted for each other.
+- A long-thread count and its affected-PR selection preserve distinct units, current resolution evidence and observation context.
+- Age or a resolved thread alone does not establish who should act, whether a review is approved or merge readiness.
+- Source availability and presentation of the age signal remain conditional on verification and do not require showing individual thread content.
+specification:
+  objective: Make the owner's requested attention to long review threads precise without inventing source timestamps or a product threshold.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:ReviewThread
+  contract:
+    definition: As a candidate, classify an observed currently unresolved review thread by elapsed time since its source-established creation at an explicitly stated reference time. Label this as thread age, not time continuously unresolved or time awaiting a reply. A thread reopened after being resolved can have an old creation time without having been continuously unresolved for that duration.
+    threshold: A long-thread classification requires a defined positive duration threshold and an explicit comparison boundary; neither is selected by this candidate. Until selected, available thread counts remain useful under 0062 and 0057, but no long-thread count or zero is fabricated. Exact threshold and whether the selection is exposed or configured require later product refinement.
+    evidence: Establish distinct thread identity, PR and Repository scope, applicable unresolved state and the time origin for each classification. Source timestamp mapping and reliability must be verified. Missing creation time, uncertain resolution, partial thread coverage, incompatible observation times or a reference time earlier than the origin cannot establish a negative. Preserve context and limitations under 0044 and 0046; do not claim all threads were simultaneously unresolved without sufficient evidence.
+    counting: Count distinct qualifying review threads and distinct open PRs containing them separately. A partial positive can be shown with incomplete coverage; an exact total or zero requires sufficient coverage of eligible PRs and threads, their resolution and timestamps. Shared Repositories follow the Project or unique portfolio scope of 0057; affected PRs are not additional independent work items.
+    routing: A count can lead to affected PRs with its originating Project, condition, reference time and coverage retained under 0047. A refreshed source observation or elapsed time can change the selection; communicate the new observation rather than claiming the earlier count still describes it. Explicit filter changes remain distinguishable from the origin.
+    boundaries: A review thread's age does not prove inactivity, elapsed unresolved time, responsibility of a person or agent, or a changes-requested decision. Other attention and lifecycle signals remain independent. Use counters or aggregate signals without requiring comment bodies, individual thread lists or a new ontology entity. Access restrictions apply to derived counts and navigation.
+    provenance: The owner requested visibility of long threads and only counters for threads. The proposed time origin, evidence requirements and scope are agent-authored; no GitHub field or native display has been verified by this candidate.
+  scenarios:
+    reopened_old_thread:
+      given: A review thread was created ten days ago, resolved for nine days and is currently unresolved after reopening one day ago.
+      when: A thread-age classification is evaluated against a selected threshold and supported timestamps.
+      then: Creation age is ten days; the app does not call that ten days continuously unresolved or infer ten days waiting for a response.
+    missing_timestamp:
+      given: Two unresolved threads are observed in an open PR, one has a qualifying verified creation time and the other has no usable creation time.
+      when: A long-thread count is evaluated with a selected threshold.
+      then: The known positive is available as partial evidence and the unknown thread is not classified as young or excluded from an allegedly complete count.
+    unknown_threshold:
+      given: Unresolved review threads and their creation times are known but no threshold has been selected.
+      when: The Project summary is shown.
+      then: Ordinary unresolved-thread counts remain available and no long-thread count, including zero, is asserted.
+    distinct_units:
+      given: Two qualifying unresolved threads belong to the same open PR and all relevant coverage is sufficient.
+      when: The signal and its destination are shown.
+      then: The signal can identify two threads and one affected PR without treating them as three tasks.
+  unresolved:
+  - Verify whether permitted GitHub data can establish thread creation and resolution with adequate scope, identity and timing; this candidate does not select an API request.
+  - Select the age definition, threshold and comparison boundary before claiming an executable long-thread predicate.
+  - Determine accessible compact presentation and refresh behavior on actual devices without exposing restricted information.
