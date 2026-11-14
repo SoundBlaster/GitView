@@ -1,0 +1,58 @@
+id: GITVIEW-SPEC-0035
+title: GitView - Density changes within an overview
+kind: spec
+created_at: '2026-11-14T13:41:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0014
+depends_on:
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0032
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0014.yaml
+  prototype: docs/drafts/dense-overview-prototype.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Changing density alters how many objects can be viewed and how much detail fits without itself changing the selected collection.
+- The selected Project or Repository, period, explicit filters and available coverage remain consistent through a density change.
+- A focused or anchored object remains the same object where available, including after a change in column count.
+- Dense and spacious layouts retain accessible object identification and entry without requiring color as the sole cue.
+specification:
+  objective: Describe density changes as a continuous overview interaction without confusing scale with navigation or source changes.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    selected_collection: Density operates on the current scope, period and filter selection. It changes presentation rather than the identities, lifecycle states, source observations or membership of the selected set.
+    scale: A pinch can move between denser and more detailed presentations. Intermediate visual behavior, exact number of columns, animation and thresholds require native evaluation. Approximately eight columns and roughly 100 objects illustrate the desired bird's-eye view, not a fixed count or device performance guarantee.
+    detail: Compact cells distinguish PR and Issue using more than color alone through an accessible representation or available non-color cue. Larger presentations may show more text and state; hiding detail for space does not assert that unavailable information is zero or healthy.
+    anchor: Where a focused or visible object remains in the selected collection, preserve its stable identity and a meaningful visible position during density changes. If data changes concurrently and it is no longer present, apply the navigation fallback in 0024; do not treat a change of position as a change of identity.
+    collection_changes: A source refresh may independently alter the selected set during a gesture. Do not attribute that change to zoom, silently reset the active filters or misrepresent a partial observation as the full collection; apply the observation and selection rules in 0023 and 0007.
+    accessibility: A usable alternative to pinch is available under 0032. Large text and viewport size may reduce the number of columns; operator access to the objects takes precedence over maintaining a target density.
+    scope_transition: Entering a Project, Repository or work object is an explicit navigation action distinguishable from an in-scope density adjustment. This contract does not define the later calendar view or sliding preview.
+    provenance: Multi-density and the Photos-like dense view follow the owner's direction; the anchoring and concurrent-refresh behavior are agent-authored refinements.
+  scenarios:
+    same_selection:
+      given: A Project's active selection contains 100 known objects with a lifecycle filter.
+      when: The operator changes from a dense to a more spacious grid without a source update.
+      then: The same 100 object identities and filter remain selected even though fewer cells fit on screen.
+    same_number:
+      given: Two visible repositories each contain PR 42 and the focused cell is from the second repository.
+      when: A density change changes the column arrangement.
+      then: Focus remains associated with the second repository's PR rather than a cell index or the other PR.
+    concurrent_refresh:
+      given: A selected PR stops matching the active filter because a refresh changes its observed state during a density gesture.
+      when: The gesture ends.
+      then: The active scope and filter remain unchanged and the updated selection uses the normal return or anchor fallback without claiming that zoom changed the PR.
+    accessible_scale:
+      given: The operator cannot perform a pinch or uses large system text.
+      when: They navigate or change the view using the accessible path.
+      then: Objects remain identifiable and openable without an eight-column requirement.
+  unresolved:
+  - Native transition behavior, gesture arbitration and measured performance require prototype and device evidence.
+  - Default density, order and available scale controls need further product and platform refinement.
