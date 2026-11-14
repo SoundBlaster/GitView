@@ -158,6 +158,10 @@ Candidate 0057 уточняет согласованный каталог мет
 тот срез содержал 57 узлов. Соответствие реальному источнику и полнота
 истории не проверены.
 
-Candidates 0058 и 0059 уточняют authorization и discovery; текущий граф
-содержит 59 узлов. Реальный протокол, права, credential storage и source
+Candidates 0058 и 0059 уточняют authorization и discovery; тот срез
+содержал 59 узлов. Реальный протокол, права, credential storage и source
 semantics этими черновиками не подтверждены.
+
+Candidate 0060 определяет рабочую единицу status-check overview; текущий
+граф содержит 60 узлов. Соответствие GitHub PR status box и точные source
+rules остаются открытыми.

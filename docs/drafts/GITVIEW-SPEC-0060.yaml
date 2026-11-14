@@ -1,0 +1,62 @@
+id: GITVIEW-SPEC-0060
+title: GitView - Current status-check entries and source context
+kind: spec
+created_at: '2026-11-14T16:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0028
+depends_on:
+- GITVIEW-SPEC-0037
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0046
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0028.yaml
+  owner_check_unit: conversation:gitview/excerpt-35-reply
+  documentation: docs/drafts/github-field-access-research-20261114.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The displayed status-check counts identify their PR, relevant source revision or revisions, observation context and coverage.
+- A current source check-run entry and a current source commit-status context are distinguishable counted units; equal display names alone do not combine them.
+- Success, pending, failure and unmapped or other results retain distinct evidence and do not imply merge eligibility.
+- When source identity, current-attempt selection, revision applicability or required source coverage cannot be established, the affected exact total or absence of failure remains uncertain.
+specification:
+  objective: Specify the user-visible unit of a GitHub-like status-check overview without conflating source types, historical attempts or merge decisions.
+  ontology_refs:
+  - gitview:PullRequest
+  - gitview:CIStatus
+  contract:
+    unit: An entry in this working proposal is one current GitHub status-check result in the identified PR observation context. It can be a check run or a commit-status context. Count source-confirmed distinct entries, not workflow runs, jobs as an assumed one-to-one mapping, repositories or a sum of all historical attempts. Source names and types remain available for disambiguation where observed.
+    types_and_identity: Preserve the source family and source-supported identity of an entry. A check run and a commit-status context with the same displayed name are not merged merely by that name; two different integrations can also use similar names. Conversely, repeated observations of the same source entry are not additional checks. Equivalence across different source representations or successive attempts requires evidence rather than a guessed name match.
+    current_selection: The counted set describes source entries selected as current for the stated PR and revision context. A historical attempt is not added as a separate current result solely because it was retained locally. Exact equivalence, retries and source rules for selecting a current entry require verification; when these cannot establish the set, report incomplete or uncertain counts rather than choose by arrival order.
+    revision: Keep the revision or revisions to which each result applies distinct. A head-commit rollup and checks associated with a test merge commit are not automatically equivalent. The GitHub PR status box can use a test merge commit or head depending on circumstances; source evidence and a product mapping must identify the applicable set before claiming equivalence to the PR's complete current status checks. A prior head result is not silently attached to a newer head.
+    source_options: GitHub documents a rollup context containing check runs and status contexts for a commit. It is a candidate source of data, not proof that the selected connection, permission and revision reproduce every visible PR status or that multiple pages form a coherent snapshot. A REST composition is another possible source; no API choice or endpoint request plan is mandated here.
+    categories: For source entries whose meaning and current applicability are sufficiently established, show failure, pending and success counts and a total as in 0028. Preserve unclassified or special conclusions separately or mark their coverage unknown; do not force them into success to make three categories add up. Source-specific treatment of skipped, neutral, cancelled, timed-out, stale and action-required results requires explicit mapping and must not infer merge permission.
+    partial: A confirmed current failure in the covered revision may establish a positive observed failure even with other entries missing. No observed failure, an empty response or a single available source family cannot establish a complete zero or absence of failure while any applicable entry, family, identity or revision remains unobserved. Retain applicable time and coverage under 0044 and 0046.
+    action: Present the counters as status-check observations for review and navigation, not as a branch-protection decision or authorization to merge. Required-check policy, review state, thread resolution and merge eligibility remain distinct.
+    provenance: Counting individual current checks and following GitHub were selected by the owner. The cross-family entry definition is an agent-authored working interpretation; source-specific mapping and behavior are not yet verified against a real PR.
+  scenarios:
+    same_name_different_families:
+      given: A source confirms a current check run named build and a distinct current commit-status context also named build for the relevant revision.
+      when: The status-check entries are counted.
+      then: Both source-confirmed entries remain distinct and count once each; their shared name is not deduplication evidence.
+    repeated_observation:
+      given: The same confirmed current source entry is returned in two observations for the same PR and revision.
+      when: The current entry count is calculated.
+      then: That entry contributes once, subject to conflict and observation ordering rules.
+    retry_identity_unknown:
+      given: Two check-run observations may be successive attempts for one logical check but their source equivalence and current selection are not established.
+      when: A total of current entries is requested.
+      then: The exact count remains uncertain rather than blindly counting both or merging them by name.
+    merge_revision_distinct:
+      given: A PR head and its test merge commit have different identifiers and the available results are only associated with the head.
+      when: The app presents check information.
+      then: The head results retain their scope and are not asserted to be the complete status-box result for the test merge commit.
+    partial_failure:
+      given: A relevant source entry is confirmed failed while another applicable source family has not been observed.
+      when: The failure signal and total are presented.
+      then: The observed failure may be shown with incomplete coverage while neither a full current total nor a complete set of failures is asserted.
+  unresolved:
+  - Exact classification of all GitHub states, conclusions and required-check semantics into visual categories, including skipped and neutral.
+  - Source-supported attempt equivalence and precise PR head versus test-merge selection under all observed cases.
+  - GraphQL and REST permissions, pagination consistency and empirical equivalence to the GitHub PR status box.

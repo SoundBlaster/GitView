@@ -600,3 +600,10 @@ PR, Issue, review, threads, CI и blockers с примерами read operations
 PR в REST Issues feed с отдельным issue ID и независимые check/status sources;
 0039 и 0028 дополнены соответствующими границами. Полный permission set,
 отображение source fields и интеграция не доказаны.
+
+## Единица status check
+
+0060 предлагает считать отдельные текущие check-run и commit-status entries
+с source identity и revision context. GitHub документирует оба типа, а также
+различие head и test merge; совпадающие имена сами по себе не объединяют
+entries. Выбор source mapping, специальных состояний и retry остаётся открытым.

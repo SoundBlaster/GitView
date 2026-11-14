@@ -26,3 +26,18 @@ permissions GitHub App не взаимозаменяемы.
 пользовательской CI-сводки при источниках check runs и commit statuses;
 только затем можно проверять mapping и требования доступа. Численные размеры
 запросов и частота обновления остаются вне этого среза.
+
+## Дополнение: единица и revision
+
+GitHub описывает [два типа status checks](https://docs.github.com/en/pull-requests/reference/status-checks):
+checks и commit statuses. Его [GraphQL StatusCheckRollup](https://docs.github.com/en/graphql/reference/commits)
+имеет connection для check runs и status contexts. Это основание для candidate
+[0060](GITVIEW-SPEC-0060.yaml), но не доказательство идентичности конкретному
+PR status box или выбора API.
+
+GitHub отдельно указывает, что check и commit status с одинаковым именем
+могут оба иметь значение для required-check policy; имя недостаточно для
+их объединения. Для PR требуется также различать head и test merge commit:
+какой commit используется, зависит от контекста. [GitHub: troubleshooting required checks](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks).
+Эта документация не устанавливает, как GitView должен отнести каждый
+special conclusion к цвету или считать повторные попытки.
