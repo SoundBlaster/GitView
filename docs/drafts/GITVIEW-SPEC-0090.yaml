@@ -1,0 +1,76 @@
+id: GITVIEW-SPEC-0090
+title: GitView - Required description process outcome and path coverage
+kind: spec
+created_at: '2026-11-14T18:22:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0076
+depends_on:
+- GITVIEW-SPEC-0034
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0051
+- GITVIEW-SPEC-0054
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0076.yaml
+  agreed_formats: docs/drafts/github-templates/README.md
+  required_format: conversation:gitview/excerpt-37
+  owner_agreement: conversation:gitview/excerpt-38
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- An applicable required-format policy identifies its participating scope, supported creation paths, policy version and the process checkpoint it governs.
+- A template or instruction is distinguished from a current structural assessment, an explicit exception and evidence that a path is actually covered.
+- A process outcome cannot be reported as satisfying the required format when the current applicable body or assessment is missing, stale or indeterminate.
+- A known deficiency, an authorized applicable exception and a structurally conforming body remain distinguishable; an exception does not change the body or structural assessment.
+- A body change or applicable policy change invalidates the earlier assessment's applicability to the current checkpoint until re-evaluated.
+- Participating process claims and source mutations remain separate from GitView's read-only display of permitted objects.
+specification:
+  objective: Define a checkable outcome for the required Issue and PR description process without assuming a GitHub gate can prevent all creation paths.
+  ontology_refs:
+  - gitview:User
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    required_format: The owner-selected Issue sections are Problem, Motivation, Expected outcome and References; PR additionally requires Changes and Validation under 0054. This applies to new descriptions in the participating process and supported paths. A repository or path is not declared participating merely because GitView can read it or because a template file exists.
+    participation_manifest: The external participating process identifies its Repository identities, included object types, supported human and agent creation paths, applicable policy and recognition-profile versions, responsible evaluator and the checkpoint at which compliance is assessed. These are process facts, not a requirement to introduce a new ontology entity, prescribe a storage format, or configure GitHub through GitView. Unknown scope or unverified path coverage cannot support an all-paths-compliant claim.
+    checkpoint: As an agent-authored minimum proposal, before the participating workflow reports a newly authored Issue or PR as having satisfied the required format at its declared checkpoint, obtain an applicable assessment of the actual body and policy, or an explicit authorized applicable exception if that process allows exceptions. The process must report known deficiencies and indeterminate or unavailable assessments distinctly and leave the requirement unresolved until re-evaluation or an authorized exception. This does not claim that every source path can prevent creation or select a mandatory correction deadline.
+    assessment: Use the versioned structural profile and result distinctions in 0076 and 0051. A conforming result means the assessed body has the required headings and structurally filled content according to that profile. It is not evidence that the text is useful, correct, independently validated, causally true, or that tests ran. Any semantic quality review is separately identified and cannot be inferred from nonempty text.
+    template_vs_process: Templates and agent instructions can prompt the desired sections but do not establish that an authored body was filled, checked, or covered by a gate. A verified evaluation on one path does not establish that another path, repository or object type is covered. A process that cannot show evidence for a path must label that path unverified rather than claim universal enforcement.
+    known_deficiency: A required section known missing or unfilled is a structural deficiency for the assessed body and policy. The participating workflow must not label that body structurally conforming merely because an object was successfully created or a template was present. The next step can be correction and re-assessment, or an applicable authorized exception if the process explicitly permits it; the concrete integration, actor and time limit are not chosen here.
+    unknown_assessment: An unavailable or ambiguous body, unknown identity, missing policy applicability, checker failure or unresolved write race is indeterminate. It is neither a pass nor necessarily a confirmed deficiency. Keep the unresolved process status visible to its participants and make a retry or review path available; do not invent a section or silently assume an exception.
+    exception: An exception is an explicit, attributable, authorized decision scoped to a specific object, requirement, policy version and applicable lifetime under 0076. It can resolve the participating process only to the extent the policy permits it; it remains distinct from structural conformance and is not inferred from a checker timeout, missing body, missing exception source or operator silence. Authority and whether exceptions are allowed remain unresolved.
+    body_or_policy_changed: Bind every assessment to the exact observed body and policy under 0076. Evaluate an exception against its separately established object, requirement, policy and lifetime scope; whether it remains applicable after an edit requires evidence under that exception policy. A new or conflicting body or relevant policy version prevents an old assessment from being described as applicable to the new checkpoint without independent evidence. Preserve prior assessment as historical evidence only; do not automatically write, close or suppress a GitHub object.
+    external_boundary: A participating authoring process may cover web, CLI, API and agent paths, but the selected supported set and actual enforcement mechanisms remain separate decisions. GitView itself reads permitted descriptions and does not create, repair, comment on, close or hide source objects based on this process. An Issue or PR outside the policy or with unknown participation remains available under the normal source and access contracts.
+    verification: Before claiming enforcement, demonstrate the actual configured evaluator and checkpoint for each declared path with conforming, missing, ambiguous, failed-checker and edited-body cases. Distinguish source-side prevention from post-creation detection and human or agent adherence. A template fixture, synthetic parser test or this specification alone is not proof of a deployed gate; do not use private source data without authorization.
+    provenance: Required sections and mandatory intent were selected by the owner. This checkpoint, scope and evidence contract is an agent-authored proposal; participating repositories, authority, exception policy and source-side mechanism are not established.
+  scenarios:
+    non_web_unverified:
+      given: A participating repository has an Issue template, but a CLI creation path has no evidence of an applicable evaluator.
+      when: A new Issue is created through that path.
+      then: The template does not prove that the actual body conforms or that the path is enforced; the process outcome remains unverified until an applicable assessment is obtained.
+    known_missing:
+      given: A current applicable PR body has a known missing Motivation section and a successful structural assessment established that deficiency.
+      when: The participating workflow reaches its declared checkpoint.
+      then: The deficiency remains visible and the body is not reported as structurally conforming; correction or an explicitly authorized applicable exception follows the policy.
+    checker_failure:
+      given: An applicable body cannot be assessed because the checker fails and no sufficiently supported result exists.
+      when: The participating workflow reaches its checkpoint.
+      then: Assessment remains indeterminate rather than a pass or a confirmed missing section, and the workflow exposes retry or review without inventing content.
+    stale_after_edit:
+      given: A PR body passed the applicable structural profile, then its body changes before the workflow checkpoint.
+      when: The process evaluates the current checkpoint.
+      then: The earlier pass remains tied to the earlier body and is not applied to the new body without an applicable reassessment.
+    permitted_exception:
+      given: A policy explicitly permits an authorized participant to exempt a particular missing References section for an identified Issue and policy version.
+      when: That scoped decision is recorded and applicable at the checkpoint.
+      then: The process can report the permitted exception separately, while the section remains structurally missing and no reference is fabricated.
+    external_read:
+      given: An accessible external Issue does not use the participating format and no process assessment applies.
+      when: GitView displays it.
+      then: Its permitted original description is available without a fabricated section or hidden object and no authoring-process compliance is asserted.
+  unresolved:
+  - The participating repositories, actual creation paths, checkpoint, authority and exception policy must be selected before deploying the process.
+  - Source-specific capability and timing of any gate, coverage of edits, reliable body identity and semantic quality review require evidence.
+  - No checker, GitHub enforcement, agent instruction rollout or GitView implementation has been installed or executed.

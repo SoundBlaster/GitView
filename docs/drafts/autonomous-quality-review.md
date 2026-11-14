@@ -513,3 +513,9 @@ Candidate 0089 и [временная сверка Today](today-temporal-evidenc
 25-часовой день и различает два closure events от одной distinct Issue; он не
 проверяет iOS Calendar, GitHub history или приложение. [Проверка словаря](evidence/autonomous-goal-ontology-check-issue-reopen-20261114.json)
 для 0043, 0056 и 0069 не нашла findings и gaps.
+
+Candidate 0090 и [сверка процесса описаний](required-description-process-review-20261114.md)
+разделяют template, текущую structural assessment, scoped exception и
+доказанное покрытие пути создания. GitView не запускает внешний gate по этому
+контракту; ни один процесс не установлен и не проверен. [Проверка словаря](evidence/autonomous-goal-ontology-check-format-process-20261114.json)
+для 0043, 0054 и 0090 не нашла findings и gaps.

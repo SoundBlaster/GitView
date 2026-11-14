@@ -1,0 +1,73 @@
+{
+  "runtime": "3593bd75",
+  "context_revision": "sha256:802242a9ca08f9aca0a49768a7de0c8ac9d618878c93bdde3ed79c0f333304d1",
+  "compiler_provenance": "not_verified",
+  "semantic_approval": "not_established",
+  "scope": "domain_vocabulary structural advisory; no authoring process or gate executed",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-goal-ontology-3kgdb4kq",
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0043",
+      "sha256": "20e81b1fe43b10900faadcbfe1e4711009acd791649db5bbc3104987c1b8c0e7",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 5,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0054",
+      "sha256": "3a1cd8983579d4845423a113e90fb19a73c1341f222ea628dc8a56ac57663850",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 2,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0090",
+      "sha256": "254f3d948a7f9db3c4aed860120ee026c568afdeb87e228f6617228ad526cdb0",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 4,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    }
+  ]
+}
