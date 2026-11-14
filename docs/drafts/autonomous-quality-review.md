@@ -264,6 +264,12 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; модель Today повторена для текущих байтов и по-прежнему
 не проверяет cohort, source coverage или приложение.
 
+Для `gitview:Metric` подготовлен [семантический кандидат](../../ontology/review/metric-meaning-candidate.md)
+без новых классов и вымышленных actor/action отношений. `ontology-doctor` с
+закреплённым compiler подтвердил структурный context `draft.5` и его imports;
+compiler provenance остаётся `not_verified`, semantic approval — `not_established`.
+Текст кандидата не является изменением или проверенным определением package.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.
