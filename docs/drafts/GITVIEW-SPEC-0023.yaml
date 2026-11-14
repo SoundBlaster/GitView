@@ -41,7 +41,7 @@ specification:
     mixed_observations:
       given: The Issue scope succeeds while the PR scope fails after a previous success.
       when: The Project overview is displayed.
-      then: Issues are current for their scope; retained PR values show their earlier time and failure without presenting the overall Project as fully current.
+      then: Issues carry their own latest successful observation time and coverage; retained PR values show their earlier time and failure without presenting the overall Project as fully current.
     no_observation:
       given: A configured Project has never received Issue data.
       when: Its summary appears.

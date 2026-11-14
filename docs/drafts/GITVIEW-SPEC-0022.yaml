@@ -7,6 +7,7 @@ draft_status: pre_canonical
 refines:
 - GITVIEW-SPEC-0004
 depends_on:
+- GITVIEW-SPEC-0002
 - GITVIEW-SPEC-0003
 - GITVIEW-SPEC-0005
 - GITVIEW-SPEC-0019
@@ -29,8 +30,10 @@ specification:
   contract:
     first_entry: When no local Project exists, the overview offers an understandable route to connect GitHub or choose repositories; a truly empty collection is distinct from unavailable observations.
     connection: Connection and permissions follow 0019. Cancelling authentication returns control to the setup route without treating it as a completed connection or deleting local data.
-    selection: After connection the operator can select from discovered accessible repositories. Incomplete or failed discovery is identified as such and permits retry; no selection is not proof that GitHub has no repositories.
-    default_project: When a Repository is selected, the operator can reach a Project containing it according to 0005's default one-to-one rule. A Project has at least one member; an unselected or inaccessible repository is not silently introduced as a member.
+    selection: After connection the operator can select from discovered accessible repositories. Incomplete or failed discovery is identified as such and permits retry; no selection is not proof that GitHub has no repositories. Pending selection is not yet a saved Project.
+    default_project: After explicitly confirming a nonempty selection, create one default Project per selected source Repository, with its own local identity and that single member, using the observed repository name as initial Project name. Reconfirming the same selection does not create another default Project for the same source Repository; existing custom Project memberships are unaffected. A Project has at least one member. Multiple repositories may subsequently be combined using 0005; selecting several does not silently create a multi-repository Project.
+    cancellation: Cancelling before confirmation discards only the pending selection, preserves previously saved Projects and source observations, and leaves the operator able to resume setup. A failure to save must not report a Project as created unless it is actually saved; retries must preserve successful creations and avoid duplicates.
+    rediscovery: A previously selected Repository that is temporarily absent from discovery remains associated with saved Projects; absence from a partial result is not deletion or proof of denied access. Source identity and permission handling follow 0002 and 0019.
     initial_data: The Project can be identified while work observations are loading. Never present an unobserved PR or Issue scope as a confirmed empty list; preserve explicit failure, last-success time and coverage under 0003 and 0019.
     repeat_entry: With existing Projects, use the normal overview and preserve configured membership. Launch restoration is a separate contract in 0024, not an assumption that setup repeats.
     boundary: Exact authentication method, discovery queries, screen composition and copy remain unspecified; this is an agent-authored UX proposal rather than a claim of explicit owner selection.
@@ -47,6 +50,18 @@ specification:
       given: A repository is accessible and selected.
       when: Its default Project is established and its work has not yet been observed.
       then: The Project is identifiable, and its PR and Issue data is shown as unobserved or loading, not confirmed empty.
+    multi_selection:
+      given: Two distinct accessible repositories are selected and neither has a default Project.
+      when: The operator confirms the selection.
+      then: Two distinct single-repository Projects are saved, and both are visible; no combined Project is implied.
+    interrupted_save:
+      given: A multi-selection is being saved and one default Project has been saved before a failure.
+      when: The operator retries the same selection.
+      then: The already saved default Project is reused and remaining selected repositories can be saved without a duplicate default Project.
+    cancel_pending:
+      given: The operator has pending repository selections and previously saved Projects.
+      when: The operator cancels before confirmation.
+      then: No pending Project is saved and existing Projects and observations are preserved.
   unresolved:
-  - When and how a selected repository becomes a Project, including confirmation and cancellation of a multi-selection.
   - Empty discovery and permission recovery details depend on source-access and Project-lifecycle refinement.
+  - Default Project identity and whether a deliberately deleted default may later be recreated require the Project lifecycle branch.

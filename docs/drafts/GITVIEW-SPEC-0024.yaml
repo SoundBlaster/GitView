@@ -13,6 +13,7 @@ depends_on:
 - GITVIEW-SPEC-0014
 - GITVIEW-SPEC-0017
 - GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0006.yaml
   filters: docs/drafts/GITVIEW-SPEC-0007.yaml
@@ -33,7 +34,7 @@ specification:
   contract:
     context: The working context includes Project identity, selected repository scope where applicable, period, explicit filters, density and a position or focused object when available. These are navigation state, not new ontology entities.
     return_in_session: Returning from a PR or Issue overview restores the originating context. The previously visible object remains the position anchor when it still exists in that filtered collection.
-    changed_objects: If the anchor no longer matches or cannot be located, preserve still-valid scope and filters, avoid claiming an unrelated object is the original, and place the user at an understandable position in the current collection. Exact replacement ordering remains open.
+    changed_objects: If the anchor no longer matches or cannot be located, preserve still-valid scope and filters and avoid claiming an unrelated object is the original. If the previous ordered list contains another object still present, anchor to the nearest surviving successor, otherwise the nearest surviving predecessor. If none survives, start at the beginning of the updated collection; its empty, incomplete or error state follows 0007 and 0023. If the previous order is unavailable, start at the beginning without inventing an anchor.
     changed_membership: Resolve membership by stable identity, not repository display name. If the selected Repository is no longer a Project member, do not silently substitute another; surface the changed scope and provide a route to the Project or portfolio.
     unavailable: Temporary observation failure does not by itself prove the Project or Repository disappeared. Where access is explicitly denied, follow 0019's cache policy and provide an available route out without displaying restricted content.
     signal_entry: A signal-origin route identifies the signal's active selection; returning does not discard that selection without operator action. Editing or clearing filters follows 0007.
@@ -53,7 +54,15 @@ specification:
       given: A previously observed selected Repository is temporarily offline.
       when: The operator returns to its work collection.
       then: The prior scope is preserved and observation failure is presented according to 0003 rather than asserting the repository was removed.
+    changed_filter_membership:
+      given: A filtered ordered collection contained objects A, B and C in that order and B was the anchor.
+      when: B no longer matches on return while A and C still match.
+      then: The same scope and filter remain active and C is the position anchor, without claiming C is B.
+    no_surviving_anchor:
+      given: The previous anchor and every other object from the old ordered collection no longer occur in the new collection.
+      when: The operator returns to the collection.
+      then: GitView starts at the beginning of the updated collection and reports its actual known, partial or empty state.
   unresolved:
-  - Deterministic fallback position and ordering when the old anchor no longer matches.
+  - Stable sort order for the collection itself is owned by 0007; this fallback operates on the last known ordered collection.
   - Cross-launch restoration default, saved-context lifetime and behavior for account changes.
   - Treatment of a deleted Project versus temporarily unavailable local configuration.
