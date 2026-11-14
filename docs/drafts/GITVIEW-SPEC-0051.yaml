@@ -1,0 +1,61 @@
+id: GITVIEW-SPEC-0051
+title: GitView - Conservative description section recognition
+kind: spec
+created_at: '2026-11-14T14:18:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0034
+depends_on:
+- GITVIEW-SPEC-0026
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0034.yaml
+  issue_template: docs/drafts/github-templates/issue.md
+  pr_template: docs/drafts/github-templates/pull-request.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A supported template heading can identify its author's section without changing or discarding the original description.
+- Missing, duplicate or syntactically ambiguous section boundaries are not guessed, and the original description remains available.
+- Placeholder-only sections do not become authored claims that work, motivation or validation occurred.
+- Section extraction is recomputed against the actual observed body and is not attributed to a different or unavailable body.
+specification:
+  objective: Define a conservative first recognition profile for the already selected Issue and PR template headings.
+  ontology_refs:
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    original: Retain the exact available source body and its observation context. Recognition produces references to ranges in that body; it does not rewrite, translate, summarize or replace the source text. An unavailable body is unknown, distinct from a successfully observed empty body.
+    supported_headings: The initial profile recognizes standalone level-two headings matching the exact case-sensitive template labels Problem, Motivation, Expected outcome and References for Issues, and those labels plus Changes and Validation for PRs. The heading syntax is the template's two hash marks, one space and the label; trailing whitespace is allowed. Other spellings or heading levels are not silently normalized into these labels.
+    exclusion: A heading-looking line inside a fenced code block or an HTML comment is not a section heading. If unclosed or malformed delimiters make it impossible to determine reliably whether a candidate heading is content, mark the affected interpretation ambiguous and retain the original body; do not guess.
+    boundaries: For a unique recognized heading, the section body begins after its heading line and ends immediately before the next standalone level-one or level-two heading outside excluded regions, recognized or not, or at end of body. Lower-level headings remain within that section. Preserve the extracted substring as authored, including its original line endings and embedded text.
+    duplicates: If the same supported heading occurs more than once outside excluded regions, its section is ambiguous. Do not silently select one occurrence or merge them as one authoritative claim. Other unambiguous sections can remain available if their boundaries are reliably known.
+    empty_and_placeholders: A section with no substantive text other than whitespace or HTML template comments is present but unfilled; preserve its raw range and do not infer a claim. A section absent from a successfully observed body is missing. A body that has not been successfully observed makes section status unknown rather than missing.
+    unsupported: Headings or syntax outside this narrow profile remain in the original body and may cause a relevant section to be missing or ambiguous. No claim is made that this recognizes every valid Markdown form or every repository's custom templates.
+    update: Interpret sections against the exact accepted body version. A failed refresh or a newly observed body must not cause a section extracted from an earlier body to be represented as belonging to the newer one. Source observations and freshness follow 0026.
+    claims: Motivation, expected outcome and validation are authored statements. Their presence does not prove an actor's actual motive, an achieved result or a passing CI check. CI is an independent source observation.
+    provenance: The selected labels come from the owner-approved format. The narrow recognition profile and ambiguity treatment are agent-authored proposals; installation and enforcement of templates are not established.
+  scenarios:
+    canonical_heading:
+      given: A PR body contains one standalone template heading for Validation followed by authored check results and then a level-two References heading.
+      when: The initial recognition profile is applied.
+      then: The authored Validation substring ends before References and remains separately attributable to the original body.
+    fenced_example:
+      given: A body contains a fenced code block with a line reading '## Motivation' and no real Motivation heading outside the fence.
+      when: The body is interpreted.
+      then: The example line is not recognized as a Motivation section and the original body remains available.
+    duplicate:
+      given: Two standalone Validation headings appear outside code fences and comments in a PR body.
+      when: The body is interpreted.
+      then: Validation is marked ambiguous rather than silently choosing or merging one occurrence.
+    placeholder_only:
+      given: The Motivation section contains only whitespace and the template's HTML instruction comment.
+      when: Its content is interpreted.
+      then: The section is present but unfilled and the instruction comment is not reported as the author's motivation.
+    unknown_body:
+      given: No Issue body has been observed because its source request failed.
+      when: Sections are requested.
+      then: Their status is unknown, not a confirmed set of missing sections.
+  unresolved:
+  - Exact handling of ambiguous or malformed mixed Markdown delimiters and supported additional heading formats.
+  - Selection and versioning of future recognition profiles; interpretation must remain bound to the observed body.
+  - Source availability and body-size or rendering concerns require integration and UX refinement.

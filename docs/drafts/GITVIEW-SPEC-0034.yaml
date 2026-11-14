@@ -51,5 +51,5 @@ specification:
       when: Its overview is opened.
       then: The description is unknown or unavailable rather than a confirmed empty body.
   unresolved:
-  - Exact parser grammar, supported heading aliases, duplicate-section behavior and template versions.
+  - An initial narrow recognition profile and duplicate-section behavior are proposed in 0051; broader heading syntax, aliases and template versions remain open.
   - Installation and enforcement across repositories belong to a separate workflow; the read-only app contract does not establish them.
