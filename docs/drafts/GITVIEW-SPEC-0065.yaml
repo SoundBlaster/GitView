@@ -33,6 +33,7 @@ specification:
   contract:
     event_occurrence: A source-confirmed event with identifiable subject, type and event time supports that event's occurrence within the stated scope. The time at which GitView learned of it is separate. A timeline API offering an event type does not by itself prove complete history, source visibility or complete traversal for a bucket.
     event_counts: An event-count bucket needs distinct event identities or sufficient equivalent evidence to prevent repeated observations from double counting. A distinct-object outcome bucket instead counts each eligible object at most once. A full total or confirmed zero requires sufficient population and relevant event coverage across the stated Repository set and period; partial known events may be shown only as incomplete.
+    source_type_boundary: GitHub GraphQL ClosedEvent applies to a Closable rather than exclusively to an Issue, and the REST Issues interface also covers PRs. Before attributing a closure to the GitView closed-Issue metric, establish that its source subject is a GitHub Issue rather than a PullRequest using supported type evidence under 0101; an Issue-shaped REST response or issue number alone does not prove the GitView object type. A closure of a PR is not an Issue closure and is not automatically a merge. If the subject type is unresolved, the event remains uncertain for type-dependent counts and cannot establish a complete zero or exact total. Preserve its own identity, event time and access context.
     reason: A closure grouped by reason requires evidence of the reason applicable to that event. GitHub documents a nullable stateReason on its GraphQL ClosedEvent, but a missing or null reason is unknown; the object's later reason is not automatically a replacement for the event's reason. Exact source mapping and availability remain to be verified.
     merge: A documented PR mergedAt value or MergedEvent can support a particular PR merge time when its source identity and semantics are established. It does not alone enumerate every PR that merged during a Project period or prove coverage of all members.
     snapshot: A point-in-time count of open PRs, open Issues or attention conditions requires coverage of the relevant population and facts at the declared point. A local observation supports only the time, scope, access and fields it actually records. A point observed at one time is not automatically valid at a later bucket boundary or between observations.
@@ -46,6 +47,14 @@ specification:
       given: One PR merge event in the chosen week is confirmed for one Repository while the full relevant PR population and other member coverage are unknown.
       when: The Project's merged-PR outcome is shown.
       then: The known event can be shown as an incomplete observation but one is not asserted as the full Project total.
+    pr_closure_is_not_issue_outcome:
+      given: A source-confirmed closure concerns a GitHub PullRequest, and the GitHub Issues interface also exposes its issue number.
+      when: The distinct closed-Issue and merged-PR metrics are evaluated for the period.
+      then: The PR closure is not counted as an Issue closure; it contributes to merged PRs only if independent merge evidence establishes that outcome in the period.
+    unresolved_closure_subject_type:
+      given: A supported closure event falls within the period, but available subject evidence does not determine whether it is an Issue or PullRequest.
+      when: A closed-Issue outcome is calculated.
+      then: The event is neither silently counted as an Issue nor discarded as definitely irrelevant; the affected type-dependent completeness remains uncertain.
     reason_missing:
       given: A source-confirmed Issue closure event has no available reason even though the Issue later has a current state reason.
       when: The historical closure is grouped by reason.

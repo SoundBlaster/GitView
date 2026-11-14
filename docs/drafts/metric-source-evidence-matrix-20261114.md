@@ -33,3 +33,7 @@ scope, identity, access, времени, predicate version и соответст
 
 Ранний общий обзор — [github-history-evidence-20261114.md](github-history-evidence-20261114.md),
 проверка потенциальных permissions — [github-app-permission-coverage-20261114.md](github-app-permission-coverage-20261114.md).
+
+## Уточнение типа субъекта при закрытии
+
+[GitHub GraphQL `ClosedEvent`](https://docs.github.com/en/graphql/reference/issues#closedevent) относится к `Closable`, а [REST Issues timeline](https://docs.github.com/en/rest/issues/timeline#list-timeline-events-for-an-issue) применяется и к pull requests. Следовательно, это авторский вывод из документации: адаптер должен подтвердить фактический тип субъекта перед подсчётом GitView Issue; один номер или форма Issue endpoint недостаточны. Закрытие PR само по себе не подтверждает merge. Наличие нужных данных и полная история конкретного аккаунта по-прежнему не проверены.
