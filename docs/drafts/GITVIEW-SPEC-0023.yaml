@@ -31,6 +31,7 @@ specification:
   contract:
     empty_projects: A confirmed local Project collection with no entries offers setup; it is not a statement about GitHub having no repositories or work.
     configuration_unknown: A failed, incomplete or inconsistent local configuration read is not a confirmed empty Project collection. Surface a local-data recovery state without silently resetting saved configuration or conflating it with a GitHub refresh failure. Once a successful read establishes saved Projects, show their permitted identities and applicable source observation states.
+    startup_reconciliation: A GitHub response completing while the saved Project configuration is unreadable or incomplete can establish only its independently supported source facts under the applicable identity and access policy. It cannot establish the local Project collection, Project membership or a first-run empty state, or automatically create a Project. On a later successful local read, reconcile permitted observations to confirmed Project identities and membership with their original scope and times; do not attribute a successful response for one Repository or category to the entire portfolio. If the operator has explicitly navigated elsewhere during recovery, updating the overview must not silently replace that active route; apply 0024 to its validity and return context.
     unobserved: A configured Project with an unobserved scope remains present. An unavailable count or signal is unknown, not zero, clear or healthy.
     partial: If some members or requested categories are missing, show available values only with a visible indication of incomplete scope. Unique portfolio totals follow 0012 and must not imply complete coverage.
     stale_or_failed: Previously authorized visible data remains available through temporary failures, with the affected scope, last successful observation time and an explicit indication of failure. Refresh does not silently reset the successful timestamp.
@@ -55,6 +56,14 @@ specification:
       given: GitHub is connected but the local Project configuration cannot be read.
       when: The operator opens the overview.
       then: The overview identifies the local-data problem without claiming there are no Projects or that GitHub has returned an empty result.
+    late_source_success_during_local_recovery:
+      given: A cold launch cannot read the saved Project configuration, while an independently authorized request for Repository R's Issues completes successfully; the response does not establish the local membership of R.
+      when: The local read later confirms Projects P and Q, only P contains R, and no other category has been refreshed.
+      then: The earlier local failure is not treated as an empty portfolio; the permitted Issue observation retains its own scope and time and can contribute to P under the summary rules, without being attributed to Q or making all of P's categories current. The source response alone creates no Project or membership.
+    recovery_while_navigated_away:
+      given: The overview reports unreadable local configuration and the operator explicitly opens an available recovery or settings route before a retry finishes.
+      when: A later valid read confirms saved Projects.
+      then: The confirmed overview can be updated without silently displacing the operator's active route; returning to it shows the permitted saved Projects and their independently supported observation states.
   unresolved:
   - Freshness classification thresholds and display of coverage by metric require the observation and summary branches.
   - Recovery behavior when source access changes during an in-flight refresh requires detailed access refinement.
