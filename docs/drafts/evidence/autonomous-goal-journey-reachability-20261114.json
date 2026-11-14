@@ -1,0 +1,182 @@
+{
+  "scope": "Scenario names and declared dependency/refinement paths only; no semantic completeness, readiness, execution or user acceptance established",
+  "snapshot_sha256": {
+    "GITVIEW-SPEC-0033": "ca6ea067eefbec0cdfdf3afb2033b564719b8b3f190613407a803f94d0afd66b",
+    "GITVIEW-SPEC-0036": "7276b598df12b5e073ba2bba835d4f736d4ef6755b4152d5176b1aba30cb5e06",
+    "GITVIEW-SPEC-0043": "ecc22286f0feb8f4ad06da177df0f6c638827f210d9f714c331b6847f467c19c",
+    "GITVIEW-SPEC-0045": "537675ff9d9a29fcaa6bc268b0199561048cdb400d7caa79400af598815fe9ec",
+    "GITVIEW-SPEC-0048": "11b31a5be96cb43593548aebadc192a5993a34f876b1a40dbf68d0a9fb0fd3a1",
+    "GITVIEW-SPEC-0064": "c586ef8b013ab8bfe12d90e5bb04a40777bf6a273c2f055e00debd054f119f36",
+    "GITVIEW-SPEC-0065": "2345935a00677d1c4f2e21a9905b9ddbdef1c5b344cf51f269df1dcf94458a4a",
+    "GITVIEW-SPEC-0068": "b419103a5736d11616d5dc60ac232844913f34071eeb0da7ee6ec78ca2ac7a41",
+    "GITVIEW-SPEC-0075": "4e6675671ad1e561ac8670b2c150e25d2087228eddcfd31addf39df7883ebf47",
+    "GITVIEW-SPEC-0085": "bcfac65adb2bb8b8f8b3b18c31f21cb52233afe3009e274a59d7e90b107c6ad5",
+    "GITVIEW-SPEC-0089": "94e3653f8ea591350ea6be1a626099f8fa74737613e8d27c58b4869b11def23f",
+    "GITVIEW-SPEC-0093": "d53e62f97fcaebe6d934b9b73acebc0cb7c7bf6e89ea8459c2bd6c9cafdc0594",
+    "GITVIEW-SPEC-0099": "1baef15696f195e7b853d9524a448cb336be4d4a4d4b57f17b6da71551b2bbff",
+    "GITVIEW-SPEC-0102": "27982fe7601e3e0dbb23e97be7edc647c6c0fde1b74d47deb940a1522b0a0a91",
+    "GITVIEW-SPEC-0105": "1fe12a30347fef0d403093124d8a5a645e8e9a70531cf19e458b08003794b229",
+    "GITVIEW-SPEC-0108": "14193e9824aaa38a62112b42472578973a808e37ed41cbfc99d1777f052c84b6",
+    "GITVIEW-SPEC-0110": "9c3dc5864ebc51167dc45e6f43f09f10b338148f814f92af64915a209daf9160",
+    "GITVIEW-SPEC-0112": "3857caea9efc16403bdc332b2e28cdef00850aed4a1c3b1a2638089720e21b7a"
+  },
+  "scenario_count": 76,
+  "journeys": [
+    {
+      "journey": "setup",
+      "scenario": "first_setup_partial_github_installation",
+      "reachable_paths": {
+        "GITVIEW-SPEC-0099": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0099"
+        ],
+        "GITVIEW-SPEC-0108": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0108"
+        ],
+        "GITVIEW-SPEC-0045": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0045"
+        ]
+      }
+    },
+    {
+      "journey": "offline",
+      "scenario": "confirmed_setup_to_offline_work",
+      "reachable_paths": {
+        "GITVIEW-SPEC-0036": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0036"
+        ],
+        "GITVIEW-SPEC-0048": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0048"
+        ],
+        "GITVIEW-SPEC-0105": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0108",
+          "GITVIEW-SPEC-0105"
+        ]
+      }
+    },
+    {
+      "journey": "today",
+      "scenario": "today_typed_decision_to_overview",
+      "reachable_paths": {
+        "GITVIEW-SPEC-0110": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0110"
+        ],
+        "GITVIEW-SPEC-0102": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0102"
+        ],
+        "GITVIEW-SPEC-0089": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0089"
+        ]
+      }
+    },
+    {
+      "journey": "preview",
+      "scenario": "preview_reopened_while_old_request_finishes",
+      "reachable_paths": {
+        "GITVIEW-SPEC-0093": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0093"
+        ],
+        "GITVIEW-SPEC-0075": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0075"
+        ],
+        "GITVIEW-SPEC-0033": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0033"
+        ]
+      }
+    },
+    {
+      "journey": "access",
+      "scenario": "identity_changes_during_inspection_and_refresh",
+      "reachable_paths": {
+        "GITVIEW-SPEC-0036": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0036"
+        ],
+        "GITVIEW-SPEC-0085": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0085"
+        ],
+        "GITVIEW-SPEC-0112": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0093",
+          "GITVIEW-SPEC-0112"
+        ]
+      }
+    },
+    {
+      "journey": "history",
+      "scenario": "late_history_for_former_members",
+      "reachable_paths": {
+        "GITVIEW-SPEC-0064": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0066",
+          "GITVIEW-SPEC-0064"
+        ],
+        "GITVIEW-SPEC-0065": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0066",
+          "GITVIEW-SPEC-0065"
+        ],
+        "GITVIEW-SPEC-0068": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0109",
+          "GITVIEW-SPEC-0068"
+        ]
+      }
+    },
+    {
+      "journey": "share",
+      "scenario": "stale_source_link_and_later_denial",
+      "reachable_paths": {
+        "GITVIEW-SPEC-0033": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0033"
+        ],
+        "GITVIEW-SPEC-0036": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0036"
+        ],
+        "GITVIEW-SPEC-0112": [
+          "GITVIEW-SPEC-0043",
+          "GITVIEW-SPEC-0093",
+          "GITVIEW-SPEC-0112"
+        ]
+      }
+    }
+  ],
+  "ontology": {
+    "runtime": "3593bd75",
+    "outcome": "checked",
+    "summary": {
+      "binding_index": {
+        "spec_count": 1,
+        "accepted_binding_count": 5,
+        "relation_candidate_count": 0,
+        "gap_count": 0,
+        "next_gap": "review_legacy_spec_ontology_bindings"
+      },
+      "validation_report": {
+        "spec_count": 1,
+        "finding_count": 0,
+        "warning_count": 0,
+        "passed_check_count": 0,
+        "next_gap": "review_spec_ontology_validation_findings"
+      }
+    },
+    "context_revision": "sha256:802242a9ca08f9aca0a49768a7de0c8ac9d618878c93bdde3ed79c0f333304d1",
+    "compiler_provenance": "not_verified",
+    "semantic_approval": "not_established",
+    "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-journey-audit-khab5jd3"
+  }
+}

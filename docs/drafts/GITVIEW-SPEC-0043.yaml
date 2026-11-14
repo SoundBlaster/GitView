@@ -67,6 +67,7 @@ depends_on:
 - GITVIEW-SPEC-0102
 - GITVIEW-SPEC-0108
 - GITVIEW-SPEC-0109
+- GITVIEW-SPEC-0110
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -92,6 +93,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    today_typed_decision_to_overview:
+      given: In a Project-wide Today selection, a permitted identified PR is confirmed merged today but its current CI is unknown; the operator has activated a failed-CI filter and another Repository's work population is not fully observed.
+      when: The caller evaluates the normalized PR under 0110 and renders the filtered Project collection.
+      then: The PR is an uncertain candidate rather than a confirmed match or exclusion, the unobserved population remains an independent coverage limitation, and the overview does not claim an exact zero or a complete failed-CI count. A top-level rule unexpectedly returning no result is an integration limitation rather than that domain uncertainty.
     source_revoked_between_admission_and_save:
       given: A Repository selection is locally admitted under source-supported access for account A, and GitHub revokes access before local save without GitView yet observing the revocation.
       when: The Project save succeeds and an applicable denial is observed afterward.
