@@ -203,6 +203,13 @@ pending-состояния. Она не проверяет атомарност�
 без findings и gaps. Две авторские модели 0052 повторены с новой SHA-256;
 они не моделируют batch record или cancellation и не доказывают persistence.
 
+Отдельная [модель отмены](evidence/autonomous-goal-batch-cancellation-model-20261114.json)
+проверила три возможных порядка одного worker и cancellation и выявила один
+контрпример наивного повторного использования старого чтения. Guarded вариант
+предполагает атомарную проверку при admission; это не доказательство реальной
+storage implementation. Обновлённый 0045 прошёл [проверку словаря](evidence/autonomous-goal-ontology-check-cancellation-20261114.json)
+без findings и gaps; модель не проверяет crash или нескольких workers.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.

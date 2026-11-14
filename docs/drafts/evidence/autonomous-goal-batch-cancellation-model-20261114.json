@@ -1,0 +1,18 @@
+{
+  "artifact_kind": "gitview_batch_cancellation_admission_model",
+  "spec": "GITVIEW-SPEC-0045",
+  "spec_sha256": "02fd1ca45716a14d7a58a134ef1890732f0748689ccd00f56ad8f9b5a8c59d20",
+  "schedules_examined": 3,
+  "naive_post_cancellation_admission_witnesses": [
+    [
+      "worker.read",
+      "cancel.commit",
+      "worker.admit"
+    ]
+  ],
+  "guarded_admissions_before_cancellation": 1,
+  "guarded_rejections_after_cancellation": 2,
+  "assumptions": "One worker, one cancellation and a pre-existing durable batch. In the guarded abstraction, cancellation and admission are totally ordered and the admission guard reads the cancellation state atomically.",
+  "limitations": "Author-built finite model, not a proof of a database or implementation. It does not model persistence failure, partial acknowledgement, multiple workers, entry completion, recovery, source access or real process termination.",
+  "application_scenarios_executed": false
+}
