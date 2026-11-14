@@ -35,6 +35,7 @@ specification:
     scope_and_route: Project counts in 0057 count distinct open PRs for each named attention condition. A destination opened from one of those counts retains its originating Project, open lifecycle, named predicate, applicable time and source scope. A thread-count origin can open distinct affected PRs without asserting equal numbers of threads and cards. Explicitly changing a filter is distinct from silently changing the origin condition.
     uncertainty: Each predicate uses its own identity, access, source and time evidence. An incomplete request list, unavailable assessment or incomplete thread collection is not a confirmed negative. Known positive observations may be shown with incomplete coverage; stale or differently timed inputs are not represented as one simultaneous current review state without evidence under 0044 and 0046.
     compact: A compact card or preview can prioritize a subset of the review facts but provides an accessible non-color route to the available separate signals and their limitations without requiring individual thread content. Zero unresolved threads or no outstanding reviewer is not rendered as approval or completed review by itself. Exact glyphs and layout remain open.
+    compact_badge_proposal: As an agent-authored interpretation of the owner's eye, check and warning ideas, a review-attention mark can indicate a supported changes-requested assessment or at least one confirmed unresolved thread, and a review-request mark can indicate a supported outstanding request. If both are present, a compact primary mark can prioritize attention, but the independent request remains discoverable. A positive approved-and-clear mark requires an applicable source approval, sufficiently complete evidence of zero unresolved review threads and no outstanding review request in the stated context; if any prerequisite is unknown, do not infer this combined mark. It describes those review facts only, not CI success or merge readiness. Platform symbols, prioritization and overlap must be verified in the real UI.
     source_boundary: GitHub documents separate review requests, current review decision and review-thread connections. This motivates separate facts but does not prove a particular query, permission, availability, freshness or equivalence to the GitHub interface. GitView remains read-only and does not resolve threads, submit reviews or change source state.
     provenance: Review attention and counters were selected by the owner; precise predicates, uncertainty and routing here are agent-authored refinements.
   scenarios:
@@ -46,6 +47,14 @@ specification:
       given: An open PR has a current changes-requested assessment and a complete observation of zero unresolved threads.
       when: Project and PR review signals are displayed.
       then: It contributes to the changes-requested PR count but not the unresolved-thread count, with both facts separately identifiable.
+    approved_unknown_threads:
+      given: An applicable review assessment reports approval but the review-thread collection is incomplete.
+      when: The compact review mark is selected.
+      then: The approval remains independently available but the app does not assert the combined approved-and-clear mark or a zero unresolved-thread count.
+    requested_and_attention:
+      given: An open PR has an outstanding review request and a confirmed unresolved thread in their own applicable contexts.
+      when: Its compact review signal is displayed.
+      then: Attention can be the primary mark, while the outstanding request remains separately discoverable and neither fact is rewritten as an approval.
     thread_without_changes:
       given: An open PR has two confirmed unresolved review threads and no source assessment establishing changes requested.
       when: A thread-count signal is opened.
