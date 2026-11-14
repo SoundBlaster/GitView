@@ -17,6 +17,7 @@ sources:
   autonomous_refinement: conversation:gitview/excerpt-69-reply
 acceptance:
 - A multi-repository Project exposes its members and a route to each member's PR and Issue objects.
+- A multi-repository Project also offers a Project-wide work collection without requiring a signal-specific filter.
 - A single-repository Project reaches its work without a redundant repository step; Project and Repository
   remain distinct.
 - A Project signal opens matching objects across its member repositories and identifies their source repositories.
@@ -43,6 +44,7 @@ specification:
       not organization or the current owner and name.
     multiple: Offer the Project's repositories and a route to the PR and Issue collection of each member.
       Repositories from different organizations remain in the same Project.
+    all_members: Offer an explicitly identifiable Project-wide work collection across its confirmed current members independently of a signal shortcut. Its initial Today selection and lifecycle defaults follow 0074 and 0007; an unobserved member makes the applicable coverage incomplete rather than empty.
     single: Skip a redundant intermediate repository screen while retaining Project and Repository as
       separate identities and retaining sufficient source context.
     signal_route: A Project signal opens matching objects across its member repositories. The active signal

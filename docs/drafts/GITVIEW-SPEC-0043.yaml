@@ -83,6 +83,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    complete_multi_repository_today_journey:
+      given: Project P has two confirmed Repositories with 100 distinct permitted open PRs in total, and relevant Today, lifecycle and identity coverage is sufficient.
+      when: The operator enters P's all-members Today work collection, 95 PRs merge today, then the operator previews and opens one of those PRs and returns without applying a lifecycle exclusion.
+      then: The selection still contains the same 100 PRs subject to the stated observations, the 95 merged PRs retain their distinct identities and current source states, the opened PR retains its Repository and Project context, and return preserves the collection's valid scope, filters, density and identity-based position.
     selected_fields_after_compact_preview:
       given: A permitted PR preview omits its available requested reviewers and an Issue preview omits its available assignees, milestone and related-work facts because of space.
       when: The operator opens each same object through an accessible route.

@@ -27,6 +27,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Ordinary Project entry has a defined route for one or several confirmed member Repositories without treating either a GitHub organization or a density change as a Project transition.
+- A multi-member Project offers a reachable Project-wide work collection as well as each individual Repository route.
 - Within an overview, changing density preserves the selected scope and objects except for independent data or membership changes.
 - A Project signal can open its corresponding cross-repository work selection without traversing an unrelated Repository screen.
 - Returning follows the actual originating route and restores its valid context rather than inventing intermediate screens or switching Project identities.
@@ -42,7 +43,8 @@ specification:
   contract:
     dimensions: A navigation scope identifies which Projects, Repositories or work objects are being surveyed; density controls presentation inside the current overview. Pinching within the current overview changes density and detail rather than silently selecting a Project, Repository or object. Exact visual continuity and whether a separately identifiable future gesture can enter a scope remain open.
     portfolio: The initial Projects overview presents saved Projects according to 0047 and 0072. Explicitly opening one Project selects that identity; a source signal can instead open its corresponding work selection as described below. The detail available in a Project cell may increase with density without changing its membership or creating a new scope.
-    multiple_members: As an agent-authored initial route, ordinary entry to a Project whose confirmed saved membership contains multiple Repositories presents that Project's member Repository overview, with permitted names and available summaries. Each member offers a route to its PR and Issue work; a Project-wide work selection may also be offered when its scope is identifiable. Different GitHub organizations are source metadata, not alternate Project identities.
+    multiple_members: As an agent-authored initial route, ordinary entry to a Project whose confirmed saved membership contains multiple Repositories presents that Project's member Repository overview, with permitted names and available summaries. Each member offers a route to its PR and Issue work, and an explicitly identifiable Project-wide work route covers all confirmed current members without requiring the operator to choose an attention signal. Different GitHub organizations are source metadata, not alternate Project identities.
+    initial_work: As an agent-authored default for a newly opened ordinary Project-wide or explicitly selected Repository work context, show Today under 0027 with all applicable lifecycle states included and no implicit attention filter. An explicit signal or historical route retains its own condition and period under 0092 and 0056 instead of being converted to Today. An in-session return restores its actual prior context under 0024 rather than resetting it to this default.
     single_member: Ordinary entry to a Project with one confirmed member reaches its Project-wide work collection directly without requiring a second equivalent Project-to-Repository screen. Project-wide intent remains distinct from a Repository scope explicitly selected by the operator; 0091 refines behavior if membership later changes. The Project and Repository remain separately identifiable where permitted, and the source context of each object is retained.
     uncertain_membership: Choose the one-member shortcut or multi-member representation only when the applicable saved membership is established. An unavailable or inconsistent configuration cannot prove a Project has one or zero members. Surface local recovery under 0023, preserve known permitted context and do not silently discard or substitute a member. An unobserved member's work remains unknown under 0047 rather than absent.
     repository_work: Explicitly opening a member Repository's work retains the enclosing Project and the selected source Repository. Changing its density does not widen to all Project members or narrow the active filters, period or object types. A Repository shared by another Project is not silently relabeled as originating there.
@@ -53,6 +55,14 @@ specification:
     accessibility: Scope entry, return and density change have distinguishable accessible paths under 0032 and 0073. Non-color identity and state, Dynamic Type and Reduce Motion remain applicable at every level; physical gestures and animation are not the only way to operate the app.
     provenance: Owner discussion establishes the density idea, membership and shortcut goals. The multi-member initial view and route-specific return behavior are agent-authored working proposals; existing prototypes demonstrate a single-member Project only.
   scenarios:
+    all_work_for_multiple_repositories:
+      given: Project P has confirmed members A and B and their permitted work observations; B belongs to another organization.
+      when: The operator opens the Project-wide work route from P without choosing a signal.
+      then: Today uses the confirmed A and B Project scope, includes applicable known open and same-day completed work without implicit lifecycle exclusions, and identifies the source Repository of each object.
+    signal_does_not_become_today:
+      given: An operator opens a historical Project closure outcome for a fixed period from P.
+      when: The work collection appears.
+      then: The explicit historical event condition and period remain active under 0056 rather than being replaced by the ordinary-entry Today default.
     multi_repository_entry:
       given: Project P has confirmed members A and B from different organizations and B's work has never been observed.
       when: The operator opens P from the Projects overview.
