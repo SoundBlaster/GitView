@@ -79,6 +79,10 @@ specification:
       given: One accepted permitted observation is submitted for history retention; the write may have committed, but the acknowledgement is lost before restart.
       when: Recovery finds enough durable evidence that the same attempt committed and its retry is processed.
       then: The result represents that one observation with its original source and time, without an extra sample or event; a later separately initiated source observation remains distinguishable.
+    later_independent_observation_during_recovery:
+      given: The retention outcome of one accepted observation is indeterminate and a separately initiated permitted source observation later reports the same numeric value.
+      when: The new observation is retained under its own operation and the earlier operation is subsequently reconciled.
+      then: Each supported observation keeps its own source and retention context, the uncertain first write is not counted twice on replay, and equality of values does not silently suppress the new observation.
     retention_outcome_unreadable:
       given: One history-retention attempt may have committed, but recovery cannot read enough evidence to determine its outcome.
       when: The application restarts or retries the operation.
