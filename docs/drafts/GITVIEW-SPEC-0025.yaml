@@ -17,7 +17,8 @@ acceptance:
 - Saved Projects have stable local identities, names and at least one repository member.
 - A Repository may participate in several Projects and an edit to one membership does not mutate other Projects or GitHub.
 - Default Project creation is idempotent for an existing default association and deletion does not silently remove the repository or its other memberships.
-- Cancelling a project edit or an invalid attempt to remove the final member preserves the last saved Project.
+- Cancelling an unsubmitted project edit or an invalid attempt to remove the final member preserves the last saved Project.
+- An interrupted edit is reconciled from durable configuration without presenting an unverified mixture of old and new membership or a dangling default association.
 specification:
   objective: Specify creation, editing and removal of local Projects and the default association used by setup.
   ontology_refs:
@@ -28,10 +29,12 @@ specification:
     identity: A saved Project has a stable local identifier independent of its name and repository addresses. Rename and transfer of a confirmed same Repository do not change Project identity or membership.
     default_association: A default association identifies the locally created default Project for one source Repository, separately from an arbitrary Project that happens to contain the same Repository. It is project configuration for idempotent setup, not a new ontology entity. For an existing association, confirming the Repository again reuses the same Project. Other existing Projects containing that Repository do not become the default implicitly.
     creation: Confirmation of one or more selected accessible Repositories establishes a separate single-member default Project for each one lacking a default association. An existing association is reused. The initial name is the observed repository name; subsequent source renames do not automatically rename Projects.
-    editing: The operator can change a Project name or its repository membership. Edits are pending until saved; cancellation preserves the last saved state. A saved Project must have a nonempty name and at least one member. An attempted save with no members or an empty name is rejected and does not modify the saved Project.
+    editing: The operator can change a Project name or its repository membership. Edits are pending until saved; cancellation before submission preserves the last saved state. Cancelling an already submitted write does not prove rollback and its outcome must be reconciled. A saved Project must have a nonempty name and at least one member. An attempted save with no members or an empty name is rejected and does not modify the saved Project.
     edited_default: Editing a default Project's name or adding members does not change its local identity or its default association, provided the associated Repository remains a member. Removing the associated Repository is allowed only if another member remains; when that edit is saved, remove the default association while preserving the Project and its remaining members. Rediscovery alone does not create a replacement; a later explicit setup confirmation can create a new default Project for the formerly associated Repository.
     removal: Explicit removal of a local Project deletes its local configuration and its default association if any, but does not remove the Repository from GitHub, erase observations needed by other Projects, or change other memberships. After deletion, a later explicit setup confirmation may create a new default Project with a new local identity; merely rediscovering the repository does not create one.
-    persistence_failure: A failed save or delete must not report success. Previously saved data and unrelated memberships remain intact; retry must not create duplicate default associations. How a partially completed batch is reported follows 0022.
+    edit_visibility: For a single Project edit, durable readers see either the previously saved valid configuration or the fully saved valid new configuration, including removal of a default association when its Repository leaves the Project. They must not observe a saved association pointing to a Project that no longer contains its Repository. This observable invariant does not prescribe a storage mechanism or imply atomicity across separate Project edits or setup batches.
+    persistence_failure: A save or delete confirmed not to have committed must not report success and preserves the previously saved configuration. If a write may have committed but its outcome is unknown, do not assert either success or rollback merely from the missing acknowledgement. Unrelated Projects and memberships remain intact; retries must not create duplicate default associations. How a partially completed setup batch is reported follows 0045.
+    interrupted_edit: After interruption, read and reconcile the durable Project configuration before claiming which membership is saved. If a complete valid new configuration is confirmed, use it; if the prior configuration is confirmed and no indeterminate write can still commit, retain it. If the local read is unavailable, inconsistent or cannot resolve a pending write, report the Project configuration as uncertain and offer recovery; do not invent a complete old or new aggregate. The policy for preserving an unsaved editing draft across process termination remains open and does not make that draft saved.
     scope: Saved Projects contain only GitHub-managed Repositories in the current product scope. Temporary offline discovery or source rename is not a command to change membership. Access restrictions follow 0019.
     provenance: These detailed lifecycle and default-association rules are agent-authored proposals under autonomous refinement, not independently approved owner decisions.
   scenarios:
@@ -59,6 +62,15 @@ specification:
       given: An existing default association for R points to Project P and R also belongs to custom Project Q.
       when: The operator reconfirms R in setup.
       then: P is reused and Q is unchanged.
+    edit_acknowledgement_lost:
+      given: Default Project P contains R and S, and removing R and its association is durably saved before its acknowledgement is lost.
+      when: The app restarts and successfully reads the complete valid configuration.
+      then: P still contains S, its association to R is absent, and the app does not restore R to P or claim the edit failed solely because the acknowledgement was lost.
+    edit_outcome_unknown:
+      given: A membership edit may have committed before interruption but durable configuration cannot currently be read.
+      when: The Project overview is restored.
+      then: The saved membership and its aggregates are uncertain rather than asserted to equal either the pre-edit or intended set; unrelated readable Projects remain available.
   unresolved:
   - The edited-default disassociation and explicit recreation policy is an agent-authored choice and needs domain review.
   - User-facing deletion confirmation and the exact policy for data no longer referenced by any Project require storage and UX specifications.
+  - How to reconcile overlapping edits and preserve or discard an unsaved editing draft across process termination requires a separate concurrency and interaction decision.

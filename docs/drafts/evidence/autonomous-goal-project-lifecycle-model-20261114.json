@@ -1,7 +1,7 @@
 {
   "artifact_kind": "gitview_project_lifecycle_finite_model",
   "specifications": {
-    "GITVIEW-SPEC-0025": "1b887586601d461cf5ebc635bf687ade8716b516d1397ca77c30846189b08d7f",
+    "GITVIEW-SPEC-0025": "0507ba94057e9820ce5c053fcf1be0a6dc55a40d0dbd43e572917be1771e5c53",
     "GITVIEW-SPEC-0045": "02fd1ca45716a14d7a58a134ef1890732f0748689ccd00f56ad8f9b5a8c59d20"
   },
   "bounded_domain": {

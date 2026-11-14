@@ -93,6 +93,10 @@ specification:
       given: Project P contains A and B, Project Q also contains B, and P has a failed-CI filter and an in-flight refresh for A and B; C is unobserved.
       when: The operator saves an edit replacing B with C in P and the original refresh completes without covering C.
       then: P retains the filter but evaluates A and C with incomplete coverage; B remains in Q and its observations are not erased, and the result for A and B is not described as a complete refresh or count for P's new membership.
+    restart_after_membership_edit:
+      given: P's membership edit from A and B to A and C may have committed, an old A and B summary exists, and the process stops before reporting the save outcome.
+      when: A new session cannot yet read P's durable configuration.
+      then: The overview identifies P's saved scope as uncertain and does not present the old summary as a complete current Project count; once a valid saved configuration is confirmed, coverage is evaluated for that membership under 0046 and access policy.
     partial_signal_navigation:
       given: A Project has an observed failed check on one identified PR and another PR has unknown checks, with incomplete Project coverage.
       when: The operator opens the failed-CI signal.
