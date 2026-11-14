@@ -77,6 +77,10 @@ specification:
       given: A same-account reconnect follows denial of private PR and Issue data, and a new applicable response returns PR 42's title successfully while the Issue field fails.
       when: GitView applies the response under the current restriction and ordering context.
       then: The supported PR title can be shown as newly observed; Issue data and unrevalidated older PR facts remain restricted or unknown, and the failure is not reported as zero Issues.
+    project_summary_after_metadata_recovery:
+      given: A Project retains members A and B; B was restricted and a post-restriction same-account response supports only B's Repository metadata, while A's work data remains independently permitted.
+      when: The app projects the Project summary and opens its work scope.
+      then: B's supported metadata can be eligible, but B's previously restricted work and derived historical aggregates do not become current or visible solely from that response; A's evidence keeps its own time and Project-wide coverage reflects the unresolved B categories.
     empty_after_denial:
       given: After access restriction a new applicable, sufficiently complete source observation establishes that the current Issue collection for R is empty.
       when: GitView shows the current Issue summary.
