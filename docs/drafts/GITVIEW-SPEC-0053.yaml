@@ -30,6 +30,7 @@ specification:
     comparable: A conflict requires values for the same confirmed source object, field and compatible scope. Different Repository identities, object types, time windows or semantically different metrics are not silently merged merely because their names or displayed numbers coincide.
     ordered: When reliable source evidence establishes that one observed value is older than another for the same fact and source state, keep the confirmed newer accepted value. A request's start or completion order alone is not that evidence.
     unordered: If incompatible values cannot be ordered, the affected fact remains uncertain. Preserve enough provenance to report that uncertainty and avoid claiming a coherent newer complete observation for its scope. A previously accepted permitted value may remain visible as last known with its own time and a conflict or incomplete indication, but is not silently labeled current or successful.
+    retained_conflict_evidence: Until a conflict is legitimately resolved, retain the evidence needed to identify the affected fact and scope, establish that competing observations remain unresolved, and assess whether a proposed resolution supersedes all relevant competitors. If this evidence is incomplete or lost, retain the affected fact as uncertain and do not claim resolution. The representation and whether individual private values need to be retained are not prescribed here.
     no_baseline: If no previously accepted value is available and the competing values cannot be ordered, the fact is unknown or conflicted rather than invented from either arrival order. This does not require displaying restricted source contents.
     resolution: A later observation may resolve the conflict only when source evidence or a separately specified rule establishes a value that supersedes the competing observations for the relevant fact and scope. If ordering remains unprovable, retain the uncertainty; do not erase it merely because another request completed.
     isolation: A conflict for PR state does not invalidate an independently observed Issue value or modify Project membership. Other successful scopes keep their own times and coverage under 0044.
@@ -52,6 +53,10 @@ specification:
       given: Conflicting observations concern a previously permitted private Repository.
       when: Access is explicitly denied before resolution.
       then: Restricted private values and derived details remain hidden and the access problem is identifiable.
+    incomplete_resolution_evidence:
+      given: Two competing PR state observations remain unordered and the evidence required to compare one competitor is unavailable.
+      when: A subsequent observation is newer than the other competitor but cannot be compared to the unavailable one.
+      then: The fact remains uncertain; success of the later request alone cannot establish that it supersedes both observations.
   unresolved:
   - Source-specific evidence that establishes a comparable field revision or ordering across partial responses.
   - Exact user-facing conflict representation, persistence of candidate values and resolution after a source cannot supply ordering evidence.

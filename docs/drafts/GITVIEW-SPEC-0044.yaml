@@ -31,6 +31,7 @@ specification:
     confirmed_empty: A known empty result requires a successful observation sufficient for the exact Repository, object category and time or filter scope being described. Complete coverage of one scope does not establish emptiness in another.
     partial: A successful subset can provide accepted facts and its own observation time while scope coverage remains partial. It must not replace the prior complete-observation timestamp with the subset's time or attribute that subset time to retained unobserved facts.
     failed_after_success: A failed refresh records its own failure and retains the preceding accepted data and successful time. A failure can coexist with previously complete or partial coverage; do not model failure as erasing the previous coverage history.
+    overlapping_attempts: For the same requested scope, distinguish in-flight attempts from terminal attempt outcomes. The most recently completed attempt is the terminal attempt with the latest completion time; an in-flight attempt does not erase an earlier failure. Completion order describes attempts only, not source revision order or coverage. If completion times cannot be ordered, retain the ambiguity instead of fabricating an order. Display of a terminal success does not imply that unresolved conflicts or incomplete coverage have been repaired.
     access: Explicit denial or disconnect can restrict display of private cached data independently of whether an earlier observation succeeded. A temporary network failure alone does not change previously permitted data into a confirmed denial. Actual content display follows 0036.
     summary: A Project or portfolio covering multiple scopes may report a summary status, but the operator can identify affected scopes and unequal freshness or coverage. It cannot declare all inputs current solely because one scope refreshed.
     ordering: Conflicting or concurrent results follow 0037; a request completion timestamp alone is not a source freshness ordering.
@@ -52,6 +53,11 @@ specification:
       given: A private Repository has an earlier fully covered PR observation.
       when: Source access is explicitly denied.
       then: The prior observation remains stored but restricted from display; the interface identifies the access problem without presenting an empty PR list.
+    overlapping_failure_and_success:
+      given: Two refresh attempts cover the same PR scope, A and B; A starts first and B fails while A is still in flight.
+      when: A later completes successfully with only partial data.
+      then: Before A finishes, B's failure and A's in-flight state are distinguishable. After A finishes, its terminal outcome is later in completion order, while incomplete coverage and any unresolved conflicting source values remain independently visible; this ordering says nothing about which source values are newer.
   unresolved:
   - Exact scope representation and completeness proof for individual source endpoints.
   - Freshness thresholds, per-field granularity, UI representation and durable storage mechanism.
+  - Retention and user-facing presentation of older attempt outcomes when a subsequent attempt completes; timestamps with insufficient precision cannot establish their order.
