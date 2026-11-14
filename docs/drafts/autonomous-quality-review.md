@@ -229,6 +229,13 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+В 0039 и 0041 добавлены документированные ограничения GitHub: имя ref может
+сохраниться после удаления ветки; PR commits connection имеет смысл
+head-versus-base; `subIssuesSummary.completed` без дополнительного evidence
+не подменяет все закрытые direct sub-issues. [Три кандидата](evidence/autonomous-goal-ontology-check-source-fields-20261114.json)
+прошли проверки без findings, gaps и warnings. Это сопоставление документации,
+а не проверенный query, permission set или живая интеграция.
+
 [0109](GITVIEW-SPEC-0109.yaml) выбирает iPhone и iOS 26+ как авторскую рабочую
 платформенную границу, системные controls и альтернативы жестам; system context
 menu остаётся кандидатом до нативной проверки. Локально прочитаны версии Xcode

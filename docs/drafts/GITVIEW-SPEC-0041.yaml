@@ -16,6 +16,7 @@ depends_on:
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0008.yaml
   selected_fields: docs/drafts/pull-request-ontology-options.md
+  github_graphql_pull_request: https://docs.github.com/en/graphql/reference/pulls
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - A PR overview retains the exact source Repository context and selected available source facts.
@@ -36,11 +37,13 @@ specification:
     context: Preserve available target Repository, source and target branches, observed revision, author, requested reviewers and linked Issues. A source author or requested reviewer is not automatically the GitView User or an identified coding agent. A link to an Issue alone does not establish a motive.
     inspect_selected: Make the owner's selected permitted PR facts inspectable within the PR overview, without requiring all of them to fit at once. These include source ID and repository-local number, title, original description, available source link, lifecycle, draft, labels, target Repository, source and target branches, observed head revision, author, requested reviewers and linked Issues; review assessment and total and unresolved thread counters; current CI category and total counters; additions, deletions, changed files and commits; and creation, update, closure or merge times and relevant source observation context. An expandable section or other accessible route in the overview may expose less prominent facts. A source-link action follows 0033; sending the operator to GitHub is not the sole way to inspect an already available selected fact in GitView.
     context_availability: A missing or inaccessible source branch, revision, reviewer, linked Issue or actor has its own source and access status. A branch name is not a stable Repository identity, and an inaccessible fork or deleted branch is not replaced by a same-named branch. Do not infer a current revision, reviewer assignment, absence or participant identity from a title, author display name or another independently refreshed field. A known permitted subset retains its own coverage and time; restricted identities and revealing derived data follow the access policy.
+    branch_name_evidence: GitHub documents that a PR's GraphQL head and base ref names may remain available after the corresponding ref is deleted. If an applicable response supplies such a name, it may be shown as the observed PR branch name with its source context, but its presence alone does not establish that the branch or fork still exists, is accessible or resolves to an available current revision. A missing or error-affected ref object is assessed independently; do not infer deletion solely from an unavailable object.
     linked_issue_meaning: When displaying a permitted linked Issue, preserve any separately supported source meaning such as an explicit closing connection or a mention. An unknown connection kind is not labeled as either; a link alone proves neither Issue completion nor an actor's motive. Opening an eligible target or source link retains its identity and origin under 0024 and 0033 and does not silently change Project membership.
     compact_and_bounds: Cell and static preview can show a subset under 0050 and 0093. Opening the same PR through an accessible route exposes the selected facts and their availability, without requiring diff, file or commit lists, check details, review-thread contents or an editing action. Source text remains the author's original under 0034; an abbreviated rendering offers access to the available original. Presenting a retained stale value does not make it a current observation.
     review: Present available aggregate review assessment and total and unresolved thread counters independently. Individual thread content is outside this overview. Lack of an available assessment differs from a known absence of reviews; the source must support either claim.
     checks: Show current-check counts under 0028. Do not equate those counts to a list of workflow runs, individual run details, past attempts or merge eligibility.
     change_counts: Show additions and deletions separately, along with changed-file and commit counts when observed. Unknown counts are not zero. These are measurements scoped to the observed PR state or revision; they do not include a diff, file browser or commit-by-commit view.
+    commit_count_source_candidate: GitHub describes the GraphQL PR commits connection as commits in the head branch absent from the base branch and exposes a connection totalCount. This is a possible source for a count with that stated meaning, not a count of every commit ever associated with the PR or proof of a chosen REST/GraphQL operation. Use it only when the response, identity, applicable source semantics and time or revision context are valid; an inaccessible or error-affected field remains unknown under 0044. Do not sum it with an independently enumerated subset or infer a commit list from a count.
     timestamps: Preserve available creation, update, closure or merge event times and source observation time as distinct values. A refresh of one scope does not update another scope's observation time.
     partial_fields: Apply 0044 per fact. A response with the PR's title or head revision does not by itself refresh omitted review, check, thread or change-count observations. A retained value remains tied to its own observation and applicable revision; if its relationship to the current revision or access cannot be established, expose that limitation rather than presenting it as a current success or zero.
     description: The selected authored Problem, Motivation, Expected outcome, Changes, Validation and References sections follow 0034. A validation statement is not proof of observed CI success.
@@ -54,6 +57,14 @@ specification:
       given: A PR has a known target branch and an unavailable source branch from a formerly accessible fork.
       when: Its context is inspected.
       then: The target remains available and the source branch is unavailable or retains its correctly attributed last-known status; a same-named local or unrelated source branch is not substituted.
+    name_after_ref_removed:
+      given: A source-confirmed PR observation supplies its head ref name but the corresponding ref object is unavailable and the response does not establish why.
+      when: Its branch context is displayed.
+      then: The observed name may remain available with its own context, while branch existence and accessibility remain unknown rather than being inferred from the name or the missing ref object.
+    commit_count_population:
+      given: A usable source observation supplies the documented total count for the PR commits connection at a supported context.
+      when: Its commit counter is displayed.
+      then: It retains the connection's head-versus-base meaning and is not described as a count of every historical commit ever associated with the PR or merged into the repository.
     separate_states:
       given: An open draft PR has a failed check and an unavailable review assessment.
       when: Its overview is displayed.

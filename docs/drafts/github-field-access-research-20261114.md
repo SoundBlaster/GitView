@@ -73,3 +73,21 @@ approval. [GitHub: GraphQL pull requests](https://docs.github.com/en/graphql/ref
 Отзыв review и применимость approval также зависят от изменений и настроек;
 это не выводится из количества открытых тредов. [GitHub: dismissing a review](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/dismissing-a-pull-request-review).
 Документация не заменяет проверку выбранного query и прав доступа.
+
+## Дополнение: имена refs и смысл агрегатов
+
+[GraphQL PullRequest](https://docs.github.com/en/graphql/reference/pulls)
+описывает `headRefName` и `baseRefName` как имена, которые могут сохраняться
+после удаления соответствующего ref. Имя поэтому не подтверждает текущую
+доступность ветки. Та же документация определяет `commits` как connection
+коммитов head, отсутствующих в base; его `totalCount` описывает этот набор,
+а не все когда-либо связанные с PR коммиты. Применимость к конкретной версии,
+контексту ответа и доступу ещё нужно подтвердить.
+
+[GraphQL Issue](https://docs.github.com/en/graphql/reference/issues) описывает
+в `subIssuesSummary` показатели `total` и `completed`. Названия документации
+сами не доказывают, что `completed` равен выбранному в GitView числу **всех
+закрытых** прямых sub-issues. Та же схема перечисляет `REOPENED` среди значений
+`IssueStateReason`; текущее значение не следует переносить на прежнее событие
+закрытия. Это документальные ограничения для кандидатов 0039 и 0041, не выбор
+конкретного query и не результат проверки данных пользователя.

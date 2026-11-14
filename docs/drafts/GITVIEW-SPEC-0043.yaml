@@ -92,6 +92,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    source_labels_do_not_imply_other_facts:
+      given: A source PR observation supplies a head ref name without confirming that the ref is still accessible, and a linked Issue has a sub-issue summary whose completed value is not established as equivalent to all closed children.
+      when: Their selected overview facts are displayed.
+      then: The PR name retains its own context without asserting branch availability, and the Issue's closed-child count remains unknown or independently established rather than silently taking the completed value.
     confirmed_setup_to_offline_work:
       given: Under a confirmed GitHub identity the operator explicitly selects eligible Repository R and its default Project is durably saved; its work has not yet been observed.
       when: The operator enters that Project and its first PR and Issue refresh fails while offline.
