@@ -1,0 +1,58 @@
+id: GITVIEW-SPEC-0033
+title: GitView - Open and share the original source
+kind: spec
+created_at: '2026-11-14T13:40:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0016
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0026
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0016.yaml
+  access: docs/drafts/GITVIEW-SPEC-0019.yaml
+  identity: docs/drafts/GITVIEW-SPEC-0002.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Opening or sharing an object uses the source link associated with that exact Repository, PR or Issue when available.
+- Missing or unverified source links do not silently navigate to a different source object.
+- Default sharing passes the source link through the platform sharing flow without automatically including private object contents or credentials.
+- A source link does not imply that a recipient has access or that an external application successfully opened it.
+specification:
+  objective: Preserve object identity and access boundaries when moving from a GitView overview to its source or sharing a link.
+  ontology_refs:
+  - gitview:User
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    link_identity: The selected source link belongs to the selected object and repository identity. Equal repository-local numbers in distinct repositories do not identify the same PR or Issue. Repository rename and transfer do not by themselves authorize substituting an unverified address.
+    open: When an eligible source link is available, provide an operation that requests opening it through the platform. A request to open is distinct from the recipient application successfully loading the object; a failure can be reported without changing stored GitHub data.
+    share: When an eligible source link is available, the default share payload contains that link only. The platform share flow allows the operator to choose a recipient or cancel; presenting the flow is not evidence of delivery, recipient access or source mutation.
+    unavailable: If no verified link for the selected object is available, identify the operation as unavailable rather than inventing a URL from a title, number or previous unrelated address. If a previously observed link may be stale, preserve its observation context rather than asserting that the destination is current.
+    access: Before exposing a link associated with restricted private cached content, apply the current access policy in 0019. A recipient's GitHub permissions determine access after sharing; a link is not a grant. Credentials must not be added to the share payload or diagnostics.
+    failure: Failure to open an external handler or a recipient's later access denial does not prove the object was deleted. The existing GitView context remains recoverable under 0024.
+    provenance: The owner requested source navigation and lightweight sharing. Link-only default and detailed failure rules are agent-authored proposals.
+  scenarios:
+    cross_repository:
+      given: Two repositories have Issues numbered 42 and each has its own observed source URL.
+      when: The operator opens or shares the second repository's Issue 42.
+      then: The URL passed to the platform belongs to that Issue and is not the first repository's URL.
+    missing:
+      given: A selected PR has no verified source URL.
+      when: The operator tries to open or share its source.
+      then: The operation is unavailable or reports why it cannot proceed and does not fabricate a URL.
+    private_share:
+      given: A private PR is currently permitted for display and its source URL is known.
+      when: The operator opens the platform sharing flow.
+      then: The default payload contains the link without automatically adding private text or credentials, and no delivery or access is asserted.
+    cancelled_share:
+      given: The platform sharing flow is visible for an Issue link.
+      when: The operator cancels it.
+      then: GitView remains recoverable at its prior context and does not record a successful delivery solely from presenting the flow.
+  unresolved:
+  - Source URL verification, stale links after rename or transfer and supported destinations require source and platform refinement.
+  - Optional payload beyond the source link remains a separate product and privacy decision.
