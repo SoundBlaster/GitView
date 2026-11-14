@@ -29,6 +29,7 @@ specification:
     unordered: If two overlapping results cannot be ordered for the same fact, retain enough previously accepted information to avoid silently asserting that either is newer. Mark the affected fact or scope uncertain or incomplete, and do not advance the last complete observation time as though a coherent newer full result were established. The exact conflict-resolution mechanism remains open.
     partial_scope: A result can improve the observed facts in a subset without proving the entire collection complete. Absence from a partial result does not delete other records; a complete observation time applies only to a sufficiently covered scope.
     denial_during_refresh: Apply current access restrictions before presenting response data. If explicit denial or disconnect was established after a request began, completion of that request alone does not restore authorization or unlock previously restricted private observations. A later authorized connection must re-establish the relevant source identity and Repository access under 0036.
+    identity_during_refresh: Bind a request and its observations to the source identity and access context under which they were initiated. If identity B becomes active before a request started under A completes, its response cannot be presented as an observation made under B or establish B's Repository access. Apply current access policy before any display, sharing or derived count; preserve any retained result only under its actual provenance and the applicable storage policy. Completion of that response does not itself establish current B coverage, even if both identities can access the same Repository. Whether the request is cancelled, retained or reconciled is a lower-level design decision.
     failure: An interrupted, cancelled or failed request does not manufacture a success time. Its visible failure or incomplete outcome is scoped separately from other successful observations.
     provenance: These concurrency and access-ordering guarantees are agent-authored refinements of the user's requirements for cached observations and visible refresh failure.
   scenarios:
@@ -48,6 +49,10 @@ specification:
       given: A PR refresh and an Issue refresh address distinct scopes for the same Repository.
       when: The Issue refresh succeeds and the PR refresh is interrupted.
       then: The Issue success is retained while the PR scope keeps its own prior observation time and incomplete outcome.
+    identity_changes_during_request:
+      given: A refresh of a private Repository starts under identity A; identity B becomes active before the response, with no confirmed access to that Repository.
+      when: The A response arrives.
+      then: Its private content is not displayed or counted for B, it does not establish B's access or current coverage, and it cannot erase the saved Project or membership.
   unresolved:
   - Concrete source freshness evidence, conflict storage and eventual reconciliation policy require source-specific design.
-  - Exact execution and cancellation semantics when account identity changes during a request require authorization design.
+  - Exact execution, cancellation and reconciliation mechanisms when account identity changes during a request require authorization design.

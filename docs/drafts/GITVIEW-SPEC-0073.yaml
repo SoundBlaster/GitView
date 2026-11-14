@@ -42,6 +42,7 @@ specification:
     active_interaction: Defer disruptive order or collection changes during an active pinch, scroll or discrete assistive interaction when a coherent deferred presentation is possible, while making the affected interval, incomplete data or pending update discoverable. An enabled assistive technology or stationary focus alone is not an indefinitely active interaction. Once the current interaction ends or is cancelled, reconcile the latest eligible selection without indefinite deferral. Deferred layout must not assert an obsolete match as current when its status is known to have changed. This does not delay restriction of private content and does not promise a precise animation or time limit.
     status_changes: Make a relevant failure, incomplete scope or changed Today period persistently discoverable in the current accessible context or its status route. A completed update is not proof of complete coverage. Avoid treating every changed cell as an urgent interruption; exact announcement timing, coalescing and focus movement must be evaluated on supported devices.
     access_change: When private source access is explicitly denied, remove affected restricted values from app-controlled accessible labels and pending app-controlled announcements as the restriction is applied, regardless of deferred ordering. Offer an accessible permitted context or access-recovery route. Information already announced or handed to the system cannot be recalled; actual interruption of platform speech is not assumed. Follow 0036 when reconnection later establishes access.
+    identity_change: When the active source identity changes, apply its current access policy to focused objects, app-controlled accessible labels and pending announcements before restoring or announcing them. An anchor retained for navigation is not evidence that a newly active identity may inspect the object. If it is not eligible, provide a permitted collection or recovery context without exposing the restricted identity or attributing its focus to a different object. This does not prescribe a platform speech-interruption mechanism.
     user_control: The operator can continue through permitted content, open a surviving object, reach status and filters, and leave the affected scope without relying solely on a gesture, color or timed announcement. These are user outcomes, not a mandate to create custom controls.
     provenance: This focus and update behavior is an agent-authored refinement of the owner's dense grid, navigation and Apple-style direction; it is not evidence of implemented accessibility support.
   scenarios:
@@ -65,6 +66,10 @@ specification:
       given: A refresh failure was visually indicated while an assistive user was inspecting another cell.
       when: The transient feedback has disappeared and the user later opens the status route.
       then: The affected scope, failure and applicable last successful observation remain discoverable without relying on the original cue.
+    focused_object_after_identity_change:
+      given: A private PR is focused under identity A and identity B becomes active without confirmed access to that Repository.
+      when: The collection or object route is restored for B.
+      then: Restricted app-controlled labels and pending announcements are not exposed, the old anchor is not announced as another object, and a permitted recovery context is reachable.
   unresolved:
   - Supported assistive technologies, focus APIs, announcement policy and timing require implementation-independent platform design and device evaluation.
   - The exact presentation and accessible grouping of uncertain candidates require UX validation.

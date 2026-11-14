@@ -14,6 +14,7 @@ depends_on:
 - GITVIEW-SPEC-0017
 - GITVIEW-SPEC-0019
 - GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0036
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0006.yaml
   filters: docs/drafts/GITVIEW-SPEC-0007.yaml
@@ -39,6 +40,7 @@ specification:
     deleted_project: When durable local configuration confirms that the originating Project was removed, do not restore its route as a valid Project or silently switch to another Project that shares a Repository. Identify the removed local scope and provide a route to the portfolio or another explicitly chosen valid scope. A pending or failed local configuration read does not prove removal and follows 0023 instead.
     open_object_after_scope_change: If an accessible PR or Issue overview or preview is already open when its originating Project is deleted or its Repository is removed from that Project, it may remain associated with that same object under current access policy. It must not be relabeled as belonging to another Project or silently navigate there. On return or dismissal, report the changed origin and offer an available route rather than restoring an invalid Project or Repository scope.
     unavailable: Temporary observation failure does not by itself prove the Project or Repository disappeared. Where access is explicitly denied, follow 0019's cache policy and provide an available route out without displaying restricted content.
+    identity_change: If the one active GitHub identity changes while a route is open or being restored, retain the local Project and explicit route intent where still valid, but evaluate each visible source fact and accessible object against the new identity and current Repository access under 0036. A route or saved anchor is not proof of authorization. Do not show previously restricted private details, a revealing object title or count, or silently substitute another object to preserve position. Where the original object cannot be displayed, offer an access-safe context or recovery route; the actual GitHub account-switching UI and cross-scene support are not selected by this rule.
     signal_entry: A signal-origin route identifies the signal's active selection; returning does not discard that selection without operator action. Editing or clearing filters follows 0007.
     zoom: A density change preserves the active context and uses the focused object as anchor when it remains available; any change of scope is explicit.
     launch: As an agent-authored initial default, a new cold app session opens the Projects overview; it does not automatically enter the last viewed private object or silently reapply its work filter. If iOS resumes a still-existing app session, preserve its valid navigation context where possible. A future user-controlled cross-launch restoration feature is outside this default and requires a separate decision.
@@ -65,6 +67,10 @@ specification:
       given: A previously observed selected Repository is temporarily offline.
       when: The operator returns to its work collection.
       then: The prior scope is preserved and observation failure is presented according to 0003 rather than asserting the repository was removed.
+    changed_identity_on_return:
+      given: A private PR from Repository R is open through Project P under GitHub identity A, and its details are restricted after identity B becomes active without confirmed R access.
+      when: The operator returns to the prior work collection.
+      then: P and its saved membership remain intact, but the restricted PR and revealing derived details are not exposed; the original anchor is not replaced and presented as the same PR, and an access-safe context or recovery route is available.
     cold_launch:
       given: An earlier app session ended while a filtered Project collection was open and Projects remain configured.
       when: A new cold app session starts.
@@ -87,5 +93,5 @@ specification:
       then: GitView starts at the beginning of the updated collection and reports its actual known, partial or empty state.
   unresolved:
   - Stable sort order for the collection is owned by 0007 and proposed in 0042; this fallback operates on the last known ordered collection. The ordering proposal still needs review.
-  - System lifecycle boundaries, multiple scenes and behavior for account changes require platform and access refinement; cold-launch overview is an agent-authored default, not an explicit owner selection.
+  - System lifecycle boundaries, multiple scenes and the account-changing UX require platform and access refinement; cold-launch overview is an agent-authored default, not an explicit owner selection.
   - Exact presentation and accessible focus after a deleted Project or temporarily unavailable local configuration require native UX evaluation.

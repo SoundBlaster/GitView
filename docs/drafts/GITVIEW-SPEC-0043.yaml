@@ -85,6 +85,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    identity_changes_during_inspection_and_refresh:
+      given: Project P contains private Repository R; identity A has a PR preview and an accessible focus open while a refresh under A is in flight. A different identity B becomes active without confirmed R access.
+      when: The old refresh completes and the operator dismisses the preview or returns to the Project collection.
+      then: A's response does not establish B's access or coverage; restricted app-controlled details, accessible labels, pending announcements and revealing counts are not exposed under B. P and its saved membership remain, the previous anchor is not relabeled as a different object and a permitted recovery context is reachable. Speech already delivered and content already handed to another app cannot be recalled.
     shared_history_clear_is_explicit:
       given: Projects P and Q both use historical evidence for the same Repository and retain their own local configurations.
       when: The operator opens the proposed all-local-history clear from a Project context, reviews its disclosed scope and confirms it successfully.
