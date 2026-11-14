@@ -1,0 +1,141 @@
+{
+  "artifact_kind": "gitview_goal_domain_vocabulary_check",
+  "runtime": "3593bd75",
+  "context": "ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml",
+  "compiler_sha256": "30dd324aa1f641e7274a49fd6f158cced5ed95d810b6b275353d3d10f19a27cb",
+  "compiler_provenance": "not_verified",
+  "workspace": "isolated TB5 clone, candidates copied to specs/nodes",
+  "check_scope": "domain_vocabulary",
+  "semantic_approval": "not_established",
+  "scenarios_executed": false,
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0022",
+      "sha256": "b429ded38959dbe4e7e2b5e906690e474053b738390bf981797235432ce7845f",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0023",
+      "sha256": "78736053be3923b9bb6580617dcecf2db89588dad9a16bfbb12fb50e54617932",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0024",
+      "sha256": "0bb2c9f109bdbf28ed69bc366b57efacbfc1b5e91693a37e57637324634f815e",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0025",
+      "sha256": "f178ee5b7e9946f69ca54a1c506dc9e4fee386d3a8971c2f7e28b8a62294f460",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0026",
+      "sha256": "f31cfd2884300aec6adae3b8ce3b5acb5da425b46aafb0e8c11a563cbd8da9f3",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0027",
+      "sha256": "81b25e0a54b3f378a2797e3fc37de9516e7602e9e7c17aeea67be382b3f1c3c0",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0028",
+      "sha256": "178d723fd019a7a3f390138fc5a1adf61a35ed44dd25aa0c2854b1a68339a689",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0029",
+      "sha256": "c451c23d9bfc4fb6d3fd5ae95c48dec80f3f6ac6e4c2a82d5f9555e29ea10e35",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0030",
+      "sha256": "f4d19e0cdd9b96ac8c5828ae57f74f3b08ced5f3551bc6f5082007eb15ffc6ee",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0031",
+      "sha256": "61e22768c8877ea3fa056ab0a77b3fb9511dee8d9b248d684369dd0c9aa79550",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0032",
+      "sha256": "f351f8561be66e763bf1a714e1eb8f7264ba1f1c11414034db76c028974de82e",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0033",
+      "sha256": "34f3efcc098e9562c2ab31938eb17e36591d8ca09f9e596af71d54b358fd13af",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0034",
+      "sha256": "95247c1bf0d0dd67400ad280fbf30bcb0100d527c733eb798a116f53a40cfa22",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0035",
+      "sha256": "d4cc72f6fea643dd01a36534a17c01dff5c5fa6d926db93dba3a94fa14fc8268",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0036",
+      "sha256": "a9ed3826cdd877d8be2ddfcd964cf332e00db2094e35a806afe589cd6a511aee",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0037",
+      "sha256": "8b404d26a5747a1d9c079a0c0e20b80d4ebb4bd5d81f7ddd19c2eb3fdca3feda",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    }
+  ]
+}
