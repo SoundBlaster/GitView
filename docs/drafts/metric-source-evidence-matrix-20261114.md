@@ -45,3 +45,7 @@ scope, identity, access, времени, predicate version и соответст
 ## Состояние и события review
 
 [GraphQL PullRequest](https://docs.github.com/en/graphql/reference/pulls#pullrequest) описывает `reviewDecision` как текущее состояние и отдельно перечисляет запросы и threads; [типы событий review](https://docs.github.com/en/graphql/reference/pulls#reviewrequestedevent) включают запрос, удаление запроса и dismiss. [REST review requests](https://docs.github.com/en/rest/pulls/review-requests#get-all-requested-reviewers-for-a-pull-request) указывает, что после отправки review человек больше не входит в текущий список requested reviewers. Вывод для GitView: событие не равно состоянию на произвольную прошлую дату и не подтверждает полноту Project; для реконструкции требуется отдельно обоснованная полнота baseline и переходов. Наличие конкретных событий, доступ и их полноценность для аккаунта не проверены.
+
+## Setup: отдельные области identity
+
+[GitHub App installations](https://docs.github.com/en/rest/apps/installations#list-app-installations-accessible-to-the-user-access-token) документирует user-token discovery установок и [repositories выбранной установки](https://docs.github.com/en/rest/apps/installations#list-repositories-accessible-to-the-user-access-token), для второго чтения указан `Metadata: read`. Рабочее предложение 0099 связывает результаты с подтверждённым пользователем и сохраняет типы user, installation и Repository ID отдельно. Это не утверждение полноты аккаунта, непрерывного доступа или доступности каждой категории данных.
