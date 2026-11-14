@@ -645,3 +645,11 @@ no-match в наблюдаемом локальном SpecificationCore. Ран�
 для 0021, 0040, 0079 и 0095 не нашла findings или gaps. Новый срез содержит
 95 кандидатов и 43 структурных листа с открытыми вопросами; это не оценка
 готовности к реализации или доказательство существования Swift modules.
+
+[Аудит архитектуры маршрута](architecture-journey-readiness-20261114.md) и
+кандидат 0096 предлагают route-level ownership, отдельно selection policy и
+refresh effects с типизированными границами и coverage. Нужные source, access,
+durable storage и package decisions остаются открытыми; тесты не выполнялись.
+[Проверка словаря](evidence/autonomous-goal-ontology-check-journey-architecture-20261114.json)
+для 0021, 0040, 0095 и 0096 не нашла findings или gaps; это не подтверждение
+реального DI, SpecificationCore, FSD dependency graph или готовности маршрута.

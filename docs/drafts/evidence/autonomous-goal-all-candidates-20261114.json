@@ -1239,6 +1239,19 @@
         "file_id_match"
       ],
       "next_action": "review_candidate"
+    },
+    {
+      "id": "GITVIEW-SPEC-0096",
+      "sha256": "e4857f37ac2ae7878618ec483fe1bdbf6763c44a6b21ef0f71e74313d9099b57",
+      "exit_code": 0,
+      "status": "checked",
+      "reported_sha256": "e4857f37ac2ae7878618ec483fe1bdbf6763c44a6b21ef0f71e74313d9099b57",
+      "checked": [
+        "yaml_mapping",
+        "spec_kind",
+        "file_id_match"
+      ],
+      "next_action": "review_candidate"
     }
   ],
   "errors": []
