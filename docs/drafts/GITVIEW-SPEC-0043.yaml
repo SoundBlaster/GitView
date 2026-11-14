@@ -90,6 +90,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    portfolio_return_with_partial_local_read:
+      given: The operator opened Project Q from a portfolio containing P and Q, and Q's local configuration cannot currently be verified while P is independently readable.
+      when: The operator returns to the portfolio.
+      then: P remains available where permitted, the incomplete local read is discoverable, and Q is neither declared deleted nor silently replaced by P as the originating Project.
     local_recovery_without_assumed_baseline:
       given: A Project's PR observations were once saved at T1, a T2 local write was interrupted, and restart cannot validate either observation while Project configuration is independently recoverable.
       when: The operator opens the Project overview.

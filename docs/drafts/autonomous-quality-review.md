@@ -229,6 +229,13 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+В 0024 и 0072 уточнено восстановление позиции при неполной work-коллекции или
+частичном чтении portfolio: недоступный anchor не считается удалённым, а новый
+явный выбор пользователя не отменяется поздним восстановлением. Сквозной
+сценарий добавлен в 0043; [три кандидата](evidence/autonomous-goal-ontology-check-portfolio-return-20261114.json)
+прошли проверки без findings, gaps и warnings. Реальная навигация и focus на
+устройстве пока не проверялись.
+
 [0108](GITVIEW-SPEC-0108.yaml) описывает FSD-композицию первого запуска,
 подключения и локального сохранения Projects. Раздельно представлены source
 identity, installation/grant, discovery, подтверждённый batch и durable
