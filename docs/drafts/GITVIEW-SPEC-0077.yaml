@@ -1,0 +1,69 @@
+id: GITVIEW-SPEC-0077
+title: GitView - Issue discussion counts and latest comment time
+kind: spec
+created_at: '2026-11-14T16:50:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0039
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0053
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0039.yaml
+  selected_fields: docs/drafts/issue-ontology-options.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Issue comment count, distinct discussion-participant count and latest comment time retain their own units, scope and observation context.
+- A missing or incomplete comment population, unavailable author identity or restricted evidence cannot silently become a complete zero or exact participant count.
+- A comment's creation time is distinct from Issue update time, observation time and a later comment edit.
+- Two comments by the same confirmed participant count as one participant, while unresolved identities are not silently merged by display name.
+- The Issue overview does not require showing individual comment text or identifying restricted participants to display a permitted aggregate.
+specification:
+  objective: Propose interpretable discussion metrics for the selected Issue overview without treating Issue comments as PR review threads or claiming a GitHub source mapping.
+  ontology_refs:
+  - gitview:Issue
+  - gitview:Repository
+  - gitview:Metric
+  contract:
+    population: As an agent-authored initial proposal, discussion metrics concern source Issue comments in the explicitly described Issue and source-access scope, not PR review threads, unrelated events or comments in linked objects. Current accessible source comments and historical comments are different populations; a retrieved current set must not be described as a complete historical record of deleted or hidden comments.
+    comment_count: Count distinct confirmed source comment identities in the stated current population, or accept a source-provided count only when its documented population and semantics match the stated metric. A source aggregate and a locally enumerated subset must not be summed as though independent. Coverage and time follow 0044; unknown, inaccessible or incomplete populations are not a confirmed zero.
+    participants: As an agent-authored meaning for the selected discussion-participant count, count distinct confirmed authors of comments in the stated population. The Issue creator, assignee, reviewer or a person mentioned in the text is not included solely because of that role; they may contribute if they authored a counted comment. Bots or other source actor types are included when their qualifying comment and stable source identity are established; this is a proposed meaning, not a claim about any GitHub aggregate field.
+    identity: Deduplicate participant identities within their source instance using evidence that the source actually establishes as the same actor. Matching display names, deleted-user labels or missing authors are insufficient to merge identities. If one or more qualifying comments have unknown, inaccessible or ambiguous authors, the exact distinct-participant total is unknown or incomplete even when a number of confirmed distinct authors is known. Do not call the observed subset a present-day lower bound without sufficient timing and population evidence.
+    latest: The latest comment time is the maximum confirmed source creation time among comments in the stated population only when the relevant population and its timestamps are sufficiently covered for that claim. If no comments are confirmed under sufficient coverage, the result is known absence of a latest comment, not a fabricated timestamp. With partial population or missing timestamps, an observed latest-so-far may be shown with explicit incomplete coverage, not as the exact latest comment time.
+    timestamps: Keep comment creation, edit if separately supported, Issue last update and observation time distinct. A title change or comment edit does not by itself create a new comment or prove a newer comment creation time. A newly read comment can have a creation time earlier than its retrieval time. If the source has a different documented definition of latest comment, that mapping requires explicit evidence before substituting it.
+    removal_and_access: A deleted, inaccessible or newly restricted comment is not automatically evidence of a source-empty discussion or historical absence. Re-evaluate the stated current population and any retained observations under their coverage and source semantics. Restrict private source content and revealing derived counts under 0036; a public Issue alone does not prove every linked or historical detail is eligible to disclose.
+    partial: A successfully observed subset can contribute permitted known comment identities and authors with their observation times. It cannot establish the complete current comment count, participants or latest time unless separate source evidence suffices. A new Issue title or lifecycle observation does not refresh an omitted discussion field; an earlier result retains its own context under 0044 and conflicts follow 0053.
+    presentation: Show the selected aggregate units and available time without requiring a comment browser, participant list or review-thread viewer. If the selected source cannot provide a matching metric with sufficient evidence, preserve an unknown or partial result rather than replacing it with a semantically different source count. Access to the original Issue remains available under the source-navigation contract.
+    provenance: The owner selected comment and participant counts plus last-comment time. Comment-author population, inclusion of source actor types and the completeness rules are agent-authored proposals; no GitHub endpoint or source field has been selected or verified for equivalence.
+  scenarios:
+    repeated_author:
+      given: A completely observed Issue comment population has three distinct comments with authors A, A and B, and source identity confirms A and B are distinct.
+      when: The discussion summary is displayed.
+      then: The comment count is three and the proposed distinct comment-author count is two; the Issue creator is not added solely for creating the Issue.
+    unknown_author:
+      given: Three comments are observed under complete comment coverage, two authored by confirmed A and one with unavailable author identity.
+      when: The participant metric is calculated.
+      then: One confirmed author is observable but the exact distinct-participant total remains uncertain; the missing author is not assumed to be A or a new person.
+    update_without_comment:
+      given: An Issue's last observed comment was created at T1 and its title changes at T2.
+      when: The title refresh completes without a new discussion observation.
+      then: T2 is not presented as the latest comment time and the earlier discussion value keeps its own source context.
+    partial_latest:
+      given: A partial comment response contains a comment created at T1 but later pages or timestamps are unobserved.
+      when: GitView reports discussion timing.
+      then: T1 can be identified as latest among the observed subset with incomplete coverage, not as a confirmed latest time for the whole Issue.
+    empty_discussion:
+      given: An Issue's permitted current comment population is sufficiently observed and contains no comments.
+      when: Its discussion summary is displayed.
+      then: Comment count and the proposed comment-author count are zero and the latest comment time is known absent; this does not establish that no comments ever existed.
+    deleted_author:
+      given: Two observed comments have indistinguishable deleted-author labels with no usable source identity.
+      when: The proposed participant count is evaluated.
+      then: GitView does not infer that one or two distinct authors existed solely from those labels, and the exact count remains uncertain.
+  unresolved:
+  - Whether comment authors are the desired product definition of discussion participants and whether source-provided aggregates have matching semantics require review and source evidence.
+  - Source ordering, deleted or hidden comment behavior, access scope and completeness for latest-time claims require integration research.
+  - UI presentation of partial and unavailable discussion metrics and native accessibility require design and testing.

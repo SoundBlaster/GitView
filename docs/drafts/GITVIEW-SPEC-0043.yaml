@@ -40,6 +40,7 @@ depends_on:
 - GITVIEW-SPEC-0074
 - GITVIEW-SPEC-0075
 - GITVIEW-SPEC-0076
+- GITVIEW-SPEC-0077
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -65,6 +66,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    partial_issue_discussion:
+      given: An Issue overview has a recent title observation and an older partial discussion observation with an unknown comment author.
+      when: The operator opens the Issue from its Project grid.
+      then: The title and discussion keep their respective contexts, the exact participant count and latest comment time remain uncertain, and missing discussion data is not shown as zero.
     description_edit_after_assessment:
       given: A participating PR had a structurally conforming description and GitView displayed its original permitted body.
       when: The PR description changes but the new body has not yet received an applicable external assessment.
