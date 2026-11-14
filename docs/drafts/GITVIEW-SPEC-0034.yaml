@@ -1,0 +1,55 @@
+id: GITVIEW-SPEC-0034
+title: GitView - Authored description sections and source text
+kind: spec
+created_at: '2026-11-14T13:40:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0010
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+- GITVIEW-SPEC-0011
+- GITVIEW-SPEC-0026
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0010.yaml
+  formats: docs/drafts/github-templates/README.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Original Issue and PR descriptions remain available even when selected sections are missing, ambiguous or in another format.
+- A reliably extracted section retains its author's text and is distinguished from independently observed state or verification.
+- Missing, empty and ambiguous sections are not fabricated or interpreted as proof of a motive, outcome or validation.
+- The presence or absence of a template does not hide an external or legacy object from the overview.
+specification:
+  objective: Preserve the author's original description while exposing agreed section content when it can be identified reliably.
+  ontology_refs:
+  - gitview:Issue
+  - gitview:PullRequest
+  contract:
+    requested_formats: The selected Issue template requests Problem, Motivation, Expected outcome and References; the PR template also requests Changes and Validation. This reading contract does not claim that a template was installed or enforced in a source Repository.
+    original: Preserve the available source description text as authored, including non-template text. An unavailable source body is unknown; an observed empty body is distinct from an unavailable body.
+    extraction: A section may be presented as extracted only if its text and source location can be identified without guessing. Preserve its original text; do not generate a section from a title, label, linked issue or review. Exact supported heading syntax and duplicate handling remain open.
+    ambiguity: If headings are missing, duplicated in a way that cannot be resolved reliably, or use an unsupported layout, keep the original body available and represent section interpretation as absent or ambiguous as appropriate. Ambiguity does not make the whole PR or Issue unavailable.
+    claims: Authored Motivation, Expected outcome and Validation are statements by the source author. They are not independent evidence of an actor's motive, achievement or successful CI; conflicting observed CI remains visible separately.
+    lifecycle: Refreshing the source body updates the observed description according to the scoped observation contract; an old extracted section is not presented as if extracted from a new body when extraction or refresh failed.
+    provenance: The owner selected structured formats; extraction reliability and uncertainty behavior are agent-authored proposals.
+  scenarios:
+    unstructured:
+      given: A legacy PR has a nonempty unstructured description without the selected headings.
+      when: The PR overview is shown.
+      then: Its original description remains available and missing template sections are not invented.
+    duplicate_heading:
+      given: A description contains two Validation headings and no reliable rule selects one.
+      when: Sections are interpreted.
+      then: The original text remains available and the ambiguous Validation section is not silently attributed to one heading.
+    ci_conflict:
+      given: A PR description says validation passed while the observed CI check collection reports a failure.
+      when: Both are displayed.
+      then: The authored statement and observed CI remain separate, and the failure is not concealed.
+    unavailable_body:
+      given: The Issue body was not observed because retrieval failed.
+      when: Its overview is opened.
+      then: The description is unknown or unavailable rather than a confirmed empty body.
+  unresolved:
+  - Exact parser grammar, supported heading aliases, duplicate-section behavior and template versions.
+  - Installation and enforcement across repositories belong to a separate workflow; the read-only app contract does not establish them.
