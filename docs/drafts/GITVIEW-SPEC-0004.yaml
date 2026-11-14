@@ -69,7 +69,7 @@ specification:
     boundary: This screen does not require mutation of GitHub data or prescribe API request sizes.
   proposal:
     starting_view: Use the project overview as the main screen. The user sees their Projects and can identify
-      them by name. Restoring the last opened screen at launch is a separate decision.
+      them by name. The agent-authored cold-launch default and preserved-session behavior are proposed in 0024.
     project_entry: Start from the existing compact proposal with the Project name and Repository count.
       When space permits, surface open PRs and Issues separately, failed CI, review waiting and recent
       results. The Project summary already defines the scope of these signals. The subset shown at the
