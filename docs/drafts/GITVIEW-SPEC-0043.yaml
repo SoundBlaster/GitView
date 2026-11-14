@@ -90,6 +90,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    preview_reopened_while_old_request_finishes:
+      given: The operator dismisses a PR preview and opens a new preview for the same PR while the first preview's request is still in flight.
+      when: Its old callback arrives after the new preview has appeared.
+      then: It cannot directly mutate the new presentation instance; any independently accepted result retains its original source and access context and is rendered only through a valid current read.
     portfolio_return_with_partial_local_read:
       given: The operator opened Project Q from a portfolio containing P and Q, and Q's local configuration cannot currently be verified while P is independently readable.
       when: The operator returns to the portfolio.
