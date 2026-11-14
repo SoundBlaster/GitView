@@ -85,6 +85,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    history_retry_across_restart:
+      given: A permitted source refresh yields an open-PR history observation, its retention may have committed, and its acknowledgement is lost before restart.
+      when: GitView recovers the retention attempt and retries or reconciles it.
+      then: Source success remains distinct from local retention outcome, the same attempt does not create a second independent sample, and an unreadable outcome stays uncertain. A confirmed clear under 0067 prevents pre-clear work from silently restoring cleared history.
     identity_changes_during_inspection_and_refresh:
       given: Project P contains private Repository R; identity A has a PR preview and an accessible focus open while a refresh under A is in flight. A different identity B becomes active without confirmed R access.
       when: The old refresh completes and the operator dismisses the preview or returns to the Project collection.

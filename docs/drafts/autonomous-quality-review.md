@@ -684,3 +684,11 @@ candidate check и [проверку словаря](evidence/autonomous-goal-on
 [проверку словаря](evidence/autonomous-goal-ontology-check-current-context-references-20261114.json)
 без findings и gaps. Прежний отчёт для всех 96 кандидатов остаётся снимком
 по своим SHA; для изменённых файлов применимы более поздние отчёты.
+
+В 0071 и 0066 уточнена идемпотентность повторной записи одного наблюдения
+при потере acknowledgement, включая restart и неизвестный исход history clear;
+0043 связывает эти требования в сценарии. Три файла прошли candidate check и
+[проверку словаря](evidence/autonomous-goal-ontology-check-retention-replay-20261114.json)
+без findings/gaps. Это текстовые требования и структурные проверки, не
+выполненный storage-тест; конкретные operation identity и механизм recovery
+остаются частью проектирования перед реализацией.

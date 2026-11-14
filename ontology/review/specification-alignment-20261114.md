@@ -23,6 +23,8 @@ specs проверены через `domain_vocabulary` в изолирован�
 [отдельном отчёте](../../docs/drafts/evidence/autonomous-goal-ontology-check-identity-navigation-20261114.json).
 Ещё 20 кандидатов после уточнения исторического и текущего context проверены
 по новым SHA в [этом отчёте](../../docs/drafts/evidence/autonomous-goal-ontology-check-current-context-references-20261114.json).
+После этого 0043 и 0066 проверены ещё раз вместе с 0071 в
+[отчёте о replay](../../docs/drafts/evidence/autonomous-goal-ontology-check-retention-replay-20261114.json).
 
 Явные `ontology_refs` найдены во всех 96 файлах и содержат 17 различных
 qualified names. Среди них 23 файла ссылаются на `gitview:Metric`, девять — на
