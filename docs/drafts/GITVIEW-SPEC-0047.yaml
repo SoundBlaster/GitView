@@ -39,6 +39,8 @@ specification:
     units: Open PRs, open Issues, failed checks, affected PRs, review attention and period outcomes remain distinct units under 0029. A single indicator must not imply that one PR is multiple independent work items or that a Project is merge-ready.
     selection: Opening a Project enters that same Project. If it contains exactly one Repository, work is reachable without a duplicate Project/Repository screen while both identities remain distinct. A multi-repository Project exposes its members and an appropriate path to each member's work under 0006.
     signal: An actionable signal can open a filtered work collection in the originating Project. The active condition, period and Project remain identifiable; when work comes from several Repositories, its source is distinguishable. Unknown inputs and partial coverage follow 0027 and 0046 rather than being presented as a complete filtered list.
+    signal_unit: The destination is a work-object collection, not necessarily a list of the metric's counted units. Where the source counts individual checks, threads or events, identify the distinct PR or Issue unit in the destination and retain the originating condition and period under 0029. Do not imply that the number of cards must equal a count expressed in another unit.
+    signal_update: A refreshed or partially loaded destination may differ from the observation underlying the originating signal. Its coverage and relevant observation context remain identifiable; unknown or restricted data is not displayed as an empty or healthy result.
     observations: An unobserved category remains unknown, partial and failed scopes remain identifiable, and stale data retains its observation context. Explicit denial follows 0036; no restricted private content or derived count is exposed as a healthy zero.
     scale_and_access: Density can change without altering the selected Project set or its accounting. Essential identification, navigation and refresh do not depend only on pinch, long press or color; accessible behavior follows 0032 and 0035.
     provenance: Multiple Projects, summary signals and a compact Apple-style overview follow the owner's product direction. Exact distribution of fields across densities and control placement remain agent-independent design questions.
@@ -59,6 +61,10 @@ specification:
       given: An actionable failed-CI signal belongs to Project P containing Repositories R1 and R2.
       when: The operator opens that signal.
       then: The resulting work collection retains Project P and failed-CI condition and distinguishes source Repositories; partial coverage remains visible.
+    checks_to_prs:
+      given: An actionable Project signal describes five failed checks belonging to two PRs and no source data changes.
+      when: The operator opens that signal.
+      then: The destination describes the failed-check condition and two affected PRs, without implying five PR cards or losing Project context.
     restricted_default_name:
       given: A default Project was named from a private Repository and source access is explicitly denied.
       when: The Projects overview is displayed.

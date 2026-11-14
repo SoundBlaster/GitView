@@ -40,6 +40,9 @@ specification:
     time: Lifecycle state is a current observed fact at its own observation time; merged PRs and closed Issues are outcomes within a separately specified period. A closed Issue is not automatically a completed Issue. Reopenings and historical outcome counting require sufficient source history and are not inferred from current state alone.
     coverage: Each metric carries coverage and last relevant observation time for its inputs. Known values from partially observed member Repositories can be presented as partial observed counts but not as a confirmed total or automatic zero for missing members. Explicit access denial follows 0019 and cannot expose restricted private data.
     selection: Navigating from a summary signal retains its originating Project or Repository, period and condition; it does not treat a count as proof that all underlying objects are loaded. Filtering and unknown behavior follow 0007 and 0027.
+    selection_unit: A signal measured in checks or review threads can navigate to the distinct PRs associated with those checks or threads, without asserting that the number of PR cards equals the signal count. The destination identifies both the source condition and its own unit. An event-count outcome can likewise lead to distinct affected objects, but multiple events for one object do not become multiple object cards or one event.
+    selection_time: Preserve the originating metric's current-state or event-period meaning when opening a signal. A historical outcome selection cannot silently become a Today or currently-closed filter merely because those are the work collection defaults. If a destination cannot represent the origin's condition or period with available evidence, expose the limitation instead of claiming an equivalent selection.
+    selection_refresh: The origin count and destination list may describe different observations if data refreshes during navigation. Preserve their observation contexts and make incompleteness or changed data identifiable; do not fabricate equality or imply that a changed value proves an error. Restricted inputs remain subject to 0036 and 0046.
     provenance: Membership overlap and distinct count units follow the owner's discussion; exact presentation and coverage propagation are agent-authored proposals.
   scenarios:
     cross_project_overlap:
@@ -58,6 +61,14 @@ specification:
       given: A Project has two members, one fully observed and one with no Issue observation.
       when: Its Issue count is shown.
       then: The known contribution can be shown with incomplete coverage and the missing member is not treated as zero.
+    many_checks_one_pr:
+      given: A Project signal counts five failed checks across two distinct PRs under complete matching coverage.
+      when: The operator opens the signal as a PR collection without a data change.
+      then: The destination identifies two affected PRs and the failed-check condition; it does not claim that its two PR cards are five checks or that three PRs are missing.
+    historical_outcome:
+      given: An Issue had two confirmed closure events in the selected past week and is currently open after a later reopening.
+      when: The operator opens the distinct-Issue selection for that week's closure events.
+      then: The Issue remains one eligible object for that event-period condition, with its current open state; the selection is not silently replaced by currently closed Issues or Today.
   unresolved:
   - Precise per-metric coverage representation, freshness classification and historical outcome definitions.
   - How unknown filter inputs affect navigation from a particular summary signal; refine with 0027.
