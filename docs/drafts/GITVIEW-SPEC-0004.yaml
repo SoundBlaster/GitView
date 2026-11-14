@@ -27,7 +27,7 @@ sources:
     package: local.gitview.domain@0.2.0-draft-composition.5
   autonomous_refinement: conversation:gitview/excerpt-69-reply
 acceptance:
-- The overview identifies each Project and makes its available work and attention signals inspectable.
+- The overview represents each Project and makes its permitted identifying information, available work and attention signals inspectable.
 - Opening a Project preserves its identity; opening a signal shows the corresponding objects in that Project.
 - A failed refresh preserves last-known data and indicates the error and the last successful update time.
 - A repository shared by Projects contributes to each Project and only once to a unique portfolio total.
@@ -56,8 +56,9 @@ specification:
   screen_contract:
     scope: The overview concerns GitView Projects, not GitHub organizations or GitHub Projects. Repository
       identity and membership are described in GITVIEW-SPEC-0002 and GITVIEW-SPEC-0005.
-    entry: Identify a Project by name and show its repository count. PR and Issue counts, attention signals
-      and period results are distinct; their placement depends on available space and data.
+    entry: Identify a Project by name and show its repository count where those details are permitted. PR and
+      Issue counts, attention signals and period results are distinct; their placement depends on available space,
+      data and source access. Restricted source-derived details follow the access policy in 0019 and 0047.
     states: Distinguish a confirmed empty Project collection, not-yet-loaded or incomplete observations,
       stale data and refresh failures. An unavailable observation is not a confirmed empty collection.
     freshness: Keep the applicable observation scope and time when components have different freshness.
@@ -69,8 +70,9 @@ specification:
     boundary: This screen does not require mutation of GitHub data or prescribe API request sizes.
   proposal:
     starting_view: Use the project overview as the main screen. The user sees their Projects and can identify
-      them by name. The agent-authored cold-launch default and preserved-session behavior are proposed in 0024.
-    project_entry: Start from the existing compact proposal with the Project name and Repository count.
+      them by permitted names; restricted source-derived names follow 0047. The agent-authored cold-launch
+      default and preserved-session behavior are proposed in 0024.
+    project_entry: Start from the existing compact proposal with the permitted Project name and Repository count.
       When space permits, surface open PRs and Issues separately, failed CI, review waiting and recent
       results. The Project summary already defines the scope of these signals. The subset shown at the
       initial density remains open.
@@ -80,7 +82,7 @@ specification:
       an observed absence of work. The refresh and failure rules are described in GITVIEW-SPEC-0003.
   review_scenarios:
     choose_project:
-      given: The user has several Projects.
+      given: The user has several Projects whose names are permitted to be shown.
       when: The main overview is visible.
       then: The user can identify a Project and open its contents.
     follow_signal:

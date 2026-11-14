@@ -21,7 +21,7 @@ sources:
   project_summary: docs/drafts/project-summary-proposal.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- The main overview identifies each saved GitView Project and provides a route to its work without treating a GitHub organization as a Project.
+- The main overview represents each saved GitView Project and identifies it where its identifying information is permitted to be shown, without treating a GitHub organization as a Project.
 - Available work counts, attention signals and period outcomes retain their meaning, scope and coverage.
 - Opening a Project or one of its actionable signals preserves Project and source Repository context.
 - A Project with incomplete observations remains represented and cannot be mistaken for confirmed empty or healthy work.
@@ -35,7 +35,7 @@ specification:
   - gitview:Issue
   contract:
     collection: The main overview concerns locally saved GitView Projects. It does not equate a Project with a GitHub organization or GitHub Projects feature. A local Project can include repositories from different organizations and a Repository can occur in multiple Projects.
-    entry: Each Project representation exposes its name and member Repository count where known and makes available selected work counts, attention signals and period outcomes according to space and coverage. Exact visual arrangement and default density remain subject to product and native design refinement.
+    entry: Each Project representation exposes its name and member Repository count where known and permitted, and makes available selected work counts, attention signals and period outcomes according to space, coverage and access. When a Project name or another identifying detail derives from restricted private source data, do not expose that detail solely to identify the entry; provide a non-sensitive representation and a route to understand or resolve the access problem. Exact visual arrangement and default density remain subject to product and native design refinement.
     units: Open PRs, open Issues, failed checks, affected PRs, review attention and period outcomes remain distinct units under 0029. A single indicator must not imply that one PR is multiple independent work items or that a Project is merge-ready.
     selection: Opening a Project enters that same Project. If it contains exactly one Repository, work is reachable without a duplicate Project/Repository screen while both identities remain distinct. A multi-repository Project exposes its members and an appropriate path to each member's work under 0006.
     signal: An actionable signal can open a filtered work collection in the originating Project. The active condition, period and Project remain identifiable; when work comes from several Repositories, its source is distinguishable. Unknown inputs and partial coverage follow 0027 and 0046 rather than being presented as a complete filtered list.
@@ -59,6 +59,11 @@ specification:
       given: An actionable failed-CI signal belongs to Project P containing Repositories R1 and R2.
       when: The operator opens that signal.
       then: The resulting work collection retains Project P and failed-CI condition and distinguishes source Repositories; partial coverage remains visible.
+    restricted_default_name:
+      given: A default Project was named from a private Repository and source access is explicitly denied.
+      when: The Projects overview is displayed.
+      then: The Project remains represented without exposing its restricted source-derived name or private counts, and the access problem is discoverable.
   unresolved:
   - Default layout, ordering of Projects and exact subset of signals shown at each density.
   - Exact visual and accessible controls for signal navigation and cross-Repository scope selection.
+  - Classification of local Project names that were independently supplied by the operator versus derived from a private source requires privacy and storage refinement.
