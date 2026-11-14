@@ -51,6 +51,10 @@ specification:
       given: An assistive user is focused on PR 42 in Repository B while a second Repository has a different PR 42.
       when: A refresh changes the sort position of B's PR but it remains a permitted match.
       then: The user retains a path to B's same PR and its actual updated accessible state; focus is not attributed to the cell now occupying its old position.
+    restored_object_during_focus:
+      given: An assistive user is focused on a permitted PR in a filtered Project collection while a different Repository yields a newly permitted matching PR.
+      when: The collection reconciles the newly supported result.
+      then: The original focused PR retains its identity and an accessible path where still eligible; the new PR does not inherit its focus merely by taking the prior position, and incomplete coverage remains discoverable where applicable.
     candidate_becomes_uncertain:
       given: A focused PR is a confirmed failed-CI match and a later observation cannot establish the applicable CI result.
       when: The selection is reevaluated.
