@@ -83,6 +83,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    today_partial_refresh_and_membership_change:
+      given: Project P previously held 100 permitted open PR observations across members A and B, and a Project-wide Today refresh begins.
+      when: The saved membership changes to A and unobserved C, then the older A-B refresh returns an open-only subset and B's later request fails.
+      then: The A-C selection does not claim completeness or a new complete time; applicable A facts keep their own evidence, C remains unobserved, B's failure retains its old request scope, and missing open-list entries are not invented as merges or deletions.
     complete_multi_repository_today_journey:
       given: Project P has two confirmed Repositories with 100 distinct permitted open PRs in total, and relevant Today, lifecycle and identity coverage is sufficient.
       when: The operator enters P's all-members Today work collection, 95 PRs merge today, then the operator previews and opens one of those PRs and returns without applying a lifecycle exclusion.

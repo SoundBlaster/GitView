@@ -9,6 +9,7 @@ refines:
 depends_on:
 - GITVIEW-SPEC-0023
 - GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0027
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0037
 - GITVIEW-SPEC-0044
@@ -38,8 +39,10 @@ specification:
     background: The app may request or use an iOS-granted background opportunity for bounded refresh. iOS controls whether and when it runs; absence of a background opportunity is not reported as a successful update or as an application failure.
     deferred: When a manual or foreground request cannot start because of a known budget or execution constraint, the affected scope remains identifiable as deferred or pending with a recoverable reason where available. No new source success time, confirmed empty result or fabricated GitHub failure is recorded merely because no source request was attempted. When the constraint is lifted, the request may be retried under the applicable scheduling policy; exact retry timing is not guaranteed.
     scope: A refresh identifies which Repository or Project members, object categories and applicable time range it attempts. A successful update for one category or member does not advance the success time or completeness of another. Outcomes and last-success times follow 0044.
+    today_population: A refresh requested for an unfiltered Today work collection must not equate successful retrieval of only currently open work with complete coverage of Today. Account for the applicable open and same-day creation and outcome alternatives under 0027, or explicitly retain the selection as incomplete when the available source evidence does not establish their union. Reuse compatible saved facts without claiming that they were all refreshed; this requirement does not choose an API, page size or a full historical download.
     navigation_during_refresh: Capture the requested scope when an operator initiates refresh. Navigating to another Project, changing period or changing filters does not relabel the in-flight request as belonging to the new view. Its eventual permitted observations and outcome remain associated with the original scope; the new view presents only its own applicable state. Source access changes follow 0036 and 0037.
     membership_during_refresh: A saved membership edit changes the Project's current scope but does not retroactively alter an in-flight request's captured scope. Its accepted per-Repository observations may be reused under their own identity, access and coverage rules; a response for the former member set is not by itself a complete refresh of the new set. An unsaved or cancelled edit does not change the saved membership used for the current claim.
+    old_scope_outcome: A late failure or completion for a former member remains attributable to the request and scope that actually produced it. It may remain discoverable as an earlier operation outcome where permitted, but must not be presented as the current Project's failure, successful coverage or observation time for a Repository that is no longer a member. A still-shared Repository can remain relevant to another Project under that Project's separately established scope. Do not hide a current Project's own incomplete new-member coverage merely because an old request completed.
     partial_or_failure: Successfully observed facts from an incomplete operation can be retained with their own observation time, while coverage remains partial. A failed operation shows a visible indication in the affected scope and preserves previously accepted data and last complete observation time. A first failure remains an unobserved scope with error, not a confirmed empty collection.
     expired_background: If an iOS-granted background opportunity expires after some facts are accepted but before the requested scope is sufficiently covered, preserve accepted facts with their own times, mark the affected scope incomplete and do not report the entire scope as successfully refreshed. An expiration before any accepted facts leaves prior observations and their successful times intact; it is distinct from proving a GitHub error. Actual system delivery and timing require device evidence.
     concurrent: If another refresh is already active, the app may coalesce or schedule the request, but it must not lose the operator's requested scope or report success before the relevant work has an observable outcome. Conflicting results and access changes follow 0037; exact scheduling and duplicate-request strategy remain open.
@@ -49,6 +52,14 @@ specification:
     boundaries: Do not specify an exact GitHub endpoint, page size, request count, numerical polling frequency or iOS execution guarantee here. Exact source mapping, budget and scheduling are later technical work.
     provenance: Background opportunities, refresh on stale open and manual refresh follow the owner's discussion; scope and outcome behavior are agent-authored refinements.
   scenarios:
+    completed_work_not_covered_by_open_list:
+      given: A Project's unfiltered Today contains previously observed work and its requested refresh completes only the open-PR source scope, without establishing today's merge or closure population.
+      when: The refreshed Project work collection is displayed.
+      then: The open-scope result keeps its own time, older eligible permitted observations retain theirs, and the Project-wide Today population remains incomplete rather than being labeled fully refreshed or losing completed work solely because it is absent from the open list.
+    removed_member_failure:
+      given: A Project refresh starts for A and B, then its saved membership changes to A and C before B's request fails; C has not been observed.
+      when: The failure and current Project are shown.
+      then: B's failure remains associated with the earlier A-B request, not described as a current A-C member failure; C remains unobserved and A-C completeness or a new complete time is not asserted.
     manual_offline:
       given: A Project has permitted saved PR observations with an earlier successful observation time and the device is offline.
       when: The operator requests refresh for that Project.

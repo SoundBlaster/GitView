@@ -1,7 +1,7 @@
 {
   "artifact_kind": "gitview_today_selection_access_finite_model",
   "spec_sha256": {
-    "GITVIEW-SPEC-0027.yaml": "b8b43b504c1323606486bbe19a2c90111b925d1184da6eeb6454f733409906bc",
+    "GITVIEW-SPEC-0027.yaml": "e630e1e0562a2e4641247883cb23a98ada50ebb1ba713578f2149d334a8011e4",
     "GITVIEW-SPEC-0042.yaml": "f25174d6924fd6b59bcbc2f3c09645cb8287988ca719f12c48bfd6a42ed3d6ba",
     "GITVIEW-SPEC-0049.yaml": "8f41eaa6adf1726e4670a2d55ce76a79fba6f8626bc7dbc2bfb2d62816adf4e6",
     "GITVIEW-SPEC-0088.yaml": "637e2aef3a90c959f288b22196cb8673dd28d5e276a55a86975ec3d4988875b5"
