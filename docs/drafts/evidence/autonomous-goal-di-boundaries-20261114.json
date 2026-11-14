@@ -1,0 +1,37 @@
+{
+  "scope": "Declared graph and SpecGraph domain_vocabulary only; not executed product behavior",
+  "context": "ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-di-boundaries-t0qzl56k",
+  "graph_report": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/di-boundaries-readiness-20261114.json",
+  "graph_sha256": "218fa147cf8501c094b0b8bb437b9ea41cf15383c150f92732929847049d4e49",
+  "node_count": 119,
+  "structural_leaves": 53,
+  "unrooted": [],
+  "acyclic_relations": [
+    "refines",
+    "depends_on",
+    "refines + depends_on"
+  ],
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0107",
+      "input_sha256": "6a426d6021b847f42b37e21920043cba4b2de3ae28749fdf3f34b00e70e6eb14",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "aaca36cd3bdb6818cc2a38c37016d14e0bd2643ae781a67e7fc7b1b891c57bff"
+    },
+    {
+      "id": "GITVIEW-SPEC-0115",
+      "input_sha256": "9caeb8baafd3618d45645a70e9bfed0df5fc64a808b51c220396785f08709831",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "381bb9e09997f0e2bf3042dfed4455c33a03d8f47d9505c1f9648726f768fdb3"
+    }
+  ]
+}
