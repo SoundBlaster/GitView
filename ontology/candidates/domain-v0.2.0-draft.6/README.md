@@ -1,7 +1,8 @@
 # GitView ontology draft.6 — кандидат удаления membership
 
-Статус: **изолированный draft для review**, не выбранный рабочим контекстом и
-не canonical ontology. Исходит из составного draft.5; единственные содержательные
+Статус: **рабочий draft для подготовки графа**, не canonical ontology.
+Первоначально проверялся в изолированном контексте и затем выбран как рабочий
+после сравнения 83 candidate specs с draft.5. Исходит из составного draft.5; единственные содержательные
 изменения — `RemoveRepository(repository: Ref<Repository>)` и отношение
 `User → RemoveRepository → Project` с именем `removesRepositoryFrom`.
 `projectIncludesRepository` остаётся описанием membership; новый action не
@@ -36,8 +37,10 @@ Project, а тот же Repository и его membership в других Projects
   терминов; они не ссылаются на новое действие и проверка не устанавливает
   instance binding, реализацию удаления или семантическое утверждение.
 
-Подробные хеши и ограниченный результат — в [verification.json](verification.json).
-Актуальная project selection остаётся на draft.5; обе версии сосуществуют.
+Подробные хеши и первоначальный ограниченный результат — в [verification.json](verification.json);
+поле `candidate_status` отражает момент до выбора рабочего контекста. Текущая
+project selection указывает на draft.6, draft.5 сохранён для сравнения.
+Основание выбора и границы — в [working-context decision](../../review/draft6-working-context-decision.md).
 Отдельный [pilot привязки](../../pilots/membership-removal-binding/README.md)
 сравнивает ссылки на новый action в draft.5 и draft.6 без изменения исходной spec.
 

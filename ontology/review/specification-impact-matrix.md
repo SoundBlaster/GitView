@@ -1,5 +1,10 @@
 # Влияние открытых ontology gaps на граф GitView
 
+Исторический срез: после этой матрицы рабочая композиция переключена с
+draft.5 на [draft.6](../candidates/domain-v0.2.0-draft.6/README.md), который
+декларирует candidate action удаления. При этом actor/action evidence и
+lifecycle принадлежности по-прежнему не установлены.
+
 Рабочая оценка на 14 ноября, по текущим candidate specs и выбранной композиции
 `local.gitview.domain@0.2.0-draft-composition.5` (`draft`). Она не утверждает
 ontology package, не доказывает готовность графа и не выдаёт candidate review

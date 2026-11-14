@@ -11,6 +11,7 @@ depends_on:
 - GITVIEW-SPEC-0019
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0005.yaml
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.6/composition-context.yaml
   startup: docs/drafts/GITVIEW-SPEC-0022.yaml
   autonomy: conversation:gitview/excerpt-77
 acceptance:
@@ -25,7 +26,11 @@ specification:
   - gitview:Project
   - gitview:Repository
   - gitview:User
+  - gitview:RemoveRepository
+  - gitview:removesRepositoryFrom
+  - gitview:projectIncludesRepository
   contract:
+    ontology_boundary: The candidate removal action describes a possible operator contribution to a Project membership change; the membership link describes a scoped state. Referencing these terms does not establish an actual actor, action, motive or observed transition, and does not require each edit or UI control to become an ontology entity.
     identity: A saved Project has a stable local identifier independent of its name and repository addresses. Rename and transfer of a confirmed same Repository do not change Project identity or membership.
     default_association: A default association identifies the locally created default Project for one source Repository, separately from an arbitrary Project that happens to contain the same Repository. It is project configuration for idempotent setup, not a new ontology entity. For an existing association, confirming the Repository again reuses the same Project. Other existing Projects containing that Repository do not become the default implicitly.
     creation: Confirmation of one or more selected accessible Repositories establishes a separate single-member default Project for each one lacking a default association. An existing association is reused. The initial name is the observed repository name; subsequent source renames do not automatically rename Projects.

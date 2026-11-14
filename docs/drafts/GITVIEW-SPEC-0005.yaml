@@ -14,6 +14,8 @@ sources:
   topic: docs/drafts/project-summary-proposal.md
   authorization: conversation:gitview/excerpt-68
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+  ontology_selection_scope: The draft.5 selection records an earlier context; the current working composition is recorded separately.
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.6/composition-context.yaml
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
   objective: Maintain a named GitView project containing one or more GitHub-managed repositories.
@@ -22,6 +24,12 @@ specification:
   - gitview:Repository
   - gitview:GitHubRepository
   - gitview:User
+  - gitview:AddRepository
+  - gitview:addsRepositoryTo
+  - gitview:RemoveRepository
+  - gitview:removesRepositoryFrom
+  - gitview:projectIncludesRepository
+  ontology_reference_boundary: These candidate terms describe available vocabulary for an operator's Project membership changes and membership state. A reference does not assert that a particular action was performed, establish actor identity or motive, or prove a stored state transition.
   requirements:
   - A project has a stable local identity, a name, an optional purpose and references to its member repositories.
   - A repository may be a member of multiple projects; organizations do not constrain membership and repositories
