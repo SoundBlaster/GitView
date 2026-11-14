@@ -87,6 +87,6 @@ specification:
       when: The operator enters P.
       then: Both members remain represented and missing work is not presented as an observed empty repository.
   unresolved:
-  - Exact transition, restoration behavior after data changes, and ordering remain to be refined.
+  - Exact transition and ordering remain to be refined; restoration after data changes is proposed in 0024, with its unresolved cases retained.
   evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
     selection and specification remain drafts; implementation is not claimed.

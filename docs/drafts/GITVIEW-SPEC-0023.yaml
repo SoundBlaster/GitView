@@ -1,0 +1,55 @@
+id: GITVIEW-SPEC-0023
+title: GitView - Project overview observation states
+kind: spec
+created_at: '2026-11-14T12:46:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0004
+depends_on:
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0012
+- GITVIEW-SPEC-0017
+- GITVIEW-SPEC-0019
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0004.yaml
+  observations: docs/drafts/GITVIEW-SPEC-0003.yaml
+  project_summary: docs/drafts/GITVIEW-SPEC-0012.yaml
+  authorization: conversation:gitview/excerpt-68
+acceptance:
+- The overview distinguishes no configured Projects from unobserved work and a failed or partial observation.
+- Known prior values remain scoped and accompanied by their freshness and failure or coverage indication when refresh fails.
+- Explicit source access denial follows 0019's private-cache policy; temporary offline failure is distinct.
+- Necessary state distinctions are available without relying solely on color.
+specification:
+  objective: Define how the portfolio overview communicates the state and limitations of observed project data.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    empty_projects: A confirmed local Project collection with no entries offers setup; it is not a statement about GitHub having no repositories or work.
+    unobserved: A configured Project with an unobserved scope remains present. An unavailable count or signal is unknown, not zero, clear or healthy.
+    partial: If some members or requested categories are missing, show available values only with a visible indication of incomplete scope. Unique portfolio totals follow 0012 and must not imply complete coverage.
+    stale_or_failed: Previously authorized visible data remains available through temporary failures, with the affected scope, last successful observation time and an explicit indication of failure. Refresh does not silently reset the successful timestamp.
+    access_denied: An explicit access denial or local disconnect follows the private-cache rules in 0019. Temporary network failure and HTTP 404 alone are not proof of revocation or deletion.
+    mixed: Each scope retains its own state and freshness; a successful Issue observation does not make a failed PR observation current. The interface may summarize the condition only if the affected scope remains discoverable.
+    action: Refresh is offered using an interaction appropriate to the screen; no success is implied until an observation succeeds. Platform scheduling and network policy are defined elsewhere.
+    boundary: Presentation placement and precise freshness thresholds are open; these proposals do not prescribe a system control or introduce domain entities for UI state.
+  scenarios:
+    mixed_observations:
+      given: The Issue scope succeeds while the PR scope fails after a previous success.
+      when: The Project overview is displayed.
+      then: Issues are current for their scope; retained PR values show their earlier time and failure without presenting the overall Project as fully current.
+    no_observation:
+      given: A configured Project has never received Issue data.
+      when: Its summary appears.
+      then: The Issue count is unknown or loading rather than zero.
+    denied_private:
+      given: A private repository was previously observed and source access is explicitly denied.
+      when: Its status is presented.
+      then: An access problem is identifiable and restricted cached content is not shown, consistent with 0019.
+  unresolved:
+  - Freshness classification thresholds and display of coverage by metric require the observation and summary branches.
+  - Recovery behavior when source access changes during an in-flight refresh requires detailed access refinement.

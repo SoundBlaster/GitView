@@ -1,0 +1,52 @@
+id: GITVIEW-SPEC-0022
+title: GitView - First launch and project setup
+kind: spec
+created_at: '2026-11-14T12:46:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0004
+depends_on:
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0019
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0004.yaml
+  access: docs/drafts/GITVIEW-SPEC-0019.yaml
+  project_membership: docs/drafts/GITVIEW-SPEC-0005.yaml
+  authorization: conversation:gitview/excerpt-68
+acceptance:
+- A first-time operator can discover the next step toward a GitHub-backed Project without an empty portfolio being mistaken for a network error.
+- Cancelled or failed authorization and incomplete discovery remain recoverable and do not create a confirmed empty account or Project.
+- A selected accessible Repository can be used in a default Project and its observed data remains distinguishable from data still being loaded.
+specification:
+  objective: Define the operator journey from an empty local Project collection to the first usable Project.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:GitHub
+  contract:
+    first_entry: When no local Project exists, the overview offers an understandable route to connect GitHub or choose repositories; a truly empty collection is distinct from unavailable observations.
+    connection: Connection and permissions follow 0019. Cancelling authentication returns control to the setup route without treating it as a completed connection or deleting local data.
+    selection: After connection the operator can select from discovered accessible repositories. Incomplete or failed discovery is identified as such and permits retry; no selection is not proof that GitHub has no repositories.
+    default_project: When a Repository is selected, the operator can reach a Project containing it according to 0005's default one-to-one rule. A Project has at least one member; an unselected or inaccessible repository is not silently introduced as a member.
+    initial_data: The Project can be identified while work observations are loading. Never present an unobserved PR or Issue scope as a confirmed empty list; preserve explicit failure, last-success time and coverage under 0003 and 0019.
+    repeat_entry: With existing Projects, use the normal overview and preserve configured membership. Launch restoration is a separate contract in 0024, not an assumption that setup repeats.
+    boundary: Exact authentication method, discovery queries, screen composition and copy remain unspecified; this is an agent-authored UX proposal rather than a claim of explicit owner selection.
+  scenarios:
+    cancelled:
+      given: No Project is configured and authorization is offered.
+      when: The operator cancels authorization.
+      then: The setup route remains available and no successful account or empty source is asserted.
+    partial_discovery:
+      given: A connected source has only partially returned the repository selection.
+      when: The operator views available repositories.
+      then: Returned repositories are selectable and the list is marked incomplete; failure or retry does not delete selections.
+    first_project:
+      given: A repository is accessible and selected.
+      when: Its default Project is established and its work has not yet been observed.
+      then: The Project is identifiable, and its PR and Issue data is shown as unobserved or loading, not confirmed empty.
+  unresolved:
+  - When and how a selected repository becomes a Project, including confirmation and cancellation of a multi-selection.
+  - Empty discovery and permission recovery details depend on source-access and Project-lifecycle refinement.

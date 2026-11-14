@@ -1,0 +1,59 @@
+id: GITVIEW-SPEC-0024
+title: GitView - Navigation context and restoration
+kind: spec
+created_at: '2026-11-14T12:46:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0006
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0014
+- GITVIEW-SPEC-0017
+- GITVIEW-SPEC-0019
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0006.yaml
+  filters: docs/drafts/GITVIEW-SPEC-0007.yaml
+  zoom: docs/drafts/GITVIEW-SPEC-0014.yaml
+  authorization: conversation:gitview/excerpt-68
+acceptance:
+- Returning from a work object preserves the originating Project, scope, period, filters and density when valid.
+- Restoring position uses a stable object identity when possible and handles a missing object without silently selecting a different one.
+- A missing or inaccessible Project or Repository is distinguished from an empty work collection, and the operator can return to an available scope.
+- A change of density alone does not change the scope, period or filters.
+specification:
+  objective: Specify continuity of context while navigating the Project overview and its work collections.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    context: The working context includes Project identity, selected repository scope where applicable, period, explicit filters, density and a position or focused object when available. These are navigation state, not new ontology entities.
+    return_in_session: Returning from a PR or Issue overview restores the originating context. The previously visible object remains the position anchor when it still exists in that filtered collection.
+    changed_objects: If the anchor no longer matches or cannot be located, preserve still-valid scope and filters, avoid claiming an unrelated object is the original, and place the user at an understandable position in the current collection. Exact replacement ordering remains open.
+    changed_membership: Resolve membership by stable identity, not repository display name. If the selected Repository is no longer a Project member, do not silently substitute another; surface the changed scope and provide a route to the Project or portfolio.
+    unavailable: Temporary observation failure does not by itself prove the Project or Repository disappeared. Where access is explicitly denied, follow 0019's cache policy and provide an available route out without displaying restricted content.
+    signal_entry: A signal-origin route identifies the signal's active selection; returning does not discard that selection without operator action. Editing or clearing filters follows 0007.
+    zoom: A density change preserves the active context and uses the focused object as anchor when it remains available; any change of scope is explicit.
+    launch: Cross-launch restoration is a proposal to restore the last valid context only after resolving available identities and access; if unavailable, fall back to a valid overview with an explanation. Whether cross-launch restoration is enabled by default remains open.
+    boundary: Exact transition, scroll algorithm, persisted state lifetime and system navigation implementation remain open; no app implementation or tested behavior is claimed.
+  scenarios:
+    object_return:
+      given: A filtered Project grid has an active density and an identified PR at its visible position.
+      when: The operator opens that PR and returns while it still matches.
+      then: Project, scope, period, filters and density remain and the same PR is restored as an anchor.
+    removed_member:
+      given: The current Project no longer includes the selected Repository.
+      when: The operator returns to the prior repository-scoped collection.
+      then: GitView reports the scope change and offers a route to an available Project or portfolio without substituting another repository.
+    source_failure:
+      given: A previously observed selected Repository is temporarily offline.
+      when: The operator returns to its work collection.
+      then: The prior scope is preserved and observation failure is presented according to 0003 rather than asserting the repository was removed.
+  unresolved:
+  - Deterministic fallback position and ordering when the old anchor no longer matches.
+  - Cross-launch restoration default, saved-context lifetime and behavior for account changes.
+  - Treatment of a deleted Project versus temporarily unavailable local configuration.
