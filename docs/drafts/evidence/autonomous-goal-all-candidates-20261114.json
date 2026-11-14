@@ -891,10 +891,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0069",
-      "sha256": "724f5edcb7df89b244de5e4926aefb88cc396948e67f477ac41fc5523ff65b5d",
+      "sha256": "299a68626e2c01f3311b594ee374190e57a4afaa41b53f19d2dae899f74c899a",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "724f5edcb7df89b244de5e4926aefb88cc396948e67f477ac41fc5523ff65b5d",
+      "reported_sha256": "299a68626e2c01f3311b594ee374190e57a4afaa41b53f19d2dae899f74c899a",
       "checked": [
         "yaml_mapping",
         "spec_kind",
