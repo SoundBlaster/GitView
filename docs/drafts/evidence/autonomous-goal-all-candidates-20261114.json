@@ -553,10 +553,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0043",
-      "sha256": "480b7c4464e2006cafd0ea9600b4b7cb8e9c3fda3bf09fa5cc2d7fc1cb640291",
+      "sha256": "c39e132fb1e93b8d8f34aea43a3222d97961815f71ce48f8826356c06ec2fa71",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "480b7c4464e2006cafd0ea9600b4b7cb8e9c3fda3bf09fa5cc2d7fc1cb640291",
+      "reported_sha256": "c39e132fb1e93b8d8f34aea43a3222d97961815f71ce48f8826356c06ec2fa71",
       "checked": [
         "yaml_mapping",
         "spec_kind",
@@ -748,10 +748,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0058",
-      "sha256": "5b5ef1f582bd5a824835561723a857841e79803698d7d2af0aa90faf230a07b4",
+      "sha256": "31c5a71a6506fe5f4ef27f2b7269bc39881d3c77477b593e4592909c6d8e65e9",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "5b5ef1f582bd5a824835561723a857841e79803698d7d2af0aa90faf230a07b4",
+      "reported_sha256": "31c5a71a6506fe5f4ef27f2b7269bc39881d3c77477b593e4592909c6d8e65e9",
       "checked": [
         "yaml_mapping",
         "spec_kind",
@@ -1099,10 +1099,23 @@
     },
     {
       "id": "GITVIEW-SPEC-0085",
-      "sha256": "4f299960ffaf39ef1cfe7372d49d4ac3dd8a6cf9a410a6ad75db27b91c4c5cea",
+      "sha256": "cd7a1fecc75ed7fa32434d7dbc2197b23e1a189550917bdbe465c91c5f115895",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "4f299960ffaf39ef1cfe7372d49d4ac3dd8a6cf9a410a6ad75db27b91c4c5cea",
+      "reported_sha256": "cd7a1fecc75ed7fa32434d7dbc2197b23e1a189550917bdbe465c91c5f115895",
+      "checked": [
+        "yaml_mapping",
+        "spec_kind",
+        "file_id_match"
+      ],
+      "next_action": "review_candidate"
+    },
+    {
+      "id": "GITVIEW-SPEC-0086",
+      "sha256": "1342e71c7f8bc531a770aef470db5445dd9517662a613be2daa92fdf69b091a8",
+      "exit_code": 0,
+      "status": "checked",
+      "reported_sha256": "1342e71c7f8bc531a770aef470db5445dd9517662a613be2daa92fdf69b091a8",
       "checked": [
         "yaml_mapping",
         "spec_kind",

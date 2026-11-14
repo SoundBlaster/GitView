@@ -49,6 +49,7 @@ depends_on:
 - GITVIEW-SPEC-0083
 - GITVIEW-SPEC-0084
 - GITVIEW-SPEC-0085
+- GITVIEW-SPEC-0086
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -74,6 +75,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    disconnect_during_credential_replacement:
+      given: A credential replacement for account A is in flight and its private Repository observations are stored locally.
+      when: The operator disconnects A and the older credential write completes late.
+      then: A is not silently reconnected, private observations remain restricted, the local credential removal outcome is recoverable rather than assumed and saved Projects are retained.
     credential_expiry_then_denial:
       given: A previously permitted private Repository has cached observations and its account credential is known locally expired without a source denial.
       when: A refresh fails and a later applicable source response is independently established as explicit denial.

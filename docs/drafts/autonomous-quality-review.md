@@ -469,3 +469,9 @@ Candidate 0085 уточняет expiry credential и восстановлени�
 не выбранный протокол и не доказательство поведения secure store или GitHub.
 [Проверка словаря](evidence/autonomous-goal-ontology-check-credential-recovery-20261114.json)
 для 0043, 0058 и 0085 не нашла findings и gaps.
+
+Candidate 0086 уточняет credential replacement, прерванную запись и поздний
+результат после disconnect; родитель 0058 согласован с неопределённым исходом.
+Сценарии и требования TDD остаются будущими: secure store, GitHub и iOS не
+проверялись. [Проверка словаря](evidence/autonomous-goal-ontology-check-credential-replacement-20261114.json)
+для 0043, 0058, 0085 и 0086 не нашла findings и gaps.
