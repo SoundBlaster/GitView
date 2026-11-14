@@ -809,3 +809,11 @@ candidate и ontology advisory checks прошли без findings, gaps и warn
 T1 после прерванной T2-записи. Проверки 0043, 0071 и 0102 прошли без findings,
 gaps и warnings; фактическое хранение и recovery не выполнялись. Снимок
 инвентаризации выше относится к предыдущим SHA этих кандидатов.
+
+[0103](GITVIEW-SPEC-0103.yaml) уточняет identity локальной операции, связь с
+неизменным намерением, результат и безопасное восстановление; новый reviewed
+edit отличается от повторной доставки старого. Отдельная uniqueness default
+association действует и для разных операций. [Проверка 0071, 0083 и 0103](evidence/autonomous-goal-ontology-check-local-operations-20261114.json)
+прошла без findings, gaps и warnings; реальный commit protocol, concurrency и
+restart не проверялись. В текущем графе 103 кандидата и 47 структурных листьев;
+все узлы связаны с корнем, отсутствующих целей и циклов не найдено.
