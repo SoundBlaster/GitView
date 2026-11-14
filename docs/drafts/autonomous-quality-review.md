@@ -525,3 +525,10 @@ Candidate 0091 и [сверка навигационного scope](project-navi
 membership. Обновлён 0074; маршруты и интерфейс остаются авторскими
 предложениями без native или source evidence. [Проверка словаря](evidence/autonomous-goal-ontology-check-navigation-scope-20261114.json)
 для 0043, 0074 и 0091 не нашла findings и gaps.
+
+Candidate 0092 и [сверка signal navigation](signal-navigation-filter-review-20261114.md)
+различают origin count, текущую выборку и явное изменение фильтра.
+Нативные controls, source data и privacy-поведение не исполнялись. [Проверка словаря](evidence/autonomous-goal-ontology-check-signal-filters-20261114.json)
+для 0043, 0047 и 0092 не нашла findings и gaps.
+Модель повторного открытия Issue повторена после изменения 0043, чтобы её
+входной hash соответствовал текущему сквозному узлу; её границы не изменились.

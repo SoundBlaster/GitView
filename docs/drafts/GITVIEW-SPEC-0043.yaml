@@ -55,6 +55,7 @@ depends_on:
 - GITVIEW-SPEC-0089
 - GITVIEW-SPEC-0090
 - GITVIEW-SPEC-0091
+- GITVIEW-SPEC-0092
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -80,6 +81,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    signal_filter_changed_after_entry:
+      given: The operator opens a Project's failed-CI signal whose observed count covers two PRs, with the failure condition active in the destination.
+      when: The operator clears that condition and the permitted Project work collection includes additional non-failing or unknown PRs.
+      then: The current filter state reflects the explicit change and the additional cards are not presented as failed merely because the route originated from the signal; the earlier count retains its own scope and observation context.
     single_project_expands_while_open:
       given: P initially contains only A and its Project-wide Today collection was opened directly from the portfolio with an active filter.
       when: A saved edit adds unobserved B while an object preview remains open, then the operator dismisses the preview and returns.

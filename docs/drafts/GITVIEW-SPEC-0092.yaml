@@ -1,0 +1,88 @@
+id: GITVIEW-SPEC-0092
+title: GitView - Signal-origin selection and explicit filter changes
+kind: spec
+created_at: '2026-11-14T18:28:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0047
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0042
+- GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0056
+- GITVIEW-SPEC-0057
+- GITVIEW-SPEC-0073
+- GITVIEW-SPEC-0074
+- GITVIEW-SPEC-0088
+- GITVIEW-SPEC-0089
+- GITVIEW-SPEC-0091
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0047.yaml
+  summary: docs/drafts/GITVIEW-SPEC-0029.yaml
+  owner_filters: conversation:gitview/excerpt-55-reply
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Opening an actionable signal retains its originating Project, condition, unit, period and observation limitations where applicable.
+- A signal's unit and the destination's distinct-object unit remain distinguishable; changing data or coverage does not manufacture equality.
+- The operator can identify and explicitly change or clear active filter conditions without altering source objects or rewriting the original signal observation.
+- Once a signal condition is explicitly changed or cleared, the destination is not presented as though the original condition still applies to all displayed objects.
+- Refresh, membership changes, incomplete coverage and access restrictions preserve their own scope and do not silently substitute another Project or period.
+- Return uses the actual originating surface, preserving valid context without exposing restricted source details.
+specification:
+  objective: Make signal-origin navigation and subsequent explicit filter changes understandable across updates without prescribing UI controls.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    origin: At activation capture enough permitted context to identify the Project or Repository, signal condition and metric unit, relevant period and observation coverage or time, and actual navigation origin. This context identifies what the earlier signal represented; it is not a promise that every underlying object has been loaded or is currently accessible. Restricted facts and revealing counts must not be retained for display solely to explain origin.
+    initial_selection: Initialize the destination with the signal's applicable condition and scope, retaining any required lifecycle predicate and event period under 0029, 0047 and 0056. If the destination cannot represent the originating condition or the scope is unknown, identify the limitation and offer a permitted route rather than silently using an unrelated filter or claiming an equivalent list.
+    units: Destination cards represent distinct source PRs or Issues under their Repository identities. A signal counted in checks, threads or events can correspond to a different number of cards. A signal already counted in affected PRs or Issues uses that object unit but can still differ after observation or scope changes. Neither a link between Issue and PR nor multiple Project memberships makes separate independent tasks.
+    editable_filters: The operator can inspect and explicitly change or clear active filter conditions using the supported filter interaction. As an agent-authored initial proposal, the signal condition is an identifiable initial selection, not an immutable hidden condition. Once it is removed or changed, label the current selection according to its actual conditions; retaining provenance that the user arrived from a signal must not imply that all current cards still satisfy the original signal. No filter edit changes source data or the historical meaning of the origin.
+    no_implicit_reset: Opening an object, returning to its work collection, changing density or accepting unrelated refresh does not silently clear or reapply an explicitly modified filter. Preserve valid selection, period, scope and position under 0024 and 0042. Leaving the destination returns to the actual origin; whether an explicitly modified selection persists after the route itself is closed or across a cold launch is not selected here.
+    current_refresh: A refreshed destination may have different objects, values or coverage than the earlier signal. Apply the current applicable condition to current permitted evidence under 0027 and 0089, expose unknown or incomplete portions and retain the origin's own time and scope where display is permitted. Do not force the list to match an old count or treat a changed number as proof of an error or a source mutation.
+    membership_and_time: A current Project signal opened after a confirmed membership change follows the current scope and limitations in 0091 without relabeling its old count as current for new members. While a historical event-origin condition remains active, retain its explicit period and stated membership basis under 0056. If the operator explicitly removes that event condition, do not label the resulting selection as the original event set; retain the earlier period only as permitted origin context. Dynamic Today, a historical closure and a current closed-state filter are distinct conditions.
+    privacy: Apply 0036 and 0088 before displaying or announcing any origin detail, count, candidate, target object or shareable link. A later denial may make an earlier signal or target unavailable; do not keep a restricted value visible to maintain numerical continuity or reveal inaccessible object existence. Provide a non-sensitive limitation or recovery route where permitted.
+    accessibility: Signal meaning, active conditions, scope, uncertainty, clear or change actions and an available return route must be discoverable without relying solely on color, pinch, long press or transient feedback. Focus follows identity and access rules under 0073; native controls and exact announcements remain open.
+    verification: Apply 0040 and 0079 to controlled scenarios for different metric units, filter changes, updated source observations, changed membership, historical event periods and explicit denial. Source mappings and native navigation or accessibility require separate evidence; this contract is not evidence of implemented behavior.
+    provenance: Signal-based navigation and explicit filtering derive from the owner's overview direction. Editable signal selection, context retention and update handling are agent-authored proposals requiring UX review.
+  scenarios:
+    checks_and_objects:
+      given: A permitted Project signal counts five failed checks across two distinct PRs under the same complete observation context.
+      when: The operator opens it without intervening source changes.
+      then: The destination identifies the failure condition and two PR cards without claiming five PRs or that three cards are missing.
+    clear_signal_condition:
+      given: The operator opened a failed-CI Project signal and its failure condition is identifiable as active in the destination.
+      when: The operator explicitly clears that condition.
+      then: The resulting collection reflects its remaining actual scope and filters and is not labeled as though every displayed PR has failed CI; the earlier signal remains attributable to its original observation.
+    refresh_changes_result:
+      given: A signal described two affected PRs at T1 and a later sufficiently supported observation at T2 shows one affected PR.
+      when: The destination is displayed after T2.
+      then: The current selection may show one while the earlier count retains T1 context; no error or missing card is inferred solely from the difference.
+    unknown_filter_input:
+      given: A signal opens the failed-CI selection and one permitted PR's applicable check result is unobserved.
+      when: The destination is evaluated.
+      then: The PR is available through the permitted uncertain portion or equivalent path, not counted as a confirmed failure or silently treated as healthy.
+    historical_origin:
+      given: An Issue closed in a selected past period and is now independently observed open.
+      when: The operator opens the period's distinct-Issue closure signal and then explicitly applies a current-closed filter.
+      then: The period condition remains identifiable, the Issue is excluded only by the explicit current-state filter and the historical event is unchanged.
+    clear_historical_condition:
+      given: The operator opened a historical closure selection with a specific period and membership basis.
+      when: The operator explicitly removes the historical closure condition.
+      then: The resulting collection is not labeled as the original closure-event selection; the prior period remains available only as permitted origin context and no event is altered.
+    denial_after_tap:
+      given: A signal and one target PR were permitted when the operator activated the signal.
+      when: Explicit source denial restricts the PR's identity and revealing counts before the destination is presented.
+      then: Restricted facts do not appear in visual or app-controlled accessible output, and an allowed general limitation or recovery path remains.
+  unresolved:
+  - Exact native presentation of origin, edited filters and differing observation times requires UX and accessibility evaluation.
+  - Source-specific completeness and applicability of CI, review, linked-Issue and historical predicates remain unverified.
+  - No application, native navigation, source or privacy scenario has been executed.
