@@ -1,0 +1,70 @@
+id: GITVIEW-SPEC-0064
+title: GitView - Project membership basis for historical metrics
+kind: spec
+created_at: '2026-11-14T16:14:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0030
+depends_on:
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0046
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0030.yaml
+  agreed_summary: docs/drafts/project-summary-proposal.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Every Project historical series identifies its membership basis and the Repository identities included in its stated scope.
+- A retrospective series for current members is not described as the Project's historical membership at the time of past events.
+- An exact point or bucket requires sufficient evidence for the metric and stated membership; absent history remains a gap or incomplete result.
+- A Project membership edit does not silently rewrite the provenance or source observations of a previously produced series.
+- Restricted or unknown member inputs cannot be presented as zero or disclosed through a derived value.
+specification:
+  objective: Define interpretable Project metric history when locally managed Repository membership changes over time.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    project_membership: GitView Project membership is local product configuration under 0025, not a GitHub organization or GitHub Projects membership. GitHub repository events do not by themselves establish when an operator added or removed a Repository from this local Project. The existence or retention of local membership history is not assumed.
+    working_default: As an agent-authored initial proposal, when opening a Project history graph use its confirmed saved current Repository set captured for that graph evaluation as a fixed retrospective scope across the selected period. Clearly identify that basis as current members, not the actual Project membership at each historical time. If current membership cannot be established, do not invent a fixed set or claim a complete Project series.
+    fixed_evaluation: Keep the captured Repository identities and membership basis associated with a displayed series while its results are assembled. A later saved membership change does not relabel old results as describing the new set. If the UI presents a newly recalculated current-member series, identify the changed scope and reassess all affected bucket coverage; exact refresh interaction remains open.
+    historical_membership: A series claiming the Project's membership at each past time requires independently sufficient local historical membership evidence with timing and identity semantics. If that evidence is absent or incomplete, such a series is unavailable or incomplete. This candidate does not require GitView to retain a historical membership ledger or imply that one already exists.
+    event_series: A confirmed PR merge or Issue closure event can support the relevant event-time bucket only for the stated source identity, metric unit, period and evidence. GitHub documents issue timeline event types, but an API's existence or a single known event does not prove complete event history for all Repositories or all past periods. Closure reasons require evidence for the relevant event under 0030 and 0056.
+    state_series: A historical count of open PRs, open Issues or review/CI attention requires a qualifying observation at the stated point or independently justified reconstruction for that exact predicate and scope. An available present state or an isolated closure event alone does not establish a past snapshot. CI/review history and source retention may have separate limits; a skipped or missing collection is not zero.
+    per_repository: Repository-level observations retain their own time, coverage, identity and access context. A previous aggregate for A and B cannot establish a total for A and C unless each required input, including C, independently supports the new point. If a permitted input covers only a subset, a partial observation may be shown with its stated coverage; it is not a complete total or an automatic current lower bound.
+    privacy: Apply current access policy before showing historical values, source details or derived counts. Restricted data is not disclosed solely because it was available in an earlier snapshot. A mixed accessible/restricted series cannot treat restricted inputs as zero or silently present the accessible subset as the complete Project.
+    source_boundary: Repository source events, GitView local membership history and GitView local saved observations are distinct evidence classes. Their existence, availability, timestamps and retention do not imply one another. Specific API, snapshot storage, background schedule and retention policy are not selected here.
+    provenance: The owner agreed Project metrics and graphs when sufficient history exists. The fixed current-member retrospective default is an agent-authored product proposal, not an independently selected owner policy.
+  scenarios:
+    member_added:
+      given: Project P contained A last week and now contains A and B; historical event coverage exists for A but not B.
+      when: A current-member retrospective graph for last week is evaluated.
+      then: The scope is labeled A and B and the missing B contribution makes affected buckets incomplete or unavailable; the old A-only graph is not relabeled as complete for A and B.
+    historical_basis_unknown:
+      given: A Project currently contains A and B but no record establishes whether B was a member last week.
+      when: A graph is requested for actual membership at each past time.
+      then: The historical-membership claim remains unavailable or incomplete; the current A and B set is not asserted as last week's membership.
+    old_series_after_edit:
+      given: A displayed historical series was evaluated for current members A and B, and a later saved edit replaces B with C.
+      when: The old series or a recalculated series is displayed.
+      then: The old series remains attributed to A and B; a new current-member series identifies A and C and reassesses its own coverage.
+    current_state_not_history:
+      given: The current open PR count is known for all current members but no historical observations or sufficient reconstruction exist for yesterday.
+      when: Yesterday's open-PR point is shown.
+      then: It is a gap or incomplete, not today's value or zero.
+    event_known_scope_incomplete:
+      given: One confirmed merge event in the selected period is known for A while B's event coverage is incomplete.
+      when: A period outcome series for current members A and B is shown.
+      then: The known A event may be represented with incomplete scope, but one is not asserted as the complete Project outcome count.
+    access_revoked:
+      given: A previously permitted historical graph includes values derived from a private Repository that later becomes explicitly restricted.
+      when: The graph is viewed again.
+      then: Restricted data or revealing derived values are not exposed and the affected scope is unavailable or incomplete rather than zero.
+  unresolved:
+  - Verify the current-member retrospective proposal as the desired product default and define native presentation when membership changes while a graph is visible.
+  - Source-specific history completeness, event reason, CI/review reconstruction and membership retention guarantees remain unverified.
+  - No local storage model, historical graph or device behavior has been implemented or tested.

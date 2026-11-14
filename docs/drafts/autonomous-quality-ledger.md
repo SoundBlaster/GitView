@@ -637,3 +637,12 @@ Repository и частичный доступ. 0047 и 0050 сохраняют �
 preview; закрытый blocker не называется автоматически completed. GitHub
 документирует [Issue dependencies](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies),
 но поведение недоступных cross-Repository связей пока не подтверждено.
+
+## История метрик и состав Project
+
+0064 предлагает подписывать график как ретроспективу по текущему составу,
+зафиксированному для конкретного расчёта. Истинный состав Project в прошлом
+требует собственной достаточной истории membership. GitHub документирует
+[события закрытия и повторного открытия](https://docs.github.com/en/rest/using-the-rest-api/issue-event-types),
+но их наличие не доказывает полный ряд или локальную историю Project.
+Это предложенный default, не проверенная реализация или принятое решение.
