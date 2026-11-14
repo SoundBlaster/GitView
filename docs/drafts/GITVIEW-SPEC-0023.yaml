@@ -30,6 +30,7 @@ specification:
   - gitview:Issue
   contract:
     empty_projects: A confirmed local Project collection with no entries offers setup; it is not a statement about GitHub having no repositories or work.
+    configuration_unknown: A failed, incomplete or inconsistent local configuration read is not a confirmed empty Project collection. Surface a local-data recovery state without silently resetting saved configuration or conflating it with a GitHub refresh failure. Once a successful read establishes saved Projects, show their permitted identities and applicable source observation states.
     unobserved: A configured Project with an unobserved scope remains present. An unavailable count or signal is unknown, not zero, clear or healthy.
     partial: If some members or requested categories are missing, show available values only with a visible indication of incomplete scope. Unique portfolio totals follow 0012 and must not imply complete coverage.
     stale_or_failed: Previously authorized visible data remains available through temporary failures, with the affected scope, last successful observation time and an explicit indication of failure. Refresh does not silently reset the successful timestamp.
@@ -50,6 +51,10 @@ specification:
       given: A private repository was previously observed and source access is explicitly denied.
       when: Its status is presented.
       then: An access problem is identifiable and restricted cached content is not shown, consistent with 0019.
+    unreadable_configuration:
+      given: GitHub is connected but the local Project configuration cannot be read.
+      when: The operator opens the overview.
+      then: The overview identifies the local-data problem without claiming there are no Projects or that GitHub has returned an empty result.
   unresolved:
   - Freshness classification thresholds and display of coverage by metric require the observation and summary branches.
   - Recovery behavior when source access changes during an in-flight refresh requires detailed access refinement.

@@ -29,7 +29,7 @@ specification:
   - gitview:Repository
   - gitview:GitHub
   contract:
-    first_entry: When no local Project exists, the overview offers an understandable route to connect GitHub or choose repositories; a truly empty collection is distinct from unavailable observations.
+    first_entry: When a successful read establishes that no local Project exists, the overview offers an understandable route to connect GitHub or choose repositories; a truly empty collection is distinct from unavailable observations. An unreadable or inconsistent local Project store is not a confirmed empty collection and must not be silently treated as first launch.
     connection: Connection and permissions follow 0019. Cancelling authentication returns control to the setup route without treating it as a completed connection or deleting local data.
     selection: After connection the operator can select from discovered accessible repositories. Incomplete or failed discovery is identified as such and permits retry; no selection is not proof that GitHub has no repositories. Pending selection is not yet a saved Project.
     default_project: After explicitly confirming a nonempty selection, create one default Project per selected source Repository, with its own local identity and that single member, using the observed repository name as initial Project name. Reconfirming the same selection does not create another default Project for the same source Repository; existing custom Project memberships are unaffected. A Project has at least one member. Multiple repositories may subsequently be combined using 0005; selecting several does not silently create a multi-repository Project.
@@ -37,6 +37,8 @@ specification:
     rediscovery: A previously selected Repository that is temporarily absent from discovery remains associated with saved Projects; absence from a partial result is not deletion or proof of denied access. Source identity and permission handling follow 0002 and 0019.
     initial_data: The Project can be identified while work observations are loading. Never present an unobserved PR or Issue scope as a confirmed empty list; preserve explicit failure, last-success time and coverage under 0003 and 0019.
     repeat_entry: With existing Projects, use the normal overview and preserve configured membership. Launch restoration is a separate contract in 0024, not an assumption that setup repeats.
+    configuration_recovery: If local Project configuration cannot be read or its completeness cannot be established, present a recoverable local-data problem and retain saved data; do not offer an automatic first-run reset or claim that no Projects exist. A retry that successfully reads saved Projects returns to the overview with their identities and memberships intact. This state is distinct from GitHub being offline, disconnected or denying source access.
+    partial_batch_on_launch: If an interrupted confirmed selection left some Projects durably saved and other entries unresolved, show the confirmed saved Projects in the normal overview after configuration is readable. Keep unresolved entries discoverable through the recovery path under 0045 and 0052 when their operation context is available; do not assert that unsaved entries succeeded or erase confirmed Projects. Recovery of operation context across termination remains subject to 0052 and is not assumed here.
     boundary: Exact authentication method, discovery queries, screen composition and copy remain unspecified; this is an agent-authored UX proposal rather than a claim of explicit owner selection.
   scenarios:
     cancelled:
@@ -63,6 +65,14 @@ specification:
       given: The operator has pending repository selections and previously saved Projects.
       when: The operator cancels before confirmation.
       then: No pending Project is saved and existing Projects and observations are preserved.
+    unreadable_local_configuration:
+      given: Local Project configuration cannot be read at startup and its previous contents are unknown.
+      when: The overview opens.
+      then: The local-data problem is identifiable and recoverable; the app neither claims no Projects exist nor resets the saved configuration as a first-run default.
+    restart_after_partial_selection:
+      given: One selected Repository's default Project was durably saved, while another selection's outcome was unresolved when the app stopped.
+      when: A new session successfully reads the saved configuration.
+      then: The confirmed Project is available in the overview; any recoverable pending outcome remains distinct from a confirmed failure or success under 0052.
   unresolved:
   - Empty discovery and permission recovery details depend on source-access and Project-lifecycle refinement.
   - Default Project association after membership editing and deletion is proposed in 0025 and still requires domain review.

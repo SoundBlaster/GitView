@@ -192,6 +192,12 @@ pending-состояния. Она не проверяет атомарност�
 [проверку словаря](evidence/autonomous-goal-ontology-check-attention-20261114.json)
 без findings и gaps. Mapping GitHub и UI-сценарии не проверялись.
 
+В [аудите запуска и настройки](leaf-readiness-0022.md) разделены подтверждённо
+пустая коллекция, ошибка чтения локальной конфигурации, offline и явный отказ
+источника; указан пробел долговечности batch context. Новые байты 0022–0024
+прошли [проверку словаря](evidence/autonomous-goal-ontology-check-startup-recovery-20261114.json)
+без findings и gaps. Восстановление хранилища и lifecycle iOS не проверялись.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.

@@ -40,6 +40,7 @@ specification:
     signal_entry: A signal-origin route identifies the signal's active selection; returning does not discard that selection without operator action. Editing or clearing filters follows 0007.
     zoom: A density change preserves the active context and uses the focused object as anchor when it remains available; any change of scope is explicit.
     launch: As an agent-authored initial default, a new cold app session opens the Projects overview; it does not automatically enter the last viewed private object or silently reapply its work filter. If iOS resumes a still-existing app session, preserve its valid navigation context where possible. A future user-controlled cross-launch restoration feature is outside this default and requires a separate decision.
+    launch_with_unknown_configuration: The cold-launch overview may represent local configuration as unavailable or inconsistent. Do not substitute the first-run empty state or automatically enter an old object when the Project configuration cannot be verified. On recovery, show the Projects confirmed by the successful read without silently discarding their membership or restoring a stale private route.
     boundary: Exact transition, scroll algorithm, persisted state lifetime and system navigation implementation remain open; no app implementation or tested behavior is claimed.
   scenarios:
     object_return:
@@ -62,6 +63,10 @@ specification:
       given: A filtered Project collection remains in an app session while iOS suspends it.
       when: iOS resumes that same preserved session.
       then: The valid Project, filter and density context remains available where the system and current data permit.
+    launch_local_read_failure:
+      given: A previous session contained saved Projects, but local configuration cannot currently be read.
+      when: A new cold session opens the overview.
+      then: The local-data problem is shown instead of a confirmed empty portfolio; a later successful read restores access to the saved Projects under the current access policy.
     changed_filter_membership:
       given: A filtered ordered collection contained objects A, B and C in that order and B was the anchor.
       when: B no longer matches on return while A and C still match.
