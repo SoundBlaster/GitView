@@ -27,6 +27,18 @@ permissions GitHub App не взаимозаменяемы.
 только затем можно проверять mapping и требования доступа. Численные размеры
 запросов и частота обновления остаются вне этого среза.
 
+## Дополнение: parent и sub-issues
+
+В [GraphQL Issue](https://docs.github.com/en/graphql/reference/issues) поле
+`parent` имеет тип `Issue`, а `subIssues` — connection. Мутация
+`addSubIssue` документирует `replaceParent`, если у дочерней Issue уже
+есть родитель; [REST sub-issues](https://docs.github.com/en/rest/issues/sub-issues)
+также описывает замену текущего parent. Это поддерживает модель не более одного
+текущего прямого parent в соответствующем source context и нескольких прямых
+детей. Из типов одного ответа не следует полнота выборки, доступность каждого
+объекта, порядок наблюдений или history. Числовые лимиты, выбор API и частота
+обновления здесь не фиксируются.
+
 ## Дополнение: единица и revision
 
 GitHub описывает [два типа status checks](https://docs.github.com/en/pull-requests/reference/status-checks):

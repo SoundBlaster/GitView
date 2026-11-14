@@ -34,6 +34,8 @@ specification:
   - gitview:Project
   contract:
     relationship_kinds: Treat a source-reported PR mention, explicit closing connection, parent, direct child, blocked-by and blocking connection as distinct directional source facts when the source establishes each meaning. An object pair may have more than one independently supported relation; do not collapse them into one generic cause or invent a reciprocal relationship merely from its inverse without the applicable source semantics. Source links do not establish an Ontology actor-action relation or a particular actor's motive.
+    current_parent: The GitHub Issue parent field represents at most one current direct parent in its source context; a sub-issue collection describes direct children of its selected parent. A relationship observed at an earlier time does not establish that the same parent is current after a possible reassignment. When two incompatible parent observations cannot be ordered or otherwise reconciled under 0053, preserve the conflict rather than assert two simultaneous current parents or choose by response arrival. Source parent cardinality does not turn a failed, omitted, restricted or error-bearing parent response into confirmed absence.
+    hierarchy_evidence: When source semantics and compatible identity, scope, access and timing evidence establish that B is a direct child of A, that relationship has the inverse interpretation that A is B's direct parent. A separately fetched child list and parent field can nevertheless be partial, inaccessible, stale or conflicting; no independent successful fetch, matching count or currently complete inverse collection follows merely from the relationship. Do not infer a transitive direct-child relationship from a longer chain.
     identity_and_scope: Resolve each endpoint by its confirmed source identity and Repository context. A repository-local number or a matching title is not global identity, and uncertain correspondence cannot be silently deduplicated. A linked object in a Repository outside the current Project does not change membership or automatically broaden the active work selection.
     evidence: Attribute every relationship collection to the source object, relation kind and direction, observed scope, time, coverage and access context. A known positive link and its target's separately observed state are different facts and may have different freshness. Missing, omitted, null-like error-bearing or partial data is not an empty set. A confirmed absence requires sufficient source evidence for that specific relationship kind and scope.
     access: Check current eligibility separately for the source Issue, the existence and type of a link, the target identity and its individual fields. A permitted Issue does not automatically authorize exposing a private target, even if a prior response mentioned it. Do not reveal restricted identity, link existence, title, URL or a derived count where that fact is restricted. If a permitted incomplete or unavailable indication can be shown without revealing a restricted fact, use it; otherwise use an access-safe general status. This does not assert that GitHub supplies a distinct permission signal for each fact.
@@ -44,6 +46,18 @@ specification:
     navigation: A permitted linked object or source URL can be opened through an explicitly identifiable route where available, following 0024 and 0033. Preserve its source identity and distinguish the originating Project from any external Repository; if the target or URL is unavailable, do not fabricate one, silently open another object, or infer removal from a 404 alone. Return preserves the valid original Issue context or reports an origin change under 0024.
     provenance: The owner selected related PRs, hierarchy and blocking directions. The detailed coverage, identity and access rules are agent-authored refinements; the exact source permissions, relationship mapping and UI remain to be verified.
   scenarios:
+    parent_reassigned:
+      given: Issue C was observed with parent A at T1 and is later source-confirmed with parent B at T2, with ordering and applicable identity established.
+      when: The current parent is displayed.
+      then: B is the current observed parent, the older A observation retains its own context, and the app does not claim that A and B are simultaneously current parents.
+    parent_conflict:
+      given: Two otherwise compatible observations associate the same Issue C with different parents A and B but provide no sufficient ordering evidence.
+      when: The current parent is requested.
+      then: The parent is conflicted or uncertain, neither observation is selected by arrival order, and the result is not presented as two confirmed simultaneous current parents.
+    parent_inaccessible:
+      given: Retrieval of an Issue's parent is omitted, restricted or fails without sufficient independent evidence of absence.
+      when: Its hierarchy is shown.
+      then: The current parent is unknown or unavailable rather than confirmed absent.
     two_relationship_types:
       given: A source Issue has independently confirmed mention and closing connections to the same PR.
       when: Related work is displayed.

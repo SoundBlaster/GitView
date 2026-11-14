@@ -52,16 +52,16 @@ Use `.codex/skills/specgraph-project-ontology/SKILL.md` when discussing,
 drafting or reviewing domain terminology and relationships. Its installed
 version is supplied by the runtime above. Project terminology in notes and
 drafts is not automatically an accepted ontology; preserve gaps and sources.
-Read [the draft.9 package guide](ontology/candidates/domain-v0.2.0-draft.9/README.md)
+Read [the draft.10 package guide](ontology/candidates/domain-v0.2.0-draft.10/README.md)
 for the working ontology context. `specgraph.project.yaml` selects its
 `composition-context.yaml` for preparing the specification graph. The package
 remains a draft. Structural checks do not establish actor, motive or causal
-facts. Draft.8, draft.7, draft.6, draft.5 and draft.4 remain available as controls. The former selection at `ontology/context.yaml` and the original
+facts. Draft.9, draft.8, draft.7, draft.6, draft.5 and draft.4 remain available as controls. The former selection at `ontology/context.yaml` and the original
 `ontology/pilots/motivation-composition/` are available as controls.
 
 For the selected context, pass the compiler at `git config --get gitview.ontologyc` to the installed runtime.
 The compiler is a locally built, SHA-256-pinned snapshot of Ontology commit
-`4c5027b`; see the draft.9 guide. It is not a verified release binary.
+`4c5027b`; see the draft.10 guide. It is not a verified release binary.
 The `ontology-context` command reads the selection from project configuration.
 For a target check via `supervisor`, pass that same path explicitly with
 `--ontology-context-selection`.
