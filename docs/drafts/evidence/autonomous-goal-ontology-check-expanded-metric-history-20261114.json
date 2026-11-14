@@ -1,0 +1,164 @@
+{
+  "runtime": "3593bd75",
+  "context_revision": "sha256:802242a9ca08f9aca0a49768a7de0c8ac9d618878c93bdde3ed79c0f333304d1",
+  "compiler_provenance": "not_verified",
+  "semantic_approval": "not_established",
+  "scope": "candidate format and domain_vocabulary structural advisory; no metric, retention, source or native behavior executed",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-metric-catalog-1wl68x4c",
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0043",
+      "sha256": "171cc8ad1cfb496793666f32131183d56ce0bce861a6c79e7ec2d0af0bb84870",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 5,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0057",
+      "sha256": "2e0484047e0feb83f874a45444a66f185aed0d43c2fe277149ff0823e9bd3ca5",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 6,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0064",
+      "sha256": "05ee3f815a6958ac64b7eca7d0046c2052285169d31eee1e2d7d6f478aae99aa",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 5,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0066",
+      "sha256": "21264ea97f9d5768af70656865c79747a7d6d7996ed59d32b28e53c684982a55",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 5,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0068",
+      "sha256": "14fcffc2d0afab024c90a6b986bb4aac49a039e3655434c7a185e9b80364786a",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 6,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0069",
+      "sha256": "23879d94475b256fe9cefad1827e1d841aa9da08757478231857d9a07cfdf65e",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 5,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0097",
+      "sha256": "55451f285995676f5cc98f54d3761a3c1ce7a47a4f148de4b1000ffc56a888ab",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 7,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    }
+  ]
+}

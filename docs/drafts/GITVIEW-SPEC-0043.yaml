@@ -85,6 +85,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    attention_history_units:
+      given: One Project's supported observation has three unresolved review threads on one open PR, while a separate PR's failed CI was observed for a different revision and time.
+      when: The operator inspects the corresponding historical summary metrics.
+      then: Thread and affected-PR series retain their distinct units and actual contexts; the CI result is not backdated or substituted for an unobserved historical PR state, and unavailable or restricted inputs remain incomplete.
     history_retry_across_restart:
       given: A permitted source refresh yields an open-PR history observation, its retention may have committed, and its acknowledgement is lost before restart.
       when: GitView recovers the retention attempt and retries or reconciles it.

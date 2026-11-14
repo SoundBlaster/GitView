@@ -25,6 +25,9 @@ specs проверены через `domain_vocabulary` в изолирован�
 по новым SHA в [этом отчёте](../../docs/drafts/evidence/autonomous-goal-ontology-check-current-context-references-20261114.json).
 После этого 0043 и 0066 проверены ещё раз вместе с 0071 в
 [отчёте о replay](../../docs/drafts/evidence/autonomous-goal-ontology-check-retention-replay-20261114.json).
+После дополнения каталога исторических метрик 0043, 0057, 0064, 0066, 0068, 0069 и
+новый 0097 проверены по более свежим SHA в
+[отчёте каталога](../../docs/drafts/evidence/autonomous-goal-ontology-check-expanded-metric-history-20261114.json).
 
 Явные `ontology_refs` найдены во всех 96 файлах и содержат 17 различных
 qualified names. Среди них 23 файла ссылаются на `gitview:Metric`, девять — на

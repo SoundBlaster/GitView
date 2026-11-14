@@ -1,0 +1,95 @@
+id: GITVIEW-SPEC-0097
+title: GitView - History for the agreed Project summary metrics
+kind: spec
+created_at: '2026-11-14T19:36:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0066
+- GITVIEW-SPEC-0068
+depends_on:
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0057
+- GITVIEW-SPEC-0061
+- GITVIEW-SPEC-0062
+- GITVIEW-SPEC-0063
+- GITVIEW-SPEC-0064
+- GITVIEW-SPEC-0065
+- GITVIEW-SPEC-0067
+- GITVIEW-SPEC-0069
+- GITVIEW-SPEC-0071
+- GITVIEW-SPEC-0094
+sources:
+  agreed_summary: docs/drafts/project-summary-proposal.md
+  catalog: docs/drafts/GITVIEW-SPEC-0057.yaml
+  retention: docs/drafts/GITVIEW-SPEC-0066.yaml
+  presentation: docs/drafts/GITVIEW-SPEC-0068.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The owner-agreed summary metrics have individually identifiable history selections when their supported evidence is available; the initial four displayed series are not treated as the complete metric catalog.
+- Historical open-draft PR, failed-CI PR, review-request PR, changes-requested PR, unresolved review-thread, affected-PR and blocked-Issue values preserve the exact current-state predicate and distinct unit they represent.
+- Historical Repository membership count distinguishes observed past Project membership from a fixed current-member retrospective scope.
+- A retained metric result preserves its predicate, unit, actual observation context, membership basis, coverage and access limitations; missing or incompatible evidence cannot become a zero or a complete point.
+- A count alone does not fabricate the identities of contributing objects or prove the historical inputs needed to recalculate a different scope.
+- Retention, history-clear, recovery and display honor private-data restrictions and do not infer missing source data from a successful local write.
+specification:
+  objective: Make the agreed Project summary graphable beyond the four initial visible series while keeping each metric's unit, historical evidence and coverage explicit.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:ReviewThread
+  - gitview:Metric
+  contract:
+    catalog: The initial open-PR, open-Issue, merged-PR and closed-Issue series remain available under 0069. Also provide a discoverable selection for the other owner-agreed summary metrics in 0057 when their supported history exists, including open draft PRs, open PRs with failed CI, open PRs awaiting review, open PRs with changes requested, unresolved review threads, open PRs with unresolved review threads, and open Issues with an open direct blocker. Repository membership count and category-specific observation coverage use their own rules below. A conditional checks-and-review-passed series is not asserted until its predicate is selected. A missing series is identified as unavailable or incomplete rather than omitted as if it had never been requested or drawn as zero. Exact menu, chart arrangement and additional presets are native design work.
+    attention_state: Each listed attention value is a distinct-object or distinct-thread state observation using its 0057 predicate, not a count of CI executions, review actions, thread messages, blocker links or completed tasks. Draft PRs are a subset of open PRs; affected PRs and unresolved threads are different units; attention categories may overlap. Preserve the predicate version, applicable source revision, object type, unit, Repository scope, observation or component times, coverage and membership basis. A changed current CI status or PR revision cannot be backdated to an earlier point, and mixed-time inputs are not represented as an exact simultaneous source snapshot without evidence under 0065.
+    retention: Extend the 0066 agent-authored capture proposal to each above attention or draft metric when a permitted accepted observation provides enough information for an interpretable result for its actual scope. A supported partial observation may be retained with its actual incomplete coverage; a request, omitted field or unchanged unrelated field does not create a fresh metric sample. Do not require saving titles, bodies or full object lists just to retain a permitted aggregate. Retention is attempted subject to access and local storage, not a guarantee that background execution, source coverage, history queries or a sample in every bucket will exist. Replays and indeterminate writes follow 0071.
+    repository_count: Offer history of the count of distinct confirmed saved Repository identities in the actual Project at an observed local configuration state. As an agent-authored capture proposal, when a confirmed saved Project configuration is observed after creation or a confirmed membership change, attempt to retain its count and its actual Project, observation time and membership-evidence context; do not use a pending or indeterminate edit as a confirmed count. A local confirmation or observation time is not automatically the exact time of a change whose durable outcome was previously indeterminate. This observed actual-membership series has a different basis from the fixed current-member retrospective in 0064; the size of today's fixed Repository set is not proof of the Project count last week. Missing local samples or historical membership evidence remain gaps; the saved current Project is not itself a history ledger.
+    coverage_history: Make category-specific observation-coverage history selectable when sufficiently supported, and attempt to retain eligible coverage observations with the accepted metric context. Identify the observed category, numerator, eligible denominator, source and time; a generic count of available Repositories is not a substitute for CI, review or Issue coverage. An unknown denominator is not zero, and neither a current grant nor a later fetch supplies an unobserved past coverage point. Do not expose restricted member identities or revealing derived counts to explain a coverage gap.
+    long_thread_boundary: The separately requested long-thread signal follows 0094. Once its duration predicate and threshold are selected, its history requires the corresponding predicate version, reference time, source thread-age and resolution evidence, units and coverage at each point. Until then do not generate or retain a purported long-thread zero or series; ordinary unresolved-thread history remains independent and can be available.
+    point_and_navigation: For daily state graphs use the eligible sample and calendar rules of 0069, keeping actual sample time and incompleteness discoverable. A sample for one Repository or previously captured member set may not be relabeled as a Project value for a different set. A retained aggregate count alone is not an object selection or a proof of an earlier PR's precise status. Offer historical object navigation only when independent authorized evidence supports the same predicate, time, scope and identities; otherwise expose the limitation under 0068. A current filtered PR list must not be substituted as a historical list.
+    project_and_privacy: A shared Repository can contribute to each Project; do not sum overlapping Project totals into a unique portfolio count. Apply 0036 and 0064 before showing or retaining private inputs or revealing aggregates. Explicitly clearing all local metric history under 0067 includes the historical values described here but does not clear Project configuration or current cache. A later fresh retrieval is attributed to its own evidence and is not proof that cleared observations survived.
+    verification: Future deterministic tests with injected clock, data and storage cover each metric's unit, predicate version, partial coverage, missing fields, equal-time conflict, shared Repository and retention replay; actual source semantics, persistence/restart, access and native chart accessibility require separate evidence under 0079. These are planned checks, not executed tests.
+    provenance: The owner approved graphs of the summary metrics when sufficient history exists. The additional capture triggers, selector, observed local membership series and fallback behavior are agent-authored proposals requiring review; they do not claim a working application or GitHub history availability.
+  scenarios:
+    failed_ci_is_not_failed_check_count:
+      given: At one supported observation context two distinct open PRs have five failed status-check entries in total, and applicable revision and coverage are established.
+      when: GitView retains and later displays the failed-CI PR history value.
+      then: The point is two affected PRs for that context; five is a distinct check unit and the point is not a count of five PRs or five failures occurring during the day.
+    review_missing:
+      given: A complete open-PR count is available but review-request information was not observed.
+      when: Review-waiting history is requested.
+      then: The open-PR observation may retain its own value, but review-waiting history remains unavailable or partial rather than a confirmed zero.
+    threads_and_prs:
+      given: One open PR has three confirmed unresolved review threads with sufficient identity and coverage.
+      when: The corresponding two summary-metric history values are retained.
+      then: The thread series records three threads and the affected-PR series records one PR; neither is presented as three independent PRs.
+    changed_project_membership:
+      given: Project P was confirmed with one Repository on Monday and with two on Wednesday, and both local membership-count observations were successfully retained with their actual contexts.
+      when: The operator inspects actual-membership count history for those points.
+      then: Monday can show one and Wednesday two; Tuesday is not asserted from the samples alone, and a retrospective graph using today's two members is not presented as evidence of Monday's actual composition.
+    unknown_membership_save:
+      given: A membership edit might have committed but its durable outcome cannot be read, and the prior confirmed membership count was one.
+      when: A historical membership point is considered at that time.
+      then: Neither one nor the proposed new count is asserted as a confirmed new sample solely from the missing acknowledgement; recovery follows 0025 and 0071.
+    aggregate_is_not_object_history:
+      given: An authorized historical aggregate establishes that two PRs had failed CI for an earlier scope, but contributing PR identities and their historical predicates are unavailable.
+      when: The operator asks to inspect the PRs behind that point.
+      then: The supported aggregate may remain visible with its context, but the object selection is limited or unavailable rather than populated from current failed-CI PRs.
+    later_revision_not_backdated:
+      given: A PR had a known passing CI result for revision A at an earlier point and a failing result for revision B is observed later.
+      when: The earlier failed-CI series is displayed.
+      then: B's failure is not assigned to A or used to rewrite the earlier point; each supported observation retains its own revision and time.
+    restricted_history:
+      given: A previously permitted Project attention point includes a private Repository that later becomes restricted.
+      when: Its metric history is opened or read through accessibility.
+      then: Restricted values and revealing aggregates are not exposed; available history is incomplete or unavailable rather than a complete zero.
+  unresolved:
+  - Validate the proposed additional capture and local membership-count series with native UX; no iOS chart, storage, history-clear or restart behavior has been implemented or tested.
+  - Establish source-specific field and revision semantics, category completeness and support for each predicate without assuming source history exists.
+  - Determine storage budgets and privacy classification, and define concrete retention/recovery mechanics after the upstream product contracts are ready.
