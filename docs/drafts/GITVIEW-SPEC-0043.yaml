@@ -61,6 +61,7 @@ depends_on:
 - GITVIEW-SPEC-0093
 - GITVIEW-SPEC-0094
 - GITVIEW-SPEC-0098
+- GITVIEW-SPEC-0099
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -86,6 +87,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    first_setup_partial_github_installation:
+      given: A GitHub identity is confirmed, Repository A is accessible through one app installation, and a separate organization-scope approval remains pending with source-supported evidence.
+      when: The operator explicitly selects A for default setup while the other scope remains unresolved.
+      then: A can become one local default Project under per-entry persistence rules; its PR and Issue data remain unobserved until fetched, while the pending scope is not presented as an empty organization or an approved installation.
     github_token_rotation_response_lost:
       given: A Project shows previously permitted cached observations while an expiring GitHub App user token is being renewed, and GitHub may have rotated the pair before the response is lost.
       when: The operator opens the Project after an interrupted restart and requests refresh.

@@ -735,3 +735,12 @@ backend GitView. Выбор агента учитывает публичност
 без findings/gaps; в графе 98 кандидатов, ссылок без цели и циклов не найдено.
 Регистрация GitHub App, реальная авторизация, secure storage и iOS UX не
 проверялись; доступность всех выбранных данных остаётся открытой.
+
+[0099](GITVIEW-SPEC-0099.yaml) уточняет первый запуск при раздельных исходах
+GitHub identity, installation, Repository grant и work-data observation.
+Выбор доступного Repository не блокируется другой неполной областью, а возврат
+из GitHub не подменяет проверку доступа. 0022, 0043, 0059, 0088 и 0099
+прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-installation-setup-20261114.json)
+без findings/gaps. В графе 99 кандидатов, отсутствующих ссылок и циклов не
+найдено. Реальные installation, discovery, permissions, сохранение и UX не
+проверялись; результаты относятся к структурной проверке candidate bytes.
