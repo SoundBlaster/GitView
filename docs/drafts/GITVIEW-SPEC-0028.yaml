@@ -32,7 +32,9 @@ specification:
     scope: Record the PR identity, observed revision if known, source observation time and coverage. A check result from a previous revision is not silently represented as a confirmed result for a newer revision; unavailable revision linkage remains unknown.
     counters: For a sufficiently observed collection, count checks mapped to failure, pending and success separately and show the total current checks. Special, cancelled, neutral or unmapped conclusions are retained as other or unknown according to a separately verified mapping; they are not silently included in success. Consequently the three colored counts need not add to total.
     empty_and_partial: A complete observation with zero current checks yields a known total of zero. No observation yields unknown, not zero. Incomplete observations can show the counts observed so far with visible incomplete coverage and must not claim the displayed count is the full total.
+    failed_check_predicate: For a stated PR revision and observation context, a confirmed current check mapped to failure is sufficient evidence that this observed PR has at least one failed check, even if other checks are unobserved. Conversely, an incomplete collection, unresolved check identity, unknown revision association or an unmapped conclusion that could affect the predicate cannot establish that no check failed. A previously observed failure remains attributable to its own revision and time; it is not automatically a current failure after a revision or source-state change.
     review: Show the source review assessment, requested-review information and total and unresolved thread counters as independent observations. A submitted request for changes can exist without an unresolved thread; absence of a thread does not erase the assessment. Unknown counts are not zero.
+    unresolved_thread_predicate: A confirmed unresolved thread is positive evidence for the observed PR and thread scope even if the thread collection is incomplete. No observed unresolved thread establishes absence only when the relevant collection and resolution states are sufficiently covered. Review approval, requested changes and zero unresolved threads remain separate source facts; none is inferred from the others.
     summary_units: Repository and Project summaries count affected PRs and repositories as specified in 0012, separately from the count of checks. Overlapping review and CI conditions do not create extra PR identities.
     access_and_failure: Obey the source-access policy in 0019 and observation handling in 0026. Retained stale data is marked with its time and does not become a current successful result because another scope refreshed.
     ready: A green check count, approved review or zero unresolved threads does not alone establish mergeability. Merge eligibility is outside this contract until all governing rules are explicitly specified.
@@ -54,6 +56,19 @@ specification:
       given: The observed PR revision changes after a prior check observation.
       when: No checks have been observed for the new revision.
       then: The prior checks are not presented as a confirmed passing status for the new revision and freshness or uncertainty is exposed.
+    partial_with_failure:
+      given: A partial check collection contains one confirmed failed check associated with the observed PR revision, while other checks remain unobserved.
+      when: The PR's failed-check signal and counters are evaluated for that observation.
+      then: The observed failure is available as positive evidence with incomplete coverage; neither the full failed-check count nor the total is asserted from that partial collection.
+    partial_without_failure:
+      given: A partial check collection has no observed failure but includes unobserved or unmapped checks.
+      when: The PR's failed-check signal is evaluated.
+      then: The predicate remains unknown rather than being treated as a confirmed absence of failed checks or a passing CI verdict.
+    partial_threads:
+      given: A partial thread collection contains one confirmed unresolved thread and the review assessment is unavailable.
+      when: Review signals are shown.
+      then: The observed unresolved thread is indicated with incomplete coverage and the review assessment remains unknown.
   unresolved:
   - GitHub field mappings for individual checks, retries, revision association and special conclusions need verification when that branch is refined.
   - Partial per-category count presentation and limits of a known total require source coverage semantics.
+  - Source evidence required to establish a thread's resolution state at the relevant observation and any relation to the current revision.

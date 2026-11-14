@@ -186,6 +186,12 @@ pending-состояния. Она не проверяет атомарност�
 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-signal-navigation-20261114.json)
 без findings и gaps. Исторические фильтры и реальная навигация не проверялись.
 
+В [аудите 0028](leaf-readiness-0028.md) разобраны положительное свидетельство
+из частичной выборки, отсутствие доказательства отрицательного результата и
+привязка к revision и observation time. Новые байты 0028 и 0046 прошли
+[проверку словаря](evidence/autonomous-goal-ontology-check-attention-20261114.json)
+без findings и gaps. Mapping GitHub и UI-сценарии не проверялись.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.
