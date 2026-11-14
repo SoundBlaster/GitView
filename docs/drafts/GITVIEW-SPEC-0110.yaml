@@ -20,6 +20,9 @@ sources:
   parent: docs/drafts/GITVIEW-SPEC-0027.yaml
   temporal: docs/drafts/GITVIEW-SPEC-0089.yaml
   model_review: docs/drafts/today-selection-access-model-review-20261114.md
+  specification_core_source: /Users/egor/Development/GitHub/Specification Project/SpecificationCore/Sources/SpecificationCore/Core/DecisionSpec.swift
+  specification_core_first_match: /Users/egor/Development/GitHub/Specification Project/SpecificationCore/Sources/SpecificationCore/Specs/FirstMatchSpec.swift
+  specification_core_observed_revision: 483214469828c42f7b615654aa70d0acbecc4dbf
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The selection decision receives normalized scoped facts, explicit filter context and their supported truth values; it performs no source, storage or navigation effects.
@@ -45,6 +48,8 @@ specification:
     output: Return per permitted confirmed-identity candidate its classification and supporting context or references to that context, together with separately attributed population coverage and limitations. The decision does not need to expose restricted candidate identity or existence to report an allowed scope-level limitation. A complete per-candidate classification of the known input list does not prove the entire requested source population was observed. Do not derive a source count, current timestamp or coherent snapshot merely from the number of classified inputs.
     filtered_empty: If the operator explicitly excludes every lifecycle state applicable to the selected object types, the visible result is intentionally filtered empty. Preserve the active exclusions and any separately applicable incomplete coverage, refresh failure or access limitation; this empty view is not evidence that the source has no work. In ordinary cases, confirmed empty requires adequate population and filter coverage under 0102 and no uncertain matching candidate in the claim's permitted scope.
     effects_and_determinism: The same normalized inputs and captured calendar context yield the same classifications without reading a clock, database or network during evaluation. A day, time-zone, source, access or membership change is supplied as a new evaluation context, not an implicit mutation of the earlier result. A later observation or route transition cannot retroactively give an earlier mixed-time result a common snapshot time.
+    typed_decision_proposal: Based on the inspected SpecificationCore checkout, represent the applicable Today policy's domain outcome explicitly as match, non-match or unknown in its typed result; a DecisionSpec may return that result when the rule applies and reserve its optional nil for rule non-applicability. For the top-level policy over a validated eligible candidate, a no-match return is not an ordinary unknown, confirmed exclusion or empty result. Treat unexpected no-match as an integration limitation or diagnostic and do not present the candidate as excluded; malformed context is validated separately rather than hidden as a domain fact. This is an agent-authored interface proposal, not a compiled API or a resolved package version.
+    composition_boundary: The inspected Specification protocol and its standard Boolean operators evaluate Bool, while FirstMatchSpec applies Boolean predicates in order and returns the first matched result or nil. Boolean negation of a predicate whose unavailable input was collapsed to false would incorrectly turn unknown into true. Preserve the three-valued facts and 0110 truth table explicitly within the typed policy; use Boolean specifications only for conditions whose inputs are actually known and whose no-match semantics do not erase unknown. A FirstMatch fallback to unknown is permitted only if independently shown to cover precisely the intended unknown cases and not a programming or applicability gap; no such fallback is selected here.
     testing: Under 0040 and 0079 specify failing-then-passing behavior tests for the truth table, identity normalization, privacy projection, half-open time boundaries, stale or mismatched revision, incomplete population and all-states-excluded view. The existing finite model checks a simplified logic abstraction only; actual domain caller, source semantics, storage, platform calendar and UI remain separate evidence. Use SpecificationCore only if its chosen API preserves true, false, unknown and rule non-applicability as required under 0095.
     provenance: The owner's requirements are unfiltered unfinished and same-day completed work, explicit filters and a dense overview. The three-valued truth rules and this pure-decision interface are agent-authored proposals; input names here describe a contract, not mandated Swift types or ontology entities.
   scenarios:
@@ -76,7 +81,15 @@ specification:
       given: A private PR's identity and existence are restricted while its internal filter evaluation would otherwise be unknown.
       when: The presentation result is prepared.
       then: No revealing card or restricted derived count is exposed and any permitted scope-level uncertainty remains separate from a false filter result.
+    unknown_is_not_rule_absence:
+      given: A validated in-scope PR has confirmed Today inclusion and an unavailable applicable CI fact under an active failed-CI filter.
+      when: The top-level typed Today policy evaluates it.
+      then: It returns the explicit domain unknown result, rather than nil for no applicable rule or a Boolean non-match; population coverage remains separately attributed.
+    unexpected_no_rule:
+      given: A validated candidate is expected to be handled by the top-level Today policy but no rule returns a result because the policy composition is incomplete.
+      when: The caller receives no decision.
+      then: The caller does not label the candidate as a confirmed exclusion or silently turn the failure into a domain unknown; it identifies an integration limitation without exposing restricted facts.
   unresolved:
-  - Specify the exact typed representation and caller mapping against the chosen SpecificationCore version and domain boundary without collapsing unknown into rule non-applicability.
+  - Select a SpecificationCore dependency version and verify the proposed typed representation and caller mapping against that resolved version without collapsing unknown into rule non-applicability.
   - Establish source-specific event, revision, identity and population evidence needed to populate the decision inputs; this contract does not assume GitHub supplies a complete snapshot.
   - The finite model uses simplified assumptions; no actual Swift policy, TDD cycle, source adapter or native behavior has been executed.

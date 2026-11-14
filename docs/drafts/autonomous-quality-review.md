@@ -229,6 +229,12 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+0110 дополнен предложением типизированного `match / non-match / unknown`,
+отдельного от `DecisionSpec` no-match. Основа — исходники SpecificationCore
+на локальном commit `4832144`, не разрешённая зависимость GitView. [Проверка](evidence/autonomous-goal-ontology-check-specificationcore-policy-20261114.json)
+не нашла findings, gaps и warnings; API не компилировался в приложении.
+Расхождение примера DocC с исходником FirstMatchSpec записано в 0AL ledger.
+
 [0110](GITVIEW-SPEC-0110.yaml) определяет входы и трёхзначный результат чистого
 Today selection, отдельно от coverage и privacy projection. [Оценка листа](today-policy-leaf-readiness-20261114.md)
 различает остающиеся проектные решения и будущие интеграционные проверки.
