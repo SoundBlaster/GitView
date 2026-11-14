@@ -73,6 +73,7 @@ depends_on:
 - GITVIEW-SPEC-0115
 - GITVIEW-SPEC-0117
 - GITVIEW-SPEC-0118
+- GITVIEW-SPEC-0119
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -214,6 +215,10 @@ specification:
       given: A two-Repository Project is represented at dense scale; one Repository has known open PRs and the other's CI scope is unobserved.
       when: The operator opens the same Project's summary and then requests its open-PR history without a pinch or long press.
       then: Available facts and their coverage remain attributable to that Project, unobserved CI is not a healthy zero, and missing historical evidence is shown as a gap or incomplete rather than backfilled from the current count.
+    project_summary_mixed_category_coverage:
+      given: Project P contains A and B, the open-PR category is sufficiently observed for both, and B's applicable CI data is unavailable.
+      when: The operator inspects P's open-PR and failed-CI signals.
+      then: The open-PR value can retain its own supported completeness while failed-CI coverage is incomplete or unavailable; one successful category does not turn the other into zero or healthy.
     discovery_search_and_custom_intent:
       given: Existing Projects are visible and the operator starts custom Project creation, selects Repository A, then searches a partially observed discovery scope for B.
       when: The current search has no observed matches and a late response for an earlier query arrives.

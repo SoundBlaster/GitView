@@ -1,0 +1,97 @@
+id: GITVIEW-SPEC-0119
+title: GitView - Scoped summary aggregation decision
+kind: spec
+created_at: '2026-11-14T22:16:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0046
+depends_on:
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0040
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0057
+- GITVIEW-SPEC-0064
+- GITVIEW-SPEC-0079
+- GITVIEW-SPEC-0092
+- GITVIEW-SPEC-0101
+- GITVIEW-SPEC-0102
+- GITVIEW-SPEC-0110
+- GITVIEW-SPEC-0112
+- GITVIEW-SPEC-0116
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0046.yaml
+  metrics: docs/drafts/GITVIEW-SPEC-0057.yaml
+  units: docs/drafts/summary-filter-units-20261114.md
+  observations: docs/drafts/GITVIEW-SPEC-0116.yaml
+  source_coverage: docs/drafts/today-source-evidence-crosswalk-20261114.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A deterministic aggregation evaluates one named metric and explicit scope from supplied evidence without fetching, saving or navigating.
+- Complete value, supported observed subset and unavailable or indeterminate result remain distinct; zero requires evidence for the claimed scope.
+- Repository membership, object identity, predicates, coverage, access and component times are retained with each applicable result and cannot be replaced by a newer unrelated observation.
+- Shared Repository membership contributes to each Project but only once to a separately requested unique portfolio; unresolved identity cannot yield a fabricated exact unique count.
+- One known signal does not imply that unrelated metrics or missing input categories are complete, current, healthy or zero.
+- Access restrictions and derived-value policy are applied before any exact or partial value is presented, including accessible and shareable output.
+- Described scenarios and injected verification do not claim a completed implementation or live-source evidence.
+specification:
+  objective: Define a pure decision boundary for Project and unique-portfolio summary values under partial coverage, overlapping membership and independent observation contexts.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:ReviewThread
+  - gitview:Metric
+  contract:
+    boundary: Evaluate one explicitly named measurement for one confirmed Project, one Repository or a separately requested unique portfolio using supplied normalized facts, membership and evidence. The decision performs no source request, persistence, mutation, clock read or navigation. A caller may evaluate multiple metrics separately; a successful result for one does not certify another. This is an agent-authored decision contract, not an ontology entity or a claim of a selected Swift API.
+    inputs: Supply metric and predicate version, unit and object type, captured source and Repository scope, known or uncertain Project membership, relevant current-state reference or fixed half-open event period, supported source identities, per-fact value and applicable times or revisions, per-category population coverage, and current disclosure eligibility. Inject evaluation time and calendar context where the predicate needs them. Distinguish missing, unreadable, restricted, conflicting and independently supported observations; a generic connection or cached Project is not proof of all category access.
+    output: Return an explicit result whose supported state is complete-for-its-stated-context, observed-subset-with-limitation, or unavailable-or-indeterminate, with enough permitted attribution to interpret its unit, predicate, scope, membership basis, relevant times and coverage. An unavailable result does not require inventing a numeric value. A partial value describes only the actually supported permitted observations; it is not automatically a bound on the present population. Exact serialization and visual wording are not selected.
+    calculation: Count each source-confirmed qualifying object at most once for a distinct-object metric, each identified qualifying thread at most once for a thread metric, and each supported event according to the event metric's own unit and interval. Apply the category predicates in 0057 and the source normalization in 0101. One PR with multiple failing checks contributes once to a failed-CI PR metric but the check count remains a separate metric; overlapping PR and Issue or CI and review categories are not combined as independent work items.
+    complete_and_zero: A complete value or zero requires supported scope, identity, relevant predicates, access and sufficient population evidence for every required input under 0102 and 0046. A successful page, absence of an observed positive, unobserved Repository or missing category field is not such evidence. A supported complete value remains tied to its actual source reference; it does not claim no later changes occurred. When component observations differ in time, report the supported time context and do not call their sum a simultaneous snapshot without evidence.
+    subset: Individually confirmed permitted positives may form an observed subset if their identities and applicable predicates can be established, even when other Repositories, pages or fields are incomplete. Label its actual scope and coverage safely. Missing or stale facts do not become negative predicate results; an old observed subset is not an automatic lower bound on current work. A sum of overlapping input aggregates is not a distinct-object count unless disjointness or sufficient member identity evidence is established. Unknown equivalence between candidate identities keeps the affected uniqueness or total uncertain.
+    membership_and_overlap: A Project evaluation captures its own confirmed member identities and evaluates each eligible member once. The same Repository can contribute to each of two Project results. A unique-portfolio evaluation instead uses the confirmed union of Repository and object identities, not the arithmetic sum of Project values. Same local PR or Issue numbers in different Repositories are not equal identities; a separately identified linked Issue is not its PR. Unknown membership or an unresolved identity prevents a complete unique total where it could affect the value.
+    compound_predicates: CI, review, threads, blockers and lifecycle use their own subject, revision, observation time and completeness. A source-confirmed failing check can establish a positive for an applicable PR even when other checks are missing; absence of any observed failure is not a confirmed negative without sufficient applicable check coverage. Open-at-T2 and failed-at-T1 do not alone prove one simultaneous open-and-failed PR at T2. A new title, Issue result or successful refresh does not advance unrelated CI or review evidence.
+    access_and_privacy: Treat disclosure eligibility as an input and enforce 0036, 0064 and 0112 at the app-controlled presentation or handoff boundary as well as when producing permitted result material. Do not include restricted identity or a revealing count merely to explain uncertainty. A supported permitted subset may be shown with non-revealing incomplete scope only if its lineage and combination with other exposed values satisfy the applicable disclosure rule; a formerly visible total does not become safe merely because it was cached. Prior disclosures outside app control cannot be recalled.
+    reevaluation: Bind every result to the actual membership, metric, selected period, inputs, access and evidence context. An older computation finishing late cannot overwrite a separately selected newer context or be relabeled with a new member set or observation time. New observations and explicit membership changes require a new evaluation; safely reusable individual facts retain their original scope and time. A navigation action follows 0029 and 0092 and independently evaluates whether underlying objects and access support the destination.
+    verification: Under 0040 and 0079 prepare TDD cases for complete zero versus unknown, mixed categories, partial positives, mixed times, duplicate representations, cross-Project overlap, uncertain identity, membership changes during evaluation and access restriction before display. Exercise the pure decision with injected evidence separately from source, persistent recovery, real permissions and native UI tests. Selecting SpecificationCore or its exact version remains a separate architecture decision; unknown and non-applicable states must not be collapsed.
+    provenance: The owner chose Projects containing one or more Repositories, overlapping membership, summaries and graphs. Result categories, source-evidence rules and this pure decision boundary are agent-authored refinements requiring review; no product code, source access or tested interface is claimed.
+  scenarios:
+    known_issue_subset_unobserved_member:
+      given: Project P has confirmed members A and B; A has three permitted open Issues with supported A-only coverage and B has no applicable Issue observation.
+      when: The open-Issue summary is evaluated.
+      then: A's observed three can be presented as an appropriately scoped incomplete subset where safe; P is not reported as having exactly three open Issues and B is not assigned zero.
+    category_independence:
+      given: Both Project members have sufficient open-PR evidence, but one member has no applicable CI observation.
+      when: Open-PR and failed-CI PR summaries are evaluated.
+      then: The open-PR value may be complete for its own supported context while the failed-CI result remains incomplete or unavailable; the former does not certify CI as healthy.
+    confirmed_failure_partial_checks:
+      given: A permitted identified open PR has a confirmed applicable failed check and its remaining check collection is incomplete.
+      when: The failed-CI PR metric is evaluated.
+      then: That PR may contribute once to a safely presented observed positive subset, while unknown other PRs and checks prevent an unsupported complete Project count.
+    shared_repository:
+      given: The same confirmed Repository R containing one qualifying PR belongs to Projects P and Q, and all relevant scopes and predicates have sufficient compatible coverage.
+      when: Both Project summaries and a separate unique portfolio summary are evaluated.
+      then: R's PR can appear once in each Project and once in the deduplicated portfolio, not twice in the portfolio by summing P and Q.
+    uncertain_unique_identity:
+      given: Two source representations might describe the same PR but their association is unresolved and either could qualify for the unique portfolio predicate.
+      when: The distinct-object total is evaluated.
+      then: The decision does not merge by title or count both as definitely distinct, and the exact unique total remains uncertain until evidence resolves the association.
+    different_component_times:
+      given: A PR has a confirmed failed check for revision A at T1 and is observed open at T2, with no evidence that the check still applies at T2.
+      when: An open-and-failed current summary is evaluated.
+      then: The earlier failed fact and later lifecycle keep their own context; their combination is not asserted as a simultaneous confirmed positive at T2.
+    membership_changes_during_evaluation:
+      given: A summary computation captured members A and B while the saved Project is subsequently changed to A and C, with no applicable C observation.
+      when: The old computation completes.
+      then: Its result keeps the A-and-B basis and cannot become the current A-and-C total; the latter is separately incomplete or unknown.
+    restricted_input_after_computation:
+      given: A stored total was derived from permitted A and B, and B's private inputs become restricted before presentation.
+      when: The summary and a separately supported A-only value are projected.
+      then: The exact total and revealing equivalents are suppressed under the current policy; an independently safe A-only value can remain labeled as incomplete without asserting B contributes zero.
+  unresolved:
+  - Choose concrete input and result types, SpecificationCore version and caller composition after the parent and dependency contracts are ready.
+  - Establish source-specific temporal, identity and coverage semantics for each selected predicate and practical privacy-safe lineage for retained aggregates.
+  - Evaluate native presentation and perform actual product, source, storage, accessibility and device tests after implementation; none have run.
