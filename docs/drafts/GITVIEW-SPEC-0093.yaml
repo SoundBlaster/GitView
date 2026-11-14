@@ -26,6 +26,7 @@ depends_on:
 - GITVIEW-SPEC-0063
 - GITVIEW-SPEC-0073
 - GITVIEW-SPEC-0075
+- GITVIEW-SPEC-0112
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0050.yaml
   preview_proposal: docs/drafts/ux-preview-interactions.md
@@ -64,6 +65,7 @@ specification:
     availability: A confirmed zero, source-confirmed absence, unobserved value, partial collection, stale observation and restricted value remain distinct under 0044 and 0046. Retained permitted observations keep their own times and revision or scope where applicable. A newer title does not make earlier CI, review, counts or links current. Compact representation may summarize limitations, provided their relevant scope remains discoverable without exposing restricted details.
     cached_and_refresh: An eligible preview can open from previously permitted saved data without requiring a new network response. If the app chooses to request additional facts, show only supported available content or an appropriate unavailable state while waiting; a successful title fetch is not complete preview coverage. Apply later facts only to the same confirmed object, field and source context, respecting ordering and current access under 0037 and 0053. A response after dismissal, retargeting, denial or scope invalidation must not populate another preview or restore restricted content by itself.
     presentation_lifetime: Bind an optional preview-specific request to the actual presentation instance, source identity, account and requested scope. Once that preview is dismissed, a late callback must not update a later preview instance, even if the operator reopened the same source object; equal object identity alone does not make their presentation lifetimes equal. The source result may still be independently reconciled for eligible storage under its original context and current access policy, but a new preview may render it only through its own current authorized read and applicable ordering rules. Dismissal does not itself prove network cancellation or undo a confirmed save.
+    partial_restoration: When post-restriction source evidence restores only some fields of the currently selected object under 0112, the preview can show those fields only if its own presentation instance and identity are still valid. Do not restore an old excerpt, review or CI count from the same object solely because its title was fetched. Present a permitted limitation or recovery action without exposing restricted values through visible content, accessibility, announcements or sharing. A preview closed before the later response is not reopened automatically.
     actions: Opening enters the same permitted object under 0031; dismissal returns according to 0024 and 0073. An optional source or share action for a Repository, PR or Issue uses an eligible object-associated link under 0033 and rechecks access at handoff. Do not infer a Project source URL from one member or disclose text or credentials through the default link-only sharing action. A stale or unavailable link remains uncertain or unavailable as specified in 0033.
     accessibility: Available identity, state, limitations and actions have accessible non-color representations and do not require long press, hover, a timed gesture or eight columns. Large text and Reduce Motion can change presentation; exact control selection, truncation, voice announcements and system preview APIs require platform evaluation.
     provenance: The owner requested static long-press preview in the first version and compact native presentation. Exact priorities, excerpt choice and asynchronous update handling are agent-authored proposals; selected fields are not a claim of verified source availability or native behavior.
@@ -92,6 +94,10 @@ specification:
       given: A preview-specific request for PR A starts under account X, that preview is dismissed, and a new preview for the same PR A opens while the request remains in flight.
       when: The old callback arrives.
       then: The callback does not directly mutate the new presentation instance; any independent retention and later rendering follow A's original source context, current access and ordering evidence rather than assuming the earlier presentation remained active.
+    partial_access_restored:
+      given: A private PR preview had its title and CI count restricted, then a new applicable request successfully returns only its title while the CI field fails.
+      when: The same eligible preview is still presented and the result is applied.
+      then: The new title may appear with its own observation context; the older CI count is not revealed, announced or shared, and the limitation remains discoverable without inventing a zero or success.
     access_changes_during_open:
       given: A private PR preview offers Open while access is permitted and an explicit denial is established before the destination renders.
       when: The open transition completes or is interrupted.

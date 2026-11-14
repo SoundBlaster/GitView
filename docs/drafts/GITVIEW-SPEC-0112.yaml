@@ -21,6 +21,7 @@ sources:
   connection_recovery: docs/drafts/GITVIEW-SPEC-0085.yaml
   github_user_access: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/authenticating-with-a-github-app-on-behalf-of-a-user
   github_installation_discovery: https://docs.github.com/en/rest/apps/installations#list-repositories-accessible-to-the-user-access-token
+  github_partial_results: https://docs.github.com/en/graphql/overview/rate-limits-and-query-limits-for-the-graphql-api
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Access evidence is interpreted in its source, account, Repository, operation and observation context; a connection or a local Project is not itself Repository access.
@@ -42,6 +43,9 @@ specification:
     other_permissions: Metadata discovery does not prove permission to read PRs, Issues, reviews or CI; each source read is limited by the operation and source evidence actually established. A positive result for one Repository does not establish access to another. A missing Repository from a partial result is unknown, not evidence of denial or deletion. Interpret source errors according to their operation; 403 and 404 alone do not universally identify denial.
     cached_display: A prior eligible observation remains eligible for last-known display during an offline, rate-limited or locally expired credential state when no applicable explicit denial or disconnect has been established, subject to 0036 and 0085. Show its age and limitations under the overview contract. Reusing the cache is not a fresh source verification. Previously established restrictions remain effective across a transient failure.
     restoration: Once a relevant denial or disconnect is locally established, restrict affected private observations. A successful connection alone does not unlock every Repository or data category. An applicable, successfully established later source observation must support restoration for the affected scope; a pre-restriction in-flight response cannot undo the restriction merely by arriving late. Independently retain old observation times until the corresponding data is refreshed.
+    restoration_witness: After reestablishing the same confirmed source identity and active connection, an applicable request started after the restriction may establish newly observed facts for the exact Repository, object and fields actually returned successfully. Evaluate source errors and field paths rather than HTTP status alone; a failed field, unreturned page or ambiguous null is not a positive observation. Explicitly source-confirmed null can be a current value for that field when the response semantics establish it. Never infer that a successful Repository name read restores Issues, PRs, review threads or checks. Do not lift a restriction using a source response that cannot be reliably related to the active identity, request scope and post-restriction ordering.
+    old_cache_after_restoration: A successful later read makes its supported returned facts eligible in the current context; it does not automatically reveal every older cached object, field or historical aggregate in that category. A complete empty collection is evidence of emptiness only for its supported current scope and does not itself restore historical private observations absent from that result. A broader restoration of old cached material needs separately established source semantics and coverage; until then keep it restricted. A source observation for another account must not be applied to old private material from the previous account; newly obtained permitted facts for the new account are handled under their own context.
+    partial_response: A partial response can contribute only successfully interpreted, eligible fields and observed objects. A field affected by an error stays restricted or unknown as applicable; a successful sibling is not proof about it. A visible incomplete indicator and safe recovery route remain available without revealing restricted identifiers or derived counts. Source pagination and completeness rules decide whether a collection can be reported as complete; one successful page alone does not establish it.
     action_boundary: Reevaluate locally applicable identity, evidence and restrictions before admitting a new membership or presenting a source-derived action or share payload. Refresh and discovery can obtain new evidence through their normal requests; do not add a fresh online check to every tap. Source-derived contents and URLs remain governed by their own access and handoff contracts. A permission change at GitHub that is not yet observed cannot be ordered atomically with a local effect.
     verification: Use injected source observations and local connection state to test positive and partial discovery, account replacement, cancellation, offline, explicit denial, delayed responses and scope-specific restoration. Separately verify the eventual GitHub mapping and real authentication behavior; this candidate is not evidence of a working integration or a completed TDD cycle.
     provenance: Last-known offline presentation follows the owner's direction. The selection lifetime and the access-evidence rules are agent-authored working policy, subject to source and usability validation.
@@ -70,7 +74,19 @@ specification:
       given: Discovery positively identifies R but the app lacks Issues permission.
       when: The operator adds R and GitView attempts to read its Issues.
       then: Admission is not proof that Issues can be read; show the source limitation instead of an empty Issues collection.
+    partial_restoration:
+      given: A same-account reconnect follows denial of private PR and Issue data, and a new applicable response returns PR 42's title successfully while the Issue field fails.
+      when: GitView applies the response under the current restriction and ordering context.
+      then: The supported PR title can be shown as newly observed; Issue data and unrevalidated older PR facts remain restricted or unknown, and the failure is not reported as zero Issues.
+    empty_after_denial:
+      given: After access restriction a new applicable, sufficiently complete source observation establishes that the current Issue collection for R is empty.
+      when: GitView shows the current Issue summary.
+      then: It may show a confirmed current zero for that exact collection and scope, but does not expose old restricted Issue titles or historical metrics merely because the new collection is empty.
+    http_success_with_error:
+      given: An applicable GraphQL request receives HTTP 200 with an error affecting its CI field and an independently successful PR title field.
+      when: GitView interprets the response.
+      then: The title may be accepted for its own scope, while the CI error remains a limitation rather than a successful check observation or automatic proof of a specific permission denial.
   unresolved:
   - Confirm the exact selected GitHub endpoint, pagination, field-level permissions and applicable response mappings against the chosen authentication integration.
-  - Define the scope and ordering of later evidence sufficient to restore each restricted private data category and verify races through actual integration.
+  - Map supported source responses to exact field and collection coverage, and establish whether any broader access witness can safely restore old cached fields; verify ordering and races through actual integration.
   - Selection lifetime is a working policy; background suspension and very long active selections require usability evaluation before implementation readiness.
