@@ -109,6 +109,21 @@ cases:
   expected:
     Motivation: {status: ambiguous}
   boundaries: The unclosed fence makes the affected interpretation ambiguous; no heading is guessed.
+- id: unclosed_comment_after_filled_section
+  object_type: issue
+  body_observed: true
+  body: |
+    ## Problem
+    A recognizable earlier observation.
+    <!-- unfinished instruction
+    ## Motivation
+    Potentially hidden text.
+  expected:
+    Problem: {status: ambiguous}
+    Motivation: {status: ambiguous}
+    References: {status: ambiguous}
+    Expected outcome: {status: ambiguous}
+  boundaries: An unclosed supported comment makes every required interpretation ambiguous; the earlier Problem range is provisional and the source body remains available.
 - id: unavailable_body
   object_type: issue
   body_observed: false
