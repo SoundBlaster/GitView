@@ -1,0 +1,85 @@
+id: GITVIEW-SPEC-0101
+title: GitView - Normalize GitHub work representations for Today
+kind: spec
+created_at: '2026-11-14T20:11:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0027
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0039
+- GITVIEW-SPEC-0041
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0089
+- GITVIEW-SPEC-0100
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0027.yaml
+  selected_fields: docs/drafts/pr-issue-selected-fields-coverage-20261114.md
+  source_mapping: docs/drafts/github-field-access-research-20261114.md
+  github_issue_api: https://docs.github.com/en/rest/issues/issues
+  github_pr_api: https://docs.github.com/en/rest/pulls/pulls
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Source observations are normalized as a confirmed PR, a confirmed Issue or an unresolved work representation before Today classification and counting.
+- A GitHub REST Issues representation marked as a PR is not also counted as an independent Issue merely because it came from an Issues endpoint.
+- Issue-representation IDs, PR IDs, GraphQL IDs and Repository IDs retain their source kinds and are not equated or used interchangeably without supported association.
+- A source-confirmed PR and a separately identified Issue remain distinct work objects even when linked or describing the same task.
+- Incomplete identity, missing type evidence, omitted fields, unorderable values and missing event times do not become a fabricated match, non-match, lifecycle transition or exact population count.
+- Field facts, event times, observation times, source scope and current access retain their distinct contexts through normalization and selection.
+specification:
+  objective: Define a source-to-domain boundary for PR and Issue observations used by Today without selecting query sizes, API budgets or a storage schema.
+  ontology_refs:
+  - gitview:GitHub
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    source_representation: GitHub documents that REST Issues endpoints can return both Issues and PRs and that a PR representation can be identified by the pull_request key. It also states that its id in that representation is an Issue ID, not the PR ID. This describes GitHub source representations; it does not merge the separately modeled GitView PullRequest and Issue concepts or make every linked Issue identical to its PR.
+    classify: For a valid, usable REST Issues response under the documented contract, a source-confirmed pull_request marker identifies a PR representation, not an independent Issue card. Classify a record without that marker as an Issue only when the selected operation and response evidence support that interpretation; if the marker or record might be omitted, malformed, inaccessible or affected by an error, leave type unresolved instead of inferring absence. A valid PR-specific source response or another explicitly supported typed source representation may establish PR type within its own documented scope. Do not infer source type from title, labels, URL appearance or a local number alone.
+    identities: Preserve source instance, confirmed Repository identity, object type, repository-local number where supplied, source identifier kind and the actual association evidence. Repository IDs follow 0002 and 0080. The REST Issue ID on a marked PR representation cannot be silently stored or compared as the REST PR ID; GraphQL Node IDs and numeric IDs are separately typed. When the source establishes that two representations refer to the same PR in the same confirmed Repository, retain the association and render or count one PR under the applicable scope. The precise persisted key and cross-API ID conversion are not chosen here; names, a matching title or identical numbers from different Repositories do not prove a match.
+    source_association: A documented source link or separately validated source response may supply the association between a marked Issues representation and its PR. A same-Repository source number can be used as a lookup locator only in the scope and source contract that supports it; the lookup result and source identity must be confirmed before consolidating observations. An unavailable target, unknown Repository identity, conflicting evidence or address reuse leaves the association unresolved under 0038 and 0053, without inventing a second confirmed PR or assigning another object's data.
+    separate_linked_issue: A separately source-identified Issue linked to the PR remains a distinct Issue, even when the objects refer to the same problem or the PR may close it. Its identity, source scope and Today inclusion are evaluated separately; the source relation is not proof of an actor's motive, a merge or an Issue closure. Equal visible numbers in different Repositories remain distinct objects.
+    lifecycle_and_events: A typed observation establishes only source fields and times actually supported by that response. An Issues representation of a PR with closed state does not alone establish whether that PR merged or closed without merge; require applicable PR or event evidence. A current closed state or retrieval time does not establish an event occurred Today. Apply 0027 and 0089 to source-confirmed open state, creation and closure or merge event times, preserving later reopenings and independent observation contexts. A missing or contradictory state remains unknown or last known under 0044 and 0053.
+    merge_and_coverage: A single object can satisfy several Today alternatives but appears at most once when identity is confirmed. Partial, overlapping or differently timed source observations may contribute supported facts without producing a full source population or simultaneous snapshot. A completed page or one typed list does not prove that other open work, in-day creation or closure or merge alternatives have been enumerated. Unclassified or unresolved records and wholly unobserved source portions prevent an exact complete count when they could affect the result; they are not silently dropped as negative matches. Confirmed false conditions may exclude only in the scope supported by 0027.
+    access_and_present: Apply current access rules before exposing object existence, identifier, text, source link or derived counts under 0036 and 0088. A temporary presentation token is not a source identity, a restricted candidate cannot be shown merely to explain uncertainty, and a failed source operation is not a confirmed deletion or empty source. Preserve allowed prior observations with their own source and time context.
+    effects_and_verification: Normalize source representations at the domain-aware adapter or composition boundary under 0095 and 0096; pure Today selection consumes prepared typed facts, not live source responses or network effects. Under 0040 and 0079, planned tests inject distinct Repository IDs, marked PR issue representations, independent linked Issues, missing type and timestamps, source conflicts and access changes. A separate real-adapter and authorized GitHub verification must establish actual field semantics and mapping; synthetic fixtures and the public documentation are not a live-source result.
+    provenance: The owner chose separate PR and Issue overviews, Today work including same-day completed items, retained cache and multi-Repository Projects. The source normalization and uncertainty rules are agent-authored refinements grounded in GitHub's documentation; they do not select endpoints or claim an implementation.
+  scenarios:
+    issue_endpoint_pr_and_independent_issue:
+      given: A usable source result for Repository R contains a PR-marked Issues representation for work number 10 and a separately identified Issue number 11 linked to that PR; a separately obtained PR representation is source-confirmed to refer to the same PR.
+      when: The applicable Today selection is constructed with sufficient source facts.
+      then: The PR occurs at most once as a PR and the independent Issue can occur once as an Issue; the PR's Issues representation is not an extra Issue card and the link does not merge the Issue into the PR.
+    ids_are_typed:
+      given: One marked PR representation contains an Issues-endpoint numeric id, and its source-confirmed PR representation has a PR identifier.
+      when: Their observations are associated.
+      then: Each identifier retains its source kind; numerical equality is not required or assumed, and the Issue representation id is not presented as the PR id.
+    untyped_partial_record:
+      given: A partial or error-bearing response omits the field needed to determine whether a work record is a PR representation.
+      when: A Today selection is built.
+      then: The record is not automatically classified as an Issue or PR, and any affected population claim remains uncertain unless independent source evidence resolves the type.
+    closed_pr_without_merge_evidence:
+      given: A PR-marked Issues representation reports closed, but no applicable PR merge information or closure event time is available.
+      when: The record is mapped for Today.
+      then: Its PR type may be known while merge versus unmerged closure and any in-day outcome remain unknown; the retrieval time is not fabricated as a merge or closure time.
+    cross_repository_number:
+      given: Repository A and Repository B each contain source-confirmed PR number 42, while B also has a separately identified linked Issue.
+      when: Project-wide work is deduplicated.
+      then: The PRs remain distinct by their respective confirmed Repository and source identity, and the linked Issue remains its own Issue rather than being merged by number or title.
+    multiple_inclusion_alternatives:
+      given: One confirmed PR was created today and later merged today with supported event times and compatible identity evidence.
+      when: Unfiltered Today is evaluated.
+      then: It appears once as the same PR with its applicable observed lifecycle, not once for creation and again for merge.
+    access_changes_during_normalization:
+      given: A source response containing a private PR representation arrives after an applicable access denial was established.
+      when: Normalized candidates are projected for display.
+      then: Restricted identity, text, link and revealing count are not shown, and the late response does not itself restore access.
+  unresolved:
+  - Select and validate actual source representations, ID association evidence and source-event fields for the initial product slice without assuming GraphQL and REST identifiers are interchangeable.
+  - Establish or conservatively represent population and temporal coverage for the chosen requests and reconciliation method, including mutable pages and partial access.
+  - No adapter, source integration, durable observation storage or native UI has been implemented or exercised.

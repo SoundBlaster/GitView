@@ -63,6 +63,7 @@ depends_on:
 - GITVIEW-SPEC-0098
 - GITVIEW-SPEC-0099
 - GITVIEW-SPEC-0100
+- GITVIEW-SPEC-0101
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -88,6 +89,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    github_issue_representation_of_pr:
+      given: A source-confirmed PR is observed through both PR and PR-marked Issues representations, alongside a separate Issue linked to that PR in the same Repository.
+      when: The Project Today grid and its counts are built from those observations.
+      then: The PR contributes once and the independent Issue contributes separately when each matches the selection; unsupported association or incomplete coverage cannot establish an exact total.
     partially_approved_github_data_categories:
       given: A Project's permitted Issue and PR information is observed, but an additional source category for checks is unavailable or its permission update has not been approved.
       when: The operator opens the Project and a PR overview.

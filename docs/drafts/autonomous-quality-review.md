@@ -770,3 +770,12 @@ credentials, а offline и потеря token rotation не выдаются з�
 необходимые в графе до реализации, и проверки реальных компонентов после неё.
 На этом снимке все 100 кандидатов имеют `idea` / `pre_canonical`, 45 являются
 структурными листьями по `refines`; это не измерение implementation readiness.
+
+0101 уточняет нормализацию представлений GitHub: PR из Issues API не создаёт
+вторую Issue, тогда как независимая связанная Issue остаётся отдельной. 0027,
+0043 и 0096 связывают это правило с выборкой и маршрутом Project. Для всех
+четырёх кандидатов прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-work-normalization-20261114.json)
+без findings, gaps и warnings; проверка не исполняла source mapping или UI.
+Текущий граф содержит 101 кандидат; ссылки и циклы проверены для `refines`,
+`depends_on` и их объединения. Снимки на 100 кандидатах выше исторические.
+Полнота source guarantees и готовность листьев остаются открытыми.
