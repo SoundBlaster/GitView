@@ -1,0 +1,18 @@
+{
+  "artifact_kind": "gitview_default_save_concurrency_counterexample",
+  "spec": "GITVIEW-SPEC-0052",
+  "spec_sha256": "78c958d8b37fe3d56db9ec2d40cd0059bc95809d421a949b7c87031f2b6640cf",
+  "bounded_domain": "two attempts for one already identified Repository; read before commit per attempt",
+  "schedules_examined": 6,
+  "naive_duplicate_witness_count": 4,
+  "naive_example_schedule": [
+    "A.read",
+    "B.read",
+    "A.commit",
+    "B.commit"
+  ],
+  "guarded_duplicate_count": 0,
+  "guarded_model_assumption": "uniqueness is checked atomically at commit",
+  "limitations": "A simplified author-built interleaving model, not a test or proof of any real database, lock, process termination, access policy or GitHub integration.",
+  "application_scenarios_executed": false
+}
