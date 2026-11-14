@@ -137,6 +137,14 @@ specification:
       given: The operator opened Project Q from a portfolio containing P and Q, and Q's local configuration cannot currently be verified while P is independently readable.
       when: The operator returns to the portfolio.
       then: P remains available where permitted, the incomplete local read is discoverable, and Q is neither declared deleted nor silently replaced by P as the originating Project.
+    retention_recovery_after_restart:
+      given: Project P has independently readable permitted T1 data. A T2 source observation is accepted, its history-retention operation O may have committed, and the acknowledgement is lost; no durable source-attempt outcome is established.
+      when: The operator can discover the local uncertainty through an accessible status route, restarts the app and requests recovery; durable evidence then confirms O and its correctly associated T2 sample.
+      then: Before recovery the app neither claims O failed nor promises T2 was durable. After recovery it can show that one T2 sample with its actual source context and retain T1 where independently readable, without creating a second sample from reconciliation. The post-restart latest source-attempt outcome remains unknown unless independently recovered; the confirmed history receipt is not presented as a new GitHub success. The affected status and return path remain available without color or a transient notice, and current access restrictions apply.
+    retention_recovery_still_unreadable:
+      given: A T2 historical write may have committed and its operation identity is known, but after restart neither its durable outcome nor the prior T1 fact and context can be read.
+      when: The operator uses the accessible recovery route.
+      then: The affected history remains unavailable or indeterminate, neither a T1 baseline nor T2 rollback or success is invented, and retry does not submit a distinct duplicating effect while O may still commit. The independently readable Project and permitted unrelated scopes remain available.
     local_recovery_without_assumed_baseline:
       given: A Project's PR observations were once saved at T1, a T2 local write was interrupted, and restart cannot validate either observation while Project configuration is independently recoverable.
       when: The operator opens the Project overview.
