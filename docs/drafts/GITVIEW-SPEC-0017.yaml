@@ -26,7 +26,7 @@ specification:
   - gitview:Issue
   requirements:
   - Provide ways to navigate and open objects without relying solely on pinch, long press, hover or color.
-  - Expose understandable object type, title, state and relevant indicators to assistive technologies.
+  - Expose understandable object type, permitted title, state and relevant indicators to assistive technologies without disclosing restricted private data.
   - Adapt presentation to Dynamic Type and motion to the system's Reduce Motion preference.
   - Keep system visual language and use native controls where appropriate; implementation details remain
     open.
@@ -42,8 +42,8 @@ specification:
   pilot_contract:
   - Every essential operation can be reached without relying exclusively on pinch, long press, hover or
     color.
-  - Assistive labels identify object type, repository context, title or number and important state when
-    known; unknown data is not announced as success.
+  - Assistive labels identify object type and permitted repository context, title or number and important state when
+    known; unknown data is not announced as success and restricted data is not disclosed.
   - Dynamic Type permits a more spacious layout; Reduce Motion avoids requiring motion to understand navigation.
   - Restoring accessibility focus after preview or return should use the original object when it remains
     available and a sensible fallback otherwise.
@@ -61,8 +61,8 @@ specification:
 acceptance:
 - Every essential operation can be reached without relying exclusively on pinch, long press, hover or
   color.
-- Assistive labels identify object type, repository context, title or number and important state when
-  known; unknown data is not announced as success.
+- Assistive labels identify object type and permitted repository context, title or number and important state when
+  known; unknown data is not announced as success and restricted data is not disclosed.
 - Dynamic Type permits a more spacious layout; Reduce Motion avoids requiring motion to understand navigation.
 - Restoring accessibility focus after preview or return should use the original object when it remains
   available and a sensible fallback otherwise.

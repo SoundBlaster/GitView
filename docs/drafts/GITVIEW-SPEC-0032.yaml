@@ -31,12 +31,16 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    object: An assistive representation communicates the object type and enough identity to distinguish it within the current scope, including source Repository context where PR or Issue numbers could collide. It exposes known title or number and relevant available status; a missing value remains unknown rather than success.
-    actions: An accessible way to change grid density, select and open an object, dismiss a preview, return, refresh and reach active filters is available without relying solely on pinch, long press, pointer hover or color. Exact native controls and actions remain implementation decisions.
+    object: An assistive representation communicates the object type and enough permitted identity to distinguish it within the current scope, including source Repository context where PR or Issue numbers could collide and disclosure is permitted. It exposes known permitted title or number and relevant available status; a missing value remains unknown rather than success. If identifying details are restricted, use a non-sensitive representation and an access-recovery route rather than disclosing them to distinguish objects.
+    actions: An accessible way to connect or recover access, select repositories, manage Projects, change grid density, select and open an object, dismiss a preview, return, refresh, reach active filters and invoke available source or share actions is available without relying solely on pinch, long press, pointer hover or color. Exact native controls and actions remain implementation decisions.
     focus: On dismissing preview or returning from an object, restore accessibility focus to the same object when it remains available in the active selection. If it is gone, use the same surviving successor/predecessor anchor rule as 0024 where possible; otherwise focus a meaningful element describing the updated collection or its empty/error state. Do not falsely announce another object as the original.
     status: Loading, failure, incomplete scope and explicit access denial remain distinguishable through non-color information and must not expose restricted private content. Presenting a changing status must not automatically claim every category has refreshed.
+    restricted_focus: If access becomes restricted while an object is focused or a preview is open, remove restricted content from assistive representations and subsequent announcements as well as visual presentation. Preserve a safe route to the affected scope or access recovery; do not identify another object as the previously focused one. Focus restoration is subject to current access and the fallback in 0024.
+    traversal: Interactive elements have understandable names, roles, values and available actions, with a task-appropriate traversal order and no reliance on visual position alone. Dense layouts can group related information but must retain a way to inspect distinct objects and essential actions. Input paths for VoiceOver, Voice Control, Switch Control and Full Keyboard Access require evaluation on supported devices; no assistive-technology support is claimed before testing.
+    async_updates: An update must not silently replace the identity or meaning of the element being inspected. The user can discover an affected error, incomplete scope or changed result without depending only on transient visual feedback; exact announcement timing and interruption policy require user testing.
     layout: Dynamic Type and available screen dimensions may reduce column count or alter layout while preserving object access and context. Eight columns and 100 objects are design illustrations, not a condition for accessibility.
     motion: With Reduce Motion, the user can understand the transition and resulting location without depending on animated movement. No specific transition animation or platform API is mandated.
+    visual_preferences: System text size, contrast and reduced transparency preferences must not make essential content or state indistinguishable; system materials and colors may adapt. Exact combinations and platform behavior require device evaluation.
     validation: Verify behavior with VoiceOver, larger text and Reduce Motion on supported iOS devices after implementation; these are future checks, not evidence of present app behavior.
     provenance: The owner chose native Apple conventions and a scalable grid; detailed accessibility outcomes are agent-authored refinements.
   scenarios:
@@ -56,6 +60,14 @@ specification:
       given: A PR's CI status has not been observed.
       when: Its accessible description is read.
       then: CI is not announced as passed or as zero failed checks.
+    private_access_revoked:
+      given: VoiceOver focus is on a private PR preview and explicit access denial is established.
+      when: The preview or focus state updates.
+      then: Restricted title and source-derived details are not spoken or exposed through accessibility, and an accessible route to the access problem or a permitted scope remains available.
+    failed_refresh_without_transient_cue:
+      given: A Project refresh fails while the operator uses a nonvisual or keyboard input path.
+      when: The temporary visual notification is no longer present.
+      then: The affected failure and its relevant last successful observation remain discoverable without relying on the notification, color or a timed gesture.
   unresolved:
   - Supported iOS versions, exact accessibility actions, reading order and device-specific focus behavior require platform evaluation.
   - How quickly asynchronous content changes are announced without excessive interruption requires user testing.

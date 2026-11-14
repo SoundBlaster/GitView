@@ -210,6 +210,12 @@ pending-состояния. Она не проверяет атомарност�
 storage implementation. Обновлённый 0045 прошёл [проверку словаря](evidence/autonomous-goal-ontology-check-cancellation-20261114.json)
 без findings и gaps; модель не проверяет crash или нескольких workers.
 
+[Аудит accessibility](leaf-readiness-0032.md) сопоставляет основные действия,
+focus и обработку ограниченного доступа. Исправлена неоднозначность assistive
+labels для private данных; новые 0017, 0032 и 0050 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-accessibility-20261114.json)
+без findings и gaps. Поддержка assistive technologies и iOS device behavior не
+проверялись и не заявляются как достигнутые.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.
