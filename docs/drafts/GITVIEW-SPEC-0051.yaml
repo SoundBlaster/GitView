@@ -26,8 +26,8 @@ specification:
   contract:
     original: Retain the exact available source body and its observation context. Recognition produces references to ranges in that body; it does not rewrite, translate, summarize or replace the source text. An unavailable body is unknown, distinct from a successfully observed empty body.
     supported_headings: The initial profile recognizes standalone level-two headings matching the exact case-sensitive template labels Problem, Motivation, Expected outcome and References for Issues, and those labels plus Changes and Validation for PRs. The heading syntax is the template's two hash marks, one space and the label; trailing whitespace is allowed. Other spellings or heading levels are not silently normalized into these labels.
-    exclusion: A heading-looking line inside a fenced code block or an HTML comment is not a section heading. If unclosed or malformed delimiters make it impossible to determine reliably whether a candidate heading is content, mark the affected interpretation ambiguous and retain the original body; do not guess.
-    boundaries: For a unique recognized heading, the section body begins after its heading line and ends immediately before the next standalone level-one or level-two heading outside excluded regions, recognized or not, or at end of body. Lower-level headings remain within that section. Preserve the extracted substring as authored, including its original line endings and embedded text.
+    exclusion: A heading-looking line inside a supported fenced code block or an HTML comment is not a section heading. A supported fence opens at the first column with at least three consecutive backticks or tildes and closes at the first column with the same marker character, at least the opening marker count and only trailing whitespace. Recognize comment delimiters outside fences and fenced markers outside comments. If unclosed, nested or otherwise malformed delimiters make it impossible to determine reliably whether a candidate heading is content, mark the affected interpretation ambiguous and retain the original body; do not guess.
+    boundaries: For a unique recognized heading, the section body begins after its heading line and ends immediately before the next boundary heading outside excluded regions, recognized or not, or at end of body. In this profile a boundary heading starts at the first column with one or two hash marks, followed by one space and non-whitespace text; lower-level headings remain within the section. Preserve the extracted substring as authored, including its original line endings and embedded text. An unsupported heading form is not silently treated as a supported heading or boundary.
     duplicates: If the same supported heading occurs more than once outside excluded regions, its section is ambiguous. Do not silently select one occurrence or merge them as one authoritative claim. Other unambiguous sections can remain available if their boundaries are reliably known.
     empty_and_placeholders: A section with no substantive text other than whitespace or HTML template comments is present but unfilled; preserve its raw range and do not infer a claim. A section absent from a successfully observed body is missing. A body that has not been successfully observed makes section status unknown rather than missing.
     unsupported: Headings or syntax outside this narrow profile remain in the original body and may cause a relevant section to be missing or ambiguous. No claim is made that this recognizes every valid Markdown form or every repository's custom templates.
@@ -47,6 +47,14 @@ specification:
       given: Two standalone Validation headings appear outside code fences and comments in a PR body.
       when: The body is interpreted.
       then: Validation is marked ambiguous rather than silently choosing or merging one occurrence.
+    unknown_boundary:
+      given: A PR body has a supported Motivation heading, followed by authored text and a separate level-two Notes heading outside a fence.
+      when: Motivation is extracted.
+      then: Its range ends before Notes even though Notes is not one of the selected template sections; the complete original body remains available.
+    malformed_fence:
+      given: A body opens a supported code fence and never closes it before a heading-looking line.
+      when: The affected section boundaries are interpreted.
+      then: The affected interpretation remains ambiguous and no section is guessed from the heading-looking line.
     placeholder_only:
       given: The Motivation section contains only whitespace and the template's HTML instruction comment.
       when: Its content is interpreted.

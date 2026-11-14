@@ -67,6 +67,10 @@ UI state не преобразовывался в ontology entities; смысл�
 После предложения узкого профиля для заголовков исходных шаблонов новые байты
 0034 и 0051 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-description-20261114.json)
 без findings и gaps. Это не проверка Markdown parser и не установка шаблонов.
+После уточнения ограниченного fence-профиля 0051 проверен
+[повторно](evidence/autonomous-goal-ontology-check-0051-revision-20261114.json)
+без findings и gaps. Сами два локальных шаблона проверены на точное наличие и
+порядок согласованных заголовков; эта сверка не является выполнением parser.
 
 После уточнения неопределённой identity новые байты 0007, 0027 и 0042 прошли
 [повторную проверку словаря](evidence/autonomous-goal-ontology-check-identity-selection-20261114.json)
