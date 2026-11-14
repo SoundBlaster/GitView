@@ -90,6 +90,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    stale_source_link_and_later_denial:
+      given: A permitted PR has a previously source-associated link with no verified current resolution, and the operator starts a share flow using the last-known link.
+      when: Explicit denial occurs before any app-controlled delayed provider supplies that link.
+      then: The earlier address is not promoted to a confirmed current destination, the restricted payload is withheld before provision, and the application makes no claim that already handed-off content can be revoked.
     preview_reopened_while_old_request_finishes:
       given: The operator dismisses a PR preview and opens a new preview for the same PR while the first preview's request is still in flight.
       when: Its old callback arrives after the new preview has appeared.

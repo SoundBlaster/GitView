@@ -11,6 +11,9 @@ depends_on:
 - GITVIEW-SPEC-0019
 - GITVIEW-SPEC-0024
 - GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0053
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0016.yaml
   access: docs/drafts/GITVIEW-SPEC-0019.yaml
@@ -31,12 +34,15 @@ specification:
   contract:
     link_identity: The selected source link belongs to the selected object and repository identity. Equal repository-local numbers in distinct repositories do not identify the same PR or Issue. Repository rename and transfer do not by themselves authorize substituting an unverified address.
     observed_link: Retain the source identity and observation context that associated an address with an object. A last-known permitted address with no contradictory evidence may be offered as last known, with its uncertainty identifiable; an old observation alone does not establish that the address still resolves to the same object. A redirect or handler launch is not by itself proof of the final source identity.
+    eligible_web_link: A source link must be a well-formed HTTPS web address associated by usable source evidence with the selected object and an approved web origin for its source instance. Reject or keep unavailable malformed links, unsafe schemes, embedded user credentials, credential-bearing query or fragment values, and an unverified different origin. Do not rewrite or strip components while claiming the result still identifies the same object unless independent evidence supports the resulting link. This initial rule concerns external handoff and does not authorize arbitrary source instances or prescribe how they are configured.
     known_address_reuse: If reliable source evidence establishes that a previously associated address now identifies a different Repository or object, do not offer that address as the selected object's source or share link. A newly observed address becomes eligible for the original object only when its identity is sufficiently confirmed; otherwise provide an unavailable or uncertain result under 0038.
     open: When an eligible source link is available, provide an operation that requests opening it through the platform. A request to open is distinct from the recipient application successfully loading the object; a failure can be reported without changing stored GitHub data.
     share: When an eligible source link is available, GitView supplies that link as its default payload to the platform share flow, without adding source text or credentials. The platform share flow allows the operator to choose a recipient or cancel; presenting the flow is not evidence of delivery, recipient access or source mutation. This contract does not claim control over how a destination processes a link after handoff.
-    unavailable: If no verified link for the selected object is available, identify the operation as unavailable rather than inventing a URL from a title, number or previous unrelated address. If a previously observed link may be stale, preserve its observation context rather than asserting that the destination is current.
+    unavailable: If no source-observed association between an eligible link and the selected object is established, identify the operation as unavailable rather than inventing a URL from a title, number or previous unrelated address. A previously associated permitted link with no contradictory evidence may be offered as last known under observed_link; its present destination is not thereby verified. If its current destination is unknown, preserve that uncertainty and observation context rather than asserting it is current.
     access: Before exposing a link associated with restricted private cached content, apply the current access policy in 0019. A recipient's GitHub permissions determine access after sharing; a link is not a grant. Credentials must not be added to the share payload or diagnostics.
     access_at_handoff: Re-evaluate the available evidence and access policy when initiating source opening or supplying a payload to the share flow, not only when the originating cell was first rendered. If the link has become restricted before handoff, do not supply it; show a permitted recovery path. Once information has been handed to another application, this contract does not claim GitView can retract copies or control the recipient.
+    delayed_handoff: If an app-controlled share provider supplies a link after the share interface has appeared, apply the current access and link eligibility at actual payload provision as well as at initial activation. If access becomes restricted before provision, withhold the restricted link and offer an allowed limitation where the platform permits. If the link has already been supplied outside app control, do not claim it was retracted; the platform or recipient may retain it. No particular platform callback or guarantee of revocation is assumed.
+    handoff_result: Distinguish GitView preparing a link, the platform accepting an open request or presenting a share flow, cancellation, reported platform or activity outcome, and independently verified source access or recipient delivery if such evidence is ever available. A platform success callback is attributed only to the semantics that platform actually documents; it is not automatically proof that the intended source object loaded, that a recipient read the link, or that GitHub permissions changed.
     failure: Failure to open an external handler or a recipient's later access denial does not prove the object was deleted. The existing GitView context remains recoverable under 0024.
     provenance: The owner requested source navigation and lightweight sharing. Link-only default and detailed failure rules are agent-authored proposals.
   scenarios:
@@ -64,6 +70,18 @@ specification:
       given: A private PR link was visible while allowed, but explicit access denial is established before the operator starts sharing.
       when: GitView evaluates the share action.
       then: The restricted link is not supplied to the platform flow and an accessible recovery path is available.
+    permitted_last_known_link:
+      given: An object has a previously source-associated eligible link, no conflicting address evidence and no current resolution observation, while access policy permits its use.
+      when: The operator opens or shares the source.
+      then: The link may be offered as last known with its limitation, without claiming its present destination has been verified or inventing a replacement address.
+    credential_bearing_link:
+      given: A source response or local record supplies a purported PR URL containing an embedded credential or an unsafe scheme.
+      when: The operator invokes Open or Share.
+      then: That address is not passed to the platform or printed as a diagnostic, and a separately evidenced eligible link or a safe unavailable state is used instead.
+    denial_before_delayed_provision:
+      given: The platform share interface has appeared but an app-controlled provider has not yet supplied a private PR link.
+      when: Explicit denial is established before the provider supplies its payload.
+      then: The provider does not supply the restricted link; no claim is made about revoking any data already handed outside app control.
   unresolved:
   - Source URL verification, stale links after rename or transfer and supported destinations require source and platform refinement.
   - Optional payload beyond the source link remains a separate product and privacy decision.
