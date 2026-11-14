@@ -1,0 +1,64 @@
+id: GITVIEW-SPEC-0047
+title: GitView - Project overview and signal navigation
+kind: spec
+created_at: '2026-11-14T14:03:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0004
+depends_on:
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0006
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0035
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0046
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0004.yaml
+  project_summary: docs/drafts/project-summary-proposal.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The main overview identifies each saved GitView Project and provides a route to its work without treating a GitHub organization as a Project.
+- Available work counts, attention signals and period outcomes retain their meaning, scope and coverage.
+- Opening a Project or one of its actionable signals preserves Project and source Repository context.
+- A Project with incomplete observations remains represented and cannot be mistaken for confirmed empty or healthy work.
+specification:
+  objective: Help the operator survey Projects, notice relevant work and enter the selected scope without losing identity or data limitations.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    collection: The main overview concerns locally saved GitView Projects. It does not equate a Project with a GitHub organization or GitHub Projects feature. A local Project can include repositories from different organizations and a Repository can occur in multiple Projects.
+    entry: Each Project representation exposes its name and member Repository count where known and makes available selected work counts, attention signals and period outcomes according to space and coverage. Exact visual arrangement and default density remain subject to product and native design refinement.
+    units: Open PRs, open Issues, failed checks, affected PRs, review attention and period outcomes remain distinct units under 0029. A single indicator must not imply that one PR is multiple independent work items or that a Project is merge-ready.
+    selection: Opening a Project enters that same Project. If it contains exactly one Repository, work is reachable without a duplicate Project/Repository screen while both identities remain distinct. A multi-repository Project exposes its members and an appropriate path to each member's work under 0006.
+    signal: An actionable signal can open a filtered work collection in the originating Project. The active condition, period and Project remain identifiable; when work comes from several Repositories, its source is distinguishable. Unknown inputs and partial coverage follow 0027 and 0046 rather than being presented as a complete filtered list.
+    observations: An unobserved category remains unknown, partial and failed scopes remain identifiable, and stale data retains its observation context. Explicit denial follows 0036; no restricted private content or derived count is exposed as a healthy zero.
+    scale_and_access: Density can change without altering the selected Project set or its accounting. Essential identification, navigation and refresh do not depend only on pinch, long press or color; accessible behavior follows 0032 and 0035.
+    provenance: Multiple Projects, summary signals and a compact Apple-style overview follow the owner's product direction. Exact distribution of fields across densities and control placement remain agent-independent design questions.
+  scenarios:
+    two_organizations:
+      given: One Project contains two Repositories from different GitHub organizations.
+      when: The operator opens that Project.
+      then: Both remain in the same GitView Project and neither organization is silently substituted for the Project.
+    shared_repository:
+      given: Repository R belongs to Projects P and Q and has one observed open PR under complete coverage.
+      when: Both Project summaries are visible.
+      then: R contributes to P and Q while a unique portfolio count includes its PR only once.
+    missing_category:
+      given: A Project's PR scope is observed and its Issue scope has never been obtained.
+      when: Its summary is shown.
+      then: The observed PR value remains available and the Issue count is unknown or loading rather than zero.
+    follow_signal:
+      given: An actionable failed-CI signal belongs to Project P containing Repositories R1 and R2.
+      when: The operator opens that signal.
+      then: The resulting work collection retains Project P and failed-CI condition and distinguishes source Repositories; partial coverage remains visible.
+  unresolved:
+  - Default layout, ordering of Projects and exact subset of signals shown at each density.
+  - Exact visual and accessible controls for signal navigation and cross-Repository scope selection.
