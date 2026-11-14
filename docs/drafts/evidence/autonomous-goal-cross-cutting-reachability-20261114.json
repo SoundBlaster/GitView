@@ -1,0 +1,1002 @@
+{
+  "scope": "structural reachability only; not semantic applicability, a pass or evidence of automatic inheritance",
+  "leaf_definition": "no incoming refines from candidate nodes",
+  "node_count": 79,
+  "leaf_count": 38,
+  "targets": [
+    "GITVIEW-SPEC-0017",
+    "GITVIEW-SPEC-0032",
+    "GITVIEW-SPEC-0021",
+    "GITVIEW-SPEC-0040"
+  ],
+  "leaves": [
+    {
+      "id": "GITVIEW-SPEC-0018",
+      "sha256": "e2271fcbc61d6c75e7fc103b40627a0bf83cc945d1a999cf2bb3928a65040f48",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0023",
+      "sha256": "48fc10c8e01d9dfc7c87143a715929a4c7068d4fec2a06071066ee6f79f099b6",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0024",
+      "sha256": "21c0c01db45fdcd7c9b19ab80e93463d4193d0b074ebd58f28d0797245d5a763",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0025",
+      "sha256": "0507ba94057e9820ce5c053fcf1be0a6dc55a40d0dbd43e572917be1771e5c53",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0033",
+      "sha256": "ff1a85cc4fc8db29f589eda025c86298d93a344e7000b95107e86f4e06f13c7b",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0036",
+      "sha256": "7276b598df12b5e073ba2bba835d4f736d4ef6755b4152d5176b1aba30cb5e06",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0038",
+      "sha256": "106e7e0a6d4f14eeb0443aa56d8a2e2c620a421ada86f93d89773015913a8b35",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0041",
+      "sha256": "243cfa9c7f93851dc9e99dc6e4479d07641c494a2692e167e1875bb331dcf234",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0042",
+      "sha256": "54171af8bcc2a176b711a59170635141e26998b7d9a13b9850dc1368927f6d30",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0043",
+      "sha256": "93a4cdf29afc7b0ca02f67b25c0b09c425d34eda055a8f3a6dc9a0b314f99abc",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0046",
+      "sha256": "af84c6cc7bf5b511b46a712e0089725e0156637aef00ee1509b20517f9cfdc85",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0048",
+      "sha256": "bb7521fadf18171cadf710d0254a02f8e94c15912d88708b2a5c48d5c0da4b3c",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0049",
+      "sha256": "5bc84d88bc9401a53ea18d7cd3069979a978062d28ac614c271e3cf5aa763356",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0050",
+      "sha256": "1bbe8594d0d35425ebd61d56a11df18f071b87d4c34d7c1e6428f96d8f085a61",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0051",
+      "sha256": "ee7af70e72d6f76c26201ee82a6147c853904f4f2ffc78639a1961afbc2c33d2",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0052",
+      "sha256": "d3cb0c80f2951055c83ed933f475ee28f798a7299dd170c6586af345400963b9",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0053",
+      "sha256": "8d3e8de399ced423eab2054a7970c15688f17d5307aeefc40aace7a9ec2c104a",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0055",
+      "sha256": "affced1d668086b466aa57ac85f78c82ef222edc47badc944504a91a5de28800",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0056",
+      "sha256": "059e4385f3a430a82a1e4c8d946eba228a713eb9de9bfa4278c9d564da2226ae",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0057",
+      "sha256": "bfa735f5490637865f869724cca7fc5e438442c42e4e84da92366819c5e966ca",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0058",
+      "sha256": "64fa2eb91c2186065a2ed1fdaec30d9c4083baad8b8d3a5f8de7e409a13a44c0",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0059",
+      "sha256": "26ead6b3aa1dcb05c9f121bf6cff804a004c84a9a17c37e716bb4c0b235c076d",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0061",
+      "sha256": "f25371548b4df15049902ba784071102ed2bd0335b0e7e86dd26fcdf8412df51",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0062",
+      "sha256": "905579f5f8d98bb1486808e8c1bb9d28c3c2840b456aa12f106428462e0e8a39",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0063",
+      "sha256": "f54acfcb498d9cfeb46508a85dff9ec22b33c888a22ccc69ed6bd63ea08be43c",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0064",
+      "sha256": "97b432ea185d65fc7b4076dc677f5a3bec41bd1edb21ffcc03cf27016ab5ed6a",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0067",
+      "sha256": "795920da415d8a1fc000412a89be5cb6f73b65e4a696c301168467571ba9a8c1",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": true
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0069",
+      "sha256": "299a68626e2c01f3311b594ee374190e57a4afaa41b53f19d2dae899f74c899a",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0070",
+      "sha256": "12956618cdb0b831bd1014f10c00873880f9f3bac6c53db832ff8a28511ec952",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": true,
+          "depends_on": false,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": true,
+          "depends_on": true,
+          "combined": true
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0071",
+      "sha256": "3d86d779504f70ea9327de081bed57662db95a7d9c15dc5a0e2ef93d7c68bcc5",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0072",
+      "sha256": "80672b9900037ae22d8ab82dee802448e6abf965d8910933013371dd5a11b1bc",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0073",
+      "sha256": "5fbbaed0e2291b943809241d59e37d9163ef443d3e306b6530ea06e5f33add1a",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": true,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": true,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0074",
+      "sha256": "f8cb16be066652f493202ad6ee6f80f6515e6d899be77eb1806c28b8fa017b5a",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0075",
+      "sha256": "4e6675671ad1e561ac8670b2c150e25d2087228eddcfd31addf39df7883ebf47",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0076",
+      "sha256": "3a76b94630e59a6859ac61e95d6ded9bca60cf0316f7cc4f75ccf703530bf787",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0077",
+      "sha256": "99a516da89ee272417c1b702df61d65b4794f88dcadf251efc642ec9674b9c27",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0078",
+      "sha256": "c8eceb756df3230754ef6b724f48a345fe599a08fddd4923c5d60a5896205550",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": false,
+          "depends_on": false,
+          "combined": false
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0079",
+      "sha256": "14775bb4b7c35c95847f7239e88ef18826acb726d73d734d4421d69538d3a2cc",
+      "paths": {
+        "GITVIEW-SPEC-0017": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0032": {
+          "refines": false,
+          "depends_on": true,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0021": {
+          "refines": true,
+          "depends_on": false,
+          "combined": true
+        },
+        "GITVIEW-SPEC-0040": {
+          "refines": true,
+          "depends_on": false,
+          "combined": true
+        }
+      }
+    }
+  ]
+}

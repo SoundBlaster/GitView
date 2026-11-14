@@ -42,6 +42,7 @@ depends_on:
 - GITVIEW-SPEC-0076
 - GITVIEW-SPEC-0077
 - GITVIEW-SPEC-0078
+- GITVIEW-SPEC-0079
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -67,6 +68,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    cross_cutting_evidence:
+      given: A Project grid scenario passes controlled tests while native accessibility and live source integration have not been checked.
+      when: Its verification result is summarized.
+      then: Controlled results are identified at their actual boundary and the applicable native and source evidence remains explicitly unverified under 0079.
     issue_link_denied:
       given: An accessible Issue in Project P has a previously observed link to a private PR outside P, and the link and target become restricted.
       when: The operator opens the Issue and its related-work section.

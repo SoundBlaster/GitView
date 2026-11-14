@@ -1,0 +1,66 @@
+id: GITVIEW-SPEC-0079
+title: GitView - Cross-cutting verification applicability
+kind: spec
+created_at: '2026-11-14T17:00:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0040
+depends_on:
+- GITVIEW-SPEC-0017
+- GITVIEW-SPEC-0032
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0040.yaml
+  accessibility: docs/drafts/GITVIEW-SPEC-0017.yaml
+  product_scope: docs/drafts/GITVIEW-SPEC-0020.yaml
+  owner_requirements: conversation:gitview/excerpt-74
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Each product behavior selected for implementation has an explicit review of applicable testability, dependency injection and evidence boundaries under 0021 and 0040.
+- Each user-facing behavior has an explicit review of applicable accessibility outcomes under 0017 and 0032, including non-gesture and non-color access where relevant.
+- An applicability decision records why a requirement or evidence level applies or does not apply to the specific behavior; a missing graph edge is not treated as a waiver.
+- Verification plans distinguish deterministic doubles, actual adapters and persistence, source integration, platform behavior and native accessibility where each is relevant.
+- Unexecuted plans, candidate checks and ontology bindings are not reported as passing product or device tests.
+specification:
+  objective: Make the owner's cross-cutting engineering and accessibility expectations traceable to product behaviors without adding a dependency edge to every leaf or implying tool-enforced inheritance.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    applicability: The product architecture and testability expectations in 0021 and 0040 apply to the relevant product implementation throughout the selected GitView scope. Accessibility outcomes in 0017 and 0032 apply wherever the behavior exposes user-facing information, navigation or actions. Determine applicability against behavior and its context; not every data-only policy has its own gesture or visual layout.
+    graph_boundary: A `refines` path describes refinement and a `depends_on` path describes a stated prerequisite; the absence of either path to a cross-cutting node is not evidence of exemption. Conversely, a reference or reachable path alone does not establish that the rule was translated into applicable scenarios, executed or passed. This contract does not assert that SpecGraph automatically propagates or enforces cross-cutting requirements.
+    review_record: Before a behavior is considered ready for implementation, identify the target specification and version, its ancestors and needed dependencies, applicable cross-cutting requirements, relevant user-visible and failure scenarios, verification levels, and unverified assumptions. Record a reason for a requirement or evidence level considered not applicable. A planned check is not a passed check; the review is not equivalent to approval of the whole graph or permission to implement before its parents and dependencies are ready.
+    testability: For implemented behavior, preserve TDD, explicit injection of external dependencies and controllable nondeterminism as applicable under 0040. A deterministic pure policy can be evaluated without a live network or user storage; operations that interact with source, persistence, time or system lifecycle require appropriate replaceable boundaries and relevant success, partial, failure and ordering scenarios. A test double is not required for a dependency that the behavior does not use.
+    accessibility: For each applicable user journey, assess reachable actions, understandable permitted identity and state, unknown and error communication, and alternatives to gesture or color. Assess focus recovery and system preferences when the journey depends on them. Do not demand a particular accessibility API, support claim or native control solely from a textual candidate; actual platform behavior requires suitable platform or device evidence.
+    evidence_levels: Separate authored scenarios, executable deterministic tests with doubles, tests of actual adapters or durable storage, authorized source integration and native platform or assistive interaction. A passing result at one level proves only its exercised conditions and does not replace the others. Record implementation version, actual inputs, observation, scope and outcome; missing applicable evidence stays explicitly unverified.
+    external_process: The selected structured-description authoring workflow is an external process rather than GitView write functionality. Its own conformance and enforcement evidence must not be misreported as an application test. GitView's reading and presentation of descriptions still need their applicable product and accessibility checks.
+    proposal_boundary: A cross-cutting review may propose specific graph edges when an actual completion or validation prerequisite is established. Do not bulk-add edges merely to increase connectivity or treat an unrelated UI feature as a blocker for a pure policy. Whether and how the installed SpecGraph tooling represents product-wide applicability remains an open tooling question.
+    provenance: The owner requested testability, DI, TDD and network/data mocks and a native Apple-style interface. This applicability and evidence method is an agent-authored refinement; no code, device check or enforced graph policy is claimed.
+  scenarios:
+    gesture_with_device_gap:
+      given: A density and preview interaction has a candidate scenario and deterministic model evidence but no native accessibility check.
+      when: Its verification readiness is assessed.
+      then: Applicable accessible alternatives and device behavior are recorded as unverified; the model or candidate check is not presented as a VoiceOver or gesture pass.
+    data_only_policy:
+      given: A deterministic function evaluates whether a PR matches a CI filter without a user interface or external I/O.
+      when: Cross-cutting applicability is reviewed.
+      then: Its unknown and known outcomes and TDD evidence are assessed; a gesture test for the pure function is recorded as not applicable with a reason, while any UI presenting the result has its own accessibility obligations.
+    missing_edge:
+      given: An Issue relationship leaf has no refines or depends_on path to the testability specification.
+      when: Its product implementation is being prepared.
+      then: Applicable testability and evidence obligations are still reviewed explicitly; the missing edge is not called an exemption or silently treated as tool-enforced inheritance.
+    mocked_storage:
+      given: Controlled tests demonstrate correct behavior when a fake store reports an interrupted write.
+      when: Durable restart behavior is assessed.
+      then: The fake result is attributed to that test boundary and cannot be reported as proof that the actual chosen store recovers correctly after restart.
+    external_format:
+      given: An external process validates a PR description and GitView separately presents the observed body.
+      when: Verification coverage is reviewed.
+      then: Process conformance, source access and accessible GitView presentation are assessed separately without claiming GitView creates or edits the PR.
+  unresolved:
+  - Evidence record format, precise ownership of applicability decisions and any SpecGraph support for cross-cutting policy remain to be specified.
+  - Supported iOS versions, assistive technologies, exact adapter contracts and independent verification strategy remain open.
+  - No product tests, live source integration or native accessibility checks have been executed.
