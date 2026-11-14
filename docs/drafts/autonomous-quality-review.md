@@ -653,3 +653,9 @@ durable storage и package decisions остаются открытыми; тес
 [Проверка словаря](evidence/autonomous-goal-ontology-check-journey-architecture-20261114.json)
 для 0021, 0040, 0095 и 0096 не нашла findings или gaps; это не подтверждение
 реального DI, SpecificationCore, FSD dependency graph или готовности маршрута.
+
+[Актуальная ontology-сверка](../../ontology/review/specification-alignment-20261114.md)
+охватила 96 кандидатов структурным advisory и выборочно сопоставила смысл
+основных терминов. Сохранён один warning/gap для product label `GitView` в
+0001; добавление entity ради нуля предупреждений не обосновано. Это не полный
+semantic review и не утверждение draft.10.
