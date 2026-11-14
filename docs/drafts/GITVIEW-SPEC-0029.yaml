@@ -1,0 +1,62 @@
+id: GITVIEW-SPEC-0029
+title: GitView - Scope and uniqueness of work summaries
+kind: spec
+created_at: '2026-11-14T13:34:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0012
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0011
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0027
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0012.yaml
+  time_selection: docs/drafts/GITVIEW-SPEC-0007.yaml
+  observations: docs/drafts/GITVIEW-SPEC-0026.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Each summary identifies its Project or Repository scope, relevant object category, observation coverage and applicable time period.
+- Each Repository contributes to every Project it belongs to, while a portfolio-wide unique total counts each Repository and source object once.
+- Distinct units and overlapping attention signals are not summed as distinct work items.
+- Incomplete or unknown source coverage is visible and cannot be treated as a known zero.
+specification:
+  objective: Make summary scope, identity, units and uncertainty explicit across repositories and Projects.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    repository: A Repository summary covers known distinct objects from that source Repository for a named category and selected period where applicable. Repository rename or transfer with confirmed identity does not produce another repository for counting.
+    project: A Project summary covers its distinct current member Repositories. A Repository shared with a different Project contributes to both Project summaries; the contributions are correct within their respective scopes and must not be summed into a unique portfolio total without deduplication.
+    portfolio: A portfolio-wide unique total uses the union of member Repository identities and distinct source object identities within those Repositories. Equal issue or PR numbers in different repositories are separate; a linked PR and Issue are separate object types. Multiple memberships do not create additional source objects.
+    units: Open PRs, draft PRs, open Issues, affected PRs, failed checks and affected repositories are separately named units. Draft PRs are a subset of open PRs where the draft flag is known; adding the two counts as independent PRs is incorrect. CI, review and thread attention categories may overlap and are not added into a unique problem count without an explicit deduplication rule.
+    time: Lifecycle state is a current observed fact at its own observation time; merged PRs and closed Issues are outcomes within a separately specified period. A closed Issue is not automatically a completed Issue. Reopenings and historical outcome counting require sufficient source history and are not inferred from current state alone.
+    coverage: Each metric carries coverage and last relevant observation time for its inputs. Known values from partially observed member Repositories can be presented as partial observed counts but not as a confirmed total or automatic zero for missing members. Explicit access denial follows 0019 and cannot expose restricted private data.
+    selection: Navigating from a summary signal retains its originating Project or Repository, period and condition; it does not treat a count as proof that all underlying objects are loaded. Filtering and unknown behavior follow 0007 and 0027.
+    provenance: Membership overlap and distinct count units follow the owner's discussion; exact presentation and coverage propagation are agent-authored proposals.
+  scenarios:
+    cross_project_overlap:
+      given: Repository R is in Projects P and Q and has one observed open PR.
+      when: P, Q and the portfolio unique total are summarized with complete coverage.
+      then: Each Project includes the PR once and the portfolio unique total includes it once, not twice.
+    same_number:
+      given: Two different Repositories each contain one open Issue numbered 42.
+      when: Their Project is summarized with complete coverage.
+      then: The open Issue count is two and each source Repository remains identifiable.
+    overlapping_attention:
+      given: One PR has a failed check and an unresolved review thread.
+      when: CI and thread attention are summarized.
+      then: That PR contributes to each applicable signal but is not represented as two distinct PRs.
+    partial_membership:
+      given: A Project has two members, one fully observed and one with no Issue observation.
+      when: Its Issue count is shown.
+      then: The known contribution can be shown with incomplete coverage and the missing member is not treated as zero.
+  unresolved:
+  - Precise per-metric coverage representation, freshness classification and historical outcome definitions.
+  - How unknown filter inputs affect navigation from a particular summary signal; refine with 0027.
