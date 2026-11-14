@@ -11,6 +11,8 @@ depends_on:
 - GITVIEW-SPEC-0008
 - GITVIEW-SPEC-0009
 sources:
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml
+  ontology_selection_scope: The draft.5 ontology_selection records an earlier source context; draft.10 is the current working composition. Neither is semantically approved by this reference.
   root_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
   topic: docs/drafts/ux-preview-interactions.md
   authorization: conversation:gitview/excerpt-68

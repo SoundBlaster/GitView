@@ -19,8 +19,8 @@ sources:
     path: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
     sha256: f346b1a369cc491606d7da5731eeb0f3cba948ddb8a769315787e8c14b0bc221
     package: local.gitview.domain@0.2.0-draft-composition.4
-  current_working_ontology_context: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
-  ontology_selection_scope: The draft.4 selection above records the earlier source context; draft.5 is the current working composition and does not itself establish semantic approval.
+  current_working_ontology_context: ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml
+  ontology_selection_scope: The draft.4 selection above records the earlier source context; draft.10 is the current working composition and does not itself establish semantic approval.
 acceptance:
 - Matching numeric repository IDs from the same GitHub instance preserve one Repository, its history and
   every Project membership across rename or transfer.

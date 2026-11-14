@@ -18,6 +18,12 @@ specs проверены через `domain_vocabulary` в изолирован�
 Остальные проверенные входы не дали findings/gaps. `passed_check_count` во всех
 отчётах равен нулю: это не выполненные поведенческие или semantic checks.
 
+Это снимок по указанным в отчёте SHA, а не проверка каждого последующего
+изменения. Позднее 0024, 0037, 0043 и 0073 проверены по новым SHA в
+[отдельном отчёте](../../docs/drafts/evidence/autonomous-goal-ontology-check-identity-navigation-20261114.json).
+Ещё 20 кандидатов после уточнения исторического и текущего context проверены
+по новым SHA в [этом отчёте](../../docs/drafts/evidence/autonomous-goal-ontology-check-current-context-references-20261114.json).
+
 Явные `ontology_refs` найдены во всех 96 файлах и содержат 17 различных
 qualified names. Среди них 23 файла ссылаются на `gitview:Metric`, девять — на
 `gitview:CIStatus`, один — на `motivcore:Motive`. Это count явных ссылок, не

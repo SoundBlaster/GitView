@@ -676,3 +676,11 @@ semantic review и не утверждение draft.10.
 candidate check и [проверку словаря](evidence/autonomous-goal-ontology-check-identity-navigation-20261114.json)
 без findings и gaps. Это не подтверждает фактическое переключение identity,
 доступность или поведение платформы; сценарий остаётся неисполненным.
+
+В 20 кандидатах устранена неоднозначность между старым ontology selection и
+текущим рабочим draft.10. Старые пути и три проверенных SHA сохранены как
+исторические источники; это не переносит semantic approval или подтверждение
+действий в новый package. Новые байты прошли candidate check и
+[проверку словаря](evidence/autonomous-goal-ontology-check-current-context-references-20261114.json)
+без findings и gaps. Прежний отчёт для всех 96 кандидатов остаётся снимком
+по своим SHA; для изменённых файлов применимы более поздние отчёты.
