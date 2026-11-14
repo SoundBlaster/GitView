@@ -17,7 +17,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Today includes each source-confirmed matching object once when any inclusion rule is confirmed; unresolved identity is not represented as confirmed uniqueness.
-- Unknown inputs cannot create a confirmed match, a confirmed non-match or proof that an unobserved source is empty.
+- An unknown input alone cannot establish a confirmed match, a confirmed non-match or an empty unobserved source; an independently true inclusion or false required condition can still determine the applicable result.
 - Explicit filter exclusions affect the selection without changing stored objects or rewriting source timestamps.
 - Time group recalculation uses the device local calendar and does not rewrite recorded source timestamps.
 specification:

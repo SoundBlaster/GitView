@@ -12,6 +12,7 @@ depends_on:
 - GITVIEW-SPEC-0029
 - GITVIEW-SPEC-0044
 - GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0049
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0030.yaml
   owner_today: conversation:gitview/excerpt-55-reply
@@ -35,7 +36,9 @@ specification:
     current_breakdown: For the captured identities, show the latest permitted source-observed lifecycle as open, merged, closed without merge or unknown, together with relevant observation times and coverage. Draft is a separate attribute of open PRs. Do not infer that every closed-without-merge PR was completed successfully or that an unknown state is closed.
     arithmetic: A remaining-open count counts distinct cohort PRs confirmed open in the stated observation context. It is not calculated as cohort size minus merged count because closed-without-merge and unknown states exist. Exact category totals for the full cohort require sufficiently complete identity, state and access evidence. Observations at different times are not labeled as a single simultaneous source snapshot without additional evidence.
     transitions: A later confirmed reopening or state change updates the same cohort PR's current observed category rather than creating another cohort identity. Past open-state trend points require an observation or reliable reconstructible state at the relevant time; current state alone does not prove the path, event count or values between snapshots under 0030.
-    evolving_work: New PRs created after capture are not silently included in the fixed cohort, though they can remain visible in Today or a separately defined new capture. The view must not imply that the fixed cohort represents all current Project work after its scope or membership changes.
+    evolving_work: New PRs created after capture are not silently included in the fixed cohort. The independent dynamic Today selection must still include each new PR that meets 0027's scope and filter conditions; capturing or viewing the cohort must not silently add a cohort-only filter to Today. The fixed view must not imply that it represents all current Project work after its scope or membership changes.
+    selection_independence: Capture records the filters and scope used at that time but does not change the operator's active Today filters, source objects or membership. Later changes to Today filters affect that dynamic selection, not the recorded cohort's identities. A new capture is explicit and cannot silently rewrite the earlier cohort or make prior trend points appear to describe the new population.
+    day_boundary: At a local day or time-zone change, Today is recalculated under 0049. A retained fixed cohort keeps its captured identities and original capture context; it is not silently redefined as the new Today. Display the distinction wherever both are presented; retention duration and historical time-zone policy remain open.
     scope_and_access: Shared Repository identities are deduplicated for a unique portfolio cohort under 0029. A Project cohort retains the membership basis at capture for that labeled cohort; this does not assert historical membership before capture. Explicit access denial or disconnect restricts private inputs and derived counts under 0036 and 0046 rather than counting them as zero.
     presentation: A current breakdown and a historical open-work trend are separate claims. Use the term burn-down for a trend only when the measured unit, fixed cohort, time points and sufficient coverage are clear; otherwise show the known breakdown or an incomplete series without claiming a verified burn-down. Layout and exact capture control are not prescribed.
     provenance: The owner wants to see a day's substantial work remain visible while it completes. A fixed captured PR cohort and its measurement semantics are agent-authored proposals, not an independently accepted product policy.
@@ -56,6 +59,18 @@ specification:
       given: A 100-PR cohort has 95 confirmed merged, 4 confirmed open and one PR whose current state is unknown.
       when: Current counts are shown.
       then: The unknown PR is not silently counted as open or closed and the result is not labeled a fully classified exact current snapshot.
+    new_pr_in_today:
+      given: A fixed cohort contains 100 PRs and a newly created source-confirmed PR in the same Project is observed after capture with no active filter excluding it.
+      when: The operator views both the cohort and the dynamic Today grid.
+      then: The fixed cohort still contains its original 100 identities and the new PR is included in Today under 0027; the cohort is not presented as the entire current Today selection.
+    day_changes:
+      given: A fixed cohort was captured from Today before the device's local day changes and its retained identities are available.
+      when: The next day's Today selection is evaluated.
+      then: Today uses the new local-day interval and the cohort remains attributable to its original capture rather than silently acquiring new-day membership.
+    incomplete_capture:
+      given: A Project has one unobserved Repository when a cohort is captured from its visible Today PRs.
+      when: The cohort and Today coverage are shown.
+      then: The captured identities remain an explicitly incomplete observed subset, and neither view claims the missing Repository contained no matching PRs.
   unresolved:
   - Whether and how the operator initiates and retains a fixed cohort, and whether this view belongs to the first release.
   - Source evidence, freshness and storage sufficient for cohort capture and historical points; no API or persistence mechanism is selected.

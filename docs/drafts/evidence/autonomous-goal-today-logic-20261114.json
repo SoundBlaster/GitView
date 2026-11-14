@@ -1,7 +1,7 @@
 {
   "artifact_kind": "gitview_three_valued_selection_model",
   "spec": "GITVIEW-SPEC-0027",
-  "spec_sha256": "d13096d8b7c31444b784cb653e18d1fe39efb532ef39206e2a6469783fd297be",
+  "spec_sha256": "4fdb7179eca93b03636c5b09289067d81a08dca60c860253e9f7d4df36151249",
   "input_variables": 5,
   "domain": [
     "false",
