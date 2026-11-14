@@ -1,0 +1,60 @@
+id: GITVIEW-SPEC-0031
+title: GitView - Preview identity and dismissal
+kind: spec
+created_at: '2026-11-14T13:38:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0015
+depends_on:
+- GITVIEW-SPEC-0016
+- GITVIEW-SPEC-0017
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0015.yaml
+  navigation: docs/drafts/GITVIEW-SPEC-0024.yaml
+  owner_direction: docs/drafts/ux-preview-interactions.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A first-version long press previews the selected object and opening from that preview preserves its identity and source context.
+- Dismissal returns to the originating scope, filters and density without opening a different object.
+- Refresh or changed filter membership while preview is visible cannot silently retarget it to another object.
+- Essential preview or opening operations remain available without requiring long press or color.
+specification:
+  objective: Allow the operator to inspect a selected cell without losing its identity or originating overview.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    activation: A long press on a Project, Repository, PR or Issue cell can present its preview. Ordinary scrolling remains available when the preview gesture is not activated; the precise gesture implementation is subject to native evaluation.
+    identity: A preview refers to the selected object's stable identity in its source context rather than just the visible cell index, display name or repository-local number. An explicit open operation navigates to the same object if it remains accessible.
+    content: Preview identifies object type and sufficient source context to disambiguate it; show known title and relevant state when available. Unknown or stale facts retain their limitations; full detail is governed by object overview specs. The preview does not require a network request to display previously permitted saved data.
+    dismissal: Dismissing returns to the originating overview without performing open, share or a source mutation. Preserve scope, period, explicit filters and density and restore the prior object or fallback position under 0024.
+    refresh: A refresh may update the selected object's observed facts while preview is visible. It must not retarget the preview to another object merely because cells move or disappear. If the object no longer matches the originating filter, preview may remain until dismissed; the collection on return reflects the filter. If access is explicitly denied, restricted cached content follows 0019 and open is not represented as successful.
+    alternatives: Provide a path to identify and open an object without relying on long press, hover or color. Assistive focus returns to the original object where still available, otherwise a meaningful fallback under 0017 and 0024.
+    later_scope: Sliding a single rich preview across cells is a later interaction; long-press activation, edge behavior and gesture arbitration require separate refinement and native evaluation. A static long-press preview does not establish that later interaction.
+    provenance: Static long-press preview and the later sliding idea were discussed with the owner; the state and identity rules here are agent-authored refinements.
+  scenarios:
+    same_number:
+      given: Repositories R1 and R2 each contain PR 42, and the operator previews R2's PR.
+      when: The operator opens the previewed object.
+      then: The overview refers to R2's PR 42, not the same-numbered PR in R1.
+    moved_cell:
+      given: A preview is open while its originating grid is sorted and refreshed.
+      when: Other cells move and the selected object moves to a different position.
+      then: The preview continues to identify the original object and does not switch to the cell that inherited its position.
+    no_long_press:
+      given: The operator cannot use long press.
+      when: They navigate the grid using an available accessible path.
+      then: They can identify and open the intended object without relying solely on a color cue.
+    revoked_access:
+      given: A private PR preview is open and source access is explicitly denied.
+      when: The updated access condition is applied.
+      then: Restricted cached content follows the private-cache policy and the preview is not silently replaced with another object.
+  unresolved:
+  - Exact preview content priorities by object type and density.
+  - Native gesture arbitration, focus behavior and iOS device evidence.
