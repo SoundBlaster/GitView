@@ -1,0 +1,20 @@
+{
+  "artifact_kind": "gitview_three_valued_selection_model",
+  "spec": "GITVIEW-SPEC-0027",
+  "spec_sha256": "d65cc977602d1f947cd1b18d69c6da92d6c4ae56ce839e4bd2f4cffddbb65d80",
+  "input_variables": 5,
+  "domain": [
+    "false",
+    "unknown",
+    "true"
+  ],
+  "combinations": 243,
+  "result_counts": {
+    "false": 139,
+    "unknown": 85,
+    "true": 19
+  },
+  "model": "(open OR same_day_outcome OR same_day_creation) AND scope AND active_filter",
+  "claims": "Finite model checks logical consequences only; it does not validate source mapping, actual coverage, UI, persistence, or application behavior.",
+  "application_scenarios_executed": false
+}
