@@ -1024,3 +1024,13 @@ review assessment и threads. Документация GitHub GraphQL разли
 не устанавливает REST-equivalence или полный PR status box. [Candidate checks](evidence/autonomous-goal-candidate-check-check-startup-failure-20261114.json)
 и [ontology advisory](evidence/autonomous-goal-check-startup-failure-20261114.json)
 прошли структурно; реальные GitHub данные и native UI не проверялись.
+
+[0062](GITVIEW-SPEC-0062.yaml) и [0057](GITVIEW-SPEC-0057.yaml) уточняют
+`REVIEW_REQUIRED` отдельно от явных requests, nullable reviewDecision без
+выдуманной причины и outdated-but-unresolved threads, которые остаются в
+выбранном общем счётчике. Новый head не приписывает актуальность старому review;
+[сверка](summary-filter-units-20261114.md) сохраняет независимость сигналов.
+[Candidate checks](evidence/autonomous-goal-candidate-check-review-semantics-20261114.json)
+и [ontology advisory / graph inventory](evidence/autonomous-goal-review-semantics-20261114.json)
+прошли для 121 candidate snapshot; актуальные permissions, source data и UI не
+проверялись.

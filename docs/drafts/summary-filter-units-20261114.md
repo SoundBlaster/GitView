@@ -1,5 +1,26 @@
 # GitView: счётчики сводки и переходы к объектам
 
+## Независимые review-сигналы
+
+[0062](GITVIEW-SPEC-0062.yaml) уточняет три независимых факта: source
+review decision, запрос конкретному reviewer и unresolved threads. Например,
+`REVIEW_REQUIRED` может оставаться значимым при пустом списке запрошенных
+reviewers; его нельзя прибавлять к числу явных запросов. У `reviewDecision`
+nullable тип, но отсутствие значения само по себе не объясняет причину и не
+доказывает approval. Тред, одновременно outdated и unresolved, остаётся в
+счётчике всех unresolved, пока пользователь явно не применил отдельный фильтр.
+
+Новый head не обновляет старый review или thread state автоматически. Частичный
+ответ и отдельные времена наблюдений сохраняются; объединённый знак approval и
+отсутствия вопросов не показывается без нужных свидетельств. Эти правила не
+обещают мердж или воспроизведение GitHub UI. GitHub документирует поля и enum
+в [GraphQL Pull requests](https://docs.github.com/en/graphql/reference/pulls),
+но этим не установлены полнота выборки или права конкретного запроса.
+
+[Candidate checks](evidence/autonomous-goal-candidate-check-review-semantics-20261114.json)
+и [ontology advisory с графом](evidence/autonomous-goal-review-semantics-20261114.json)
+двух узлов прошли структурно; реальные review данные, UI и policy не проверены.
+
 ## От сигнала к выборке
 
 [0092](GITVIEW-SPEC-0092.yaml) использует результат расчёта 0119 как контекст

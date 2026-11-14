@@ -87,6 +87,14 @@ GitHub документирует отдельные поля `reviewDecision`, 
 reviewer после отправки им review; сам по себе этот факт не доказывает
 approval. [GitHub: GraphQL pull requests](https://docs.github.com/en/graphql/reference/pulls),
 [REST review requests](https://docs.github.com/en/rest/pulls/review-requests).
+
+`reviewDecision` — nullable поле; в enum отдельно перечислен `REVIEW_REQUIRED`.
+Отсутствие конкретного requested reviewer не превращает это решение в approval,
+а одна лишь nullable-схема не объясняет причину `null`. В
+[PullRequestReviewThread](https://docs.github.com/en/graphql/reference/pulls#pullrequestreviewthread)
+поля `isOutdated` и `isResolved` описаны раздельно: устаревший тред не обязан
+быть разрешённым. Эти документальные факты не подтверждают permissions, полноту
+connection или атомарность разновременных review и head observations.
 Отзыв review и применимость approval также зависят от изменений и настроек;
 это не выводится из количества открытых тредов. [GitHub: dismissing a review](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/dismissing-a-pull-request-review).
 Документация не заменяет проверку выбранного query и прав доступа.

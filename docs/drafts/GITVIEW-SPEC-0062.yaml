@@ -9,11 +9,13 @@ refines:
 depends_on:
 - GITVIEW-SPEC-0044
 - GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0053
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0028.yaml
   agreed_summary: docs/drafts/project-summary-proposal.md
   access_research: docs/drafts/github-field-access-research-20261114.md
   github_review_schema: https://docs.github.com/en/graphql/reference/pulls
+  github_review_requests: https://docs.github.com/en/rest/pulls/review-requests#get-all-requested-reviewers-for-a-pull-request
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Outstanding review requests, source review assessment and unresolved review threads are separate facts with separately attributable coverage and observation context.
@@ -30,8 +32,11 @@ specification:
   contract:
     requests: An outstanding-review-request condition requires evidence that at least one person or team is currently requested for this PR in the observation context. It is distinct from a source decision that review is required and from a personal request to the GitView operator. GitHub documents that a requested reviewer is removed from the requested-reviewer result when they submit a review; absence from that result alone does not establish approval or even the reason for absence.
     assessment: A changes-requested condition uses the applicable current source review assessment with its own scope and observation time. An individual historical review or a newly observed head revision alone is not proof of the current aggregate assessment; dismissed or superseded reviews require source-specific interpretation. A source assessment remains distinct from thread resolution and outstanding review requests.
+    required_review: GitHub GraphQL documents REVIEW_REQUIRED as a source review decision and separately provides review requests. A supported applicable REVIEW_REQUIRED decision can be made discoverable as the source's review-required status even if a complete requested-reviewer list is empty; do not fabricate a person or team request, attribute it to the GitView operator, or add it to the distinct outstanding-request count merely from that decision. Conversely, an observed reviewer request alone does not establish REVIEW_REQUIRED. Exact badge and category presentation remain a native design proposal and neither fact establishes the complete merge decision.
+    nullable_decision: The GraphQL reviewDecision field is nullable. Preserve a source-supported null or unavailable value with its own context, and distinguish a field-level error or unrequested field from a supported null. The documented nullable type by itself does not explain why the value is null or prove that no review exists, approval is absent, a review is required, or a PR is mergeable. Show an appropriate limited or unknown state rather than inventing the reason.
     review_commit: GitHub's individual PR review can have an associated commit and a submission time, while the PR reviewDecision is a separate current assessment. Preserve any supported individual review commit and observation context where used; a review's commit alone neither establishes the current aggregate decision nor proves that an earlier approval is valid or invalid for a newer head. A nullable or unavailable commit is not evidence of an empty review or a successful assessment.
-    threads: An unresolved-thread condition concerns identifiable review threads whose source resolution state is known. A positive observation can establish an affected PR under partial coverage; a known zero or absence requires sufficiently complete relevant threads and resolution states. Thread count, PRs with at least one unresolved thread and affected Repositories are different units. An unresolved thread need not mean that the source assessment is changes requested, and a changes-requested assessment can exist without an unresolved thread.
+    threads: An unresolved-thread condition concerns identifiable review threads whose source resolution state is known. GitHub exposes isOutdated and isResolved as separate thread fields; an outdated thread that is still source-confirmed unresolved remains an unresolved thread for the selected all-unresolved count, not an automatically resolved or excluded thread. Preserve its outdated status separately when available, without requiring individual thread content. A positive observation can establish an affected PR under partial coverage; a known zero or absence requires sufficiently complete relevant threads and resolution states. Thread count, PRs with at least one unresolved thread and affected Repositories are different units. An unresolved thread need not mean that the source assessment is changes requested, and a changes-requested assessment can exist without an unresolved thread.
+    joint_observation: A response that includes a head revision and review fields can support each successfully interpreted field with its source context, but their inclusion in one response alone is not a documented proof that every nested field, page and policy was evaluated atomically for that revision. After a head change, do not promote an earlier approval or complete-thread claim to the new revision solely from a refreshed head or a callback time. Use an applicable source assessment and sufficient context; otherwise preserve the older observation as last known or unknown under 0044 and 0053. This does not assume that every thread is intrinsically scoped to one head revision.
     scope_and_route: Project counts in 0057 count distinct open PRs for each named attention condition. A destination opened from one of those counts retains its originating Project, open lifecycle, named predicate, applicable time and source scope. A thread-count origin can open distinct affected PRs without asserting equal numbers of threads and cards. Explicitly changing a filter is distinct from silently changing the origin condition.
     uncertainty: Each predicate uses its own identity, access, source and time evidence. An incomplete request list, unavailable assessment or incomplete thread collection is not a confirmed negative. Known positive observations may be shown with incomplete coverage; stale or differently timed inputs are not represented as one simultaneous current review state without evidence under 0044 and 0046.
     compact: A compact card or preview can prioritize a subset of the review facts but provides an accessible non-color route to the available separate signals and their limitations without requiring individual thread content. Zero unresolved threads or no outstanding reviewer is not rendered as approval or completed review by itself. Exact glyphs and layout remain open.
@@ -51,6 +56,22 @@ specification:
       given: An applicable review assessment reports approval but the review-thread collection is incomplete.
       when: The compact review mark is selected.
       then: The approval remains independently available but the app does not assert the combined approved-and-clear mark or a zero unresolved-thread count.
+    required_without_requested_reviewer:
+      given: The source reports an applicable REVIEW_REQUIRED review decision and a sufficiently observed empty requested-reviewer collection.
+      when: Review signals and the outstanding-request count are presented.
+      then: The review-required decision is discoverable independently; zero explicit outstanding reviewer requests does not erase it or fabricate a requested person, and the app does not claim merge readiness.
+    null_decision_without_cause:
+      given: A successfully interpreted source response provides a null reviewDecision with no documented cause, while an independent review-thread observation is available.
+      when: The PR review summary is presented.
+      then: The null retains its actual source context without an invented reason or implied approval, and the independently supported thread fact is not erased.
+    outdated_unresolved_thread:
+      given: A review thread is source-confirmed outdated and unresolved for an otherwise eligible PR, with sufficient identity and applicable observation context.
+      when: The all-unresolved thread and affected-PR signals are evaluated.
+      then: The thread can contribute once as unresolved and its outdated attribute remains distinct; it is not excluded or marked resolved solely because it is outdated.
+    head_and_partial_review_response:
+      given: A PR head changes from A to B, and a later response supplies the new head but its review assessment field is missing or affected by an error.
+      when: The compact review marker is evaluated.
+      then: An earlier approval or zero-thread observation remains attributed to its prior evidence and is not asserted current for B solely because the head was observed at B.
     requested_and_attention:
       given: An open PR has an outstanding review request and a confirmed unresolved thread in their own applicable contexts.
       when: Its compact review signal is displayed.

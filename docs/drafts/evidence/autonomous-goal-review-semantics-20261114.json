@@ -1,0 +1,41 @@
+{
+  "scope": "Documented source fields, declared graph and domain_vocabulary advisory only; no live review or UI test",
+  "documentation": [
+    "https://docs.github.com/en/graphql/reference/pulls",
+    "https://docs.github.com/en/rest/pulls/review-requests#get-all-requested-reviewers-for-a-pull-request"
+  ],
+  "context": "ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-review-semantics-h1klouso",
+  "graph_report": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/review-semantics-readiness-20261114.json",
+  "graph_sha256": "3c3173364175a351471d638d9040c2e8f1ac7c0838b7fed2e66c1e1703a1230c",
+  "node_count": 121,
+  "structural_leaves": 54,
+  "unrooted": [],
+  "acyclic_relations": [
+    "refines",
+    "depends_on",
+    "refines + depends_on"
+  ],
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0057",
+      "input_sha256": "b66e0ca384d7adfb9a5ff53adb23f6829f695e96c0fd6f777d0f4842f486e0b0",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "fb826aa67dea8ee334f363a7acd37a42ab5385dc2261f7b377a6a8c5994e6f98"
+    },
+    {
+      "id": "GITVIEW-SPEC-0062",
+      "input_sha256": "9c72bd1f8f356be8d3c17e62bb78fb0e758430bf030825436b08825fdb596737",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "17c9f59a52a871348f1596b9f8b494a0d42d8e9d1a423e25cd08f17f6ebe6e7d"
+    }
+  ]
+}
