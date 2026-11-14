@@ -1,0 +1,149 @@
+[
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0056.yaml",
+      "spec_id": "GITVIEW-SPEC-0056",
+      "sha256": "7464edd7790a8a412dede483e6ec7a59377da8f138aa8918fb04cce3da0d3671"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  },
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0057.yaml",
+      "spec_id": "GITVIEW-SPEC-0057",
+      "sha256": "dc10bc48f55ff432e3613c165f13f69b2a1927a660e0bf49bbaead5aae5d4430"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  },
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0066.yaml",
+      "spec_id": "GITVIEW-SPEC-0066",
+      "sha256": "f43ced38cbf6a3f21fed04b344da9172a2137c75fec13ecb2e6969bd00df13fa"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  },
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0071.yaml",
+      "spec_id": "GITVIEW-SPEC-0071",
+      "sha256": "ab355b00a9bd1ee8fced58622e082aab0575128ba07a0844dbcb5f6d668aab17"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  },
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0103.yaml",
+      "spec_id": "GITVIEW-SPEC-0103",
+      "sha256": "4f8a3682ea2d4482d4164fb975646b699d45094c7d1bbc416e2ae7fe408347fe"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  },
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0105.yaml",
+      "spec_id": "GITVIEW-SPEC-0105",
+      "sha256": "675801326f4ffea44ca9f315225442f390333c302a0370a10c763669d6ed9ae8"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  },
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0111.yaml",
+      "spec_id": "GITVIEW-SPEC-0111",
+      "sha256": "e6c540367db4d7461c726c44ac7222719be6e6439507efb110f62f6d6f2fe208"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  }
+]

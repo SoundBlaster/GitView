@@ -82,6 +82,6 @@ specification:
       when: Their separate local retention operations are reconciled.
       then: Equality alone neither identifies them as one operation nor proves two distinct source events; each keeps its actual supported context and history rules.
   unresolved:
-  - Select a persistence boundary, operation-binding representation, commit protocol and concrete recovery strategy after upstream data ownership and source contracts are fixed.
+  - Candidate 0113 proposes a SQLite consistency boundary and operation-result coordination; select its provider and concrete operation-binding representation, commit protocol and recovery strategy after upstream data ownership and source contracts are fixed.
   - Define evidence retention and compaction relative to late delivery, process lifetime, storage budgets, private-data policy and history-clear semantics.
   - No concrete persistence, concurrency, fault injection or restart behavior has been implemented or verified.

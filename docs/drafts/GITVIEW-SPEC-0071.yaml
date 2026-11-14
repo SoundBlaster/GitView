@@ -88,7 +88,7 @@ specification:
       when: Recovery considers replaying the retention attempt.
       then: It does not assume the clear failed or relabel the earlier attempt as post-clear; the affected result remains uncertain until the boundary can be reconciled.
   unresolved:
-  - Persistence implementation, commit granularity, interruption detection and recovery interface require further design and validation.
+  - Candidates 0105 and 0113 propose field/context and coverage commit boundaries; the provider, physical representation, interruption detection and recovery interface require design and validation.
   - Retention and classification of ephemeral observations, local failure presentation and scope of any repair remain to be specified.
-  - The implementation must design and verify recoverable operation identity and reconciliation without treating equal values or timestamps as identity; no mechanism or executed restart test is selected here.
+  - Candidates 0103 and 0113 propose operation binding and reconciliation; the implementation must specify and verify their representation and crash behavior without treating equal values or timestamps as identity. No restart test has run.
   - Source-specific evidence, durable storage behavior and native application recovery have not been tested.

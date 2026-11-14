@@ -88,5 +88,5 @@ specification:
       then: It reports an integration limitation rather than claiming the Project is valid, invalid or simply missing source evidence.
   unresolved:
   - Define exact name and purpose text normalization, input types and SpecificationCore dependency version before declaring the decision independently implementable.
-  - Establish source identity and access eligibility mappings for newly added Repositories and the concrete commit and recovery protocol.
+  - Establish source identity and access eligibility mappings for newly added Repositories; candidates 0112–0114 propose eligibility, coordinated commit and credential recovery, but their concrete interfaces and behavior remain unverified.
   - No product policy, durable storage, source integration or TDD cycle has been implemented or verified.

@@ -107,6 +107,6 @@ specification:
       then: The timed-out PR contributes once without being called a failed test; the action-required outcome remains discoverable as special and is not described as healthy solely because it does not contribute to this count.
   unresolved:
   - Verified GitHub source mapping and semantics for outstanding review requests, blocking links, check revision and historical closure reasons.
-  - Selected period presets, graph buckets, retention and historical membership basis for each displayed series.
+  - Evaluate the working period, bucket and membership proposals in 0064 and 0069 and retention proposals in 0066 and 0097; establish supported evidence for each displayed series and do not treat these candidates as tested source history.
   - Exact uncertainty presentation, accessibility and initial visual placement; optional checks-and-review predicate remains unselected.
   - Which retained observations and source evidence can support historical dynamic-Today breakdowns or exact same-day outcome counts are not established.

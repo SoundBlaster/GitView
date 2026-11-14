@@ -78,6 +78,6 @@ specification:
       when: The caller reads the Project work scope after restart.
       then: Independently readable permitted facts can remain available, while complete coverage and its newer timestamp are not claimed solely from the stored pages or a terminal cursor.
   unresolved:
-  - Choose a concrete representation and commit boundary for facts, coverage, operation evidence and independent history outcomes.
+  - Candidate 0113 proposes separate coordinated fact and coverage commits; define their physical representation, applicable atomicity and independently recoverable history outcomes before implementation readiness.
   - Establish source-specific field, timestamp and revision semantics and privacy-safe retention and compaction before selecting actual mappings.
   - No source adapter, persistence implementation, process-restart or native behavior has been tested.

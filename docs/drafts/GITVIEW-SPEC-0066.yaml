@@ -91,6 +91,6 @@ specification:
       when: Recovery reconciles and retries that same storage attempt.
       then: The chart does not gain an additional independent source sample merely because the storage operation was replayed; an unreadable outcome remains uncertain.
   unresolved:
-  - Retention contracts for other selected metrics, precise observation triggers, storage budgeting and recovery behavior require further refinement; no-age-expiry is an agent-authored proposal.
-  - Atomic write and clear coordination, interrupted writes, history deletion and recovery require a storage contract.
+  - Candidate 0097 extends retention to the other agreed metrics; exact source eligibility, observation triggers, storage budgeting and recovery remain open. No-age-expiry is an agent-authored proposal.
+  - Candidates 0105, 0113 and 0117 propose fact retention and clear coordination; physical schema, actual atomicity, interruption handling and recovery remain to be designed and verified.
   - iOS background scheduling, persistence and graph behavior require actual implementation and device evidence.

@@ -74,6 +74,6 @@ specification:
       when: The period outcome selection is opened.
       then: Known eligible Issues may be shown but the destination is not claimed exhaustive or empty for both Repositories.
   unresolved:
-  - Supported historical outcome metrics, period presets and membership basis for each origin remain to be chosen.
+  - Candidate 0069 proposes distinct merged-PR and closed-Issue daily outcomes, seven- and thirty-day calendar presets and a fixed captured current-member basis; its usability and other origins or metrics remain to be resolved.
   - Source evidence for complete event histories, event identity and event-time closure reasons requires verification without assuming API availability.
   - Validate the 0069 fixed-period proposal across a device time-zone change; exact filter presentation and accessible controls require native design.
