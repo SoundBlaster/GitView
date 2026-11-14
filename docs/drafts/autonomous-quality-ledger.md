@@ -470,3 +470,10 @@ false. Критерий приведён к существующей трёхз�
 с примерами единиц, времени и coverage; дополнительные classes и отношения
 актора не вводились. Это предложение, не изменение выбранного package и не
 подтверждение его semantic approval.
+
+## Границы CI и review в ontology
+
+Подготовлен [кандидат](../../ontology/review/ci-review-boundaries-candidate.md)
+для различения CIStatus, counts, review assessment и ReviewThread. Найденная
+неопределённость гранулярности CIStatus сохранена явно; пакет draft.5 не
+менялся и новые classes/actions по одному наличию значков не добавлялись.
