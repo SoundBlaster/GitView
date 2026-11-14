@@ -1,0 +1,54 @@
+{
+  "runtime": "3593bd75",
+  "context_revision": "sha256:802242a9ca08f9aca0a49768a7de0c8ac9d618878c93bdde3ed79c0f333304d1",
+  "compiler_provenance": "not_verified",
+  "semantic_approval": "not_established",
+  "scope": "candidate format and domain vocabulary structural advisory; no SQLite implementation, iOS SQLite version, WAL behavior, Keychain coordination or fault tests executed",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-sqlite-direction-dnmjci6f",
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0043",
+      "sha256": "cf5ecfe871c18a0e399b1e242f688faa1c3cf8b7ad81c18ca852605da5676841",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 5,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    },
+    {
+      "id": "GITVIEW-SPEC-0113",
+      "sha256": "3024def9f62908e11356b7edabbd602d89b120d9383f8994fb2061fd3837b356",
+      "candidate_check": "checked",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 5,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    }
+  ]
+}
