@@ -25,20 +25,20 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   requirements:
-  - Where an original GitHub URL is available, offer a direct route to the source object.
+  - Where an eligible original GitHub URL is available, offer a route to the source object while preserving its observation context.
   - Provide lightweight sharing using the platform's native sharing experience.
   - Keep source URLs and source data associated with the correct object and repository.
   - Do not imply access to private content for a recipient merely because a link is shared.
   review_scenarios:
-  - Given a PR with an available source URL, opening its source leads to that PR in GitHub.
+  - Given a PR with an eligible observed source URL, opening its source requests that URL without claiming the external handler loaded the intended object.
   - Given no source URL, do not construct an unverified URL and present it as confirmed.
   unresolved:
   - Exact UI affordance and optional additional payload require product and privacy review.
   evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
     selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
-  - Offer an original GitHub source link for a Repository, PR or Issue when the source URL is available;
-    do not manufacture an unverified URL.
+  - Offer an original GitHub source link for a Repository, PR or Issue when an eligible source URL is available;
+    do not manufacture an unverified URL or present a known misdirected address as that object.
   - Use the native share flow for an available source link; sharing a link does not grant recipient access.
   - For the pilot, default to sharing the source link and avoid automatically exporting private descriptions,
     repository contents or screenshots. Additional share payload is a later decision.
@@ -56,8 +56,8 @@ specification:
   pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
     are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
-- Offer an original GitHub source link for a Repository, PR or Issue when the source URL is available;
-  do not manufacture an unverified URL.
+- Offer an original GitHub source link for a Repository, PR or Issue when an eligible source URL is available;
+  do not manufacture an unverified URL or present a known misdirected address as that object.
 - Use the native share flow for an available source link; sharing a link does not grant recipient access.
 - For the pilot, default to sharing the source link and avoid automatically exporting private descriptions,
   repository contents or screenshots. Additional share payload is a later decision.

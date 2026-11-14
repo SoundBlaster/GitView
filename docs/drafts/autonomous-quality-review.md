@@ -216,6 +216,12 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps. Поддержка assistive technologies и iOS device behavior не
 проверялись и не заявляются как достигнутые.
 
+[Аудит source и sharing](leaf-readiness-0033.md) различает last-known ссылку,
+подтверждённо занятый другим объектом адрес и результат platform handoff.
+Новые 0016 и 0033 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-sharing-20261114.json)
+без findings и gaps; redirects, recipient access и системный share flow не
+проверялись.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.
