@@ -62,15 +62,15 @@ specification:
       given: The later sliding mode is active across three cells.
       when: The finger moves between them.
       then: One preview changes object without navigating into any of them.
+  future_acceptance_candidates:
+  - The later sliding rich preview changes one preview as the user inspects neighboring cells without automatically opening them; long press is a proposed activation, not settled gesture arbitration.
   pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
     are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - 'First version: long press presents a preview of the same Project, Repository, PR or Issue, with an
   explicit way to open it and a way to dismiss without navigation.'
 - On dismissal or return retain the originating scope, filter and density and restore position where available.
-- The later sliding rich preview changes one preview as the user inspects neighboring cells without automatically
-  opening them; long press is a proposed activation, not settled gesture arbitration.
 - An accessible non-long-press path to inspect or open the object is required.
 acceptance_evidence:
 - criterion: The pilot contract and its boundary scenarios are independently checkable.
-  evidence: The pilot_scenarios describe expected results for future verification; no app test has run.
+  evidence: same_object and dismiss describe expected first-version results for future verification; future_slide is explicitly later. No app test has run.
