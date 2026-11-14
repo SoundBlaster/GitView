@@ -19,6 +19,8 @@ sources:
     path: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
     sha256: f346b1a369cc491606d7da5731eeb0f3cba948ddb8a769315787e8c14b0bc221
     package: local.gitview.domain@0.2.0-draft-composition.4
+  current_working_ontology_context: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+  ontology_selection_scope: The draft.4 selection above records the earlier source context; draft.5 is the current working composition and does not itself establish semantic approval.
 acceptance:
 - Matching numeric repository IDs from the same GitHub instance preserve one Repository, its history and
   every Project membership across rename or transfer.
@@ -67,18 +69,20 @@ specification:
     GitHub instance identify one Repository. A different numeric id in that scope identifies a different
     object. The GitHubRepository context and every Project membership follow the Repository identity.
   address_rule: Owner, name and URL describe the source address. GitView compares the source identity
-    before applying an address change or associating history and memberships with a repository.
+    before applying an address change or associating history and memberships with a repository. Matching
+    identity alone does not establish which conflicting address is newer; 0038 and 0053 describe the
+    additional ordering evidence and uncertainty.
   unavailable_rule: HTTP 404 supplies no current repository object. Keep the last known record and distinguish
     unknown current state from a confirmed change.
   scenarios:
     confirmed_rename:
       given: Repository R with REST id 42 is tracked in Projects P and Q at egor/OldName.
-      when: The same GitHub instance returns id 42 at egor/NewName.
+      when: The same GitHub instance returns id 42 at egor/NewName and sufficient source evidence confirms the change is current.
       then: R remains in P and Q with its existing history. The current address becomes egor/NewName.
         Prior observations keep egor/OldName.
     confirmed_transfer:
       given: The same R is tracked in P and Q at egor/NewName.
-      when: The same GitHub instance returns id 42 at team/NewName after transfer.
+      when: The same GitHub instance returns id 42 at team/NewName after transfer and sufficient source evidence confirms the change is current.
       then: R remains in P and Q with its history and GitHub management context. The current owner and
         address become team and team/NewName. Prior observations keep their recorded owners and addresses.
     reused_address:

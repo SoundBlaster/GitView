@@ -43,6 +43,7 @@ depends_on:
 - GITVIEW-SPEC-0077
 - GITVIEW-SPEC-0078
 - GITVIEW-SPEC-0079
+- GITVIEW-SPEC-0080
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -68,6 +69,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    same_id_address_uncertain:
+      given: A Repository in two Projects has two conflicting source addresses observed under the same confirmed numeric ID without source ordering evidence.
+      when: Its Projects and source navigation are displayed.
+      then: Both Project memberships remain attached to the same Repository, the current address is uncertain rather than chosen by arrival order, and no unverified source link is asserted current.
     cross_cutting_evidence:
       given: A Project grid scenario passes controlled tests while native accessibility and live source integration have not been checked.
       when: Its verification result is summarized.
