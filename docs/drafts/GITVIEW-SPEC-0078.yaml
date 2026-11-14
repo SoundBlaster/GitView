@@ -117,4 +117,4 @@ specification:
   unresolved:
   - Source-specific relationship types, directionality, per-field access, pagination and aggregate semantics need documented and real-source evidence.
   - Exact UI for related objects, restricted facts and returning from an external Repository needs accessibility and native evaluation.
-  - Historical relationship membership, event ordering and the ontology actor-action origin are not established by source links.
+  - Individual source dependency events can provide limited actor and relationship-change evidence; complete historical membership, sufficient event ordering and the motive or code-changing action are not established by the current source links or by an isolated event.

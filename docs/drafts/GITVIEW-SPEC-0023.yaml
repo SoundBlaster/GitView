@@ -66,4 +66,4 @@ specification:
       then: The confirmed overview can be updated without silently displacing the operator's active route; returning to it shows the permitted saved Projects and their independently supported observation states.
   unresolved:
   - Freshness classification thresholds and display of coverage by metric require the observation and summary branches.
-  - Recovery behavior when source access changes during an in-flight refresh requires detailed access refinement.
+  - Candidates 0037 and 0112 propose access-change and in-flight refresh handling; exact source-to-field mapping, local recovery presentation and actual ordering remain to be established.

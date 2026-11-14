@@ -1,0 +1,1938 @@
+{
+  "scope": "Static declared graph and literal author-supplied fields only; not semantic assessment, implementation readiness, test coverage or acceptance.",
+  "candidate_count": 121,
+  "structural_leaf_count": 54,
+  "status_counts": {
+    "idea / pre_canonical": 121
+  },
+  "unrooted_by_refines": [],
+  "acyclic_relations": [
+    "refines",
+    "depends_on",
+    "refines + depends_on"
+  ],
+  "candidate_sha256": {
+    "GITVIEW-SPEC-0001": "5184876bb38ffff8901a02ac7fc0b54be7bad6c55234de7a484b9ac85c6b9b39",
+    "GITVIEW-SPEC-0002": "0be05a15dcda62539b5fe0a47df000b424cefc2f77269386bc3a8b3e731146ce",
+    "GITVIEW-SPEC-0003": "09f9fecd55d89ace06cc4b59cd96e8d82ab1719311f7530deb3092f6c29577b3",
+    "GITVIEW-SPEC-0004": "d7b5d5bfe66dd686f1df41bfd246a84f6d29de3cbe6d67f859a846426a81e12d",
+    "GITVIEW-SPEC-0005": "0b994a2105a7cd9a36991bd7cb07911a9e2c9ffd6e9acad8e5665f2aa7908eb8",
+    "GITVIEW-SPEC-0006": "7a430ba90765928e95bffb40a001e57e9622ba3afb6526e9cc0dfc5ce0e746bc",
+    "GITVIEW-SPEC-0007": "14722f672fd4d524084aec8c670c837e8854c303c23c8be1383fb0f41fa64547",
+    "GITVIEW-SPEC-0008": "60ef75f597f82d93244a8c0e3170debdd266605d0c45540ff9de3d12d3c1fed9",
+    "GITVIEW-SPEC-0009": "67d3ce0830c0475fe1e10361f95ac052b12074c77b30f08c8d1a64e08fa73489",
+    "GITVIEW-SPEC-0010": "0a4f3f0205d63e7e4af7b0160d3df0d27886ec1a362a717a597ef5a45b819a25",
+    "GITVIEW-SPEC-0011": "1cee56d3aafbad1a44d5124577963a67ec6c03f359f541e065b861158f6e2983",
+    "GITVIEW-SPEC-0012": "2cc615c457f2b3c0d09196a232d92fc2990c6832d45e3bbcbc1995bbec5246ca",
+    "GITVIEW-SPEC-0013": "b7f3d7cff77cc8c7be720e9180f99fad827855b946d809e00fee998512a4408b",
+    "GITVIEW-SPEC-0014": "05d3271953e2daf23a112ac3bec3a90e54cb588f24a0e1566b6387b30883cdb9",
+    "GITVIEW-SPEC-0015": "7a9b6fd476a6ade697fbf28028ad9ad2f51570a434d965461a3a86c14ed4cc29",
+    "GITVIEW-SPEC-0016": "eae1afa8e64fe775c09c6686e2cb3b11590a9a2e2c1a3a53186c18ac8acd1ba0",
+    "GITVIEW-SPEC-0017": "b32b1a9230aa82f478930b0cbeb598d4b7b2b36d53dfa951f97056e18a103bfa",
+    "GITVIEW-SPEC-0018": "29f4994c0cde2c8ede0cf1227e32458c167100038996fc01b4fb00ad959a4266",
+    "GITVIEW-SPEC-0019": "3c451c99f9cb105f669e869be0a056277b280bf8008d69ef81f7e83bcaf7ccc4",
+    "GITVIEW-SPEC-0020": "764780a8a58243fe90d348ffd21490eeb94b1a0550e9db13ee771fe61c5d45a6",
+    "GITVIEW-SPEC-0021": "b6671ebaf9f22f2c9f0a582116f19faf83ebf79cdaded8f2227559f55ef75aec",
+    "GITVIEW-SPEC-0022": "bc7d8a6337e5dbfcaafaad71e11fe267be2c5354bcf3062d3f443bc6cf727318",
+    "GITVIEW-SPEC-0023": "96b4ed2217e9bb91b2007798b40796913a90fa9e2612157fa7964ce773e786e6",
+    "GITVIEW-SPEC-0024": "b37ca84abdb84117fb7369857e5ed75f439eef0bcbfa0962b0a4124fd9ad7faf",
+    "GITVIEW-SPEC-0025": "33e401eba8756080209e4235e92e22f4c8d819e1c3226415fd22dfa501d2d4b0",
+    "GITVIEW-SPEC-0026": "e35bbbeb2cf9976bca1db3a12d37109ebe27a8ac094d2a54d89d08352ec345e4",
+    "GITVIEW-SPEC-0027": "6d7658c5cecfe16e166ea81b485294bd09761b37a72c56a385de7719c9b6818b",
+    "GITVIEW-SPEC-0028": "ebc6967c0cf7bf76b85b143e8b1154984cb6f1a4b46f7aefa9a6baeaeb03c0d0",
+    "GITVIEW-SPEC-0029": "632c98369cd4447a02e9587521ee64e44b40de3a68092ba0b323064bd4bdae1c",
+    "GITVIEW-SPEC-0030": "1e3d0c3db1535f9ff22f485a067da8f5cd0c43aabb8f127cad6bd250654666b1",
+    "GITVIEW-SPEC-0031": "b190e29626797981a8e6abaa6eb72d1362897ff942281f6a8656efc15a8c5218",
+    "GITVIEW-SPEC-0032": "742cf5126396144703eee5c5dd752dd8db9362b4bf40b2f7602a1a52b818dded",
+    "GITVIEW-SPEC-0033": "ca6ea067eefbec0cdfdf3afb2033b564719b8b3f190613407a803f94d0afd66b",
+    "GITVIEW-SPEC-0034": "befb9848d4f9934e0e9aa222ba7753db3b3952cc6688662355f6acd5102e8b18",
+    "GITVIEW-SPEC-0035": "e3ac46431e38aa656af01f3f8b2d24b23cf3c46e922a52c928da09cb0470f051",
+    "GITVIEW-SPEC-0036": "b146393f9420eb95d18d92cf73e6e5c17fdc27ed9c826d03983032d5499aab1f",
+    "GITVIEW-SPEC-0037": "66294fc085cf4b80c9366b11d3166532ad97b52f06c2b099ff8af1e206575fe3",
+    "GITVIEW-SPEC-0038": "106e7e0a6d4f14eeb0443aa56d8a2e2c620a421ada86f93d89773015913a8b35",
+    "GITVIEW-SPEC-0039": "d8227ed39da8974fac44c19162847b9d713c2cae72a00be8b06c692c9adcf05a",
+    "GITVIEW-SPEC-0040": "5b13d89f38070ffdbdd1f998cff9e0b5dcfa5c536f8d03a21dcaa6818b324c26",
+    "GITVIEW-SPEC-0041": "db0f035405489dd44229192c263881a215a47e31c7d7bb1a2d9fb7a40c0aedd6",
+    "GITVIEW-SPEC-0042": "5c9c9fcd3c6616cb76174ef355fabebac65976700f5c79d4ed56304fa9849c72",
+    "GITVIEW-SPEC-0043": "adb445086179d1507c2bb6690ccf44f189e6c5af7e2a4276458c7e9b468400be",
+    "GITVIEW-SPEC-0044": "8a9f95c6b93b1cb7420077b974f94aaa81d538f71e8bcb425664b9f5bd2c60ec",
+    "GITVIEW-SPEC-0045": "537675ff9d9a29fcaa6bc268b0199561048cdb400d7caa79400af598815fe9ec",
+    "GITVIEW-SPEC-0046": "7bb26943f85f7b72cdcabe623034c40e76072dd0994fa0bd57972456d287318d",
+    "GITVIEW-SPEC-0047": "79e54c25dc3e6f173f5ae4b219d5142edbb973b6cf6ad3471c197fdb5e4055db",
+    "GITVIEW-SPEC-0048": "11b31a5be96cb43593548aebadc192a5993a34f876b1a40dbf68d0a9fb0fd3a1",
+    "GITVIEW-SPEC-0049": "608b48b75cbeb84e7268a5b7bcd0ae32da3103b60269bfe611558cab90cb88b8",
+    "GITVIEW-SPEC-0050": "683fc8e37af4e85d7d67453eefb33f6977d06dd4a757a11f21d79df47fa550ac",
+    "GITVIEW-SPEC-0051": "87e19533f0fa55fff6eee78404fae2fd147ad4ec9983f630d5333e0eddeecb9f",
+    "GITVIEW-SPEC-0052": "aa961517e13cf6483538637fdeadfa5e54d669ea0c4127fccd14ab2c5821a77c",
+    "GITVIEW-SPEC-0053": "8d3e8de399ced423eab2054a7970c15688f17d5307aeefc40aace7a9ec2c104a",
+    "GITVIEW-SPEC-0054": "1973c8d4d1ce36a0a1f29f1819ef143c74ca2626dd655b27145ae7cb3af1dd0b",
+    "GITVIEW-SPEC-0055": "d5c1c5b9afadacd715cd0ca9c50d6717728040e4e24e7bc4df0f3aae939e6648",
+    "GITVIEW-SPEC-0056": "7464edd7790a8a412dede483e6ec7a59377da8f138aa8918fb04cce3da0d3671",
+    "GITVIEW-SPEC-0057": "b66e0ca384d7adfb9a5ff53adb23f6829f695e96c0fd6f777d0f4842f486e0b0",
+    "GITVIEW-SPEC-0058": "31c5a71a6506fe5f4ef27f2b7269bc39881d3c77477b593e4592909c6d8e65e9",
+    "GITVIEW-SPEC-0059": "729088ee0ffdc9a3c23453e33313a758ad4bd71c7209581bc1d8b80c11e05d6a",
+    "GITVIEW-SPEC-0060": "877ff8611ac0e18b94f8c370e15e34beaf191a2069e43baaadf06e4e7dab0d9a",
+    "GITVIEW-SPEC-0061": "8089a881307bb867a595bff47d9c6c4801411858b23847a15a92d52cc0819cbf",
+    "GITVIEW-SPEC-0062": "9c72bd1f8f356be8d3c17e62bb78fb0e758430bf030825436b08825fdb596737",
+    "GITVIEW-SPEC-0063": "127bd80004a8a798d32b8ad3f6f8bcd9709839b94cad846796f66c4314a0a2a9",
+    "GITVIEW-SPEC-0064": "c586ef8b013ab8bfe12d90e5bb04a40777bf6a273c2f055e00debd054f119f36",
+    "GITVIEW-SPEC-0065": "2345935a00677d1c4f2e21a9905b9ddbdef1c5b344cf51f269df1dcf94458a4a",
+    "GITVIEW-SPEC-0066": "f43ced38cbf6a3f21fed04b344da9172a2137c75fec13ecb2e6969bd00df13fa",
+    "GITVIEW-SPEC-0067": "192684e46c5b614a2f0362201c44d9b1d9fdf5feca0c2c8bee241de1679be17d",
+    "GITVIEW-SPEC-0068": "b419103a5736d11616d5dc60ac232844913f34071eeb0da7ee6ec78ca2ac7a41",
+    "GITVIEW-SPEC-0069": "954370ebb3509952c979a846db73e7a5f40c8fe0b1c63476cd3c7ea557205c09",
+    "GITVIEW-SPEC-0070": "58650d2e467359238b30dcc1a61089cc21f59cfafdc66ecc1494dbbeac4e60d4",
+    "GITVIEW-SPEC-0071": "ab355b00a9bd1ee8fced58622e082aab0575128ba07a0844dbcb5f6d668aab17",
+    "GITVIEW-SPEC-0072": "1377b2f8e17ce4667d8929253d394f2cb5518068009cc6359b0fd519ecb9574e",
+    "GITVIEW-SPEC-0073": "862f551a4c8f10bc85405ebba765a48d04a6c6ee06e7cbf307f3173954f8753e",
+    "GITVIEW-SPEC-0074": "b7d2571d6a4967f485b3bd521127ae357e787c87cff65bf36dd45e3520a9a46b",
+    "GITVIEW-SPEC-0075": "e793f420a6a6d9d6127cd85ea7839efde99224cbee8976df97524be02b57f66a",
+    "GITVIEW-SPEC-0076": "df84376c207f59aceb6d5add0893765b0f3c81b27939753db93674235839debf",
+    "GITVIEW-SPEC-0077": "1c5725975db513395e8e4c50a997201b79db4ff22e7ab1b15a24b4dd3a9c65cc",
+    "GITVIEW-SPEC-0078": "e4deb7c8230aee275d5ddf688404c9bf6f3ee30f57588010b30046c9a67777e0",
+    "GITVIEW-SPEC-0079": "14775bb4b7c35c95847f7239e88ef18826acb726d73d734d4421d69538d3a2cc",
+    "GITVIEW-SPEC-0080": "5fd374c1f147fe90de14f6335594af7bd06c7a5706f9f70c0a32c5ca3de839fb",
+    "GITVIEW-SPEC-0081": "d3dcd32779bcfde0c7c16ffe9bfbf77127412dda0db175cd605e2c68f9605548",
+    "GITVIEW-SPEC-0082": "967750381c2c5f9edf0fbce31b0593120aa459622a13e54d306044211d1982c9",
+    "GITVIEW-SPEC-0083": "b615cf1faf2e98809f1205435abde02ab2da6fcd4cb78dc4b9a57c09f053d67d",
+    "GITVIEW-SPEC-0084": "c6379f07ae977c009800f40014c30f1ee78a9875bf872d7a23fd9974f7f96d35",
+    "GITVIEW-SPEC-0085": "bcfac65adb2bb8b8f8b3b18c31f21cb52233afe3009e274a59d7e90b107c6ad5",
+    "GITVIEW-SPEC-0086": "bfa5d3d11dbac3d68b1888617925ec0796d7eba70a41571ed90f7ff48288a255",
+    "GITVIEW-SPEC-0087": "97f3639b38de77edd508ed70aa66d11ad067d7e78f9bf2e887ce2f5dafc4b0d5",
+    "GITVIEW-SPEC-0088": "b602a4be6ebbd457bafcbebffd60cb5aac9c495c782647b3316413ef757f332e",
+    "GITVIEW-SPEC-0089": "94e3653f8ea591350ea6be1a626099f8fa74737613e8d27c58b4869b11def23f",
+    "GITVIEW-SPEC-0090": "254f3d948a7f9db3c4aed860120ee026c568afdeb87e228f6617228ad526cdb0",
+    "GITVIEW-SPEC-0091": "0dacb445288857fde519d28f7bfa831e70a42be4a9a06cfb8ea722755367f2f7",
+    "GITVIEW-SPEC-0092": "9ea3480b9b379fd613eaf0b1020be8f4bc6590400f2eab2decf420a637529d83",
+    "GITVIEW-SPEC-0093": "d7c41cb779072bb11d695c5c04c1170a0bfd420b620e7e4a3174d469381ce818",
+    "GITVIEW-SPEC-0094": "64873cf0e0a63a14e098b75bc0c3b5a28f9f24e3301cc7e79413f1955ff2450d",
+    "GITVIEW-SPEC-0095": "7669987ed6462e8e84137469d1d655fab64ca0b9cea77bc5647a3cd6d0fca218",
+    "GITVIEW-SPEC-0096": "0b510ba9877c4d73ef7724dcf53b9e5ada2092d06182b673e9ecb3e06ad11aba",
+    "GITVIEW-SPEC-0097": "6dad8717897f323a02bc3fbd19a3aaaed7805bc241ae8d015bffae2e57727887",
+    "GITVIEW-SPEC-0098": "3f337d48c9a9bf854bcfaf99b0c05d340a0badfcb0aaa5b12730f023eed79243",
+    "GITVIEW-SPEC-0099": "1baef15696f195e7b853d9524a448cb336be4d4a4d4b57f17b6da71551b2bbff",
+    "GITVIEW-SPEC-0100": "7f9d1a28d07e7e39374d48191b88e1fbbb4e2d53edfacd575d9e0199ccc34533",
+    "GITVIEW-SPEC-0101": "914f8f7889d6ce8969337da2009bcb6065789f14079bdb6a2c1e271a295d76e4",
+    "GITVIEW-SPEC-0102": "70d02fc9a026741b94ab287c5e03e722556ba6db58806406635de807b3f92752",
+    "GITVIEW-SPEC-0103": "4f8a3682ea2d4482d4164fb975646b699d45094c7d1bbc416e2ae7fe408347fe",
+    "GITVIEW-SPEC-0104": "c1dd9594c23fc1f6dc7dbbfc5a2b8c849f6db209f9fd38d69eee7f15f67c2439",
+    "GITVIEW-SPEC-0105": "675801326f4ffea44ca9f315225442f390333c302a0370a10c763669d6ed9ae8",
+    "GITVIEW-SPEC-0106": "78db609e41a6a12e8c7302419a3fc693bd467ce4f51e22953726a938dc2489f7",
+    "GITVIEW-SPEC-0107": "6a426d6021b847f42b37e21920043cba4b2de3ae28749fdf3f34b00e70e6eb14",
+    "GITVIEW-SPEC-0108": "0037d2ca2c2a5f2d992c989aae1a2b1e4460f024480deccc09214bcf177fea2d",
+    "GITVIEW-SPEC-0109": "8e79d5eb8f2819428cd41f6bc5a979477a12d45ccf123968f570f6b5eb73de74",
+    "GITVIEW-SPEC-0110": "9bfcf40ba7b5a63d0675bf7bbf931751048079f32f9345e8e68c3774e89f4bd8",
+    "GITVIEW-SPEC-0111": "e6c540367db4d7461c726c44ac7222719be6e6439507efb110f62f6d6f2fe208",
+    "GITVIEW-SPEC-0112": "b9424cc96374f380b59eb1cc2765e3d5672d01f80552279b73d95707770692f8",
+    "GITVIEW-SPEC-0113": "9bda69247b1e04515a8066821614a61f773554e2b6cef4e29ae686fc99a15921",
+    "GITVIEW-SPEC-0114": "4f8defdc5704d30d219dabcde6dac1095d9ab0832a495f05e1af609d09c499fc",
+    "GITVIEW-SPEC-0115": "9caeb8baafd3618d45645a70e9bfed0df5fc64a808b51c220396785f08709831",
+    "GITVIEW-SPEC-0116": "5ff347414bdc3e81ff7e7f1d3dce9b9bc2cabcfd8d0f2ff8e2570fe932dfc901",
+    "GITVIEW-SPEC-0117": "961f95ec1e57dcaaa708ad3d3a2e7c1db173c15f96bacbb52ece93933ce0a590",
+    "GITVIEW-SPEC-0118": "7c5b0b41db5ebf62a1cdd9daa6c1c30f6258d5ccb27c583a09161c91891548fe",
+    "GITVIEW-SPEC-0119": "7af41c04c40649fabc92b046498af541aeef81bac38ef5fbff37e3a7e4350106",
+    "GITVIEW-SPEC-0120": "12e3c55500cd3706964beab274bdfe79faddd476553cad516dc151012a37a155",
+    "GITVIEW-SPEC-0121": "3d4e9e56c9291ba0a3e8ea9e993e732d7f7106c443ab3e44d3df07f9aaf9a93c"
+  },
+  "leaves": [
+    {
+      "id": "GITVIEW-SPEC-0018",
+      "title": "GitView - Calendar overview and future depth",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "29f4994c0cde2c8ede0cf1227e32458c167100038996fc01b4fb00ad959a4266",
+      "direct_refines": [
+        "GITVIEW-SPEC-0001"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0013",
+        "GITVIEW-SPEC-0014"
+      ],
+      "reachable_declared_nodes": 13,
+      "reachable_precanonical_nodes": 13,
+      "scenario_counts_by_field": {
+        "scenarios": 0,
+        "review_scenarios": 2,
+        "pilot_scenarios": 1
+      },
+      "declared_unresolved": [
+        "Calendar metric, data source, navigation and future PR depth remain undefined."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0023",
+      "title": "GitView - Project overview observation states",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "96b4ed2217e9bb91b2007798b40796913a90fa9e2612157fa7964ce773e786e6",
+      "direct_refines": [
+        "GITVIEW-SPEC-0004"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0003",
+        "GITVIEW-SPEC-0012",
+        "GITVIEW-SPEC-0017",
+        "GITVIEW-SPEC-0019"
+      ],
+      "reachable_declared_nodes": 16,
+      "reachable_precanonical_nodes": 16,
+      "scenario_counts_by_field": {
+        "scenarios": 6,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Freshness classification thresholds and display of coverage by metric require the observation and summary branches.",
+        "Candidates 0037 and 0112 propose access-change and in-flight refresh handling; exact source-to-field mapping, local recovery presentation and actual ordering remain to be established."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0024",
+      "title": "GitView - Navigation context and restoration",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "b37ca84abdb84117fb7369857e5ed75f439eef0bcbfa0962b0a4124fd9ad7faf",
+      "direct_refines": [
+        "GITVIEW-SPEC-0006"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0002",
+        "GITVIEW-SPEC-0005",
+        "GITVIEW-SPEC-0007",
+        "GITVIEW-SPEC-0014",
+        "GITVIEW-SPEC-0017",
+        "GITVIEW-SPEC-0019",
+        "GITVIEW-SPEC-0023",
+        "GITVIEW-SPEC-0036"
+      ],
+      "reachable_declared_nodes": 18,
+      "reachable_precanonical_nodes": 18,
+      "scenario_counts_by_field": {
+        "scenarios": 13,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Stable sort order for the collection is owned by 0007 and proposed in 0042; this fallback operates on the last known ordered collection. The ordering proposal still needs review.",
+        "System lifecycle boundaries, multiple scenes and the account-changing UX require platform and access refinement; cold-launch overview is an agent-authored default, not an explicit owner selection.",
+        "Exact presentation and accessible focus after a deleted Project or temporarily unavailable local configuration require native UX evaluation."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0041",
+      "title": "GitView - PR overview facts and change counters",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "db0f035405489dd44229192c263881a215a47e31c7d7bb1a2d9fb7a40c0aedd6",
+      "direct_refines": [
+        "GITVIEW-SPEC-0008"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0002",
+        "GITVIEW-SPEC-0026",
+        "GITVIEW-SPEC-0028",
+        "GITVIEW-SPEC-0033",
+        "GITVIEW-SPEC-0034",
+        "GITVIEW-SPEC-0044"
+      ],
+      "reachable_declared_nodes": 28,
+      "reachable_precanonical_nodes": 28,
+      "scenario_counts_by_field": {
+        "scenarios": 9,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Source mapping and availability of the selected facts, including revision association for counters.",
+        "Display priority, truncation and behavior for removed or inaccessible source branches."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0042",
+      "title": "GitView - Work ordering and uncertain selection presentation",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "5c9c9fcd3c6616cb76174ef355fabebac65976700f5c79d4ed56304fa9849c72",
+      "direct_refines": [
+        "GITVIEW-SPEC-0007"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0002",
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0026",
+        "GITVIEW-SPEC-0027",
+        "GITVIEW-SPEC-0061"
+      ],
+      "reachable_declared_nodes": 33,
+      "reachable_precanonical_nodes": 33,
+      "scenario_counts_by_field": {
+        "scenarios": 10,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "User-selected alternative ordering and historical grouping semantics.",
+        "Validate the proposed labeled portions and compact status control with native grid density, interaction and accessibility; actual visual treatment and localization remain open.",
+        "Exact stable object identifier encoding and source timestamp mapping require integration refinement."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0043",
+      "title": "GitView - Cross-branch overview and recovery scenarios",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "adb445086179d1507c2bb6690ccf44f189e6c5af7e2a4276458c7e9b468400be",
+      "direct_refines": [
+        "GITVIEW-SPEC-0020"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0022",
+        "GITVIEW-SPEC-0023",
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0027",
+        "GITVIEW-SPEC-0028",
+        "GITVIEW-SPEC-0029",
+        "GITVIEW-SPEC-0031",
+        "GITVIEW-SPEC-0032",
+        "GITVIEW-SPEC-0033",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0037",
+        "GITVIEW-SPEC-0039",
+        "GITVIEW-SPEC-0041",
+        "GITVIEW-SPEC-0045",
+        "GITVIEW-SPEC-0046",
+        "GITVIEW-SPEC-0048",
+        "GITVIEW-SPEC-0049",
+        "GITVIEW-SPEC-0052",
+        "GITVIEW-SPEC-0053",
+        "GITVIEW-SPEC-0054",
+        "GITVIEW-SPEC-0055",
+        "GITVIEW-SPEC-0056",
+        "GITVIEW-SPEC-0058",
+        "GITVIEW-SPEC-0059",
+        "GITVIEW-SPEC-0061",
+        "GITVIEW-SPEC-0062",
+        "GITVIEW-SPEC-0063",
+        "GITVIEW-SPEC-0066",
+        "GITVIEW-SPEC-0071",
+        "GITVIEW-SPEC-0072",
+        "GITVIEW-SPEC-0073",
+        "GITVIEW-SPEC-0074",
+        "GITVIEW-SPEC-0075",
+        "GITVIEW-SPEC-0076",
+        "GITVIEW-SPEC-0077",
+        "GITVIEW-SPEC-0078",
+        "GITVIEW-SPEC-0079",
+        "GITVIEW-SPEC-0080",
+        "GITVIEW-SPEC-0081",
+        "GITVIEW-SPEC-0082",
+        "GITVIEW-SPEC-0083",
+        "GITVIEW-SPEC-0084",
+        "GITVIEW-SPEC-0085",
+        "GITVIEW-SPEC-0086",
+        "GITVIEW-SPEC-0087",
+        "GITVIEW-SPEC-0088",
+        "GITVIEW-SPEC-0089",
+        "GITVIEW-SPEC-0090",
+        "GITVIEW-SPEC-0091",
+        "GITVIEW-SPEC-0092",
+        "GITVIEW-SPEC-0093",
+        "GITVIEW-SPEC-0094",
+        "GITVIEW-SPEC-0098",
+        "GITVIEW-SPEC-0099",
+        "GITVIEW-SPEC-0100",
+        "GITVIEW-SPEC-0101",
+        "GITVIEW-SPEC-0102",
+        "GITVIEW-SPEC-0108",
+        "GITVIEW-SPEC-0109",
+        "GITVIEW-SPEC-0110",
+        "GITVIEW-SPEC-0113",
+        "GITVIEW-SPEC-0114",
+        "GITVIEW-SPEC-0115",
+        "GITVIEW-SPEC-0117",
+        "GITVIEW-SPEC-0118",
+        "GITVIEW-SPEC-0119",
+        "GITVIEW-SPEC-0120",
+        "GITVIEW-SPEC-0121"
+      ],
+      "reachable_declared_nodes": 118,
+      "reachable_precanonical_nodes": 118,
+      "scenario_counts_by_field": {
+        "scenarios": 81,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Precise device and source fixtures, credentials, test levels and executable acceptance procedures depend on implementation and platform decisions.",
+        "Exact source mapping, refresh concurrency reconciliation and view composition remain open in dependency branches.",
+        "These scenarios sample critical paths but do not establish complete coverage of the graph."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0048",
+      "title": "GitView - Refresh triggers and visible outcomes",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "11b31a5be96cb43593548aebadc192a5993a34f876b1a40dbf68d0a9fb0fd3a1",
+      "direct_refines": [
+        "GITVIEW-SPEC-0003"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0023",
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0027",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0037",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0053"
+      ],
+      "reachable_declared_nodes": 25,
+      "reachable_precanonical_nodes": 25,
+      "scenario_counts_by_field": {
+        "scenarios": 12,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Staleness classification and policies when refresh is deferred by source budget or platform constraints.",
+        "Exact scheduling and coalescing behavior for overlapping requests, including user-visible pending state.",
+        "Device evidence for background execution and accessible manual refresh controls."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0049",
+      "title": "GitView - Today boundary and active navigation",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "608b48b75cbeb84e7268a5b7bcd0ae32da3103b60269bfe611558cab90cb88b8",
+      "direct_refines": [
+        "GITVIEW-SPEC-0027"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0031",
+        "GITVIEW-SPEC-0042",
+        "GITVIEW-SPEC-0044"
+      ],
+      "reachable_declared_nodes": 35,
+      "reachable_precanonical_nodes": 35,
+      "scenario_counts_by_field": {
+        "scenarios": 13,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Validate the 0069 fixed historical period proposal across time-zone changes and long-running navigation on the native interface.",
+        "Exact accessible indication and native implementation of a deferred visual update require device evaluation.",
+        "Source-specific evidence and query boundaries sufficient to prove each required scope remain to be established without assuming a fixed API budget."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0051",
+      "title": "GitView - Conservative description section recognition",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "87e19533f0fa55fff6eee78404fae2fd147ad4ec9983f630d5333e0eddeecb9f",
+      "direct_refines": [
+        "GITVIEW-SPEC-0034"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0026"
+      ],
+      "reachable_declared_nodes": 11,
+      "reachable_precanonical_nodes": 11,
+      "scenario_counts_by_field": {
+        "scenarios": 10,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Exact handling of ambiguous or malformed mixed Markdown delimiters and supported additional heading formats.",
+        "Selection and versioning of future recognition profiles; interpretation must remain bound to the observed body.",
+        "Source availability and body-size or rendering concerns require integration and UX refinement."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0052",
+      "title": "GitView - Recover an interrupted default Project save",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "aa961517e13cf6483538637fdeadfa5e54d669ea0c4127fccd14ab2c5821a77c",
+      "direct_refines": [
+        "GITVIEW-SPEC-0045"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0038"
+      ],
+      "reachable_declared_nodes": 13,
+      "reachable_precanonical_nodes": 13,
+      "scenario_counts_by_field": {
+        "scenarios": 5,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Local persistence mechanism and evidence that concurrent or late commits enforce the stated uniqueness and visibility guarantees.",
+        "Recovery interaction and policy for resolving inconsistent configuration without accidental deletion.",
+        "Cross-process or multi-scene concurrency and source access changes while recovery is underway."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0053",
+      "title": "GitView - Conflicting source observations",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "8d3e8de399ced423eab2054a7970c15688f17d5307aeefc40aace7a9ec2c104a",
+      "direct_refines": [
+        "GITVIEW-SPEC-0037"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0023",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0044"
+      ],
+      "reachable_declared_nodes": 22,
+      "reachable_precanonical_nodes": 22,
+      "scenario_counts_by_field": {
+        "scenarios": 7,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Source-specific evidence that establishes a comparable field revision or ordering across partial responses.",
+        "Exact user-facing conflict representation, persistence of candidate values and resolution after a source cannot supply ordering evidence."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0055",
+      "title": "GitView - Fixed PR cohort completion view",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "d5c1c5b9afadacd715cd0ca9c50d6717728040e4e24e7bc4df0f3aae939e6648",
+      "direct_refines": [
+        "GITVIEW-SPEC-0030"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0007",
+        "GITVIEW-SPEC-0027",
+        "GITVIEW-SPEC-0029",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0046",
+        "GITVIEW-SPEC-0049"
+      ],
+      "reachable_declared_nodes": 36,
+      "reachable_precanonical_nodes": 36,
+      "scenario_counts_by_field": {
+        "scenarios": 7,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Whether and how the operator initiates and retains a fixed cohort, and whether this view belongs to the first release.",
+        "Source evidence, freshness and storage sufficient for cohort capture and historical points; no API or persistence mechanism is selected.",
+        "Whether an analogous Issue cohort or a different definition of burn-down is desired; neither is implied by PR counts."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0056",
+      "title": "GitView - Historical outcome selection",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "7464edd7790a8a412dede483e6ec7a59377da8f138aa8918fb04cce3da0d3671",
+      "direct_refines": [
+        "GITVIEW-SPEC-0007"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0029",
+        "GITVIEW-SPEC-0030",
+        "GITVIEW-SPEC-0044"
+      ],
+      "reachable_declared_nodes": 26,
+      "reachable_precanonical_nodes": 26,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Candidate 0069 proposes distinct merged-PR and closed-Issue daily outcomes, seven- and thirty-day calendar presets and a fixed captured current-member basis; its usability and other origins or metrics remain to be resolved.",
+        "Source evidence for complete event histories, event identity and event-time closure reasons requires verification without assuming API availability.",
+        "Validate the 0069 fixed-period proposal across a device time-zone change; exact filter presentation and accessible controls require native design."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0057",
+      "title": "GitView - Project metric catalog and coverage",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "b66e0ca384d7adfb9a5ff53adb23f6829f695e96c0fd6f777d0f4842f486e0b0",
+      "direct_refines": [
+        "GITVIEW-SPEC-0013"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0028",
+        "GITVIEW-SPEC-0029",
+        "GITVIEW-SPEC-0027",
+        "GITVIEW-SPEC-0030",
+        "GITVIEW-SPEC-0039",
+        "GITVIEW-SPEC-0046",
+        "GITVIEW-SPEC-0056",
+        "GITVIEW-SPEC-0061",
+        "GITVIEW-SPEC-0062",
+        "GITVIEW-SPEC-0063",
+        "GITVIEW-SPEC-0064",
+        "GITVIEW-SPEC-0065"
+      ],
+      "reachable_declared_nodes": 42,
+      "reachable_precanonical_nodes": 42,
+      "scenario_counts_by_field": {
+        "scenarios": 11,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Verified GitHub source mapping and semantics for outstanding review requests, blocking links, check revision and historical closure reasons.",
+        "Evaluate the working period, bucket and membership proposals in 0064 and 0069 and retention proposals in 0066 and 0097; establish supported evidence for each displayed series and do not treat these candidates as tested source history.",
+        "Exact uncertainty presentation, accessibility and initial visual placement; optional checks-and-review predicate remains unselected.",
+        "Which retained observations and source evidence can support historical dynamic-Today breakdowns or exact same-day outcome counts are not established."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0061",
+      "title": "GitView - Status-check count categories",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "8089a881307bb867a595bff47d9c6c4801411858b23847a15a92d52cc0819cbf",
+      "direct_refines": [
+        "GITVIEW-SPEC-0060"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0028",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0046",
+        "GITVIEW-SPEC-0053"
+      ],
+      "reachable_declared_nodes": 31,
+      "reachable_precanonical_nodes": 31,
+      "scenario_counts_by_field": {
+        "scenarios": 11,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Verify the selected source schemas, applicability, retry selection and handling of special outcomes against actual GitHub PR observations.",
+        "Whether a future design groups special outcomes differently and how the compact interface exposes them require native UX and accessibility evaluation.",
+        "Required-check and merge policies are outside this candidate and require distinct evidence if later brought into product scope."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0063",
+      "title": "GitView - Blocked Issue attention and source access",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "127bd80004a8a798d32b8ad3f6f8bcd9709839b94cad846796f66c4314a0a2a9",
+      "direct_refines": [
+        "GITVIEW-SPEC-0039"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0046"
+      ],
+      "reachable_declared_nodes": 34,
+      "reachable_precanonical_nodes": 34,
+      "scenario_counts_by_field": {
+        "scenarios": 7,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Exact GitHub source visibility and completeness guarantees for cross-Repository dependencies, private blockers and link changes.",
+        "Concrete accessibility presentation and filtering controls for unknown or restricted dependency data.",
+        "Source identity and observation timing sufficient to treat a linked blocker state as current; no real GitHub query has been executed."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0064",
+      "title": "GitView - Project membership basis for historical metrics",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "c586ef8b013ab8bfe12d90e5bb04a40777bf6a273c2f055e00debd054f119f36",
+      "direct_refines": [
+        "GITVIEW-SPEC-0030"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0046"
+      ],
+      "reachable_declared_nodes": 27,
+      "reachable_precanonical_nodes": 27,
+      "scenario_counts_by_field": {
+        "scenarios": 10,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Specify a practical provenance representation and evidence for whether a computed point depends on currently restricted inputs; validate any broader safe-aggregate policy before relaxing suppression.",
+        "Verify the current-member retrospective proposal as the desired product default and define native presentation when membership changes while a graph is visible.",
+        "Source-specific history completeness, event reason, CI/review reconstruction and membership retention guarantees remain unverified.",
+        "No local storage model, historical graph or device behavior has been implemented or tested."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0069",
+      "title": "GitView - Initial metric series and calendar periods",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "954370ebb3509952c979a846db73e7a5f40c8fe0b1c63476cd3c7ea557205c09",
+      "direct_refines": [
+        "GITVIEW-SPEC-0068"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0030",
+        "GITVIEW-SPEC-0049",
+        "GITVIEW-SPEC-0056",
+        "GITVIEW-SPEC-0057",
+        "GITVIEW-SPEC-0064",
+        "GITVIEW-SPEC-0065",
+        "GITVIEW-SPEC-0066"
+      ],
+      "reachable_declared_nodes": 75,
+      "reachable_precanonical_nodes": 75,
+      "scenario_counts_by_field": {
+        "scenarios": 10,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Confirm source-specific completeness, object and event identity, state-sample timestamps and retention for each series.",
+        "Decide how other agreed summary metrics are selected and graphed beyond the initial presentation without silently removing them from product scope.",
+        "Native chart, period controls, accessible inspection, DST boundaries and device behavior require evaluation; these working defaults are not separately owner-selected."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0070",
+      "title": "GitView - Verification of metric history behavior",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "58650d2e467359238b30dcc1a61089cc21f59cfafdc66ecc1494dbbeac4e60d4",
+      "direct_refines": [
+        "GITVIEW-SPEC-0040"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0030",
+        "GITVIEW-SPEC-0056",
+        "GITVIEW-SPEC-0064",
+        "GITVIEW-SPEC-0065",
+        "GITVIEW-SPEC-0066",
+        "GITVIEW-SPEC-0067",
+        "GITVIEW-SPEC-0068",
+        "GITVIEW-SPEC-0069",
+        "GITVIEW-SPEC-0102"
+      ],
+      "reachable_declared_nodes": 76,
+      "reachable_precanonical_nodes": 76,
+      "scenario_counts_by_field": {
+        "scenarios": 4,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Concrete Swift test frameworks, source adapter contract, fixture formats and actual storage implementation remain to be chosen.",
+        "Exact history UI and accessibility controls require device evidence; availability of GitHub history and permissions requires separate source verification.",
+        "No application behavior, TDD cycle or live integration has been executed."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0072",
+      "title": "GitView - Stable Project overview order and position",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "1377b2f8e17ce4667d8929253d394f2cb5518068009cc6359b0fd519ecb9574e",
+      "direct_refines": [
+        "GITVIEW-SPEC-0047"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0023",
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0032",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0045",
+        "GITVIEW-SPEC-0052"
+      ],
+      "reachable_declared_nodes": 50,
+      "reachable_precanonical_nodes": 50,
+      "scenario_counts_by_field": {
+        "scenarios": 7,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Native collection update, focus and gesture behavior requires accessibility and device verification.",
+        "Ordering metadata storage, repair behavior and tie-break details need design and independent review.",
+        "User-controlled sorting, cross-device order and ordering leakage from pre-existing metadata remain separate privacy and product questions."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0073",
+      "title": "GitView - Accessible focus during live overview updates",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "862f551a4c8f10bc85405ebba765a48d04a6c6ee06e7cbf307f3173954f8753e",
+      "direct_refines": [
+        "GITVIEW-SPEC-0032"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0027",
+        "GITVIEW-SPEC-0031",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0042",
+        "GITVIEW-SPEC-0049",
+        "GITVIEW-SPEC-0072"
+      ],
+      "reachable_declared_nodes": 53,
+      "reachable_precanonical_nodes": 53,
+      "scenario_counts_by_field": {
+        "scenarios": 7,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Supported assistive technologies, focus APIs, announcement policy and timing require implementation-independent platform design and device evaluation.",
+        "The exact presentation and accessible grouping of uncertain candidates require UX validation.",
+        "Native accessibility tests and real source observations have not been executed."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0075",
+      "title": "GitView - Grid gesture arbitration and interruption",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "e793f420a6a6d9d6127cd85ea7839efde99224cbee8976df97524be02b57f66a",
+      "direct_refines": [
+        "GITVIEW-SPEC-0035"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0015",
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0031",
+        "GITVIEW-SPEC-0032",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0049",
+        "GITVIEW-SPEC-0073"
+      ],
+      "reachable_declared_nodes": 54,
+      "reachable_precanonical_nodes": 54,
+      "scenario_counts_by_field": {
+        "scenarios": 6,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Native gesture competition, preview dismissal, anchor geometry, cancellation handling and platform accessibility actions require device evaluation.",
+        "Exact density levels, default density, timings and animation are not selected by this contract; candidate 0120 proposes targeted first-version zoom across scopes but requires UX and native validation.",
+        "Future sliding preview, hover and edge autoscroll remain separate design work."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0077",
+      "title": "GitView - Issue discussion counts and latest comment time",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "1c5725975db513395e8e4c50a997201b79db4ff22e7ab1b15a24b4dd3a9c65cc",
+      "direct_refines": [
+        "GITVIEW-SPEC-0039"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0053"
+      ],
+      "reachable_declared_nodes": 28,
+      "reachable_precanonical_nodes": 28,
+      "scenario_counts_by_field": {
+        "scenarios": 10,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Whether comment authors are the desired product definition of discussion participants and whether source-provided aggregates have matching semantics require review and source evidence.",
+        "Source ordering, deleted or hidden comment behavior, access scope and completeness for latest-time claims require integration research.",
+        "UI presentation of partial and unavailable discussion metrics and native accessibility require design and testing."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0078",
+      "title": "GitView - Issue links, hierarchy and partial access",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "e4deb7c8230aee275d5ddf688404c9bf6f3ee30f57588010b30046c9a67777e0",
+      "direct_refines": [
+        "GITVIEW-SPEC-0039"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0033",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0053"
+      ],
+      "reachable_declared_nodes": 28,
+      "reachable_precanonical_nodes": 28,
+      "scenario_counts_by_field": {
+        "scenarios": 15,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Source-specific relationship types, directionality, per-field access, pagination and aggregate semantics need documented and real-source evidence.",
+        "Exact UI for related objects, restricted facts and returning from an external Repository needs accessibility and native evaluation.",
+        "Individual source dependency events can provide limited actor and relationship-change evidence; complete historical membership, sufficient event ordering and the motive or code-changing action are not established by the current source links or by an isolated event."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0079",
+      "title": "GitView - Cross-cutting verification applicability",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "14775bb4b7c35c95847f7239e88ef18826acb726d73d734d4421d69538d3a2cc",
+      "direct_refines": [
+        "GITVIEW-SPEC-0040"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0017",
+        "GITVIEW-SPEC-0032"
+      ],
+      "reachable_declared_nodes": 24,
+      "reachable_precanonical_nodes": 24,
+      "scenario_counts_by_field": {
+        "scenarios": 5,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Evidence record format, precise ownership of applicability decisions and any SpecGraph support for cross-cutting policy remain to be specified.",
+        "Supported iOS versions, assistive technologies, exact adapter contracts and independent verification strategy remain open.",
+        "No product tests, live source integration or native accessibility checks have been executed."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0081",
+      "title": "GitView - Repository address conflict and recovery",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "d3dcd32779bcfde0c7c16ffe9bfbf77127412dda0db175cd605e2c68f9605548",
+      "direct_refines": [
+        "GITVIEW-SPEC-0080"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0033",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0048",
+        "GITVIEW-SPEC-0053"
+      ],
+      "reachable_declared_nodes": 29,
+      "reachable_precanonical_nodes": 29,
+      "scenario_counts_by_field": {
+        "scenarios": 5,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Source evidence and an ordering rule that can actually supersede all competitors remain unverified; repeated rechecks may leave conflict unresolved.",
+        "Exact representation, accessible wording, eligible-link behavior and recovery after corrupt local evidence require product and device evaluation.",
+        "Actual source, durable storage and platform behavior have not been tested."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0083",
+      "title": "GitView - Review and retry a conflicting Project edit",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "b615cf1faf2e98809f1205435abde02ab2da6fcd4cb78dc4b9a57c09f053d67d",
+      "direct_refines": [
+        "GITVIEW-SPEC-0082"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0052"
+      ],
+      "reachable_declared_nodes": 27,
+      "reachable_precanonical_nodes": 27,
+      "scenario_counts_by_field": {
+        "scenarios": 7,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Exact difference presentation, review controls, accessibility focus and retention of unsaved drafts across restart require product and native evaluation.",
+        "Atomic compare-and-save, failure reconciliation and explicit merge semantics require storage design and independent evidence.",
+        "The exact source-access evidence for adding a Repository and default-association behavior require separate validation."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0089",
+      "title": "GitView - Temporal applicability of Today and filter evidence",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "94e3653f8ea591350ea6be1a626099f8fa74737613e8d27c58b4869b11def23f",
+      "direct_refines": [
+        "GITVIEW-SPEC-0027"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0028",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0037",
+        "GITVIEW-SPEC-0042",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0046",
+        "GITVIEW-SPEC-0049",
+        "GITVIEW-SPEC-0053",
+        "GITVIEW-SPEC-0060",
+        "GITVIEW-SPEC-0061"
+      ],
+      "reachable_declared_nodes": 36,
+      "reachable_precanonical_nodes": 36,
+      "scenario_counts_by_field": {
+        "scenarios": 6,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Source-specific ordering, revision applicability, correction and freshness evidence remain to be established for each selected field.",
+        "Exact representation of individual observation contexts, uncertainty and accessible recovery requires UX and platform evaluation.",
+        "No source adapter, retention mechanism, actual privacy behavior or application implementation has been tested."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0090",
+      "title": "GitView - Required description process outcome and path coverage",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "254f3d948a7f9db3c4aed860120ee026c568afdeb87e228f6617228ad526cdb0",
+      "direct_refines": [
+        "GITVIEW-SPEC-0076"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0034",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0051",
+        "GITVIEW-SPEC-0054"
+      ],
+      "reachable_declared_nodes": 17,
+      "reachable_precanonical_nodes": 17,
+      "scenario_counts_by_field": {
+        "scenarios": 6,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "The participating repositories, actual creation paths, checkpoint, authority and exception policy must be selected before deploying the process.",
+        "Source-specific capability and timing of any gate, coverage of edits, reliable body identity and semantic quality review require evidence.",
+        "No checker, GitHub enforcement, agent instruction rollout or GitView implementation has been installed or executed."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0091",
+      "title": "GitView - Work scope continuity as Project membership changes",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "0dacb445288857fde519d28f7bfa831e70a42be4a9a06cfb8ea722755367f2f7",
+      "direct_refines": [
+        "GITVIEW-SPEC-0074"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0023",
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0027",
+        "GITVIEW-SPEC-0029",
+        "GITVIEW-SPEC-0031",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0049",
+        "GITVIEW-SPEC-0082",
+        "GITVIEW-SPEC-0084"
+      ],
+      "reachable_declared_nodes": 58,
+      "reachable_precanonical_nodes": 58,
+      "scenario_counts_by_field": {
+        "scenarios": 7,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "The default Project-wide intent and transient return to a surviving member overview are agent-authored product choices requiring UX evaluation.",
+        "Source coverage, local edit coordination and native navigation or focus restoration require independent implementation-level evidence.",
+        "The exact display of an old signal alongside a changed scope and access limitations remains to be designed."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0092",
+      "title": "GitView - Signal-origin selection and explicit filter changes",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "9ea3480b9b379fd613eaf0b1020be8f4bc6590400f2eab2decf420a637529d83",
+      "direct_refines": [
+        "GITVIEW-SPEC-0047"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0027",
+        "GITVIEW-SPEC-0029",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0042",
+        "GITVIEW-SPEC-0046",
+        "GITVIEW-SPEC-0056",
+        "GITVIEW-SPEC-0057",
+        "GITVIEW-SPEC-0073",
+        "GITVIEW-SPEC-0074",
+        "GITVIEW-SPEC-0088",
+        "GITVIEW-SPEC-0089",
+        "GITVIEW-SPEC-0091",
+        "GITVIEW-SPEC-0094",
+        "GITVIEW-SPEC-0102",
+        "GITVIEW-SPEC-0119"
+      ],
+      "reachable_declared_nodes": 99,
+      "reachable_precanonical_nodes": 99,
+      "scenario_counts_by_field": {
+        "scenarios": 14,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Exact native presentation of origin, edited filters and differing observation times requires UX and accessibility evaluation.",
+        "Source-specific completeness and applicability of CI, review, linked-Issue and historical predicates remain unverified.",
+        "No application, native navigation, source or privacy scenario has been executed."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0093",
+      "title": "GitView - First-version preview content and availability",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "d7c41cb779072bb11d695c5c04c1170a0bfd420b620e7e4a3174d469381ce818",
+      "direct_refines": [
+        "GITVIEW-SPEC-0050"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0023",
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0028",
+        "GITVIEW-SPEC-0031",
+        "GITVIEW-SPEC-0032",
+        "GITVIEW-SPEC-0033",
+        "GITVIEW-SPEC-0034",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0039",
+        "GITVIEW-SPEC-0041",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0046",
+        "GITVIEW-SPEC-0047",
+        "GITVIEW-SPEC-0061",
+        "GITVIEW-SPEC-0062",
+        "GITVIEW-SPEC-0063",
+        "GITVIEW-SPEC-0073",
+        "GITVIEW-SPEC-0075",
+        "GITVIEW-SPEC-0112"
+      ],
+      "reachable_declared_nodes": 95,
+      "reachable_precanonical_nodes": 95,
+      "scenario_counts_by_field": {
+        "scenarios": 12,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Native layout, system preview presentation, exact field order and truncation require UX and device evaluation.",
+        "Source identity, per-field freshness, permissions and actual availability require source-specific evidence.",
+        "The timing and cancellation of optional preview refresh and accessible announcements require an implemented platform design and tests."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0094",
+      "title": "GitView - Unresolved review threads with an older observed comment",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "64873cf0e0a63a14e098b75bc0c3b5a28f9f24e3301cc7e79413f1955ff2450d",
+      "direct_refines": [
+        "GITVIEW-SPEC-0062"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0046",
+        "GITVIEW-SPEC-0047",
+        "GITVIEW-SPEC-0057",
+        "GITVIEW-SPEC-0089"
+      ],
+      "reachable_declared_nodes": 52,
+      "reachable_precanonical_nodes": 52,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Verify actual permission and coverage for submitted comments, timestamps, thread resolution and PR state; this candidate does not select an API request.",
+        "Evaluate the usefulness and labeling of the 24-hour comment-age proxy; it is an agent-authored default rather than evidence of what the owner meant by a long thread.",
+        "Determine accessible compact presentation and refresh behavior on actual devices without exposing restricted information."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0097",
+      "title": "GitView - History for the agreed Project summary metrics",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "6dad8717897f323a02bc3fbd19a3aaaed7805bc241ae8d015bffae2e57727887",
+      "direct_refines": [
+        "GITVIEW-SPEC-0066",
+        "GITVIEW-SPEC-0068"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0102",
+        "GITVIEW-SPEC-0029",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0046",
+        "GITVIEW-SPEC-0057",
+        "GITVIEW-SPEC-0061",
+        "GITVIEW-SPEC-0062",
+        "GITVIEW-SPEC-0063",
+        "GITVIEW-SPEC-0064",
+        "GITVIEW-SPEC-0065",
+        "GITVIEW-SPEC-0067",
+        "GITVIEW-SPEC-0069",
+        "GITVIEW-SPEC-0071",
+        "GITVIEW-SPEC-0094"
+      ],
+      "reachable_declared_nodes": 76,
+      "reachable_precanonical_nodes": 76,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Validate the proposed additional capture and local membership-count series with native UX; no iOS chart, storage, history-clear or restart behavior has been implemented or tested.",
+        "Establish source-specific field and revision semantics, category completeness and support for each predicate without assuming source history exists.",
+        "Determine storage budgets and privacy classification, and define concrete retention/recovery mechanics after the upstream product contracts are ready."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0098",
+      "title": "GitView - GitHub App public-client authorization and renewal",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "3f337d48c9a9bf854bcfaf99b0c05d340a0badfcb0aaa5b12730f023eed79243",
+      "direct_refines": [
+        "GITVIEW-SPEC-0087"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0019",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0037",
+        "GITVIEW-SPEC-0040",
+        "GITVIEW-SPEC-0058",
+        "GITVIEW-SPEC-0059",
+        "GITVIEW-SPEC-0079",
+        "GITVIEW-SPEC-0085",
+        "GITVIEW-SPEC-0086",
+        "GITVIEW-SPEC-0088"
+      ],
+      "reachable_declared_nodes": 57,
+      "reachable_precanonical_nodes": 57,
+      "scenario_counts_by_field": {
+        "scenarios": 9,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Establish a deployable callback target, GitHub App registration and exact documented per-operation permission coverage for the chosen source fields; no credentials or registration are created by this proposal.",
+        "Choose and verify platform secure-store access and interruption handling, source identity lookup and the implementation of coordinated rotation and recovery.",
+        "Validate that the chosen user experience, app-installation process, permissions and public-client tradeoffs are acceptable with real GitHub and an iOS device; no product integration has run."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0099",
+      "title": "GitView - GitHub App installation scope in first setup",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "1baef15696f195e7b853d9524a448cb336be4d4a4d4b57f17b6da71551b2bbff",
+      "direct_refines": [
+        "GITVIEW-SPEC-0059"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0022",
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0045",
+        "GITVIEW-SPEC-0058",
+        "GITVIEW-SPEC-0087",
+        "GITVIEW-SPEC-0088",
+        "GITVIEW-SPEC-0098"
+      ],
+      "reachable_declared_nodes": 58,
+      "reachable_precanonical_nodes": 58,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Verify actual GitHub installation, organization-approval and Repository-selection behavior for the selected registration, including public data and applicable permissions; this specification does not choose an endpoint or assume complete enumeration.",
+        "Specify the exact native access-review route, callback and accessible explanation after the product flow is further designed; no app or device interaction has run.",
+        "Source pagination consistency, per-entry access evidence, installation changes and interrupted local Project saves need independently scoped adapter and storage validation."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0100",
+      "title": "GitView - GitHub App read-permission coverage for selected data",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "7f9d1a28d07e7e39374d48191b88e1fbbb4e2d53edfacd575d9e0199ccc34533",
+      "direct_refines": [
+        "GITVIEW-SPEC-0088"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0039",
+        "GITVIEW-SPEC-0041",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0060",
+        "GITVIEW-SPEC-0061",
+        "GITVIEW-SPEC-0062",
+        "GITVIEW-SPEC-0063",
+        "GITVIEW-SPEC-0077",
+        "GITVIEW-SPEC-0078",
+        "GITVIEW-SPEC-0094",
+        "GITVIEW-SPEC-0098",
+        "GITVIEW-SPEC-0099"
+      ],
+      "reachable_declared_nodes": 68,
+      "reachable_precanonical_nodes": 68,
+      "scenario_counts_by_field": {
+        "scenarios": 6,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Trace exact selected operations and field-level GraphQL permissions, particularly review threads, comment-age proxy, relationship links, identity and historical outcomes; perform authorized source validation before declaring a complete grant set.",
+        "Decide exact permission disclosure and installation-update experience with real GitHub and iOS; no registration, permission approval or app behavior has been executed.",
+        "Source pagination completeness, permission-change timing and access to related private objects remain separate evidence requirements."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0101",
+      "title": "GitView - Normalize GitHub work representations for Today",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "914f8f7889d6ce8969337da2009bcb6065789f14079bdb6a2c1e271a295d76e4",
+      "direct_refines": [
+        "GITVIEW-SPEC-0027"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0002",
+        "GITVIEW-SPEC-0026",
+        "GITVIEW-SPEC-0029",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0039",
+        "GITVIEW-SPEC-0041",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0053",
+        "GITVIEW-SPEC-0089",
+        "GITVIEW-SPEC-0100"
+      ],
+      "reachable_declared_nodes": 69,
+      "reachable_precanonical_nodes": 69,
+      "scenario_counts_by_field": {
+        "scenarios": 7,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Select and validate actual source representations, ID association evidence and source-event fields for the initial product slice without assuming GraphQL and REST identifiers are interchangeable.",
+        "Establish or conservatively represent population and temporal coverage for the chosen requests and reconciliation method, including mutable pages and partial access.",
+        "No adapter, source integration, durable observation storage or native UI has been implemented or exercised."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0102",
+      "title": "GitView - Population coverage evidence across refreshes",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "70d02fc9a026741b94ab287c5e03e722556ba6db58806406635de807b3f92752",
+      "direct_refines": [
+        "GITVIEW-SPEC-0044"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0027",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0037",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0048",
+        "GITVIEW-SPEC-0049",
+        "GITVIEW-SPEC-0053",
+        "GITVIEW-SPEC-0071",
+        "GITVIEW-SPEC-0089",
+        "GITVIEW-SPEC-0101"
+      ],
+      "reachable_declared_nodes": 73,
+      "reachable_precanonical_nodes": 73,
+      "scenario_counts_by_field": {
+        "scenarios": 10,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "For each chosen GitHub source operation, document pagination consistency, update visibility, ordering, deletion, access and applicable temporal guarantees; absence of evidence is not a claim that GitHub lacks a capability.",
+        "Determine an adequate source-backed method, its feasible freshness and an understandable accessible presentation of limited coverage without assuming continuous live consistency.",
+        "Actual source, storage, process-restart and native behavior remain unimplemented and unverified."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0104",
+      "title": "GitView - Project configuration storage boundary",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "c1dd9594c23fc1f6dc7dbbfc5a2b8c849f6db209f9fd38d69eee7f15f67c2439",
+      "direct_refines": [
+        "GITVIEW-SPEC-0103"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0045",
+        "GITVIEW-SPEC-0052",
+        "GITVIEW-SPEC-0082",
+        "GITVIEW-SPEC-0083",
+        "GITVIEW-SPEC-0095"
+      ],
+      "reachable_declared_nodes": 79,
+      "reachable_precanonical_nodes": 79,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Select concrete Project ownership, version evidence and commit mechanism after reviewing application composition and persistence candidates.",
+        "Define migration, storage-unavailable interaction and actual cleanup of data no longer referenced by any Project without assuming a particular database.",
+        "No production boundary, concurrent save, durable read or restart behavior has been implemented or verified."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0108",
+      "title": "GitView - Setup and Project creation route composition",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "0037d2ca2c2a5f2d992c989aae1a2b1e4460f024480deccc09214bcf177fea2d",
+      "direct_refines": [
+        "GITVIEW-SPEC-0022"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0040",
+        "GITVIEW-SPEC-0045",
+        "GITVIEW-SPEC-0052",
+        "GITVIEW-SPEC-0059",
+        "GITVIEW-SPEC-0079",
+        "GITVIEW-SPEC-0098",
+        "GITVIEW-SPEC-0099",
+        "GITVIEW-SPEC-0100",
+        "GITVIEW-SPEC-0103",
+        "GITVIEW-SPEC-0104",
+        "GITVIEW-SPEC-0105",
+        "GITVIEW-SPEC-0106",
+        "GITVIEW-SPEC-0107",
+        "GITVIEW-SPEC-0111",
+        "GITVIEW-SPEC-0112",
+        "GITVIEW-SPEC-0113",
+        "GITVIEW-SPEC-0114"
+      ],
+      "reachable_declared_nodes": 97,
+      "reachable_precanonical_nodes": 97,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Specify concrete startup and setup presentation, accessibility focus, callback handling and storage recovery interfaces after upstream contracts and native constraints are reviewed.",
+        "Verify source-specific eligibility, account-change coordination and the selected GitHub App flow against actual operations and permissions.",
+        "No FSD modules, source or persistence adapter, controlled product tests or native behavior have been implemented or verified."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0109",
+      "title": "GitView - Initial iOS platform and system interaction baseline",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "8e79d5eb8f2819428cd41f6bc5a979477a12d45ccf123968f570f6b5eb73de74",
+      "direct_refines": [
+        "GITVIEW-SPEC-0017"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0014",
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0031",
+        "GITVIEW-SPEC-0032",
+        "GITVIEW-SPEC-0033",
+        "GITVIEW-SPEC-0035",
+        "GITVIEW-SPEC-0048",
+        "GITVIEW-SPEC-0068",
+        "GITVIEW-SPEC-0073",
+        "GITVIEW-SPEC-0075",
+        "GITVIEW-SPEC-0085",
+        "GITVIEW-SPEC-0093",
+        "GITVIEW-SPEC-0107"
+      ],
+      "reachable_declared_nodes": 97,
+      "reachable_precanonical_nodes": 97,
+      "scenario_counts_by_field": {
+        "scenarios": 6,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Verify actual Xcode SDK deployment support, availability of selected APIs, target devices and any iPad-specific support before an implementation or release claim.",
+        "Choose and validate the native collection, preview, refresh and accessible controls against real interactions and the current system behavior.",
+        "No app build, simulator run, physical-device observation or accessibility test has been performed."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0110",
+      "title": "GitView - Pure Today selection decision contract",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "9bfcf40ba7b5a63d0675bf7bbf931751048079f32f9345e8e68c3774e89f4bd8",
+      "direct_refines": [
+        "GITVIEW-SPEC-0027"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0040",
+        "GITVIEW-SPEC-0042",
+        "GITVIEW-SPEC-0049",
+        "GITVIEW-SPEC-0079",
+        "GITVIEW-SPEC-0089",
+        "GITVIEW-SPEC-0101",
+        "GITVIEW-SPEC-0102",
+        "GITVIEW-SPEC-0107"
+      ],
+      "reachable_declared_nodes": 93,
+      "reachable_precanonical_nodes": 93,
+      "scenario_counts_by_field": {
+        "scenarios": 14,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Select a SpecificationCore dependency version and verify the proposed typed representation and caller mapping against that resolved version without collapsing unknown into rule non-applicability.",
+        "Establish source-specific event, revision, identity and population evidence needed to populate the decision inputs; this contract does not assume GitHub supplies a complete snapshot.",
+        "The finite model uses simplified assumptions; no actual Swift policy, TDD cycle, source adapter or native behavior has been executed."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0111",
+      "title": "GitView - Project configuration validity decision",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "e6c540367db4d7461c726c44ac7222719be6e6439507efb110f62f6d6f2fe208",
+      "direct_refines": [
+        "GITVIEW-SPEC-0084"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0025",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0040",
+        "GITVIEW-SPEC-0052",
+        "GITVIEW-SPEC-0079",
+        "GITVIEW-SPEC-0082",
+        "GITVIEW-SPEC-0083",
+        "GITVIEW-SPEC-0095",
+        "GITVIEW-SPEC-0103",
+        "GITVIEW-SPEC-0104",
+        "GITVIEW-SPEC-0106"
+      ],
+      "reachable_declared_nodes": 92,
+      "reachable_precanonical_nodes": 92,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Define exact name and purpose text normalization, input types and SpecificationCore dependency version before declaring the decision independently implementable.",
+        "Establish source identity and access eligibility mappings for newly added Repositories; candidates 0112–0114 propose eligibility, coordinated commit and credential recovery, but their concrete interfaces and behavior remain unverified.",
+        "No product policy, durable storage, source integration or TDD cycle has been implemented or verified."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0112",
+      "title": "GitView - Repository access evidence applicability",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "b9424cc96374f380b59eb1cc2765e3d5672d01f80552279b73d95707770692f8",
+      "direct_refines": [
+        "GITVIEW-SPEC-0036"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0037",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0045",
+        "GITVIEW-SPEC-0059",
+        "GITVIEW-SPEC-0085",
+        "GITVIEW-SPEC-0098",
+        "GITVIEW-SPEC-0111"
+      ],
+      "reachable_declared_nodes": 93,
+      "reachable_precanonical_nodes": 93,
+      "scenario_counts_by_field": {
+        "scenarios": 9,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Confirm the exact selected GitHub endpoint, pagination, field-level permissions and applicable response mappings against the chosen authentication integration.",
+        "Map supported source responses to exact field and collection coverage, and establish whether any broader access witness can safely restore old cached fields; verify ordering and races through actual integration.",
+        "Selection lifetime is a working policy; background suspension and very long active selections require usability evaluation before implementation readiness."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0113",
+      "title": "GitView - Local transactional storage direction",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "9bda69247b1e04515a8066821614a61f773554e2b6cef4e29ae686fc99a15921",
+      "direct_refines": [
+        "GITVIEW-SPEC-0106"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0019",
+        "GITVIEW-SPEC-0045",
+        "GITVIEW-SPEC-0052",
+        "GITVIEW-SPEC-0079",
+        "GITVIEW-SPEC-0086",
+        "GITVIEW-SPEC-0103",
+        "GITVIEW-SPEC-0104",
+        "GITVIEW-SPEC-0105",
+        "GITVIEW-SPEC-0112"
+      ],
+      "reachable_declared_nodes": 94,
+      "reachable_precanonical_nodes": 94,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Select the actual iOS SQLite provider, version and wrapper, validate relevant security and WAL fixes, and select and verify journal, synchronization and backup behavior.",
+        "Define physical schema, migration and concrete coordinator; verify the selected offline tradeoff and transactional recovery semantics across the unrecorded-denial crash gap before treating this boundary as implementation-ready.",
+        "Choose and test iOS file protection, background availability, credentials/database reconciliation and actual interruption behavior on supported devices."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0114",
+      "title": "GitView - Recoverable connection binding across local stores",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "4f8defdc5704d30d219dabcde6dac1095d9ab0832a495f05e1af609d09c499fc",
+      "direct_refines": [
+        "GITVIEW-SPEC-0086"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0058",
+        "GITVIEW-SPEC-0085",
+        "GITVIEW-SPEC-0098",
+        "GITVIEW-SPEC-0113"
+      ],
+      "reachable_declared_nodes": 95,
+      "reachable_precanonical_nodes": 95,
+      "scenario_counts_by_field": {
+        "scenarios": 6,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Specify and validate secure-store item uniqueness, generation comparison, writer quiescence and exact recovery evidence on supported iOS versions.",
+        "Choose Keychain and database protection, backup and migration policy; verify background behavior before and after first unlock.",
+        "Establish the selected GitHub flow, registration and token rotation on real source and device separately from deterministic tests."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0115",
+      "title": "GitView - Project Today inspection route assembly",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "9caeb8baafd3618d45645a70e9bfed0df5fc64a808b51c220396785f08709831",
+      "direct_refines": [
+        "GITVIEW-SPEC-0107"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0033",
+        "GITVIEW-SPEC-0042",
+        "GITVIEW-SPEC-0049",
+        "GITVIEW-SPEC-0056",
+        "GITVIEW-SPEC-0073",
+        "GITVIEW-SPEC-0074",
+        "GITVIEW-SPEC-0075",
+        "GITVIEW-SPEC-0091",
+        "GITVIEW-SPEC-0092",
+        "GITVIEW-SPEC-0093",
+        "GITVIEW-SPEC-0101",
+        "GITVIEW-SPEC-0102",
+        "GITVIEW-SPEC-0108",
+        "GITVIEW-SPEC-0109",
+        "GITVIEW-SPEC-0110",
+        "GITVIEW-SPEC-0112",
+        "GITVIEW-SPEC-0113",
+        "GITVIEW-SPEC-0114",
+        "GITVIEW-SPEC-0116",
+        "GITVIEW-SPEC-0119"
+      ],
+      "reachable_declared_nodes": 105,
+      "reachable_precanonical_nodes": 105,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Define actual source-to-domain mappings, public interface shapes and ownership of source, storage, clock, access and navigation boundaries after prerequisite decisions are complete.",
+        "Verify native density, static preview, focus, source handoff and their interaction on supported devices without assuming a particular system API satisfies the contract.",
+        "The assembled route is pre-canonical and no product implementation, TDD cycle, real source integration or native behavior has been executed."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0116",
+      "title": "GitView - Scoped observation exchange for work routes",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "5ff347414bdc3e81ff7e7f1d3dce9b9bc2cabcfd8d0f2ff8e2570fe932dfc901",
+      "direct_refines": [
+        "GITVIEW-SPEC-0105"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0037",
+        "GITVIEW-SPEC-0044",
+        "GITVIEW-SPEC-0048",
+        "GITVIEW-SPEC-0053",
+        "GITVIEW-SPEC-0101",
+        "GITVIEW-SPEC-0102",
+        "GITVIEW-SPEC-0110",
+        "GITVIEW-SPEC-0112",
+        "GITVIEW-SPEC-0113"
+      ],
+      "reachable_declared_nodes": 97,
+      "reachable_precanonical_nodes": 97,
+      "scenario_counts_by_field": {
+        "scenarios": 9,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Select concrete Swift interface shapes and source-to-domain mappings for the chosen GitHub operations, including source-specific errors, identity association and coverage evidence.",
+        "Define the physical atomic retention and recovery boundaries and validate access, timestamps and conflict handling with the selected SQLite and Keychain design.",
+        "No adapter, live GitHub interaction, persistence, product TDD cycle or native presentation has been implemented or verified."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0117",
+      "title": "GitView - Durable history clear and observation admission",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "961f95ec1e57dcaaa708ad3d3a2e7c1db173c15f96bacbb52ece93933ce0a590",
+      "direct_refines": [
+        "GITVIEW-SPEC-0067"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0065",
+        "GITVIEW-SPEC-0066",
+        "GITVIEW-SPEC-0071",
+        "GITVIEW-SPEC-0097",
+        "GITVIEW-SPEC-0103",
+        "GITVIEW-SPEC-0105",
+        "GITVIEW-SPEC-0113"
+      ],
+      "reachable_declared_nodes": 95,
+      "reachable_precanonical_nodes": 95,
+      "scenario_counts_by_field": {
+        "scenarios": 7,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Define exact database schema, migration, transactional coordinator and observable failure mapping for the chosen SQLite provider; verify journal and protection settings on supported devices.",
+        "Determine privacy and backup semantics, retention budgets, supported source-history retrieval and user-facing clear and recovery interaction.",
+        "Verify source mappings, durable crash recovery, background operation and native accessibility separately; no product implementation or tests exist yet."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0118",
+      "title": "GitView - Accessible historical point inspection and return",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "7c5b0b41db5ebf62a1cdd9daa6c1c30f6258d5ccb27c583a09161c91891548fe",
+      "direct_refines": [
+        "GITVIEW-SPEC-0068"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0032",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0040",
+        "GITVIEW-SPEC-0056",
+        "GITVIEW-SPEC-0064",
+        "GITVIEW-SPEC-0065",
+        "GITVIEW-SPEC-0069",
+        "GITVIEW-SPEC-0079",
+        "GITVIEW-SPEC-0097",
+        "GITVIEW-SPEC-0112",
+        "GITVIEW-SPEC-0116"
+      ],
+      "reachable_declared_nodes": 98,
+      "reachable_precanonical_nodes": 98,
+      "scenario_counts_by_field": {
+        "scenarios": 7,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Choose and evaluate native inspection, traversal, focus, announcement and fallback controls across supported iOS versions and assistive technologies.",
+        "Establish source-specific completeness, object identities and privacy-safe lineage for each selectable metric before claiming the corresponding navigation is available.",
+        "Verify actual chart rendering, system snapshots, queued announcements, Dynamic Type and device accessibility after implementation; no UI or product test exists."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0119",
+      "title": "GitView - Scoped summary aggregation decision",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "7af41c04c40649fabc92b046498af541aeef81bac38ef5fbff37e3a7e4350106",
+      "direct_refines": [
+        "GITVIEW-SPEC-0046"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0029",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0040",
+        "GITVIEW-SPEC-0053",
+        "GITVIEW-SPEC-0057",
+        "GITVIEW-SPEC-0064",
+        "GITVIEW-SPEC-0079",
+        "GITVIEW-SPEC-0101",
+        "GITVIEW-SPEC-0102",
+        "GITVIEW-SPEC-0110",
+        "GITVIEW-SPEC-0112",
+        "GITVIEW-SPEC-0116"
+      ],
+      "reachable_declared_nodes": 98,
+      "reachable_precanonical_nodes": 98,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Choose concrete input and result types, SpecificationCore version and caller composition after the parent and dependency contracts are ready.",
+        "Establish source-specific temporal, identity and coverage semantics for each selected predicate and practical privacy-safe lineage for retained aggregates.",
+        "Evaluate native presentation and perform actual product, source, storage, accessibility and device tests after implementation; none have run."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0120",
+      "title": "GitView - Targeted zoom across overview scopes",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "12e3c55500cd3706964beab274bdfe79faddd476553cad516dc151012a37a155",
+      "direct_refines": [
+        "GITVIEW-SPEC-0074"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0031",
+        "GITVIEW-SPEC-0032",
+        "GITVIEW-SPEC-0035",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0049",
+        "GITVIEW-SPEC-0073",
+        "GITVIEW-SPEC-0075",
+        "GITVIEW-SPEC-0091",
+        "GITVIEW-SPEC-0115"
+      ],
+      "reachable_declared_nodes": 106,
+      "reachable_precanonical_nodes": 106,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Validate whether the proposed boundary, target arming and commit-on-release interaction are discoverable and practical in the first version; exact thresholds and ambiguity rules require native UX prototyping.",
+        "Choose and verify native collection, gesture arbitration, visual continuity, focus and accessibility on supported iOS versions; no system API or device behavior is assumed.",
+        "Resolve how targeted zoom interacts with multi-scene lifecycle, live source changes and applicable route restoration after the prerequisite architecture and access contracts are ready."
+      ]
+    },
+    {
+      "id": "GITVIEW-SPEC-0121",
+      "title": "GitView - Source handoff admission and access ordering",
+      "status": "idea",
+      "draft_status": "pre_canonical",
+      "sha256": "3d4e9e56c9291ba0a3e8ea9e993e732d7f7106c443ab3e44d3df07f9aaf9a93c",
+      "direct_refines": [
+        "GITVIEW-SPEC-0033"
+      ],
+      "direct_depends_on": [
+        "GITVIEW-SPEC-0024",
+        "GITVIEW-SPEC-0036",
+        "GITVIEW-SPEC-0037",
+        "GITVIEW-SPEC-0038",
+        "GITVIEW-SPEC-0053",
+        "GITVIEW-SPEC-0079",
+        "GITVIEW-SPEC-0081",
+        "GITVIEW-SPEC-0112",
+        "GITVIEW-SPEC-0113",
+        "GITVIEW-SPEC-0114",
+        "GITVIEW-SPEC-0115"
+      ],
+      "reachable_declared_nodes": 108,
+      "reachable_precanonical_nodes": 108,
+      "scenario_counts_by_field": {
+        "scenarios": 8,
+        "review_scenarios": 0,
+        "pilot_scenarios": 0
+      },
+      "declared_unresolved": [
+        "Identify the actual earliest data-transfer boundary, platform callbacks, cancellation and access-ordering mechanism for the selected iOS open and sharing APIs.",
+        "Define and validate the coordinator's lifetime, main-actor or other isolation, participating scenes and any future extension or multi-process boundary.",
+        "Establish source link mapping and address-order evidence, and independently test actual platform, authorized source and accessibility behavior after implementation."
+      ]
+    }
+  ]
+}
