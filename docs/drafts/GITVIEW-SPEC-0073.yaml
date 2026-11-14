@@ -1,0 +1,71 @@
+id: GITVIEW-SPEC-0073
+title: GitView - Accessible focus during live overview updates
+kind: spec
+created_at: '2026-11-14T16:40:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0032
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0042
+- GITVIEW-SPEC-0049
+- GITVIEW-SPEC-0072
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0032.yaml
+  preview: docs/drafts/GITVIEW-SPEC-0031.yaml
+  update_and_order: docs/drafts/GITVIEW-SPEC-0042.yaml
+  today_boundary: docs/drafts/GITVIEW-SPEC-0049.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A reordered or reflowed collection keeps the currently inspected permitted object identifiable by its actual identity rather than by its old position.
+- If an object is no longer in the active collection, accessible focus has a meaningful successor, predecessor or collection-state fallback without misidentifying a different object.
+- An uncertain candidate remains distinguishable from a confirmed matching object and is not lost solely because its grouping changed.
+- Source access restrictions apply to accessible representations and pending app-controlled announcements without waiting for visual reordering.
+- Failures, incomplete coverage and changes to the selected period are discoverable without requiring a transient announcement or color.
+specification:
+  objective: Specify observable focus continuity and safe recovery during asynchronous overview changes across visual and assistive navigation.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    identity: Associate the active focus or inspection target with the appropriate stable Project or source object identity and originating scope. Equal local numbers, a reused cell position and a changed label do not imply the same object. An unresolved source identity retains the limitations in 0042; a temporary presentation token is not proof of source identity.
+    live_reorder: Source refresh can change work order under 0042, while the Project order follows 0072. When the focused object remains present and permitted, maintain an accessible path to that same object across a reorder or density reflow. Do not programmatically move focus to the item that inherits its old position or falsely announce that the target changed. Exact focus APIs and platform scheduling remain open.
+    candidate_transition: When a confirmed match becomes uncertain because a required value is unavailable, preserve its known object identity and provide access through the uncertain portion or equivalent path under 0042. If it remains represented there and access is permitted, maintain or restore focus to that object where feasible; disclose that its selection status is uncertain. Do not call the changed grouping a confirmed exclusion or leave focus on a stale claim of a confirmed match.
+    removed_or_unavailable: If a selected object no longer matches or is unavailable in the active collection, use the last known ordered collection and the successor, predecessor and collection-state fallback in 0024. With no reliable prior order or when the collection is incomplete, do not assert that the fallback is the next source object or imply an exhaustive selection. When an object overview or preview remains open, preserve its identity under 0031 and apply fallback on return rather than immediately switching it to another object.
+    active_interaction: Defer disruptive order or collection changes during an active pinch, scroll or discrete assistive interaction when a coherent deferred presentation is possible, while making the affected interval, incomplete data or pending update discoverable. An enabled assistive technology or stationary focus alone is not an indefinitely active interaction. Once the current interaction ends or is cancelled, reconcile the latest eligible selection without indefinite deferral. Deferred layout must not assert an obsolete match as current when its status is known to have changed. This does not delay restriction of private content and does not promise a precise animation or time limit.
+    status_changes: Make a relevant failure, incomplete scope or changed Today period persistently discoverable in the current accessible context or its status route. A completed update is not proof of complete coverage. Avoid treating every changed cell as an urgent interruption; exact announcement timing, coalescing and focus movement must be evaluated on supported devices.
+    access_change: When private source access is explicitly denied, remove affected restricted values from app-controlled accessible labels and pending app-controlled announcements as the restriction is applied, regardless of deferred ordering. Offer an accessible permitted context or access-recovery route. Information already announced or handed to the system cannot be recalled; actual interruption of platform speech is not assumed. Follow 0036 when reconnection later establishes access.
+    user_control: The operator can continue through permitted content, open a surviving object, reach status and filters, and leave the affected scope without relying solely on a gesture, color or timed announcement. These are user outcomes, not a mandate to create custom controls.
+    provenance: This focus and update behavior is an agent-authored refinement of the owner's dense grid, navigation and Apple-style direction; it is not evidence of implemented accessibility support.
+  scenarios:
+    refresh_moves_focused_pr:
+      given: An assistive user is focused on PR 42 in Repository B while a second Repository has a different PR 42.
+      when: A refresh changes the sort position of B's PR but it remains a permitted match.
+      then: The user retains a path to B's same PR and its actual updated accessible state; focus is not attributed to the cell now occupying its old position.
+    candidate_becomes_uncertain:
+      given: A focused PR is a confirmed failed-CI match and a later observation cannot establish the applicable CI result.
+      when: The selection is reevaluated.
+      then: The same permitted PR remains inspectable in the uncertain portion or equivalent path, the uncertainty is discoverable, and it is not announced as a confirmed failed match or confirmed exclusion.
+    preview_and_day_boundary:
+      given: A VoiceOver user has opened a PR preview from Today and the PR will not match the next local day.
+      when: The local day changes and the preview is dismissed.
+      then: The preview was not retargeted, the current day and incomplete coverage are discoverable, and focus uses a valid surviving anchor or collection-state fallback.
+    revoked_while_deferred:
+      given: A private PR title is focused and a grid rearrangement is deferred during an interaction.
+      when: Explicit denial is applied before the interaction ends.
+      then: The restricted title is removed from app-controlled accessible representations and pending app-controlled announcements without waiting for the rearrangement; a permitted recovery route remains.
+    failure_after_transient_feedback:
+      given: A refresh failure was visually indicated while an assistive user was inspecting another cell.
+      when: The transient feedback has disappeared and the user later opens the status route.
+      then: The affected scope, failure and applicable last successful observation remain discoverable without relying on the original cue.
+  unresolved:
+  - Supported assistive technologies, focus APIs, announcement policy and timing require implementation-independent platform design and device evaluation.
+  - The exact presentation and accessible grouping of uncertain candidates require UX validation.
+  - Native accessibility tests and real source observations have not been executed.

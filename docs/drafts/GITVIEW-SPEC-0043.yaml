@@ -36,6 +36,7 @@ depends_on:
 - GITVIEW-SPEC-0063
 - GITVIEW-SPEC-0071
 - GITVIEW-SPEC-0072
+- GITVIEW-SPEC-0073
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -61,6 +62,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    accessible_focus_after_refresh:
+      given: A VoiceOver user is inspecting one of two same-numbered PRs from different Repositories in a filtered Project grid.
+      when: A refresh reorders the grid and the selected PR's filter result becomes uncertain.
+      then: The same permitted PR remains inspectable through the uncertainty path with its Repository context; a different PR is not substituted and the incomplete selection remains discoverable.
     portfolio_return_after_refresh:
       given: Projects P and Q are visible in stable order and the operator opens Q.
       when: A background refresh changes P's signals and the operator returns.
