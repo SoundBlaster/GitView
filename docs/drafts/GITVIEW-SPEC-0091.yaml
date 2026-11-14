@@ -1,0 +1,86 @@
+id: GITVIEW-SPEC-0091
+title: GitView - Work scope continuity as Project membership changes
+kind: spec
+created_at: '2026-11-14T18:25:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0074
+depends_on:
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0049
+- GITVIEW-SPEC-0082
+- GITVIEW-SPEC-0084
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0074.yaml
+  membership: docs/drafts/GITVIEW-SPEC-0025.yaml
+  return: docs/drafts/GITVIEW-SPEC-0024.yaml
+  owner_project: conversation:gitview/excerpt-10
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- An active work collection distinguishes Project-wide intent from an explicitly selected Repository scope even when the Project initially has one member.
+- A confirmed membership change updates Project-wide selection against the new member set without silently changing the operator's filter, period or Project identity.
+- An explicitly selected Repository is not silently replaced or widened when membership changes.
+- Pending, failed or indeterminate edits do not become a confirmed new scope; coverage of the previous set is not presented as complete for an unobserved new member.
+- An open permitted preview or object retains its identity; return follows the valid origin or reports an invalid or uncertain origin rather than substituting another Project.
+- Route, membership and access changes preserve privacy and accessible recovery independently of display density.
+specification:
+  objective: Preserve the operator's work-scope intent and actual navigation origin when a local Project gains or loses member Repositories.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    project_wide_intent: As an agent-authored initial navigation proposal, ordinary entry to a confirmed single-member Project opens that Project's work collection directly with Project-wide intent. Its current Repository set has one member; this shortcut does not silently turn it into a permanently Repository-specific selection. The Project and source Repository remain distinguishable under 0074.
+    explicit_repository: When the operator explicitly opens a member Repository's work, its scope is that Repository within the originating Project, even if it currently happens to be the Project's only member. A later addition to the Project does not silently widen this explicitly chosen Repository scope. Density changes, refresh and source rename with confirmed identity do not change the scope intent.
+    pending_edit: A pending or cancelled edit, a confirmed failed save, or source discovery alone does not change the saved membership or collection. If a submitted edit's durable result is indeterminate, do not assert either the old or proposed membership as confirmed current; show local configuration uncertainty and reconcile under 0025 and 0082 before claiming a complete selection.
+    expansion: When a Project-wide collection has confirmed membership A and a saved edit adds B, reevaluate the Project-wide scope as A and B without navigating to a different Project or silently clearing period, explicit filters or density. A prior complete observation for A does not establish B's data or complete coverage for A and B. A remains eligible under its own access and observation context; B is unknown or incomplete until supported evidence exists.
+    contraction: When a saved edit removes B while A remains, a Project-wide collection reevaluates against the confirmed current member set. The change of local scope is not source deletion and must not erase B's observations needed elsewhere or alter another Project. An explicitly selected B scope that no longer belongs to the origin Project is not silently switched to A or another Project; use the changed-origin route under 0024.
+    current_signal: If a current Project signal was calculated for an earlier member set and the operator opens it after membership changed, retain the signal's condition and original observation context. Evaluate the destination against the confirmed current Project-wide scope or explicitly expose that its scope cannot yet be established; do not label the old result as a complete current count for the new member set. A historical signal with an explicitly captured membership basis follows 0056 rather than silently adopting current membership.
+    actual_route: Preserve the actual in-session origin when returning. A collection entered directly through a formerly single-member Project returns to its originating portfolio surface rather than fabricating a member-overview step after expansion. A Repository collection entered through a member overview may return to that same still-valid Project overview after contraction, even if only one member remains; a later ordinary fresh entry to the single-member Project follows 0074's direct route. Exact presentation is a design question, not a requirement for a redundant permanent screen.
+    open_object: An already opened permitted preview or PR or Issue remains bound to the same source identity across a membership edit and is not retargeted to a card at the old position. If its originating Repository leaves the Project or the Project is deleted, follow 0024 and 0031 for changed origin on return. Explicit source denial immediately applies 0036; remaining in another Project does not itself restore private access.
+    accessibility_and_privacy: Explain a changed or uncertain scope, incomplete coverage and recovery through accessible non-color paths. Do not expose restricted Repository identities, counts or object details to explain a scope change; provide a safe general status where permitted. App-controlled restricted content is not retained merely to preserve an anchor or route.
+    verification: Apply 0040 and 0079 to controlled tests for single-to-multi and multi-to-single changes, explicit versus Project-wide scope, interrupted edits, direct signal navigation and access denial. Verify native navigation and accessibility separately. These expectations do not choose a data store, screen transition or implementation architecture.
+    provenance: One Project can contain several Repositories, and a Repository can belong to several Projects by owner decision. The default Project-wide intent and route handling above are agent-authored proposals based on that model and require native evaluation.
+  scenarios:
+    single_project_gains_member:
+      given: Project P has only A and was opened directly to a Project-wide Today collection with an active filter; B has no work observation.
+      when: A saved membership edit adds B to P while the collection remains open.
+      then: The collection remains in P with the same period, filter and density, its Project-wide scope becomes A and B and its coverage is incomplete for B rather than reusing A-only completeness.
+    explicit_member_remains_narrow:
+      given: The operator explicitly selected A's Repository work within Project P.
+      when: A saved edit adds B to P.
+      then: The active work scope remains A until the operator explicitly changes it; B is not silently mixed into the Repository-specific selection.
+    removed_selected_member:
+      given: P contains A and B, and the operator is viewing B's explicitly selected work.
+      when: A saved edit removes B from P while preserving A.
+      then: The app identifies that the origin scope changed and offers an available route rather than silently switching to A or a different Project containing B.
+    shortcut_return_after_expansion:
+      given: P originally contained only A and the operator entered its work directly from the portfolio.
+      when: P gains B and the operator returns to the originating surface.
+      then: Return goes to the portfolio, not a newly invented member-overview step; the next explicit Project entry follows its then-confirmed membership.
+    member_route_after_contraction:
+      given: P contained A and B and the operator entered A's work through P's member overview.
+      when: B is removed and the operator returns while P and A remain accessible.
+      then: The actual origin may be restored as P's valid member overview without substituting an unrelated route; a later fresh P entry can use the one-member shortcut.
+    signal_changed_members:
+      given: A failed-CI Project signal was observed for members A and B, then P is durably changed to A and C while C is unobserved.
+      when: The operator opens the current Project signal.
+      then: The failed-CI condition remains identifiable, B is not described as a current P member and the A-C destination is incomplete for C; the old A-B signal context is not mislabeled a complete A-C result.
+    unreadable_edit_outcome:
+      given: A membership edit from A to A and B may have committed, but durable configuration cannot be read or reconciled.
+      when: The open Project-wide collection is restored.
+      then: Its current membership and dependent complete counts are uncertain rather than asserted to equal either A or A and B, and an accessible recovery path remains.
+  unresolved:
+  - The default Project-wide intent and transient return to a surviving member overview are agent-authored product choices requiring UX evaluation.
+  - Source coverage, local edit coordination and native navigation or focus restoration require independent implementation-level evidence.
+  - The exact display of an old signal alongside a changed scope and access limitations remains to be designed.

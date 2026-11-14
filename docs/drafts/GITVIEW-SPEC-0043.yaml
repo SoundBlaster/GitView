@@ -54,6 +54,7 @@ depends_on:
 - GITVIEW-SPEC-0088
 - GITVIEW-SPEC-0089
 - GITVIEW-SPEC-0090
+- GITVIEW-SPEC-0091
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -79,6 +80,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    single_project_expands_while_open:
+      given: P initially contains only A and its Project-wide Today collection was opened directly from the portfolio with an active filter.
+      when: A saved edit adds unobserved B while an object preview remains open, then the operator dismisses the preview and returns.
+      then: The preview remains bound to its original permitted object, the Project-wide collection is reevaluated for A and B with incomplete B coverage and unchanged filter, and return follows the actual portfolio origin without inventing a member screen.
     required_format_unverified_path:
       given: A participating repository contains the agreed PR template, but an agent creates a PR through a path whose evaluation coverage is not established.
       when: The participating process and GitView overview are considered.

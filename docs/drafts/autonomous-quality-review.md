@@ -519,3 +519,9 @@ Candidate 0090 и [сверка процесса описаний](required-desc
 доказанное покрытие пути создания. GitView не запускает внешний gate по этому
 контракту; ни один процесс не установлен и не проверен. [Проверка словаря](evidence/autonomous-goal-ontology-check-format-process-20261114.json)
 для 0043, 0054 и 0090 не нашла findings и gaps.
+
+Candidate 0091 и [сверка навигационного scope](project-navigation-scope-review-20261114.md)
+разделяют Project-wide intent и явно выбранный Repository при изменении
+membership. Обновлён 0074; маршруты и интерфейс остаются авторскими
+предложениями без native или source evidence. [Проверка словаря](evidence/autonomous-goal-ontology-check-navigation-scope-20261114.json)
+для 0043, 0074 и 0091 не нашла findings и gaps.
