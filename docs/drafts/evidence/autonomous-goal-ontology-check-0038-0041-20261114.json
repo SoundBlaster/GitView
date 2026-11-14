@@ -1,0 +1,45 @@
+{
+  "artifact_kind": "gitview_goal_domain_vocabulary_check",
+  "runtime": "3593bd75",
+  "context": "ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml",
+  "compiler_sha256": "30dd324aa1f641e7274a49fd6f158cced5ed95d810b6b275353d3d10f19a27cb",
+  "compiler_provenance": "not_verified",
+  "workspace": "isolated TB5 clone, candidates copied to specs/nodes",
+  "check_scope": "domain_vocabulary",
+  "semantic_approval": "not_established",
+  "scenarios_executed": false,
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0038",
+      "sha256": "106e7e0a6d4f14eeb0443aa56d8a2e2c620a421ada86f93d89773015913a8b35",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0039",
+      "sha256": "12ede83f34a9a0b6c942672516e3415963e1cc78cad301eb457d5cfcce6367f8",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0040",
+      "sha256": "b3d1c73963f4cc4a313ae71ddca3bd7822d59c7adcf0a9d0631dae2dc5a124eb",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0041",
+      "sha256": "ea9572f294931734bf41d8319c285bc20ba4e3c56e04488224f56d48c5a65faa",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    }
+  ]
+}
