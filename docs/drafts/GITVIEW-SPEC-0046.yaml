@@ -1,0 +1,61 @@
+id: GITVIEW-SPEC-0046
+title: GitView - Aggregate counts with incomplete observations
+kind: spec
+created_at: '2026-11-14T14:02:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0029
+depends_on:
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0030
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0044
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0029.yaml
+  observation: docs/drafts/GITVIEW-SPEC-0044.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Each displayed aggregate identifies its metric, source scope, coverage and relevant observation time or times.
+- Partial and stale observations are not presented as a confirmed current total or an automatic lower bound on current work.
+- Inaccessible private observations do not leak through a derived count when the access policy restricts them.
+- Portfolio-wide aggregation deduplicates source identities without removing a shared Repository from an individual Project summary.
+specification:
+  objective: Describe what an aggregate may assert when its constituent observations have different completeness, freshness or access.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    inputs: Each metric states its unit, Project or portfolio scope, object type and period where applicable. Its inputs have per-repository or finer observation scope, accepted value, relevant time, coverage and access eligibility under 0044.
+    complete: A confirmed aggregate is reported for the stated metric and scope only when every required input is sufficiently covered for the claim and access policy permits use. Its relevant observation times are available; unequal times do not become one invented simultaneous snapshot.
+    partial: If some eligible inputs are missing or incomplete, a sum over accepted known observations can be shown as an observed partial value only with clearly associated scope and coverage. It is not a confirmed complete total. An unobserved Repository contributes unknown, not zero.
+    stale: A past observation records a fact at its observation time, not a guaranteed present fact. A partial sum containing stale open-work observations is not automatically a lower bound on the number currently open; a previously open PR may have closed or an unseen one may have opened. Show relevant times or stale indication instead of using arithmetic to imply freshness.
+    private: If an input becomes restricted under 0036, do not display its restricted private content or a derived private count that reveals it. An aggregate spanning allowed and restricted inputs can represent the allowed subset as incomplete or unavailable; it cannot silently treat the restricted input as zero or claim full coverage.
+    deduplication: Deduplicate confirmed Repository and object identities for a unique portfolio total as in 0029. If identity is insufficient to deduplicate, report the affected uniqueness or coverage as uncertain instead of silently merging by a display name.
+    time: A snapshot count and a period outcome count have different input requirements. A current accepted snapshot does not prove a historical event series or fill missing historical buckets; 0030 governs those claims.
+    provenance: The owner requested summaries and visible update errors; propagation of coverage, stale counts and restricted derived values is an agent-authored refinement.
+  scenarios:
+    incomplete_member:
+      given: A Project has two Repositories; R1 has a complete Issue observation of three open Issues and R2 has never been observed.
+      when: The Project open-Issue metric is displayed.
+      then: Three may be identified as the observed R1 contribution with incomplete Project coverage; the Project total is not asserted to be three or to include an implicit zero for R2.
+    stale_not_lower_bound:
+      given: A Project had three observed open PRs yesterday and no observation since then.
+      when: Its current-work summary is displayed.
+      then: The time and staleness remain visible and the app does not assert that at least three PRs are open now.
+    denied_member:
+      given: A Project contains one accessible Repository and one private Repository whose access has been explicitly denied.
+      when: The Project summary is displayed.
+      then: Restricted private counts are not exposed; any aggregate of allowed data indicates incomplete or unavailable coverage rather than claiming the restricted Repository has zero work.
+    overlap:
+      given: The same confirmed Repository and its one observed PR are members of two Projects.
+      when: Both Project summaries and a unique portfolio total are computed with sufficient coverage.
+      then: Each Project includes that PR and the portfolio-wide unique total counts it once.
+  unresolved:
+  - Exact representation of coverage and multiple observation times at each density.
+  - Per-metric rules establishing sufficiently complete and current source evidence.
+  - Policy for aggregating mixed public and restricted data beyond the non-disclosure boundary.
