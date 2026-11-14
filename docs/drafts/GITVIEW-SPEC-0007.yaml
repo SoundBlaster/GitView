@@ -180,8 +180,8 @@ specification:
   unresolved:
   - Precise grouping and inclusion rules for older completed outcomes and historical reopening sequences.
   - Whether other non-open states should count as unfinished beyond the working first-selection rule.
-  - Exact filtering control, sort order, position fallback and interaction during a clock or time-zone
-    change.
+  - Exact filtering control and interaction during a clock or time-zone change; 0024 and 0042 propose
+    position fallback and sorting, subject to review.
   - Source mapping, pagination, history availability and exact freshness thresholds; see GITVIEW-SPEC-0003.
   provenance_boundary: 'All lifecycle states by default, retaining today''s completed work, older unfinished
     work and explicit state filtering follow the user''s discussion. The local-day interpretation and

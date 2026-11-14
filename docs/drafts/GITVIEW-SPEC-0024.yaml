@@ -63,6 +63,6 @@ specification:
       when: The operator returns to the collection.
       then: GitView starts at the beginning of the updated collection and reports its actual known, partial or empty state.
   unresolved:
-  - Stable sort order for the collection itself is owned by 0007; this fallback operates on the last known ordered collection.
+  - Stable sort order for the collection is owned by 0007 and proposed in 0042; this fallback operates on the last known ordered collection. The ordering proposal still needs review.
   - Cross-launch restoration default, saved-context lifetime and behavior for account changes.
   - Treatment of a deleted Project versus temporarily unavailable local configuration.
