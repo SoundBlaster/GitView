@@ -90,6 +90,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    local_recovery_without_assumed_baseline:
+      given: A Project's PR observations were once saved at T1, a T2 local write was interrupted, and restart cannot validate either observation while Project configuration is independently recoverable.
+      when: The operator opens the Project overview.
+      then: The Project remains available with the affected PR scope unknown or unavailable and a permitted recovery path; neither T1 nor T2 is asserted recovered, and no source-empty result or silent Project deletion is invented.
     summary_to_incomplete_destination:
       given: A Project has a permitted source-supported failed-CI PR signal at T1; a later paged traversal succeeds but cannot establish complete coverage at T2.
       when: The operator opens the signal and inspects its matching PR collection.
