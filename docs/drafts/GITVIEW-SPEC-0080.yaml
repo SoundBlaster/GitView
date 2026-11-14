@@ -15,6 +15,7 @@ sources:
   parent: docs/drafts/GITVIEW-SPEC-0038.yaml
   identity_decision: conversation:gitview/excerpt-60-reply
   ontology_context: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
+  source_evidence: docs/drafts/github-repository-identity-evidence-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Valid source-confirmed GitHub REST Repository numeric IDs are compared exactly within a confirmed GitHub instance without reducing their precision.
@@ -35,6 +36,7 @@ specification:
     id_kinds: REST Repository numeric ID, GraphQL Node ID, Issue-representation ID, repository-local PR or Issue number, owner/name and URL are different kinds of source identifier or address. Do not compare across kinds as if the values were interchangeable or infer a match from textual similarity. A documented or observed cross-kind association is usable only with its own evidence and scope; its implementation and ID migration are outside the selected numeric-ID rule.
     incomplete_instance: When source-instance identity is unknown or unconfirmed, neither equality nor inequality of numeric representations alone proves the same or a different Repository across instances. Do not merge histories or memberships on that basis. The rules for comparing or importing distinct instances remain open; no additional hosting provider is introduced.
     address_and_order: Address is an observed attribute, not the identity. Two different addresses attached to the same confirmed ID establish observations about one Repository but do not by themselves order those observations. Promote a new current address only with evidence whose semantics cover that change; otherwise retain the last permitted accepted address as last known with uncertainty under 0053. Transport completion or retrieval time alone is not a source revision.
+    source_limitations: GitHub documents Repository address fields and a general updatedAt, but the reviewed documentation does not establish updatedAt as a monotonic revision of every address change. A redirect is not itself sufficient to bind the destination to a previously observed Repository. A successful conditional response without a usable matching baseline supplies no new body or Repository ID; its validator cannot be treated as an ordered version across unrelated resources or fields. Any revalidation applies only to the matching representation and its source, request and access context.
     change_and_reuse: A source-confirmed current rename or transfer for the same ID retains the same Repository, history and membership in every affected Project; prior observations retain their original recorded address. A different confirmed ID at a former address is a different Repository and cannot inherit the first one's history or membership. No automatic Project rename, source mutation or proof of current access follows from identity alone.
     access: Matching IDs or reading a cached identity does not re-establish access to private source content after explicit denial or disconnect. Restrict private observations and addresses under 0036 while retaining permitted identity and membership state; a 404 or unavailable ID does not prove deletion or permission revocation.
     verification: Pure comparison can be exercised deterministically with explicitly supplied source instance, identifier kind and exact values, including values that a lower-precision intermediary would conflate. Actual adapter decoding, durable round-trip and authorized real-source behavior are separate verification levels under 0079; synthetic IDs or a mock do not prove GitHub's transfer behavior.
@@ -64,6 +66,14 @@ specification:
       given: The same confirmed Repository changes address and explicit access denial is established for private content.
       when: GitView restores its Project membership and observations.
       then: Membership remains associated with the same Repository while restricted private information is not disclosed or unlocked merely by the ID match.
+    conditional_without_baseline:
+      given: A conditional request returns an unchanged response but the matching saved representation and its identity context are unavailable.
+      when: GitView attempts to establish the Repository's current address.
+      then: It does not invent an ID or address from that response, and the identity or address remains unverified pending sufficient source evidence.
+    generic_update_time:
+      given: Two observations of the same Repository have different addresses and different generic update timestamps, but no documented source rule establishes those timestamps as ordering the address changes.
+      when: GitView reconciles the observations.
+      then: The timestamps alone do not establish which address is current, and the address remains uncertain under 0053.
   unresolved:
   - Exact source ID validity rules, source-instance identification and adapter evidence for change ordering require documented source mapping and authorized integration checks.
   - Persistence representation, precision-safe round-trip, alias handling and cross-ID migration require design and implementation evidence.

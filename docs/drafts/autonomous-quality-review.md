@@ -399,3 +399,8 @@ Candidate 0078 уточняет связи Issue и ограничения до�
 применила требования 0079 и выявила необходимость точного ID и отдельного
 ordering адреса. 0002 уточнён, добавлен 0080; [проверка словаря](evidence/autonomous-goal-ontology-check-exact-identity-20261114.json)
 не нашла findings и gaps. Реальные adapter, storage и source behavior не проверены.
+
+[Сверка GitHub identity](github-repository-identity-evidence-20261114.md)
+уточнила границы numeric ID, redirect, updatedAt и conditional response.
+Обновлённый 0080 прошёл [проверку словаря](evidence/autonomous-goal-ontology-check-identity-source-20261114.json);
+source integration и порядок адресов документацией не доказаны.

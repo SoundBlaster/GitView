@@ -49,3 +49,8 @@ TDD, реальные адаптеры, UI и GitHub integration не запус
 не обладают проверенной готовностью к независимой реализации. Следующий
 содержательный шаг — уточнить доступный источник ordering адреса и source
 identity evidence, отделив документированные гарантии от предположений.
+
+Документальная сверка [источников GitHub](github-repository-identity-evidence-20261114.md)
+подтвердила numeric ID при rename, но не установила общего правила ordering
+адресов или сохранения numeric ID при каждом transfer. Conditional response
+без matching baseline не разрешает identity. Это не заменяет integration evidence.
