@@ -1,0 +1,75 @@
+id: GITVIEW-SPEC-0078
+title: GitView - Issue links, hierarchy and partial access
+kind: spec
+created_at: '2026-11-14T16:52:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0039
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0063
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0039.yaml
+  selected_fields: docs/drafts/issue-ontology-options.md
+  source_research: docs/drafts/github-field-access-research-20261114.md
+  ontology_boundary: ontology/review/issue-pr-meaning-candidate.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Issue links retain their observed type, direction, source context and independent coverage without inferring motive or actor actions.
+- A partial or inaccessible relationship collection is not represented as a confirmed empty collection or as a complete set.
+- Direct sub-Issue totals and closed totals count distinct eligible direct children, not grandchildren, and do not imply completed work.
+- Identifiable permitted relationships can remain visible with their own limitations without exposing restricted linked objects or derived private details.
+- A linked object outside a GitView Project does not become a Project member and is never replaced by a same-numbered object from another Repository.
+specification:
+  objective: Specify observable Issue relationship and direct-child summary behavior under partial observations and unequal source access.
+  ontology_refs:
+  - gitview:Issue
+  - gitview:PullRequest
+  - gitview:Repository
+  - gitview:Project
+  contract:
+    relationship_kinds: Treat a source-reported PR mention, explicit closing connection, parent, direct child, blocked-by and blocking connection as distinct directional source facts when the source establishes each meaning. An object pair may have more than one independently supported relation; do not collapse them into one generic cause or invent a reciprocal relationship merely from its inverse without the applicable source semantics. Source links do not establish an Ontology actor-action relation or a particular actor's motive.
+    identity_and_scope: Resolve each endpoint by its confirmed source identity and Repository context. A repository-local number or a matching title is not global identity, and uncertain correspondence cannot be silently deduplicated. A linked object in a Repository outside the current Project does not change membership or automatically broaden the active work selection.
+    evidence: Attribute every relationship collection to the source object, relation kind and direction, observed scope, time, coverage and access context. A known positive link and its target's separately observed state are different facts and may have different freshness. Missing, omitted, null-like error-bearing or partial data is not an empty set. A confirmed absence requires sufficient source evidence for that specific relationship kind and scope.
+    access: Check current eligibility separately for the source Issue, the existence and type of a link, the target identity and its individual fields. A permitted Issue does not automatically authorize exposing a private target, even if a prior response mentioned it. Do not reveal restricted identity, link existence, title, URL or a derived count where that fact is restricted. If a permitted incomplete or unavailable indication can be shown without revealing a restricted fact, use it; otherwise use an access-safe general status. This does not assert that GitHub supplies a distinct permission signal for each fact.
+    known_subset: Permitted and source-supported known links can be presented with their own time and incomplete coverage when other links are unavailable. An observed subset is not the complete current collection merely because its retrieval succeeded, and it is not automatically a current lower bound when observations are stale or incompatible. Do not display a source-provided total that reveals restricted inputs.
+    direct_children: A direct sub-Issue counter concerns distinct source-confirmed immediate children of the selected Issue only. A separate closed-direct-child counter requires known child lifecycle and sufficient association and identity evidence. Grandchildren do not become direct children, and closed state is not proof of successful completion. Unknown child state is not open or closed by default; no percentage of work completed follows from the two counts.
+    count_evidence: A source-provided aggregate may support a count without enumerating every child only when its documented population, access and semantics match the stated metric and its use is permitted. Enumeration can support an exact count only with sufficient coverage and stable identities. Partial lists, unknown identity, mixed observation times or missing child states cannot establish a complete exact current total unless independent source evidence establishes it. A visible subset and source aggregate are not automatically additive.
+    link_change: A later complete sufficiently comparable observation may establish that a link is absent in its own scope; an omitted field, unavailable target or partial response does not by itself remove a prior link. Conflicting or unorderable observations follow 0053, and old permitted facts retain their original context rather than being labeled current from an unrelated title refresh.
+    navigation: A permitted linked object or source URL can be opened through an explicitly identifiable route where available, following 0024 and 0033. Preserve its source identity and distinguish the originating Project from any external Repository; if the target or URL is unavailable, do not fabricate one, silently open another object, or infer removal from a 404 alone. Return preserves the valid original Issue context or reports an origin change under 0024.
+    provenance: The owner selected related PRs, hierarchy and blocking directions. The detailed coverage, identity and access rules are agent-authored refinements; the exact source permissions, relationship mapping and UI remain to be verified.
+  scenarios:
+    two_relationship_types:
+      given: A source Issue has independently confirmed mention and closing connections to the same PR.
+      when: Related work is displayed.
+      then: Both supported meanings can be identified for that PR without treating either as proof of merge or the actor's motive.
+    incomplete_children:
+      given: Two distinct permitted direct children are observed, one closed and one with unknown lifecycle, and the relationship collection is incomplete.
+      when: Direct-child metrics are displayed.
+      then: The known observations retain their coverage; neither two total nor one closed is claimed as the complete current count, and the unknown child is not classified as open.
+    grandchild:
+      given: Issue A has direct child B and B has direct child C, each relationship sufficiently observed.
+      when: A's direct-child count is evaluated.
+      then: B contributes once, C does not contribute solely through B, and the result does not express a completion percentage.
+    restricted_target:
+      given: An accessible Issue previously had a known connection to a private linked PR but the relevant link and target facts are now restricted by applicable access policy.
+      when: The Issue overview is displayed.
+      then: Restricted identity, URL, link fact and revealing counts are not exposed; no confirmed empty relationship collection is invented and an access-safe limitation can be discovered.
+    outside_project:
+      given: Issue A belongs to Project P and has a permitted direct blocker in Repository B outside P.
+      when: The blocker is inspected through an available route.
+      then: Its own source context is retained, B is not silently added to P and returning preserves A's valid originating context.
+    omitted_link_refresh:
+      given: Closing PR links were observed at T1 and a later Issue response at T2 contains only a changed title.
+      when: Related work is displayed.
+      then: Permitted T1 link evidence retains its own context or is unavailable; the T2 title does not prove those links were refreshed or removed.
+  unresolved:
+  - Source-specific relationship types, directionality, per-field access, pagination and aggregate semantics need documented and real-source evidence.
+  - Exact UI for related objects, restricted facts and returning from an external Repository needs accessibility and native evaluation.
+  - Historical relationship membership, event ordering and the ontology actor-action origin are not established by source links.

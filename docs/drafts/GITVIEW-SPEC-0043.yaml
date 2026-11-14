@@ -41,6 +41,7 @@ depends_on:
 - GITVIEW-SPEC-0075
 - GITVIEW-SPEC-0076
 - GITVIEW-SPEC-0077
+- GITVIEW-SPEC-0078
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -66,6 +67,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    issue_link_denied:
+      given: An accessible Issue in Project P has a previously observed link to a private PR outside P, and the link and target become restricted.
+      when: The operator opens the Issue and its related-work section.
+      then: Restricted link and PR details or revealing counts are not exposed, no confirmed empty result is fabricated, and the external Repository is not added to P.
     partial_issue_discussion:
       given: An Issue overview has a recent title observation and an older partial discussion observation with an unknown comment author.
       when: The operator opens the Issue from its Project grid.
