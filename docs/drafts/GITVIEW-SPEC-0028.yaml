@@ -1,0 +1,59 @@
+id: GITVIEW-SPEC-0028
+title: GitView - PR check counters and independent review signals
+kind: spec
+created_at: '2026-11-14T13:33:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0011
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0012
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0026
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0011.yaml
+  pr_overview: docs/drafts/GITVIEW-SPEC-0008.yaml
+  observations: docs/drafts/GITVIEW-SPEC-0026.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Current check counters, review assessment and unresolved thread counts are independently represented for the same PR.
+- Known zero, unobserved and incomplete check collections are distinguishable; unknown or special conclusions are not silently counted as successful.
+- Counts of checks and counts of affected PRs or repositories use separate units.
+- No individual signal or combination of these counters alone is labeled as a confirmed merge decision.
+specification:
+  objective: Present independently interpretable current CI and review signals for a PR without fabricating coverage or readiness.
+  ontology_refs:
+  - gitview:PullRequest
+  - gitview:ReviewThread
+  - gitview:CIStatus
+  contract:
+    check_unit: A check counter refers to an individual current check in the observed PR check collection, not a workflow run or historical attempt. Check identity and retry equivalence must follow the eventual verified source mapping; if the identity cannot be resolved, show incomplete or uncertain coverage instead of claiming a precise distinct count.
+    scope: Record the PR identity, observed revision if known, source observation time and coverage. A check result from a previous revision is not silently represented as a confirmed result for a newer revision; unavailable revision linkage remains unknown.
+    counters: For a sufficiently observed collection, count checks mapped to failure, pending and success separately and show the total current checks. Special, cancelled, neutral or unmapped conclusions are retained as other or unknown according to a separately verified mapping; they are not silently included in success. Consequently the three colored counts need not add to total.
+    empty_and_partial: A complete observation with zero current checks yields a known total of zero. No observation yields unknown, not zero. Incomplete observations can show the counts observed so far with visible incomplete coverage and must not claim the displayed count is the full total.
+    review: Show the source review assessment, requested-review information and total and unresolved thread counters as independent observations. A submitted request for changes can exist without an unresolved thread; absence of a thread does not erase the assessment. Unknown counts are not zero.
+    summary_units: Repository and Project summaries count affected PRs and repositories as specified in 0012, separately from the count of checks. Overlapping review and CI conditions do not create extra PR identities.
+    access_and_failure: Obey the source-access policy in 0019 and observation handling in 0026. Retained stale data is marked with its time and does not become a current successful result because another scope refreshed.
+    ready: A green check count, approved review or zero unresolved threads does not alone establish mergeability. Merge eligibility is outside this contract until all governing rules are explicitly specified.
+    provenance: The owner chose check counters and GitHub-like check semantics; uncertain mappings, revision rules and verification scenarios here are agent-authored proposals.
+  scenarios:
+    mixed_checks:
+      given: A complete observation has three failing, four pending, eight successful and one unmapped current check.
+      when: Counters are displayed.
+      then: Failure is 3, pending 4, success 8, total 16 and the unmapped conclusion is not counted as success.
+    missing_collection:
+      given: Check collection has never been observed for a PR.
+      when: Its overview opens.
+      then: Check counts are unknown and are not represented as a confirmed zero or passing result.
+    change_request_without_thread:
+      given: The source reports a change request and a complete observation of zero unresolved threads.
+      when: Review signals are displayed.
+      then: Both the request for changes and known zero unresolved threads remain visible as independent facts.
+    old_revision:
+      given: The observed PR revision changes after a prior check observation.
+      when: No checks have been observed for the new revision.
+      then: The prior checks are not presented as a confirmed passing status for the new revision and freshness or uncertainty is exposed.
+  unresolved:
+  - GitHub field mappings for individual checks, retries, revision association and special conclusions need verification when that branch is refined.
+  - Partial per-category count presentation and limits of a known total require source coverage semantics.

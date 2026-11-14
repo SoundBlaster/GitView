@@ -34,6 +34,7 @@
 │   └── 0025  Жизненный цикл Project и связь с default Repository
 ├── 0008  Обзор Pull Request
 │   └── 0011  CI, review и review threads
+│       └── 0028  Счётчики проверок и независимые review-сигналы
 ├── 0009  Обзор Issue
 ├── 0010  Форматы описаний Issue и PR
 ├── 0012  Сводки Repository и Project
