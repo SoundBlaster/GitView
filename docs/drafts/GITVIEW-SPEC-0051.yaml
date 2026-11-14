@@ -29,7 +29,8 @@ specification:
     exclusion: A heading-looking line inside a supported fenced code block or an HTML comment is not a section heading. A supported fence opens at the first column with at least three consecutive backticks or tildes and closes at the first column with the same marker character, at least the opening marker count and only trailing whitespace. Recognize comment delimiters outside fences and fenced markers outside comments. If unclosed, nested or otherwise malformed delimiters make it impossible to determine reliably whether a candidate heading is content, mark the affected interpretation ambiguous and retain the original body; do not guess.
     boundaries: For a unique recognized heading, the section body begins after its heading line and ends immediately before the next boundary heading outside excluded regions, recognized or not, or at end of body. In this profile a boundary heading starts at the first column with one or two hash marks, followed by one space and non-whitespace text; lower-level headings remain within the section. Preserve the extracted substring as authored, including its original line endings and embedded text. An unsupported heading form is not silently treated as a supported heading or boundary.
     duplicates: If the same supported heading occurs more than once outside excluded regions, its section is ambiguous. Do not silently select one occurrence or merge them as one authoritative claim. Other unambiguous sections can remain available if their boundaries are reliably known.
-    empty_and_placeholders: A section with no substantive text other than whitespace or HTML template comments is present but unfilled; preserve its raw range and do not infer a claim. A section absent from a successfully observed body is missing. A body that has not been successfully observed makes section status unknown rather than missing.
+    empty_and_placeholders: A section with no substantive text other than whitespace or HTML template comments is present but unfilled. Under the initial working placeholder convention shared with the process assessment in 0076, a section whose remaining trimmed text is exactly TODO or TBD using ASCII case-insensitive comparison is also unfilled. Preserve the raw range including those words and comments; do not represent the placeholder as an actual motivation, outcome or validation claim. Other nonempty text, including a longer line beginning with TODO, is not classified as a placeholder by this narrow rule. An observed absent section is missing; an unobserved body makes section status unknown rather than missing.
+    profile_revision: The heading-recognition rules and placeholder convention used for any derived interpretation must be versioned together or otherwise independently identified. An older interpretation made without the TODO or TBD convention must not be silently labeled as having applied it. Re-evaluate from the same supported original body or preserve the earlier result with its actual profile; profile and body changes each require their own applicability check. A reading interpretation does not claim that an external authoring process ran or passed.
     unsupported: Headings or syntax outside this narrow profile remain in the original body and may cause a relevant section to be missing or ambiguous. No claim is made that this recognizes every valid Markdown form or every repository's custom templates.
     update: Interpret sections against the exact accepted body version. A failed refresh or a newly observed body must not cause a section extracted from an earlier body to be represented as belonging to the newer one. Source observations and freshness follow 0026.
     claims: Motivation, expected outcome and validation are authored statements. Their presence does not prove an actor's actual motive, an achieved result or a passing CI check. CI is an independent source observation.
@@ -59,6 +60,18 @@ specification:
       given: The Motivation section contains only whitespace and the template's HTML instruction comment.
       when: Its content is interpreted.
       then: The section is present but unfilled and the instruction comment is not reported as the author's motivation.
+    literal_placeholder:
+      given: A supported Motivation section contains the text 'todo' and an instruction comment, with no other content.
+      when: The initial working convention is applied to the observed body.
+      then: The section is present but unfilled; the exact original text remains available and no actual motivation is inferred.
+    longer_todo_text:
+      given: "A supported section contains 'TODO: validate the timeout behavior' as its remaining authored text."
+      when: The same narrow convention is applied.
+      then: This longer text is not automatically classified as an exact TODO placeholder, while its presence does not prove the work or validation happened.
+    older_profile:
+      given: An earlier section interpretation was recorded before its profile identified the TODO or TBD convention.
+      when: A later presentation or process requests an interpretation under the updated convention.
+      then: The older result is not relabeled as an evaluation under the new convention; the supported body is reinterpreted or the earlier profile and limitation remain explicit.
     unknown_body:
       given: No Issue body has been observed because its source request failed.
       when: Sections are requested.

@@ -48,5 +48,5 @@ specification:
       then: Headings alone do not establish that the claim is true or that CI passed; observed CI is represented separately.
   unresolved:
   - Participating repositories and supported creation paths; these must be selected before any installation or deployment.
-  - Exact conformance rules for empty or placeholder sections, permitted exceptions, edits and the required enforcement point for each path.
+  - Candidate 0076 proposes a narrow empty and TODO/TBD convention with versioned assessments; additional placeholders, permitted exceptions, edit coverage and the enforcement point for each path remain unresolved.
   - Source capability and proof that the chosen mechanism actually covers each participating path; no deployment has been performed.

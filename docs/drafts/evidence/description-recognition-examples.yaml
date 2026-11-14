@@ -36,6 +36,28 @@ cases:
     Motivation: {status: present_unfilled}
     References: {status: filled, text_contains: 'None.'}
   boundaries: The raw comment is retained in source text but is not an authored motivation claim.
+- id: exact_todo_and_tbd
+  object_type: pull_request
+  body_observed: true
+  body: |
+    ## Motivation
+    <!-- Explain motivation. -->
+    todo
+    ## Validation
+    TbD
+  expected:
+    Motivation: {status: present_unfilled}
+    Validation: {status: present_unfilled}
+  boundaries: The initial convention matches exact TODO or TBD without ASCII case sensitivity after instruction comments and whitespace; original text remains available.
+- id: longer_todo_text
+  object_type: issue
+  body_observed: true
+  body: |
+    ## Problem
+    TODO: validate timeout behavior.
+  expected:
+    Problem: {status: filled, text_contains: 'TODO: validate timeout behavior.'}
+  boundaries: The longer text is not an exact TODO placeholder under this narrow structural rule; its presence does not establish that work was completed.
 - id: code_fence
   object_type: issue
   body_observed: true
