@@ -1,0 +1,62 @@
+id: GITVIEW-SPEC-0048
+title: GitView - Refresh triggers and visible outcomes
+kind: spec
+created_at: '2026-11-14T14:05:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0003
+depends_on:
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0037
+- GITVIEW-SPEC-0044
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0003.yaml
+  manual_refresh: conversation:gitview/excerpt-64
+  trigger_intent: conversation:gitview/excerpt-63
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The operator can request refresh using pull-to-refresh where appropriate or an equivalent accessible action for the current view.
+- Available permitted saved data can be shown while a refresh is requested or in progress.
+- Stale data can be refreshed when opening a relevant scope, and background refresh is opportunistic under iOS scheduling rather than a guaranteed interval.
+- Success, partial progress and failure apply only to their actual observation scope and remain distinguishable in the affected view.
+specification:
+  objective: Specify user-visible refresh triggers and outcomes independently of endpoint selection and numerical API budgets.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    manual: An explicit operator action requests refresh for the currently described view or selected scope. Pull-to-refresh is appropriate where it fits; an equivalent accessible action is available when it does not. Triggering a request does not itself imply completion or success.
+    foreground: When a view with previously saved observations opens, permitted saved content can be displayed without waiting for a network response. If its scope is considered stale, the app requests a bounded refresh when conditions and available budget allow; the actual staleness policy and prioritization require further definition.
+    background: The app may request or use an iOS-granted background opportunity for bounded refresh. iOS controls whether and when it runs; absence of a background opportunity is not reported as a successful update or as an application failure.
+    scope: A refresh identifies which Repository or Project members, object categories and applicable time range it attempts. A successful update for one category or member does not advance the success time or completeness of another. Outcomes and last-success times follow 0044.
+    partial_or_failure: Successfully observed facts from an incomplete operation can be retained with their own observation time, while coverage remains partial. A failed operation shows a visible indication in the affected scope and preserves previously accepted data and last complete observation time. A first failure remains an unobserved scope with error, not a confirmed empty collection.
+    concurrent: If another refresh is already active, the app may coalesce or schedule the request, but it must not lose the operator's requested scope or report success before the relevant work has an observable outcome. Conflicting results and access changes follow 0037; exact scheduling and duplicate-request strategy remain open.
+    feedback: The operator can discover whether the relevant scope is loading, complete, incomplete or failed and see the applicable last successful observation time when available. UI placement and animation are not prescribed.
+    boundaries: Do not specify an exact GitHub endpoint, page size, request count, numerical polling frequency or iOS execution guarantee here. Exact source mapping, budget and scheduling are later technical work.
+    provenance: Background opportunities, refresh on stale open and manual refresh follow the owner's discussion; scope and outcome behavior are agent-authored refinements.
+  scenarios:
+    manual_offline:
+      given: A Project has permitted saved PR observations with an earlier successful observation time and the device is offline.
+      when: The operator requests refresh for that Project.
+      then: Saved data and its successful time remain available and a visible failure describes the affected scope.
+    first_load_failed:
+      given: A Repository's Issue collection has never been observed.
+      when: The first requested refresh fails.
+      then: The collection remains unobserved with a failure and is not displayed as a confirmed empty list.
+    background_not_granted:
+      given: iOS does not grant a background refresh opportunity before the next app opening.
+      when: The app displays previously saved data.
+      then: Its actual observation time remains visible or discoverable and no background success is invented.
+    simultaneous_scopes:
+      given: The PR and Issue categories have separate prior successful observations.
+      when: Issue refresh succeeds and PR refresh fails.
+      then: Issue data receives its own result and time while PR data retains its prior time and visible failure.
+  unresolved:
+  - Staleness classification and policies when refresh is deferred by source budget or platform constraints.
+  - Exact scheduling and coalescing behavior for overlapping requests, including user-visible pending state.
+  - Device evidence for background execution and accessible manual refresh controls.
