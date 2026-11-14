@@ -73,6 +73,10 @@ specification:
       given: A PR had failed CI at T1 and only its title was observed again at T2; no current CI result is available.
       when: The operator opens the current failed-CI selection.
       then: The retained T1 evidence can be inspected with its time and uncertainty; the T2 title does not turn it into a confirmed current result or eliminate it as a confirmed non-match.
+    restored_single_object_not_full_population:
+      given: One permitted PR in a previously restricted Repository has newly supported Today and active-filter facts, while the rest of that Repository's applicable population has not been observed.
+      when: The collection is refreshed and presented.
+      then: The PR can appear as a confirmed match under its own evidence, while the separately scoped collection status remains incomplete; no missing-object number, zero Issues or full-Project refresh is inferred.
     restricted_uncertain_candidate:
       given: A previously permitted PR becomes an uncertain filter candidate and its identity, existence and underlying private facts are now explicitly restricted.
       when: The uncertain portion is presented.
