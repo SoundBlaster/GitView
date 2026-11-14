@@ -32,6 +32,8 @@ specification:
   contract:
     inputs: Each metric states its unit, Project or portfolio scope, object type and period where applicable. Its inputs have per-repository or finer observation scope, accepted value, relevant time, coverage and access eligibility under 0044.
     complete: A confirmed aggregate is reported for the stated metric and scope only when every required input is sufficiently covered for the claim and access policy permits use. Its relevant observation times are available; unequal times do not become one invented simultaneous snapshot.
+    membership_change: Project coverage is evaluated against its membership for the stated claim, not just the members included in a prior aggregate. Adding a Repository with missing required inputs makes the expanded aggregate incomplete; removing a member changes the scope and does not assert source deletion. A previously complete aggregate remains attributable to its earlier membership and observation context, not to the changed membership.
+    claim_time: A complete sum of individually covered inputs observed at unequal times may be reported only with that scope and timing made clear; it is not a point-in-time snapshot unless a separate source guarantee supports the shared time. A change in membership or an unknown identity cannot be hidden by reusing an earlier total.
     partial: If some eligible inputs are missing or incomplete, a sum over accepted known observations can be shown as an observed partial value only with clearly associated scope and coverage. It is not a confirmed complete total. An unobserved Repository contributes unknown, not zero.
     stale: A past observation records a fact at its observation time, not a guaranteed present fact. A partial sum containing stale open-work observations is not automatically a lower bound on the number currently open; a previously open PR may have closed or an unseen one may have opened. Show relevant times or stale indication instead of using arithmetic to imply freshness.
     private: If an input becomes restricted under 0036, do not display its restricted private content or a derived private count that reveals it. An aggregate spanning allowed and restricted inputs can represent the allowed subset as incomplete or unavailable; it cannot silently treat the restricted input as zero or claim full coverage.
@@ -55,6 +57,10 @@ specification:
       given: The same confirmed Repository and its one observed PR are members of two Projects.
       when: Both Project summaries and a unique portfolio total are computed with sufficient coverage.
       then: Each Project includes that PR and the portfolio-wide unique total counts it once.
+    project_expands:
+      given: A Project's open-Issue total was observed with sufficient coverage for Repository A, then Repository B is added without an Issue observation.
+      when: Its expanded Project summary is displayed.
+      then: The earlier total can be attributed to A's prior scope, but the new Project total is incomplete or unknown; B is not silently counted as zero.
   unresolved:
   - Exact representation of coverage and multiple observation times at each density.
   - Per-metric rules establishing sufficiently complete and current source evidence.
