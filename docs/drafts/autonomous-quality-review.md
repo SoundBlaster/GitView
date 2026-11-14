@@ -229,6 +229,14 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+[0109](GITVIEW-SPEC-0109.yaml) выбирает iPhone и iOS 26+ как авторскую рабочую
+платформенную границу, системные controls и альтернативы жестам; system context
+menu остаётся кандидатом до нативной проверки. Локально прочитаны версии Xcode
+27.1 и iPhone SDK 27.1, без сборки. [Проверка 0109](evidence/autonomous-goal-ontology-check-ios-baseline-20261114.json)
+и [проверка 0043](evidence/autonomous-goal-ontology-check-ios-acceptance-20261114.json)
+не обнаружили findings, gaps и warnings. В графе 109 кандидатов и 51 структурный
+лист; построение и поведение приложения на устройстве не проверены.
+
 [Сверка продуктовых требований](product-requirement-graph-crosswalk-20261114.md)
 сопоставляет исходные решения пользователя с кандидатами и оставшимися
 ограничениями. В 0043 добавлена явная зависимость от setup-композиции 0108 и

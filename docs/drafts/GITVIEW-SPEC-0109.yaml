@@ -1,0 +1,87 @@
+id: GITVIEW-SPEC-0109
+title: GitView - Initial iOS platform and system interaction baseline
+kind: spec
+created_at: '2026-11-14T20:49:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0017
+depends_on:
+- GITVIEW-SPEC-0014
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0035
+- GITVIEW-SPEC-0048
+- GITVIEW-SPEC-0068
+- GITVIEW-SPEC-0073
+- GITVIEW-SPEC-0075
+- GITVIEW-SPEC-0085
+- GITVIEW-SPEC-0093
+- GITVIEW-SPEC-0107
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0017.yaml
+  apple_liquid_glass: https://developer.apple.com/documentation/technologyoverviews/liquid-glass
+  apple_adoption: https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass
+  apple_context_menus: https://developer.apple.com/design/human-interface-guidelines/context-menus
+  apple_charts: https://developer.apple.com/design/human-interface-guidelines/charts
+  apple_ios26: https://www.apple.com/newsroom/2025/06/apple-introduces-a-delightful-and-elegant-new-software-design/
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The first-version platform baseline is iPhone on iOS 26 or later, with a compatible iOS SDK and an explicit availability review for any newer APIs.
+- System controls, typography, colors, symbols and navigation provide the default Apple appearance; custom glass styling is not applied as decoration to every grid cell.
+- Density change, preview, object opening, filtering, refresh and source handoff remain usable without relying solely on pinch, long press or color.
+- A native context-menu preview is a candidate for the selected static long-press behavior, not proof that all required interaction and accessibility behavior is available.
+- Dynamic Type, Reduce Motion, contrast and reduced transparency are respected without hiding essential information or claiming a fixed eight-column accessibility layout.
+- Platform evidence distinguishes documentation and locally available tool versions from a built app, simulator or physical-device observation.
+specification:
+  objective: Select an initial iOS and native-design baseline that makes subsequent UX specifications concrete while preserving accessibility and source-data semantics.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    deployment: As an agent-authored initial product decision, target iPhone with minimum iOS 26 for the first version. This supports the owner's requested native Liquid Glass direction without requiring an earlier-OS appearance fallback. Later iOS versions remain supported subject to actual availability and compatibility checks. This does not select an exact device list, guarantee iPad-specific adaptation, promise App Store distribution or assert installation on the owner's device.
+    build_baseline: Build the eventual app with an iOS SDK and Xcode version capable of the selected iOS 26 design; select and pin actual tools when implementation begins, then verify their deployment support. On the local host inspected during this draft, xcodebuild reported Xcode 27.1 build 27A9275 and the selected iphoneos SDK reported 27.1; this is an environment observation, not a build, deployment-target validation or proof that future APIs are available on iOS 26. Any adopted API newer than the baseline needs an availability-safe alternative or an explicit revision of the supported range.
+    system_appearance: Prefer standard SwiftUI and system navigation, controls, typography, semantic colors and SF Symbols. Apple's Liquid Glass guidance says system controls and navigation adopt the platform appearance with the appropriate SDK; do not assume every custom view gains glass automatically. Use material effects where they improve hierarchy and respect platform preferences, keeping the dense work grid legible and content-led. Avoid an independently drawn glass surface on every cell simply to signal compliance. Exact layout and effects remain subject to native evaluation.
+    density: Pinch changes density within the current scope under 0035 and 0075. Provide an accessible system-control route to increase or decrease density and inspect the current setting without requiring pinch or a continuously tracked gesture; a standard control or menu is a candidate, not a fixed control choice. Preserve selection, filter and identity-based position, and allow fewer columns for large text or limited space. Eight columns and 100 objects remain examples, not fixed constants or measured performance.
+    preview: First-version long press presents a static preview for the selected object under 0031 and 0093. Apple's context-menu guidance supports system previews with actions as a candidate matching the visual reference. Choose the actual SwiftUI or UIKit system interaction only after validating identity, explicit Open, cancellation, asynchronous access changes, gesture competition and accessibility; a documented preview alone does not prove that exact GitView behavior. The later sliding preview remains outside this baseline.
+    actions_and_handoff: Make filter selection, refresh, source opening and sharing available through recognizable system controls or menus appropriate to their scope. Pull-to-refresh is supported where the collection interaction permits it; otherwise offer an equally discoverable explicit refresh action under 0048. Source handoff follows 0033, including link and access checks at actual payload provision; do not assume a particular system share API supplies the necessary revalidation without verification.
+    accessible_inspection: Every object can be identified and opened through an assistive or non-long-press path, with its permitted type, identity, relevant state and limitations. Color or an SF Symbol alone cannot carry essential state. Status and refresh failures remain discoverable after transient feedback ends. VoiceOver focus and dynamic source updates follow 0032 and 0073; Voice Control, Switch Control and keyboard paths require separate evaluation rather than inferred support.
+    visual_preferences: Respect system Dynamic Type, Reduce Motion, contrast and reduced-transparency preferences. Reflow or expose a more detailed inspection route when compact cells cannot express essential information; do not make navigation depend on animation or transparency. When a chart is available, expose its metric, units, scope, supported values and gaps in a non-color accessible representation under 0068; do not imply that an audio graph or a specific chart framework has already been implemented.
+    platform_lifecycle: Treat background refresh as an opportunistic platform capability under 0048 and 0085, not a periodic schedule guaranteed by iOS. Preserve local observations and failure context as specified by the data boundaries. Cold launch and resumed-session behavior follow 0024; multiple-scene support and iPad-specific layouts are not decided by this baseline.
+    verification: Before declaring support, exercise a real build on iOS 26 and a later supported OS with representative iPhone sizes, Dynamic Type, VoiceOver, Reduce Motion and relevant contrast or transparency settings. Separately check context-menu and gesture arbitration, source handoff and native chart accessibility. Record OS, device, app build and observed behavior; simulator, static specification, SDK availability and screenshots alone do not establish physical-device behavior. Test other assistive input paths separately where they are claimed.
+    provenance: The owner requested native Apple Look, Liquid Glass, minimal custom components, SF Symbols and accessible alternatives. Minimum iOS 26 and the iPhone-first support boundary are agent-authored working choices made for the autonomous specification, not a claim that the owner selected a specific deployment version or that the app is implemented.
+  scenarios:
+    old_os_boundary:
+      given: A user has an iPhone running an iOS version earlier than the selected minimum.
+      when: The first-version support contract is evaluated.
+      then: That OS is outside the proposed supported range; no untested legacy design or compatibility is promised.
+    newer_api_on_baseline:
+      given: A proposed control uses an API available only on an OS later than iOS 26.
+      when: The interface is designed for the selected minimum.
+      then: An availability-safe system alternative is specified and tested, or the platform baseline is explicitly revised before claiming support.
+    accessible_dense_grid:
+      given: A Project grid contains many PRs and Issues at its compact visual density while VoiceOver and large text are enabled.
+      when: The operator identifies an object, changes density and opens it without pinch or long press.
+      then: The object's permitted identity and relevant state remain distinguishable and the same Project scope and filters are retained, even if fewer columns fit.
+    system_preview_candidate:
+      given: A permitted PR cell offers a system context-menu preview candidate.
+      when: Long press is recognized or the interaction is cancelled.
+      then: The preview identifies the same PR and dismissal does not open or mutate another object; actual system behavior and access changes require native verification.
+    reduced_transparency:
+      given: The system reduces transparency and a Project has an incomplete CI observation.
+      when: Its overview is displayed.
+      then: The limitation is still identifiable without relying on a glass effect or color alone and is not described as healthy CI.
+    refresh_without_pull_gesture:
+      given: The current grid interaction cannot expose a reliable pull-to-refresh gesture.
+      when: The operator requests a refresh through the available alternative.
+      then: The same scoped refresh rules and failure reporting apply without needing the gesture or silently changing filters.
+  unresolved:
+  - Verify actual Xcode SDK deployment support, availability of selected APIs, target devices and any iPad-specific support before an implementation or release claim.
+  - Choose and validate the native collection, preview, refresh and accessible controls against real interactions and the current system behavior.
+  - No app build, simulator run, physical-device observation or accessibility test has been performed.
