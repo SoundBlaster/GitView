@@ -71,6 +71,7 @@ depends_on:
 - GITVIEW-SPEC-0113
 - GITVIEW-SPEC-0114
 - GITVIEW-SPEC-0115
+- GITVIEW-SPEC-0117
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -172,6 +173,10 @@ specification:
       given: A permitted source refresh yields an open-PR history observation, its retention may have committed, and its acknowledgement is lost before restart.
       when: GitView recovers the retention attempt and retries or reconciles it.
       then: Source success remains distinct from local retention outcome, the same attempt does not create a second independent sample, and an unreadable outcome stays uncertain. A confirmed clear under 0067 prevents pre-clear work from silently restoring cleared history.
+    clear_then_late_response_and_backfill:
+      given: An old refresh is in flight when an explicit all-local-history clear is confirmed, and a separate source-history retrieval starts after the clear.
+      when: Both responses arrive and the operator opens a historical chart.
+      then: The old refresh cannot silently recreate cleared points; separately supported events from the new retrieval may appear with their original event times and new retrieval context, without claiming complete history or that deleted local records survived.
     identity_changes_during_inspection_and_refresh:
       given: Project P contains private Repository R; identity A has a PR preview and an accessible focus open while a refresh under A is in flight. A different identity B becomes active without confirmed R access.
       when: The old refresh completes and the operator dismisses the preview or returns to the Project collection.

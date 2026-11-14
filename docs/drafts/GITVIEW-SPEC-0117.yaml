@@ -1,0 +1,82 @@
+id: GITVIEW-SPEC-0117
+title: GitView - Durable history clear and observation admission
+kind: spec
+created_at: '2026-11-14T22:04:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0067
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0065
+- GITVIEW-SPEC-0066
+- GITVIEW-SPEC-0071
+- GITVIEW-SPEC-0097
+- GITVIEW-SPEC-0103
+- GITVIEW-SPEC-0105
+- GITVIEW-SPEC-0113
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0067.yaml
+  storage: docs/drafts/GITVIEW-SPEC-0113.yaml
+  retention: docs/drafts/GITVIEW-SPEC-0105.yaml
+  metric_inputs: docs/drafts/metric-source-evidence-matrix-20261114.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A confirmed clear durably removes the described local history and prevents pre-clear work from restoring it after a late response, replay or restart.
+- A fresh source operation is eligible to contribute new history only under the current history generation and its independently supported access and source evidence.
+- A source success, current-cache save and historical retention remain separate outcomes; an uncertain clear or unreadable generation does not become an empty source or confirmed history.
+- A retried clear retains its logical operation identity; a second intentionally confirmed clear is a separate operation that cannot be mistaken for that retry.
+- Current cache, local Projects, credentials, GitHub data and external backups retain their separately stated boundaries.
+- Deterministic verification distinguishes interruption, transaction ordering, source observation time and later historical retrieval; no real storage behavior is claimed.
+specification:
+  objective: Refine the proposed SQLite-backed local history-clear boundary so that concurrent source work and retries cannot silently recreate cleared history.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:Metric
+  contract:
+    scope: Apply the agent-authored all-local-metric-history option of 0067, including retained historical samples, supported outcome evidence and derived history in the disclosed scope. Do not clear Project configuration, current observation cache, credentials or source data. The generation below is a technical coordination value, not an ontology entity or a GitHub revision.
+    capture: Before a source operation or a local Project-membership observation that may later contribute historical evidence is initiated, capture the currently confirmed durable history generation and bind it to the operation identity and intended history scope. The source request and its network completion never execute inside the database transaction. If the generation cannot be established, the operation may still serve another permitted purpose, but it cannot publish historical evidence using a guessed or subsequently substituted generation. Reading a cached fact or confirmed old Project configuration after clear is not itself a new source or membership observation.
+    clear_transaction: For one explicit confirmed logical clear, use the 0113 local consistency boundary to atomically validate the operation identity and scope, advance the current history generation, remove the affected locally retained historical evidence and derived historical values, and record the clear result. Apply 0103 to retries and incompatible reuse of the same operation identity. No source or secure-store effect is included in this transaction. The exact schema, SQLite configuration and physical deletion mechanics are not selected here.
+    history_admission: For a history write, atomically compare its captured generation with the current durable generation and apply the permitted fact, its required context and the bound retention outcome together when they match. Recheck current access and applicable clear restrictions through the coordinated boundary; a source result or earlier access check alone does not authorize disclosure. If the generation differs, reject historical publication for that operation rather than retagging it, including on a replay after restart. Current-cache treatment is independently governed by 0036 and 0105 and cannot create a historical point merely by being read.
+    ordering: A write that commits before clear belongs to the old generation and is within the clear scope. A write that reaches the transaction after the clear commits fails the generation comparison. A request initiated during an uncommitted clear can capture the old generation and is conservatively ineligible to populate history if the clear later commits. A new operation that captures the confirmed new generation after clear can contribute only supported new observations or explicitly retrieved source history; source event time remains its actual time rather than the retrieval time.
+    unknown_and_restart: A lost acknowledgement does not establish either clear outcome. Reconcile the same operation identity, its durable result, generation and relevant readable evidence before reporting success or retrying a mutation. If the result or the necessary local state is unreadable, keep the affected history and historical admission uncertain; do not manufacture a zero, rollback or new generation. After recovery, previously started operations retain their original generation or are ineligible if that association cannot be established.
+    repeat_and_isolation: Replaying a confirmed clear returns its bound historical outcome without deleting history newly collected after that clear. A separately confirmed later clear uses a new operation identity and advances the generation again. The initial scope is installation-wide; future narrower clear or separate writers require their own shared-evidence isolation and coordination proof. SQLite serialization alone does not fence an uncoordinated writer or another store.
+    later_retrieval: A source-history request initiated after clear may return source events whose event times precede the clear. If source, completeness and access evidence support them, they may be retained as newly retrieved historical evidence with both original event time and actual retrieval context; they do not prove deleted local records survived. Previously cleared samples cannot be reconstructed from current state alone or shown as zero without evidence.
+    deletion_boundary: Confirmation covers logically accessible history in the selected local application store and the durable admission fence. It does not promise physical secure erasure of database pages, journal or backups, deletion from a device backup, or source deletion. Data protection and backup behavior remain separate prerequisites for any stronger privacy claim.
+    verification: Define TDD cases with injected storage, source and clock for both transaction orders, lost acknowledgements, repeated clear, stale requests and replay, inaccessible generation, current-cache preservation and later explicit historical retrieval. Separately verify actual SQLite durability, file protection, restart, privacy and iOS behavior; this proposal is not executable product evidence.
+    provenance: The owner requested retained local observations, graphs, DI and TDD. The all-history clear, generation and transaction protocol are agent-authored working proposals; no destructive operation has been performed.
+  scenarios:
+    old_response_after_clear:
+      given: A source operation captured generation G before an all-history clear commits generation G2.
+      when: Its supported source response arrives and the app attempts history retention after the clear.
+      then: The response cannot be stored as new history under G2; any independent current-cache use follows its own access and ordering rules.
+    history_write_before_clear:
+      given: An eligible G history write commits before the confirmed clear transaction.
+      when: The clear commits G2.
+      then: The old retained point is included in the cleared local scope and is not presented as surviving history.
+    lost_clear_acknowledgement:
+      given: A clear transaction may have committed, its acknowledgement is lost, and the local operation result is temporarily unreadable.
+      when: A writer or history view requests the affected scope.
+      then: The outcome remains uncertain and admission is not guessed; later reconciliation uses the same operation identity and supported durable evidence.
+    replay_does_not_clear_new_history:
+      given: Clear C is confirmed and a subsequent permitted operation under G2 retained a new point.
+      when: Delivery of the same clear C is retried after restart.
+      then: Its prior outcome is recovered without executing a new clear or deleting the new point; a separately confirmed clear is a different operation.
+    explicit_backfill_after_clear:
+      given: A new source-history request captured G2 after a confirmed clear and source evidence establishes a PR merge that occurred before the clear.
+      when: Its event evidence is durably retained with its event and retrieval contexts.
+      then: The historical event may be displayed with supported completeness and access limitations; this does not prove the earlier local record survived.
+    cache_does_not_refill_history:
+      given: An earlier permitted current-cache PR value survives the confirmed history clear.
+      when: The user opens the graph without a new eligible source operation.
+      then: The cached value does not become a new historical sample and missing past history is not drawn as zero.
+    old_membership_sample_after_clear:
+      given: A supported Project-membership observation captured G before clear, but its history retention has not yet committed when clear establishes G2.
+      when: The old membership sample is delivered or replayed after the clear.
+      then: It cannot recreate cleared membership history; the saved Project configuration remains available under its separate contract and is not automatically resampled as an old point.
+  unresolved:
+  - Define exact database schema, migration, transactional coordinator and observable failure mapping for the chosen SQLite provider; verify journal and protection settings on supported devices.
+  - Determine privacy and backup semantics, retention budgets, supported source-history retrieval and user-facing clear and recovery interaction.
+  - Verify source mappings, durable crash recovery, background operation and native accessibility separately; no product implementation or tests exist yet.
