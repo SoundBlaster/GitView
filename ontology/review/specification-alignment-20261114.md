@@ -32,6 +32,8 @@ specs проверены через `domain_vocabulary` в изолирован�
 [этом отчёте](../../docs/drafts/evidence/autonomous-goal-ontology-check-metric-source-matrix-20261114.json).
 После выбора рабочего comment-age proxy более новые SHA 0043, 0057, 0094 и
 0097 проверены в [следующем отчёте](../../docs/drafts/evidence/autonomous-goal-ontology-check-long-thread-comment-proxy-20261114.json).
+После уточнения маршрута более новые SHA 0043, 0047, 0092 и 0094 проверены в
+[отчёте маршрута](../../docs/drafts/evidence/autonomous-goal-ontology-check-aged-signal-route-20261114.json).
 
 Явные `ontology_refs` найдены во всех 96 файлах и содержат 17 различных
 qualified names. Среди них 23 файла ссылаются на `gitview:Metric`, девять — на

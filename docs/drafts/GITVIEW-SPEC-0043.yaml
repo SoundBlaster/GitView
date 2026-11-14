@@ -85,6 +85,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    aged_comment_signal_navigation_at_new_time:
+      given: At T1 a Project signal counts two qualifying review threads belonging to one PR; by T2 one thread is source-confirmed resolved and the other still qualifies under applicable state evidence.
+      when: The operator opens the current signal and the PR selection is reevaluated at T2.
+      then: The Project and named 24-hour comment-age condition remain identifiable, the origin keeps its two-thread T1 context, and the destination can represent one remaining thread on one PR at T2 without inferring a missing PR or source failure.
     aged_comment_with_incomplete_thread_history:
       given: An open PR has one observed unresolved review thread containing a confirmed submitted comment created 25 elapsed hours before the reference instant; other threads and comments are only partly observed.
       when: The Project's proposed 24-hour comment-age attention and its history are inspected.

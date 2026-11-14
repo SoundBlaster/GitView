@@ -20,6 +20,7 @@ depends_on:
 - GITVIEW-SPEC-0088
 - GITVIEW-SPEC-0089
 - GITVIEW-SPEC-0091
+- GITVIEW-SPEC-0094
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0047.yaml
   summary: docs/drafts/GITVIEW-SPEC-0029.yaml
@@ -49,6 +50,8 @@ specification:
     no_implicit_reset: Opening an object, returning to its work collection, changing density or accepting unrelated refresh does not silently clear or reapply an explicitly modified filter. Preserve valid selection, period, scope and position under 0024 and 0042. Leaving the destination returns to the actual origin; whether an explicitly modified selection persists after the route itself is closed or across a cold launch is not selected here.
     current_refresh: A refreshed destination may have different objects, values or coverage than the earlier signal. Apply the current applicable condition to current permitted evidence under 0027 and 0089, expose unknown or incomplete portions and retain the origin's own time and scope where display is permitted. Do not force the list to match an old count or treat a changed number as proof of an error or a source mutation.
     membership_and_time: A current Project signal opened after a confirmed membership change follows the current scope and limitations in 0091 without relabeling its old count as current for new members. While a historical event-origin condition remains active, retain its explicit period and stated membership basis under 0056. If the operator explicitly removes that event condition, do not label the resulting selection as the original event set; retain the earlier period only as permitted origin context. Dynamic Today, a historical closure and a current closed-state filter are distinct conditions.
+    aged_comment_signal: For the current attention proxy in 0094, retain the origin's 24-hour comment-age condition, thread or affected-PR unit, reference instant, applicable state-observation contexts and coverage. The current work destination can evaluate that same predicate at a later reference instant with currently applicable permitted evidence; it must identify that reevaluation and distinguish it from the origin's prior time and count. An old unresolved-state observation does not become current solely because a comment crosses the threshold. If inputs are insufficient, show permitted uncertainty or a scope limitation rather than forcing equality with the old count. A thread-count origin may open fewer distinct PR cards; neither destination nor origin implies continuous unresolved duration or an unanswered reply.
+    aged_comment_history: Opening a historical proxy sample follows its captured predicate version, threshold, reference instant, membership basis and access context under 0097. A saved aggregate alone is not a historical selection of PR identities; when the exact qualifying object set cannot be supported, show the aggregate and an explicit navigation limitation instead of silently opening a current 24-hour filter as its historical contents. A separately labeled current selection may be offered without changing the old sample. If the operator explicitly clears or changes the proxy condition, use editable_filters and do not reapply it merely because the route originated at the historical point.
     privacy: Apply 0036 and 0088 before displaying or announcing any origin detail, count, candidate, target object or shareable link. A later denial may make an earlier signal or target unavailable; do not keep a restricted value visible to maintain numerical continuity or reveal inaccessible object existence. Provide a non-sensitive limitation or recovery route where permitted.
     accessibility: Signal meaning, active conditions, scope, uncertainty, clear or change actions and an available return route must be discoverable without relying solely on color, pinch, long press or transient feedback. Focus follows identity and access rules under 0073; native controls and exact announcements remain open.
     verification: Apply 0040 and 0079 to controlled scenarios for different metric units, filter changes, updated source observations, changed membership, historical event periods and explicit denial. Source mappings and native navigation or accessibility require separate evidence; this contract is not evidence of implemented behavior.
@@ -82,6 +85,18 @@ specification:
       given: A signal and one target PR were permitted when the operator activated the signal.
       when: Explicit source denial restricts the PR's identity and revealing counts before the destination is presented.
       then: Restricted facts do not appear in visual or app-controlled accessible output, and an allowed general limitation or recovery path remains.
+    aged_comment_reevaluated:
+      given: At T1 a Project signal counts two qualifying threads on one PR; at T2 one thread is confirmed resolved and the other remains applicable and unresolved with its qualifying comment.
+      when: The operator opens the current signal and the destination is evaluated at T2.
+      then: The origin remains attributable to two threads at T1, while the destination can show one currently qualifying thread on one PR at T2; the differing count is not described as a missing PR or an application error.
+    aged_comment_clock_without_state:
+      given: A PR and its thread were last observed open and unresolved when a submitted comment was 23 hours old; no later state observation is available.
+      when: The comment crosses the 24-hour threshold and the signal destination is evaluated.
+      then: The elapsed comment age can be known, but the thread is not asserted to be confirmed unresolved now solely from the older state; current matching or coverage remains uncertain.
+    historical_aged_comment_aggregate:
+      given: A permitted historical proxy point records two qualifying threads but no independently supported PR identities or per-thread facts for that point.
+      when: The operator attempts to open the contributing PRs.
+      then: The earlier aggregate retains its time and units and an explicit selection limitation is shown; a current live filter is not substituted and labeled as the past PR set.
   unresolved:
   - Exact native presentation of origin, edited filters and differing observation times requires UX and accessibility evaluation.
   - Source-specific completeness and applicability of CI, review, linked-Issue and historical predicates remain unverified.

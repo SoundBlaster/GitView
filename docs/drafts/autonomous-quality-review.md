@@ -718,3 +718,10 @@ unresolved thread в открытом PR с подтверждённым submitt
 создания thread. В 0057, 0097 и 0043 согласованы сводка, история и сценарии;
 все четыре файла прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-long-thread-comment-proxy-20261114.json)
 без findings/gaps. Source access, полезность порога и native UX не проверены.
+
+Маршрут 0047 → 0092 → 0094 уточнён для comment-age signal: origin и
+переоценённый destination сохраняют собственные reference times и единицы;
+старое состояние unresolved не становится текущим только из-за течения времени.
+Исторический aggregate без identity не подменяется текущим списком PR. Добавлен
+сквозной сценарий в 0043. Четыре кандидата прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-aged-signal-route-20261114.json)
+без findings/gaps; source, navigation и accessibility сценарии не выполнялись.
