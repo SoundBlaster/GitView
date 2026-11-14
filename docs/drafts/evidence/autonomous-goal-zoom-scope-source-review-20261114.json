@@ -1,0 +1,49 @@
+{
+  "scope": "Source comparison and structural advisory only; no native gesture or user intent test",
+  "source_sha256": {
+    ".specgraph/root_intent.md": "38aac38d95da46d48474fb9a0957d4dd34340a300cd148148d2ceb9806dc7459",
+    "docs/product-discovery.md": "60231ffd18e4c0f01483425c6086517037f585755205b1f9da48bc5fccc37cda",
+    "docs/drafts/ux-zoom-levels-proposal.md": "19a2aaf4edc4b174e5ba63267529b01bbdc97136eba597637b54120a70ca6352",
+    "docs/drafts/dense-overview-prototype.md": "f60ba3f2403c497466a10a107cbfb98982050f607679291dea7412a162a07c6d",
+    "docs/drafts/inline-peek-pop-prototype.md": "27e62007ad29b1d692752df56803705d2afe4ce0bbe0abb08bf1a6190e862ede",
+    "prototypes/dense-overview/index.html": "ab372164d968e8e835b6a30cd7767007e99104294a14ee0eace3253eeaf04fd9",
+    "prototypes/dense-overview/app.js": "e788038fb4b8392e2516929a7c5e419a8c28314fd72e7c900f8c21af104788db",
+    "prototypes/peek-pop/index.html": "2c8dc61022b711986e0ac637fb7b673d6cbabb06c93a9b94a9258aaad26fb142",
+    "prototypes/peek-pop/app.js": "d2874d9d2261c9a5423597dacd85dfd002cae3ecf1e8ebb14e423f8b731d5ac9"
+  },
+  "ontology_context": "ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-zoom-scope-review-gki6lzs2",
+  "declared_edges_unchanged_vs_head": true,
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0035",
+      "input_sha256": "e3ac46431e38aa656af01f3f8b2d24b23cf3c46e922a52c928da09cb0470f051",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "e21b52f971d20d224e12d5df3b3bf703d4c83743b530893124af0ab60440a61e"
+    },
+    {
+      "id": "GITVIEW-SPEC-0074",
+      "input_sha256": "544485674f86e979f183ce8f5041a5e3b8b488425aff034f5fd9b52bec75eb49",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "92825dfac7c38f1f1dc371febe898d6f09864b2bcf29b223322158c21ba01e8f"
+    },
+    {
+      "id": "GITVIEW-SPEC-0075",
+      "input_sha256": "3e8738013a563954f5c84fe53c69e7eb77090c7eb0185fe1bbffd30307f917b2",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "597e16ff6aa6989dc206e776873973a7275cc7e0c9a4dbcab92665facd92a0a2"
+    }
+  ]
+}

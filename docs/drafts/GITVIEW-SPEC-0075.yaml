@@ -22,7 +22,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - An ordinary scroll, a recognized density change and a preview or open action have distinguishable outcomes and cannot accidentally activate a different object.
-- Pinching changes density within the same scope and preserves a meaningful identity-based anchor when available.
+- A pinch recognized as an in-scope density change preserves that scope and a meaningful identity-based anchor when available.
 - First-version long press can preview the intended cell without requiring the later sliding-preview mode.
 - An interrupted gesture or platform cancellation leaves a coherent overview and does not imply an object was opened or an action committed.
 - Privacy restrictions, changed selection and accessible alternatives remain effective throughout interactions.
@@ -35,9 +35,9 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    scope: The first-version interactions covered here are ordinary scroll, pinch density, explicit object entry and static long-press preview. Sliding rich preview is a separately deferred interaction under 0015; these rules do not claim it exists or decide its gesture lifecycle.
+    scope: The first-version interactions covered here are ordinary scroll, in-scope pinch density, explicit object entry and static long-press preview. Whether a separately distinguishable targeted zoom gesture may navigate across scope in the first version remains open under 0074; it is not resolved by the density-only contract here. Sliding rich preview is a separately deferred interaction under 0015; these rules do not claim it exists or decide its gesture lifecycle.
     scroll: Movement recognized as an ordinary scroll moves the current collection and does not also open a cell or activate its preview. An unfinished press candidate that becomes a scroll is cancelled as a preview candidate; scroll and tap recognition details follow native behavior and require evaluation.
-    pinch: A recognized pinch changes presentation density in the current overview under 0035. It does not change Project, Repository scope, period or explicit filters, activate a cell, or navigate into an object. If a still-pending press competes with a pinch, the recognized pinch cancels that pending preview candidate rather than triggering both actions. The arbitration mechanism and detection thresholds remain open.
+    pinch: A pinch recognized as an in-scope density interaction changes presentation density in the current overview under 0035. That density interaction does not change Project, Repository scope, period or explicit filters, activate a cell, or navigate into an object. If a still-pending press competes with such a pinch, the recognized pinch cancels that pending preview candidate rather than triggering both actions. A separately designed deliberate scope transition must not be silently inferred from this rule; target evidence, arbitration and thresholds remain open.
     anchor: When the pinch has an unambiguous permitted cell focus near its interaction point, use that object's identity as the preferred position anchor through reflow. Where there is no such cell or the focus is ambiguous, preserve an existing valid focus or a meaningful visible position without selecting an arbitrary object. If the anchor moves out of the selected set, use the fallback in 0024 and 0073; matching the former cell coordinate is not object identity.
     static_preview: A recognized long press on an eligible cell presents that same object's static preview under 0031. A movement across other cells does not by itself retarget that preview, enter another object, or imply the later sliding mode is active. Explicit open or dismissal follows the presented native-compatible interaction and retains its established identity and access constraints.
     preview_and_density: When a static preview is already presented, a new density interaction must not silently retarget the preview or commit an object. The system may keep the preview or dismiss it without opening; a density change can be performed after returning to the overview. Which native behavior occurs and whether the same touch sequence can subsequently begin a new gesture require device evaluation.
@@ -72,5 +72,5 @@ specification:
       then: Restricted content is removed according to access policy without waiting for the animation or gesture to finish, and the remaining permitted overview remains recoverable.
   unresolved:
   - Native gesture competition, preview dismissal, anchor geometry, cancellation handling and platform accessibility actions require device evaluation.
-  - Exact density levels, default density, timings and animation are not selected by this contract.
+  - Exact density levels, default density, timings and animation are not selected by this contract; targeted zoom across scopes and its first-version applicability are open under 0074.
   - Future sliding preview, hover and edge autoscroll remain separate design work.
