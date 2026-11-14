@@ -238,6 +238,13 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 для процесса участвующих репозиториев. Их новые байты прошли [проверку словаря](evidence/autonomous-goal-ontology-check-required-format-20261114.json)
 без findings и gaps; состав участников и работающий enforcement не установлены.
 
+Сверены локальные источники FSD iOS и SpecificationCore; в 0021 устранено
+ослабление пользовательского намерения использовать SpecificationCore до одной
+лишь оценки. [Аудит 0040](leaf-readiness-0040.md) различает архитектурные
+обязательства и отсутствие фактической реализации. Новые 0021 и 0040 прошли
+[проверку словаря](evidence/autonomous-goal-ontology-check-architecture-20261114.json)
+без findings и gaps; Swift dependency graph и TDD evidence не проверялись.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.

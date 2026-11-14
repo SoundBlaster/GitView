@@ -29,8 +29,9 @@ specification:
   contract:
     boundaries: Network access and data persistence enter product behavior through replaceable dependencies composed at an explicit boundary. Time, scheduling and other nondeterministic effects are controlled where they affect a scenario. The contract does not require a DI framework or a protocol for every value.
     isolation: Domain decisions such as Today membership, filter uncertainty, Project membership, identity continuity and scoped coverage can be evaluated with deterministic inputs and without a live GitHub request or mutation of personal data.
+    decision_outcomes: Suitable named domain policies use SpecificationCore under 0021 without losing meaningful outcomes such as confirmed match, confirmed non-match and unknown. A Boolean-only representation is insufficient where it collapses those distinctions. Facts, source evidence and time are supplied explicitly; evaluation does not itself fetch data, mutate a Project or perform a UI action.
     doubles: Test doubles for network and data provide reproducible success, partial result, failure and relevant ordering cases. A fake or stub can provide data; a mock may verify required interactions when behavior depends on the interaction. The choice is based on the scenario rather than forcing every test to use the same double.
-    workflow: For a product behavior change, express the intended externally observable behavior in a failing automated test, implement the minimum behavior to pass, then refactor while retaining passing tests. Tests check meaningful contract outcomes and failure modes rather than requiring a duplicate test for every trivial branch or private helper.
+    workflow: For a product behavior change, express the intended externally observable behavior in a failing automated test, implement the minimum behavior to pass, then refactor while retaining passing tests. The initial failure must demonstrate the missing or incorrect behavior, not merely a compiler error, unavailable service or unrelated environment failure. Tests check meaningful contract outcomes and failure modes rather than requiring a duplicate test for every trivial branch or private helper.
     real_boundaries: Passing isolated tests using doubles establishes behavior only under the supplied test conditions. Verify real adapter serialization and response handling, source integration with authorized access, platform behavior and native interaction separately where their contracts require evidence. A missing live or device check remains an explicit gap.
     privacy: Fixtures and logs used in tests must not include credentials or unapproved private source content. Test failures do not change a user's actual GitHub state.
     evidence: A verification report identifies the tested specification, scenario, test level, input conditions and observed outcome. Proposed scenarios and unexecuted tests are not reported as passes.
@@ -44,6 +45,10 @@ specification:
       given: A deterministic PR fixture has an unknown CI state.
       when: The failed-CI filter decision is evaluated.
       then: The result retains uncertainty rather than claiming a confirmed failure, pass or zero count.
+    unknown_policy_outcome:
+      given: A named selection policy receives an included PR with an unavailable active-filter input and no independently false condition.
+      when: It evaluates the supplied facts without network or storage access.
+      then: Its typed result preserves unknown and does not silently collapse it into false or true; effects and subsequent presentation remain outside policy evaluation.
     integration_boundary:
       given: All isolated tests using network doubles pass.
       when: Real adapter integration has not been run.

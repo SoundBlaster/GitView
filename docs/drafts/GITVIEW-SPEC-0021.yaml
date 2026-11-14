@@ -27,8 +27,8 @@ acceptance:
 - Organize the app according to the selected FSD iOS responsibility and dependency direction without requiring
   empty layers or premature modules.
 - Separate GitHub and persistence adapters, typed observed facts, domain decisions and UI effects.
-- Evaluate SpecificationCore for stable named domain policies; do not create a specification for every
-  control-flow branch.
+- Use SpecificationCore for suitable stable named domain policies while preserving their complete domain outcomes;
+  do not create a specification for every control-flow branch.
 - Preserve source, scope, freshness and uncertainty through domain decisions and presentations.
 - Design product code for testability and inject replaceable network and data dependencies at explicit boundaries.
 - Develop product behavior using TDD and provide deterministic network and data test doubles.
@@ -47,13 +47,15 @@ specification:
   - gitview:Issue
   pilot_contract:
     layers: 'Follow FSD iOS direction app to pages to widgets to features to entities to shared, composing
-      sibling slices above their layer. Create a layer or module only when its responsibility exists.
+      sibling slices above their layer. Lower layers do not depend on higher layers; shared infrastructure
+      does not depend on GitView domain concepts. Create a layer or module only when its responsibility exists.
 
       '
     decisions: 'Candidate domain decisions include Today inclusion, filter match with unknown, repository
       identity continuity and summary coverage. Keep external I/O, parsing, serialization and UI actions
-      outside the decision itself. Evaluate SpecificationCore for stable named policies where it makes
-      them clearer and independently testable.
+      outside the decision itself. Use SpecificationCore for suitable stable named policies where it makes
+      them clearer and independently testable; retain typed unknown and other distinct outcomes rather than
+      forcing them into an inadequate Boolean representation. Exact policy selection remains to be justified.
 
       '
     dependency: 'SpecificationCore and FSD iOS are intended tools; exact versions, module decomposition
