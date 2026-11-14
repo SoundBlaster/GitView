@@ -11,6 +11,7 @@ depends_on:
 - GITVIEW-SPEC-0003
 - GITVIEW-SPEC-0005
 - GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0025
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0004.yaml
   access: docs/drafts/GITVIEW-SPEC-0019.yaml
@@ -64,4 +65,4 @@ specification:
       then: No pending Project is saved and existing Projects and observations are preserved.
   unresolved:
   - Empty discovery and permission recovery details depend on source-access and Project-lifecycle refinement.
-  - Default Project identity and whether a deliberately deleted default may later be recreated require the Project lifecycle branch.
+  - Default Project association after membership editing and deletion is proposed in 0025 and still requires domain review.

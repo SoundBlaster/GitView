@@ -1,0 +1,57 @@
+id: GITVIEW-SPEC-0026
+title: GitView - Scoped observations and incomplete refresh
+kind: spec
+created_at: '2026-11-14T13:31:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0003
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0019
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0003.yaml
+  access: docs/drafts/GITVIEW-SPEC-0019.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The app preserves scope, last successful observation time, coverage and latest refresh outcome separately.
+- A partial or failed refresh does not establish an empty or complete collection, delete unobserved records or advance the last complete observation time.
+- A successful observation updates only the scope it actually covers, and source access policy applies when retained observations are displayed.
+- An older overlapping refresh must not silently overwrite a newer accepted observation for the same scope.
+specification:
+  objective: Define the observable result of complete, partial, failed and overlapping source refreshes.
+  ontology_refs:
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    scope: An observation is interpreted with its source identity, requested repository or project scope, object category and time selection where applicable. A Project spanning repositories is not a single proof that all members were observed.
+    complete: A complete success covers the requested scope and records its successful observation time and coverage. A complete empty collection is asserted only for that scope. This does not prove emptiness of another repository, category, time selection or inaccessible source.
+    partial: A partial response may update records it actually observes, but keeps the scope marked incomplete and retains last-known records not observed in that response. It records the time and coverage of the partial observation separately from the previous complete observation. Their presentation must not imply that all retained records were observed at the partial response time.
+    failure: A failed attempt that yields no accepted data leaves previously accepted values and their successful observation times intact, and records failure separately. Failure on first observation leaves that scope unobserved with an error, not empty.
+    ordering: A result that was requested before a later request for the same scope may finish afterwards. An older result must not replace newer accepted values for that same scope merely because it completed later. Cross-scope data and partial results require field-level or scope-level ordering without discarding unrelated successful observations; exact ordering token and source revision semantics remain open.
+    absence: Absence from a partial page, failed request or inaccessible source is not a deletion or lifecycle transition. Inferring closure or deletion from a fully observed result requires a separate explicit source-identity and scope rule; this specification does not infer it.
+    private_access: Stored private content is eligible for display only under the current access policy in 0019. A temporary network failure alone is distinct from an explicit denial or local disconnect.
+    display: Show the last relevant successful observation time and the most recent failed or incomplete refresh for the relevant scope. When different values have different observation times or coverage, a summary does not imply one shared complete observation.
+    provenance: The complete and partial reconciliation and concurrency rules are agent-authored proposals based on the user's cache and visible-failure requirements.
+  scenarios:
+    partial_after_complete:
+      given: A complete PR observation for a repository contains A and B at time T1.
+      when: A later incomplete refresh observes an updated A but does not reach B.
+      then: A may be updated, B remains last known, coverage is incomplete and the previous complete time T1 is not advanced.
+    out_of_order:
+      given: Refresh A starts before refresh B for the same scope, and B's newer observation is accepted first.
+      when: A finishes later with older values.
+      then: A does not replace B's accepted values for that scope and does not make them appear older or newer than observed.
+    category_isolation:
+      given: PR and Issue scopes have separate previous successful observations.
+      when: The Issue refresh succeeds and PR refresh fails.
+      then: The Issue scope records its own success, while the PR scope retains its earlier data, time and failure indication.
+    permission_revoked:
+      given: A private Repository has saved observations and source access is explicitly denied.
+      when: A view is opened.
+      then: The denial is visible and restricted cached content follows 0019 instead of being shown as an empty Repository.
+  unresolved:
+  - Formal reconciliation order for overlapping partial scopes and source revisions, including authorization changes during a request.
+  - Exact persisted data schema, source query, page size, API budget, retries and freshness thresholds.
+  - Conditions for removing a stale record after a fully observed scope or source deletion event.
