@@ -1,0 +1,57 @@
+id: GITVIEW-SPEC-0044
+title: GitView - Observation status and coverage interpretation
+kind: spec
+created_at: '2026-11-14T13:56:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0026
+depends_on:
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0037
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0026.yaml
+  overview: docs/drafts/GITVIEW-SPEC-0023.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Known data, observation coverage, request outcome and eligibility to display private data are independently interpretable for the affected scope.
+- A successful partial response does not establish complete coverage, and a failed request does not erase the last accepted successful observation.
+- An observed empty collection, no observation and unavailable access are distinguishable.
+- An observed time identifies the scope and observation it belongs to and is not advanced by an unsuccessful request.
+specification:
+  objective: Define how observation data, coverage, refresh outcome and access restrictions combine without collapsing different situations into a single status.
+  ontology_refs:
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    axes: For each meaningful scope retain separately the accepted known observations, whether the requested scope was unobserved, partial or sufficiently covered, the last relevant successful observation time, the outcome of the latest request, and whether previously saved private data may currently be displayed. These are product-state properties, not new ontology entities.
+    unobserved: Before any accepted observation of a collection, the collection is unknown. A first failed request adds a failure outcome but does not make the collection a known empty result.
+    confirmed_empty: A known empty result requires a successful observation sufficient for the exact Repository, object category and time or filter scope being described. Complete coverage of one scope does not establish emptiness in another.
+    partial: A successful subset can provide accepted facts and its own observation time while scope coverage remains partial. It must not replace the prior complete-observation timestamp with the subset's time or attribute that subset time to retained unobserved facts.
+    failed_after_success: A failed refresh records its own failure and retains the preceding accepted data and successful time. A failure can coexist with previously complete or partial coverage; do not model failure as erasing the previous coverage history.
+    access: Explicit denial or disconnect can restrict display of private cached data independently of whether an earlier observation succeeded. A temporary network failure alone does not change previously permitted data into a confirmed denial. Actual content display follows 0036.
+    summary: A Project or portfolio covering multiple scopes may report a summary status, but the operator can identify affected scopes and unequal freshness or coverage. It cannot declare all inputs current solely because one scope refreshed.
+    ordering: Conflicting or concurrent results follow 0037; a request completion timestamp alone is not a source freshness ordering.
+    provenance: The owner asked to show last update and GitHub error on failure. Separate coverage, request outcome and access axes are agent-authored refinements.
+  scenarios:
+    first_failure:
+      given: No Issue list has been accepted for Repository R.
+      when: The first request fails.
+      then: R's Issue scope is unobserved with a visible failure and has no invented successful observation time or zero count.
+    complete_zero_then_failure:
+      given: A fully covered PR list for R was observed empty at T1.
+      when: A later refresh fails.
+      then: The last known empty observation at T1 remains identifiable and the later failure is visible; it is not described as a newly verified empty list.
+    subset_after_complete:
+      given: PRs A and B were fully observed at T1.
+      when: A partial refresh observes A at T2 and does not cover B.
+      then: A can use T2, B retains its prior observation context, and the full scope remains partial rather than fully observed at T2.
+    denied_after_success:
+      given: A private Repository has an earlier fully covered PR observation.
+      when: Source access is explicitly denied.
+      then: The prior observation remains stored but restricted from display; the interface identifies the access problem without presenting an empty PR list.
+  unresolved:
+  - Exact scope representation and completeness proof for individual source endpoints.
+  - Freshness thresholds, per-field granularity, UI representation and durable storage mechanism.
