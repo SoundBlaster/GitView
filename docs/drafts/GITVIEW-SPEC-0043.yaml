@@ -85,6 +85,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    shared_history_clear_is_explicit:
+      given: Projects P and Q both use historical evidence for the same Repository and retain their own local configurations.
+      when: The operator opens the proposed all-local-history clear from a Project context, reviews its disclosed scope and confirms it successfully.
+      then: The action does not claim to affect P alone, the disclosed historical scope is cleared for both Projects, their configurations and permitted current observations remain, and graphs do not turn the cleared history into zero source activity.
     current_refresh_with_missing_history:
       given: A Project has a previously retained open-PR sample, the next day's background opportunity does not occur, and a later source refresh succeeds while retaining its new history sample fails.
       when: The operator opens the Project overview and the historical series.
