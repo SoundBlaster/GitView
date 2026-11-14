@@ -1,0 +1,87 @@
+id: GITVIEW-SPEC-0106
+title: GitView - Logical local data composition and commit boundaries
+kind: spec
+created_at: '2026-11-14T20:30:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0095
+depends_on:
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0052
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0066
+- GITVIEW-SPEC-0067
+- GITVIEW-SPEC-0071
+- GITVIEW-SPEC-0082
+- GITVIEW-SPEC-0096
+- GITVIEW-SPEC-0097
+- GITVIEW-SPEC-0102
+- GITVIEW-SPEC-0103
+- GITVIEW-SPEC-0104
+- GITVIEW-SPEC-0105
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0095.yaml
+  project_storage: docs/drafts/GITVIEW-SPEC-0104.yaml
+  observation_storage: docs/drafts/GITVIEW-SPEC-0105.yaml
+  operation_identity: docs/drafts/GITVIEW-SPEC-0103.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Logical retained data distinguishes Project configuration, source identities, observation evidence, history, operation outcomes and history-clear state by their ownership and interpretation.
+- Default association uniqueness and Project membership invariants are enforced at a coordinated commit boundary, including concurrent and interrupted attempts.
+- A field value is not combined with an unrelated identity, scope, time, access or coverage claim to manufacture a stronger observation.
+- A confirmed clear and the admission of in-flight history writes are durably ordered so pre-clear work cannot restore cleared history.
+- Current cache, metric history and Project configuration have separately observable outcomes even if an implementation uses shared physical storage.
+- The model can be implemented with replaceable persistence and tested with controlled commit and recovery failures without network access.
+specification:
+  objective: Select a logical composition and consistency boundaries sufficient to reason about local Project and observation data without prescribing tables or frameworks.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    design_status: This is an agent-authored initial data design under the owner's autonomous specification request. The named records describe persistence responsibilities and are not new ontology entities, required classes or physical database tables. Exact encoding and storage framework remain separate choices.
+    project_record: Retain a stable local Project identity, locally saved name and optional purpose, nonempty confirmed member Repository identities, and saved-configuration revision evidence sufficient for compare-and-save. A name, current owner or address is not identity. A revision must distinguish a later valid saved state from a stale base even if visible values later return to earlier values; it need not be a wall-clock time. Project removal invalidates edits against the removed identity under 0082.
+    source_identity_record: Retain confirmed source instance and source-supported Repository identity separately from mutable display address and name; PR and Issue references preserve their kind, Repository context and source-supported identifiers under 0038 and 0101. Unresolved identity remains unresolved. One confirmed Repository may be referenced by many Projects; no Project membership implies the source belongs exclusively to it.
+    default_association: Retain an optional mapping from a confirmed source Repository identity to one saved Project that includes that Repository. At the point of committing setup or a membership edit, coordinate the Project configuration and association so a durable reader sees a valid pair or the previous valid state; concurrent operations for the same Repository cannot establish two active mappings. A custom Project containing that Repository is not automatically its default. Deleting a Project or removing its associated Repository follows 0025 and 0052.
+    observation_evidence: Associate each retained fact or supported grouped observation with the identity, category, field or metric meaning, value and supported source or event time, actual observation context, relevant scope, revision or ordering evidence, coverage and access context needed for its claim. Some context may be shared if association and validity remain provable. Unobserved, unavailable and explicitly empty are distinct. A later partial observation does not redate omitted facts or make their source contexts interchangeable.
+    metric_history: Retain eligible metric samples or sufficient source-supported evidence separately interpretable from current-cache outcomes, including metric and predicate version, unit, subject, period, membership basis, actual time and coverage. A numeric aggregate does not imply a list of contributing objects. A shared Repository can contribute to multiple Project views without a requirement to duplicate its facts; deleting one Project must not silently erase evidence needed by another.
+    operation_evidence: Associate each relevant local operation identity with its kind, immutable intent binding, preconditions and supported durable outcome under 0103. Bind outcome and effect consistently through interruption, and maintain enough evidence to distinguish retry from a newly confirmed operation while a late attempt remains possible. An operation receipt records its own historical effect, not the latest readable Project, renewed source authorization or proof that data remains readable after corruption.
+    clear_generation: As an initial logical design, associate work eligible to retain metric history with the all-history clear generation in effect when that work is initiated. A confirmed clear durably advances this generation and removes the covered retained history, with admission of retention coordinated against that boundary. Work from an earlier generation cannot add history after the confirmed clear; a newly initiated eligible observation uses the later generation and preserves its actual source time. An equivalent mechanism is acceptable only if it proves the same ordering and recovery guarantees. Capturing a generation must not turn a previously initiated response into new work merely because its local save starts after clear.
+    unknown_clear: If a clear or its generation cannot be durably reconciled, affected history admission and clear outcome remain uncertain; do not assume either the old or new generation, claim a successful clear or silently replay pre-clear work. A failed uncommitted clear and an applied clear are only reported when independently supported. Current observations and Project configuration follow their separate boundaries.
+    composition_and_access: The Project work composition obtains Project configuration through 0104 and allowed source and history facts through 0105, then supplies access-scoped facts to selection and aggregation decisions. The result keeps separate source observation, local retention, population coverage and access outcomes. Current authorization is applied before visual, accessible or shared output; retained sensitive values and history never grant access by themselves.
+    commit_granularity: Project configuration and its default association require the coordinated visibility above; one observation requires its necessary evidence to be consistently associated with its retained outcome; a history clear requires coordination with history admission. There is no requirement for a single atomic transaction spanning every Project, source refresh, current cache and metric history. A separately failed history write does not roll back a confirmed Project edit or prove its source request failed.
+    verification: Before implementation, use 0040 and 0079 to define externally meaningful TDD tests for shared Repository membership, rename identity, compare-and-save after values return to an earlier value, concurrent default setup, partial observations, operation replay, clear races and restart. Inject storage, time and source boundaries; separately verify a concrete persistence implementation, crash recovery and native interaction. This candidate and its scenarios do not prove that such tests or a product exist.
+    provenance: Shared Projects, local data, metrics, DI and TDD follow the owner's decisions. Record categories, version evidence and clear-generation design are agent-authored refinements; no storage implementation, API rate, schema migration mechanism or OS scheduling frequency is selected.
+  scenarios:
+    shared_repository_configuration:
+      given: Confirmed Repository R is a member of Project P and Project Q, and P is the default for R.
+      when: P is deleted through a confirmed local operation.
+      then: The P configuration and its default association are removed together; Q and its membership in R remain, and shared eligible source observations are not silently deleted solely with P.
+    stale_base_after_values_return:
+      given: Project P has configuration V1, changes to V2, and a later edit restores the same visible name and members as V1 at V3.
+      when: An old edit based on V1 reaches commit.
+      then: Matching visible values do not establish that V1 is the current base; the edit is not silently accepted as though no intervening change occurred.
+    old_work_across_clear:
+      given: An eligible refresh starts while history generation G1 applies; an all-history clear then durably succeeds and advances the boundary to G2.
+      when: The earlier refresh response arrives and attempts history retention after the clear.
+      then: It cannot silently add a G2 historical sample; a separately initiated post-clear observation may be retained with its actual context if permitted.
+    clear_and_write_race:
+      given: An in-flight G1 history write and an all-history clear race at the durable boundary.
+      when: The clear is reported confirmed.
+      then: Any G1 history effect is either included in the cleared scope or prevented from later admission, including after restart; the confirmed result is not merely a UI acknowledgement.
+    history_failure_project_success:
+      given: A Project edit was confirmed saved and an independent metric-history write fails locally.
+      when: The Project and its history are read.
+      then: The valid saved Project remains, the failed history result is distinguishable, and neither operation implies the other's outcome.
+    unknown_clear_after_restart:
+      given: A clear may have committed but its durable boundary is unreadable after interruption.
+      when: An older retention operation is retried.
+      then: The clear and affected history admission remain uncertain, and the old operation is not promoted into a new generation or reported as confirmed new history.
+  unresolved:
+  - Choose a concrete persistence technology, representation, version allocation and coordinated commit protocol satisfying these logical boundaries and the platform's actual capabilities.
+  - Decide privacy-safe operation-evidence retention and compaction, migrations, data protection and storage budgets without weakening recovery or shared-Repository invariants.
+  - No Swift data model, persistence boundary, source integration, TDD cycle or actual restart has been implemented or verified.

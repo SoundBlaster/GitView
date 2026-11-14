@@ -825,3 +825,13 @@ coverage и повтором операций. [Оба кандидата](evide
 прошли candidate и ontology advisory без findings, gaps и warnings. В графе
 105 кандидатов и 48 структурных листьев; это не подтверждает готовность
 контрактов к реализации, реальный storage и restart не выполнялись.
+
+[0106](GITVIEW-SPEC-0106.yaml) предлагает логическую композицию сохранённых
+Project configuration, source identities, observations, history и operation
+evidence. Для истории предложено поколение очистки, фиксируемое при начале
+работы, с согласованной границей приёма записи и очистки. Это выбранное
+агентом предложение, не физическая схема и не доказательство атомарности.
+[Candidate и ontology advisory](evidence/autonomous-goal-ontology-check-data-composition-20261114.json)
+прошли без findings, gaps и warnings. На новом структурном снимке 106 кандидатов,
+49 листьев, отсутствующих целей и циклов нет; реальные storage и restart не
+проверялись.
