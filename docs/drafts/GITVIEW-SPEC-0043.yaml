@@ -89,6 +89,10 @@ specification:
       given: A Project has a permitted last-known PR state and an unresolved conflicting observation; an unrelated Repository has its own successful observation.
       when: The operator discovers the affected scope and requests refresh, and the source responds but its value cannot be ordered against all conflicting observations.
       then: The response is distinguishable from resolving the conflict, the affected state remains uncertain with its last-known context, and neither its complete-scope time nor the unrelated Repository's state is advanced by that response alone.
+    membership_changes_during_refresh:
+      given: Project P contains A and B, Project Q also contains B, and P has a failed-CI filter and an in-flight refresh for A and B; C is unobserved.
+      when: The operator saves an edit replacing B with C in P and the original refresh completes without covering C.
+      then: P retains the filter but evaluates A and C with incomplete coverage; B remains in Q and its observations are not erased, and the result for A and B is not described as a complete refresh or count for P's new membership.
     partial_signal_navigation:
       given: A Project has an observed failed check on one identified PR and another PR has unknown checks, with incomplete Project coverage.
       when: The operator opens the failed-CI signal.

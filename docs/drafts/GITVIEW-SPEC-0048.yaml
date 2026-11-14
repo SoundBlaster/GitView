@@ -8,6 +8,7 @@ refines:
 - GITVIEW-SPEC-0003
 depends_on:
 - GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0025
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0037
 - GITVIEW-SPEC-0044
@@ -38,6 +39,7 @@ specification:
     deferred: When a manual or foreground request cannot start because of a known budget or execution constraint, the affected scope remains identifiable as deferred or pending with a recoverable reason where available. No new source success time, confirmed empty result or fabricated GitHub failure is recorded merely because no source request was attempted. When the constraint is lifted, the request may be retried under the applicable scheduling policy; exact retry timing is not guaranteed.
     scope: A refresh identifies which Repository or Project members, object categories and applicable time range it attempts. A successful update for one category or member does not advance the success time or completeness of another. Outcomes and last-success times follow 0044.
     navigation_during_refresh: Capture the requested scope when an operator initiates refresh. Navigating to another Project, changing period or changing filters does not relabel the in-flight request as belonging to the new view. Its eventual permitted observations and outcome remain associated with the original scope; the new view presents only its own applicable state. Source access changes follow 0036 and 0037.
+    membership_during_refresh: A saved membership edit changes the Project's current scope but does not retroactively alter an in-flight request's captured scope. Its accepted per-Repository observations may be reused under their own identity, access and coverage rules; a response for the former member set is not by itself a complete refresh of the new set. An unsaved or cancelled edit does not change the saved membership used for the current claim.
     partial_or_failure: Successfully observed facts from an incomplete operation can be retained with their own observation time, while coverage remains partial. A failed operation shows a visible indication in the affected scope and preserves previously accepted data and last complete observation time. A first failure remains an unobserved scope with error, not a confirmed empty collection.
     expired_background: If an iOS-granted background opportunity expires after some facts are accepted but before the requested scope is sufficiently covered, preserve accepted facts with their own times, mark the affected scope incomplete and do not report the entire scope as successfully refreshed. An expiration before any accepted facts leaves prior observations and their successful times intact; it is distinct from proving a GitHub error. Actual system delivery and timing require device evidence.
     concurrent: If another refresh is already active, the app may coalesce or schedule the request, but it must not lose the operator's requested scope or report success before the relevant work has an observable outcome. Conflicting results and access changes follow 0037; exact scheduling and duplicate-request strategy remain open.
@@ -71,6 +73,10 @@ specification:
       given: A refresh is requested for Project P and remains in flight while the operator opens Project Q.
       when: The refresh for P completes.
       then: Its accepted result and outcome remain scoped to P; Q is not marked refreshed solely because it is currently visible.
+    membership_saved_while_refreshing:
+      given: A Project refresh was requested for saved members A and B, and an edit replacing B with C is saved while it runs.
+      when: The request for A and B completes without covering C.
+      then: The request retains its original scope, the current Project is not reported fully refreshed for A and C, and permitted observations of A remain eligible for reuse with their own times and coverage.
     background_expires:
       given: An iOS-granted background refresh accepted one page but has not covered the remaining pages.
       when: The granted execution opportunity expires.

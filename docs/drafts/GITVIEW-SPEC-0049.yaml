@@ -8,6 +8,7 @@ refines:
 - GITVIEW-SPEC-0027
 depends_on:
 - GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0025
 - GITVIEW-SPEC-0031
 - GITVIEW-SPEC-0042
 - GITVIEW-SPEC-0044
@@ -35,6 +36,7 @@ specification:
     coverage: To claim a complete Today selection, the relevant Repository set and requested PR/Issue categories must be sufficiently observed for both currently open work regardless of creation date and the selected day's created, merged or closed outcomes. All active filter inputs needed for that claim must also be known. A retrieved subset that covers only newly created items cannot establish that older open work is absent. If any required Repository, category, inclusion input or active-filter input is not sufficiently observed, represent the affected scope as unknown or incomplete under 0044; do not declare a confirmed empty day merely because the currently loaded list has no matches.
     coverage_basis: Assess coverage against the actual Project membership, selected categories, local-day boundaries and active filter at the time of the claim. For each included Repository and category, source evidence must cover every inclusion alternative that can still affect the result, including older open work and in-day creation or outcomes. An alternative or filter need not be observed where another known condition logically makes it irrelevant for the stated selection, but unknown candidates or wholly unobserved portions still prevent an exhaustive claim. Results covering different scopes or observation times do not by themselves establish one simultaneous snapshot.
     membership_or_day_change: When a Repository is added, the day or time zone changes, or a filter gains an additional required input, reassess coverage for the new scope before asserting completeness. Existing observations may be reused only where their recorded scope and times support the new claim; they do not establish coverage for the newly added part. Removing a Repository changes the selected scope rather than proving anything about that Repository's source data.
+    membership_edit_and_filter: A pending or cancelled membership edit does not change the saved Project selection. Once the edit is saved, reevaluate the active selection and its required filter inputs against the new membership while preserving the operator's period and explicit filter choices. A previously calculated result for the old member set cannot be relabeled as exhaustive for the new set; any affected unknown inputs remain visible through the applicable uncertainty treatment. An explicitly selected Repository removed from the Project follows 0024 rather than being silently replaced.
     open_object: If a PR or Issue overview or preview is open when Today changes, keep it associated with the same source object; do not navigate to a different object or dismiss it solely because its prior card no longer belongs to Today. On return, update the collection and use 0024's anchor fallback if the object no longer matches.
     explicit_period: A user-selected explicit period is not silently relabeled as the new dynamic Today. Exact historical grouping and how a fixed period is interpreted after a time-zone change remain open; the interface must retain enough context to distinguish the fixed choice from Today.
     provenance: The owner requested unfinished work and same-day results; local-calendar semantics and boundary behavior are agent-authored proposals.
@@ -59,6 +61,10 @@ specification:
       given: Today was completely observed for a Project containing Repository A, and Repository B is then added without a Today observation for B.
       when: The Project's Today selection is displayed.
       then: A's observations retain their original context, while the expanded Project selection is incomplete or unknown until B's required scope is sufficiently observed; the previous complete time is not represented as complete for A and B.
+    saved_edit_during_filtered_selection:
+      given: Today is filtered to failed CI for saved Project members A and B, and C has no CI observation.
+      when: The operator saves an edit replacing B with C while an earlier calculation for A and B is still finishing.
+      then: The failed-CI filter and period remain selected, B is not included as a current Project member, C's unknown CI does not become a confirmed non-match, and the former calculation is not presented as an exhaustive A and C result.
     time_zone:
       given: A source timestamp lies on different local dates in the old and new device time zones.
       when: The device time zone changes while Today is active.

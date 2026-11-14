@@ -8,6 +8,7 @@ refines:
 - GITVIEW-SPEC-0029
 depends_on:
 - GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0025
 - GITVIEW-SPEC-0026
 - GITVIEW-SPEC-0030
 - GITVIEW-SPEC-0036
@@ -33,6 +34,7 @@ specification:
     inputs: Each metric states its unit, Project or portfolio scope, object type and period where applicable. Its inputs have per-repository or finer observation scope, accepted value, relevant time, coverage and access eligibility under 0044.
     complete: A confirmed aggregate is reported for the stated metric and scope only when every required input is sufficiently covered for the claim and access policy permits use. Its relevant observation times are available; unequal times do not become one invented simultaneous snapshot.
     membership_change: Project coverage is evaluated against its membership for the stated claim, not just the members included in a prior aggregate. Adding a Repository with missing required inputs makes the expanded aggregate incomplete; removing a member changes the scope and does not assert source deletion. A previously complete aggregate remains attributable to its earlier membership and observation context, not to the changed membership.
+    aggregate_reconciliation: When an aggregate calculation or source request completes after a membership edit was saved, its original member set remains part of its provenance. Before presenting a current Project claim, evaluate accepted inputs against the saved membership and the metric's other required scope. A result for the former set must not overwrite or be labeled as a complete result for the changed set. Reuse of individual observations for members still present is allowed only when their identity, access, scope and observation context support the new claim; removing a member does not delete its source observations or change another Project.
     claim_time: A complete sum of individually covered inputs observed at unequal times may be reported only with that scope and timing made clear; it is not a point-in-time snapshot unless a separate source guarantee supports the shared time. A change in membership or an unknown identity cannot be hidden by reusing an earlier total.
     partial: If some eligible inputs are missing or incomplete, a sum over accepted known observations can be shown as an observed partial value only with clearly associated scope and coverage. It is not a confirmed complete total. An unobserved Repository contributes unknown, not zero.
     attention_predicate: For a named attention condition, a confirmed positive observation on an identified permitted PR may contribute that PR once to an observed affected-PR subset even if the Project or the PR's check or thread collection is incomplete. A missing positive observation is not evidence of a negative predicate when the relevant inputs are incomplete or unmapped. Any subset is attributed to its revision and observation context and is not automatically a current lower bound or a complete Project total.
@@ -63,6 +65,10 @@ specification:
       given: A Project's open-Issue total was observed with sufficient coverage for Repository A, then Repository B is added without an Issue observation.
       when: Its expanded Project summary is displayed.
       then: The earlier total can be attributed to A's prior scope, but the new Project total is incomplete or unknown; B is not silently counted as zero.
+    membership_changes_during_calculation:
+      given: A Project contains A and B, a count over A and B is being calculated, and the operator saves an edit replacing B with unobserved C.
+      when: The calculation for A and B completes after the edit.
+      then: Its result is attributable only to its original scope; the current A and C total is incomplete or unknown, B is not included in that total, and A's permitted observation may be reused within its own context.
     partial_check_attention:
       given: One identified PR has a confirmed failed check in its partially observed relevant revision, while another PR's check results are unknown.
       when: The Project's failed-CI attention is summarized for those observations.
