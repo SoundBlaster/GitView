@@ -15,6 +15,7 @@ depends_on:
 - GITVIEW-SPEC-0056
 - GITVIEW-SPEC-0061
 - GITVIEW-SPEC-0062
+- GITVIEW-SPEC-0063
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0013.yaml
   agreed_summary: docs/drafts/project-summary-proposal.md
@@ -44,7 +45,7 @@ specification:
     review_waiting: Count distinct open PRs for which source evidence establishes an outstanding review request in the stated context under 0062. A request for a team or person is not automatically a request to the GitView operator or proof of a review-required decision, and an unknown request state is not zero.
     changes_requested: Count distinct open PRs whose applicable source review assessment reports changes requested. Preserve its revision and observation context; do not derive it from thread count or assume every change request leaves an unresolved thread.
     unresolved_review_threads: Report the number of distinct unresolved review threads and the number of distinct open PRs containing at least one separately. The first unit is threads, the second PRs. A confirmed unresolved thread can establish a positive partial observation, while an empty or complete total requires sufficient thread identity and resolution coverage.
-    blocked_issues: Count distinct open Issues with at least one explicitly linked blocking Issue that is confirmed open in the relevant observation context. A mention, parent relationship or unknown blocker state is not proof of this predicate. Keep the relation and each observed lifecycle context distinct; incomplete source links or states prevent a confirmed absence.
+    blocked_issues: Count distinct open affected Issues with at least one explicitly linked direct blocker confirmed open in the relevant permitted observation context under 0063. A blocker may be outside the Project without becoming its member. A mention, parent relationship or unknown blocker state is not proof of this predicate; incomplete or restricted inputs prevent a confirmed absence and must not leak private details.
     period_outcomes: For an explicitly stated period, report merged PRs and closed Issues separately, using event time and sufficient event evidence. Identify whether a value counts distinct affected objects or events; when grouped by Issue closure reason, require reason evidence applicable to that closure. Unknown reason stays unknown and a non-completion closure is not a completed task. Object selections opened from such outcomes follow 0056.
     optional_ready: The suggested checks-and-review-passed selection remains conditional on a separately defined and accepted predicate, including empty and unknown inputs. Until then do not fabricate this count or call it merge readiness; known check, review and thread observations remain independently available under 0028.
     graphing: The selected Project proposal requests graphs of its summary metrics when history is sufficient. For a current-state metric, each historical point requires an observation or reliable reconstruction of the same predicate, membership basis and scope at that point. A period-outcome series requires event evidence and bucket boundaries as in 0030. Missing history is a gap or explicitly incomplete value, never an invented zero or a line copied from a current snapshot. Graph style, default buckets and which graphs fit on an initial screen remain open.

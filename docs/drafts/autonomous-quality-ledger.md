@@ -629,3 +629,11 @@ GitHub допускает skipped/neutral для required checks в описан
 со сводкой и preview. Пустой список ожидаемых reviewers и ноль тредов не
 являются самостоятельным доказательством approval. Сценарии записаны для
 будущей проверки, не являются результатами приложения или GitHub query.
+
+## Blocked Issue от источника до Project
+
+0063 уточняет направление direct blocked-by, единицу affected Issue, внешний
+Repository и частичный доступ. 0047 и 0050 сохраняют этот смысл в переходе и
+preview; закрытый blocker не называется автоматически completed. GitHub
+документирует [Issue dependencies](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies),
+но поведение недоступных cross-Repository связей пока не подтверждено.

@@ -19,6 +19,7 @@ depends_on:
 - GITVIEW-SPEC-0056
 - GITVIEW-SPEC-0061
 - GITVIEW-SPEC-0062
+- GITVIEW-SPEC-0063
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0004.yaml
   project_summary: docs/drafts/project-summary-proposal.md
@@ -45,6 +46,7 @@ specification:
     signal_unit: The destination is a work-object collection, not necessarily a list of the metric's counted units. Where the source counts individual checks, threads or events, identify the distinct PR or Issue unit in the destination and retain the originating condition and period under 0029. Do not imply that the number of cards must equal a count expressed in another unit.
     failed_ci_signal: The Project's failure-category count and its destination apply the same working status-check classification under 0061, scope and observation context. The open-PR count retains its open-lifecycle condition at the destination. A timeout or status error is not relabeled as a failed test; a special outcome outside the failure count is not thereby represented as healthy.
     review_signal: Requested-review, changes-requested and unresolved-thread signals preserve their independently named condition, open-PR scope and observation context under 0062. A thread-count signal can lead to fewer distinct PR cards than threads; absence or uncertainty in one review fact does not decide another.
+    blocked_issue_signal: A blocked-Issue signal counts affected open Issues and opens those Issues, not their blockers, under 0063. A direct blocker outside Project membership does not expand that membership; inaccessible dependency information stays restricted or uncertain.
     historical_signal: A historical outcome signal that opens distinct work objects retains the event condition, scope and period under 0056; a currently reopened Issue may still qualify for an earlier closure. If the destination cannot support the original condition or its evidence is incomplete, expose that limitation.
     signal_update: A refreshed or partially loaded destination may differ from the observation underlying the originating signal. Its coverage and relevant observation context remain identifiable; unknown or restricted data is not displayed as an empty or healthy result.
     observations: An unobserved category remains unknown, partial and failed scopes remain identifiable, and stale data retains its observation context. Explicit denial follows 0036; no restricted private content or derived count is exposed as a healthy zero.

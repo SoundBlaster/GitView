@@ -33,6 +33,7 @@ depends_on:
 - GITVIEW-SPEC-0059
 - GITVIEW-SPEC-0061
 - GITVIEW-SPEC-0062
+- GITVIEW-SPEC-0063
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -118,6 +119,10 @@ specification:
       given: One open PR has a current changes-requested assessment and zero unresolved threads, while another has two unresolved threads and unknown assessment.
       when: The operator opens each Project review-attention signal and previews its matching PR with no intervening source change.
       then: The changes-requested destination identifies the first PR; the thread destination identifies the second as one affected PR with two threads, and neither signal invents the other's review assessment.
+    blocked_issue_external_source:
+      given: Project P contains Repository A with one open Issue blocked by an accessible open Issue in Repository B, which is outside P.
+      when: The operator opens P's blocked-Issue signal and previews its affected Issue without intervening source changes.
+      then: The Issue in A is shown once, B does not become a Project member, and the permitted blocker information retains its source context.
     denied_preview_and_share:
       given: A private PR preview is open and a source link was eligible before explicit access denial.
       when: Denial is applied and the operator attempts to share the link.

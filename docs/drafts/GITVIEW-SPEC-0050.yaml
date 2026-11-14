@@ -12,6 +12,7 @@ depends_on:
 - GITVIEW-SPEC-0032
 - GITVIEW-SPEC-0061
 - GITVIEW-SPEC-0062
+- GITVIEW-SPEC-0063
 - GITVIEW-SPEC-0033
 - GITVIEW-SPEC-0039
 - GITVIEW-SPEC-0041
@@ -40,6 +41,7 @@ specification:
     pull_request: Present Repository context, PR number, known title and lifecycle, with draft flag, CI summary, review assessment and unresolved-thread count where available. Keep CI, review and threads independent and do not expose individual run or thread content as part of these counters.
     review_independence: Under 0062, requested-review information, review assessment and unresolved-thread count retain separate meanings and observation context. A zero or missing thread count does not by itself justify an approval or completed-review mark. Compact visual treatment has an accessible path to distinguish available signals and unknowns without requiring individual thread content.
     issue: Present Repository context, Issue number, known title and open or closed state, with source closure reason when available. An Issue is not assigned PR CI or review-thread status, and closure is not automatically completion.
+    issue_blockers: A blocked-by indication for an Issue follows the permitted evidence and uncertainty rules in 0063; it does not disclose a restricted private blocker or claim no blocker when dependency coverage is incomplete.
     missing: A source field that is unknown, stale, incomplete or restricted remains distinguishable from a confirmed empty, zero or successful field. Compactness does not authorize inventing values; detailed representations follow 0023 and the relevant object specification.
     mixed_freshness: Compact presentation must not use a newly observed title or lifecycle as evidence that omitted CI, review, thread, Issue-link or counter fields are equally fresh. Relevant limitations remain available through the preview or its accessible route to detail without exposing restricted fields.
     check_specials: A compact PR cell or preview need not add a prominent counter beyond the selected failure, pending, success and total. When a known total includes special or unclassified status-check entries under 0061, a non-color accessible path exposes their presence and available outcome without presenting them as passed or silently describing the PR as healthy. The route may lead to the same object's overview; do not require individual check details in GitView.

@@ -1,0 +1,67 @@
+id: GITVIEW-SPEC-0063
+title: GitView - Blocked Issue attention and source access
+kind: spec
+created_at: '2026-11-14T16:11:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0039
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0046
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0039.yaml
+  agreed_summary: docs/drafts/project-summary-proposal.md
+  source_research: docs/drafts/github-field-access-research-20261114.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A blocked-Issue attention count concerns distinct open Issues in the selected Project or Repository, not the number of blockers or dependency links.
+- A confirmed direct blocked-by connection and a confirmed open blocker can establish an observed positive when their source and observation contexts support that claim.
+- Unavailable links, inaccessible blocker state or incomplete coverage do not establish that an Issue is unblocked or that a Project has zero blocked Issues.
+- Navigation from the Project signal retains the same affected-Issue predicate, open lifecycle and originating scope without disclosing restricted private data.
+specification:
+  objective: Define the agreed blocked-Issue attention signal from explicit source dependencies while preserving access, identity and incomplete observations.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:Issue
+  contract:
+    direction: A selected Issue is an affected Issue when source evidence identifies it as blocked by a direct blocking Issue. The inverse blocking view describes the other direction and is not substituted. A mention, linked PR, parent or sub-issue relation does not establish a blocked-by connection. The source link is an observed GitHub association, not by itself an Ontology actor-action relation or proof of the reason an actor acted.
+    predicate: For an open affected Issue in the selected Project or Repository, a confirmed direct blocked-by connection to at least one confirmed open blocker is positive evidence in the stated observation context. A closed affected Issue is outside this open-Issue metric even if its retained links remain. A known closed blocker does not satisfy the open-blocker condition; closed is not automatically completed. A different independently confirmed open blocker can still make the affected Issue match.
+    scope: The affected Issue's source Repository must belong to the stated Project or be the explicitly selected Repository. Its direct blocker may belong to another Repository outside the Project; do not add that Repository to Project membership merely because the link exists. Source-specific evidence and access determine whether that external blocker's state may support the predicate. Project and portfolio identity and deduplication follow 0029 and 0038.
+    units: Count each confirmed affected Issue once per Project even when it has multiple open blockers or multiple matching links. A separate count of blocker objects, links or affected Repositories is a different unit and is not implied. An Issue in two Projects can contribute once to each; a unique portfolio uses source identity to avoid duplicating it.
+    uncertainty: A missing or partial blocked-by collection, unknown identity, inaccessible blocker, unavailable blocker state or source conflict is not a negative. If one supported positive exists, it can be shown with its observation context while overall coverage remains incomplete; absent a positive and with unknown relevant inputs, the predicate is uncertain. A confirmed negative requires enough permitted evidence for every relevant direct link and blocker state or evidence of a complete empty link set. Different observation times do not establish a simultaneous current state unless supported.
+    privacy: Apply access policy to the affected Issue, blocker, relation and any derived value. Do not reveal a restricted blocker title, identity, link or a derived count that exposes restricted information. When evidence cannot be disclosed or evaluated, use a permitted incomplete or unavailable presentation; do not convert the restricted part into zero. A visible affected Issue does not automatically authorize disclosure of its private blocker.
+    navigation: An actionable Project blocked-Issue count opens distinct affected Issues within its originating Project and preserves open lifecycle, predicate, observation context and coverage. It does not navigate instead to blocker Issues or silently widen the Project. If the source data changes, explain the changed or incomplete selection under 0029 rather than implying that the earlier count was a complete current snapshot.
+    presentation: An Issue overview or preview may expose the permitted blocked-by signal and count without requiring source thread or blocker detail inside GitView. Unknown, stale and restricted inputs remain distinguishable from a confirmed absence; an accessible non-color path must be available. Follow the original source when the operator needs detail.
+    provenance: The owner accepted Project attention for Issues with open blockers. This direct-link, open-state interpretation and uncertainty handling are agent-authored refinements; exact GitHub visibility and history semantics require verification.
+  scenarios:
+    two_blockers:
+      given: One open Issue in the Project has two distinct direct blockers, both confirmed open under sufficient coverage.
+      when: The blocked-Issue Project signal is calculated and opened.
+      then: The affected Issue contributes once and appears once in the destination; neither two Issues nor two independent tasks are inferred.
+    external_blocker:
+      given: An open Issue in Repository A is directly blocked by an open Issue in Repository B, which is not a member of the selected Project; all relevant evidence is permitted.
+      when: The blocked-Issue signal is evaluated.
+      then: The Issue in A can contribute once, B is not added to the Project, and the destination remains scoped to the affected Issue in A.
+    private_blocker_unavailable:
+      given: An accessible open Issue may depend on an Issue whose private details or lifecycle are restricted and no other open blocker is confirmed.
+      when: The Project signal and Issue preview are displayed.
+      then: Restricted identity and derived private counts are not exposed; the affected predicate or coverage is uncertain rather than confirmed unblocked.
+    one_open_one_unknown:
+      given: An open Issue has one permitted confirmed open blocker and another blocker whose state is unavailable.
+      when: The blocked-Issue predicate is evaluated.
+      then: The known open blocker supports an observed positive for that Issue subject to access policy, while the incomplete input context remains visible.
+    inverse_link:
+      given: Issue A is confirmed to block Issue B but no blocked-by connection for A is established.
+      when: A is evaluated as a potentially blocked Issue.
+      then: The inverse connection alone does not establish that A is blocked by B.
+    matching_scope_on_navigation:
+      given: A complete Project signal counts one open affected Issue with an open blocker and source observations do not change.
+      when: The operator opens that signal.
+      then: The same affected Issue appears once under the original open-Issue and blocked-by condition, not as the blocker card or a different Project selection.
+  unresolved:
+  - Exact GitHub source visibility and completeness guarantees for cross-Repository dependencies, private blockers and link changes.
+  - Concrete accessibility presentation and filtering controls for unknown or restricted dependency data.
+  - Source identity and observation timing sufficient to treat a linked blocker state as current; no real GitHub query has been executed.
