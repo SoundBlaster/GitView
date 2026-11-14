@@ -1,0 +1,27 @@
+{
+  "scope": "SpecGraph domain_vocabulary advisory only",
+  "context": "ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-setup-final-p44ozs3a",
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0108",
+      "sha256": "0037d2ca2c2a5f2d992c989aae1a2b1e4460f024480deccc09214bcf177fea2d",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "97982e4233669be2e1fc134adc1febd1ab60a95a86508cbfad438675ade94d16"
+    },
+    {
+      "id": "GITVIEW-SPEC-0112",
+      "sha256": "b9424cc96374f380b59eb1cc2765e3d5672d01f80552279b73d95707770692f8",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "7bef5c5a7790c7ac115d012cb169f67233c8e9ba98ff7bbe08c1ce177f3e871f"
+    }
+  ]
+}
