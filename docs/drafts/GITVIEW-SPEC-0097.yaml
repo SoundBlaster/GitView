@@ -27,6 +27,7 @@ sources:
   catalog: docs/drafts/GITVIEW-SPEC-0057.yaml
   retention: docs/drafts/GITVIEW-SPEC-0066.yaml
   presentation: docs/drafts/GITVIEW-SPEC-0068.yaml
+  metric_source_evidence: docs/drafts/metric-source-evidence-matrix-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The owner-agreed summary metrics have individually identifiable history selections when their supported evidence is available; the initial four displayed series are not treated as the complete metric catalog.

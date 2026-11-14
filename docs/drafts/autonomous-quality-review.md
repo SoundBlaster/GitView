@@ -701,3 +701,12 @@ candidate check и [проверку словаря](evidence/autonomous-goal-on
 Семь изменённых файлов прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-expanded-metric-history-20261114.json)
 без findings/gaps. Источник, storage, UX и сценарии не исполнялись; эта
 проверка не устанавливает полноту evidence или готовность к реализации.
+
+[Матрица входов исторических метрик](metric-source-evidence-matrix-20261114.md)
+сопоставляет каждый согласованный ряд с документированными понятиями GitHub и
+оставшимся evidence. В частности, в опубликованном перечне полей GitHub
+GraphQL `PullRequestReviewThread` нет собственного `createdAt`; 0094 теперь
+запрещает молча подставлять время первого доступного комментария как время
+создания треда. Для 0094 и 0097 прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-metric-source-matrix-20261114.json)
+без findings/gaps. Просмотр документации не является проверкой разрешений,
+query, полноты источника или работающего приложения.

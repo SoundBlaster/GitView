@@ -15,6 +15,7 @@ sources:
   parent: docs/drafts/GITVIEW-SPEC-0062.yaml
   project_summary: docs/drafts/project-summary-proposal.md
   owner_intent: conversation:gitview/excerpt-02
+  source_evidence: docs/drafts/metric-source-evidence-matrix-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - An age-based attention signal identifies its time origin, reference time, threshold, scope and unit; unknown evidence is not a confirmed zero.
@@ -33,6 +34,7 @@ specification:
     definition: As a candidate, classify an observed currently unresolved review thread by elapsed time since its source-established creation at an explicitly stated reference time. Label this as thread age, not time continuously unresolved or time awaiting a reply. A thread reopened after being resolved can have an old creation time without having been continuously unresolved for that duration.
     threshold: A long-thread classification requires a defined positive duration threshold and an explicit comparison boundary; neither is selected by this candidate. Until selected, available thread counts remain useful under 0062 and 0057, but no long-thread count or zero is fabricated. Exact threshold and whether the selection is exposed or configured require later product refinement.
     evidence: Establish distinct thread identity, PR and Repository scope, applicable unresolved state and the time origin for each classification. Source timestamp mapping and reliability must be verified. Missing creation time, uncertain resolution, partial thread coverage, incompatible observation times or a reference time earlier than the origin cannot establish a negative. Preserve context and limitations under 0044 and 0046; do not claim all threads were simultaneously unresolved without sufficient evidence.
+    source_time_boundary: The documented GitHub GraphQL PullRequestReviewThread field list contains identity, comments and resolution state but no thread createdAt field. A comment's own creation time, including the earliest currently visible comment, is not automatically proof of the thread's original creation time. Any alternative time origin must have a separately specified source meaning and adequate coverage; if that evidence is absent, thread age remains unknown. This does not by itself require retaining or displaying comment bodies.
     counting: Count distinct qualifying review threads and distinct open PRs containing them separately. A partial positive can be shown with incomplete coverage; an exact total or zero requires sufficient coverage of eligible PRs and threads, their resolution and timestamps. Shared Repositories follow the Project or unique portfolio scope of 0057; affected PRs are not additional independent work items.
     routing: A count can lead to affected PRs with its originating Project, condition, reference time and coverage retained under 0047. A refreshed source observation or elapsed time can change the selection; communicate the new observation rather than claiming the earlier count still describes it. Explicit filter changes remain distinguishable from the origin.
     boundaries: A review thread's age does not prove inactivity, elapsed unresolved time, responsibility of a person or agent, or a changes-requested decision. Other attention and lifecycle signals remain independent. Use counters or aggregate signals without requiring comment bodies, individual thread lists or a new ontology entity. Access restrictions apply to derived counts and navigation.
@@ -46,6 +48,10 @@ specification:
       given: Two unresolved threads are observed in an open PR, one has a qualifying verified creation time and the other has no usable creation time.
       when: A long-thread count is evaluated with a selected threshold.
       then: The known positive is available as partial evidence and the unknown thread is not classified as young or excluded from an allegedly complete count.
+    earliest_visible_comment:
+      given: A thread has an accessible comment timestamp but the source evidence does not establish that this comment's time equals the thread's original creation time.
+      when: A thread-creation-age predicate is evaluated.
+      then: The comment time is not silently asserted to be the thread creation time; the thread-age classification remains unknown unless independent adequate evidence exists.
     unknown_threshold:
       given: Unresolved review threads and their creation times are known but no threshold has been selected.
       when: The Project summary is shown.
