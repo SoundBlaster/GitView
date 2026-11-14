@@ -1,0 +1,59 @@
+id: GITVIEW-SPEC-0027
+title: GitView - Today selection and filter uncertainty
+kind: spec
+created_at: '2026-11-14T13:32:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0007
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0026
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0007.yaml
+  lifecycle: docs/drafts/GITVIEW-SPEC-0008.yaml
+  issue: docs/drafts/GITVIEW-SPEC-0009.yaml
+  observations: docs/drafts/GITVIEW-SPEC-0026.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Today includes each known matching object once when any inclusion rule is confirmed.
+- Unknown inputs cannot create a confirmed match, a confirmed non-match or proof that an unobserved source is empty.
+- Explicit filter exclusions affect the selection without changing stored objects or rewriting source timestamps.
+- Time group recalculation uses the device local calendar and does not rewrite recorded source timestamps.
+specification:
+  objective: Define a checkable Today selection over known work and explicit filters while retaining uncertainty.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    identity: Distinguish each observed PR or Issue by source object identity within its repository; source numbers are not globally unique. A linked PR and Issue are distinct objects and repeated inclusion rules do not duplicate a card.
+    today: The day is the interval from the start of the device local calendar day to the start of the following local day, inclusive at the start and exclusive at the end. Re-evaluate on local day or time-zone change without rewriting stored timestamps.
+    base_inclusion: A confirmed source-open PR or Issue is included as unfinished, including one created earlier. A PR observed merged or closed without merge today, an Issue observed closed today, or an object with a confirmed creation timestamp today is included as a same-day result. A draft PR is still an open PR with a separate draft flag. Current state is shown; close reason and merge state remain distinct.
+    unknown: Evaluate the inclusion alternatives and each active filter using known values. If at least one inclusion alternative is confirmed, inclusion is confirmed even if another alternative is unknown. If no alternative is confirmed and one or more cannot be evaluated, base inclusion is unknown rather than false. If all applicable alternatives are known false, base inclusion is false. An active filter with unavailable input is unknown, not an automatic match or rejection.
+    composition: A known-false scope, inclusion or active filter excludes the object. When all required conditions are known true, the object is a confirmed match. Otherwise it is an uncertain candidate. Presentation can group uncertain candidates or indicate affected coverage, but must not claim an exhaustive result or display an unknown condition as passing.
+    explicit_exclusions: The operator can exclude applicable lifecycle states. When every applicable state is explicitly excluded, show an intentional filtered empty selection without claiming that source work is absent; scope freshness or failure remains accessible.
+    boundary: This defines the Today selection only. Older completed history, ordering and how unknown candidates are visually arranged require separate refinement. Source fetch, exact fields and pagination are not selected here.
+    provenance: The inclusion of unfinished and same-day work and explicit filtering follow the owner discussion; the three-valued evaluation rules are agent-authored proposals.
+  scenarios:
+    one_true_alternative:
+      given: An Issue is confirmed open, was created before Today and has unknown closure time.
+      when: Today is evaluated without a lifecycle exclusion.
+      then: The Issue is included once as unfinished; unknown closure time does not remove it.
+    unknown_filter:
+      given: A PR is included by Today and its CI status is unavailable.
+      when: A failed-CI filter is active.
+      then: The PR is not asserted to pass or fail the filter; the selection communicates uncertainty or incomplete coverage.
+    known_false_filter:
+      given: A PR is confirmed merged today and the operator excludes merged PRs.
+      when: The selection is evaluated.
+      then: The PR is excluded from the view, while its underlying observed data remains unchanged.
+    time_zone_change:
+      given: An Issue has a stored UTC creation time and the device time zone changes.
+      when: Today is recalculated.
+      then: The Issue is evaluated against the new local day boundaries and its stored timestamp is unchanged.
+  unresolved:
+  - Source field semantics and sufficient history for same-day transition claims, especially reopenings.
+  - Arrangement of uncertain candidates and stable ordering within the grid.
+  - Historical periods and semantics beyond the first Today selection.
