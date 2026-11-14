@@ -1,0 +1,59 @@
+id: GITVIEW-SPEC-0041
+title: GitView - PR overview facts and change counters
+kind: spec
+created_at: '2026-11-14T13:49:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0008
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0028
+- GITVIEW-SPEC-0034
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0008.yaml
+  selected_fields: docs/drafts/pull-request-ontology-options.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A PR overview retains the exact source Repository context and selected available source facts.
+- Lifecycle, draft flag, review assessment, review-thread counts and check counts remain separate, with unknown values not asserted as zero or success.
+- Additions, deletions, changed files and commits are separate counters and are not treated as a code diff or a list of commit details.
+- Event timestamps and observation timestamps are distinguished, and authored Validation text is not treated as independently observed CI.
+specification:
+  objective: Present the selected PR facts and change counters for quick review while preserving their source and uncertainty.
+  ontology_refs:
+  - gitview:PullRequest
+  - gitview:Repository
+  - gitview:ReviewThread
+  - gitview:CIStatus
+  contract:
+    identity: The overview refers to a specific source PR in its target Repository. Display its available source ID, repository-local number, title, original description and source URL; an unknown field remains unknown. A PR with the same number in another Repository is a different object.
+    state: Show source lifecycle as open, closed without merge or merged when established; draft is a separate flag and labels are separate characteristics. Closed without merge is not merged, and draft, review and CI do not form one shared status scale.
+    context: Preserve available target Repository, source and target branches, observed revision, author, requested reviewers and linked Issues. A source author or requested reviewer is not automatically the GitView User or an identified coding agent. A link to an Issue alone does not establish a motive.
+    review: Present available aggregate review assessment and total and unresolved thread counters independently. Individual thread content is outside this overview. Lack of an available assessment differs from a known absence of reviews; the source must support either claim.
+    checks: Show current-check counts under 0028. Do not equate those counts to a list of workflow runs, individual run details, past attempts or merge eligibility.
+    change_counts: Show additions and deletions separately, along with changed-file and commit counts when observed. Unknown counts are not zero. These are measurements scoped to the observed PR state or revision; they do not include a diff, file browser or commit-by-commit view.
+    timestamps: Preserve available creation, update, closure or merge event times and source observation time as distinct values. A refresh of one scope does not update another scope's observation time.
+    description: The selected authored Problem, Motivation, Expected outcome, Changes, Validation and References sections follow 0034. A validation statement is not proof of observed CI success.
+    provenance: The selected property groups and counters follow the owner's choices; detailed uncertainty and source-observation behavior are agent-authored refinements.
+  scenarios:
+    separate_states:
+      given: An open draft PR has a failed check and an unavailable review assessment.
+      when: Its overview is displayed.
+      then: Open, draft and failed CI remain distinct and unavailable review is not presented as approval.
+    closed_without_merge:
+      given: A PR is closed without merge and its merge timestamp is unavailable.
+      when: Its lifecycle and timestamps are displayed.
+      then: It is shown as closed without merge and no merged event or merge time is invented.
+    missing_changes:
+      given: A PR has a known commit count but additions and deletions are unavailable.
+      when: Change counters are shown.
+      then: The commit count remains known while additions and deletions are unknown, not zero.
+    authored_validation:
+      given: A PR description claims validation passed while observed CI has a failure.
+      when: Both appear in its overview.
+      then: The authored text and failed CI are separately represented without converting the claim into CI success.
+  unresolved:
+  - Source mapping and availability of the selected facts, including revision association for counters.
+  - Display priority, truncation and behavior for removed or inaccessible source branches.
