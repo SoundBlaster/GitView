@@ -17,6 +17,7 @@ sources:
 acceptance:
 - A completed default Project save is recoverable as a Project and its matching default association together.
 - A retry after an interrupted save reuses a confirmed saved association and does not create a duplicate default Project for the same Repository.
+- Concurrent or late save attempts for the same Repository cannot both establish distinct active default associations for it.
 - An unavailable or inconsistent local record is reported as unresolved rather than assumed absent or overwritten.
 - Recovery of one Repository's setup outcome does not delete or alter unrelated Projects, source objects or other Repository memberships.
 specification:
@@ -28,6 +29,7 @@ specification:
   contract:
     scope: The operation concerns one confirmed source Repository and its locally saved default Project association. Multi-selection can contain multiple such operations and retains per-entry outcomes under 0045.
     atomic_visibility: For one newly created default Project, observers of durable local configuration must see either the previous state or a saved Project with its matching default association and Repository membership. The implementation may use any storage mechanism satisfying this observable invariant; this does not impose all-or-nothing behavior across the whole multi-selection.
+    concurrent_uniqueness: The local configuration enforces at most one active default association for a confirmed source Repository even if two create or retry attempts overlap or an earlier attempt commits late. At most one distinct Project can win that association. A losing or conflicting attempt must resolve to the confirmed existing Project or report a recoverable conflict; it must not overwrite an unrelated Project, erase memberships or report a second successful default association. The choice of locking, transactions, compare-and-swap or another mechanism is not prescribed.
     recover_saved: After interruption or restart, if durable local configuration confirms an association to a valid saved Project containing that same Repository, report or reuse that Project. Do not create another default Project merely because the earlier completion acknowledgement was lost.
     recover_absent: If durable local configuration is successfully read and establishes that no matching default association or pending indeterminate save exists, a later explicit retry may create the Project. An old custom Project with the same name or Repository is not silently relabeled as the default.
     recover_unknown: If configuration is unavailable, inconsistent, or cannot establish whether the previous save completed, the result remains unknown and the operator can see a recovery or retry path. Do not claim the Project was not created and do not create another default under an unverified identity merely to clear the error. Recovery must not infer identity solely from a display name.
@@ -51,7 +53,11 @@ specification:
       given: Local configuration references a default Project for R but that Project cannot be confirmed to contain R.
       when: Recovery checks the association.
       then: The inconsistency is surfaced for recovery and the app does not silently treat the reference as a valid default or create a second one.
+    competing_saves:
+      given: Two attempts for the same confirmed Repository R both begin while no default association is visible.
+      when: Their saves reach durable configuration in either order.
+      then: At most one default association for R is established; the other attempt reuses the confirmed winner or reports a recoverable conflict without creating a second successful default association.
   unresolved:
-  - Local persistence mechanism and proof that a prior indeterminate operation cannot later commit after absence has been concluded.
+  - Local persistence mechanism and evidence that concurrent or late commits enforce the stated uniqueness and visibility guarantees.
   - Recovery interaction and policy for resolving inconsistent configuration without accidental deletion.
   - Cross-process or multi-scene concurrency and source access changes while recovery is underway.

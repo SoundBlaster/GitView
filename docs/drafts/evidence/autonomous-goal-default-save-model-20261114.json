@@ -1,7 +1,7 @@
 {
   "artifact_kind": "gitview_default_save_recovery_finite_model",
   "spec": "GITVIEW-SPEC-0052",
-  "spec_sha256": "589ccbc85288a3ec314bec2f38110a18885c2cc3609f30862fd3cf09acd401be",
+  "spec_sha256": "78c958d8b37fe3d56db9ec2d40cd0059bc95809d421a949b7c87031f2b6640cf",
   "input_axes": [
     "configuration_readable",
     "project_visible",

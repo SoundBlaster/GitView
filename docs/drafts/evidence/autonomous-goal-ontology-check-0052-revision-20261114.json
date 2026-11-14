@@ -1,0 +1,21 @@
+{
+  "artifact_kind": "gitview_goal_domain_vocabulary_check",
+  "runtime": "3593bd75",
+  "context": "ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml",
+  "compiler_sha256": "30dd324aa1f641e7274a49fd6f158cced5ed95d810b6b275353d3d10f19a27cb",
+  "compiler_provenance": "not_verified",
+  "workspace": "isolated TB5 clone, candidate copied to specs/nodes",
+  "check_scope": "domain_vocabulary",
+  "semantic_approval": "not_established",
+  "scenarios_executed": false,
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0052",
+      "sha256": "78c958d8b37fe3d56db9ec2d40cd0059bc95809d421a949b7c87031f2b6640cf",
+      "outcome": "checked",
+      "context_outcome": "verified",
+      "findings": 0,
+      "gaps": 0
+    }
+  ]
+}
