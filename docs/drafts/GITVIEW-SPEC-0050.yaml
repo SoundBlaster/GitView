@@ -10,6 +10,7 @@ depends_on:
 - GITVIEW-SPEC-0023
 - GITVIEW-SPEC-0028
 - GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0061
 - GITVIEW-SPEC-0033
 - GITVIEW-SPEC-0039
 - GITVIEW-SPEC-0041
@@ -39,6 +40,7 @@ specification:
     issue: Present Repository context, Issue number, known title and open or closed state, with source closure reason when available. An Issue is not assigned PR CI or review-thread status, and closure is not automatically completion.
     missing: A source field that is unknown, stale, incomplete or restricted remains distinguishable from a confirmed empty, zero or successful field. Compactness does not authorize inventing values; detailed representations follow 0023 and the relevant object specification.
     mixed_freshness: Compact presentation must not use a newly observed title or lifecycle as evidence that omitted CI, review, thread, Issue-link or counter fields are equally fresh. Relevant limitations remain available through the preview or its accessible route to detail without exposing restricted fields.
+    check_specials: A compact PR cell or preview need not add a prominent counter beyond the selected failure, pending, success and total. When a known total includes special or unclassified status-check entries under 0061, a non-color accessible path exposes their presence and available outcome without presenting them as passed or silently describing the PR as healthy. The route may lead to the same object's overview; do not require individual check details in GitView.
     action: Provide a path to open the same object and dismiss the preview; optional source and share actions follow 0033. Dismissal and identity preservation follow 0031.
     layout: Which fields fit and how text is truncated can adapt to size and system accessibility settings. An accessible path to identify and open the object remains available under 0032; eight columns are not a requirement.
     provenance: The owner requested minimal title, ID, badges and text; this type-specific prioritization is an agent-authored proposal.
@@ -47,6 +49,10 @@ specification:
       given: A PR preview has a known title, failed CI and unavailable review assessment.
       when: The preview is shown.
       then: The PR remains identifiable, failed CI is distinguishable and review is not represented as approval or known zero.
+    special_check_in_dense_view:
+      given: A PR's complete current status-check observation contains one skipped result and no success, pending or failure entries.
+      when: Its compact representation and accessible inspection path are used.
+      then: The total can be one while the three category counts are zero; the skipped result or its special status is discoverable without a color-only cue or a claim that a check executed successfully.
     issue_closed:
       given: An Issue preview is closed with unknown source reason.
       when: The preview is shown.

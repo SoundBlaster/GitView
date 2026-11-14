@@ -31,6 +31,7 @@ depends_on:
 - GITVIEW-SPEC-0056
 - GITVIEW-SPEC-0058
 - GITVIEW-SPEC-0059
+- GITVIEW-SPEC-0061
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -108,6 +109,10 @@ specification:
       given: A Project has an observed failed check on one identified PR and another PR has unknown checks, with incomplete Project coverage.
       when: The operator opens the failed-CI signal.
       then: The observed PR is available under the failed-check condition, the unknown portion is not silently excluded as healthy, and the destination does not claim an exhaustive current total.
+    timeout_signal_to_preview:
+      given: A Project's complete observed CI summary contains one open PR with a timed-out current entry and a second open PR with a skipped entry, with no source changes during navigation.
+      when: The operator opens the failure-category signal, previews the matching PR, then inspects the second PR in the unfiltered grid.
+      then: The timeout contributes one affected PR and remains identifiable as a timeout; the skipped result is not described as a successful execution or hidden from an accessible inspection path.
     denied_preview_and_share:
       given: A private PR preview is open and a source link was eligible before explicit access denial.
       when: Denial is applied and the operator attempts to share the link.

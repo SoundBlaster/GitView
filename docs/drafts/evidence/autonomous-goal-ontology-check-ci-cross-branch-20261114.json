@@ -1,0 +1,43 @@
+{
+  "scope": "domain_vocabulary; structural advisory only",
+  "semantic_approval": "not_established",
+  "compiler_provenance": "not_verified",
+  "context_revision": "sha256:34c22c8224bcd060c427dae3820c62c3c37cd3da6c298593597ac54bba701598",
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0042",
+      "sha256": "54171af8bcc2a176b711a59170635141e26998b7d9a13b9850dc1368927f6d30",
+      "outcome": "checked",
+      "finding_count": 0,
+      "gap_count": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0043",
+      "sha256": "c33c0259548950a7a2ba14b87c3cf3593aaf2cb8c9ee37a511a49978e366e1ba",
+      "outcome": "checked",
+      "finding_count": 0,
+      "gap_count": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0047",
+      "sha256": "b8df611441fc49510184d6036dea09d6262da8fafe554a989cf3f5982b4867ce",
+      "outcome": "checked",
+      "finding_count": 0,
+      "gap_count": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0050",
+      "sha256": "a1c6e07be98dba1517ef1a7439918e6d245faa2349001eb46aaac943714b7da2",
+      "outcome": "checked",
+      "finding_count": 0,
+      "gap_count": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0057",
+      "sha256": "c12526bc5cd29dc00a9f7cbfb9a3e561c8efb2f2f3c1a0476555d202d0ea847b",
+      "outcome": "checked",
+      "finding_count": 0,
+      "gap_count": 0
+    }
+  ]
+}

@@ -11,6 +11,7 @@ depends_on:
 - GITVIEW-SPEC-0024
 - GITVIEW-SPEC-0026
 - GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0061
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0007.yaml
   today: docs/drafts/GITVIEW-SPEC-0027.yaml
@@ -33,6 +34,7 @@ specification:
     identity: A source-confirmed PR or Issue appears at most once per selected collection. Repository-local number alone is insufficient to distinguish objects. Rename or transfer with confirmed source identity does not create a second card. Observations whose identity cannot be resolved remain explicitly uncertain rather than being counted as confirmed distinct objects or silently merged by name.
     confidence: Apply the confirmed match, confirmed exclusion and uncertain candidate rules in 0027. Present confirmed matches separately from a clearly identified uncertain portion or provide an equally explicit way to inspect those candidates. An unavailable filter value is not labeled as a confirmed match; unobserved portions of a repository remain incomplete even when no candidate object is individually known.
     stale_filter: A last-known filter value may support an observed result for its own time and scope, but is not silently labeled a confirmed current match or exclusion. When current evaluation is unknown, preserve access to the affected known candidate or an equally explicit uncertainty path under 0027, and distinguish that from an exhaustive current selection. Updating another field does not refresh the filter value.
+    failed_ci_filter: The failure-category condition uses the same proposed entry mapping and applicable revision as the Project count in 0061 and 0057. When reached from the open-PR summary signal, retain its open-lifecycle condition as well as the check predicate; an independently selected failed-CI filter may have a different explicit lifecycle scope. A confirmed timed-out check or status error can match without claiming a failed test. An action-required or other special outcome is not silently classified as failure, success or healthy merely because it falls outside that category; it remains discoverable through the object's status information. Unknown applicable inputs follow uncertainty rules.
     unknowns: Where the app has a candidate object but cannot evaluate an active filter, it remains available for inspection through the uncertainty presentation. A known-false independent condition can still exclude an object; missing input alone is not a known-false condition.
     context: Density changes do not change the sorting key, active scope, period or filters. A refresh may change source timestamps and therefore order; preserve the selected object or apply the fallback in 0024 rather than treating the old cell index as identity.
     empty: When all lifecycle states are explicitly excluded, display an intentional filtered-empty result and preserve the ability to inspect scope coverage and refresh failure. When all applicable conditions are known and complete with no matches, display a confirmed empty selection. When coverage is incomplete or candidate evaluation is unknown, do not label the source result fully empty.
@@ -54,6 +56,10 @@ specification:
       given: A PR had failed CI at T1 and only its title was observed again at T2; no current CI result is available.
       when: The operator opens the current failed-CI selection.
       then: The retained T1 evidence can be inspected with its time and uncertainty; the T2 title does not turn it into a confirmed current result or eliminate it as a confirmed non-match.
+    timeout_matches_origin:
+      given: A Project failure-category signal counts one open PR whose only classified failing entry timed out, with matching scope and observation context.
+      when: The operator opens that signal with no intervening source change.
+      then: The PR matches the destination filter and its timeout remains distinguishable from a failed test; the originating unit is not relabeled as a count of failed tests.
     reordering:
       given: A selected PR remains in the active filter and receives a newer source update time.
       when: Refresh changes its position in the sorted grid.

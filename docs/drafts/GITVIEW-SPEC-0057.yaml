@@ -13,6 +13,7 @@ depends_on:
 - GITVIEW-SPEC-0039
 - GITVIEW-SPEC-0046
 - GITVIEW-SPEC-0056
+- GITVIEW-SPEC-0061
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0013.yaml
   agreed_summary: docs/drafts/project-summary-proposal.md
@@ -38,7 +39,7 @@ specification:
     coverage: Each value states or makes discoverable its object type, unit, condition, relevant time or period, scope and completeness. Coverage is assessed per metric and applicable Repository and field; an overall available-repository count alone does not prove that CI, review, Issue links or history are complete. Unknown and inaccessible inputs follow 0044 and 0046 rather than contributing zero.
     repository_count: Count distinct confirmed saved member Repository identities. If configuration or identity is uncertain, do not assert an exact distinct count. A coverage indication identifies the particular observed category and scope it describes; available membership is not itself evidence of successful GitHub observation.
     open_work: Count distinct source-confirmed open PRs, open draft PRs and open Issues separately for the stated observation context. Draft PRs are a subset of open PRs, not an additional category of work. Source data must establish identity, open lifecycle and, for the subset, the draft flag; an unknown flag is not non-draft. PR and Issue counts are not a count of independent tasks.
-    failed_ci: Count distinct open PRs with at least one confirmed failed current check in the applicable revision and observation context. A positive may be known with partial check coverage, but absence requires sufficient coverage under 0028. Optionally also report distinct affected Repositories as a separate unit; neither count is the number of failed checks.
+    failed_ci: Count distinct open PRs with at least one confirmed current status-check entry in the failure category of 0061 for the applicable revision and observation context. This includes a supported timeout or status error without calling either a failed test. A positive may be known with partial check coverage, but absence requires sufficient coverage under 0028 and 0061. Optionally also report distinct affected Repositories as a separate unit; neither count is the number of failed entries. A zero failure count does not classify special outcomes or establish healthy CI.
     review_waiting: Count distinct open PRs for which source evidence establishes an outstanding review request in the stated context. A request for a team or person is not automatically a request to the GitView operator, and an unknown request state is not zero. Source semantics for identifying an outstanding request remain to be verified.
     changes_requested: Count distinct open PRs whose applicable source review assessment reports changes requested. Preserve its revision and observation context; do not derive it from thread count or assume every change request leaves an unresolved thread.
     unresolved_review_threads: Report the number of distinct unresolved review threads and the number of distinct open PRs containing at least one separately. The first unit is threads, the second PRs. A confirmed unresolved thread can establish a positive partial observation, while an empty or complete total requires sufficient thread identity and resolution coverage.
@@ -72,6 +73,10 @@ specification:
       given: Today's open PR count is known but no supported observations or reconstruction exist for the preceding three days.
       when: A daily open-PR graph is requested.
       then: Earlier days are gaps and today's count is not copied backward or turned into zeroes.
+    timeout_and_special_outcome:
+      given: One open PR has a current timed-out check and another has a current action-required outcome, both with sufficient context.
+      when: The Project's failure-category PR count is displayed under the proposed 0061 mapping.
+      then: The timed-out PR contributes once without being called a failed test; the action-required outcome remains discoverable as special and is not described as healthy solely because it does not contribute to this count.
   unresolved:
   - Verified GitHub source mapping and semantics for outstanding review requests, blocking links, check revision and historical closure reasons.
   - Selected period presets, graph buckets, retention and historical membership basis for each displayed series.
