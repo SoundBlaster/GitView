@@ -710,3 +710,11 @@ GraphQL `PullRequestReviewThread` нет собственного `createdAt`; 0
 создания треда. Для 0094 и 0097 прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-metric-source-matrix-20261114.json)
 без findings/gaps. Просмотр документации не является проверкой разрешений,
 query, полноты источника или работающего приложения.
+
+0094 уточнён до рабочего proxy для long-thread attention: наблюдаемый
+unresolved thread в открытом PR с подтверждённым submitted comment возрастом
+не менее 24 часов. Это авторский выбор, а не доказанный смысл исходной фразы;
+он не означает непрерывного ожидания и не выдаёт timestamp comment за время
+создания thread. В 0057, 0097 и 0043 согласованы сводка, история и сценарии;
+все четыре файла прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-long-thread-comment-proxy-20261114.json)
+без findings/gaps. Source access, полезность порога и native UX не проверены.

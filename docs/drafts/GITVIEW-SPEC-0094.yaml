@@ -1,5 +1,5 @@
 id: GITVIEW-SPEC-0094
-title: GitView - Age of unresolved review threads
+title: GitView - Unresolved review threads with an older observed comment
 kind: spec
 created_at: '2026-11-14T18:37:00Z'
 status: idea
@@ -11,6 +11,7 @@ depends_on:
 - GITVIEW-SPEC-0046
 - GITVIEW-SPEC-0047
 - GITVIEW-SPEC-0057
+- GITVIEW-SPEC-0089
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0062.yaml
   project_summary: docs/drafts/project-summary-proposal.md
@@ -18,49 +19,62 @@ sources:
   source_evidence: docs/drafts/metric-source-evidence-matrix-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- An age-based attention signal identifies its time origin, reference time, threshold, scope and unit; unknown evidence is not a confirmed zero.
+- An age-based attention signal identifies its comment-time origin, reference time, threshold, scope and unit; unknown evidence is not a confirmed zero.
 - Thread creation age, duration continuously unresolved and time since last activity are distinct and are not substituted for each other.
 - A long-thread count and its affected-PR selection preserve distinct units, current resolution evidence and observation context.
 - Age or a resolved thread alone does not establish who should act, whether a review is approved or merge readiness.
 - Source availability and presentation of the age signal remain conditional on verification and do not require showing individual thread content.
 specification:
-  objective: Make the owner's requested attention to long review threads precise without inventing source timestamps or a product threshold.
+  objective: Offer a bounded working interpretation of the owner's long-thread attention using observable comment time without inventing a thread creation timestamp.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
   - gitview:PullRequest
   - gitview:ReviewThread
   contract:
-    definition: As a candidate, classify an observed currently unresolved review thread by elapsed time since its source-established creation at an explicitly stated reference time. Label this as thread age, not time continuously unresolved or time awaiting a reply. A thread reopened after being resolved can have an old creation time without having been continuously unresolved for that duration.
-    threshold: A long-thread classification requires a defined positive duration threshold and an explicit comparison boundary; neither is selected by this candidate. Until selected, available thread counts remain useful under 0062 and 0057, but no long-thread count or zero is fabricated. Exact threshold and whether the selection is exposed or configured require later product refinement.
-    evidence: Establish distinct thread identity, PR and Repository scope, applicable unresolved state and the time origin for each classification. Source timestamp mapping and reliability must be verified. Missing creation time, uncertain resolution, partial thread coverage, incompatible observation times or a reference time earlier than the origin cannot establish a negative. Preserve context and limitations under 0044 and 0046; do not claim all threads were simultaneously unresolved without sufficient evidence.
-    source_time_boundary: The documented GitHub GraphQL PullRequestReviewThread field list contains identity, comments and resolution state but no thread createdAt field. A comment's own creation time, including the earliest currently visible comment, is not automatically proof of the thread's original creation time. Any alternative time origin must have a separately specified source meaning and adequate coverage; if that evidence is absent, thread age remains unknown. This does not by itself require retaining or displaying comment bodies.
+    definition: As an agent-authored first-version proposal, identify a permitted thread as attention-worthy when it is observed unresolved on an open PR and contains at least one source-confirmed submitted review comment created at least 24 elapsed hours before the evaluation reference time. State the actual meaning as an unresolved thread with an observed comment at least 24 hours old. This is a useful attention proxy, not a claim about the thread's creation, continuous unresolved duration, last activity or time awaiting a reply. A reopened thread can match because of an older comment even if it was reopened recently. It is not a count of comments or a claim that the owner selected this precise definition.
+    threshold: The proposed initial threshold is 24 elapsed hours with an inclusive boundary; a comment exactly 24 hours before the reference time qualifies. Use actual instants and elapsed duration, not a local calendar-day change. The threshold and its meaning must be discoverable; an absent timestamp or unknown predicate input is not a zero. The owner did not separately select 24 hours, and native presentation or a future setting may change only with an explicit predicate version and compatible history.
+    evidence: Establish distinct thread identity, PR and Repository scope, applicable open and unresolved states, comment membership and submitted state, and an authentic comment creation time. One permitted, source-confirmed qualifying comment can establish a positive for that thread when the other required states are applicable; a partial comment collection does not invalidate that observed positive. Absence of such a comment in a partial collection cannot prove a negative. A negative requires sufficiently complete eligible comment coverage with usable times, or another source guarantee sufficient for this exact predicate; a timestamp in the future, unknown comment state, uncertain resolution or incompatible observations stays uncertain. Preserve context under 0044 and 0046; do not claim all threads were simultaneously unresolved without sufficient evidence.
+    source_time_boundary: The documented GitHub GraphQL PullRequestReviewThread field list contains identity, comments and resolution state but no thread createdAt field; PullRequestReviewComment has its own createdAt. The working predicate uses an observed eligible comment's creation time with that precise meaning. It does not assume that the earliest currently visible comment establishes the thread's original creation time. The proxy does not require retaining or displaying comment bodies or a list of individual threads; access to source timestamps and relevant comment state still requires independent verification.
+    time_and_state: Compare the reference instant to the selected comment's creation instant while retaining the actual observation contexts of the PR and thread. Advancing the clock can change comment-age classification, but does not prove the thread stayed unresolved or the PR stayed open since the last observation. If those states are stale or unavailable, show the prior observation with its time or an uncertain result under 0089 and 0044 rather than labeling it confirmed currently unresolved. Missing background refresh or lack of comments is not proof of no long-lived thread.
     counting: Count distinct qualifying review threads and distinct open PRs containing them separately. A partial positive can be shown with incomplete coverage; an exact total or zero requires sufficient coverage of eligible PRs and threads, their resolution and timestamps. Shared Repositories follow the Project or unique portfolio scope of 0057; affected PRs are not additional independent work items.
     routing: A count can lead to affected PRs with its originating Project, condition, reference time and coverage retained under 0047. A refreshed source observation or elapsed time can change the selection; communicate the new observation rather than claiming the earlier count still describes it. Explicit filter changes remain distinguishable from the origin.
-    boundaries: A review thread's age does not prove inactivity, elapsed unresolved time, responsibility of a person or agent, or a changes-requested decision. Other attention and lifecycle signals remain independent. Use counters or aggregate signals without requiring comment bodies, individual thread lists or a new ontology entity. Access restrictions apply to derived counts and navigation.
-    provenance: The owner requested visibility of long threads and only counters for threads. The proposed time origin, evidence requirements and scope are agent-authored; no GitHub field or native display has been verified by this candidate.
+    boundaries: An older observed comment does not prove inactivity, elapsed unresolved time, responsibility of a person or agent, or a changes-requested decision. Comment text length and number of messages are different notions of a long discussion and are not measured by this temporal proxy. Other attention and lifecycle signals remain independent. Use counters or aggregate signals without requiring comment bodies, individual thread lists or a new ontology entity. Access restrictions apply to derived counts and navigation.
+    provenance: The owner requested visibility of long threads and only counters for threads. The comment-age proxy, 24-hour threshold and evidence policy are agent-authored working choices, not an owner-selected definition or evidence of source access or native display. Public schema documents the fields but not the completeness of a particular response.
   scenarios:
     reopened_old_thread:
-      given: A review thread was created ten days ago, resolved for nine days and is currently unresolved after reopening one day ago.
-      when: A thread-age classification is evaluated against a selected threshold and supported timestamps.
-      then: Creation age is ten days; the app does not call that ten days continuously unresolved or infer ten days waiting for a response.
+      given: An open PR has a thread observed unresolved after reopening one hour ago, with a confirmed submitted comment created ten days ago.
+      when: The 24-hour comment-age predicate is evaluated for an applicable observation context.
+      then: The thread is an observed positive because of the old comment; the app does not claim ten days continuously unresolved or ten days waiting for a response.
     missing_timestamp:
-      given: Two unresolved threads are observed in an open PR, one has a qualifying verified creation time and the other has no usable creation time.
-      when: A long-thread count is evaluated with a selected threshold.
+      given: Two unresolved threads are observed in an open PR, one has a qualifying submitted comment time and the other has no usable comment time.
+      when: The 24-hour comment-age count is evaluated.
       then: The known positive is available as partial evidence and the unknown thread is not classified as young or excluded from an allegedly complete count.
     earliest_visible_comment:
       given: A thread has an accessible comment timestamp but the source evidence does not establish that this comment's time equals the thread's original creation time.
       when: A thread-creation-age predicate is evaluated.
       then: The comment time is not silently asserted to be the thread creation time; the thread-age classification remains unknown unless independent adequate evidence exists.
-    unknown_threshold:
-      given: Unresolved review threads and their creation times are known but no threshold has been selected.
-      when: The Project summary is shown.
-      then: Ordinary unresolved-thread counts remain available and no long-thread count, including zero, is asserted.
+    partial_comments:
+      given: An unresolved thread on an open PR has an incomplete comment collection, including one eligible comment created 25 hours before the reference instant.
+      when: The comment-age predicate is evaluated.
+      then: That observed comment supports a positive for the thread; the unobserved comments and wider thread population do not become complete solely from that positive.
+    partial_comments_without_positive:
+      given: An unresolved thread has a partial comment collection containing only a submitted comment created one hour before the reference instant.
+      when: The comment-age predicate is evaluated.
+      then: The thread remains uncertain, because an unseen eligible older comment may exist; it is not asserted negative solely from the recent comment.
+    exact_threshold:
+      given: An unresolved thread on an open PR has an eligible source-confirmed comment created exactly 24 hours before the reference instant.
+      when: The proposed comment-age predicate is evaluated.
+      then: The thread qualifies at the inclusive boundary; a local time-zone or calendar-day change does not alter the elapsed-duration comparison.
+    old_state_after_clock_advances:
+      given: A thread was last observed unresolved before its eligible comment reached the 24-hour threshold, but no applicable later thread-state observation exists.
+      when: The clock advances past the threshold.
+      then: The comment age can be computed but the app does not assert that the thread is confirmed unresolved now; it preserves the old state time or marks current status uncertain.
     distinct_units:
       given: Two qualifying unresolved threads belong to the same open PR and all relevant coverage is sufficient.
       when: The signal and its destination are shown.
       then: The signal can identify two threads and one affected PR without treating them as three tasks.
   unresolved:
-  - Verify whether permitted GitHub data can establish thread creation and resolution with adequate scope, identity and timing; this candidate does not select an API request.
-  - Select the age definition, threshold and comparison boundary before claiming an executable long-thread predicate.
+  - Verify actual permission and coverage for submitted comments, timestamps, thread resolution and PR state; this candidate does not select an API request.
+  - Evaluate the usefulness and labeling of the 24-hour comment-age proxy; it is an agent-authored default rather than evidence of what the owner meant by a long thread.
   - Determine accessible compact presentation and refresh behavior on actual devices without exposing restricted information.

@@ -85,6 +85,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    aged_comment_with_incomplete_thread_history:
+      given: An open PR has one observed unresolved review thread containing a confirmed submitted comment created 25 elapsed hours before the reference instant; other threads and comments are only partly observed.
+      when: The Project's proposed 24-hour comment-age attention and its history are inspected.
+      then: The supported thread can contribute one observed positive with incomplete coverage, without asserting the thread was continuously unresolved for 25 hours or treating the observed count as a complete Project total.
     attention_history_units:
       given: One Project's supported observation has three unresolved review threads on one open PR, while a separate PR's failed CI was observed for a different revision and time.
       when: The operator inspects the corresponding historical summary metrics.
@@ -138,7 +142,7 @@ specification:
       when: The operator saves a valid membership edit without changing the description, then opens a Project preview.
       then: The same description remains saved and is inspectable through the Project route even if omitted from compact preview; no GitHub Repository description is changed.
     old_thread_partial_signal:
-      given: Two unresolved threads belong to one open PR; one qualifies under a selected creation-age threshold while the other's creation timestamp is unavailable.
+      given: Two unresolved threads belong to one open PR; one has a submitted comment at least 24 hours old and the other's eligible comment history is unavailable.
       when: The operator opens the Project's long-thread signal and previews the affected PR.
       then: The known qualifying thread identifies one affected PR, the unknown thread and incomplete coverage remain distinguishable, and neither age nor unresolved state is represented as review approval or the time waiting for a response.
     preview_late_response_after_denial:
