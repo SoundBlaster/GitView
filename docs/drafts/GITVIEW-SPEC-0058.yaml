@@ -57,5 +57,6 @@ specification:
       then: R1 may become eligible for display under current access policy and R2 remains restricted pending its own access evidence.
   unresolved:
   - Actual supported GitHub authorization flow, minimum permissions, callback validation and source identity verification require source and platform research.
-  - Account switching, token expiration, provider-side revocation and policy for an interrupted secure-store operation require further specification.
+  - Token expiry and recovery are refined in 0085; the authorization mechanism, provider-side revocation and policy for an interrupted secure-store operation remain open.
+  - Account switching and credential replacement require further specification within the one-active-identity boundary.
   - Implementation and device evidence for secure storage, access enforcement and lifecycle ordering are absent.

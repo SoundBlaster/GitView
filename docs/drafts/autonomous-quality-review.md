@@ -462,3 +462,10 @@ draft.7 выбран как рабочий контекст; сохраняет�
 [draft.10](../../ontology/candidates/domain-v0.2.0-draft.10/README.md)
 выбран рабочим контекстом. Проверка имён и compiler не доказывают enforcement,
 реальную полноту source или поведение adapter.
+
+Candidate 0085 уточняет expiry credential и восстановление подключения,
+а [сверка ветви](connection-recovery-branch-review-20261114.md) разделяет
+локальную непригодность, отказ источника и disconnect. Это авторский контракт,
+не выбранный протокол и не доказательство поведения secure store или GitHub.
+[Проверка словаря](evidence/autonomous-goal-ontology-check-credential-recovery-20261114.json)
+для 0043, 0058 и 0085 не нашла findings и gaps.
