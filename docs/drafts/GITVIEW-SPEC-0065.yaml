@@ -1,0 +1,68 @@
+id: GITVIEW-SPEC-0065
+title: GitView - Evidence for historical metric values
+kind: spec
+created_at: '2026-11-14T16:16:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0030
+depends_on:
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0064
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0030.yaml
+  metric_catalog: docs/drafts/GITVIEW-SPEC-0057.yaml
+  membership_basis: docs/drafts/GITVIEW-SPEC-0064.yaml
+  source_research: docs/drafts/github-history-evidence-20261114.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A historical value distinguishes an event count, distinct objects with an event and a state snapshot at a stated time.
+- A source event can support its own occurrence and time without proving complete event coverage or a complete historical population.
+- A state snapshot requires sufficiently covered observations at the stated time or a separately justified reconstruction of every input needed for that metric.
+- Project membership basis, source access and per-Repository coverage remain attributable to each value or gap.
+- Unknown historical reasons, unavailable evidence and gaps are not represented as successful completion or zero.
+specification:
+  objective: Define the minimum evidence claims for event-based and state-based historical metrics without assuming a complete GitHub event log.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    event_occurrence: A source-confirmed event with identifiable subject, type and event time supports that event's occurrence within the stated scope. The time at which GitView learned of it is separate. A timeline API offering an event type does not by itself prove complete history, source visibility or complete traversal for a bucket.
+    event_counts: An event-count bucket needs distinct event identities or sufficient equivalent evidence to prevent repeated observations from double counting. A distinct-object outcome bucket instead counts each eligible object at most once. A full total or confirmed zero requires sufficient population and relevant event coverage across the stated Repository set and period; partial known events may be shown only as incomplete.
+    reason: A closure grouped by reason requires evidence of the reason applicable to that event. GitHub documents a nullable stateReason on its GraphQL ClosedEvent, but a missing or null reason is unknown; the object's later reason is not automatically a replacement for the event's reason. Exact source mapping and availability remain to be verified.
+    merge: A documented PR mergedAt value or MergedEvent can support a particular PR merge time when its source identity and semantics are established. It does not alone enumerate every PR that merged during a Project period or prove coverage of all members.
+    snapshot: A point-in-time count of open PRs, open Issues or attention conditions requires coverage of the relevant population and facts at the declared point. A local observation supports only the time, scope, access and fields it actually records. A point observed at one time is not automatically valid at a later bucket boundary or between observations.
+    reconstruction: A past snapshot may instead be derived when a separately specified reconstruction has a trustworthy baseline, complete relevant population, all state transitions and ordering needed for the predicate and time interval, as well as source semantics and access sufficient for the claim. If any material input is missing or unresolved, do not present a reconstructed exact total. This condition is an evidence requirement, not a claim GitHub supplies the required complete history.
+    complex_signals: A historical CI, review, thread or blocker attention value can depend on multiple independently observed facts and potentially changing associations or revisions. An Issue close/reopen event alone cannot reconstruct those signals. Retained snapshots may support points only when their own context and completeness match the metric; missing source history does not prove no signal existed.
+    membership_and_access: Use the series membership basis under 0064 and current access restrictions under 0036. Historical Project membership, source events and GitView snapshots are distinct evidence classes. Restriction of a private input also restricts revealing historical derived counts; missing member evidence is never an automatic zero.
+    retention: Do not promise indefinite source availability or automatic local collection. If a source or local retention policy has removed evidence, report its effect on coverage. Scheduling, local retention, storage representation and historical source query choices remain open.
+    provenance: The owner requested metrics and graphs where history is available. Evidence sufficiency and reconstruction requirements are agent-authored refinements and are not claims that the app has captured or tested the needed data.
+  scenarios:
+    merge_known_population_unknown:
+      given: One PR merge event in the chosen week is confirmed for one Repository while the full relevant PR population and other member coverage are unknown.
+      when: The Project's merged-PR outcome is shown.
+      then: The known event can be shown as an incomplete observation but one is not asserted as the full Project total.
+    reason_missing:
+      given: A source-confirmed Issue closure event has no available reason even though the Issue later has a current state reason.
+      when: The historical closure is grouped by reason.
+      then: Its event reason remains unknown unless separately established; the later current reason is not silently assigned to it.
+    snapshots_between_points:
+      given: Complete observations of the same open-PR metric exist at Monday and Wednesday but no adequate Tuesday state or transition evidence exists.
+      when: The daily graph shows Tuesday.
+      then: Tuesday is a gap or incomplete, not an observed value inferred by carrying Monday forward or interpolating.
+    reconstruct_with_gap:
+      given: A proposed state reconstruction has a trusted baseline but an unknown relevant reopen transition or object population gap before the target time.
+      when: A past open-Issue total is requested.
+      then: The value is not reported as an exact reconstructed Project total.
+    review_history_not_implied:
+      given: Complete Issue close and reopen events exist for a Repository but there are no historical PR review observations or proven review reconstruction.
+      when: A past review-attention graph is requested.
+      then: The review series remains unavailable or incomplete rather than being derived from unrelated Issue events.
+  unresolved:
+  - Source-specific evidence for complete object enumeration, event traversal, ordering, permission gaps and historical reconstruction.
+  - Metric-specific local snapshot frequency, retained fields, retention and user-visible graph behavior remain unselected.
+  - No source query, storage system or reconstruction algorithm has been implemented or verified.
