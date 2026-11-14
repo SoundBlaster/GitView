@@ -19,7 +19,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - A first-version long press previews the selected object and opening from that preview preserves its identity and source context.
-- Dismissal returns to the originating scope, filters and density without opening a different object.
+- Dismissal returns to the originating scope, filters and density when valid, or exposes an available fallback when the origin has changed, without opening a different object.
 - Refresh or changed filter membership while preview is visible cannot silently retarget it to another object.
 - Essential preview or opening operations remain available without requiring long press or color.
 specification:
@@ -32,8 +32,8 @@ specification:
   contract:
     activation: A long press on a Project, Repository, PR or Issue cell can present its preview. Ordinary scrolling remains available when the preview gesture is not activated; the precise gesture implementation is subject to native evaluation.
     identity: A preview refers to the selected object's stable identity in its source context rather than just the visible cell index, display name or repository-local number. An explicit open operation navigates to the same object if it remains accessible.
-    content: Preview identifies object type and sufficient source context to disambiguate it; show known title and relevant state when available. Unknown or stale facts retain their limitations; full detail is governed by object overview specs. The preview does not require a network request to display previously permitted saved data.
-    dismissal: Dismissing returns to the originating overview without performing open, share or a source mutation. Preserve scope, period, explicit filters and density and restore the prior object or fallback position under 0024.
+    content: Preview identifies object type and sufficient permitted source context to disambiguate it; show permitted known title and relevant state when available. Unknown or stale facts retain their limitations; full detail is governed by object overview specs. The preview does not require a network request to display previously permitted saved data while it remains eligible under current access policy.
+    dismissal: Dismissing returns to the originating overview without performing open, share or a source mutation when that origin remains valid. Preserve valid scope, period, explicit filters and density and restore the prior object or fallback position under 0024. If the originating Project was deleted or the Repository is no longer its member, expose the changed scope and an available route rather than silently switching Projects or claiming the old scope is valid.
     refresh: A refresh may update the selected object's observed facts while preview is visible. It must not retarget the preview to another object merely because cells move or disappear. If the object no longer matches the originating filter, preview may remain until dismissed; the collection on return reflects the filter. If access is explicitly denied, restricted cached content follows 0019 and open is not represented as successful.
     alternatives: Provide a path to identify and open an object without relying on long press, hover or color. Assistive focus returns to the original object where still available, otherwise a meaningful fallback under 0017 and 0024.
     later_scope: Sliding a single rich preview across cells is a later interaction; long-press activation, edge behavior and gesture arbitration require separate refinement and native evaluation. A static long-press preview does not establish that later interaction.
@@ -55,6 +55,10 @@ specification:
       given: A private PR preview is open and source access is explicitly denied.
       when: The updated access condition is applied.
       then: Restricted cached content follows the private-cache policy and the preview is not silently replaced with another object.
+    origin_deleted:
+      given: A PR preview was opened through Project P, which is then durably deleted while the PR remains accessible in Project Q.
+      when: The operator dismisses the preview.
+      then: GitView identifies the unavailable origin and offers a valid route without silently returning to Q or treating the PR as deleted.
   unresolved:
   - Exact preview content priorities by object type and density.
   - Native gesture arbitration, focus behavior and iOS device evidence.

@@ -222,6 +222,12 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+При сверке Project lifecycle и preview уточнён возврат после удаления origin;
+недоступность локальной конфигурации не считается удалением. Новые 0015, 0024,
+0025 и 0031 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-project-navigation-20261114.json)
+без findings и gaps. Модель Project lifecycle перезапущена для актуальных
+0025 и 0045, но она не проверяет navigation, UI или реальное хранилище.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.

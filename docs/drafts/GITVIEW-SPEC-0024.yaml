@@ -36,6 +36,8 @@ specification:
     return_in_session: Returning from a PR or Issue overview restores the originating context. The previously visible object remains the position anchor when it still exists in that filtered collection.
     changed_objects: If the anchor no longer matches or cannot be located, preserve still-valid scope and filters and avoid claiming an unrelated object is the original. If the previous ordered list contains another object still present, anchor to the nearest surviving successor, otherwise the nearest surviving predecessor. If none survives, start at the beginning of the updated collection; its empty, incomplete or error state follows 0007 and 0023. If the previous order is unavailable, start at the beginning without inventing an anchor.
     changed_membership: Resolve membership by stable identity, not repository display name. If the selected Repository is no longer a Project member, do not silently substitute another; surface the changed scope and provide a route to the Project or portfolio.
+    deleted_project: When durable local configuration confirms that the originating Project was removed, do not restore its route as a valid Project or silently switch to another Project that shares a Repository. Identify the removed local scope and provide a route to the portfolio or another explicitly chosen valid scope. A pending or failed local configuration read does not prove removal and follows 0023 instead.
+    open_object_after_scope_change: If an accessible PR or Issue overview or preview is already open when its originating Project is deleted or its Repository is removed from that Project, it may remain associated with that same object under current access policy. It must not be relabeled as belonging to another Project or silently navigate there. On return or dismissal, report the changed origin and offer an available route rather than restoring an invalid Project or Repository scope.
     unavailable: Temporary observation failure does not by itself prove the Project or Repository disappeared. Where access is explicitly denied, follow 0019's cache policy and provide an available route out without displaying restricted content.
     signal_entry: A signal-origin route identifies the signal's active selection; returning does not discard that selection without operator action. Editing or clearing filters follows 0007.
     zoom: A density change preserves the active context and uses the focused object as anchor when it remains available; any change of scope is explicit.
@@ -51,6 +53,14 @@ specification:
       given: The current Project no longer includes the selected Repository.
       when: The operator returns to the prior repository-scoped collection.
       then: GitView reports the scope change and offers a route to an available Project or portfolio without substituting another repository.
+    deleted_origin:
+      given: Project P and Project Q both contain Repository R, and a PR from R is open through P.
+      when: P is durably deleted while the PR remains accessible, then the operator returns.
+      then: GitView identifies that P is no longer available and offers a route to the portfolio or an explicitly selected Project; it does not silently relabel the origin as Q or delete R's observed data.
+    unknown_origin_configuration:
+      given: A previously opened Project cannot currently be looked up because local configuration is unreadable.
+      when: The operator returns from an object.
+      then: The origin is reported as temporarily unverifiable rather than confirmed deleted, and a safe recovery path remains available.
     source_failure:
       given: A previously observed selected Repository is temporarily offline.
       when: The operator returns to its work collection.
@@ -78,4 +88,4 @@ specification:
   unresolved:
   - Stable sort order for the collection is owned by 0007 and proposed in 0042; this fallback operates on the last known ordered collection. The ordering proposal still needs review.
   - System lifecycle boundaries, multiple scenes and behavior for account changes require platform and access refinement; cold-launch overview is an agent-authored default, not an explicit owner selection.
-  - Treatment of a deleted Project versus temporarily unavailable local configuration.
+  - Exact presentation and accessible focus after a deleted Project or temporarily unavailable local configuration require native UX evaluation.

@@ -26,7 +26,7 @@ specification:
   requirements:
   - In the first version, long press opens an expanded preview, from which the user can open the same
     object.
-  - Dismissing the preview returns to the originating grid and scope.
+  - Dismissing the preview returns to the originating grid and scope when valid, or offers an available fallback when that origin is no longer valid.
   - Later, support a single rich preview that changes the shown object as the finger moves from cell to
     cell, without navigating into each object.
   - Long press is a hypothesis for activating the sliding interaction; resolve its conflict with scrolling
@@ -45,7 +45,7 @@ specification:
   - 'First version: long press presents a preview of the same Project, Repository, PR or Issue, with an
     explicit way to open it and a way to dismiss without navigation.'
   - On dismissal or return retain the originating scope, filter and density and restore position where
-    available.
+    valid and available; if the origin no longer exists, provide a meaningful available fallback.
   - The later sliding rich preview changes one preview as the user inspects neighboring cells without
     automatically opening them; long press is a proposed activation, not settled gesture arbitration.
   - An accessible non-long-press path to inspect or open the object is required.
@@ -69,7 +69,7 @@ specification:
 acceptance:
 - 'First version: long press presents a preview of the same Project, Repository, PR or Issue, with an
   explicit way to open it and a way to dismiss without navigation.'
-- On dismissal or return retain the originating scope, filter and density and restore position where available.
+- On dismissal or return retain the originating scope, filter and density and restore position where valid and available; if the origin no longer exists, provide a meaningful available fallback.
 - An accessible non-long-press path to inspect or open the object is required.
 acceptance_evidence:
 - criterion: The pilot contract and its boundary scenarios are independently checkable.

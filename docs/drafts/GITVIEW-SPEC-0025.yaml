@@ -51,6 +51,10 @@ specification:
       given: The operator explicitly removed the default Project for R while R remains in Project Q.
       when: R appears in a later discovery result without a new setup confirmation.
       then: Q is unchanged and no replacement Project is created merely by discovery.
+    delete_origin_while_viewing:
+      given: R belongs to both P and Q, and an accessible PR from R is being viewed through P.
+      when: P is durably removed and the operator leaves the object overview.
+      then: Q and R remain unchanged and the navigation result follows the removed-origin policy in 0024 rather than treating Q as the same Project.
     repeat_setup:
       given: An existing default association for R points to Project P and R also belongs to custom Project Q.
       when: The operator reconfirms R in setup.
