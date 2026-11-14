@@ -1,0 +1,87 @@
+id: GITVIEW-SPEC-0108
+title: GitView - Setup and Project creation route composition
+kind: spec
+created_at: '2026-11-14T20:35:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0022
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0040
+- GITVIEW-SPEC-0045
+- GITVIEW-SPEC-0052
+- GITVIEW-SPEC-0059
+- GITVIEW-SPEC-0079
+- GITVIEW-SPEC-0098
+- GITVIEW-SPEC-0099
+- GITVIEW-SPEC-0100
+- GITVIEW-SPEC-0103
+- GITVIEW-SPEC-0104
+- GITVIEW-SPEC-0105
+- GITVIEW-SPEC-0106
+- GITVIEW-SPEC-0107
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0022.yaml
+  work_route: docs/drafts/GITVIEW-SPEC-0107.yaml
+  selection: docs/drafts/GITVIEW-SPEC-0045.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A startup route distinguishes a confirmed empty Project collection from partial or unreadable local configuration and connection state.
+- Connection, app installation, discovery and explicit Project save remain independently evidenced and owned throughout setup.
+- Default batch setup and custom Project creation preserve their distinct intent, identities and outcomes.
+- Interrupted or cancelled batch work is recovered without automatic submission of unstarted entries or duplication of confirmed Projects.
+- The page composes connection, discovery and local save through injected public boundaries without sibling-feature dependencies or raw credentials in presentation state.
+- Controlled tests can independently vary local storage, source, access, time and interruption; actual GitHub and native behavior remain separately verified.
+specification:
+  objective: Assign ownership and data flow for the first setup and Project creation routes in the selected FSD composition.
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Project
+  - gitview:Repository
+  contract:
+    startup_owner: App composition supplies local configuration, connection and access capabilities. The overview or its setup route reads the Project collection through the 0104 domain-aware boundary and retains its own route state. A complete valid empty collection offers setup; a partial read may expose independently valid permitted Projects with a coverage limitation; unreadable or inconsistent configuration offers local recovery without declaring first launch or erasing data. A local empty collection, expired credential and failed GitHub discovery are distinct conditions.
+    source_ownership: The connection responsibility owns the user-authorized account session and credential lifecycle under 0098. Installation and Repository discovery provide separately scoped source observations under 0059 and 0099. They do not own local Project configuration and an external return does not establish a grant, a selected Repository or a Project. App-level composition supplies access-scoped capabilities; setup presentation and Project domain policies do not hold raw tokens or directly import an authentication sibling feature.
+    presentation_owner: The setup or discovery page owns the active presentation, query, pending selected Repository identities, original connection context and explicit intent as either default setup or custom Project. The selection is a draft and does not mutate saved membership or GitHub. Extract connection, discovery or confirmation actions as features only where useful; a page or higher composition joins them without direct sibling-feature dependencies. Closing an unsubmitted selection does not delete unrelated saved Projects.
+    eligibility: Before an entry can be submitted for local save, apply its confirmed source identity, current applicable account and access evidence under 0036, 0038, 0045 and 0099. Discovery success for one installation does not establish another installation's coverage or PR and Issue observations. A disappeared item in partial discovery is not necessarily deleted; a changed account or denied access cannot be bypassed by stale page state. Access-check and entry admission must be coordinated with applicable account and cancellation changes so an old read alone cannot authorize a newly submitted entry after the change.
+    default_batch: An explicitly confirmed nonempty default selection creates a durable batch intent and per-entry operation contexts before any corresponding Project mutation under 0045 and 0103. Each entry uses 0104 and 0052 to reuse or establish at most one active default association for its confirmed Repository. Process results separately; the batch is not one implicit multi-Repository Project and cannot claim all-or-nothing completion. If the durable intent cannot be established, no entry from that new batch starts.
+    custom_creation: A distinct explicit custom-Project intent presents and confirms one valid name, optional purpose and one or more eligible Repository identities. It submits a separate local creation operation under 0025, 0103 and 0104; matching a previous Project's name or members does not make it a default setup or a retry. An unknown prior creation outcome is reconciled before an unsafe retry; a later independently confirmed intentional creation remains distinct.
+    result_and_transition: A confirmed Project configuration can appear in the normal overview as soon as it is independently readable and permitted, even when other batch entries fail or remain unresolved. Its PR and Issue observations remain unobserved until separately obtained. Moving from setup to the overview or a Project preserves the actual saved Project identity and scope; it does not treat source authorization, installation or a save receipt as a successful data refresh. The local Project boundary remains authoritative after navigation under 0107.
+    restart_and_cancel: On restart, read confirmed Projects independently from the batch's durable selection and operation outcomes. Reconcile submitted or uncertain entries against actual operation and configuration evidence; expose unreadable portions as local recovery problems. Do not automatically submit unstarted entries or resume a cancelled batch solely due to restart. Cancellation prevents future entry admission after its durable boundary but does not assert rollback of an earlier in-flight commit. Previously confirmed Projects remain accessible where permitted.
+    account_change_and_denial: A pending selection and submitted batch retain their initiating account context. A new account requires fresh identity, access evidence and explicit confirmation for remaining entries; a late response or receipt from the earlier account cannot create a selection for the new account or lift a current denial. Reconciliation of a prior local outcome does not require presenting restricted source-derived details. Existing Project configuration and accessible observations follow their own saved identity and access policies.
+    accessibility: Connection, discovery scope and limitations, distinct creation intents, confirmation, per-entry outcomes, cancellation and recovery must be available without relying only on color, long press or a timed gesture. The exact native controls, screen allocation and announcements remain open; source-restricted identities and counts are not exposed to explain a limitation.
+    verification: Under 0040 and 0079 specify TDD scenarios with injected local configuration, source, access, clock and operation outcomes for empty versus unreadable startup, partial discovery, account switch, durable intent failure, cancellation race, lost acknowledgement and later work refresh failure. Check actual authorization, source grant changes, persistent restart and native accessibility separately. These are planned tests, not executed product evidence.
+    provenance: One default Project per Repository, custom multi-Repository Projects, retained local data and FSD with DI and TDD are owner choices. The setup page ownership and composition are agent-authored proposals; they do not claim a selected screen hierarchy, live installation, database or implementation.
+  scenarios:
+    unreadable_startup_with_saved_data:
+      given: A valid Project was previously saved but the current local Project collection read is unavailable.
+      when: The app starts while GitHub is also offline.
+      then: Local recovery and source connectivity remain distinguishable, the app does not assert an empty portfolio or reset configuration, and it can show independently recoverable permitted Projects if supported.
+    authorized_without_installation:
+      given: The user identity is confirmed but no applicable installation or Repository grant has yet been established.
+      when: The operator enters discovery.
+      then: Setup can offer a permitted user-initiated access-review route, but does not create a Project or assert an empty GitHub account from authorization alone.
+    partial_batch_restart:
+      given: A confirmed two-entry batch durably saved the first default Project and did not submit the second before termination.
+      when: The app restarts and independently reads the Project and batch records.
+      then: The saved Project appears under its identity, the remaining entry retains its actual status and is not automatically submitted, and no work observation is fabricated.
+    connection_changes_during_confirmation:
+      given: A selection was confirmed under account A and the active account changes to B while one entry is not yet admitted for save.
+      when: The setup composition attempts to continue.
+      then: The old confirmation does not authorize submission under B; completed or in-flight A outcomes are reconciled separately and remaining work requires the applicable new confirmation and access evidence.
+    local_save_succeeds_refresh_fails:
+      given: A selected Repository's default Project is durably saved and its first PR refresh later fails.
+      when: The operator enters that Project.
+      then: The saved Project remains identifiable, the refresh failure and unobserved work are distinguishable, and neither empty PR data nor failed Project creation is inferred.
+    explicit_custom_and_default:
+      given: Two Repositories have existing default Projects and the operator explicitly confirms a custom Project containing both.
+      when: The custom save is durably confirmed.
+      then: One distinct Project with both members becomes available; the existing default associations remain unchanged and no extra source grant is inferred.
+  unresolved:
+  - Specify concrete startup and setup presentation, accessibility focus, callback handling and storage recovery interfaces after upstream contracts and native constraints are reviewed.
+  - Verify source-specific eligibility, account-change coordination and the selected GitHub App flow against actual operations and permissions.
+  - No FSD modules, source or persistence adapter, controlled product tests or native behavior have been implemented or verified.

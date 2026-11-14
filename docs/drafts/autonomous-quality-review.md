@@ -229,6 +229,15 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+[0108](GITVIEW-SPEC-0108.yaml) описывает FSD-композицию первого запуска,
+подключения и локального сохранения Projects. Раздельно представлены source
+identity, installation/grant, discovery, подтверждённый batch и durable
+Project; добавлены сценарии restart, смены account и ошибки первого refresh.
+[Candidate и ontology advisory](evidence/autonomous-goal-ontology-check-setup-composition-20261114.json)
+прошли без findings, gaps и warnings. Снимок содержит 108 кандидатов и 50
+структурных листьев без отсутствующих целей или циклов. GitHub, storage и
+native setup в приложении не проверялись.
+
 [0107](GITVIEW-SPEC-0107.yaml) выбирает первоначальную FSD-композицию
 Project-work domain, route-level page и отдельно подключаемых действий; общий
 transport и storage не знают предметные типы, sibling features не импортируют
