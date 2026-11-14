@@ -1,0 +1,72 @@
+id: GITVIEW-SPEC-0082
+title: GitView - Concurrent Project edits and deletion
+kind: spec
+created_at: '2026-11-14T17:09:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0025
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0045
+- GITVIEW-SPEC-0052
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0025.yaml
+  setup_recovery: docs/drafts/GITVIEW-SPEC-0052.yaml
+  ontology_boundary: ontology/review/remove-repository-action-candidate.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A save based on an obsolete Project configuration does not silently replace a newer confirmed edit.
+- Conflicting or indeterminate edit outcomes remain distinguishable from confirmed save, cancellation and confirmed rollback.
+- A confirmed Project deletion cannot be silently undone by an edit submitted against its earlier identity.
+- Concurrent default-Project setup and membership edits retain at most one valid default association for the same confirmed Repository.
+- A Project edit preserves the nonempty membership invariant and does not mutate unrelated Projects or GitHub source objects.
+- Recovery paths and required conflict information respect private-data access and are reachable without relying solely on a gesture or color.
+specification:
+  objective: Define observable behavior for overlapping local Project edits, removal and default setup without choosing a persistence or concurrency mechanism.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  contract:
+    edit_context: Each pending edit is associated with the stable local Project identity and the saved configuration on which the edit was based. A display name or membership coincidence is not that identity. A pending draft is not a saved edit and does not alter other views until a valid save is confirmed under 0025.
+    stale_base: If a different confirmed edit changes the same Project before a pending edit is saved, do not silently apply a whole stale configuration over the newer one. Reject or defer the stale save as a conflict, retain the confirmed configuration, and provide a way for the operator to review and submit a fresh edit. A separately specified merge is possible only if it preserves the intended changes and invariants; no automatic merge rule is selected here.
+    no_lost_update: Concurrent operations need a durable ordering or equivalent guarantee so that validating an old base and later committing cannot overwrite an intervening confirmed change. A check performed only before the commit is insufficient. This is an observable invariant, not a mandate for a database transaction, lock or specific version format.
+    delete_before_edit: If deletion of Project P is durably confirmed before an edit based on P's former configuration can commit, the stale edit must not recreate P, reattach its default association or report a successful edit to P. Identify the changed origin and offer an available route under 0024. A later explicit Project creation is a separate operation with a new identity, not silent resurrection.
+    edit_before_delete: If a valid edit is durably confirmed before an explicitly requested deletion of the same Project is evaluated, the deletion must operate on the confirmed Project identity and report its actual outcome; it must not claim that unrelated Projects or source Repositories were deleted. If the applicable delete intent or scope can no longer be established, report conflict or uncertainty instead of guessing which Project to delete. Exact deletion confirmation remains open.
+    unknown_outcome: An acknowledgement loss or unreadable configuration leaves the affected operation's outcome indeterminate until durable evidence reconciles it. Do not automatically replay an old edit or delete in a way that overwrites a newer configuration, resurrects a deleted Project or implies rollback. A confirmed unrelated Project remains available under its own access policy.
+    default_association: For the same confirmed source Repository, overlapping setup, removal from an edited default Project and deletion must satisfy the uniqueness and valid membership guarantees of 0025 and 0052. If their relative durable outcomes cannot yet be established, report an unresolved result and do not claim two active defaults, a dangling association, or a completed replacement. A new default may arise only through a later valid explicit setup confirmation under 0025 and 0045.
+    input_and_invariants: A save cannot persist an empty Project name or zero members. Source Repository identity must be sufficiently established for any newly added member; a same-named discovery result, a late response from another account or lack of access does not authorize a substitution. Removing a member affects only the selected Project and associated local default configuration when applicable; it never deletes a GitHub Repository or another Project's membership.
+    recoverable_interaction: The operator can distinguish a stale-base conflict, an unknown save outcome, an invalid proposed membership and a confirmed deletion, and can reach an appropriate review, retry or exit route without relying only on color or a timed gesture. Show only permitted names, membership details and source context; unreadable or restricted information is not a confirmed empty Project.
+    provenance: Project composition and shared membership follow the owner's choices. Stale-edit rejection, durable ordering and interaction boundaries are agent-authored refinements rather than claims of a selected database, multi-scene feature or implemented behavior.
+  scenarios:
+    concurrent_membership_edits:
+      given: Project P is saved with members A and B; two pending edits start from that same configuration, one adding C and one removing B.
+      when: Adding C is durably saved before the other stale edit attempts to save.
+      then: The stale edit cannot silently replace P with A alone and erase C; it is reported for review or another separately specified safe merge, while the confirmed A B C configuration remains until a valid subsequent save.
+    rename_and_membership:
+      given: Two pending edits of P start from the same saved state, one renaming P and one changing its members.
+      when: The rename is confirmed before the membership edit attempts to save.
+      then: The second edit does not silently restore the old name; the newer configuration remains or an explicitly defined safe merge is performed.
+    deleted_while_editing:
+      given: P is being edited while another operation explicitly deletes P, and the delete is durably confirmed first.
+      when: The old edit later reaches its commit boundary.
+      then: P and its old default association are not recreated, the edit is not reported successful, and another Project sharing a Repository remains unchanged.
+    edit_maybe_committed:
+      given: A Project edit may have committed before acknowledgement is lost and local configuration cannot be read.
+      when: The operator returns to the overview and asks to retry.
+      then: The affected outcome remains unknown with a recoverable path; GitView does not assert rollback, automatically overwrite a possible newer edit or present old membership as confirmed current.
+    setup_races_with_removal:
+      given: Default Project P contains R and S, an edit removes R while an explicit setup confirmation for R overlaps, and both operations refer to the same confirmed source identity.
+      when: Their durable outcomes are reconciled.
+      then: Any active default association points to a saved Project containing R, at most one is active for R, P retains its valid remaining membership, and an indeterminate ordering is not reported as two confirmed successes.
+    restricted_conflict:
+      given: An edit conflict concerns a Project name or Repository details derived from a private source whose access has been explicitly denied.
+      when: The conflict is presented and the operator requests recovery.
+      then: Restricted source details are not exposed to explain the conflict, and a permitted accessible route remains available.
+  unresolved:
+  - Exact merge, conflict-resolution and unsaved-draft policies, including multi-scene interaction, require product and accessibility design.
+  - Durable ordering, compare-and-save semantics and deletion coordination require storage design and tests of the chosen implementation.
+  - Default-association lifecycle and formal actor/action handling remain draft proposals and require independent review.
