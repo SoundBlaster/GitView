@@ -30,6 +30,7 @@ specification:
   contract:
     today: Today is the device's current local calendar day, with an inclusive start and exclusive next-day boundary. Re-evaluate it when the current day or device time zone changes; use local calendar boundaries rather than assuming every day has the same duration.
     context: Re-evaluation changes the interval represented by the dynamic Today selection but preserves the selected Project, Repository scope, object type and explicit filters. Source event and observation timestamps are not rewritten.
+    active_gesture: If the boundary changes while a density or scroll gesture is active, mark the Today interval as changed and calculate the new selection, but defer disruptive grid reordering until the current gesture ends or is cancelled. During that interval the previous grid is not presented as a fully current view of the new day. A preview or detail already open remains bound to its object under open_object. The app does not indefinitely defer updating after the interaction ends.
     unfinished: A known currently open PR or Issue remains eligible as unfinished across a day boundary even if created earlier; same-day merged or closed outcomes are evaluated against the newly current day without treating every closure as successful completion. Additional historical grouping and reopen history follow 0007 and 0027.
     coverage: If the new day or affected Repository has not been observed sufficiently, represent unknown or incomplete scope under 0044; do not declare a confirmed empty day merely because the currently loaded list has no matches.
     open_object: If a PR or Issue overview or preview is open when Today changes, keep it associated with the same source object; do not navigate to a different object or dismiss it solely because its prior card no longer belongs to Today. On return, update the collection and use 0024's anchor fallback if the object no longer matches.
@@ -52,6 +53,10 @@ specification:
       given: A source timestamp lies on different local dates in the old and new device time zones.
       when: The device time zone changes while Today is active.
       then: Today is evaluated using the new local boundaries and the stored source timestamp remains unchanged.
+    active_pinch:
+      given: The operator is pinching a Today grid when the local calendar day changes.
+      when: The new day's selection is calculated while the pinch remains active.
+      then: The old arrangement is not silently claimed as the current day and disruptive reordering is deferred until the gesture ends or is cancelled; Project, filter and selected identity remain intact where valid.
   unresolved:
   - Fixed historical period behavior across a time-zone change and long-running navigation session.
-  - When and how the UI presents a day-boundary change during an active gesture without disrupting accessibility.
+  - Exact accessible indication and native implementation of a deferred visual update require device evaluation.

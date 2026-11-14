@@ -57,6 +57,9 @@ UI state не преобразовывался в ontology entities; смысл�
 
 Новые 0049 и 0050 получили `checked` по [словарю](evidence/autonomous-goal-ontology-check-0049-0050-20261114.json)
 без findings и gaps; их UX и platform-сценарии остаются неисполненными.
+После уточнения активного жеста новые байты 0049 проверены
+[повторно](evidence/autonomous-goal-ontology-check-0049-revision-20261114.json)
+без findings и gaps; прежний отчёт для 0049 относится к старой версии.
 
 ## Существенные нерешённые зависимости
 
