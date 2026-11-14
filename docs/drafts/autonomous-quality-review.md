@@ -303,6 +303,13 @@ omitted и error-bearing значения не приравниваются к �
 без findings и gaps. Pagination counterexample перезапущен для новой SHA 0044;
 семантику конкретных GitHub responses и revision он не проверяет.
 
+Частичные поля PR и Issue сверены в [таблице](leaf-readiness-0039-0041.md),
+обновлены 0039, 0041 и 0050. Первоначальная проверка YAML выявила авторскую
+синтаксическую ошибку в 0041; она исправлена до повторной проверки. Финальные
+байты прошли [проверку словаря](evidence/autonomous-goal-ontology-check-object-fields-20261114.json)
+без findings и gaps, а граф ссылок — проверку циклов. Source mapping и UI не
+проверялись.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.

@@ -38,6 +38,7 @@ specification:
     pull_request: Present Repository context, PR number, known title and lifecycle, with draft flag, CI summary, review assessment and unresolved-thread count where available. Keep CI, review and threads independent and do not expose individual run or thread content as part of these counters.
     issue: Present Repository context, Issue number, known title and open or closed state, with source closure reason when available. An Issue is not assigned PR CI or review-thread status, and closure is not automatically completion.
     missing: A source field that is unknown, stale, incomplete or restricted remains distinguishable from a confirmed empty, zero or successful field. Compactness does not authorize inventing values; detailed representations follow 0023 and the relevant object specification.
+    mixed_freshness: Compact presentation must not use a newly observed title or lifecycle as evidence that omitted CI, review, thread, Issue-link or counter fields are equally fresh. Relevant limitations remain available through the preview or its accessible route to detail without exposing restricted fields.
     action: Provide a path to open the same object and dismiss the preview; optional source and share actions follow 0033. Dismissal and identity preservation follow 0031.
     layout: Which fields fit and how text is truncated can adapt to size and system accessibility settings. An accessible path to identify and open the object remains available under 0032; eight columns are not a requirement.
     provenance: The owner requested minimal title, ID, badges and text; this type-specific prioritization is an agent-authored proposal.
@@ -54,6 +55,10 @@ specification:
       given: A Project preview would otherwise include a default name derived from a private Repository whose access is explicitly denied.
       when: The preview is displayed.
       then: Restricted source-derived details and private counts are not exposed; an access problem and safe route remain available.
+    mixed_freshness:
+      given: An Issue preview has a title observed recently and related-PR data only from an earlier observation.
+      when: The preview summarizes available information.
+      then: It does not imply that the related-PR data was refreshed with the title, and its applicable stale or incomplete context remains discoverable.
   unresolved:
   - Exact layout, field priority at each density and excerpt length require native UX evaluation.
   - Detailed classification of user-supplied versus source-derived Project names follows the access branch.

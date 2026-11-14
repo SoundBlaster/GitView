@@ -501,10 +501,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0039",
-      "sha256": "12ede83f34a9a0b6c942672516e3415963e1cc78cad301eb457d5cfcce6367f8",
+      "sha256": "8eef9355d4ab42dbbe9e24185208cea525c102b9e004746e17cf264e2714842c",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "12ede83f34a9a0b6c942672516e3415963e1cc78cad301eb457d5cfcce6367f8",
+      "reported_sha256": "8eef9355d4ab42dbbe9e24185208cea525c102b9e004746e17cf264e2714842c",
       "checked": [
         "yaml_mapping",
         "spec_kind",
@@ -527,10 +527,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0041",
-      "sha256": "ea9572f294931734bf41d8319c285bc20ba4e3c56e04488224f56d48c5a65faa",
+      "sha256": "243cfa9c7f93851dc9e99dc6e4479d07641c494a2692e167e1875bb331dcf234",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "ea9572f294931734bf41d8319c285bc20ba4e3c56e04488224f56d48c5a65faa",
+      "reported_sha256": "243cfa9c7f93851dc9e99dc6e4479d07641c494a2692e167e1875bb331dcf234",
       "checked": [
         "yaml_mapping",
         "spec_kind",
@@ -644,10 +644,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0050",
-      "sha256": "75743bd875ae7ff6c3cf528e028d6df0f04c5c3e1bb15d66d7dcb6aa605037ff",
+      "sha256": "11fada848635cc23795282d026bc1baf2596854231469d7bbb5ba1173c1454ed",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "75743bd875ae7ff6c3cf528e028d6df0f04c5c3e1bb15d66d7dcb6aa605037ff",
+      "reported_sha256": "11fada848635cc23795282d026bc1baf2596854231469d7bbb5ba1173c1454ed",
       "checked": [
         "yaml_mapping",
         "spec_kind",

@@ -10,6 +10,7 @@ depends_on:
 - GITVIEW-SPEC-0002
 - GITVIEW-SPEC-0026
 - GITVIEW-SPEC-0034
+- GITVIEW-SPEC-0044
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0009.yaml
   selected_fields: docs/drafts/issue-ontology-options.md
@@ -34,6 +35,7 @@ specification:
     discussion: Show comment and participant counts as distinct units when observed. Issue comments are not PR review threads; no unresolved-review-thread count is fabricated for an Issue. A known zero is distinct from missing or incomplete count data.
     direct_children: Show total direct sub-issues and closed direct sub-issues as separate counts when available. These are not transitive descendants and their ratio is not a percentage of completed work; closed children can have different source reasons.
     timestamps: Creation, update, closure, last comment and observation times have different meanings. A source update time is not automatically a last-comment time; an unavailable time remains unknown.
+    partial_fields: Apply the field evidence and refresh rules in 0044 independently to state, reason, participants, links, counters and body. A newer title or state observation does not make omitted links, counts or description current. Preserve previously accepted permitted facts with their own context or indicate unavailability; a null-like error or omitted association is not automatically a known empty set.
     description: Structured sections follow 0034. Authored motivation remains a statement, not proof of an actor's motive or observed result.
     provenance: The selected fields and role distinctions follow the owner's accepted Issue field set; the detailed unknown and evidence handling are agent-authored refinements.
   scenarios:
@@ -53,6 +55,14 @@ specification:
       given: An Issue's comment count is unavailable while its participant count is known.
       when: Discussion metrics are shown.
       then: The participant count remains available and the comment count is unknown, not zero.
+    partial_title_and_links:
+      given: An Issue's closing links and discussion counts were observed at T1, and a later response at T2 supplies its new title but omits those fields.
+      when: The Issue overview is displayed.
+      then: The title can use T2 while the earlier permitted links and counts keep their T1 context or are shown unavailable; GitView does not clear them or claim they were refreshed at T2.
+    partial_children:
+      given: Two direct sub-issues are observed but the source does not establish that all direct sub-issues were returned.
+      when: The Issue's direct-sub-issue summary is shown.
+      then: The observed contribution can be presented with incomplete coverage, without asserting two is the complete total or inferring a completion percentage.
   unresolved:
   - Source availability and exact mapping for direct hierarchy, blocking links, participants and last-comment time require source-specific verification.
   - Display priority, paging of related objects and treatment of ambiguous source links require product refinement.

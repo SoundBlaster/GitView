@@ -11,6 +11,7 @@ depends_on:
 - GITVIEW-SPEC-0026
 - GITVIEW-SPEC-0028
 - GITVIEW-SPEC-0034
+- GITVIEW-SPEC-0044
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0008.yaml
   selected_fields: docs/drafts/pull-request-ontology-options.md
@@ -35,6 +36,7 @@ specification:
     checks: Show current-check counts under 0028. Do not equate those counts to a list of workflow runs, individual run details, past attempts or merge eligibility.
     change_counts: Show additions and deletions separately, along with changed-file and commit counts when observed. Unknown counts are not zero. These are measurements scoped to the observed PR state or revision; they do not include a diff, file browser or commit-by-commit view.
     timestamps: Preserve available creation, update, closure or merge event times and source observation time as distinct values. A refresh of one scope does not update another scope's observation time.
+    partial_fields: Apply 0044 per fact. A response with the PR's title or head revision does not by itself refresh omitted review, check, thread or change-count observations. A retained value remains tied to its own observation and applicable revision; if its relationship to the current revision or access cannot be established, expose that limitation rather than presenting it as a current success or zero.
     description: The selected authored Problem, Motivation, Expected outcome, Changes, Validation and References sections follow 0034. A validation statement is not proof of observed CI success.
     provenance: The selected property groups and counters follow the owner's choices; detailed uncertainty and source-observation behavior are agent-authored refinements.
   scenarios:
@@ -54,6 +56,10 @@ specification:
       given: A PR description claims validation passed while observed CI has a failure.
       when: Both appear in its overview.
       then: The authored text and failed CI are separately represented without converting the claim into CI success.
+    title_only_refresh:
+      given: A PR had a review assessment and check counts observed at T1; a later response at T2 contains only a changed title.
+      when: The PR overview is displayed.
+      then: The title may carry T2 while review and checks retain their T1 context or are unavailable; they are not silently assigned T2 or cleared.
   unresolved:
   - Source mapping and availability of the selected facts, including revision association for counters.
   - Display priority, truncation and behavior for removed or inaccessible source branches.
