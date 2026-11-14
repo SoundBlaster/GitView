@@ -1,0 +1,57 @@
+id: GITVIEW-SPEC-0049
+title: GitView - Today boundary and active navigation
+kind: spec
+created_at: '2026-11-14T14:10:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0027
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0042
+- GITVIEW-SPEC-0044
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0027.yaml
+  navigation: docs/drafts/GITVIEW-SPEC-0024.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The Today selection tracks the current local calendar day without changing stored source timestamps.
+- A day or time-zone change does not silently change the Project, Repository scope or explicit filters.
+- A selected object overview or preview is not replaced with another object solely because Today changes.
+- Missing coverage for the newly evaluated day remains unknown or partial rather than a confirmed empty selection.
+specification:
+  objective: Define the visible effect of a local Today boundary while the operator is navigating or inspecting work.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    today: Today is the device's current local calendar day, with an inclusive start and exclusive next-day boundary. Re-evaluate it when the current day or device time zone changes; use local calendar boundaries rather than assuming every day has the same duration.
+    context: Re-evaluation changes the interval represented by the dynamic Today selection but preserves the selected Project, Repository scope, object type and explicit filters. Source event and observation timestamps are not rewritten.
+    unfinished: A known currently open PR or Issue remains eligible as unfinished across a day boundary even if created earlier; same-day merged or closed outcomes are evaluated against the newly current day without treating every closure as successful completion. Additional historical grouping and reopen history follow 0007 and 0027.
+    coverage: If the new day or affected Repository has not been observed sufficiently, represent unknown or incomplete scope under 0044; do not declare a confirmed empty day merely because the currently loaded list has no matches.
+    open_object: If a PR or Issue overview or preview is open when Today changes, keep it associated with the same source object; do not navigate to a different object or dismiss it solely because its prior card no longer belongs to Today. On return, update the collection and use 0024's anchor fallback if the object no longer matches.
+    explicit_period: A user-selected explicit period is not silently relabeled as the new dynamic Today. Exact historical grouping and how a fixed period is interpreted after a time-zone change remain open; the interface must retain enough context to distinguish the fixed choice from Today.
+    provenance: The owner requested unfinished work and same-day results; local-calendar semantics and boundary behavior are agent-authored proposals.
+  scenarios:
+    midnight:
+      given: The active Today view contains an open Issue created yesterday and a PR merged earlier in the current local day.
+      when: The device moves to the next local day and the selection is recalculated.
+      then: The open Issue remains eligible, while the prior-day merged PR is not kept in the new Today solely because of that earlier merge.
+    preview_at_boundary:
+      given: A PR preview is open from Today and the PR will not match the next local day.
+      when: The local day changes.
+      then: The preview remains associated with the same PR; after dismissal the refreshed collection and fallback position follow 0024.
+    new_day_unobserved:
+      given: The local day changes but current observations do not establish complete coverage for the new day.
+      when: Today is shown.
+      then: Known eligible work can be shown with incomplete coverage and no confirmed empty day is asserted.
+    time_zone:
+      given: A source timestamp lies on different local dates in the old and new device time zones.
+      when: The device time zone changes while Today is active.
+      then: Today is evaluated using the new local boundaries and the stored source timestamp remains unchanged.
+  unresolved:
+  - Fixed historical period behavior across a time-zone change and long-running navigation session.
+  - When and how the UI presents a day-boundary change during an active gesture without disrupting accessibility.
