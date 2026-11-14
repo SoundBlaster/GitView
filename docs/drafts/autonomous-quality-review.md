@@ -157,6 +157,10 @@ pending-состояния. Она не проверяет атомарност�
 без findings и gaps. Это не проверка source ordering или реального разрешения
 конфликтов наблюдений.
 
+После уточнения границы показа данных при temporary failure и explicit denial
+0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
+без findings и gaps. Реальная защита приватного кэша не проверялась.
+
 После отделения будущего sliding preview от acceptance первой версии новые
 байты 0015 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-0015-scope-20261114.json)
 без findings и gaps. Первоначальное смешение scope было ошибкой авторского

@@ -293,10 +293,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0023",
-      "sha256": "78736053be3923b9bb6580617dcecf2db89588dad9a16bfbb12fb50e54617932",
+      "sha256": "18e7bc2244d5050068978df5ef871fbced9fa04a9f4db34cb93cb3a951771835",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "78736053be3923b9bb6580617dcecf2db89588dad9a16bfbb12fb50e54617932",
+      "reported_sha256": "18e7bc2244d5050068978df5ef871fbced9fa04a9f4db34cb93cb3a951771835",
       "checked": [
         "yaml_mapping",
         "spec_kind",

@@ -18,7 +18,7 @@ sources:
   authorization: conversation:gitview/excerpt-68
 acceptance:
 - The overview distinguishes no configured Projects from unobserved work and a failed or partial observation.
-- Known prior values remain scoped and accompanied by their freshness and failure or coverage indication when refresh fails.
+- Prior values eligible for display remain scoped and accompanied by their freshness and failure or coverage indication when a temporary refresh fails; explicit denial follows the private-cache policy.
 - Explicit source access denial follows 0019's private-cache policy; temporary offline failure is distinct.
 - Necessary state distinctions are available without relying solely on color.
 specification:
