@@ -1,0 +1,61 @@
+id: GITVIEW-SPEC-0032
+title: GitView - Accessible grid and navigation
+kind: spec
+created_at: '2026-11-14T13:39:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0017
+depends_on:
+- GITVIEW-SPEC-0014
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0031
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0017.yaml
+  grid: docs/drafts/GITVIEW-SPEC-0014.yaml
+  navigation: docs/drafts/GITVIEW-SPEC-0024.yaml
+  preview: docs/drafts/GITVIEW-SPEC-0031.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Essential overview navigation, scale changes, object inspection and refresh have accessible paths that do not require a particular gesture or color.
+- An accessible representation identifies the object's type, source context and known relevant state without announcing unknown as success.
+- Returning from an object or dismissing its preview restores meaningful focus without silently identifying another object as the original.
+- Larger text and reduced motion retain access to information and navigation without a fixed grid density.
+specification:
+  objective: Describe observable accessibility outcomes for dense overview, preview and return navigation.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    object: An assistive representation communicates the object type and enough identity to distinguish it within the current scope, including source Repository context where PR or Issue numbers could collide. It exposes known title or number and relevant available status; a missing value remains unknown rather than success.
+    actions: An accessible way to change grid density, select and open an object, dismiss a preview, return, refresh and reach active filters is available without relying solely on pinch, long press, pointer hover or color. Exact native controls and actions remain implementation decisions.
+    focus: On dismissing preview or returning from an object, restore accessibility focus to the same object when it remains available in the active selection. If it is gone, use the same surviving successor/predecessor anchor rule as 0024 where possible; otherwise focus a meaningful element describing the updated collection or its empty/error state. Do not falsely announce another object as the original.
+    status: Loading, failure, incomplete scope and explicit access denial remain distinguishable through non-color information and must not expose restricted private content. Presenting a changing status must not automatically claim every category has refreshed.
+    layout: Dynamic Type and available screen dimensions may reduce column count or alter layout while preserving object access and context. Eight columns and 100 objects are design illustrations, not a condition for accessibility.
+    motion: With Reduce Motion, the user can understand the transition and resulting location without depending on animated movement. No specific transition animation or platform API is mandated.
+    validation: Verify behavior with VoiceOver, larger text and Reduce Motion on supported iOS devices after implementation; these are future checks, not evidence of present app behavior.
+    provenance: The owner chose native Apple conventions and a scalable grid; detailed accessibility outcomes are agent-authored refinements.
+  scenarios:
+    ambiguous_number:
+      given: Two Repositories in a Project each contain an Issue numbered 42.
+      when: A VoiceOver user reaches each Issue in the grid.
+      then: The descriptions identify the source Repository sufficiently to distinguish the two Issues.
+    preview_removed:
+      given: A previewed PR no longer matches its original filter and VoiceOver is active.
+      when: The operator dismisses its preview.
+      then: Focus returns to a valid surviving anchor or meaningful collection state without labeling a different PR as the original.
+    larger_text:
+      given: A large system text size is selected.
+      when: Eight columns would make object information unusable.
+      then: The grid may use fewer columns while preserving object identification and navigation.
+    unavailable_status:
+      given: A PR's CI status has not been observed.
+      when: Its accessible description is read.
+      then: CI is not announced as passed or as zero failed checks.
+  unresolved:
+  - Supported iOS versions, exact accessibility actions, reading order and device-specific focus behavior require platform evaluation.
+  - How quickly asynchronous content changes are announced without excessive interruption requires user testing.
