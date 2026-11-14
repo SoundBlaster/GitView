@@ -29,7 +29,7 @@ sources:
     sha256: 56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f
   ontology_draft: ontology/packages/gitview/README.md
   ontology_composition_pilot: ontology/pilots/motivation-composition/README.md
-  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.6/composition-context.yaml
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.7/composition-context.yaml
   project_sources_commit_scope: Pins the earlier background source documents; the later identity decision
     is separately pinned by sketch revision, excerpt refs and review document digest.
   repository_identity_decision:

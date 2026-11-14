@@ -437,3 +437,9 @@ storage и не доказывает факт выполнения действ�
 0061 прошёл [проверку словаря](evidence/autonomous-goal-ontology-check-ci-coherence-20261114.json)
 без findings и gaps. Новый смысл CIStatus в package не утверждён; source
 mapping и исполнение продукта не проверялись.
+
+[Сверка всех шести прямых потребителей CIStatus](../../ontology/review/ci-status-consumer-audit.md)
+не обнаружила необходимости считать отдельное значение status агрегатом.
+После [сравнения 84 candidate specs](../../ontology/candidates/domain-v0.2.0-draft.7/verification.json)
+draft.7 выбран как рабочий контекст; сохраняется warning в 0001.
+Смысловая и source-интеграционная проверка не установлены.

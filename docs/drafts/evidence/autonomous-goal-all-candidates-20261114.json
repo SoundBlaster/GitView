@@ -7,10 +7,10 @@
   "results": [
     {
       "id": "GITVIEW-SPEC-0001",
-      "sha256": "d0ac824162e9395a4a2bee035a1663745b490359001b35df867e5918e543280f",
+      "sha256": "7a1e2789cad192e2db7ab2c23081d6659f180d95e4448786e3b386f8ee629399",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "d0ac824162e9395a4a2bee035a1663745b490359001b35df867e5918e543280f",
+      "reported_sha256": "7a1e2789cad192e2db7ab2c23081d6659f180d95e4448786e3b386f8ee629399",
       "checked": [
         "yaml_mapping",
         "spec_kind",
@@ -59,10 +59,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0005",
-      "sha256": "0e1c5497042a41bacf2eb6ca5c1a1b53f9ff538ec5a077850d290380971610b4",
+      "sha256": "19c0e570d4cc746c881216aaf4283c24013435e57b2f97069860da24f39213fe",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "0e1c5497042a41bacf2eb6ca5c1a1b53f9ff538ec5a077850d290380971610b4",
+      "reported_sha256": "19c0e570d4cc746c881216aaf4283c24013435e57b2f97069860da24f39213fe",
       "checked": [
         "yaml_mapping",
         "spec_kind",
@@ -319,10 +319,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0025",
-      "sha256": "adf6a256aab0e292cd8d3a16225779915c4326dc87e57232fe8f69c61c60c069",
+      "sha256": "bc32f4a91cfb441b07a727d89f11c83ead08ad9e79caf45b7a41528fe5e03a00",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "adf6a256aab0e292cd8d3a16225779915c4326dc87e57232fe8f69c61c60c069",
+      "reported_sha256": "bc32f4a91cfb441b07a727d89f11c83ead08ad9e79caf45b7a41528fe5e03a00",
       "checked": [
         "yaml_mapping",
         "spec_kind",
@@ -1086,10 +1086,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0084",
-      "sha256": "a5a361272a503b8f91df737ac4c30090844e3871471ecdea67d5d6ce3ebe3141",
+      "sha256": "2b68ea39dd585fc20a12499cabd7dd496924b83ec2bd3e6b1e07a9d08bddfabb",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "a5a361272a503b8f91df737ac4c30090844e3871471ecdea67d5d6ce3ebe3141",
+      "reported_sha256": "2b68ea39dd585fc20a12499cabd7dd496924b83ec2bd3e6b1e07a9d08bddfabb",
       "checked": [
         "yaml_mapping",
         "spec_kind",
