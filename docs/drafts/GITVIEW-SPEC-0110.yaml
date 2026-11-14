@@ -23,6 +23,7 @@ sources:
   specification_core_source: /Users/egor/Development/GitHub/Specification Project/SpecificationCore/Sources/SpecificationCore/Core/DecisionSpec.swift
   specification_core_first_match: /Users/egor/Development/GitHub/Specification Project/SpecificationCore/Sources/SpecificationCore/Specs/FirstMatchSpec.swift
   specification_core_observed_revision: 483214469828c42f7b615654aa70d0acbecc4dbf
+  input_evidence_review: docs/drafts/today-input-evidence-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The selection decision receives normalized scoped facts, explicit filter context and their supported truth values; it performs no source, storage or navigation effects.
@@ -45,6 +46,7 @@ specification:
     predicates: For each eligible candidate derive a three-valued scope condition S, open-work alternative O, in-day creation alternative C, and in-day closure or merge alternative E using the applicable facts and local half-open interval. Derive each explicitly active type, lifecycle or attention filter F independently. True and false mean supported in the stated context, not eternal or necessarily simultaneous source truth. A timestamp of retrieval alone is not an event; a prior-day closure is not a Today event. A candidate's current state and an event that qualifies it are distinct facts.
     truth_domain: Use values true, false and unknown. For OR, true dominates; all operands false yields false; otherwise the result is unknown. For AND, false dominates; all operands true yields true; otherwise the result is unknown. No active optional filters means their conjunction is true. For each candidate evaluate base as O OR C OR E and result as S AND base AND every applicable active filter. Interpret true as a confirmed match in the supplied context, false as a confirmed non-match in that context and unknown as an uncertain candidate. A negated filter must preserve unknown rather than turning it into true.
     applicability: Derive O, C, E and each filter only from facts applicable to the actual object type, identity, scope, event time and relevant revision under 0089. A true same-day event need not establish current lifecycle or a separate CI filter. An unavailable current CI value is unknown even if an old result remains visible as last known. A confirmed false condition may determine exclusion despite another unknown condition, but only for the supported scope and time. This pure decision must not turn an unsupported absence into false.
+    input_evidence: The input review distinguishes identification and presentation fields from the independently evaluated open, creation and closure-or-merge alternatives, active filter facts and population coverage. A source-reported creation instant can support C in the selected half-open local day; a source-supported merge or closure event can support E in that day. Current open or closed state alone is not an exhaustive history of today's transitions. An updated timestamp is an ordering observation, not an event type. A null, older or unavailable closure timestamp is not automatically proof that no qualifying closure occurred during the whole day without source-backed event and coverage semantics.
     output: Return per permitted confirmed-identity candidate its classification and supporting context or references to that context, together with separately attributed population coverage and limitations. The decision does not need to expose restricted candidate identity or existence to report an allowed scope-level limitation. A complete per-candidate classification of the known input list does not prove the entire requested source population was observed. Do not derive a source count, current timestamp or coherent snapshot merely from the number of classified inputs.
     filtered_empty: If the operator explicitly excludes every lifecycle state applicable to the selected object types, the visible result is intentionally filtered empty. Preserve the active exclusions and any separately applicable incomplete coverage, refresh failure or access limitation; this empty view is not evidence that the source has no work. In ordinary cases, confirmed empty requires adequate population and filter coverage under 0102 and no uncertain matching candidate in the claim's permitted scope.
     effects_and_determinism: The same normalized inputs and captured calendar context yield the same classifications without reading a clock, database or network during evaluation. A day, time-zone, source, access or membership change is supplied as a new evaluation context, not an implicit mutation of the earlier result. A later observation or route transition cannot retroactively give an earlier mixed-time result a common snapshot time.
@@ -57,6 +59,18 @@ specification:
       given: A permitted identified Issue is in scope, is confirmed open, was not created today and has unknown closure history; no optional filter excludes it.
       when: The decision evaluates Today.
       then: The open alternative makes the base inclusion true and the Issue is a confirmed contextual match despite unknown closure history.
+    old_closed_with_unproven_day_events:
+      given: An identified permitted Issue is confirmed closed in the supplied current context, was created before today, and no source-backed evidence establishes whether any closure occurred during today.
+      when: The unfiltered Today decision evaluates it.
+      then: Open and creation alternatives are false but the closure alternative is unknown, so the Issue remains an uncertain candidate rather than a confirmed exclusion or a confirmed same-day outcome.
+    reopened_with_confirmed_today_closure:
+      given: An Issue created before today has a source-confirmed closure event today and is independently observed open after a reopen.
+      when: The unfiltered Today decision evaluates it.
+      then: It is one confirmed matching Issue through both supported alternatives, with current open state and the earlier closure event kept distinct; it is not two cards or proof that every intervening event was observed.
+    title_without_lifecycle:
+      given: A partial response contains a permitted PR identity and title but fails to provide applicable lifecycle, creation and closure-or-merge evidence.
+      when: The unfiltered Today decision evaluates the candidate.
+      then: The title remains independently usable for safe identification and the Today result remains unknown, not confirmed open, absent or excluded.
     false_scope_masks_unknown:
       given: A permitted identified PR is confirmed outside an explicitly selected Repository and its lifecycle and CI are unknown.
       when: The current selection is evaluated.
