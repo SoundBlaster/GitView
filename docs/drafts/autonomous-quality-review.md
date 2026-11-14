@@ -430,3 +430,10 @@ Candidate 0084 разделяет текущее membership, намерение,
 [Проверка словаря](evidence/autonomous-goal-ontology-check-membership-lifecycle-20261114.json)
 не нашла findings и gaps. Она не проверяет корректность семантики, UI или
 storage и не доказывает факт выполнения действий.
+
+[Сверка CIStatus и Metric](../../ontology/review/ci-metric-composition-review.md)
+предлагает для дальнейшего review узкий смысл CIStatus и выявила необходимость
+явно разделить несовместимые наблюдения одной check в счётчиках. Обновлённый
+0061 прошёл [проверку словаря](evidence/autonomous-goal-ontology-check-ci-coherence-20261114.json)
+без findings и gaps. Новый смысл CIStatus в package не утверждён; source
+mapping и исполнение продукта не проверялись.

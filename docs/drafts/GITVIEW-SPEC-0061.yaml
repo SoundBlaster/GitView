@@ -10,6 +10,7 @@ depends_on:
 - GITVIEW-SPEC-0028
 - GITVIEW-SPEC-0044
 - GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0053
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0060.yaml
   owner_counters: docs/drafts/pull-request-ontology-options.md
@@ -34,6 +35,7 @@ specification:
     other: Completed neutral, skipped, cancelled, stale and action-required results are retained as distinct special outcomes outside the three counts in this initial conservative proposal. Unknown values and unsupported or inconsistent status/conclusion combinations are unclassified rather than forced into a color. A source-reported startup failure is not silently treated as a check-run outcome without establishing its actual source type.
     result_semantics: GitHub documents that skipped or neutral may satisfy required-check policy in the documented branch-protection context. That policy result is not equivalent to a check having executed successfully; retain the original outcome. A visual summary is not a branch-protection or merge decision. Future source-verified UX may choose different color grouping only if the meaning and special outcomes remain explicit.
     total: The total counts all source-confirmed distinct current entries in the stated scope, including known special outcomes and entries with unclassified result. It is exact only with sufficient entry identity and collection coverage. Thus failure plus pending plus success can be less than total. Make the existence and number of other or unclassified entries discoverable without requiring a separate prominent counter on the compact cell.
+    count_consistency: The relation between category counts and total applies only to the same compatible entry set, revision context and evaluation. Do not manufacture a coherent current set by combining independently refreshed categories, pages or retries whose ordering or applicability is unresolved. A source-confirmed entry with incompatible unordered pending and failure observations is not simultaneously counted in both categories; its current category remains uncertain under 0053. Independently supported earlier observations can remain identifiable with their own context under 0046, without presenting their arithmetic as a single current rollup.
     contradictory: A completed run without a usable conclusion, a nonterminal state paired with an incompatible terminal result, or insufficient evidence to associate a result with the applicable revision is not silently classified as success or a confirmed failure. Show the relevant uncertainty or incompleteness. Preserve raw source provenance for later reconciliation under 0053.
     accessibility: Counts are available through non-color labels or accessible descriptions and retain the difference between zero, unavailable, incomplete and special outcomes. Exact glyphs and placement follow the native design and accessibility specifications.
     provenance: The owner chose compact red/yellow/green/total counters and GitHub as an orienting behavior. The conservative mapping of special outcomes is an agent-authored working proposal, not a claim that GitHub renders every entry with the same color.
@@ -58,6 +60,10 @@ specification:
       given: A sufficiently complete source observation proves no current entries for the selected context.
       when: Counters are displayed.
       then: Total and category counts can be shown as known zero without implying that checks passed or that the PR is mergeable.
+    unordered_category_change:
+      given: Two incompatible observations of the same identified current entry say pending and failure, and no evidence orders them.
+      when: Current counters are evaluated.
+      then: The entry is not counted as both pending and failure or silently assigned a current category; an applicable earlier value may remain last known with conflict and its own context, while any affected exact current category count remains uncertain.
   unresolved:
   - Verify the selected source schemas, applicability, retry selection and handling of special outcomes against actual GitHub PR observations.
   - Whether a future design groups special outcomes differently and how the compact interface exposes them require native UX and accessibility evaluation.

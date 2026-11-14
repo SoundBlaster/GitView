@@ -1,0 +1,31 @@
+{
+  "runtime": "3593bd75",
+  "context_revision": "sha256:e8adc00713102d5003e7b9e28769737c663e96fc18ff12ef68b875f2ca74bce8",
+  "compiler_provenance": "not_verified",
+  "semantic_approval": "not_established",
+  "scope": "domain_vocabulary structural advisory; no source, product or device behavior executed",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-goal-ontology-fpa2m90i",
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0061",
+      "sha256": "008c78ee713325176754d6bd9e713c176c706fb6461ab48a4590e50f326a2f2a",
+      "outcome": "checked",
+      "summary": {
+        "binding_index": {
+          "spec_count": 1,
+          "accepted_binding_count": 2,
+          "relation_candidate_count": 0,
+          "gap_count": 0,
+          "next_gap": "review_legacy_spec_ontology_bindings"
+        },
+        "validation_report": {
+          "spec_count": 1,
+          "finding_count": 0,
+          "warning_count": 0,
+          "passed_check_count": 0,
+          "next_gap": "review_spec_ontology_validation_findings"
+        }
+      }
+    }
+  ]
+}
