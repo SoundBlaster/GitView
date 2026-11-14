@@ -37,6 +37,7 @@ depends_on:
 - GITVIEW-SPEC-0071
 - GITVIEW-SPEC-0072
 - GITVIEW-SPEC-0073
+- GITVIEW-SPEC-0074
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -62,6 +63,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    direct_signal_return:
+      given: The operator opens a failed-CI signal on Project P in the portfolio and the affected PRs are in two different member Repositories.
+      when: The operator inspects the cross-repository selection and returns without entering a member Repository separately.
+      then: The destination retains P and the signal scope and distinguishes the Repositories; return goes to the originating portfolio and preserves its valid density and position.
     accessible_focus_after_refresh:
       given: A VoiceOver user is inspecting one of two same-numbered PRs from different Repositories in a filtered Project grid.
       when: A refresh reorders the grid and the selected PR's filter result becomes uncertain.
