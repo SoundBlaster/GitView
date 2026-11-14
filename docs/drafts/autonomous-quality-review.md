@@ -229,6 +229,16 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+[0107](GITVIEW-SPEC-0107.yaml) выбирает первоначальную FSD-композицию
+Project-work domain, route-level page и отдельно подключаемых действий; общий
+transport и storage не знают предметные типы, sibling features не импортируют
+друг друга. Выбор предложен агентом по локальным FSD-правилам на ревизии
+`21731b9`; это не новый термин онтологии и не реализация модулей. [Candidate и
+ontology advisory](evidence/autonomous-goal-ontology-check-fsd-ownership-20261114.json)
+прошли без findings, gaps и warnings. На новом структурном снимке 107 узлов и
+49 листьев, отсутствующих целей и циклов нет; фактический architecture lint,
+TDD и platform behavior не выполнялись.
+
 Для фильтров и сводок уточнён контекст mixed-freshness входов: отдельные
 наблюдения не доказывают одновременную текущую комбинацию. Новые 0027, 0042 и
 0046 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-filter-freshness-20261114.json)
