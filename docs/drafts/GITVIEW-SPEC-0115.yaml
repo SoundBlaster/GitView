@@ -1,0 +1,87 @@
+id: GITVIEW-SPEC-0115
+title: GitView - Project Today inspection route assembly
+kind: spec
+created_at: '2026-11-14T21:49:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0107
+depends_on:
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0042
+- GITVIEW-SPEC-0049
+- GITVIEW-SPEC-0073
+- GITVIEW-SPEC-0074
+- GITVIEW-SPEC-0075
+- GITVIEW-SPEC-0091
+- GITVIEW-SPEC-0093
+- GITVIEW-SPEC-0101
+- GITVIEW-SPEC-0102
+- GITVIEW-SPEC-0108
+- GITVIEW-SPEC-0109
+- GITVIEW-SPEC-0110
+- GITVIEW-SPEC-0112
+- GITVIEW-SPEC-0113
+- GITVIEW-SPEC-0114
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0107.yaml
+  journey: docs/drafts/GITVIEW-SPEC-0096.yaml
+  decision: docs/drafts/GITVIEW-SPEC-0110.yaml
+  preview: docs/drafts/GITVIEW-SPEC-0093.yaml
+  original_source: docs/drafts/GITVIEW-SPEC-0033.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- One route instance composes a confirmed Project and its selected scope, applicable observations, Today policy and independent population coverage without conflating them.
+- Density change, preview, object overview and source handoff preserve the actual source object and originating Project context subject to current access.
+- Confirmed and uncertain known candidates, missing population, stale facts and refresh or storage failure remain separately observable throughout the route.
+- A late response, old preview callback, day or membership change cannot silently replace the currently selected route context or restore restricted data.
+- Opening GitHub is a platform handoff for an eligible observed object link, not proof that the destination loaded or the recipient has access.
+- The assembly has observable acceptance scenarios and injected boundaries, but this specification does not claim a product, completed TDD cycle or device behavior.
+specification:
+  objective: Assemble the Project to Today to preview to original-source journey from the selected policy, data, navigation and platform contracts.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    route_ownership: The Project work page or an equivalent route-level owner under 0096 and 0107 retains its Project identity, Project-wide or explicit Repository intent, dynamic Today context, explicit filters, density, origin and permitted navigation anchor. A one-Repository Project may enter its work directly while keeping Project and Repository identities separate. Selection, source refresh, credential handling and source opening remain replaceable capabilities supplied by valid higher-level composition, not sibling-feature imports or presentation-owned source truth.
+    input_and_policy: Read the current confirmed saved membership through 0104; supply accepted, identity-normalized and permitted PR or Issue observations, applicable access facts, captured local calendar boundaries and explicit filter state to the pure 0110 Today decision. Pass population coverage independently under 0102. The policy neither performs I-O nor establishes that every source object was observed. A restricted candidate is not included in visible or accessible output merely to explain an uncertain result.
+    presented_result: Project the policy result into the confirmed and needs-verification portions proposed by 0042, plus a persistent safe collection limitation where coverage, storage or refresh is incomplete. A known permitted positive can remain visible without implying a complete Project total. Per-field observation and revision context remain distinct; a source refresh of one field is not a whole-object or whole-Project timestamp. Selected CI and review signals follow their own 0061 and 0062 contracts.
+    density_and_preview: A pinch or accessible density alternative changes layout without changing scope, selected filters or source identity under 0074 and 0075. A first-version static long press may request a preview of one eligible identified object under 0093; a non-long-press path exposes its permitted information and opening action. The preview has a distinct presentation lifetime, uses current allowed facts and offers Open for the same object or dismissal. It does not open GitHub automatically or expose individual diff, check, comment or review-thread contents.
+    detail_and_source: Opening the preview or cell enters the same permitted PR or Issue overview; available selected facts remain reachable under 0041 or 0039. The separately invoked Open on GitHub or Share action uses the source-observed eligible object link and current access under 0033. A Project itself is local and cannot acquire a fabricated source link from one member. A last-known link can be offered with its limitation where allowed; handler acceptance does not prove the intended source object loaded. Return follows the actual route and stable identity or a valid fallback under 0024.
+    result_relevance: Capture the route instance, Project identity, member basis, source account, selected object identity when relevant, day or fixed period, filters and applicable access context for every asynchronous result. A result can be retained as evidence only under its own scope and storage policy; it updates the current presentation only after its context, ordering, object and current permissions are independently applicable. A previously dismissed preview's callback cannot directly update a newly opened preview, even of the same object. Refreshing another field cannot confer a new observation time on CI, review or coverage.
+    transitions: Membership edits, explicit filter edits, local day or time-zone changes and account or access changes trigger reevaluation with the new context; old results are not relabeled as new. Ordinary reordering may be deferred during an active gesture under 0073 and 0075, but access restriction is applied immediately to app-controlled content. If a previewed object stops matching the collection, keep that preview bound to the object while it remains permitted; on dismissal use an identity-preserving anchor or a supported collection fallback. If access is denied, withhold the restricted preview and handoff content rather than keeping it for navigation continuity.
+    source_and_storage_outcomes: An accepted source observation and its local retention result are distinct under 0105. Current-session presentation may use supported permitted data while clearly reporting a failed durable save; after restart, only independently confirmed readable retained data may be claimed. A source, access or storage failure preserves saved Projects and prior eligible observations as specified by their own contracts, and cannot be reported as an empty repository or successful refresh. The account-binding procedure under 0114 does not make category-specific source data current.
+    verification_plan: Before declaring implementation readiness, resolve the named upstream decisions, define public interface shapes and ownership for the selected FSD boundaries, source-to-domain identity and coverage mapping, and native control and handoff behavior. Under 0040 and 0079 plan TDD with injected time, source, storage, access and opener for scoped selection, partial coverage, type and lifecycle filters, missing URL, denial during preview, stale callbacks and return after membership change. Record controlled tests separately from later real GitHub, durable restart, physical-device and accessibility evidence. No numeric GitHub request budget is selected here.
+    provenance: The owner selected a dense Project overview, Today retaining same-day completed work, native first-version preview, source navigation, FSD, DI, TDD and mocks. This assembly and its FSD responsibility assignment are agent-authored working refinements rather than an approved technical implementation.
+  scenarios:
+    known_and_unknown_to_preview:
+      given: Project P contains Repositories A and B; A has a permitted PR with confirmed failed CI, another permitted PR has unknown CI, and B's applicable work scope is unobserved.
+      when: The operator opens P's failed-CI selection and previews the uncertain PR at compact density.
+      then: The first PR is a confirmed match, the second stays in the labeled uncertain portion with its identity and context, B contributes a separate coverage limitation rather than fabricated cells, and previewing does not change P or the filter.
+    source_link_after_preview:
+      given: A permitted PR preview opened from P has an observed link associated with that PR and no known conflicting address evidence.
+      when: The operator opens the same PR overview and explicitly requests its source.
+      then: GitView offers or hands off only the eligible observed PR link with any last-known limitation; the platform request does not prove the page loaded or imply a source mutation.
+    deny_before_source_action:
+      given: A private PR preview is open while a source refresh is in flight and its source action was previously eligible.
+      when: An explicit applicable denial is established before the operator requests the source.
+      then: Restricted preview facts and link are withheld, the older refresh cannot restore access by arrival order, and a permitted recovery route replaces neither the object nor the Project.
+    scope_changes_while_preview_open:
+      given: A PR preview was opened from Project P while its Repository was a member, and a confirmed Project edit removes that Repository while access to the PR remains permitted.
+      when: The preview is dismissed after an old Project-wide refresh finishes.
+      then: The preview was not retargeted, the old refresh keeps its former member basis, and the current collection uses P's new membership and a valid anchor fallback without including the removed Repository as a current member.
+    refresh_succeeds_save_unknown:
+      given: A source returns an applicable new title for a PR but the local retention outcome is indeterminate and older retained data was previously observed.
+      when: The current route presents the supported title and the process subsequently restarts.
+      then: The source observation and uncertain save remain distinct; after restart the app does not claim the new title is durably recovered unless independent storage evidence supports it.
+    day_change_in_preview:
+      given: A merged PR qualifies for Today and its permitted preview is open when the device crosses into a new local day.
+      when: The operator dismisses the preview after Today is reevaluated.
+      then: The preview remained bound to that PR, the new day and its coverage are represented honestly, and a valid collection fallback is used if the PR no longer matches.
+  unresolved:
+  - Define actual source-to-domain mappings, public interface shapes and ownership of source, storage, clock, access and navigation boundaries after prerequisite decisions are complete.
+  - Verify native density, static preview, focus, source handoff and their interaction on supported devices without assuming a particular system API satisfies the contract.
+  - The assembled route is pre-canonical and no product implementation, TDD cycle, real source integration or native behavior has been executed.

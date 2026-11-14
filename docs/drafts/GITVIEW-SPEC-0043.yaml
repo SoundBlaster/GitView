@@ -70,6 +70,7 @@ depends_on:
 - GITVIEW-SPEC-0110
 - GITVIEW-SPEC-0113
 - GITVIEW-SPEC-0114
+- GITVIEW-SPEC-0115
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
