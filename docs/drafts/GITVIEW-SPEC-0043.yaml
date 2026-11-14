@@ -35,6 +35,7 @@ depends_on:
 - GITVIEW-SPEC-0061
 - GITVIEW-SPEC-0062
 - GITVIEW-SPEC-0063
+- GITVIEW-SPEC-0066
 - GITVIEW-SPEC-0071
 - GITVIEW-SPEC-0072
 - GITVIEW-SPEC-0073
@@ -84,6 +85,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    current_refresh_with_missing_history:
+      given: A Project has a previously retained open-PR sample, the next day's background opportunity does not occur, and a later source refresh succeeds while retaining its new history sample fails.
+      when: The operator opens the Project overview and the historical series.
+      then: The current source observation and local retention failure are distinguishable, the prior retained point keeps its time, and neither the day without an observation nor the failed write is represented as a durable zero or invented sample.
     today_breakdown_changes_without_cohort:
       given: A fully covered Project-wide Today selection and a separately captured fixed cohort each contain the same 100 PRs, of which 95 are observed merged and five open in a compatible context.
       when: A new eligible distinct open PR is observed and the dynamic Today selection is completely reevaluated.
