@@ -82,6 +82,6 @@ specification:
       when: An older retention operation is retried.
       then: The clear and affected history admission remain uncertain, and the old operation is not promoted into a new generation or reported as confirmed new history.
   unresolved:
-  - Choose a concrete persistence technology, representation, version allocation and coordinated commit protocol satisfying these logical boundaries and the platform's actual capabilities.
+  - Validate the candidate SQLite direction in 0113 and choose representation, version allocation and coordinated commit protocol satisfying these logical boundaries and the platform's actual capabilities.
   - Decide privacy-safe operation-evidence retention and compaction, migrations, data protection and storage budgets without weakening recovery or shared-Repository invariants.
   - No Swift data model, persistence boundary, source integration, TDD cycle or actual restart has been implemented or verified.
