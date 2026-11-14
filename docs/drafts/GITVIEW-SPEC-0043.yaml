@@ -28,6 +28,7 @@ depends_on:
 - GITVIEW-SPEC-0052
 - GITVIEW-SPEC-0053
 - GITVIEW-SPEC-0054
+- GITVIEW-SPEC-0056
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -108,7 +109,7 @@ specification:
     historical_outcome_reopened:
       given: An Issue was closed in the selected past week and subsequently reopened, with source evidence sufficient for that event.
       when: The operator opens the week's distinct-Issue closure selection.
-      then: The Issue can appear once with its current open state; the historical condition is not silently replaced with a current-closed or Today filter.
+      then: The Issue can appear once with its separately observed open state; the historical condition and original period remain identifiable under 0056 and are not silently replaced with a current-closed or Today filter.
     format_and_external_objects:
       given: A participating authoring process requires the agreed PR sections and a separate external Issue has an unstructured description.
       when: A new participating PR is evaluated and GitView displays the external Issue.

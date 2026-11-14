@@ -16,6 +16,7 @@ depends_on:
 - GITVIEW-SPEC-0035
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0056
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0004.yaml
   project_summary: docs/drafts/project-summary-proposal.md
@@ -40,6 +41,7 @@ specification:
     selection: Opening a Project enters that same Project. If it contains exactly one Repository, work is reachable without a duplicate Project/Repository screen while both identities remain distinct. A multi-repository Project exposes its members and an appropriate path to each member's work under 0006.
     signal: An actionable signal can open a filtered work collection in the originating Project. The active condition, period and Project remain identifiable; when work comes from several Repositories, its source is distinguishable. Unknown inputs and partial coverage follow 0027 and 0046 rather than being presented as a complete filtered list.
     signal_unit: The destination is a work-object collection, not necessarily a list of the metric's counted units. Where the source counts individual checks, threads or events, identify the distinct PR or Issue unit in the destination and retain the originating condition and period under 0029. Do not imply that the number of cards must equal a count expressed in another unit.
+    historical_signal: A historical outcome signal that opens distinct work objects retains the event condition, scope and period under 0056; a currently reopened Issue may still qualify for an earlier closure. If the destination cannot support the original condition or its evidence is incomplete, expose that limitation.
     signal_update: A refreshed or partially loaded destination may differ from the observation underlying the originating signal. Its coverage and relevant observation context remain identifiable; unknown or restricted data is not displayed as an empty or healthy result.
     observations: An unobserved category remains unknown, partial and failed scopes remain identifiable, and stale data retains its observation context. Explicit denial follows 0036; no restricted private content or derived count is exposed as a healthy zero.
     scale_and_access: Density can change without altering the selected Project set or its accounting. Essential identification, navigation and refresh do not depend only on pinch, long press or color; accessible behavior follows 0032 and 0035.

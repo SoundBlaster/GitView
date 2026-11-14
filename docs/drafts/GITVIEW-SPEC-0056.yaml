@@ -1,0 +1,71 @@
+id: GITVIEW-SPEC-0056
+title: GitView - Historical outcome selection
+kind: spec
+created_at: '2026-11-14T15:48:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0007
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0030
+- GITVIEW-SPEC-0044
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0007.yaml
+  period_outcomes: docs/drafts/project-summary-proposal.md
+  historical_series: docs/drafts/GITVIEW-SPEC-0030.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A historical outcome selection identifies its Project or Repository scope, event condition, period, time-zone interpretation and object type.
+- A source-confirmed PR merge or Issue closure in the selected period can select that object independently of its latest observed lifecycle state.
+- The destination distinguishes its distinct-object unit from a source event count and preserves incomplete coverage or uncertain identity.
+- Current displayed facts and their observation context do not claim to reconstruct the object's state or reason at the time of a historical event.
+- Navigation from a period outcome retains the original condition and period or explicitly reports that the destination cannot represent them.
+specification:
+  objective: Make a selected period outcome inspectable as distinct source objects without confusing past events with current lifecycle or dynamic Today.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    entry: When an actionable outcome signal is opened, retain its confirmed origin scope, metric condition, object type, period boundaries and time-zone interpretation. This candidate covers the distinct PRs with a confirmed merge and the distinct Issues with a confirmed closure in an explicitly selected historical period; it does not assert that all history or a general timeline is available.
+    boundaries: Interpret the explicitly stated period as inclusive at its start and exclusive at its end. The concrete controls, presets and handling of a time-zone change during a fixed-period navigation remain open; do not silently change or relabel the period while the operator inspects a result.
+    membership: Use the originating signal's stated Repository set and membership basis. A current-member Project summary and a historically defined member set are different scopes; current membership alone does not prove historical membership. If the origin scope is no longer valid or cannot be established, follow 0024 and disclose the limitation instead of substituting a different scope.
+    inclusion: An eligible PR or Issue has at least one source-confirmed matching event whose event time lies in the stated period. The fact may have been observed later. A current closed or merged state without sufficient event-time evidence does not establish that the outcome occurred in this period. Missing history, unclear event time or unknown identity cannot prove a non-match or a complete empty selection.
+    identity_and_units: Each confirmed object identity occurs at most once in the destination even if it has multiple matching events. An event-count signal and the destination's distinct-object count are different units; neither is converted into the other by assuming one event per object. A linked PR and Issue remain separate objects. Unresolved identity follows 0002 and 0027.
+    current_and_past: Display a permitted latest observed lifecycle with its own observation context where available. It can differ from the event condition; a reopened Issue remains eligible for an earlier confirmed closure. Do not infer the historical state immediately before or after the event, or its historical closure reason, from a later current observation alone.
+    filtering: Explicit current-state filters remain distinguishable from the originating historical condition. Applying a current-state filter can exclude a reopened Issue from the visible list without changing or erasing its historical event. If the origin includes a reason condition, that condition requires evidence for the relevant event; a later reason alone is insufficient.
+    coverage: Known matching objects can be inspected under partial coverage, with relevant time and scope. A confirmed zero or exhaustive destination requires sufficient evidence for the stated event, identity, access and scope. If history is missing or cannot be mapped, expose an incomplete or unavailable result instead of silently replacing it with a current-state or Today selection.
+    refresh: A later observation may add evidence or change the latest observed lifecycle while retaining the selected condition and period. The origin metric and destination may refer to different observation contexts; report their limitations under 0029 and 0044 without fabricating equality. Access restrictions follow 0036.
+    boundary: This is an agent-authored refinement of selected period outcomes. It does not require reconstructing a full historical snapshot, an event timeline, a calendar mode, a fixed cohort, an API endpoint or a numerical request budget.
+  scenarios:
+    reopened_issue:
+      given: An Issue has a confirmed closure in the selected past week and is currently observed open after reopening.
+      when: The operator opens the distinct-Issue closure selection for that week.
+      then: The Issue appears once with the historical closure condition and its separately contextualized latest observed open state.
+    repeated_closures:
+      given: An Issue has two confirmed closure events in the selected period and sufficient identity evidence.
+      when: An event-count signal opens the distinct-Issue selection.
+      then: The destination has one Issue card and identifies its distinct-object unit; two events are not claimed to be two Issues.
+    missing_event_time:
+      given: An Issue is currently observed closed but no supported evidence establishes when it closed.
+      when: A past week's closure selection is evaluated.
+      then: The Issue is not asserted to match or not match based only on its current state, and the affected coverage remains uncertain.
+    explicit_current_filter:
+      given: An Issue closed within a past period, later reopened and is in that period's outcome selection.
+      when: The operator explicitly filters the destination to currently closed Issues.
+      then: The Issue is excluded if its current open state is sufficiently established, while the period and historical event remain unchanged and the active filter is identifiable.
+    event_time_boundary:
+      given: One confirmed merge occurs at the inclusive period start and another occurs at the exclusive period end.
+      when: The selected period's distinct-PR outcomes are calculated.
+      then: The first merge matches and the second does not match that period on event time alone.
+    partial_repository:
+      given: A Project has two member Repositories in the stated metric scope and historical closure evidence for only one.
+      when: The period outcome selection is opened.
+      then: Known eligible Issues may be shown but the destination is not claimed exhaustive or empty for both Repositories.
+  unresolved:
+  - Supported historical outcome metrics, period presets and membership basis for each origin remain to be chosen.
+  - Source evidence for complete event histories, event identity and event-time closure reasons requires verification without assuming API availability.
+  - Fixed-period behavior across a device time-zone change, exact filter presentation and accessible controls require further refinement.
