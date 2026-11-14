@@ -39,6 +39,7 @@ depends_on:
 - GITVIEW-SPEC-0073
 - GITVIEW-SPEC-0074
 - GITVIEW-SPEC-0075
+- GITVIEW-SPEC-0076
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -64,6 +65,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    description_edit_after_assessment:
+      given: A participating PR had a structurally conforming description and GitView displayed its original permitted body.
+      when: The PR description changes but the new body has not yet received an applicable external assessment.
+      then: The earlier result is not attributed to the new body, GitView preserves available source text and independent CI status, and no GitView source mutation is implied.
     grid_pinch_not_preview:
       given: The operator begins touching a PR cell in a filtered Project grid but has not activated preview.
       when: A second contact results in a recognized pinch that changes density.

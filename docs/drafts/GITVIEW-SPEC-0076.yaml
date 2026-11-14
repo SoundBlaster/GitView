@@ -1,0 +1,76 @@
+id: GITVIEW-SPEC-0076
+title: GitView - Description conformance and revision lifecycle
+kind: spec
+created_at: '2026-11-14T16:48:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0054
+depends_on:
+- GITVIEW-SPEC-0034
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0051
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0054.yaml
+  recognition: docs/drafts/GITVIEW-SPEC-0051.yaml
+  issue_template: docs/drafts/github-templates/issue.md
+  pr_template: docs/drafts/github-templates/pull-request.md
+  agreed_formats: docs/drafts/github-templates/README.md
+  mandatory_format: conversation:gitview/excerpt-37
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A participating process can assess each required section of an identified Issue or PR body using an explicit versioned structural profile.
+- Missing or unfilled sections, ambiguous or unavailable evidence, and a structurally conforming body remain distinguishable.
+- A conformance result is bound to the specific observed body, source object and applied policy; an edit cannot silently inherit a prior result.
+- An explicit exception is distinguishable from structural conformance and is not inferred from missing information or a temporary failure.
+- Structural conformance does not establish that a statement is true, that validation succeeded, or that an actor had the stated motive.
+- GitView continues to show permitted source objects and original descriptions without enforcing or repairing the external process.
+specification:
+  objective: Propose a minimal checkable structural profile and result lifecycle for the owner's required Issue and PR formats without claiming a deployed source gate.
+  ontology_refs:
+  - gitview:User
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    applicability: A participating process explicitly identifies the Repositories, object types, creation paths and policy version to which it applies. Objects outside that declared scope, legacy descriptions and third-party content are not silently declared nonconforming merely because this policy exists. Unknown participation is not proof of either inclusion or exclusion.
+    profile: As an agent-authored initial structural proposal, apply the exact heading and ambiguity recognition profile in 0051. Issue requires Problem, Motivation, Expected outcome and References; PR additionally requires Changes and Validation. For each required section, a uniquely recognized heading and a nonempty authored body after excluding whitespace and template instruction comments are necessary. Only the listed headings and syntax are recognized by this profile; no broad Markdown or semantic understanding is claimed.
+    placeholders: A section consisting only of whitespace or template HTML comments is unfilled under 0051. As a narrow additional proposal, a section whose remaining trimmed content is exactly TODO or TBD, ignoring ASCII letter case, is also unfilled. Other boilerplate or placeholder-like text is not automatically classified without a separately versioned rule or human review; a structural pass is not a quality judgment. The original text is preserved.
+    explicit_absence: An authored statement that there are no references can satisfy the structural nonempty criterion for References; an authored statement that no checks were run, with the author's reason, can satisfy it for Validation. Neither statement asserts that references or checks actually exist or that CI passed. The narrow structural profile checks presence of authored text, not the truth or sufficiency of the explanation.
+    result: Report per-section observations and the aggregate assessment separately. A recognized required section that is known missing or unfilled is a known structural deficiency. If every required section is recognized and filled under this exact profile, the body is structurally conforming to that profile. An ambiguous section, unavailable body, unresolved identity or unestablished applicable policy makes the affected assessment indeterminate; never turn it into a pass or an empty section. If a known deficiency coexists with indeterminate sections, report both and do not claim a complete assessment of every section.
+    version_binding: Associate an assessment with the confirmed source instance, Repository and object identity, the exact body observation or content digest, recognition and policy versions, and assessment time. A digest identifies the supplied bytes but does not establish when or by whom they were authored, that they remain current, or that source access is still valid. Different body versions and policy versions require separate assessments.
+    edit_and_race: An accepted new body observation or policy revision invalidates any claim that an older assessment applies to the new body or policy. An unavailable or unordered changed body leaves current conformance unknown rather than silently carrying forward a pass or failure. Before an external process acts on an assessment, it must establish that the result applies to the relevant current body and policy; otherwise it must re-evaluate or report stale or indeterminate. Exact source revision and consistency evidence remain open.
+    exception: An exception is a separately recorded, explicit decision by an authorized participant in the external process, scoped to an identified object, requirement and policy version, with a reason and applicable lifetime where the process establishes one. It does not turn a missing section into present text or a structural failure into a structural pass. Whether exceptions are allowed, who has authority and how they are enforced are unresolved; an absent exception record is not proof that none exists if the exception source was not sufficiently observed.
+    enforcement: The participating process must specify for each supported creation or edit path who evaluates the applicable body, where a result becomes visible, what action follows a known deficiency or indeterminate outcome, and whether a particular stage can actually be blocked. A local template, instruction, check result or callback alone does not prove complete path coverage or enforcement. No source-specific prevention, correction deadline, automatic closing or GitHub write is asserted by this candidate.
+    read_only: GitView may display the original permitted body and recognized sections under 0034 and 0051 regardless of participation or structural result. This candidate does not require GitView to run a checker, display a compliance badge, change source text, suppress an object, create a comment or grant an exception. Access restrictions apply to any displayed private body or derived result under 0036.
+    provenance: Section names and the mandatory direction are owner-selected. Exact structural profile, placeholder rule, assessment lifecycle and exception model are agent-authored proposals, not an installed process or a claim of owner approval of those details.
+  scenarios:
+    untouched_template:
+      given: A participating new Issue contains the four template headings with only the provided instruction comments.
+      when: The proposed profile assesses its observed body.
+      then: The required sections are present but unfilled, so their known deficiencies are reported without inventing Problem or Motivation text.
+    no_validation_run:
+      given: A participating PR contains the required sections and its Validation says that no checks were run and explains why.
+      when: Structural conformance is evaluated independently of CI.
+      then: Validation can be structurally filled while the report does not claim tests ran, passed, or establish the truth of the author's explanation.
+    ambiguous_and_missing:
+      given: An observed participating PR has two Validation headings and a reliably missing Motivation heading.
+      when: Its body is assessed.
+      then: Motivation is a known deficiency and Validation is ambiguous; neither is treated as a pass and the original body is preserved.
+    edit_after_pass:
+      given: A participating Issue body passed the structural profile at one observed body revision.
+      when: The source body changes and the new revision has not yet been assessed.
+      then: The old pass remains attributable only to its original body and the current assessment is unknown until an applicable new result is established.
+    accepted_exception:
+      given: A participating PR has a confirmed missing References section and an authorized external participant records an applicable exception.
+      when: The process presents the result.
+      then: The missing section remains a structural deficiency and the separate exception is shown as a decision, not as fabricated References text or a structural pass.
+    legacy_description:
+      given: An accessible historical Issue outside the participating process has an unstructured description.
+      when: GitView displays it.
+      then: The original permitted description remains available and the Issue is not hidden or rewritten because the new profile was not applied.
+  unresolved:
+  - Participation and all covered creation or edit paths, policy authority, exception rules and the precise enforcement stage must be selected by the participating process.
+  - Additional placeholder forms, Markdown syntax and semantic quality review need explicit versioned rules; short nonempty text alone cannot establish a useful explanation.
+  - Source revision consistency, external checker integration and applicable GitHub capabilities need independent evidence; no gate or product implementation has been deployed.
