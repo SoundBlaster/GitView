@@ -41,3 +41,12 @@ GitHub отдельно указывает, что check и commit status с о�
 какой commit используется, зависит от контекста. [GitHub: troubleshooting required checks](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks).
 Эта документация не устанавливает, как GitView должен отнести каждый
 special conclusion к цвету или считать повторные попытки.
+
+GitHub описывает `neutral`, `skipped`, `cancelled`, `timed_out`, `stale` и
+`action_required` как отдельные conclusions, а не одно состояние исполнения.
+В документации required checks `skipped` и `neutral` могут считаться успешными
+для указанного контекста branch protection. Это не означает, что проверка
+фактически выполнилась: [GitHub: status checks](https://docs.github.com/en/pull-requests/reference/status-checks),
+[required checks](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks).
+Candidate [0061](GITVIEW-SPEC-0061.yaml) предлагает консервативные счётчики;
+это решение GitView, а не утверждение о точных цветах GitHub.

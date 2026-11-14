@@ -607,3 +607,11 @@ PR в REST Issues feed с отдельным issue ID и независимые 
 с source identity и revision context. GitHub документирует оба типа, а также
 различие head и test merge; совпадающие имена сами по себе не объединяют
 entries. Выбор source mapping, специальных состояний и retry остаётся открытым.
+
+## Категории status checks
+
+0061 предлагает отображать известные failure/pending/success и общий total;
+special outcomes сохраняются отдельно от утверждения «успешно выполнилось».
+GitHub допускает skipped/neutral для required checks в описанном контексте,
+но это не делает цвет счётчика решением о merge. Проверка actual mapping и
+нативного представления остаётся открытой.

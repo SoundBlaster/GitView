@@ -162,6 +162,10 @@ Candidates 0058 и 0059 уточняют authorization и discovery; тот ср
 содержал 59 узлов. Реальный протокол, права, credential storage и source
 semantics этими черновиками не подтверждены.
 
-Candidate 0060 определяет рабочую единицу status-check overview; текущий
-граф содержит 60 узлов. Соответствие GitHub PR status box и точные source
+Candidate 0060 определяет рабочую единицу status-check overview; тот срез
+содержал 60 узлов. Соответствие GitHub PR status box и точные source
 rules остаются открытыми.
+
+Candidate 0061 предлагает классификацию status-check counters; текущий граф
+содержит 61 узел. Классификация специальных результатов остаётся рабочим
+предложением до проверки source mapping и нативного интерфейса.
