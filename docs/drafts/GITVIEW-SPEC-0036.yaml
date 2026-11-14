@@ -1,0 +1,58 @@
+id: GITVIEW-SPEC-0036
+title: GitView - Connection state and restricted observations
+kind: spec
+created_at: '2026-11-14T13:42:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0019
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0003
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0019.yaml
+  observations: docs/drafts/GITVIEW-SPEC-0003.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Temporary connectivity failure, explicit authorization denial and deliberate local disconnection have distinguishable effects on access to prior observations.
+- Explicit denial or disconnection prevents restricted private cached content from being displayed while retaining the local records until an explicit clear operation.
+- A source 404 or an incomplete discovery result alone is not treated as a confirmed deletion or revocation.
+- Reconnection does not silently change the identity of existing Projects or treat a different source identity as proof of restored access.
+specification:
+  objective: Describe how connection and source access affect visibility and recovery of stored observations without choosing an authorization implementation.
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Repository
+  - gitview:Project
+  contract:
+    scope: The initial product slice concerns one connected source identity. The GitView User is its operator and is not inferred to be the author or reviewer of a particular PR.
+    no_account: An unconnected state provides a route to connect and is not evidence that GitHub contains no repositories. Cancellation leaves connection incomplete and preserves existing local Projects and observations.
+    network_failure: A temporary network or rate failure leaves previously permitted cached observations eligible for display, with their observation time, coverage and visible refresh failure under 0003. It is not proof of access denial or repository deletion.
+    explicit_denial: An explicit authentication or authorization denial is distinct from offline. Under the working private-cache policy from 0019, restrict display of affected private observations and their sensitive derived details until access is re-established or the records are explicitly cleared. The denial is not represented as an empty collection.
+    source_404: A 404 alone does not prove deletion or access revocation and does not erase Repository identity, Project membership or previously saved observations. It leaves current source state uncertain; access to cached private content remains subject to the other applicable access evidence, not to a fabricated confirmed denial.
+    disconnect: A deliberate local disconnect removes the local credential and stops refresh for that identity. It restricts private cached content from display and retains records until an explicit clear operation. It does not remove source Repositories or unrelated local Project memberships.
+    reconnect: Successful reconnection identifies the source identity and re-establishes access to the affected repository before restricted private observations become eligible for display. A different identity or a connection with only partial repository access does not automatically unlock all prior private observations.
+    discovery: Partial discovery records its incomplete scope and does not treat unreturned repositories as deleted or denied. Complete-discovery interpretation is subject to source and permission rules that remain to be specified.
+    provenance: Offline behavior and visible update failure follow the owner's direction; private-cache restriction, local disconnect and restoration policy are agent-authored working decisions.
+  scenarios:
+    offline:
+      given: A previously permitted private Repository has saved observations and no explicit denial is known.
+      when: A refresh fails due to network unavailability.
+      then: Previously permitted data can remain visible with the last-success time and a visible failure, without claiming current source access was reverified.
+    explicit_denial:
+      given: A private Repository has saved observations.
+      when: The source explicitly denies access to that Repository.
+      then: Affected private data is not displayed, the problem is visible and the saved records and Project membership are not silently erased.
+    different_identity:
+      given: A local disconnect restricted previously observed private data for source identity A.
+      when: A different source identity B connects.
+      then: B's connection alone does not automatically unlock A's prior restricted private observations.
+    not_found:
+      given: A saved Repository is referenced by an old source address.
+      when: A source request returns 404.
+      then: GitView records an uncertain source result and retains the Repository and membership instead of asserting deletion.
+  unresolved:
+  - Distinguish source signals that prove an explicit repository-level denial from ambiguous HTTP or API failures.
+  - Concurrent refresh and revocation ordering, exact authorization flow and secure credential lifecycle.
+  - Explicit clear-data UX, retention scope and behavior after device migration.
