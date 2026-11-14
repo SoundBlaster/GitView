@@ -75,6 +75,7 @@ depends_on:
 - GITVIEW-SPEC-0118
 - GITVIEW-SPEC-0119
 - GITVIEW-SPEC-0120
+- GITVIEW-SPEC-0121
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -224,6 +225,10 @@ specification:
       given: The proposed targeted zoom interaction identifies Project P containing one confirmed Repository R, and P's origin is the Projects overview.
       when: The transition is committed and the operator later returns by an available zoom-return or Back action.
       then: P's work opens without a redundant Repository screen, the same P and R remain attributable, and return follows the actual origin rather than a fabricated intermediate step.
+    share_boundary_then_denial:
+      given: A private PR's source link has crossed the actual platform handoff boundary, and a source access restriction is established before the operator chooses a recipient.
+      when: GitView applies the restriction and handles any later app-controlled provider request.
+      then: Future app-controlled provisions are independently checked and restricted where applicable, while the app does not claim that the earlier platform payload was never supplied or retracted.
     discovery_search_and_custom_intent:
       given: Existing Projects are visible and the operator starts custom Project creation, selects Repository A, then searches a partially observed discovery scope for B.
       when: The current search has no observed matches and a late response for an earlier query arrives.

@@ -1,0 +1,37 @@
+{
+  "scope": "Declared graph and SpecGraph domain_vocabulary only; not native or privacy behavior",
+  "context": "ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-handoff-ordering-fvmknwbc",
+  "graph_report": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/handoff-ordering-readiness-20261114.json",
+  "graph_sha256": "71c2931bc1f9074b6a8046e8c4edacce462f68bd4a6b6d5f67b0144f5454fbff",
+  "node_count": 121,
+  "structural_leaves": 54,
+  "unrooted": [],
+  "acyclic_relations": [
+    "refines",
+    "depends_on",
+    "refines + depends_on"
+  ],
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0043",
+      "input_sha256": "adb445086179d1507c2bb6690ccf44f189e6c5af7e2a4276458c7e9b468400be",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "db0e12d7e796528f3caf927e42cf8e527091877c8f22f17488205187f8dd7b75"
+    },
+    {
+      "id": "GITVIEW-SPEC-0121",
+      "input_sha256": "3d4e9e56c9291ba0a3e8ea9e993e732d7f7106c443ab3e44d3df07f9aaf9a93c",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "0b24f62c8e8eaf039888aa63ffe99157cd9be07f2c06a4e264697be868eedd9f"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+id: GITVIEW-SPEC-0121
+title: GitView - Source handoff admission and access ordering
+kind: spec
+created_at: '2026-11-14T22:36:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0033
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0037
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0079
+- GITVIEW-SPEC-0081
+- GITVIEW-SPEC-0112
+- GITVIEW-SPEC-0113
+- GITVIEW-SPEC-0114
+- GITVIEW-SPEC-0115
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0033.yaml
+  local_access_order: docs/drafts/GITVIEW-SPEC-0113.yaml
+  connection_binding: docs/drafts/GITVIEW-SPEC-0114.yaml
+  project_route: docs/drafts/GITVIEW-SPEC-0115.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- An Open or Share attempt is bound to the selected source object, its observed eligible link and originating route rather than to a later matching name or screen position.
+- A locally established applicable restriction or superseding identity ordered before app-controlled payload handoff prevents that restricted handoff; a pre-handoff check alone is insufficient without ordering.
+- A link already handed to a system or another application cannot be claimed retracted, even if the operator has not yet chosen a share recipient.
+- A delayed app-controlled provider re-evaluates eligibility at every actual payload provision, and never replaces a prepared object with another one.
+- Identity uncertainty, known address reuse, cancellation, platform request acceptance, external loading and recipient delivery remain distinct outcomes.
+- The ordering contract applies to locally observed facts and participating app boundaries, not an unobserved remote permission change or an unverified platform guarantee.
+- Planned deterministic and native tests are not evidence that a product, actual share provider or platform behavior already exists.
+specification:
+  objective: Refine the source-link handoff into a reviewable local ordering and recovery contract without claiming control after data leaves GitView.
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    attempt_context: An explicit Open or Share attempt captures its operation identity, original route, source instance and selected Repository and object identity, link evidence and observation context, and current account or connection generation where relevant. A local Project is not a GitHub source object and must not acquire a member's link by implication. A source-confirmed same Repository identity after rename or transfer preserves membership but does not prove an old address still resolves to that object under 0033, 0038 and 0081.
+    link_candidate: A prepared candidate contains only the source-associated eligible HTTPS link and the non-secret evidence required to assess its selected-object association, permitted source origin and applicable access. Default sharing passes the link without automatically attaching source descriptions or credentials under 0033. A malformed, unsafe, credential-bearing, known-reused or unassociated link is not sent or printed in ordinary diagnostics; do not silently repair a link and assert the result has the same target without evidence. A permitted previously associated link without contradictory evidence may be offered as last known with its uncertainty, not as a verified current destination.
+    admitted_handoff: Coordinate the local ordering of applicable access restriction, account or connection generation changes, link-invalidating source evidence and the act that first submits this payload across an app-controlled system boundary. At that ordered admission point evaluate the same selected identity, candidate, source association, current locally established restrictions and route applicability. If a relevant denial, disconnect, superseding identity or invalidating address evidence was established before admission, withhold the affected payload and return a safe limitation or recovery path. If ordering or evidence cannot be established, do not claim the handoff was authorized by a stale earlier check. The operation does not require a new online request for every tap.
+    ordering_mechanism: As an agent-authored working direction, a serialized in-process coordinator or an equivalent verified mechanism must order locally known restriction and handoff admission for all participating scenes and callback producers. Merely reading a generation and later making an independently scheduled platform call is not by itself proof that no intervening local restriction took effect. No database, network or credential operation is assumed atomic with a platform handoff; exact main-actor interaction, synchronization, lifecycle and multi-process support remain open. An independently unobserved remote revocation cannot be locally ordered before it is known.
+    earliest_boundary: The handoff is the earliest point at which the actual platform integration receives the link or a representation of it outside GitView's control, which may occur while constructing or presenting a share interface, not only when the person chooses a recipient. Identify and verify this boundary for the chosen API. If it cannot be established or controlled, do not claim that a restriction observed afterward prevented a payload already given to the platform. Platform previews, suggestions, caching, screenshots and recipient behavior require their own platform evidence and are not equivalent to an app-controlled delayed provider.
+    delayed_provider: If GitView retains control of an item provider and is asked to supply a link later, capture the same source identity and attempt context and perform a new ordered eligibility check at each actual app-controlled payload provision. A formerly permitted preview, an earlier share-sheet appearance or an earlier successful provision is not renewed authorization for a later callback. If the relevant restriction was ordered before that provision, withhold the restricted value where the platform permits and do not substitute another object or modified URL. The app cannot promise that a previously provided value or a system-owned copy can be withdrawn.
+    changed_evidence: Reconcile an address conflict or reuse according to 0053 and 0081, not response arrival time or an operator-selected label. If the original link is confirmed to identify a different object before admission, it is ineligible. A newly observed link can replace the candidate only when source evidence associates it with the same selected object and current access permits it; preserve its own observation context. If competing evidence cannot establish eligibility, retain an unavailable or uncertain action rather than automatically sending an arbitrary candidate.
+    lifecycle_and_results: Distinguish a prepared candidate, ordered admission, platform request acceptance or failure, share-interface cancellation and any platform-reported activity result. Do not describe an accepted open request as proof of page load or intended final identity, or a presented share flow as proof of recipient delivery or authorization. Leaving or cancelling a pending route invalidates its uncommitted app-controlled attempt where possible, but does not undo a payload already submitted or a source operation already accepted. Recovery retains the actual valid origin under 0024 without changing the GitHub object.
+    privacy_surfaces: Apply the same current policy to visual or accessible action labels, app-generated previews, optional metadata, diagnostics and payloads. A generic safe error may be shown without exposing a restricted title, address, object existence or recipient. Actual system-generated metadata and previously delivered content are outside any promise of app-controlled retraction. Test data and logs must not contain credentials or unapproved private source content.
+    verification: Under 0040 and 0079 plan deterministic tests with injected source-link evidence, a controllable coordinator, account and access changes, platform-open result and delayed providers. Exercise both orderings of restriction and admission, address reuse, same-number distinct objects, route cancellation, independently eligible unrelated scope and repeat callbacks. Separately verify the chosen iOS handoff API, its earliest data transfer and actual provider behavior on supported devices; a fake coordinator or written scenario does not prove platform privacy or recipient behavior.
+    provenance: The owner requested a route to the original GitHub source and lightweight sharing. Link-only default, local admission ordering and uncertainty handling are agent-authored refinements; no platform integration, actual user share, source access or product test is claimed.
+  scenarios:
+    denial_before_admission:
+      given: A private PR link was prepared under account A, and an applicable denial is established and ordered before its pending platform handoff.
+      when: The Open or Share attempt reaches the admission boundary.
+      then: The link is withheld, the source object is not replaced and an allowed recovery or limitation remains available.
+    admitted_before_denial:
+      given: A permitted link was already submitted across the actual platform boundary and an applicable denial is established afterward.
+      when: GitView updates the current route.
+      then: Future app-controlled disclosures follow the restriction, but the earlier payload is not claimed retracted and no recipient delivery is inferred.
+    sheet_presented_then_provider_called:
+      given: A share interface is visible but a particular app-controlled provider has not supplied its private link; access is then explicitly denied.
+      when: That provider is called for the link.
+      then: It rechecks current eligibility and withholds the restricted value where the integration permits, without claiming that any independently supplied system copy was revoked.
+    platform_received_before_sheet_visible:
+      given: The chosen integration submits a permitted link to the platform before the share interface is visible, and denial occurs after submission but before a recipient is chosen.
+      when: GitView processes the denial.
+      then: It restricts future app-controlled disclosures but does not assert that the platform never received the earlier link or that it was retracted.
+    same_number_different_repository:
+      given: Repository A and Repository B contain different Issues numbered 42, and a share attempt was prepared for B's Issue.
+      when: An asynchronous callback runs after the user navigates to A's Issue.
+      then: The attempt cannot silently provide A's link as B's or reuse B's link as A's; route lifetime and current access determine whether B's own pending attempt remains eligible.
+    reused_address_before_handoff:
+      given: Repository R previously had source address X and a share attempt captured X; reliable new source evidence establishes that X now identifies a different Repository.
+      when: The attempt reaches ordered admission.
+      then: X is not supplied as R's link; another same-identity eligible source observation may support a separately evaluated candidate or the action remains unavailable.
+    account_switch_while_pending:
+      given: A private PR link was prepared under account A and account B becomes active without separately established access before handoff admission.
+      when: The pending attempt resumes.
+      then: A's earlier authorization is not presented as B's access and the restricted link is withheld; the Project configuration itself is not deleted.
+    cancel_then_late_provider:
+      given: An app-controlled share attempt is cancelled before it has supplied the link and its delayed provider later receives a callback.
+      when: The callback attempts to obtain the payload.
+      then: The cancelled attempt does not issue a new app-controlled payload; no claim is made about any value that had independently crossed the platform boundary earlier.
+  unresolved:
+  - Identify the actual earliest data-transfer boundary, platform callbacks, cancellation and access-ordering mechanism for the selected iOS open and sharing APIs.
+  - Define and validate the coordinator's lifetime, main-actor or other isolation, participating scenes and any future extension or multi-process boundary.
+  - Establish source link mapping and address-order evidence, and independently test actual platform, authorized source and accessibility behavior after implementation.
