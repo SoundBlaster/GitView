@@ -66,3 +66,4 @@ specification:
   unresolved:
   - Empty discovery and permission recovery details depend on source-access and Project-lifecycle refinement.
   - Default Project association after membership editing and deletion is proposed in 0025 and still requires domain review.
+  - Per-entry confirmation, partial saves and cancellation recovery are proposed in 0045; in-flight persistence reconciliation remains open.
