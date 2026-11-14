@@ -22,6 +22,7 @@ acceptance:
 - Refreshing or narrowing discovery does not silently discard a pending selection or mutate saved Project membership.
 - A stale discovery response cannot be relabeled as belonging to a different active connection or prove restored access after disconnect.
 - Confirmation rechecks the identity and applicable access required by the selected operation and preserves individual unresolved outcomes.
+- The operator can find Repositories within the available discovery scope without losing pending selections or confusing search results with source-wide absence.
 specification:
   objective: Specify continuity from authorized repository discovery to explicit Project setup while preserving identity and coverage.
   ontology_refs:
@@ -31,6 +32,9 @@ specification:
   - gitview:Project
   contract:
     result_scope: Attribute each discovery result to its source identity, query or selection scope, applicable access context and coverage. Returned accessible Repositories may be offered for selection while the result is incomplete, with that limitation visible. Only sufficiently covered discovery can establish that no repositories match its stated scope; it does not establish that the source account has no other repositories outside that scope.
+    search: Offer a way to narrow discovery by a permitted Repository name or source context and return to the broader available discovery scope by clearing the restriction. Searching is distinct from the saved Project collection and does not alter pending selections. A result set identifies the active search and access scope; a complete no-match statement applies only to that scope. If filtering only an incompletely observed local subset, show that the displayed matches and any no-match state are incomplete rather than asserting there are no source matches. Matching, ordering, supported fields and whether search is source-side remain unselected until source and UX design.
+    search_response_order: Associate each discovery or search response with its source identity, active connection, requested query and attempt context. A late response for a superseded query cannot be presented as the complete result for the current query or replace a newer result without an applicable ordering rule. It may be retained only with its original context and current access policy. Resetting the search initiates or displays the broader scope under its own coverage; it does not make a partial cache complete.
+    distinct_intents: Repository discovery may serve default setup or a separately initiated custom-Project creation. Retain the selected operation intent through query changes and pagination; the same pending selection must not be submitted under another intent without an explicit operator choice and review. Default setup follows 0045, and custom creation follows 0025; source identity and access requirements apply to both.
     app_access_scope: When the chosen source access method limits discovery to particular application installations or grants, identify that applicable scope. A Repository absent from the app's accessible results is not thereby proven inaccessible to the person using GitHub, nor are uninstalled organizations proven empty. The access method and source-specific installation mapping remain unselected.
     identity: Select and reconcile an entry by confirmed Repository identity under 0038. Different names or owners can refer to the same confirmed source object, while the same display name alone cannot establish identity. An entry lacking the identity or access evidence required for setup remains unresolved rather than being silently substituted or merged.
     pending_selection: Pending selection is separate from discovery's visible subset and from saved Project membership. Pagination, a changed search query, a refresh or a temporary source failure does not silently clear previously selected confirmed identities. The operator can inspect and explicitly remove selections; an unavailable entry is identified as such without disclosing restricted details.
@@ -41,6 +45,18 @@ specification:
     retry: A retry or continuation preserves already confirmed selected identities and reports its own coverage and error without assuming the remaining source is empty. Exact source pagination, query syntax and selection layout remain unchosen.
     provenance: Explicit default-per-Repository setup follows the owner's choice; continuity, scope and race boundaries are agent-authored refinements.
   scenarios:
+    incomplete_search_no_matches:
+      given: Discovery has returned only a partial accessible subset and a local search finds no match in that subset.
+      when: The operator reads the result and clears the search.
+      then: The app does not claim that no source Repository matches; any retained selections remain pending and the broader view retains its own incomplete coverage.
+    superseded_search:
+      given: Search A was issued, then the operator enters search B under the same valid connection and B's result is presented.
+      when: A's response arrives late.
+      then: It is not labeled as B's result or used to claim B's coverage; any permitted retention preserves A's own scope and attempt context.
+    creation_mode_preserved:
+      given: The operator selects two eligible Repositories for a custom Project and changes the search query.
+      when: The selection is reviewed before confirmation.
+      then: Both pending selections and the custom creation intent remain identifiable; no default-setup submission or Project mutation occurs without an explicit choice and confirmation.
     selection_across_search:
       given: A Repository R with confirmed identity is selected in one partial discovery result.
       when: The operator changes the search and R is not in the currently visible result.
@@ -65,3 +81,4 @@ specification:
   - Source-specific discovery scope, permission semantics, search and pagination evidence require verification.
   - Exact user-facing recovery and retention of a pending selection across an account switch remain open within the stated privacy and explicit-confirmation boundaries.
   - Device and real-adapter evidence is absent; no source endpoint or request budget is chosen.
+  - Search matching, field availability, response ordering and presentation of query coverage require source and native verification.

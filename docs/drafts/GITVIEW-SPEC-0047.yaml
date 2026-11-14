@@ -10,12 +10,14 @@ depends_on:
 - GITVIEW-SPEC-0005
 - GITVIEW-SPEC-0006
 - GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0025
 - GITVIEW-SPEC-0027
 - GITVIEW-SPEC-0029
 - GITVIEW-SPEC-0032
 - GITVIEW-SPEC-0035
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0045
 - GITVIEW-SPEC-0056
 - GITVIEW-SPEC-0061
 - GITVIEW-SPEC-0062
@@ -29,6 +31,7 @@ acceptance:
 - Available work counts, attention signals and period outcomes retain their meaning, scope and coverage.
 - Opening a Project or one of its actionable signals preserves Project and source Repository context.
 - A Project with incomplete observations remains represented and cannot be mistaken for confirmed empty or healthy work.
+- The operator can reach Repository discovery for default setup and a separate explicit custom-Project creation route from the overview without losing saved Projects.
 specification:
   objective: Help the operator survey Projects, notice relevant work and enter the selected scope without losing identity or data limitations.
   ontology_refs:
@@ -39,6 +42,7 @@ specification:
   - gitview:Issue
   contract:
     collection: The main overview concerns locally saved GitView Projects. It does not equate a Project with a GitHub organization or GitHub Projects feature. A local Project can include repositories from different organizations and a Repository can occur in multiple Projects.
+    manage_projects: The overview offers an accessible route to add default Projects from Repository discovery under 0022 and 0045, and a distinguishable route to explicitly create a custom Project under 0025. Both routes remain reachable when Projects already exist; a confirmed empty collection offers a route into setup under 0022. Beginning either route does not itself create a Project or alter the existing portfolio. The exact control, placement and whether the routes share intermediate screens remain open.
     entry: Each Project representation exposes its name and member Repository count where known and permitted, and makes available selected work counts, attention signals and period outcomes according to space, coverage and access. When a Project name or another identifying detail derives from restricted private source data, do not expose that detail solely to identify the entry; provide a non-sensitive representation and a route to understand or resolve the access problem. Exact visual arrangement and default density remain subject to product and native design refinement.
     units: Open PRs, open Issues, failed checks, affected PRs, review attention and period outcomes remain distinct units under 0029. A single indicator must not imply that one PR is multiple independent work items or that a Project is merge-ready.
     selection: Opening a Project enters that same Project. If it contains exactly one Repository, work is reachable without a duplicate Project/Repository screen while both identities remain distinct. A multi-repository Project exposes its members and an appropriate path to each member's work under 0006.
@@ -53,6 +57,10 @@ specification:
     scale_and_access: Density can change without altering the selected Project set or its accounting. Essential identification, navigation and refresh do not depend only on pinch, long press or color; accessible behavior follows 0032 and 0035.
     provenance: Multiple Projects, summary signals and a compact Apple-style overview follow the owner's product direction. Exact distribution of fields across densities and control placement remain agent-independent design questions.
   scenarios:
+    existing_portfolio_add_project:
+      given: The overview contains saved Projects and the operator wants a custom Project using one or more eligible Repositories already represented there.
+      when: The operator enters the custom-creation route and confirms a valid Project.
+      then: The new Project can appear with its own identity while existing Projects, memberships and default associations remain unchanged under 0025; the overview is not reset to first launch.
     two_organizations:
       given: One Project contains two Repositories from different GitHub organizations.
       when: The operator opens that Project.
