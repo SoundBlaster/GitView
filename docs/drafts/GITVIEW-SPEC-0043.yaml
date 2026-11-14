@@ -83,6 +83,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    selected_fields_after_compact_preview:
+      given: A permitted PR preview omits its available requested reviewers and an Issue preview omits its available assignees, milestone and related-work facts because of space.
+      when: The operator opens each same object through an accessible route.
+      then: The corresponding selected available facts and their independent coverage can be inspected in GitView, while individual review threads, checks and Issue comments are not required and no relationship is presented as an actor's motive.
     project_summary_at_dense_scale:
       given: A two-Repository Project is represented at dense scale; one Repository has known open PRs and the other's CI scope is unobserved.
       when: The operator opens the same Project's summary and then requests its open-PR history without a pinch or long press.

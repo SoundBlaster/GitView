@@ -26,7 +26,7 @@ acceptance:
 - A preview provides enough permitted identity and available summary to identify the same object before opening it.
 - PR and Issue previews distinguish their lifecycle and known signals without fabricating missing values or combining unrelated review and CI facts.
 - Project and Repository previews retain scope, data coverage and applicable access restrictions.
-- Full source detail remains available through object overview and source navigation rather than requiring it inside the preview.
+- Selected available fields remain inspectable in the GitView object overview, while deeper source detail is reachable through an eligible source link rather than required inside the preview.
 specification:
   objective: Define a compact, type-aware preview that supports scanning without leaving the overview.
   ontology_refs:

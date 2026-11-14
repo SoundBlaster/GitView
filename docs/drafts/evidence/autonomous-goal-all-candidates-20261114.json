@@ -501,10 +501,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0039",
-      "sha256": "b45ad7f8f8f14e8581ec436d40795567200e8661007a7ecf624471f7c2a0d57f",
+      "sha256": "9034206954a85823734b5bb947ffbc2033fa6d1ec4adcf09aeeb7b1d0782166f",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "b45ad7f8f8f14e8581ec436d40795567200e8661007a7ecf624471f7c2a0d57f",
+      "reported_sha256": "9034206954a85823734b5bb947ffbc2033fa6d1ec4adcf09aeeb7b1d0782166f",
       "checked": [
         "yaml_mapping",
         "spec_kind",
@@ -527,10 +527,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0041",
-      "sha256": "243cfa9c7f93851dc9e99dc6e4479d07641c494a2692e167e1875bb331dcf234",
+      "sha256": "a6f553ccb0c1e53fa73227906dcdf7e640fb5f7535956f35925e365fdac7347e",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "243cfa9c7f93851dc9e99dc6e4479d07641c494a2692e167e1875bb331dcf234",
+      "reported_sha256": "a6f553ccb0c1e53fa73227906dcdf7e640fb5f7535956f35925e365fdac7347e",
       "checked": [
         "yaml_mapping",
         "spec_kind",
@@ -553,10 +553,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0043",
-      "sha256": "3cce4cc095881c9b03d58d3fee4b7b43cbcdc35395632f91486a79e516fe245d",
+      "sha256": "a2071a427b9ebb2258adf85cd6ec720875ddacaf9b68f7b2b80bddcac624ce64",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "3cce4cc095881c9b03d58d3fee4b7b43cbcdc35395632f91486a79e516fe245d",
+      "reported_sha256": "a2071a427b9ebb2258adf85cd6ec720875ddacaf9b68f7b2b80bddcac624ce64",
       "checked": [
         "yaml_mapping",
         "spec_kind",
@@ -644,10 +644,10 @@
     },
     {
       "id": "GITVIEW-SPEC-0050",
-      "sha256": "2ba7bff5d9086ee76e8f23b33d949ac84b8e55d742e0f46734e461d6484b7c82",
+      "sha256": "683fc8e37af4e85d7d67453eefb33f6977d06dd4a757a11f21d79df47fa550ac",
       "exit_code": 0,
       "status": "checked",
-      "reported_sha256": "2ba7bff5d9086ee76e8f23b33d949ac84b8e55d742e0f46734e461d6484b7c82",
+      "reported_sha256": "683fc8e37af4e85d7d67453eefb33f6977d06dd4a757a11f21d79df47fa550ac",
       "checked": [
         "yaml_mapping",
         "spec_kind",
