@@ -1,0 +1,99 @@
+{
+  "context": "ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml",
+  "scope": "domain_vocabulary",
+  "input_source_sha256": "73dfccf3c7b360ee6dd9e943f8603bde6bff63d3fcf85c478aacf7759a40905c",
+  "compiler_sha256": "30dd324aa1f641e7274a49fd6f158cced5ed95d810b6b275353d3d10f19a27cb",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-semantic-audit-wnp7vmq3",
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0001",
+      "input_sha256": "5184876bb38ffff8901a02ac7fc0b54be7bad6c55234de7a484b9ac85c6b9b39",
+      "report_sha256": "a7d6903fc159a422583756b47bcdf33c413df00a2a279f90f43b081cdecfa62f",
+      "outcome": "checked",
+      "findings": 1,
+      "warnings": 1,
+      "gaps": 1,
+      "passed_checks": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0025",
+      "input_sha256": "33e401eba8756080209e4235e92e22f4c8d819e1c3226415fd22dfa501d2d4b0",
+      "report_sha256": "429bd7aac8a39516aad644a69745d0e23f957192130cb6b7d741eedbf47242ae",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0038",
+      "input_sha256": "106e7e0a6d4f14eeb0443aa56d8a2e2c620a421ada86f93d89773015913a8b35",
+      "report_sha256": "be4a64f06e9404893fa544af7d8ad75008243315a5d6e2666de165ece4e1829c",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0101",
+      "input_sha256": "914f8f7889d6ce8969337da2009bcb6065789f14079bdb6a2c1e271a295d76e4",
+      "report_sha256": "4d53aa0f15192f3630f35688954235e3f89a69bd8f2fab5259e888bea3a88901",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0110",
+      "input_sha256": "9bfcf40ba7b5a63d0675bf7bbf931751048079f32f9345e8e68c3774e89f4bd8",
+      "report_sha256": "a29a9022f48f589a1002c770a56a0e7a7e7ff39d92706883f9133da2ebffe2a9",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0113",
+      "input_sha256": "9bda69247b1e04515a8066821614a61f773554e2b6cef4e29ae686fc99a15921",
+      "report_sha256": "b210e229473cda26ca52272b6cff1e66b151069bbc3ed451c291ca25f60f1114",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0114",
+      "input_sha256": "4f8defdc5704d30d219dabcde6dac1095d9ab0832a495f05e1af609d09c499fc",
+      "report_sha256": "e634a99bbbfdefe9799178e811735cd85b5d4c8605f1e61b138706e0ac00ab54",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0115",
+      "input_sha256": "953595b372fe9af1a29c45f31c5b1d6912d080e8e75b622e6eb95b784a796eb1",
+      "report_sha256": "93e85c8337e9ba1eb381d0713bc67566425844ea3c6b9b5ff4d0d49850195578",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0116",
+      "input_sha256": "5ff347414bdc3e81ff7e7f1d3dce9b9bc2cabcfd8d0f2ff8e2570fe932dfc901",
+      "report_sha256": "48bb1a0e422ca35f63b91faeea5c2bd51cb9b5b5cb531f877087d5478e0ef02c",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0
+    }
+  ]
+}
