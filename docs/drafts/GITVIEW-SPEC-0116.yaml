@@ -1,0 +1,82 @@
+id: GITVIEW-SPEC-0116
+title: GitView - Scoped observation exchange for work routes
+kind: spec
+created_at: '2026-11-14T21:51:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0105
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0037
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0048
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0101
+- GITVIEW-SPEC-0102
+- GITVIEW-SPEC-0110
+- GITVIEW-SPEC-0112
+- GITVIEW-SPEC-0113
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0105.yaml
+  normalization: docs/drafts/GITVIEW-SPEC-0101.yaml
+  coverage: docs/drafts/GITVIEW-SPEC-0102.yaml
+  route: docs/drafts/GITVIEW-SPEC-0115.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Source attempt, accepted fact, population coverage, local retention and present disclosure eligibility remain independently representable for the exact affected scope.
+- Field evidence distinguishes supported values or absence from omitted, error-affected, inaccessible and conflicting information without converting them into zero or deletion.
+- Object representations are associated only with sufficient typed source identity and Repository context; an Issue representation of a PR is not an extra Issue.
+- A partial response can contribute supported fields without refreshing unrelated facts or asserting a complete population.
+- Retention, replay and later reads preserve per-fact context and do not manufacture a source observation or a durable success.
+- The route receives permitted prepared facts and limitations through injectable domain-facing boundaries without receiving raw credentials or treating a transport response as a domain object.
+specification:
+  objective: Specify the information contract between GitHub observations, retained local evidence and the Project work route without choosing source requests or a physical schema.
+  ontology_refs:
+  - gitview:GitHub
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    request_context: A source attempt captures its own identity, initiating source and account context, confirmed or unresolved Repository scope, requested object categories and field or event scope, and relevant selection period and revision where applicable. Request start and completion describe the attempt; neither is automatically an event time, a source ordering, a successful observation of every requested field or complete coverage. Cancellation, access and account changes are evaluated under their own contracts. Do not embed tokens or authorization responses in route-visible state or normal diagnostics.
+    source_outcome: A completed source response may contain independently usable fields and scoped errors; transport success does not make every field or collection successful. Represent attempt outcome and affected scope separately from interpreted values, including incomplete response, source failure, cancellation or deferred work where supported. A generic error or status is not an invented denial, empty collection, deletion or proof of a specific cause. Attempts with different completion order do not establish source revision order under 0037 and 0053.
+    object_identity: Interpret each usable source record under the confirmed source instance and Repository identity and retain its actual source identifier kind and type. Normalize GitHub's PR-marked Issues representation under 0101 before counting or selection, using source-supported association rather than title or unscoped number. A record without enough evidence for type or identity remains unresolved and cannot be silently merged, opened as another object or counted as a confirmed distinct Issue or PR. A separately confirmed linked Issue remains its own object.
+    field_evidence: For each requested or retained domain fact distinguish a source-supported value, source-supported absence where its semantics permit it, not requested, failed or unobservable for this attempt, access-restricted and unresolved conflict. Known zero and known empty are values only when the corresponding source semantics and scope establish them. A null-like field affected by an error is not authoritative absence; omission does not delete or refresh an earlier accepted value. Preserve why a field is unavailable only to the extent source and privacy evidence support that explanation.
+    provenance: Associate each accepted fact with the exact object, source representation, field or event meaning, applicable observation and source-event times, relevant revision or ordering evidence, access context and scope. An event time can precede observation; an unavailable event time stays unknown. A last-known fact remains last known for its own context even if a sibling field is newly observed. Do not serialize a group of differently timed facts as one simultaneous current source snapshot unless independently established.
+    coverage: Supply a separate coverage assessment for the requested Repository set, object category, Today alternatives or other predicate, selected period, applicable filters, source and access context under 0102. Distinguish unobserved, incomplete or unproven, and sufficiently established coverage with its supported reference; a last page or successful local write alone is not sufficient proof. A count of known candidates is not a count of unseen source objects. Keep a prior supported coverage claim at its original scope and time rather than advancing it with an unrelated partial field.
+    retention: A domain-aware boundary accepts a logical 0103 retention operation with its bound supported facts and interpretation context under 0105 and 0113. Return applied, terminal rejection or conflict where supported, or indeterminate independently of the source attempt. Same-operation replay cannot become another source observation, and a checkpoint or coverage advance cannot outlive the evidence required to support it. A successful cache write does not establish separate history retention or current source access.
+    route_read: A work route reads the current saved Project membership and the eligible recoverable observations under their respective boundaries. Its prepared input includes per-object typed facts and limitations, an independently scoped population assessment, relevant latest source attempt and local retention outcomes, and safe access state. A pending source response can be presented transiently only when permitted and explicitly not claimed durable; an unreadable local read or an indeterminate save remains a recovery condition rather than a confirmed empty Project. The current Project identity and filter context are supplied by the route, not inferred from a source record.
+    ordering_and_presentation: Reconcile only comparable facts using supported source ordering and current access, not callback completion or record insertion order. When values cannot be ordered retain an explicit conflict or uncertainty; a response started before denial or a previous account cannot unlock restricted content. Before producing visual, accessible, preview or sharing state, apply current privacy and relevance under 0036, 0112 and 0115. Suppress restricted identity, values and revealing aggregates, while preserving a safe general limitation where allowed.
+    response_boundaries: The selection policy receives immutable prepared facts and their contextual uncertainty rather than raw GraphQL or REST payloads, database handles, credential values or UI objects. The route can change density, filters or navigation without causing the source observation itself to change; a newly relevant context requires a new evaluation. Exact Swift interfaces, source endpoint choices, serialization, scheduling and result presentation remain separately specified.
+    verification: Prepare TDD cases with injected source responses and local outcomes for a partial response with a failed sibling field, PR issue representation, unknown identity, overlapping unordered attempts, denied access, lost save acknowledgement and restart. Verify real GitHub response mapping, persistent storage and native rendering separately from deterministic doubles. This specification and ontology checks do not demonstrate any implemented adapter or product.
+    provenance_note: Offline last-known data, visible update errors, a dense Today overview and DI with TDD were requested by the owner. The evidence dimensions and boundary are agent-authored working refinements; they introduce no new product ontology entity or mandatory source API.
+  scenarios:
+    title_and_failed_ci_field:
+      given: An applicable PR response successfully supplies a new title at T2 but its CI field has an error; a permitted CI observation from T1 is retained.
+      when: The source response is normalized and the route is prepared.
+      then: The title can carry T2 while CI remains last known at T1 or unavailable with its own limitation; no zero, current success or full-Project refresh is inferred.
+    marked_pr_representation:
+      given: A usable source record in an Issues response is marked as a PR and its association to a separately received PR identity is supported in the same confirmed Repository.
+      when: The route builds its distinct work candidates.
+      then: The two representations contribute one PR, their source ID kinds remain distinct and no independent Issue is fabricated.
+    partial_with_storage_failure:
+      given: A source attempt supplies two supported PR facts but leaves a second Repository unobserved and its local retention fails.
+      when: The current route displays the result and later restarts.
+      then: Permitted transient facts may be shown with their context and failure, Project coverage remains incomplete, and after restart no new durable observation is claimed without an independently readable save.
+    unordered_values:
+      given: Two applicable observations give incompatible current CI states for the same entry with no source-supported ordering.
+      when: The route requests the current failure filter.
+      then: The field remains conflicted or unknown and no callback order is used to manufacture a confirmed match or exclusion.
+    stale_response_after_denial:
+      given: A request for a private Issue began under account A, and a later applicable denial restricts its identity before that response completes.
+      when: The result is mapped and the route renders.
+      then: The old response cannot unlock the Issue or reveal its restricted identity or derived count; a permitted limitation may remain visible.
+    absent_and_unrequested:
+      given: A supported source response establishes an empty assignee collection for an Issue but did not request its review-related PR information.
+      when: Facts are handed to their respective overviews.
+      then: The Issue assignee collection can be known empty in that context, while unrequested PR review data is not cleared or labeled a zero review state.
+  unresolved:
+  - Select concrete Swift interface shapes and source-to-domain mappings for the chosen GitHub operations, including source-specific errors, identity association and coverage evidence.
+  - Define the physical atomic retention and recovery boundaries and validate access, timestamps and conflict handling with the selected SQLite and Keychain design.
+  - No adapter, live GitHub interaction, persistence, product TDD cycle or native presentation has been implemented or verified.
