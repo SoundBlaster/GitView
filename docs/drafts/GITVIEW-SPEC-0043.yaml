@@ -92,6 +92,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    source_revoked_between_admission_and_save:
+      given: A Repository selection is locally admitted under source-supported access for account A, and GitHub revokes access before local save without GitView yet observing the revocation.
+      when: The Project save succeeds and an applicable denial is observed afterward.
+      then: The saved Project remains under its own local identity, the earlier admission does not prove continuous source access, and restricted source-derived data is hidden under the current policy.
     empty_status_rollup_on_fork:
       given: A fork-based PR has a source combined commit-status state pending because no status contexts exist, and check-run association and coverage are not established.
       when: The Project and PR CI summaries are evaluated.

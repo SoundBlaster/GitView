@@ -229,6 +229,14 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+0045, 0108 и 0111 уточняют предел локального admission: его можно согласовать
+с уже известными сменой account, denial и cancellation, но нельзя атомарно
+связать с ещё не наблюдавшимся отзывом GitHub grant. Позднее подтверждённый
+denial ограничивает показ данных, не удаляя сохранённый Project. Добавлен
+сквозной сценарий 0043; [четыре кандидата](evidence/autonomous-goal-ontology-check-admission-evidence-20261114.json)
+прошли проверки без findings, gaps и warnings. Фактические source grant и
+конкурентный commit не исполнялись.
+
 [0111](GITVIEW-SPEC-0111.yaml) задаёт чистое решение о допустимости Project
 configuration с отдельными invalid, insufficient evidence и valid. Результат
 не приравнивается к commit; повторная проверка версии и уникальности остаётся
