@@ -1,0 +1,59 @@
+id: GITVIEW-SPEC-0042
+title: GitView - Work ordering and uncertain selection presentation
+kind: spec
+created_at: '2026-11-14T13:50:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0007
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0027
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0007.yaml
+  today: docs/drafts/GITVIEW-SPEC-0027.yaml
+  navigation: docs/drafts/GITVIEW-SPEC-0024.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The work collection has a deterministic ordering for known objects and does not use a repository-local number as a global identity.
+- Uncertain filter candidates are distinguishable from confirmed matches and do not make the selection appear exhaustive.
+- A refresh or density change does not silently reset filters or conflate a moved cell with a different object.
+- An intentionally filtered empty collection remains distinct from missing data, incomplete coverage and a complete observed empty collection.
+specification:
+  objective: Make ordering and uncertain results predictable while preserving the current scope and selected object identity.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    order: As an initial agent-authored default, order known work by observed source last-update timestamp descending. Objects without a known source update time follow objects with known times. Break ties deterministically by stable source instance, Repository identity, object type and object source identity. If a source identity component is unavailable, use a stable local observation token for ordering without treating it as a confirmed GitHub identity or deduplicating it with another uncertain record. This is a display order, not an assertion that the last update was a comment or human work.
+    identity: A PR or Issue appears at most once per selected collection. Repository-local number alone is insufficient to distinguish objects. Rename or transfer with confirmed source identity does not create a second card.
+    confidence: Apply the confirmed match, confirmed exclusion and uncertain candidate rules in 0027. Present confirmed matches separately from a clearly identified uncertain portion or provide an equally explicit way to inspect those candidates. An unavailable filter value is not labeled as a confirmed match; unobserved portions of a repository remain incomplete even when no candidate object is individually known.
+    unknowns: Where the app has a candidate object but cannot evaluate an active filter, it remains available for inspection through the uncertainty presentation. A known-false independent condition can still exclude an object; missing input alone is not a known-false condition.
+    context: Density changes do not change the sorting key, active scope, period or filters. A refresh may change source timestamps and therefore order; preserve the selected object or apply the fallback in 0024 rather than treating the old cell index as identity.
+    empty: When all lifecycle states are explicitly excluded, display an intentional filtered-empty result and preserve the ability to inspect scope coverage and refresh failure. When all applicable conditions are known and complete with no matches, display a confirmed empty selection. When coverage is incomplete or candidate evaluation is unknown, do not label the source result fully empty.
+    boundaries: The sort applies to the current work collection; grouping for historical periods, user-selectable alternative orderings and exact uncertainty UI remain separate decisions. This default is an agent proposal, not a user-selected ordering.
+  scenarios:
+    tie:
+      given: Two different Repositories each contain Issue 42 with the same source update time.
+      when: The collection is ordered repeatedly without data changes.
+      then: Both Issues remain distinct and their relative order is deterministic.
+    unknown_ci:
+      given: Two Today PRs have respectively failed CI and unknown CI.
+      when: The operator selects the failed-CI filter.
+      then: The first is a confirmed match and the second is available through a clearly identified uncertain portion, not counted as a confirmed match or silently lost.
+    partial_empty:
+      given: A Project has no known matching Issues but one member Repository has not been observed.
+      when: The Issue selection is shown.
+      then: The result indicates incomplete coverage rather than a confirmed empty Project.
+    reordering:
+      given: A selected PR remains in the active filter and receives a newer source update time.
+      when: Refresh changes its position in the sorted grid.
+      then: Its source identity remains the same and position or focus restoration follows 0024.
+  unresolved:
+  - User-selected alternative ordering and historical grouping semantics.
+  - Exact UI used to expose uncertain candidates and source coverage while maintaining dense scanning.
+  - Exact stable object identifier encoding and source timestamp mapping require integration refinement.
