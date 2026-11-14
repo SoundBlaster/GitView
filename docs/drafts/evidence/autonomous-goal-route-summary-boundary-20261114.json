@@ -1,0 +1,31 @@
+{
+  "scope": "Declared specification graph links and SpecGraph domain_vocabulary only; not Swift imports or behavior",
+  "input_id": "GITVIEW-SPEC-0115",
+  "input_sha256": "11602659e7cd17bb4d49786cd530778cc8ee29fe17fb9f383165af985fcc0612",
+  "raw_report": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-route-summary-boundary-d736myhk/GITVIEW-SPEC-0115.stdout.json",
+  "raw_report_sha256": "a96c3dedf9db596d58f661f78798c91a10568fd2fd949a0e0bb7b28b57d904f3",
+  "outcome": "checked",
+  "findings": 0,
+  "gaps": 0,
+  "passed_checks": 0,
+  "graph_report": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/route-summary-boundary-readiness-20261114.json",
+  "graph_sha256": "2f52799210146a7ec3724e3b10d73c69eff4669e4a3c8ccba9b1b4ac8535be3a",
+  "node_count": 119,
+  "structural_leaves": 53,
+  "acyclic_relations": [
+    "refines",
+    "depends_on",
+    "refines + depends_on"
+  ],
+  "unrooted": [],
+  "composition_dependencies": [
+    "0092",
+    "0110",
+    "0116",
+    "0119"
+  ],
+  "composition_not_reachable_from": [
+    "0092",
+    "0119"
+  ]
+}

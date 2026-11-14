@@ -10,10 +10,12 @@ depends_on:
 - GITVIEW-SPEC-0033
 - GITVIEW-SPEC-0042
 - GITVIEW-SPEC-0049
+- GITVIEW-SPEC-0056
 - GITVIEW-SPEC-0073
 - GITVIEW-SPEC-0074
 - GITVIEW-SPEC-0075
 - GITVIEW-SPEC-0091
+- GITVIEW-SPEC-0092
 - GITVIEW-SPEC-0093
 - GITVIEW-SPEC-0101
 - GITVIEW-SPEC-0102
@@ -24,6 +26,7 @@ depends_on:
 - GITVIEW-SPEC-0113
 - GITVIEW-SPEC-0114
 - GITVIEW-SPEC-0116
+- GITVIEW-SPEC-0119
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0107.yaml
   journey: docs/drafts/GITVIEW-SPEC-0096.yaml
@@ -38,6 +41,7 @@ acceptance:
 - A late response, old preview callback, day or membership change cannot silently replace the currently selected route context or restore restricted data.
 - Opening GitHub is a platform handoff for an eligible observed object link, not proof that the destination loaded or the recipient has access.
 - The assembly has observable acceptance scenarios and injected boundaries, but this specification does not claim a product, completed TDD cycle or device behavior.
+- A current summary signal carries its own aggregation context into an independently evaluated work selection without making either pure decision own navigation or effects.
 specification:
   objective: Assemble the Project to Today to preview to original-source journey from the selected policy, data, navigation and platform contracts.
   ontology_refs:
@@ -49,6 +53,8 @@ specification:
   contract:
     route_ownership: The Project work page or an equivalent route-level owner under 0096 and 0107 retains its Project identity, Project-wide or explicit Repository intent, dynamic Today context, explicit filters, density, origin and permitted navigation anchor. A one-Repository Project may enter its work directly while keeping Project and Repository identities separate. Selection, source refresh, credential handling and source opening remain replaceable capabilities supplied by valid higher-level composition, not sibling-feature imports or presentation-owned source truth.
     input_and_policy: Read the current confirmed saved membership through 0104; supply accepted, identity-normalized and permitted PR or Issue observations, applicable access facts, captured local calendar boundaries and explicit filter state to the pure 0110 Today decision through the scoped exchange in 0116. Pass population coverage independently under 0102. The policy neither performs I-O nor establishes that every source object was observed. A restricted candidate is not included in visible or accessible output merely to explain an uncertain result.
+    summary_and_signal_composition: At a valid higher composition boundary, prepare the inputs for the pure 0119 summary decision from applicable Project and observation evidence and retain each measurement's unit, membership, reference and coverage. When an actionable current signal opens work, apply 0092 to carry its permitted origin context and explicit condition into an independently evaluated 0110 Today selection. A number does not supply the contributing object identities; the route must obtain or reuse separately supported eligible facts. An observed partial signal can lead to supported matches and a separate limitation without manufacturing missing cards or requiring the destination to equal an earlier count. Historical outcome routes retain their own period and 0056 semantics rather than being forced through dynamic Today.
+    specification_and_code_dependencies: A `depends_on` or `refines` edge in this specification graph identifies a prerequisite or refinement of requirements, not a Swift import or a concrete runtime call. In the candidate FSD partition of 0107, domain decisions receive domain-facing immutable values; they do not import the page, navigation feature, GitHub transport, SQLite or credential implementation. Composition and adapters supply those values and injected effects through reviewed boundaries. A specification depending on an architecture or observation contract does not by itself prove that a corresponding source module depends on the latter's concrete adapter, and graph acyclicity does not prove FSD conformance.
     presented_result: Project the policy result into the confirmed and needs-verification portions proposed by 0042, plus a persistent safe collection limitation where coverage, storage or refresh is incomplete. A known permitted positive can remain visible without implying a complete Project total. Per-field observation and revision context remain distinct; a source refresh of one field is not a whole-object or whole-Project timestamp. Selected CI and review signals follow their own 0061 and 0062 contracts.
     density_and_preview: A pinch or accessible density alternative changes layout without changing scope, selected filters or source identity under 0074 and 0075. A first-version static long press may request a preview of one eligible identified object under 0093; a non-long-press path exposes its permitted information and opening action. The preview has a distinct presentation lifetime, uses current allowed facts and offers Open for the same object or dismissal. It does not open GitHub automatically or expose individual diff, check, comment or review-thread contents.
     detail_and_source: Opening the preview or cell enters the same permitted PR or Issue overview; available selected facts remain reachable under 0041 or 0039. The separately invoked Open on GitHub or Share action uses the source-observed eligible object link and current access under 0033. A Project itself is local and cannot acquire a fabricated source link from one member. A last-known link can be offered with its limitation where allowed; handler acceptance does not prove the intended source object loaded. Return follows the actual route and stable identity or a valid fallback under 0024.
@@ -62,6 +68,10 @@ specification:
       given: Project P contains Repositories A and B; A has a permitted PR with confirmed failed CI, another permitted PR has unknown CI, and B's applicable work scope is unobserved.
       when: The operator opens P's failed-CI selection and previews the uncertain PR at compact density.
       then: The first PR is a confirmed match, the second stays in the labeled uncertain portion with its identity and context, B contributes a separate coverage limitation rather than fabricated cells, and previewing does not change P or the filter.
+    partial_signal_refreshes_during_entry:
+      given: An 0119 failed-CI signal records one permitted observed PR under partial A-and-B Project coverage at T1, and independently accepted T2 evidence changes the destination while B remains unobserved.
+      when: The operator opens the signal and the Project work route composes the 0092 origin and the separately evaluated 0110 selection.
+      then: The origin remains a T1 partial signal, supported T2 PRs and their own coverage are shown where permitted, and the destination neither fabricates B cards nor claims that its count or membership must equal the earlier signal.
     source_link_after_preview:
       given: A permitted PR preview opened from P has an observed link associated with that PR and no known conflicting address evidence.
       when: The operator opens the same PR overview and explicitly requests its source.
