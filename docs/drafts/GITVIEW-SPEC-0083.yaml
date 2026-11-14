@@ -51,6 +51,10 @@ specification:
       given: P was named Old, one pending edit proposes Blue and a different edit has durably renamed it Green.
       when: The stale edit is reviewed.
       then: Green is identified as saved and Blue as pending where permitted; no name is silently chosen as the operator's resolved intent.
+    purpose_conflict:
+      given: A pending edit would clear P's purpose description while another edit has durably changed that description.
+      when: The stale clear is reviewed.
+      then: The permitted current description and the intention to clear remain distinguishable; neither is silently selected and retry requires explicit review against the confirmed current Project.
     third_change_before_commit:
       given: The operator reviews a revised edit against confirmed P state V2, and another operation durably changes P to V3 before the revised edit commits.
       when: The revised save reaches its commit boundary.

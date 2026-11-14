@@ -16,6 +16,8 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Saved Projects have stable local identities, names and at least one repository member.
+- A Project's optional purpose description can be inspected, set, changed and explicitly cleared without changing its identity or source Repository.
+- The operator can explicitly create a distinct Project from one or more eligible Repositories without changing their existing memberships or default associations.
 - A Repository may participate in several Projects and an edit to one membership does not mutate other Projects or GitHub.
 - Default Project creation is idempotent for an existing default association and deletion does not silently remove the repository or its other memberships.
 - Cancelling an unsubmitted project edit or an invalid attempt to remove the final member preserves the last saved Project.
@@ -34,6 +36,10 @@ specification:
     identity: A saved Project has a stable local identifier independent of its name and repository addresses. Rename and transfer of a confirmed same Repository do not change Project identity or membership.
     default_association: A default association identifies the locally created default Project for one source Repository, separately from an arbitrary Project that happens to contain the same Repository. It is project configuration for idempotent setup, not a new ontology entity. For an existing association, confirming the Repository again reuses the same Project. Other existing Projects containing that Repository do not become the default implicitly.
     creation: Confirmation of one or more selected accessible Repositories establishes a separate single-member default Project for each one lacking a default association. An existing association is reused. The initial name is the observed repository name; subsequent source renames do not automatically rename Projects.
+    custom_creation: As a separate agent-authored route, the operator can explicitly create one custom Project with a nonempty name, an optional purpose description and one or more confirmed eligible GitHub Repository identities. The operator reviews the proposed composition and confirms it before it becomes saved. Successful creation establishes a new stable local Project identity and the selected membership, without changing existing Projects, copying source data, modifying GitHub or implicitly making this custom Project the default for any Repository. Multiple organizations may be represented. Do not silently combine the selections of the distinct default-setup route into this custom Project.
+    custom_creation_outcome: A custom creation attempt is distinguishable from its retries. Cancelling before submission leaves no saved Project from that attempt. A confirmed save reports the new identity and valid saved configuration; a confirmed non-commit leaves no Project from that attempt. After an indeterminate outcome, reconcile the original attempt against durable evidence before reporting success, failure or issuing a retry that could duplicate that attempt. An intentional later creation is a distinct action and may yield another Project even when its name or members match; matching names or membership alone do not establish identity or a duplicate. This is an observable guarantee, not a selected storage transaction or operation-id format.
+    purpose: A Project can have an optional locally saved description of its purpose, as selected in the Project proposal. The operator can inspect a permitted saved description and explicitly set, change or clear it through a Project editing route. Clearing removes the optional value; it does not remove the Project, its name or members. A Project without a description remains valid. Treat unobserved, unreadable or restricted content separately from a confirmed absent description under 0023 and 0036. The text is local Project configuration, not the GitHub Repository description, a generated explanation or a requirement that PR and Issue sections be present. No source refresh, Repository rename or membership change silently generates, replaces or clears it.
+    purpose_edit: As an agent-authored refinement, a new default Project starts with no description unless the setup interaction explicitly accepts one from the operator. A pending change or clear is not saved until the Project edit is confirmed; cancellation before submission preserves the saved value. A name-only or membership-only edit preserves the saved description unless an explicit reviewed change to it is part of the valid edit. Confirmed, uncertain and stale writes follow the same Project-wide rules as other fields under 0082 and 0083. Do not expose restricted source-derived text merely because it is stored as a Project description; the classification of mixed or operator-authored content remains subject to access policy rather than inferred from its field name.
     editing: The operator can change a Project name or its repository membership. Edits are pending until saved; cancellation before submission preserves the last saved state. Cancelling an already submitted write does not prove rollback and its outcome must be reconciled. A saved Project must have a nonempty name and at least one member. An attempted save with no members or an empty name is rejected and does not modify the saved Project.
     edited_default: Editing a default Project's name or adding members does not change its local identity or its default association, provided the associated Repository remains a member. Removing the associated Repository is allowed only if another member remains; when that edit is saved, remove the default association while preserving the Project and its remaining members. Rediscovery alone does not create a replacement; a later explicit setup confirmation can create a new default Project for the formerly associated Repository.
     removal: Explicit removal of a local Project deletes its local configuration and its default association if any, but does not remove the Repository from GitHub, erase observations needed by other Projects, or change other memberships. After deletion, a later explicit setup confirmation may create a new default Project with a new local identity; merely rediscovering the repository does not create one.
@@ -43,6 +49,30 @@ specification:
     scope: Saved Projects contain only GitHub-managed Repositories in the current product scope. Temporary offline discovery or source rename is not a command to change membership. Access restrictions follow 0019.
     provenance: These detailed lifecycle and default-association rules are agent-authored proposals under autonomous refinement, not independently approved owner decisions.
   scenarios:
+    create_shared_custom_project:
+      given: Repositories A and B are eligible and each already belongs to its own saved default Project.
+      when: The operator explicitly confirms a new custom Project containing both, with a name and optional purpose.
+      then: One distinct Project with A and B is saved, both existing default Projects and associations remain intact, and no GitHub object is modified.
+    custom_creation_unknown:
+      given: A custom Project creation might have committed before its acknowledgement was lost and durable outcome evidence is unavailable.
+      when: The operator asks to retry that same creation attempt.
+      then: The outcome remains unknown until reconciled and the app does not report failure or create another Project from that attempt merely because the acknowledgement is absent.
+    intentional_same_membership:
+      given: A saved custom Project contains A and B.
+      when: The operator separately creates and confirms another custom Project containing A and B, even with the same name.
+      then: The second explicit action can establish a distinct local Project and does not alter or silently reuse the first or its default associations.
+    set_and_clear_purpose:
+      given: A saved Project has no purpose description and contains a confirmed Repository.
+      when: The operator explicitly saves a description, later reviews it and explicitly saves its removal.
+      then: The description is available while saved and permitted, then confirmed absent; Project identity, name, membership and GitHub data remain unchanged.
+    membership_edit_preserves_purpose:
+      given: A Project has a saved purpose description and two members.
+      when: The operator saves a valid edit removing one member without changing the description.
+      then: The saved description remains associated with the same Project, the remaining member is preserved and no source Repository is modified.
+    description_unreadable:
+      given: A Project identity is readable but the saved description cannot be read or exposed under current access policy.
+      when: Its permitted details are inspected.
+      then: The description is unavailable or restricted as applicable, not asserted absent, and restricted text is not disclosed.
     shared_repository:
       given: Repository R is in default Project P and another Project Q.
       when: The operator removes R from P while retaining another member in P.
@@ -79,3 +109,5 @@ specification:
   - The edited-default disassociation and explicit recreation policy is an agent-authored choice and needs domain review.
   - User-facing deletion confirmation and the exact policy for data no longer referenced by any Project require storage and UX specifications.
   - How to reconcile overlapping edits and preserve or discard an unsaved editing draft across process termination requires a separate concurrency and interaction decision.
+  - Exact editing control, text format, whitespace handling and privacy classification of mixed-origin descriptions remain open; no source or native behavior has been verified.
+  - Durable custom-creation attempt reconciliation and its accessible interaction require storage and platform design; no actual persistence behavior is established.

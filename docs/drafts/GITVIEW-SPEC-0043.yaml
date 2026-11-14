@@ -83,6 +83,14 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    create_custom_project_from_shared_repositories:
+      given: Two eligible Repositories each already have a saved default Project and belong to different organizations.
+      when: The operator explicitly creates a separate custom Project containing both and opens it from the overview.
+      then: The new Project has its own identity and both members, the prior Projects and defaults remain intact, and its initial multi-member route is scoped to that new Project.
+    project_purpose_across_edit:
+      given: A Project has a permitted locally saved purpose description and multiple Repository members.
+      when: The operator saves a valid membership edit without changing the description, then opens a Project preview.
+      then: The same description remains saved and is inspectable through the Project route even if omitted from compact preview; no GitHub Repository description is changed.
     old_thread_partial_signal:
       given: Two unresolved threads belong to one open PR; one qualifies under a selected creation-age threshold while the other's creation timestamp is unavailable.
       when: The operator opens the Project's long-thread signal and previews the affected PR.
