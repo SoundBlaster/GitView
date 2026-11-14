@@ -1,0 +1,110 @@
+artifact_kind: gitview_description_recognition_examples
+schema_version: 1
+status: candidate
+specification: GITVIEW-SPEC-0051
+purpose: Reviewable examples of the proposed narrow recognition profile; not execution results or evidence of a parser.
+cases:
+- id: canonical_pr
+  object_type: pull_request
+  body_observed: true
+  body: |
+    ## Problem
+    Slow review.
+
+    ## Validation
+    Unit tests passed.
+
+    ## References
+    #42
+  expected:
+    Problem: {status: filled, text_contains: 'Slow review.'}
+    Validation: {status: filled, text_contains: 'Unit tests passed.'}
+    References: {status: filled, text_contains: '#42'}
+    Motivation: {status: missing}
+  boundaries: Validation ends before References; the complete original body remains available.
+- id: placeholder_only
+  object_type: issue
+  body_observed: true
+  body: |
+    ## Motivation
+
+    <!-- State whose goal this serves. -->
+
+    ## References
+    None.
+  expected:
+    Motivation: {status: present_unfilled}
+    References: {status: filled, text_contains: 'None.'}
+  boundaries: The raw comment is retained in source text but is not an authored motivation claim.
+- id: code_fence
+  object_type: issue
+  body_observed: true
+  body: |
+    ## Problem
+    Example snippet follows.
+    ```text
+    ## Motivation
+    Not a section.
+    ```
+    ## References
+    Context.
+  expected:
+    Problem: {status: filled, text_contains: 'Not a section.'}
+    Motivation: {status: missing}
+    References: {status: filled, text_contains: 'Context.'}
+  boundaries: The heading-looking line in the supported fence belongs to the Problem body.
+- id: duplicate_heading
+  object_type: pull_request
+  body_observed: true
+  body: |
+    ## Validation
+    First claim.
+    ## Validation
+    Second claim.
+  expected:
+    Validation: {status: ambiguous}
+  boundaries: No single Validation occurrence is selected or combined as an authoritative claim.
+- id: unrelated_boundary
+  object_type: pull_request
+  body_observed: true
+  body: |
+    ## Motivation
+    Improve navigation.
+    ## Notes
+    This is not Motivation.
+  expected:
+    Motivation: {status: filled, text_contains: 'Improve navigation.', text_excludes: 'This is not Motivation.'}
+  boundaries: An unrelated standalone level-two heading terminates the preceding recognized section.
+- id: unclosed_fence
+  object_type: issue
+  body_observed: true
+  body: |
+    ## Problem
+    Example.
+    ```
+    ## Motivation
+    Is this content?
+  expected:
+    Motivation: {status: ambiguous}
+  boundaries: The unclosed fence makes the affected interpretation ambiguous; no heading is guessed.
+- id: unavailable_body
+  object_type: issue
+  body_observed: false
+  body: null
+  expected:
+    Problem: {status: unknown}
+    Motivation: {status: unknown}
+  boundaries: A failed observation is not a confirmed empty or section-free description.
+- id: stale_extraction
+  object_type: pull_request
+  body_observed: true
+  body_version_a: |
+    ## Validation
+    Checks passed.
+  body_version_b: |
+    ## Validation
+    Checks failed.
+  expected:
+    version_a: {status: filled, text_contains: 'Checks passed.'}
+    version_b: {status: filled, text_contains: 'Checks failed.'}
+  boundaries: An extraction for version A must not be presented as the text of version B; either statement remains separate from observed CI.
