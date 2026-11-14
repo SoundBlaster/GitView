@@ -18,6 +18,8 @@ sources:
   parent: docs/drafts/GITVIEW-SPEC-0003.yaml
   manual_refresh: conversation:gitview/excerpt-64
   trigger_intent: conversation:gitview/excerpt-63
+  apple_background_strategy: https://developer.apple.com/documentation/BackgroundTasks/choosing-background-strategies-for-your-app
+  apple_background_expiration: https://developer.apple.com/documentation/backgroundtasks/bgtask/expirationhandler
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The operator can request refresh using pull-to-refresh where appropriate or an equivalent accessible action for the current view.
@@ -45,7 +47,9 @@ specification:
     membership_during_refresh: A saved membership edit changes the Project's current scope but does not retroactively alter an in-flight request's captured scope. Its accepted per-Repository observations may be reused under their own identity, access and coverage rules; a response for the former member set is not by itself a complete refresh of the new set. An unsaved or cancelled edit does not change the saved membership used for the current claim.
     old_scope_outcome: A late failure or completion for a former member remains attributable to the request and scope that actually produced it. It may remain discoverable as an earlier operation outcome where permitted, but must not be presented as the current Project's failure, successful coverage or observation time for a Repository that is no longer a member. A still-shared Repository can remain relevant to another Project under that Project's separately established scope. Do not hide a current Project's own incomplete new-member coverage merely because an old request completed.
     partial_or_failure: Successfully observed facts from an incomplete operation can be retained with their own observation time, while coverage remains partial. A failed operation shows a visible indication in the affected scope and preserves previously accepted data and last complete observation time. A first failure remains an unobserved scope with error, not a confirmed empty collection.
-    expired_background: If an iOS-granted background opportunity expires after some facts are accepted but before the requested scope is sufficiently covered, preserve accepted facts with their own times, mark the affected scope incomplete and do not report the entire scope as successfully refreshed. An expiration before any accepted facts leaves prior observations and their successful times intact; it is distinct from proving a GitHub error. Actual system delivery and timing require device evidence.
+    expired_background: If an iOS-granted background opportunity expires after some facts are accepted but before the requested scope is sufficiently covered, retain independently confirmed durable facts with their own times and identify incomplete coverage. Facts accepted only in memory are transient and cannot be promised after suspension or process termination. An expiration before any accepted facts does not itself update prior observations or successful times and is distinct from proving a GitHub error. A pending or indeterminate local write is reconciled under 0105 rather than reported as committed or rolled back. Actual system delivery and timing require device evidence.
+    system_expiration: Apple's BackgroundTasks documentation describes an expiration handler with limited cleanup time and a completion report to the scheduler. When using that framework, stop or cancel applicable work promptly and complete the platform task according to its API contract; do not assume the handler always runs or provides time to finish a network request, durable write, cleanup or another retry. Local retention and each source attempt keep their independently supported outcomes. A scheduler completion report is not evidence that every requested Project scope was fully observed, and an unsuccessful or expired platform task alone is not a GitHub error. No exact execution duration or schedule is a product guarantee.
+    cancellation_and_late_response: A cancellation request or expired execution opportunity is not proof that an in-flight source operation or local write has stopped or has no result. Preserve its attempt identity, scope and unresolved state until independently resolved under 0037 and 0105. If a permitted late response is delivered while processing is still possible, evaluate it against its original scope, identity, ordering and current access; it is not relabeled as a later refresh or as automatically durable. If termination prevents delivery, do not invent a source outcome.
     concurrent: If another refresh is already active, the app may coalesce or schedule the request, but it must not lose the operator's requested scope or report success before the relevant work has an observable outcome. Conflicting results and access changes follow 0037; exact scheduling and duplicate-request strategy remain open.
     coalesced_coverage: A shared refresh may satisfy a request only to the extent that its actual covered scope includes that request's required inputs. A shared success for PRs cannot complete a request for both PRs and Issues, and a partial response does not become complete merely because several triggers share it. Requests can have distinct outcomes while reusing accepted facts.
     feedback: The operator can discover whether the relevant scope is loading, complete, incomplete or failed and see the applicable last successful observation time when available. UI placement and animation are not prescribed.
@@ -94,9 +98,17 @@ specification:
       when: The request for A and B completes without covering C.
       then: The request retains its original scope, the current Project is not reported fully refreshed for A and C, and permitted observations of A remain eligible for reuse with their own times and coverage.
     background_expires:
-      given: An iOS-granted background refresh accepted one page but has not covered the remaining pages.
+      given: An iOS-granted background refresh accepted one page, some facts are durably stored and others remain in memory, but the remaining pages are not covered.
       when: The granted execution opportunity expires.
-      then: The accepted facts retain their own observation context and the requested scope remains incomplete without inventing a GitHub error or a new complete-scope time.
+      then: Independently recoverable facts retain their own observation context, memory-only facts are not promised after termination, and the requested scope remains incomplete without inventing a GitHub error or a new complete-scope time.
+    expiration_during_pending_write:
+      given: A background source response was accepted but its local retention commit has an indeterminate outcome when the system requests expiration.
+      when: The process terminates before the commit result is observed.
+      then: Recovery reconciles the original retention operation under 0105, without assuming rollback or durable success; the system expiration does not become a GitHub failure or a complete observation.
+    late_result_after_expiration:
+      given: An expiration handler requested cancellation of a scoped source attempt, but the source response and local outcome are not yet resolved.
+      when: A response is delivered while the process still runs.
+      then: Any usable permitted facts retain that attempt's identity, scope and timing; cancellation alone does not prove the request failed, and storage and full-coverage claims require their own evidence.
     coalesced_subset:
       given: A manual request covers PRs and Issues while an existing refresh covers only PRs.
       when: The PR refresh completes successfully and Issue data is still unobserved.
