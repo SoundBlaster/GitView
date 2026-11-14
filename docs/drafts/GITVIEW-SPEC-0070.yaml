@@ -1,0 +1,67 @@
+id: GITVIEW-SPEC-0070
+title: GitView - Verification of metric history behavior
+kind: spec
+created_at: '2026-11-14T16:30:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0040
+depends_on:
+- GITVIEW-SPEC-0030
+- GITVIEW-SPEC-0056
+- GITVIEW-SPEC-0064
+- GITVIEW-SPEC-0065
+- GITVIEW-SPEC-0066
+- GITVIEW-SPEC-0067
+- GITVIEW-SPEC-0068
+- GITVIEW-SPEC-0069
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0040.yaml
+  owner_requirements: conversation:gitview/excerpt-74
+  history_audit: docs/drafts/history-branch-readiness-20261114.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Each implemented historical-metric behavior has traceable tests of observable results, including uncertainty and failure, developed under the TDD contract in 0040.
+- Tests control clock, calendar, time zone, source observations and persistence where needed without requiring a live account for domain decisions.
+- A history claim is verified at the appropriate boundary; passing deterministic doubles does not prove real source, persistence, scheduling or native accessibility behavior.
+- A verification record identifies the specification, scenario, fixture conditions, test level and actual result without credentials or unapproved private data.
+specification:
+  objective: Specify verification obligations for historical metrics across domain decisions, storage, GitHub adapters and native interaction.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    tdd: For each implemented behavioral slice, start with a failing test that demonstrates the missing externally observable behavior, implement the minimum change, then refactor with passing tests under 0040. Record the source scenario and actual red/green results; a proposed scenario, parsing check or compile error alone is not TDD evidence.
+    injected_inputs: Domain-level tests supply deterministic clock, calendar and time-zone inputs as well as source facts, membership, scope, access and persistence outcomes. Network and data doubles are replaceable at explicit boundaries under 0040. Use SpecificationCore for suitable named domain policies as required by 0021 without collapsing unknown or partial into a Boolean.
+    calendar: Verify half-open boundaries, current-day evaluation cutoff, relevant time-zone changes and 23-hour and 25-hour local days. Assertions must target user-visible period membership and actual timestamps rather than just restating an implementation helper. Host-side examples alone do not establish iOS calendar behavior or accessible presentation.
+    history: Verify distinct-object versus event counts, reason unknown versus completed, repeated closure, separate PR and Issue series, current membership basis and missing or partial Repository inputs. Confirm that a later partial sample is not labeled a complete latest sample and that mismatched observation times do not become a fabricated simultaneous snapshot.
+    storage: Exercise accepted source observations, persistence failure or unknown outcome, scoped clear and a late pre-clear response using controlled storage and network boundaries. Verify confirmed clearing does not let earlier admitted work silently repopulate removed history and that a genuinely new later observation can be retained. A fake-storage test is not by itself proof of actual durable ordering or restart behavior; test the chosen persistent implementation and restart boundary separately once specified.
+    navigation: Verify that an actionable period-outcome entry opens the same Project, period and condition and distinguishes event counts from distinct object cards. Verify return, incomplete history and restricted private inputs without requiring live data. Native accessibility and visual distinctions need separate device or appropriate platform-level evidence under 0032 and 0068.
+    real_boundaries: For a chosen source mapping, separately verify documented API field and permission assumptions, actual parsing and partial or error behavior with an authorized, deliberately scoped test source. Verify platform background delivery only as observed, not as a guaranteed schedule. Avoid using a user's private data unless explicitly authorized for that test; never mutate source GitHub objects as part of read-only validation.
+    evidence: Record what ran, tested version, scenario, controlled inputs, test level and observed result; identify unavailable live or device checks. The author's calendar-history model and SpecGraph structural checks are design evidence only and do not claim the application implementation passed.
+    provenance: Testability, DI, TDD and network/data doubles were requested by the owner. History-specific verification cases are agent-authored refinements and no product test has run.
+  scenarios:
+    dst_boundary:
+      given: A controlled clock and calendar place an event at the exclusive end of a 23-hour local day.
+      when: The event is assigned to consecutive day buckets.
+      then: It belongs to the following bucket, not both, with each bucket's actual boundaries inspectable.
+    clear_race:
+      given: A retention operation started before a confirmed clear and a later response is delivered by a controlled source.
+      when: The application attempts to persist that response.
+      then: The cleared history is not silently restored; separately verify the chosen durable implementation across restart before claiming that guarantee.
+    partial_members:
+      given: A Project has complete A observations, unobserved B and a known value for A.
+      when: Its historical Project metric is presented.
+      then: The value is identified as incomplete or unavailable for A and B, and B is not treated as zero.
+    integration_gap:
+      given: Controlled history decision tests pass but real GitHub adapter and native accessibility checks have not run.
+      when: The verification result is reported.
+      then: The controlled checks are reported at their actual level and the missing integration and device evidence remain explicit.
+  unresolved:
+  - Concrete Swift test frameworks, source adapter contract, fixture formats and actual storage implementation remain to be chosen.
+  - Exact history UI and accessibility controls require device evidence; availability of GitHub history and permissions requires separate source verification.
+  - No application behavior, TDD cycle or live integration has been executed.
