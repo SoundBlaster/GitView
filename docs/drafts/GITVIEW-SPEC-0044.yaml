@@ -29,6 +29,7 @@ specification:
     axes: For each meaningful scope retain separately the accepted known observations, whether the requested scope was unobserved, partial or sufficiently covered, the last relevant successful observation time, the outcome of the latest request, and whether previously saved private data may currently be displayed. These are product-state properties, not new ontology entities.
     unobserved: Before any accepted observation of a collection, the collection is unknown. A first failed request adds a failure outcome but does not make the collection a known empty result.
     confirmed_empty: A known empty result requires a successful observation sufficient for the exact Repository, object category and time or filter scope being described. Complete coverage of one scope does not establish emptiness in another.
+    traversal_vs_coverage: A successful final page is an outcome of traversal, not automatically proof of an exhaustive source state. When changes during traversal or gaps in source guarantees leave coverage unproven, mark the collection's coverage uncertain or incomplete and retain any earlier successful complete-observation time with its original scope. Do not equate uncertainty about completeness with proof that a specific item is absent or present.
     partial: A successful subset can provide accepted facts and its own observation time while scope coverage remains partial. It must not replace the prior complete-observation timestamp with the subset's time or attribute that subset time to retained unobserved facts.
     failed_after_success: A failed refresh records its own failure and retains the preceding accepted data and successful time. A failure can coexist with previously complete or partial coverage; do not model failure as erasing the previous coverage history.
     overlapping_attempts: For the same requested scope, distinguish in-flight attempts from terminal attempt outcomes. The most recently completed attempt is the terminal attempt with the latest completion time; an in-flight attempt does not erase an earlier failure. Completion order describes attempts only, not source revision order or coverage. If completion times cannot be ordered, retain the ambiguity instead of fabricating an order. Display of a terminal success does not imply that unresolved conflicts or incomplete coverage have been repaired.
@@ -57,6 +58,10 @@ specification:
       given: Two refresh attempts cover the same PR scope, A and B; A starts first and B fails while A is still in flight.
       when: A later completes successfully with only partial data.
       then: Before A finishes, B's failure and A's in-flight state are distinguishable. After A finishes, its terminal outcome is later in completion order, while incomplete coverage and any unresolved conflicting source values remain independently visible; this ordering says nothing about which source values are newer.
+    terminal_page_unproven:
+      given: A prior complete Issue observation exists and the source collection changes during a later traversal whose consistency cannot be established.
+      when: All pages returned by that traversal finish successfully.
+      then: The latest traversal outcome is distinguishable from its unproven coverage; the old complete time is not advanced as if the newer traversal had proved an exhaustive snapshot.
   unresolved:
   - Exact scope representation and completeness proof for individual source endpoints.
   - Freshness thresholds, per-field granularity, UI representation and durable storage mechanism.

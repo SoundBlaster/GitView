@@ -27,6 +27,7 @@ specification:
   contract:
     scope: An observation is interpreted with its source identity, requested repository or project scope, object category and time selection where applicable. A Project spanning repositories is not a single proof that all members were observed.
     complete: A complete success covers the requested scope and records its successful observation time and coverage. A complete empty collection is asserted only for that scope. This does not prove emptiness of another repository, category, time selection or inaccessible source.
+    enumeration_evidence: Traversing every page reported by a source is evidence of completed traversal, but does not by itself establish an exhaustive or simultaneous collection if relevant items can move between pages during the traversal. A complete-scope claim requires source guarantees or a separately justified reconciliation rule sufficient for that specific claim. When such evidence is unavailable, preserve accepted facts with their context and report coverage as uncertain or incomplete; do not infer a missing record was deleted. No particular pagination algorithm or source guarantee is assumed.
     partial: A partial response may update records it actually observes, but keeps the scope marked incomplete and retains last-known records not observed in that response. It records the time and coverage of the partial observation separately from the previous complete observation. Their presentation must not imply that all retained records were observed at the partial response time.
     failure: A failed attempt that yields no accepted data leaves previously accepted values and their successful observation times intact, and records failure separately. Failure on first observation leaves that scope unobserved with an error, not empty.
     ordering: A result that was requested before a later request for the same scope may finish afterwards. An older result must not replace newer accepted values for that same scope merely because it completed later. Cross-scope data and partial results require field-level or scope-level ordering without discarding unrelated successful observations; exact ordering token and source revision semantics remain open.
@@ -51,6 +52,10 @@ specification:
       given: A private Repository has saved observations and source access is explicitly denied.
       when: A view is opened.
       then: The denial is visible and restricted cached content follows 0019 instead of being shown as an empty Repository.
+    changing_page_boundaries:
+      given: A collection changes while its pages are being read, and the available evidence cannot establish that every relevant item was covered.
+      when: The last page is reached without a transport error.
+      then: The traversal may be reported as finished, but the collection is not asserted exhaustive or simultaneous solely because of the terminal page; prior unseen records are not deleted.
   unresolved:
   - Formal reconciliation order for overlapping partial scopes and source revisions, including authorization changes during a request.
   - Exact persisted data schema, source query, page size, API budget, retries and freshness thresholds.

@@ -291,6 +291,12 @@ checks и threads; определения в выбранном package не и�
 различает первоначальное решение о continuity и более позднее согласие на
 сравнение numeric REST ID в пределах одного GitHub instance.
 
+Уточнено различие успешного page traversal и доказанного coverage. Авторский
+[пример](evidence/autonomous-goal-pagination-coverage-20261114.json) показывает
+пропуск на искусственном изменяемом offset list, не на GitHub. Новые 0026 и
+0044 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-pagination-20261114.json)
+без findings и gaps; реальные source guarantees и reconciliation не проверялись.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.
