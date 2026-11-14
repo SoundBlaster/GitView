@@ -229,6 +229,14 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+[0111](GITVIEW-SPEC-0111.yaml) задаёт чистое решение о допустимости Project
+configuration с отдельными invalid, insufficient evidence и valid. Результат
+не приравнивается к commit; повторная проверка версии и уникальности остаётся
+на границе сохранения. [Candidate и ontology advisory](evidence/autonomous-goal-ontology-check-membership-policy-20261114.json)
+прошли без findings, gaps и warnings. Конкретная text normalization, source
+eligibility и реальный storage protocol остаются открытыми. Текущий граф
+содержит 111 кандидатов и 52 структурных листа без отсутствующих целей и циклов.
+
 0110 дополнен предложением типизированного `match / non-match / unknown`,
 отдельного от `DecisionSpec` no-match. Основа — исходники SpecificationCore
 на локальном commit `4832144`, не разрешённая зависимость GitView. [Проверка](evidence/autonomous-goal-ontology-check-specificationcore-policy-20261114.json)
