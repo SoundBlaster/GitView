@@ -1,0 +1,57 @@
+id: GITVIEW-SPEC-0040
+title: GitView - Testable behavior and injected dependencies
+kind: spec
+created_at: '2026-11-14T13:48:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0021
+depends_on:
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0036
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0021.yaml
+  owner_requirements: conversation:gitview/excerpt-74
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Product behavior with external effects can be exercised through explicitly supplied network and data dependencies.
+- Stable domain decisions can be tested deterministically without a live GitHub account or persistent user data.
+- Test-driven development starts behavioral changes with a failing test, then implementation and refactoring under passing tests.
+- Tests using doubles are complemented by separate evidence for real adapters, system integration and device-dependent interactions where relevant.
+specification:
+  objective: Make product behavior independently testable while preserving trustworthy evidence of real integration.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    boundaries: Network access and data persistence enter product behavior through replaceable dependencies composed at an explicit boundary. Time, scheduling and other nondeterministic effects are controlled where they affect a scenario. The contract does not require a DI framework or a protocol for every value.
+    isolation: Domain decisions such as Today membership, filter uncertainty, Project membership, identity continuity and scoped coverage can be evaluated with deterministic inputs and without a live GitHub request or mutation of personal data.
+    doubles: Test doubles for network and data provide reproducible success, partial result, failure and relevant ordering cases. A fake or stub can provide data; a mock may verify required interactions when behavior depends on the interaction. The choice is based on the scenario rather than forcing every test to use the same double.
+    workflow: For a product behavior change, express the intended externally observable behavior in a failing automated test, implement the minimum behavior to pass, then refactor while retaining passing tests. Tests check meaningful contract outcomes and failure modes rather than requiring a duplicate test for every trivial branch or private helper.
+    real_boundaries: Passing isolated tests using doubles establishes behavior only under the supplied test conditions. Verify real adapter serialization and response handling, source integration with authorized access, platform behavior and native interaction separately where their contracts require evidence. A missing live or device check remains an explicit gap.
+    privacy: Fixtures and logs used in tests must not include credentials or unapproved private source content. Test failures do not change a user's actual GitHub state.
+    evidence: A verification report identifies the tested specification, scenario, test level, input conditions and observed outcome. Proposed scenarios and unexecuted tests are not reported as passes.
+    provenance: The owner requested testability, DI, TDD and network/data mocks; boundary placement and test-level distinctions are agent-authored refinements.
+  scenarios:
+    offline_refresh:
+      given: A data fake contains a last-known PR observation with a successful time and the network double returns a deterministic failure.
+      when: Refresh behavior is exercised.
+      then: The stored observation and time remain and a scoped failure is visible, without contacting GitHub.
+    unknown_filter:
+      given: A deterministic PR fixture has an unknown CI state.
+      when: The failed-CI filter decision is evaluated.
+      then: The result retains uncertainty rather than claiming a confirmed failure, pass or zero count.
+    integration_boundary:
+      given: All isolated tests using network doubles pass.
+      when: Real adapter integration has not been run.
+      then: The evidence report identifies the unverified integration rather than presenting the mock results as proof of GitHub compatibility.
+    tdd_trace:
+      given: A new user-visible selection rule is being developed.
+      when: Its implementation change is proposed.
+      then: The review can trace the rule to a test that first exposed the missing behavior and to the passing result after implementation.
+  unresolved:
+  - Concrete Swift test tools, dependency wiring and continuous-integration topology are implementation decisions.
+  - Precise retention and reproducibility format for red-green-refactor evidence requires development workflow design.
