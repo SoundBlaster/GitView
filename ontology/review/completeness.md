@@ -124,3 +124,32 @@ selection, разрешённый в composition. Generic warning не дикт�
 
 Rule selection не завершает typed reference/time/availability contract и
 не утверждает все прочие решения candidate. Canonical graph остаётся отложенным.
+
+## Сверка с текущим графом — 2026-11-14
+
+Таблица 0.1.0 и промежуточные draft.1–draft.2 выше описывают исторические
+снимки, а не текущий выбранный пакет. `specgraph.project.yaml` выбирает
+[составной draft.5](../candidates/domain-v0.2.0-draft.5/composition-context.yaml):
+`local.gitview.domain@0.2.0-draft-composition.5`, status `draft`, вместе с
+импортированными motivation-core и events-core. При чтении локального source
+пакета обнаружены 13 class declarations (включая действия `RegisterRepository`
+и `AddRepository`), 14 relation/link declarations, один protocol и четыре
+manual policies. Число declarations не является мерой смысловой полноты.
+
+| Область | Состояние draft.5 и граница |
+| --- | --- |
+| User и действие над Project | `User` и `AddRepository` объявлены; action несёт типизированную ссылку на Repository, а `addsRepositoryTo` связывает оператора и Project. Проверка декларации не доказывает выполнения действия или мотива конкретного оператора. |
+| GitHub и Repository | `RegisterRepository`, `managesRepository` и contextual protocol `GitHubRepository` представлены; это контекст того же Repository, не новый объект. Источник и время возникновения фактического управления остаются отдельным вопросом. |
+| Состав и source links | `projectIncludesRepository`, связи PR/Issue с Repository и Issue/PR links объявлены. Часть выражена как `domain/range` links: не следует выдавать их за установленные актором action-derived отношения или доказательство причинности. |
+| Выбранные свойства | Project, PR и Issue имеют частичную типизированную проекцию; политика `PartialObservationBoundary` прямо запрещает считать missing значением zero/false/empty. Поля и связи не равны полному состоянию GitHub или доказанной доступности API. |
+| Identity | `RepositoryIdentityContinuity` и `ProjectMembershipScope` фиксируют рабочие правила в manual policies; реализуемая логика и источник наблюдений требуют соответствующих specs и evidence. |
+| Motive и Activity | Ссылка использует импортированный `motivcore:Motive`; Issue link не доказывает мотив или причинную цепь. `Activity` по-прежнему не вводится как самостоятельная сущность без основания. |
+| Новые UX и application state | Loading, coverage, focus, pending selection и default association описаны в спецификациях как состояние или правила приложения. Их появление не является основанием добавлять ontology class. Если дальнейший review обнаружит отдельный устойчивый смысл или недостающий актор/action, нужен отдельный candidate с источником и разбором последствий. |
+
+Для узлов 0022–0047 выполнены выборочные проверки `domain_vocabulary` в
+изолированных копиях. Отчёты и SHA-256 приведены в [оценке качества](../../docs/drafts/autonomous-quality-review.md);
+они проверяют структурные bindings к выбранной композиции, а не истинность
+определений, полноту связей, runtime behavior или canonical acceptance.
+Аудит смысловой полноты не завершён: остаются определения PR/Issue и CIStatus,
+значение Metric и его единиц, основания action-derived отношений и provenance
+источника. Обновление аудита не изменяет пакет или его статус.
