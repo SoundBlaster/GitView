@@ -754,3 +754,19 @@ comments; в 0078 — что open-only список связанных PR не �
 Шесть изменённых кандидатов прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-permission-profile-20261114.json)
 без findings/gaps. В графе 100 кандидатов, отсутствующих ссылок и циклов не
 найдено. Ни разрешения, ни реальный source mapping не проверялись запросами.
+
+0096 дополнен явными зависимостями на авторизацию 0098 и permission profile
+0100: route и policy получают допустимые факты и capability outcomes без raw
+credentials, а offline и потеря token rotation не выдаются за source refresh.
+[Снимок declared dependency paths](evidence/autonomous-goal-journey-dependency-traces-20261114.json)
+показывает конкретные пути на 100 зафиксированных по SHA кандидатах.
+[Candidate и ontology advisory](evidence/autonomous-goal-ontology-check-route-auth-dependencies-20261114.json)
+для 0096 прошли без findings/gaps; ни путь, ни проверка не доказывают
+семантическую полноту графа, готовность к реализации или поведение приложения.
+
+[Сквозная сверка маршрутов](main-route-closure-audit-20261114.md) сопоставляет
+первый запуск, portfolio, Today, preview/share, метрики и testability с их
+основными кандидатами. Для каждого маршрута отдельно названы решения,
+необходимые в графе до реализации, и проверки реальных компонентов после неё.
+На этом снимке все 100 кандидатов имеют `idea` / `pre_canonical`, 45 являются
+структурными листьями по `refines`; это не измерение implementation readiness.

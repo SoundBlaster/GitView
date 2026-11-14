@@ -40,6 +40,8 @@ specs проверены через `domain_vocabulary` в изолирован�
 проверены в [отчёте первого запуска](../../docs/drafts/evidence/autonomous-goal-ontology-check-installation-setup-20261114.json).
 После сверки candidate permission profile обновлённые SHA 0043, 0077, 0078,
 0088, 0098 и нового 0100 проверены в [отчёте permissions](../../docs/drafts/evidence/autonomous-goal-ontology-check-permission-profile-20261114.json).
+После уточнения зависимости маршрута от подключения обновлённый SHA 0096
+проверен в [отчёте route](../../docs/drafts/evidence/autonomous-goal-ontology-check-route-auth-dependencies-20261114.json).
 
 Явные `ontology_refs` найдены во всех 96 файлах и содержат 17 различных
 qualified names. Среди них 23 файла ссылаются на `gitview:Metric`, девять — на
