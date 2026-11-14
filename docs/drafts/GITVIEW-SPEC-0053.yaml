@@ -1,0 +1,57 @@
+id: GITVIEW-SPEC-0053
+title: GitView - Conflicting source observations
+kind: spec
+created_at: '2026-11-14T14:38:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0037
+depends_on:
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0044
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0037.yaml
+  identity: docs/drafts/GITVIEW-SPEC-0038.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A source-confirmed newer value is not replaced by a source-confirmed older value for the same fact and scope merely because the older response arrived later.
+- Conflicting values with insufficient ordering evidence do not silently become a confirmed current value or a coherent complete scope.
+- Conflict handling preserves the source identity and observation context of the affected facts and does not affect unrelated scopes.
+- An explicit access denial or disconnect continues to restrict private data while a conflict or later response remains unresolved.
+specification:
+  objective: Specify observable handling of incompatible observations without pretending transport arrival order proves source freshness.
+  ontology_refs:
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    comparable: A conflict requires values for the same confirmed source object, field and compatible scope. Different Repository identities, object types, time windows or semantically different metrics are not silently merged merely because their names or displayed numbers coincide.
+    ordered: When reliable source evidence establishes that one observed value is older than another for the same fact and source state, keep the confirmed newer accepted value. A request's start or completion order alone is not that evidence.
+    unordered: If incompatible values cannot be ordered, the affected fact remains uncertain. Preserve enough provenance to report that uncertainty and avoid claiming a coherent newer complete observation for its scope. A previously accepted permitted value may remain visible as last known with its own time and a conflict or incomplete indication, but is not silently labeled current or successful.
+    no_baseline: If no previously accepted value is available and the competing values cannot be ordered, the fact is unknown or conflicted rather than invented from either arrival order. This does not require displaying restricted source contents.
+    resolution: A later observation may resolve the conflict only when source evidence or a separately specified rule establishes a value that supersedes the competing observations for the relevant fact and scope. If ordering remains unprovable, retain the uncertainty; do not erase it merely because another request completed.
+    isolation: A conflict for PR state does not invalidate an independently observed Issue value or modify Project membership. Other successful scopes keep their own times and coverage under 0044.
+    access: Apply current source access restrictions before displaying values or derived details. A pre-denial private response arriving later does not lift an explicit denial; reconnection requires the source identity and access evidence in 0036.
+    provenance: Conflict and source-evidence requirements are agent-authored refinements of the owner's request to retain observations and expose failures; exact source ordering fields are not yet chosen.
+  scenarios:
+    older_arrives_later:
+      given: Two observations describe the same PR state and source evidence establishes that B is newer than A.
+      when: B is accepted before A arrives.
+      then: A cannot replace B solely due to its later transport arrival.
+    unordered_values:
+      given: Two values for the same PR lifecycle conflict and no source ordering can be established.
+      when: The affected PR and Project summary are displayed.
+      then: The affected state is uncertain or conflicted and neither value is silently asserted as confirmed current; unaffected scopes retain their own observation context.
+    newer_resolution:
+      given: Two accepted candidate values for the same field remain conflicted.
+      when: A new source observation is demonstrably newer than both and covers that field.
+      then: The new value can resolve the field conflict without asserting that unrelated Project or Issue scopes have refreshed.
+    access_denied_during_conflict:
+      given: Conflicting observations concern a previously permitted private Repository.
+      when: Access is explicitly denied before resolution.
+      then: Restricted private values and derived details remain hidden and the access problem is identifiable.
+  unresolved:
+  - Source-specific evidence that establishes a comparable field revision or ordering across partial responses.
+  - Exact user-facing conflict representation, persistence of candidate values and resolution after a source cannot supply ordering evidence.
