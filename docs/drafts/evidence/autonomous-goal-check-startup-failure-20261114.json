@@ -1,0 +1,29 @@
+{
+  "scope": "SpecGraph domain_vocabulary and documented schema interpretation; no GitHub account query or product test",
+  "context": "ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml",
+  "documentation": "https://docs.github.com/en/graphql/reference/checks#checkconclusionstate",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-check-startup-final-woaijvae",
+  "declared_edges_unchanged_vs_head": true,
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0057",
+      "input_sha256": "2db3e5d197370ea810ad9d83fcb7a4db8c7b3c53397bebc7e3329006b4cd6092",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "34745cd9977e5ac53f92e1ae4bcecea6964127cf635bad91586f91c35aa26f5d"
+    },
+    {
+      "id": "GITVIEW-SPEC-0061",
+      "input_sha256": "8089a881307bb867a595bff47d9c6c4801411858b23847a15a92d52cc0819cbf",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "4edd829f04f573ce6b295ec7459477cb220f583288d662df6546ed84cec2717c"
+    }
+  ]
+}

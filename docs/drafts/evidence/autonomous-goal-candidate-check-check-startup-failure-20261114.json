@@ -1,0 +1,44 @@
+[
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0057.yaml",
+      "spec_id": "GITVIEW-SPEC-0057",
+      "sha256": "2db3e5d197370ea810ad9d83fcb7a4db8c7b3c53397bebc7e3329006b4cd6092"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  },
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0061.yaml",
+      "spec_id": "GITVIEW-SPEC-0061",
+      "sha256": "8089a881307bb867a595bff47d9c6c4801411858b23847a15a92d52cc0819cbf"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  }
+]

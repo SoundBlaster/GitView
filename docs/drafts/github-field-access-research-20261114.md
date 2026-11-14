@@ -73,6 +73,15 @@ Candidate [0061](GITVIEW-SPEC-0061.yaml) предлагает консерват
 
 ## Дополнение: review
 
+Перед этим дополнением уточнение check states: [GraphQL CheckConclusionState](https://docs.github.com/en/graphql/reference/checks#checkconclusionstate)
+документирует `STARTUP_FAILURE` для check suite или check run. В candidate 0061
+установленный `CheckRun` с этим завершённым результатом предлагается учитывать в
+failure с сохранением исходного значения; один лишь статус suite не создаёт
+дополнительный check-run entry и остаётся отдельно видимым при применимости.
+Это не утверждение, что REST и GraphQL
+предоставляют одинаковые значения или что выбранный query, revision и coverage
+воспроизводят весь PR status box.
+
 GitHub документирует отдельные поля `reviewDecision`, `reviewRequests` и
 `reviewThreads` у PR. В REST результат requested reviewers перестаёт включать
 reviewer после отправки им review; сам по себе этот факт не доказывает

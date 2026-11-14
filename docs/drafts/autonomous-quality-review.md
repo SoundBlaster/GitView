@@ -1010,3 +1010,17 @@ evidence. Для истории предложено поколение очис
 При сверке процесса обязательных описаний согласованы [0051](GITVIEW-SPEC-0051.yaml) и [0076](GITVIEW-SPEC-0076.yaml): точные TODO/TBD с комментариями шаблона рассматриваются как незаполненная секция по узкому working profile, а оригинал сохраняется. Формулировка 0054 обновлена с учётом этого кандидата; добавлены неисполненные fixtures для точного placeholder и более длинного текста. [Candidate checks](evidence/autonomous-goal-candidate-check-description-convention-20261114.json) и [ontology advisory / graph inventory](evidence/autonomous-goal-description-convention-20261114.json) прошли; parser, внешнее enforcement и GitView не реализованы и не проверялись.
 
 [0121](GITVIEW-SPEC-0121.yaml) уточняет [локальный порядок допуска ссылки к platform handoff](source-handoff-ordering-review-20261114.md), в том числе смену доступа до и после передачи и повторный app-controlled provider callback. Граница конкретного iOS API, source identity и действительные privacy свойства остаются непроверенными. [Candidate checks](evidence/autonomous-goal-candidate-check-handoff-ordering-20261114.json) и [ontology advisory / graph inventory](evidence/autonomous-goal-handoff-ordering-20261114.json) прошли структурно для 0043 и 0121; граф содержит 121 candidate, 54 структурных листа, нет отсутствующих целей, циклов и unrooted.
+
+Сверка CI и review подтвердила необходимость отдельных единиц checks, PR,
+review assessment и threads. Документация GitHub GraphQL различает тип объекта
+и содержит `STARTUP_FAILURE` как возможное состояние check suite или run.
+[0061](GITVIEW-SPEC-0061.yaml) и [0057](GITVIEW-SPEC-0057.yaml) теперь относят
+подтверждённый применимый check-run startup failure к failure, сохраняя его
+исходный смысл; suite сам по себе не становится дополнительным check-run и
+ошибка запуска не называется провалившимся тестом. Отдельная подтверждённая
+ошибка suite без соответствующего check run остаётся видимой как проблема
+источника, но не превращается в выдуманную проваленную проверку или здоровый CI.
+[Источник](github-field-access-research-20261114.md)
+не устанавливает REST-equivalence или полный PR status box. [Candidate checks](evidence/autonomous-goal-candidate-check-check-startup-failure-20261114.json)
+и [ontology advisory](evidence/autonomous-goal-check-startup-failure-20261114.json)
+прошли структурно; реальные GitHub данные и native UI не проверялись.
