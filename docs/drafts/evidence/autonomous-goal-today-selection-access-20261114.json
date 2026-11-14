@@ -1,0 +1,42 @@
+{
+  "artifact_kind": "gitview_today_selection_access_finite_model",
+  "spec_sha256": {
+    "GITVIEW-SPEC-0027.yaml": "20cf00a1dbc7c45c65bf0aa5c3a30f8eace26b84d79dcfc37a70c08f9ac22237",
+    "GITVIEW-SPEC-0042.yaml": "f25174d6924fd6b59bcbc2f3c09645cb8287988ca719f12c48bfd6a42ed3d6ba",
+    "GITVIEW-SPEC-0049.yaml": "8f41eaa6adf1726e4670a2d55ce76a79fba6f8626bc7dbc2bfb2d62816adf4e6",
+    "GITVIEW-SPEC-0088.yaml": "637e2aef3a90c959f288b22196cb8673dd28d5e276a55a86975ec3d4988875b5"
+  },
+  "case_count": 34992,
+  "selection_counts": {
+    "false": 23552,
+    "unknown": 9312,
+    "true": 2128
+  },
+  "presentation_counts": {
+    "suppressed": 17496,
+    "none": 11776,
+    "uncertain": 4656,
+    "confirmed": 1064
+  },
+  "model_sha256": "32151b87f89dfe33b592d06eee3f2ba3b518c5ff953ffb95e485a979576affec",
+  "hundred_pr_design_example": {
+    "initial": 100,
+    "after_95_merged": 100,
+    "merged_excluded": 5
+  },
+  "oracle": "Exhaustive Boolean completions of the stated three-valued inputs after applying visibility and active filters.",
+  "assumptions": [
+    "The Boolean completions are a deliberately simplified independent-input abstraction.",
+    "A CI value inaccessible to the operator is unknown for current filter evaluation.",
+    "Object-level visibility and source-wide coverage are independent model inputs.",
+    "All excluded lifecycle states are an explicit active filter, not proof that source work is absent.",
+    "Intentional filtered emptiness is represented independently of scope coverage."
+  ],
+  "limitations": [
+    "No real GitHub or iOS behavior, app implementation, actual permission inference or accessibility output is tested.",
+    "No temporal ordering, correlated facts, identity resolution, source pagination or concurrent gesture is modeled.",
+    "Abstract scope status is not a user-visible count or proof of privacy for actual UI and cache.",
+    "The oracle checks logical consistency of this abstraction, not whether its assumptions implement the complete product specification."
+  ],
+  "application_scenarios_executed": false
+}
