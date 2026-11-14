@@ -5,6 +5,8 @@
 нативный GitView, один активный GitHub identity в первом срезе, несколько
 репозиториев из разных организаций, обзор без мутаций исходных PR/Issue и
 необходимость работать с ранее сохранёнными наблюдениями.
+Сравнение ниже — исторический срез до выбора кандидата 0098; актуальный
+рабочий выбор и его границы изложены в последнем разделе.
 
 ## Решения, которые можно выразить сейчас
 
@@ -71,3 +73,21 @@
 приводит документированные примеры read permissions и отдельные пробелы.
 Продуктовое поведение при частичном доступе предложено в 0088; это не выбор
 окончательного permission set или подтверждение GraphQL query.
+
+## Рабочий выбор для первой версии
+
+Позднее [0098](GITVIEW-SPEC-0098.yaml) предложил GitHub App user access token,
+authorization code с S256 PKCE и системную browser authentication session без
+отдельного backend GitView. GitHub [рекомендует PKCE для public clients](https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/best-practices-for-creating-a-github-app)
+и указывает, что встроенный `client_secret` невозможно сохранить секретным.
+Он не используется как доказательство подлинности экземпляра приложения;
+installation private key в приложение не помещается. Это выбор агента для
+развития спецификации, а не создание регистрации или утверждение безопасности
+реальной интеграции.
+
+Для истекающих user tokens GitHub [описывает rotation](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/refreshing-user-access-tokens):
+успешное применение refresh token делает прежнюю пару недействительной. Если
+ответ потерян либо новая пара не сохранена, локальный rollback не доказывает
+восстановление доступа. 0098 задаёт координацию renewal и путь повторной
+авторизации; сохранённые Projects при этом не удаляются. Фактические callback,
+permissions, secure storage и UX всё ещё требуют проектирования и проверки.

@@ -725,3 +725,13 @@ unresolved thread в открытом PR с подтверждённым submitt
 Исторический aggregate без identity не подменяется текущим списком PR. Добавлен
 сквозной сценарий в 0043. Четыре кандидата прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-aged-signal-route-20261114.json)
 без findings/gaps; source, navigation и accessibility сценарии не выполнялись.
+
+[0098](GITVIEW-SPEC-0098.yaml) предлагает GitHub App user authorization,
+authorization code с S256 PKCE и системную browser session без отдельного
+backend GitView. Выбор агента учитывает публичность регистрационного
+`client_secret` в native binary и описывает восстановление при потере ответа
+после provider-side token rotation. 0019, 0043, 0085–0087 согласованы с
+кандидатом. Шесть спецификаций прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-github-auth-selection-20261114.json)
+без findings/gaps; в графе 98 кандидатов, ссылок без цели и циклов не найдено.
+Регистрация GitHub App, реальная авторизация, secure storage и iOS UX не
+проверялись; доступность всех выбранных данных остаётся открытой.

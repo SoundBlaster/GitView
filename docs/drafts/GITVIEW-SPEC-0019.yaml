@@ -47,8 +47,8 @@ specification:
       '
     access: 'Request only access needed for the selected repositories and supported read-only overview.
       Distinguish the app''s read-only behavior from permissions actually granted to a credential; any
-      broader grant needs explicit justification and disclosure under 0087. The exact authorization method,
-      scope names and GitHub API mapping require research. The app does not create, review, merge or otherwise
+      broader grant needs explicit justification and disclosure under 0087. Candidate 0098 proposes a GitHub
+      App public-client flow; exact permission names and GitHub API mapping require further research. The app does not create, review, merge or otherwise
       mutate source work objects in this pilot; user-mediated authorization or installation is a separate
       provider-side access decision.
 
@@ -94,7 +94,7 @@ specification:
       then: New refresh stops and private cached content is locked. Credential removal is reported as complete
         only if confirmed; otherwise the local removal problem remains visible. No repository is deleted from GitHub.
   unresolved:
-  - Exact authorization method, least-required GitHub permissions, token lifecycle and account recovery.
+  - Validate candidate 0098's authorization method and rotation; determine least-required GitHub permissions and concrete account recovery.
   - Exact local clear-data interaction and behavior after device change.
   - Repository discovery pagination and first-launch layout.
   provenance_boundary: 'Single-account scope and the default privacy posture are pilot choices made under

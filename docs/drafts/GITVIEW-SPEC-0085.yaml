@@ -70,6 +70,6 @@ specification:
       when: The operator opens the app.
       then: A recoverable local security or connection problem is shown without claiming the credential was deleted, expired or accepted by GitHub.
   unresolved:
-  - The authorization method, supported renewal behavior, token expiry semantics and source error classification remain unselected and require documented evidence.
+  - Candidate 0098 proposes GitHub App public-client authorization and expiring-token renewal; source-specific errors and actual provider behavior require separate verification.
   - Secure-store interruption and credential replacement are refined in 0086; concrete atomicity and provider-side revocation remain unverified.
   - Exact native recovery controls, background delivery and accessibility need platform evaluation; no live source or device behavior has been tested.

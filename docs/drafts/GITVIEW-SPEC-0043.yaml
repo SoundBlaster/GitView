@@ -60,6 +60,7 @@ depends_on:
 - GITVIEW-SPEC-0092
 - GITVIEW-SPEC-0093
 - GITVIEW-SPEC-0094
+- GITVIEW-SPEC-0098
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -85,6 +86,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    github_token_rotation_response_lost:
+      given: A Project shows previously permitted cached observations while an expiring GitHub App user token is being renewed, and GitHub may have rotated the pair before the response is lost.
+      when: The operator opens the Project after an interrupted restart and requests refresh.
+      then: GitView does not claim that the old credential remains valid or that source data was refreshed; saved Projects and eligible observations retain their actual context, and an accessible reauthorization route is available when necessary.
     aged_comment_signal_navigation_at_new_time:
       given: At T1 a Project signal counts two qualifying review threads belonging to one PR; by T2 one thread is source-confirmed resolved and the other still qualifies under applicable state evidence.
       when: The operator opens the current signal and the PR selection is reevaluated at T2.

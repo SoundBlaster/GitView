@@ -1,0 +1,98 @@
+id: GITVIEW-SPEC-0098
+title: GitView - GitHub App public-client authorization and renewal
+kind: spec
+created_at: '2026-11-14T19:52:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0087
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0037
+- GITVIEW-SPEC-0040
+- GITVIEW-SPEC-0058
+- GITVIEW-SPEC-0059
+- GITVIEW-SPEC-0079
+- GITVIEW-SPEC-0085
+- GITVIEW-SPEC-0086
+- GITVIEW-SPEC-0088
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0087.yaml
+  comparison: docs/drafts/authorization-flow-selection-20261114.md
+  permissions: docs/drafts/github-app-permission-coverage-20261114.md
+  github_flow: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-a-user-access-token-for-a-github-app
+  github_security: https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/best-practices-for-creating-a-github-app
+  github_refresh: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/refreshing-user-access-tokens
+  apple_session: https://developer.apple.com/documentation/authenticationservices/aswebauthenticationsession
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The proposed initial connection uses GitHub App user authorization via an external system-supported browser session and authorization code with S256 PKCE, with a separate validated attempt and callback state.
+- GitView uses a user access token rather than a GitHub App installation private key, and a public-client identifier or embedded client secret is not treated as proof of a genuine app instance or confidential material.
+- User identity, token usability, GitHub App installation, repository grant and actual data coverage remain independently established facts.
+- Renewal of an expiring credential cannot be treated as a locally reversible operation if GitHub may have rotated the credential remotely; an indeterminate result offers safe recovery.
+- Cancelled, replayed, mismatched or superseded authorization results cannot establish a connection or undo a later disconnect.
+- No credential, authorization code, verifier or private source detail is exposed through ordinary diagnostics, sharing or unrelated UI.
+specification:
+  objective: Select a reviewable first-version GitHub connection direction and its trust, authorization and token-rotation boundaries without registering an app or implementing a client.
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Project
+  - gitview:Repository
+  contract:
+    selection: As an agent-authored working architecture for the initial single-account GitHub.com scope, use a GitHub App user access token obtained through GitHub's authorization-code flow with S256 PKCE and a platform-supported external authentication session. The selected public-client direction requires no separately operated GitView backend for the token exchange; GitHub and the system authentication surface remain external dependencies. This is a candidate product decision, not evidence that an app registration, client, source request or device behavior exists. The data and permission coverage still requires verification before a complete implementation can be claimed.
+    rationale: A GitHub App can express fine-grained permissions and a user token applies the relevant user's and app's access; this aligns with the read-oriented overview and partial-organization access model. A browser-capable iPhone does not need device flow as a default. GitHub warns that enabling device flow can enable phishing impersonation and recommends authorization code with PKCE for public clients. A broader OAuth App repo grant or a personal access token is not adopted as the normal onboarding path. This choice does not claim any flow can prevent all phishing or prove every organization grants the app access.
+    public_client: GitHub documents a client_secret parameter for its authorization-code exchange and says a native public client cannot keep it confidential. If the source flow still requires that application registration value at implementation time, treat any shipped value as extractable and public, not an authenticator of a genuine GitView installation or a server secret. Never ship a GitHub App installation private key or generate installation tokens on the device. Do not commit actual credentials or embed user tokens, authorization codes or PKCE verifiers in source, examples, ordinary logs, shares or screenshots. Rotating a shipped registration value can require distributing an updated client and is an operational concern, not proof of confidentiality.
+    authorization_attempt: On an explicit user connection action, create a distinct short-lived authorization attempt with an unpredictable state and PKCE verifier and derive an S256 challenge. Use a system-supported external authentication session, such as the platform authentication session documented by Apple, for GitHub's authorization page. The app-owned UI explains the source and requested access; GitHub collects its own credentials. A registration must configure the permitted callback and requested GitHub App permissions; do not turn wildcard callback matching on merely for convenience. Exact callback scheme or verified URL and deployment registration are later implementation and operational choices.
+    callback_and_exchange: Accept a callback only for the currently active unexpired attempt, the expected callback target and matching state; a mismatch, cancellation, duplicate, superseded attempt or unexpected callback does not authorize a token exchange or create a connection. Use the original verifier for the S256 challenge in the exchange and never expose the code or verifier in ordinary diagnostics. PKCE and state bind the exchange to the initiating attempt; neither proves the public client binary is authentic. A GitHub redirect or received code is not by itself an authenticated account or confirmed durable connection.
+    interrupted_authorization: If a session or process interruption loses the verified attempt context, state or verifier, abandon that attempt and offer a new user-initiated authorization rather than accepting an orphaned callback or reconstructing a verifier. If a code exchange may have reached GitHub but its outcome is unknown, do not assume the single-use code remains usable or an account was connected; recover only if the current credential and binding are independently confirmed, otherwise offer a fresh attempt. Existing saved Projects and observations retain their access and observation context.
+    identity_and_grants: After a successful exchange, use an authorized source observation to establish the GitHub identity associated with the token, then securely persist and bind the applicable credential and identity under 0086. User authorization, app installation, organization approval, repository selection and a successful category observation are different facts. The intersection of the app and user's permitted access applies; an uninstalled or unapproved organization is not an empty organization or proof the person lacks access. Discovery and 0088 preserve independent available scopes. A different verified account does not unlock earlier restricted observations merely because its display name matches.
+    credentials_and_expiry: Prefer expiring user access tokens and their refresh tokens as an agent-authored initial security choice, subject to the configured GitHub App flow and source response. Keep the token pair and associated identity and expiration context in platform-provided secure storage under 0019 and 0086. Use the source-returned expiry where available; do not assume the existence of refresh credentials or invent their lifetime. Secure storage unavailability, expiry, temporary network failure, explicit denial and disconnect remain distinguishable under 0085 and 0036. The GitHub App registration client_secret cannot be used as a reason to omit protection of user tokens or the one-time PKCE verifier.
+    rotation: For an expiring GitHub App user token, GitHub documents that successful use of a refresh token yields a new pair and invalidates the prior refresh token and prior access token. Coordinate renewal for one current credential binding so overlapping foreground and background refreshes do not race to rotate the same refresh token. After a confirmed response, bind and durably retain the replacement pair and expiry context together with the same identity and still-current connection generation before reporting durable renewal. A local write failure or lost response cannot be treated as proof that GitHub kept the old pair valid; preserve Projects and observations and expose renewal or connection uncertainty under 0085 and 0086.
+    uncertain_remote_outcome: If a rotation request might have reached GitHub but its result or replacement pair is lost, the provider may have invalidated the prior pair even though local state still contains it. Do not promise transparent recovery, infer provider revocation of the account, silently mark the old token valid, or automatically replay the old refresh as if it were guaranteed unused. Reconcile only when source and secure-store evidence suffice; otherwise require a new user-mediated authorization when needed and preserve permitted last-known data under current access policy. An unconfirmed renewal does not advance a source observation timestamp.
+    disconnect_and_replacement: Explicit disconnect immediately restricts applicable private content and prevents new work for the disconnected binding. A callback, renewal result or secure-store write from an earlier generation cannot restore the connection or visibility after disconnect or a newer account replacement. Local credential removal and provider-side authorization revocation are distinct outcomes; no remote revocation is claimed without a separate supported operation and evidence. Repository membership and source objects are not deleted by this connection action.
+    permissions_and_recovery: Select GitHub App read permissions only after tracing each actual selected source operation to documented permissions; the example permission matrix is not an accepted exhaustive minimum. Explain material grants and missing installation or organization approval where evidence supports them. If the selected source operation or field cannot be accessed, retain independent permitted data, show the affected category as incomplete or unavailable, and offer an appropriate recovery route without expanding the grant or revealing restricted data. An insufficient or failed request does not establish that the repository, Project or data category is empty.
+    verification: Before marking this branch implementable, define callback target and account identity evidence, source-supported read permission coverage, native secure-store binding and token-rotation recovery, and their independently observable tests. Planned deterministic tests inject browser callbacks, clock, source and secure-store outcomes, including state mismatch, duplicate callback, lost remote rotation response, local write failure, simultaneous renewal and disconnect. Real GitHub registration and source access, secure-store restart behavior and native accessibility are separate later evidence; mocks alone do not establish them. No network budgets or product API query sizes are selected here.
+    provenance: A personal, read-oriented iOS overview and local data follow the owner's direction. GitHub App, public-client PKCE, expiring credentials and no separate backend are agent-authored working decisions based on the cited documentation, not claims of owner review, deployment or successful authentication.
+  scenarios:
+    callback_state_mismatch:
+      given: An active authorization attempt has an expected callback and state.
+      when: A callback arrives for that target with a missing or different state.
+      then: It does not establish a connection or exchange a code, the attempt can be safely abandoned or restarted, and no sensitive callback value is exposed in diagnostics.
+    prior_attempt_returns_late:
+      given: Attempt A is cancelled and a later attempt B has been durably confirmed for a verified identity.
+      when: A's callback or response arrives afterward.
+      then: A cannot replace B, associate a credential with B's identity or unlock A's private observations.
+    authorization_context_lost:
+      given: The process is interrupted during GitHub authorization and the active attempt's verifier cannot be recovered.
+      when: The previous browser session later returns a callback.
+      then: GitView does not exchange the orphaned code or confirm an account; a new user-initiated authorization remains available and existing Projects are retained.
+    installation_not_approved:
+      given: A user token and identity are established, while a particular organization has not approved an app installation and other repositories are permitted.
+      when: GitView shows discovery and Project access.
+      then: Permitted scopes remain usable, the unapproved scope is not called an empty organization, and any specific remedy is shown only where source evidence supports it.
+    rotation_response_lost:
+      given: A refresh request for a previously valid user-token pair may have succeeded at GitHub, but the response is lost and the new pair is not recoverable locally.
+      when: The app recovers or the operator requests a refresh.
+      then: The old pair is not asserted valid and a successful new pair is not invented; previously permitted observations retain their own access and freshness context and user-mediated reauthorization is available when needed.
+    rotation_local_write_fails:
+      given: GitHub confirms rotation and returns a new pair, but secure storage cannot durably establish a consistent binding for it.
+      when: The result is displayed or the app restarts.
+      then: GitView does not report a confirmed durable renewal or assume the now-invalid prior pair is usable; it preserves saved Projects and offers an accessible recovery path without revealing tokens.
+    concurrent_renewal:
+      given: Foreground and background work both need an access token for the same active binding.
+      when: Renewal is necessary and both requests overlap.
+      then: The app coordinates them as one rotation attempt for that binding or otherwise prevents duplicate competing rotations; each waiting operation uses only a subsequently confirmed applicable credential or receives a recoverable failure.
+    disconnect_during_renewal:
+      given: Renewal has started for account A and the operator disconnects before its result is durably bound.
+      when: The late result or attempted write completes.
+      then: It cannot restore A's active connection or unlock private cached content; credential-removal uncertainty remains a local recovery issue.
+    client_identity_spoof:
+      given: A third party obtains the public-client registration identifier and extractable client_secret from a distributed binary.
+      when: A service or GitView component evaluates whether this proves an authentic app instance.
+      then: It does not treat those values as confidential or as instance authentication, and PKCE is not represented as an attestation of the binary.
+  unresolved:
+  - Establish a deployable callback target, GitHub App registration and exact documented per-operation permission coverage for the chosen source fields; no credentials or registration are created by this proposal.
+  - Choose and verify platform secure-store access and interruption handling, source identity lookup and the implementation of coordinated rotation and recovery.
+  - Validate that the chosen user experience, app-installation process, permissions and public-client tradeoffs are acceptable with real GitHub and an iOS device; no product integration has run.

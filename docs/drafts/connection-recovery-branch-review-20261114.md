@@ -39,3 +39,10 @@ read-only поведение отдельно от реальных capabilities
 граница и прозрачность дополнительного сервиса. GitHub App user authorization
 остается кандидатом; конкретный flow и полномочия не утверждены. Сравнение
 источников и открытые проверки — в [отдельном разборе](authorization-flow-selection-20261114.md).
+
+Позднее [0098](GITVIEW-SPEC-0098.yaml) предложил для первого среза GitHub App
+user authorization с PKCE как public client без отдельного backend GitView.
+Документированы extractable client registration value, отдельные installation
+и grant, а также потеря ответа при provider-side rotation. Это позволяет
+проектировать дальнейшие ветви, но не подтверждает выбранный callback,
+достаточность permissions или реальное восстановление на устройстве.
