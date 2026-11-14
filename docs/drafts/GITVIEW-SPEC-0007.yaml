@@ -111,9 +111,10 @@ specification:
       Its originating scope and active condition remain identifiable.
 
       '
-    uncertainty: 'If an object''s state or another active filter input is unknown, do not classify it
-      as a confirmed match or non-match. Keep the uncertainty or incomplete coverage visible rather than
-      presenting the resulting list as exhaustively filtered.
+    uncertainty: 'Evaluate inclusion alternatives and active filters separately as specified in 0027.
+      An unknown input does not override an independently confirmed inclusion alternative or a known-false
+      condition. If the overall result remains unknown, do not classify it as a confirmed match or non-match.
+      Keep uncertainty or incomplete coverage visible rather than presenting the resulting list as exhaustive.
 
       '
     all_excluded: 'If the user explicitly excludes every applicable lifecycle state, show an intentional

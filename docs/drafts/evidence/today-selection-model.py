@@ -1,7 +1,7 @@
 import hashlib, itertools, json
 from pathlib import Path
 
-# Independent finite model of the proposed 0027 selection contract.
+# Author-built finite abstraction of the proposed 0027 selection contract.
 values = ('false', 'unknown', 'true')
 def logical_or(items):
     if 'true' in items: return 'true'

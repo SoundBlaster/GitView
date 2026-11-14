@@ -30,7 +30,8 @@ specification:
   contract:
     identity: Distinguish each source-confirmed PR or Issue by source object identity within its repository; source numbers are not globally unique. A linked PR and Issue are distinct objects and repeated inclusion rules do not duplicate a confirmed object's card. If identity cannot establish whether two observations refer to the same object, preserve that uncertainty rather than claiming two confirmed distinct objects or silently merging by title.
     today: The day is the interval from the start of the device local calendar day to the start of the following local day, inclusive at the start and exclusive at the end. Re-evaluate on local day or time-zone change without rewriting stored timestamps.
-    base_inclusion: A confirmed source-open PR or Issue is included as unfinished, including one created earlier. A PR observed merged or closed without merge today, an Issue observed closed today, or an object with a confirmed creation timestamp today is included as a same-day result. A draft PR is still an open PR with a separate draft flag. Current state is shown; close reason and merge state remain distinct.
+    base_inclusion: A confirmed source-open PR or Issue is included as unfinished, including one created earlier. A PR with a confirmed merge or unmerged closure event in Today, an Issue with a confirmed closure event in Today, or an object with a confirmed creation timestamp in Today is included under the corresponding same-day alternative. Observation today alone does not prove an event occurred today. A draft PR is still an open PR with a separate draft flag. Current state is shown; close reason and merge state remain distinct.
+    observed_event: A confirmed source event may be observed after it happened; evaluate its event time against Today rather than using retrieval time. An object's current closed state and its observation time without a confirmed closure event time do not prove that it closed today. A currently open object still qualifies through the unfinished alternative, without proving when or how many times it reopened.
     unknown: Evaluate the inclusion alternatives and each active filter using known values. If at least one inclusion alternative is confirmed, inclusion is confirmed even if another alternative is unknown. If no alternative is confirmed and one or more cannot be evaluated, base inclusion is unknown rather than false. If all applicable alternatives are known false, base inclusion is false. An active filter with unavailable input is unknown, not an automatic match or rejection.
     composition: A known-false scope, inclusion or active filter excludes the object. When all required conditions are known true, the object is a confirmed match. Otherwise it is an uncertain candidate. Presentation can group uncertain candidates or indicate affected coverage, but must not claim an exhaustive result or display an unknown condition as passing.
     explicit_exclusions: The operator can exclude applicable lifecycle states. When every applicable state is explicitly excluded, show an intentional filtered empty selection without claiming that source work is absent; scope freshness or failure remains accessible.
@@ -57,6 +58,14 @@ specification:
       given: Two observations have insufficient source identity to decide whether they refer to one PR or two.
       when: Their scope and selection are presented.
       then: Their unresolved identity remains explicit; the app neither claims a precise unique-object count nor merges them solely because their titles match.
+    observed_today_closed_earlier:
+      given: An Issue created before Today is observed closed during Today, but its confirmed closure event occurred yesterday.
+      when: Its unfiltered Today inclusion is evaluated.
+      then: Today's retrieval time does not make yesterday's closure a Today result; the Issue matches only if another Today inclusion alternative is confirmed.
+    unknown_closure_time:
+      given: An Issue created before Today is observed closed but its closure event time is unavailable.
+      when: Its unfiltered Today inclusion is evaluated with no other confirmed alternative.
+      then: The result is uncertain rather than a confirmed Today closure or a confirmed exclusion.
   unresolved:
   - Source field semantics and sufficient history for same-day transition claims, especially reopenings.
   - Concrete UI arrangement of uncertain candidates; an initial accessible treatment and ordering are proposed in 0042 and remain subject to review.
