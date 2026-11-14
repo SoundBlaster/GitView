@@ -796,3 +796,9 @@ credentials, а offline и потеря token rotation не выдаются з�
 неясная фраза об Issue и PR: связанная отдельная Issue остаётся отдельным
 объектом. Сквозной сценарий добавлен в 0043. [Проверки этих трёх кандидатов](evidence/autonomous-goal-ontology-check-coverage-signals-20261114.json)
 прошли без findings, gaps и warnings; aggregation и navigation не выполнялись.
+
+[Инвентаризация 102 кандидатов и 47 структурных листьев](graph-readiness-inventory-20261114.md)
+фиксирует SHA, объявленные рёбра и открытые вопросы каждого листа. В ней
+содержательно разобраны отдельные примеры ограничений, но не подтверждена
+готовность всех листьев. 0096 и 0097 дополнены зависимостью от 0102; их
+candidate и ontology advisory checks прошли без findings, gaps и warnings.
