@@ -1,0 +1,77 @@
+id: GITVIEW-SPEC-0069
+title: GitView - Initial metric series and calendar periods
+kind: spec
+created_at: '2026-11-14T16:26:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0068
+depends_on:
+- GITVIEW-SPEC-0030
+- GITVIEW-SPEC-0049
+- GITVIEW-SPEC-0056
+- GITVIEW-SPEC-0057
+- GITVIEW-SPEC-0064
+- GITVIEW-SPEC-0065
+- GITVIEW-SPEC-0066
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0068.yaml
+  agreed_summary: docs/drafts/project-summary-proposal.md
+  earlier_period_proposal: docs/drafts/repository-summary-proposal.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The initial history presentation identifies separate open-PR, open-Issue, merged-PR and closed-Issue series and their different units.
+- Calendar-day buckets have explicit local time-zone interpretation, boundaries and current-day incompleteness.
+- A daily state display uses actual supported observation times and does not invent a day-end snapshot or fill missing days.
+- Outcome buckets count distinct eligible objects for their own interval, with separate closure reasons when supported and uncertainty otherwise.
+- A history period opened from a summary retains its actual originating boundaries rather than silently converting a rolling interval into calendar days.
+specification:
+  objective: Propose an initial legible set of history series and explicit day buckets without asserting unobserved history or changing agreed metric scope.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    initial_series: As an agent-authored initial presentation proposal, offer four separately labeled series for open PR observations, open Issue observations, distinct PRs merged and distinct Issues closed. Open PR and open Issue values are state observations; merged PR and closed Issue values are period outcomes. Where source evidence supports it, closure outcomes can be broken down by reason, including unknown. This initial presentation does not remove the agreed ability to graph other Project summary metrics when sufficient history exists; their individual definitions and presentation remain to be refined.
+    membership: Use the explicitly stated Project membership basis under 0064; a working current-member retrospective uses a fixed captured Repository set for that evaluation and must not claim to be the Project's membership in each past day. Missing or restricted member evidence affects each applicable point or bucket.
+    calendar_presets: As an agent-authored proposal, offer the last seven and last thirty local calendar days including the current local day, initially selecting seven days when entering history without an existing period. Each day begins at the local calendar start and ends at the next local calendar start; use the selected time zone's calendar rather than assuming every day lasts exactly 24 hours. These are calendar presets, not the previously proposed rolling 24-hour, seven-day or thirty-day intervals.
+    current_day: At period evaluation, the current-day outcome bucket covers from that day's local start through the evaluation instant, not the future part of the day. Its end and provisional nature are visible or discoverable. Advancing time can expand that bucket only through a new evaluation; source coverage determines whether its value is complete for the elapsed interval. A day that has not elapsed is not a confirmed zero for its full calendar interval.
+    event_unit: Each daily merged-PR bucket counts distinct PR identities with a confirmed merge event in that bucket; each daily closed-Issue bucket counts distinct Issue identities with at least one confirmed closure event in that bucket. Event time rather than retrieval time determines the bucket. An Issue closed twice on the same day contributes once to that day's distinct-object count, while an event-count series would have a different unit. A period-wide distinct-Issue total must be deduplicated across days rather than inferred by summing daily counts.
+    closure_reasons: A reason-specific bucket includes a closure only when evidence establishes the reason for the relevant event. Unknown reason remains unknown. If one Issue has different closure reasons within the same bucket, it can appear in more than one reason-specific distinct-object subset; those subsets must not be added and labeled as distinct Issues without deduplication. Completion is not inferred from closed state alone.
+    state_samples: For a daily open-work presentation, show eligible retained observations whose actual observation times fall within that calendar bucket. An initial compact view may select the latest recorded eligible sample within each bucket for the displayed metric and scope, ordered by its recorded observation time; this selection does not itself establish source freshness or a coherent simultaneous Project snapshot. Keep the actual observation time, component times and completeness discoverable. A later partial or conflicting sample must not be silently replaced by an earlier complete sample labeled as the latest or current value. If no eligible sample exists, show a gap; do not move an observation to midnight or invent a day-end state.
+    partial: Apply 0044 and 0065 separately to every series and bucket. A known event or sample from one Repository may be available as partial information, but it does not prove the total for all members. Do not treat partial or stale observations as current lower bounds. A complete zero requires sufficient evidence for the exact metric, elapsed period, identity and scope.
+    fixed_period: When a summary or chart origin supplies an explicit period, retain its actual start, end, time-zone interpretation and condition under 0056 and 0068. A seven-day rolling interval supplied by an origin is not relabeled as the seven-calendar-day preset. For a historical period already selected when device time zone changes, this proposal retains its captured absolute boundaries and original time-zone label until the operator explicitly changes or re-evaluates the period; dynamic Today remains governed by 0049.
+    navigation: Opening a daily outcome bucket can show the corresponding distinct-object selection for that exact bucket under 0056, preserving source scope and coverage. A graph with state samples does not imply an event-based list or a past object snapshot unless evidence supports it. Returning from objects preserves the graph context under 0024.
+    visual_and_access: Labels, times, gaps and units are available through non-color and accessible paths under 0032 and 0068. Exact chart form, ordering, controls and treatment of dense data require native design and device evaluation.
+    provenance: The owner accepted Project summary metrics and graphs with sufficient history. The four initial series, calendar presets, sample selection and fixed-period time-zone rule are agent-authored proposals; the earlier repository proposal described rolling periods and was not itself an owner selection.
+  scenarios:
+    current_day:
+      given: A seven-calendar-day history is evaluated at local 15:00 with sufficient data for elapsed time only.
+      when: Today's outcome bucket is shown.
+      then: It is identified as covering the day through that evaluation time, not as a complete value for the future remainder of the day.
+    two_closures_same_day:
+      given: One Issue has two confirmed closure events on the same local day and complete identity evidence.
+      when: The daily distinct-Issue closure series is computed.
+      then: The Issue contributes once to the day's object count; an event count of two is a different measurement.
+    sample_is_not_midnight:
+      given: The only eligible open-PR observation on Tuesday was recorded at 10:30 local time.
+      when: The daily state series is shown.
+      then: Its actual time remains discoverable and it is not represented as a day-end snapshot or as evidence of the rest of Tuesday.
+    later_partial_sample:
+      given: A Project had a complete open-Issue observation at 09:00 and a partial observation at 17:00 for the same day.
+      when: The latest-sample presentation is evaluated.
+      then: The later partial result is not silently replaced by the earlier complete value labeled latest; each available observation retains its own coverage and time.
+    rolling_origin:
+      given: A Project summary opens a rolling interval ending at a specific instant.
+      when: The history surface receives that selection.
+      then: It retains the original boundaries and does not label them as a calendar-day preset or silently widen the interval.
+    time_zone_change:
+      given: A historical calendar period was selected in one device time zone and its absolute boundaries were captured.
+      when: The device time zone changes while the period remains open.
+      then: The selected historical interval and original time-zone label remain until explicit re-evaluation, while dynamic Today may change separately.
+  unresolved:
+  - Confirm source-specific completeness, object and event identity, state-sample timestamps and retention for each series.
+  - Decide how other agreed summary metrics are selected and graphed beyond the initial presentation without silently removing them from product scope.
+  - Native chart, period controls, accessible inspection, DST boundaries and device behavior require evaluation; these working defaults are not separately owner-selected.
