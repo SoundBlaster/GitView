@@ -15,7 +15,7 @@ sources:
   agreed_summary: docs/drafts/project-summary-proposal.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Every Project historical series identifies its membership basis and the Repository identities included in its stated scope.
+- Every Project historical series identifies its membership basis and its included Repository scope to the extent permitted by current access; restricted identities or revealing counts are not exposed to satisfy this requirement.
 - A retrospective series for current members is not described as the Project's historical membership at the time of past events.
 - An exact point or bucket requires sufficient evidence for the metric and stated membership; absent history remains a gap or incomplete result.
 - A Project membership edit does not silently rewrite the provenance or source observations of a previously produced series.
@@ -32,6 +32,7 @@ specification:
     project_membership: GitView Project membership is local product configuration under 0025, not a GitHub organization or GitHub Projects membership. GitHub repository events do not by themselves establish when an operator added or removed a Repository from this local Project. The existence or retention of local membership history is not assumed.
     working_default: As an agent-authored initial proposal, when opening a Project history graph use its confirmed saved current Repository set captured for that graph evaluation as a fixed retrospective scope across the selected period. Clearly identify that basis as current members, not the actual Project membership at each historical time. If current membership cannot be established, do not invent a fixed set or claim a complete Project series.
     fixed_evaluation: Keep the captured Repository identities and membership basis associated with a displayed series while its results are assembled. A later saved membership change does not relabel old results as describing the new set. If the UI presents a newly recalculated current-member series, identify the changed scope and reassess all affected bucket coverage; exact refresh interaction remains open.
+    competing_evaluations: Bind each graph evaluation to its captured metric, predicate version, period and time zone, membership basis, Repository set, access context and relevant observation evidence. If a newer evaluation is selected while an older one is still being assembled, a late older result may be retained with its own supported context but cannot replace or be labeled as the selected new series solely because it completed later. An older result's use after an access change remains subject to current restrictions; its prior context does not authorize disclosure.
     historical_membership: A series claiming the Project's membership at each past time requires independently sufficient local historical membership evidence with timing and identity semantics. If that evidence is absent or incomplete, such a series is unavailable or incomplete. This candidate does not require GitView to retain a historical membership ledger or imply that one already exists.
     observed_membership_count: Candidate 0097 proposes a separately labeled history of the Project's confirmed local membership count at actual observed configuration states. The fixed current-member retrospective default is not a substitute for this series. A retained count point need not establish a complete membership ledger or prove the Project's count between observed states; the points and any gaps retain their own observation context and access limitations.
     event_series: A confirmed PR merge or Issue closure event can support the relevant event-time bucket only for the stated source identity, metric unit, period and evidence. GitHub documents issue timeline event types, but an API's existence or a single known event does not prove complete event history for all Repositories or all past periods. Closure reasons require evidence for the relevant event under 0030 and 0056.
@@ -53,6 +54,10 @@ specification:
       given: A displayed historical series was evaluated for current members A and B, and a later saved edit replaces B with C.
       when: The old series or a recalculated series is displayed.
       then: The old series remains attributed to A and B; a new current-member series identifies A and C and reassesses its own coverage.
+    old_evaluation_completes_late:
+      given: A graph evaluation for current members A and B starts, then membership changes and the operator selects a newly evaluated A and C series.
+      when: The earlier A and B evaluation completes after the A and C selection.
+      then: The earlier result cannot overwrite or be labeled as the selected A and C series; each permitted result retains its own scope, access and coverage context.
     current_state_not_history:
       given: The current open PR count is known for all current members but no historical observations or sufficient reconstruction exist for yesterday.
       when: Yesterday's open-PR point is shown.

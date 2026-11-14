@@ -90,6 +90,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    late_history_for_former_members:
+      given: A history graph request uses Project members A and B; after membership changes the operator explicitly selects an A and C graph, with C's historical coverage incomplete.
+      when: The older A and B result arrives after the new graph is selected.
+      then: The old result is not presented as the A and C graph, C is not treated as zero, and any permitted earlier result retains its own scope and observation context.
     stale_source_link_and_later_denial:
       given: A permitted PR has a previously source-associated link with no verified current resolution, and the operator starts a share flow using the last-known link.
       when: Explicit denial occurs before any app-controlled delayed provider supplies that link.

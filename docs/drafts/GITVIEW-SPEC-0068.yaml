@@ -17,6 +17,7 @@ depends_on:
 - GITVIEW-SPEC-0064
 - GITVIEW-SPEC-0065
 - GITVIEW-SPEC-0067
+- GITVIEW-SPEC-0102
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0013.yaml
   agreed_summary: docs/drafts/project-summary-proposal.md
@@ -44,6 +45,7 @@ specification:
     states: A confirmed zero requires sufficient evidence for its metric and bucket. Missing history is a gap; incomplete coverage is indicated as incomplete and not visually indistinguishable from a complete value. When only one supported observation is available, it may be presented as a point with its time but does not establish a trend or fill adjacent buckets. Do not interpolate missing observations as if observed.
     timing: Show or make discoverable the period boundaries, time-zone interpretation and actual observation context. If a metric is composed from observations at different times, do not call it an exact simultaneous source snapshot. Candidate 0069 proposes calendar presets and fixed-period behavior; these working choices require source and native evaluation.
     outcome_navigation: Where a period outcome is actionable, retain Project or Repository identity, period, event condition and coverage when showing distinct matching objects under 0056. When the origin counts events and a destination shows objects, identify the different units. If available evidence cannot support that selection, present its limitation rather than silently opening Today or a current-state list.
+    selection_lifetime: A graph point and its object-selection request retain their actual evaluation scope, period, predicate, unit, coverage and source observation context. A later membership edit, time-zone change or refresh cannot relabel an older result as the newly selected graph or replace its historical object selection with a current list. Results arriving after the operator has selected a different metric or period do not overwrite that selection; permitted older evidence may remain associated with its own context. Access restrictions apply immediately before presentation and navigation, including to chart labels and app-controlled accessibility output.
     context: Opening or closing the history surface does not modify Project membership, underlying observations or existing work filters. Returning restores the originating context under 0024 where still valid. An independently selected historical period or metric is not silently relabeled as dynamic Today.
     access: Apply current access restrictions before drawing or announcing historical input or revealing derived counts. A chart with a restricted member is incomplete or unavailable rather than showing a full-project zero. A cleared local history is distinguished from no source events under 0067.
     accessibility: Essential metric names, values, units, scope and gaps have a non-color accessible representation and can be inspected without requiring a drag gesture or relying solely on spatial chart position. Preserve meaningful focus on return under 0032. Exact native controls and chart design require device evaluation.
@@ -69,6 +71,14 @@ specification:
       given: The operator opens metric history from a Project overview and later returns while that Project is still valid.
       when: The overview is restored.
       then: It retains the originating Project and valid navigation context without adopting an unrelated historical filter or mutating data.
+    graph_selection_changes_before_result:
+      given: A graph for the earlier A and B membership basis is loading while the operator selects a new A and C basis for the same metric and period.
+      when: The A and B result arrives after the A and C selection.
+      then: The displayed selected graph is not overwritten or relabeled with the old result, and each available result retains its own membership basis, coverage and access context.
+    aggregate_without_object_membership:
+      given: A permitted graph point has a supported aggregate but no evidence identifying its contributing objects.
+      when: The operator requests its object list.
+      then: GitView explains that the historical object selection is unavailable or limited rather than substituting the current filtered list or inferring object identities from the total.
   unresolved:
   - Validate the initial series and period proposal in 0069, and determine presentation and evidence for the other agreed summary metrics.
   - Source and local evidence sufficient for each metric and actual graph accessibility require further validation.
