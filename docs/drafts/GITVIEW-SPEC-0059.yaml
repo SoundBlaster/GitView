@@ -36,6 +36,7 @@ specification:
     incomplete_or_absent: A Repository not returned by a partial result is not confirmed deleted, denied or deselected. A complete result can establish absence only within its stated source and query scope and according to source permissions; it does not alone delete saved Projects or prove source deletion. Explicit denial follows 0036.
     confirm: The operator explicitly confirms a nonempty selection. Before a selected entry changes local Projects, establish the required source identity and applicable access at processing time; failures or uncertainties are per-entry outcomes under 0045. An earlier discovery result does not itself prove present access after a connection change.
     changing_connection: Bind a discovery attempt to the identity and active connection context that initiated it. A late result after disconnect, authorization denial or confirmed replacement cannot re-enable access, replace the new account's results or make restricted private details visible. A new valid connection requires its own applicable discovery and access evidence.
+    pending_across_account_change: A pending selection retains its original source context and is not silently treated as a selection made under a different account. When the active account changes, do not expose restricted identifiers or submit earlier choices automatically. The operator can review any permitted retained selection and explicitly confirm entries in the new context after the required identity and access are re-established; an unavailable entry remains unresolved or can be removed. Already saved Projects remain separate from this pending selection.
     retry: A retry or continuation preserves already confirmed selected identities and reports its own coverage and error without assuming the remaining source is empty. Exact source pagination, query syntax and selection layout remain unchosen.
     provenance: Explicit default-per-Repository setup follows the owner's choice; continuity, scope and race boundaries are agent-authored refinements.
   scenarios:
@@ -55,7 +56,11 @@ specification:
       given: A Repository was selected from a previously permitted result but its access cannot be established when the selection is processed.
       when: The operator confirms setup.
       then: The affected entry is unresolved or failed under 0045 and no replacement Repository is inferred from a matching name; unrelated completed entries remain intact.
+    selection_followed_by_account_change:
+      given: The operator selected a private Repository under A but has not confirmed setup, then B becomes the active account.
+      when: The pending selection is revisited.
+      then: The prior selection is not submitted or relabeled as B's, private details remain subject to access restrictions, and any setup under B requires explicit confirmation with applicable identity and access evidence.
   unresolved:
   - Source-specific discovery scope, permission semantics, search and pagination evidence require verification.
-  - Exact behavior for an account switch with pending selection and the user-facing recovery interaction remain open.
+  - Exact user-facing recovery and retention of a pending selection across an account switch remain open within the stated privacy and explicit-confirmation boundaries.
   - Device and real-adapter evidence is absent; no source endpoint or request budget is chosen.

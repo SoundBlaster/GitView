@@ -1,7 +1,7 @@
 {
   "artifact_kind": "gitview_batch_cancellation_admission_model",
   "spec": "GITVIEW-SPEC-0045",
-  "spec_sha256": "02fd1ca45716a14d7a58a134ef1890732f0748689ccd00f56ad8f9b5a8c59d20",
+  "spec_sha256": "d6e91413433226336b9b4d9433c6adec7100933169056b524e66f6227b69cae1",
   "schedules_examined": 3,
   "naive_post_cancellation_admission_witnesses": [
     [

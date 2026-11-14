@@ -29,6 +29,8 @@ depends_on:
 - GITVIEW-SPEC-0053
 - GITVIEW-SPEC-0054
 - GITVIEW-SPEC-0056
+- GITVIEW-SPEC-0058
+- GITVIEW-SPEC-0059
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -58,6 +60,10 @@ specification:
       given: No Projects exist; the operator connects one source identity and confirms two accessible repositories in different organizations.
       when: Two single-repository default Projects are saved and source observations are obtained.
       then: Both Projects are identifiable, each has the confirmed source Repository, and available work can be reached without conflating organizations with Projects.
+    setup_changes_account:
+      given: A connected account A has a partial discovery result and a confirmed two-entry setup whose first Project was saved; the second entry has not been submitted.
+      when: The active connection changes to B before the second entry starts and an old A discovery response arrives.
+      then: The saved Project remains subject to access policy, the response does not become B's discovery or unlock A data, and the remaining entry requires explicit confirmation and applicable access evidence under B before a new submission.
     shared_repository:
       given: Repository R belongs to both Project P and Project Q and contains one observed open PR under complete coverage.
       when: P, Q and a portfolio-wide unique total are displayed.
