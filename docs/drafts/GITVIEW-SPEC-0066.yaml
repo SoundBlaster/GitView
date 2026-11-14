@@ -1,0 +1,69 @@
+id: GITVIEW-SPEC-0066
+title: GitView - Retained observations for metric history
+kind: spec
+created_at: '2026-11-14T16:18:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0065
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0048
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0064
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0065.yaml
+  storage_intent: conversation:gitview/excerpt-61
+  refresh_intent: conversation:gitview/excerpt-63
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Retained metric observations preserve their metric meaning, source scope, relevant observation time, coverage and access context needed to interpret a future graph.
+- A failed, deferred or ungranted refresh does not create a historical sample or zero for unobserved work.
+- A partial observation can be retained as partial without being promoted to a complete historical Project point.
+- A local persistence failure or uncertain write does not report the observation as durably retained without confirmation.
+- Retained values and derived historical results obey current private-data access and explicit clear policies.
+specification:
+  objective: Describe the product semantics of accumulating historical observations without prescribing a database, retention duration or background schedule.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    collection_proposal: As an agent-authored working proposal, after a refresh accepts facts relevant to a supported history metric, the app attempts to retain an observation suitable for that metric when local storage and access permit. The trigger is an accepted observation, not merely launching a request or receiving a background opportunity. This does not promise that every metric, Repository or time bucket is sampled, or prescribe a new background task.
+    meaning: Retain enough non-secret context to distinguish the metric and version of its predicate, unit, object type, source instance and Repository identity or covered set, observation time and any applicable source time or revision. The representation may retain facts or derived samples; it must not retain more private source detail than the selected product policy requires. The complete list of metrics and data minimization rules remain open.
+    coverage: Associate the retained sample or inputs with the actual included scope, missing or restricted portions and whether the metric was sufficiently observed for the stated claim. A success for one category, field or Repository does not confer freshness on another. Known zero requires sufficient evidence under 0044 and 0065; a missing category is unknown, not a zero sample.
+    non_simultaneous: Inputs observed at different times can be retained with their individual contexts. Do not stamp them as a single exact simultaneous Project snapshot unless the source evidence supports that claim. A derived value can describe separately timed observations with their timing visible or remain incomplete as appropriate.
+    partial_and_conflict: Retain permitted accepted facts from partial work with their own coverage where useful; the enclosing Project sample is not called complete until its evidence supports completeness. Unordered conflicting values follow 0053 and cannot be collapsed into a confirmed historical point merely because a later refresh finished.
+    write_outcomes: A historical observation is reported as durably retained only when local storage confirms it. If storage fails or its result is indeterminate, preserve any last confirmed retained history, surface the relevant local limitation and do not invent a durable new point. A source refresh may succeed while history retention fails; these outcomes are distinguishable. Recovery and exact atomicity are separate implementation questions.
+    gaps: No accepted observation from a missing, cancelled, deferred, failed or ungranted background opportunity creates no new observed value for that scope. Graphs expose gaps or incomplete periods according to 0065; they do not backfill, interpolate as observed, or use the current value as a historical zero. A successfully observed partial subset remains distinct from a missing entire scope.
+    access_and_clear: Retention and subsequent presentation obey 0036 and 0064. An explicit denial or disconnect restricts private observations and revealing derived values regardless of when they were stored. An explicit local clear must not be undone by automatically replaying previously queued retention writes; exact clear scope, synchronization and recovery are unresolved.
+    retention_policy: The metrics selected for historical capture, timing of accepted samples, storage size policy, retention and explicit clear UX remain to be defined. The application must not claim a daily historical series merely because iOS background tasks exist. A decision on retention must preserve the meaning and limitations of any remaining data and distinguish removed or unavailable history from zero.
+    provenance: The owner requested local retained observations, metrics and opportunistic background refresh. Attempting historical capture after accepted refresh is an agent-authored proposal; the owner has not selected its timing, retention or storage design.
+  scenarios:
+    no_background_grant:
+      given: A Repository was last observed on Monday and iOS grants no background opportunity on Tuesday.
+      when: A daily history graph is opened on Wednesday without other Tuesday evidence.
+      then: Tuesday has no invented sample or zero, and Monday remains attributed to its actual observation context.
+    successful_source_failed_storage:
+      given: A source refresh observes a metric successfully but local historical retention fails.
+      when: The result and later historical graph are displayed.
+      then: Source success is distinguishable from local retention failure, and no new durable point is asserted without confirmation.
+    partial_repository:
+      given: A Project refresh accepts complete PR observations for A but B remains unobserved.
+      when: History is retained for the Project's PR metric.
+      then: A's observation may be retained with its own time and scope, but no complete A-and-B Project sample is invented.
+    unequal_times:
+      given: Repository A and B observations were accepted at different times with no simultaneous source guarantee.
+      when: A Project metric is retained and later shown.
+      then: Their separate times remain attributable and the aggregate is not described as a single exact simultaneous snapshot.
+    disconnect_then_old_write:
+      given: A private observation retention write was started before an explicit disconnect and arrives afterward.
+      when: The historical view is presented while access remains restricted.
+      then: The result does not unlock or disclose private content or revealing derived counts; its eventual storage outcome is handled separately.
+  unresolved:
+  - Which supported metrics need retained facts or samples, and the precise observation trigger, retention duration and storage budget.
+  - Atomic write and clear coordination, interrupted writes, history deletion and recovery require a storage contract.
+  - iOS background scheduling, persistence and graph behavior require actual implementation and device evidence.
