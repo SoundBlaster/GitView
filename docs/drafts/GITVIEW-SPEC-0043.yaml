@@ -72,6 +72,7 @@ depends_on:
 - GITVIEW-SPEC-0114
 - GITVIEW-SPEC-0115
 - GITVIEW-SPEC-0117
+- GITVIEW-SPEC-0118
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -169,6 +170,10 @@ specification:
       given: One Project's supported observation has three unresolved review threads on one open PR, while a separate PR's failed CI was observed for a different revision and time.
       when: The operator inspects the corresponding historical summary metrics.
       then: Thread and affected-PR series retain their distinct units and actual contexts; the CI result is not backdated or substituted for an unobserved historical PR state, and unavailable or restricted inputs remain incomplete.
+    historical_point_access_and_return:
+      given: A historical outcome point is inspectable with permitted partial evidence and an object selection is open when access to a contributing private Repository becomes restricted.
+      when: The operator returns using an accessible navigation path.
+      then: Restricted details and inferable totals are not newly exposed, the earlier point is not mislabeled as a new scope, and a safe limitation or recovery route retains the permitted period and context where valid.
     history_retry_across_restart:
       given: A permitted source refresh yields an open-PR history observation, its retention may have committed, and its acknowledgement is lost before restart.
       when: GitView recovers the retention attempt and retries or reconciles it.

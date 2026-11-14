@@ -1,0 +1,88 @@
+id: GITVIEW-SPEC-0118
+title: GitView - Accessible historical point inspection and return
+kind: spec
+created_at: '2026-11-14T22:08:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0068
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0040
+- GITVIEW-SPEC-0056
+- GITVIEW-SPEC-0064
+- GITVIEW-SPEC-0065
+- GITVIEW-SPEC-0069
+- GITVIEW-SPEC-0079
+- GITVIEW-SPEC-0097
+- GITVIEW-SPEC-0112
+- GITVIEW-SPEC-0116
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0068.yaml
+  periods: docs/drafts/GITVIEW-SPEC-0069.yaml
+  privacy: docs/drafts/GITVIEW-SPEC-0064.yaml
+  platform_skill: /Users/egor/.codex/skills/ios-accessibility/SKILL.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A person can identify the selected metric, scope, period, point or gap, unit and applicable limitation without relying on color, motion, precise chart position or drag alone.
+- Complete zero, permitted partial evidence, unavailable history, current access restriction and a pending read remain distinct when evidence supports each distinction, without exposing restricted details.
+- A historical outcome opens only an independently supported selection for the captured period, condition and scope, with event and distinct-object units distinguished.
+- Return or dismissal restores the originating point and meaningful focus when still valid; a changed context or access restriction uses an honest safe fallback.
+- Late data and asynchronous focus or announcement work cannot relabel another metric, bucket or scope or intentionally disclose newly restricted data.
+- The described interactions are verifiable with injected inputs and native assistive technologies, but no implemented or verified UI is claimed.
+specification:
+  objective: Specify an accessible inspection and navigation contract for historical metric values without prescribing a chart implementation or inventing missing history.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    selection_context: An inspection is associated with the Project, metric and predicate version, unit, fixed membership basis and allowed Repository scope, captured absolute period or bucket boundaries, original time-zone interpretation, applicable observation context and current disclosure eligibility. An interval outcome and a point-in-time sample are different meanings. These are evaluation and presentation context, not new ontology entities or a claim that every field can be revealed.
+    equivalent_path: Provide a discoverable path to inspect individual available buckets or samples and their permitted meaning without requiring visual position, a long press or a continuous drag. Use semantic system controls where appropriate; a chart, accessible summary, list, adjustable selection or another native pattern may satisfy the contract. A single summary must not make individually inspectable permitted values unreachable. Names, roles, current values and available actions must reflect their actual semantics rather than visual decoration.
+    interpretable_value: For a permitted supported numeric result make its metric, unit, interval or sample time, applicable scope and completeness or provisional limitation available together or through an explicitly reachable detail. Present a sample at its actual observed time and an outcome for its captured half-open interval; do not announce a sample as an end-of-day snapshot or a current-day elapsed result as a completed full day. Identity of a restricted Repository is not needed to explain that a value is limited.
+    missing_and_uncertain: A complete evidenced zero is a numeric zero with its unit and scope. A bucket with no retained or reconstructible evidence is a gap or unavailable, not zero. A partial observation is identified with its supported scope and limitation only where that disclosure is safe; it is not automatically a lower bound or a complete total. Loading, an unavailable local read, missing source history and an established access restriction are distinguished when their cause is known and may be safely stated; an unknown cause is not labeled as a specific denial. Do not manufacture one accessibility element per missing event or a count of inaccessible objects.
+    point_to_selection: A historical outcome may offer its supported object-selection action under 0056. Carry its original Project or Repository scope, actual fixed bucket boundaries, event predicate, object type, unit and evidence context. A total alone does not establish contributing identities, and a current work list is not a substitute for historical selection. If the origin counts events while the destination lists distinct objects, explicitly identify the two different units. State-sample drilldown is available only if separate permitted evidence supports the historical object identities and same predicate; a present-day filtered list is not silently substituted.
+    changing_evidence: A destination evaluated with later source evidence can be incomplete or differ from the selected origin's observation. Preserve and identify both contexts instead of promising equal counts; do not relabel the older point as newly observed. A late response for a prior metric, period, membership basis or point cannot replace the active selection. Re-evaluate access before exposing results, actions and their accessible or shareable equivalents under 0036 and 0064.
+    return_and_focus: On dismissal of point detail or return from its object selection, retain the actual originating metric, bucket, fixed period and permissible scope while they remain valid. Where the original actionable element still exists and is permitted, restore meaningful accessibility focus to it. If its data became missing, its Project was removed, the active route changed or its content is restricted, do not focus or announce a different point as if it were the original; provide an eligible nearby bucket or a safe heading, limitation or recovery route as appropriate. Do not override a newer explicit user focus or navigation action with a delayed restoration.
+    access_change: On an applicable restriction, promptly remove restricted point values, inferable totals, labels, detail actions and app-controlled accessible representations under 0064 and 0112. Revalidate delayed app-owned focus and announcements immediately before issuing them; prefer a safe generic status where details cannot be disclosed. Content already spoken, copied, captured by the system or delivered externally cannot be recalled; exact platform behavior and queued system announcements require native verification.
+    adaptive_presentation: Maintain this inspection and navigation path with supported Dynamic Type, Reduce Motion, increased contrast and reduced transparency, allowing system layout and density to adapt. Grouping may simplify traversal while preserving a reachable way to inspect permitted individual results and limitations. Exact hierarchy, wording, VoiceOver rotor, chart API and presentation remain product design and platform decisions.
+    verification: Under 0040 and 0079 specify deterministic checks for point classification, partial and restricted data, exact captured boundaries, differing origin and destination units, late response, focus restoration and access-change races. Later exercise the actual native path with VoiceOver, Switch Control, Voice Control, Full Keyboard Access and relevant system settings on supported devices; a planned scenario is not a passed accessibility test.
+    provenance: The owner selected Apple-like system presentation and Project metrics. The accessibility outcomes, inspection path, exact point-context boundary and focus policy are agent-authored refinements; this candidate is not approval of a particular native chart or a tested accessibility claim.
+  scenarios:
+    zero_gap_partial:
+      given: Three historical daily buckets respectively have a supported complete zero, no usable observation, and a permitted partial observation with non-revealing scope.
+      when: The operator inspects them visually or through an accessible path.
+      then: The zero includes its unit and period, the missing bucket is identified as unavailable or a gap, and the partial result is labeled as incomplete without claiming a full total or a present-day lower bound.
+    event_to_distinct_objects:
+      given: A selected bucket records two closure events for one Issue and the relevant event, identity, scope and access evidence are sufficient.
+      when: The operator opens its historical object selection without a drag gesture.
+      then: The origin retains two events, the destination can identify one distinct Issue, and both retain the same captured period and source condition.
+    aggregate_without_identities:
+      given: A permitted complete aggregate is supported but its contributing object identities cannot be established.
+      when: The operator asks to inspect the associated objects.
+      then: The limitation is available without substituting current objects, inventing an exhaustive list or exposing inaccessible identities.
+    partial_origin_new_destination:
+      given: An outcome point was evaluated with incomplete evidence at T1 and a later permitted retrieval at T2 finds additional matching objects for the same fixed interval.
+      when: The operator opens its object selection.
+      then: The destination can show supported T2 matches with its own coverage while preserving the T1 point and distinguishing their contexts; neither count is silently rewritten to equal the other.
+    restriction_before_delayed_focus:
+      given: A private historical point detail schedules a return focus or announcement and an applicable restriction is established before that app-owned work is issued.
+      when: The delayed work becomes eligible to run.
+      then: GitView rechecks the current context, does not issue newly restricted details and offers a safe permitted context or recovery route; it does not promise to retract speech already delivered.
+    old_result_after_selection_change:
+      given: The operator selects a second metric or bucket while the first bucket's object selection is still loading.
+      when: The earlier result arrives.
+      then: It does not take over the new selection or focus; any retained permitted result remains associated with its original captured context.
+    return_after_scope_change:
+      given: A point from Project P is open and P's saved membership changes before return.
+      when: The operator dismisses the detail or returns from its historical object selection.
+      then: The old point keeps its original basis if still valid and permitted; otherwise a safe changed-scope state is offered without calling a newly evaluated point the original.
+  unresolved:
+  - Choose and evaluate native inspection, traversal, focus, announcement and fallback controls across supported iOS versions and assistive technologies.
+  - Establish source-specific completeness, object identities and privacy-safe lineage for each selectable metric before claiming the corresponding navigation is available.
+  - Verify actual chart rendering, system snapshots, queued announcements, Dynamic Type and device accessibility after implementation; no UI or product test exists.
