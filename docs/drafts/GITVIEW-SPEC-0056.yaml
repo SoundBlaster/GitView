@@ -61,6 +61,14 @@ specification:
       given: One confirmed merge occurs at the inclusive period start and another occurs at the exclusive period end.
       when: The selected period's distinct-PR outcomes are calculated.
       then: The first merge matches and the second does not match that period on event time alone.
+    prior_day_close_next_day_open:
+      given: An Issue is confirmed closed before the selected day's exclusive end and separately confirmed currently open after a reopening beyond that end.
+      when: The prior day's closure selection is opened after the local day boundary.
+      then: The Issue appears once for its supported prior closure with its separately observed current open state; an explicit current-closed filter can exclude it without changing the historical selection condition or the stored event.
+    reopen_without_closure_time:
+      given: An Issue is confirmed currently open after a reported past closure, but that closure's event time and historical coverage are unavailable.
+      when: A specific prior day's closure selection is evaluated.
+      then: The historical match remains uncertain rather than being inferred from the current open state or counted as a confirmed zero.
     partial_repository:
       given: A Project has two member Repositories in the stated metric scope and historical closure evidence for only one.
       when: The period outcome selection is opened.

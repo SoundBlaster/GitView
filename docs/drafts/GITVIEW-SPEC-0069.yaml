@@ -59,6 +59,10 @@ specification:
       given: One Issue has two confirmed closure events on the same local day and complete identity evidence.
       when: The daily distinct-Issue closure series is computed.
       then: The Issue contributes once to the day's object count; an event count of two is a different measurement.
+    one_issue_closed_on_two_days:
+      given: One confirmed Issue has a closure on each of two distinct local days, with a reopening between and sufficient event and identity coverage.
+      when: Daily distinct-Issue closure buckets and a distinct-Issue total covering both days are computed.
+      then: The Issue contributes once to each applicable daily bucket but once to the period-wide distinct-Issue total; a supported event count is two and does not become two distinct Issues.
     sample_is_not_midnight:
       given: The only eligible open-PR observation on Tuesday was recorded at 10:30 local time.
       when: The daily state series is shown.

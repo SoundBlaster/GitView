@@ -78,6 +78,14 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    issue_reopens_across_day:
+      given: An Issue was confirmed closed just before the local day boundary and is independently confirmed reopened and currently open just after it, with identity, event times and scope established.
+      when: The operator views the new Today and then opens a historical selection for the preceding day's closure.
+      then: The Issue appears once in new Today as unfinished and once in the historical distinct-object selection for the prior closure, with the separately observed open state; an explicit current-closed filter excludes it without deleting or altering the closure event.
+    issue_reopens_missing_closure_time:
+      given: An Issue is independently confirmed currently open after a reported earlier closure, but no sufficient evidence establishes that closure's event time or complete history.
+      when: The new Today and a previous-day closure selection are evaluated.
+      then: The Issue qualifies for Today as open, while the previous-day event match remains uncertain rather than a confirmed match or zero; the current open fact is not proof of the missing event time.
     today_event_with_older_ci:
       given: A PR has a confirmed merge event today and a failed check observed earlier for revision R1, but the current applicable revision or checks cannot be established.
       when: The operator opens the failed-CI filtered Today collection.

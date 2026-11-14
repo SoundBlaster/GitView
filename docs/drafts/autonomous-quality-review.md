@@ -507,3 +507,9 @@ Candidate 0089 и [временная сверка Today](today-temporal-evidenc
 конечные модели Today повторены для новых bytes 0027, но они не моделируют
 временную согласованность или GitHub source behavior. [Проверка словаря](evidence/autonomous-goal-ontology-check-temporal-evidence-20261114.json)
 для 0027, 0043 и 0089 не нашла findings и gaps.
+
+[Сквозной разбор повторного открытия Issue](issue-reopening-boundary-review-20261114.md)
+связывает Today, историю и current-state filter. Host-side пример включает
+25-часовой день и различает два closure events от одной distinct Issue; он не
+проверяет iOS Calendar, GitHub history или приложение. [Проверка словаря](evidence/autonomous-goal-ontology-check-issue-reopen-20261114.json)
+для 0043, 0056 и 0069 не нашла findings и gaps.
