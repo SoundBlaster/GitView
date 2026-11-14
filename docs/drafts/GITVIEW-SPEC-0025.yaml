@@ -29,7 +29,7 @@ specification:
     default_association: A default association identifies the locally created default Project for one source Repository, separately from an arbitrary Project that happens to contain the same Repository. It is project configuration for idempotent setup, not a new ontology entity. For an existing association, confirming the Repository again reuses the same Project. Other existing Projects containing that Repository do not become the default implicitly.
     creation: Confirmation of one or more selected accessible Repositories establishes a separate single-member default Project for each one lacking a default association. An existing association is reused. The initial name is the observed repository name; subsequent source renames do not automatically rename Projects.
     editing: The operator can change a Project name or its repository membership. Edits are pending until saved; cancellation preserves the last saved state. A saved Project must have a nonempty name and at least one member. An attempted save with no members or an empty name is rejected and does not modify the saved Project.
-    edited_default: Editing a default Project's membership or name does not by itself change its local identity or its default association. The association records its origin rather than requiring the Project to remain single-member; a source Repository can be removed from that Project only if at least one member remains.
+    edited_default: Editing a default Project's name or adding members does not change its local identity or its default association, provided the associated Repository remains a member. Removing the associated Repository is allowed only if another member remains; when that edit is saved, remove the default association while preserving the Project and its remaining members. Rediscovery alone does not create a replacement; a later explicit setup confirmation can create a new default Project for the formerly associated Repository.
     removal: Explicit removal of a local Project deletes its local configuration and its default association if any, but does not remove the Repository from GitHub, erase observations needed by other Projects, or change other memberships. After deletion, a later explicit setup confirmation may create a new default Project with a new local identity; merely rediscovering the repository does not create one.
     persistence_failure: A failed save or delete must not report success. Previously saved data and unrelated memberships remain intact; retry must not create duplicate default associations. How a partially completed batch is reported follows 0022.
     scope: Saved Projects contain only GitHub-managed Repositories in the current product scope. Temporary offline discovery or source rename is not a command to change membership. Access restrictions follow 0019.
@@ -38,7 +38,11 @@ specification:
     shared_repository:
       given: Repository R is in default Project P and another Project Q.
       when: The operator removes R from P while retaining another member in P.
-      then: P retains its identity and default association; Q and the source Repository remain unchanged.
+      then: P retains its identity and remaining members, its default association with R is removed, and Q and the source Repository remain unchanged.
+    setup_after_member_removed:
+      given: R was removed from its former default Project P, which still exists with other members.
+      when: The operator later explicitly confirms R in setup.
+      then: A new default Project containing R may be created; P retains its identity and other members, and is not reused as a Project that lacks R.
     reject_last_member:
       given: A saved Project has exactly one Repository member.
       when: The operator attempts to save an edit that removes it.
@@ -52,5 +56,5 @@ specification:
       when: The operator reconfirms R in setup.
       then: P is reused and Q is unchanged.
   unresolved:
-  - Whether a default association should persist after its origin Repository is removed from its edited Project needs domain review; the current proposal chooses persistence to maintain idempotence.
+  - The edited-default disassociation and explicit recreation policy is an agent-authored choice and needs domain review.
   - User-facing deletion confirmation and the exact policy for data no longer referenced by any Project require storage and UX specifications.
