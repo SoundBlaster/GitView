@@ -1,0 +1,69 @@
+id: GITVIEW-SPEC-0081
+title: GitView - Repository address conflict and recovery
+kind: spec
+created_at: '2026-11-14T17:07:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0080
+depends_on:
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0048
+- GITVIEW-SPEC-0053
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0080.yaml
+  source_evidence: docs/drafts/github-repository-identity-evidence-20261114.md
+  cross_cutting: docs/drafts/GITVIEW-SPEC-0079.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- An unresolved address conflict remains distinct from confirmed Repository deletion, access denial and a failed refresh.
+- The operator can discover the affected scope and request a recheck where access and scheduling permit, without requiring disclosure of restricted addresses.
+- A successful recheck and resolution of the competing address observations are reported as distinct outcomes.
+- Source opening or sharing follows independently established link identity, current access policy and known address-reuse evidence rather than an operator-selected label or an unordered address alone.
+- Project membership, permitted unrelated observations and the conflict's evidence are not silently overwritten or deleted to clear the status.
+specification:
+  objective: Make an unresolved Repository address conflict understandable and recoverable while preserving source identity, access and honest uncertainty.
+  ontology_refs:
+  - gitview:User
+  - gitview:Repository
+  - gitview:Project
+  - gitview:GitHub
+  contract:
+    conflict: When incompatible address observations refer to the same confirmed source Repository but their source states cannot be ordered, retain the identity and mark its current address uncertain under 0053 and 0080. An address conflict is not proof of a second Repository, deletion, denied access, an empty Project, failed CI or a failed request. Independent Project membership and observations remain attributable to their own scope and times.
+    visible_state: As an agent-authored presentation proposal, show or make discoverable a non-color indication on affected Repository or Project context that the source address cannot be confirmed, together with relevant permitted last-known observation context and a route to recheck. The operator need not understand source revision machinery to identify the affected scope. Never show restricted private addresses or revealing alternatives merely to explain the conflict; under denial offer a permitted access-recovery route instead.
+    recheck: Offer an explicit refresh or recheck of the affected scope under 0048 when access and scheduling permit. Preserve the intended source instance and Repository identity, and report deferred, failed, partial and successful source outcomes accurately. A request, an external handler opening, a redirect, or a fresh-looking timestamp alone does not prove which conflicting address is current or that the conflict has been resolved.
+    unresolved_after_success: If a recheck returns useful permitted source information but cannot establish an ordering against every relevant competing address observation, retain the unresolved conflict. A newly observed fact may be shown with its own observation time and scope; do not label it the authoritative current address merely because the retry completed later. When evidence for a competing observation is lost, retain uncertainty under 0053 rather than assuming it has been superseded.
+    resolution: Resolve the conflict only when source evidence or a separately specified rule actually establishes which address state supersedes all relevant competitors within the applicable scope. Record the evidence and its limits; do not retroactively rewrite historical observations. No source currently reviewed here is asserted to provide a universal monotonic address version. An operator choosing or acknowledging a label is not itself source evidence and cannot merge objects or certify the latest address.
+    source_link: An address or source link is eligible for open or share only under the independently observed identity, access, freshness and reuse rules in 0033. A permitted last-known link may be offered as last known with its uncertainty when the 0033 conditions hold; an address known to identify a different Repository is not offered as the original object's link. If the conflict or missing evidence prevents establishing an eligible link, report the source action unavailable or uncertain rather than selecting an arbitrary candidate. GitView cannot guarantee what an external handler resolves after handoff.
+    retained_state: A restart, a locally successful save, a repeated refresh or dismissal of a warning does not itself resolve the conflict. Retain enough permitted durable context to recover its unresolved status under 0053 and 0071; if required evidence cannot be read, show uncertainty and a recovery path. A deliberate local history clear follows its explicitly selected scope and must not be represented as source conflict resolution merely because earlier evidence was removed.
+    privacy: Apply access restrictions before displaying candidate values, derived details or passing a link to a platform handler. If access becomes explicitly denied while a recheck is in flight, its late result cannot unlock private information or re-establish access without the applicable independent evidence. Source identity continuity alone does not grant a recipient access or authorize opening a restricted cached URL.
+    accessibility: Make the conflict, relevant last-observation context, recheck or access-recovery path and source-action availability discoverable without relying solely on color, a transient notification, long press or pinch. Exact control, wording and assistive announcements require native evaluation.
+    provenance: The owner requested last-known data and visible refresh failures. This address-conflict interaction and recheck behavior are agent-authored working proposals; neither an implementation nor a GitHub ordering guarantee is claimed.
+  scenarios:
+    retry_does_not_resolve:
+      given: Repository R belongs to Projects P and Q and two address observations for R cannot be ordered.
+      when: A recheck succeeds but its address cannot be ordered against one competing observation.
+      then: Both memberships remain, the source success and unresolved address conflict are separately discoverable, and the response is not silently promoted to the current address.
+    source_reuse:
+      given: R previously used address X and reliable evidence now establishes that X identifies a different Repository S.
+      when: The operator requests R's source link.
+      then: X is not offered as R's link; another eligible link may be used under 0033 or the source action remains unavailable or uncertain.
+    access_denied_in_flight:
+      given: A private Repository's address recheck is in flight and explicit access denial is applied.
+      when: Its earlier response arrives after the denial.
+      then: Restricted address details stay hidden, the response does not by itself re-establish access, and an accessible recovery path remains.
+    restart_with_missing_evidence:
+      given: An address conflict existed and after restart the record needed to compare one competing observation cannot be read.
+      when: The Repository overview is restored.
+      then: The affected address remains uncertain and no candidate is presented as resolved solely because the other evidence is unavailable.
+    no_color_recovery:
+      given: A permitted Repository's address is unresolved and its latest GitHub request failed.
+      when: An operator who does not use color or a timed gesture inspects the affected scope.
+      then: The address uncertainty, request failure and a suitable retry path are distinguishable without claiming either source deletion or successful conflict resolution.
+  unresolved:
+  - Source evidence and an ordering rule that can actually supersede all competitors remain unverified; repeated rechecks may leave conflict unresolved.
+  - Exact representation, accessible wording, eligible-link behavior and recovery after corrupt local evidence require product and device evaluation.
+  - Actual source, durable storage and platform behavior have not been tested.
