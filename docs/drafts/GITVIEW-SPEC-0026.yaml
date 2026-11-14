@@ -33,7 +33,7 @@ specification:
     ordering: A result that was requested before a later request for the same scope may finish afterwards. An older result must not replace newer accepted values for that same scope merely because it completed later. Cross-scope data and partial results require field-level or scope-level ordering without discarding unrelated successful observations; exact ordering token and source revision semantics remain open.
     absence: Absence from a partial page, failed request or inaccessible source is not a deletion or lifecycle transition. Inferring closure or deletion from a fully observed result requires a separate explicit source-identity and scope rule; this specification does not infer it.
     private_access: Stored private content is eligible for display only under the current access policy in 0019. A temporary network failure alone is distinct from an explicit denial or local disconnect.
-    display: Show the last relevant successful observation time and the most recent failed or incomplete refresh for the relevant scope. When different values have different observation times or coverage, a summary does not imply one shared complete observation.
+    display: Show the last relevant successful observation time and the latest applicable terminal request outcome for the relevant scope under 0044, while identifying any in-flight request and independently incomplete or uncertain coverage. A later successful attempt does not erase an earlier failed attempt's history, but the earlier failure is not represented as the current latest outcome after a sufficiently ordered later success. A successful request does not by itself resolve missing coverage, conflicting values or failure in another scope. When different values have different observation times or coverage, a summary does not imply one shared complete observation. The retention and presentation of earlier outcomes remain open.
     provenance: The complete and partial reconciliation and concurrency rules are agent-authored proposals based on the user's cache and visible-failure requirements.
   scenarios:
     partial_after_complete:
@@ -48,6 +48,10 @@ specification:
       given: PR and Issue scopes have separate previous successful observations.
       when: The Issue refresh succeeds and PR refresh fails.
       then: The Issue scope records its own success, while the PR scope retains its earlier data, time and failure indication.
+    failure_then_partial_success:
+      given: A PR refresh fails and a later terminal attempt for the same scope is reliably ordered after it and succeeds with only partial coverage; an Issue refresh has a separate unresolved failure.
+      when: The overview presents the latest outcomes and coverage.
+      then: The earlier PR failure is not represented as the latest PR attempt, the successful PR subset does not imply full PR coverage, and the Issue failure retains its own scope. The earlier failure can remain accessible as history without being confused with the current outcome.
     permission_revoked:
       given: A private Repository has saved observations and source access is explicitly denied.
       when: A view is opened.

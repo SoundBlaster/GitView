@@ -87,6 +87,10 @@ specification:
       given: A Today calculation was started before the local day changed and another calculation for the new day has become active.
       when: The older calculation returns after the newer context was selected.
       then: Its result retains its earlier interval and cannot be presented as the new day's selection or overwrite it solely due to arrival order.
+    day_change_filter_edit_and_late_result:
+      given: A failed-CI Today selection starts calculating before the local day changes. After the change, the operator explicitly clears that filter and the new unfiltered Today context becomes active while a partial refresh is still in flight.
+      when: The old filtered calculation finishes after the filter edit and the refresh returns facts for only some Repositories.
+      then: The old calculation cannot reapply the cleared filter or be relabeled as the new day's selection. Applicable permitted source facts retain their own scopes and observation times; the new unfiltered selection is recomputed under its actual membership and day, with missing coverage visible rather than treated as an empty complete result. Returning from an open object preserves the explicit edit and follows the current dynamic Today context under 0024.
     active_pinch:
       given: The operator is pinching a Today grid when the local calendar day changes.
       when: The new day's selection is calculated while the pinch remains active.
