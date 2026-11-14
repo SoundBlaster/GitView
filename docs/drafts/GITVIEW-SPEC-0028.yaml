@@ -29,6 +29,7 @@ specification:
   - gitview:CIStatus
   contract:
     check_unit: A check counter refers to an individual current check in the observed PR check collection, not a workflow run or historical attempt. Check identity and retry equivalence must follow the eventual verified source mapping; if the identity cannot be resolved, show incomplete or uncertain coverage instead of claiming a precise distinct count.
+    source_families: GitHub documents check runs and commit statuses as distinct source families. Do not claim a GitHub-like complete PR check collection merely because one family was retrieved; decide and verify which source entries belong to the product's current-check unit, how each relates to the relevant revision, and how identity and retries are handled. Missing required source families or mapping remain incomplete or unknown.
     scope: Record the PR identity, observed revision if known, source observation time and coverage. A check result from a previous revision is not silently represented as a confirmed result for a newer revision; unavailable revision linkage remains unknown.
     counters: For a sufficiently observed collection, count checks mapped to failure, pending and success separately and show the total current checks. Special, cancelled, neutral or unmapped conclusions are retained as other or unknown according to a separately verified mapping; they are not silently included in success. Consequently the three colored counts need not add to total.
     empty_and_partial: A complete observation with zero current checks yields a known total of zero. No observation yields unknown, not zero. Incomplete observations can show the counts observed so far with visible incomplete coverage and must not claim the displayed count is the full total.
@@ -40,6 +41,10 @@ specification:
     ready: A green check count, approved review or zero unresolved threads does not alone establish mergeability. Merge eligibility is outside this contract until all governing rules are explicitly specified.
     provenance: The owner chose check counters and GitHub-like check semantics; uncertain mappings, revision rules and verification scenarios here are agent-authored proposals.
   scenarios:
+    only_one_source_family:
+      given: Check runs were retrieved for the relevant revision but commit-status coverage and the product's combined-source mapping are not established.
+      when: The app presents the PR check collection.
+      then: It does not claim a complete GitHub-like total or a confirmed absence of failures solely from the check-run response.
     mixed_checks:
       given: A complete observation has three failing, four pending, eight successful and one unmapped current check.
       when: Counters are displayed.

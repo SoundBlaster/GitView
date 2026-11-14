@@ -592,3 +592,11 @@ atomic admission и реальная проверка source access остают
 ограничения — в [исследовании](github-ios-access-research-20261114.md).
 В 0036 и 0059 уточнены классификация status и ограниченный scope discovery;
 протокол и разрешения не выбраны, запросы к GitHub не выполнялись.
+
+## Поля и права GitHub
+
+В [документальном срезе](github-field-access-research-20261114.md) сопоставлены
+PR, Issue, review, threads, CI и blockers с примерами read operations. Выявлены
+PR в REST Issues feed с отдельным issue ID и независимые check/status sources;
+0039 и 0028 дополнены соответствующими границами. Полный permission set,
+отображение source fields и интеграция не доказаны.

@@ -31,6 +31,7 @@ specification:
     lifecycle: Show source open or closed state and separately show the reason if supplied. A closed state with unknown or non-completion reason does not establish successful completion. Source Issue type and labels are distinct characteristics; GitView Project is not GitHub Projects state.
     participants: Author and assignees are source roles. An assignee is not proof that work has begun, and author or assignee does not automatically identify the GitView User, a coding agent or the actor behind a change.
     links: Preserve source distinctions among an explicit closing PR reference, mention, direct parent or sub-issue and blocking links when known. A mention alone is not a closing link; a closing link is not proof of merge, issue completion or an actor's motive. Unknown relationships and partial lists are not asserted empty.
+    source_issue_representation: GitHub REST issue collections may include a pull request represented as an issue. When that source identifies an entry as a PR, do not count or present the same source PR as an independent Issue merely because it appeared in an issue collection. The issue-representation ID is not assumed to equal the pull-request ID; establish correspondence with source-supported identity evidence and preserve uncertainty if it cannot be established. A genuinely separate Issue linked to a PR remains a separate object.
     milestone: Show the source milestone reference when available without introducing a separate GitView domain identity or inferring completion.
     discussion: Show comment and participant counts as distinct units when observed. Issue comments are not PR review threads; no unresolved-review-thread count is fabricated for an Issue. A known zero is distinct from missing or incomplete count data.
     direct_children: Show total direct sub-issues and closed direct sub-issues as separate counts when available. These are not transitive descendants and their ratio is not a percentage of completed work; closed children can have different source reasons.
@@ -39,6 +40,10 @@ specification:
     description: Structured sections follow 0034. Authored motivation remains a statement, not proof of an actor's motive or observed result.
     provenance: The selected fields and role distinctions follow the owner's accepted Issue field set; the detailed unknown and evidence handling are agent-authored refinements.
   scenarios:
+    pull_request_in_issue_feed:
+      given: A source Issue collection returns an entry explicitly identified as a pull request, with an issue-representation ID distinct from the ID in a PR response.
+      when: GitView normalizes the source observations for PR and Issue summaries.
+      then: It does not count the PR as a separate ordinary Issue or assume the two IDs are directly interchangeable; correspondence requires sufficient source identity evidence.
     reason_unknown:
       given: An Issue is known closed and the closure reason is unavailable.
       when: Its overview is shown.
