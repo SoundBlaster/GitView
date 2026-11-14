@@ -38,6 +38,8 @@ Project, а тот же Repository и его membership в других Projects
 
 Подробные хеши и ограниченный результат — в [verification.json](verification.json).
 Актуальная project selection остаётся на draft.5; обе версии сосуществуют.
+Отдельный [pilot привязки](../../pilots/membership-removal-binding/README.md)
+сравнивает ссылки на новый action в draft.5 и draft.6 без изменения исходной spec.
 
 ## Воспроизведение SDK-проверки
 

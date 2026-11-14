@@ -3,6 +3,9 @@
 Изолированный [ontology candidate draft.6](../../ontology/candidates/domain-v0.2.0-draft.6/README.md)
 описывает действие удаления membership и проверен на test consumer. Он не
 выбран текущим контекстом; приложение, storage и реальное действие не проверены.
+В [pilot привязки](../../ontology/pilots/membership-removal-binding/README.md)
+те же имена отсутствуют в draft.5 и разрешаются в draft.6; это проверка
+терминов, а не доказательство конкретного действия или прекращения membership.
 
 Оценка на 14 ноября, после уточнения узлов 0022–0053. Это самооценка автора,
 не независимый review, не semantic approval и не готовность к реализации.

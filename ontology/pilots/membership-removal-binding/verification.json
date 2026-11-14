@@ -1,0 +1,58 @@
+{
+  "artifact_kind": "gitview_membership_removal_binding_pilot",
+  "date": "2026-11-14",
+  "source_spec": "docs/drafts/GITVIEW-SPEC-0005.yaml",
+  "source_sha256": "48d9e4cb8cc8431813f9fef3e197dc18b66bf48666e63c382e059bce4a1aeb86",
+  "overlay": "GITVIEW-SPEC-0005.overlay.yaml",
+  "overlay_sha256": "80fa049699732c2cf0829da0f8c1f13e48e8d3877f50eacbdf929f4aab02f968",
+  "added_references": [
+    "gitview:RemoveRepository",
+    "gitview:removesRepositoryFrom",
+    "gitview:projectIncludesRepository"
+  ],
+  "runtime_revision": "3593bd75",
+  "compiler_sha256": "30dd324aa1f641e7274a49fd6f158cced5ed95d810b6b275353d3d10f19a27cb",
+  "cases": [
+    {
+      "context": "draft.5",
+      "context_revision": "sha256:34c22c8224bcd060c427dae3820c62c3c37cd3da6c298593597ac54bba701598",
+      "outcome": "checked",
+      "binding_index": {
+        "spec_count": 1,
+        "accepted_binding_count": 5,
+        "relation_candidate_count": 0,
+        "gap_count": 2,
+        "next_gap": "review_legacy_spec_ontology_bindings"
+      },
+      "validation_report": {
+        "spec_count": 1,
+        "finding_count": 2,
+        "warning_count": 2,
+        "passed_check_count": 0,
+        "next_gap": "review_spec_ontology_validation_findings"
+      }
+    },
+    {
+      "context": "draft.6",
+      "context_revision": "sha256:e8adc00713102d5003e7b9e28769737c663e96fc18ff12ef68b875f2ca74bce8",
+      "outcome": "checked",
+      "binding_index": {
+        "spec_count": 1,
+        "accepted_binding_count": 7,
+        "relation_candidate_count": 0,
+        "gap_count": 0,
+        "next_gap": "review_legacy_spec_ontology_bindings"
+      },
+      "validation_report": {
+        "spec_count": 1,
+        "finding_count": 0,
+        "warning_count": 0,
+        "passed_check_count": 0,
+        "next_gap": "review_spec_ontology_validation_findings"
+      }
+    }
+  ],
+  "semantic_approval": "not_established",
+  "canonical_mutations_allowed": false,
+  "limitation": "domain_vocabulary resolves names only; overlay is not selected or canonical and does not bind instances, prove actor action, state transition or persistence"
+}
