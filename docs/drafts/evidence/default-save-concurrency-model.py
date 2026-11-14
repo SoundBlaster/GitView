@@ -43,7 +43,7 @@ record = {
     'naive_example_schedule': naive_witnesses[0],
     'guarded_duplicate_count': 0,
     'guarded_model_assumption': 'uniqueness is checked atomically at commit',
-    'limitations': 'A simplified author-built interleaving model, not a test or proof of any real database, lock, process termination, access policy or GitHub integration.',
+    'limitations': 'A simplified author-built interleaving model, not a model of the batch record or cancellation and not a test or proof of any real database, lock, process termination, access policy or GitHub integration.',
     'application_scenarios_executed': False,
 }
 out = drafts / 'evidence/autonomous-goal-default-save-concurrency-20261114.json'

@@ -19,6 +19,7 @@ acceptance:
 - Each confirmed repository is associated with a saved or existing default Project containing that same Repository, or is individually reported as unresolved or failed.
 - A partial save followed by retry does not duplicate already saved default associations or roll back unrelated saved Projects.
 - Cancelling an unconfirmed selection preserves saved Projects; cancellation after partial saving does not imply that already completed saves were undone.
+- A confirmed multi-selection retains enough durable context to identify its entries and recover their outcomes after process termination, subject to local storage availability and access policy.
 specification:
   objective: Make the results of a multi-repository setup confirmation recoverable and attributable to the correct source identities.
   ontology_refs:
@@ -30,9 +31,13 @@ specification:
     pending: A pending selection is separate from saved Project membership. An empty selection cannot be confirmed as a saved empty Project. Cancel before confirmation discards pending choices only.
     identity: Evaluate each selected entry by confirmed source Repository identity under 0002 and 0038. A duplicate reference to the same confirmed Repository in one selection is one entry; equal names or incomplete IDs do not prove two entries are identical.
     confirmation: On explicit confirmation, for each eligible selected Repository reuse its existing default association under 0025 if the associated Project still contains that Repository; otherwise establish a separate single-repository default Project. The operation does not silently add the selected Repository to an arbitrary custom Project or combine selected Repositories into a multi-member Project.
+    durable_intent: Before submitting any entry of a newly confirmed selection for a Project mutation, durably record the confirmed operation and its selected entries, retaining enough stable source identity or explicitly unresolved identity to distinguish entries, relate outcomes to the selection and recover their processing state. This does not prescribe a schema or store credentials or source text as part of the contract. If that durable record cannot be confirmed, do not begin this selection's Project mutations or claim confirmation succeeded; any earlier unrelated operation remains independently recoverable.
     outcomes: Each selected Repository has an observable result of saved, reused, pending, failed or unresolved identity/access. A multi-selection is complete only when all selected entries have a saved or reused result. The exact UI may summarize these outcomes but must permit the operator to identify entries needing attention.
     interrupted: If a failure or interruption occurs after some entries have saved, keep those completed saves and record or present unresolved entries as not yet confirmed. Retry works from the current saved associations and is idempotent for already completed entries. Do not claim an all-or-nothing rollback when saves have actually occurred.
     cancel_after_start: If the operator cancels after saves have started, no further unsaved entry is intentionally submitted. A save already confirmed remains saved; an in-flight outcome whose completion is not yet known must be resolved or reported unknown before retry can safely claim no Project exists. Exact in-flight cancellation mechanics are implementation decisions.
+    restart: After process termination, recover the confirmed selection and its per-entry known or uncertain outcomes when its durable record is readable. Reconcile each submitted or indeterminate entry against durable Project configuration under 0052; never infer a failed save merely from a missing acknowledgement. Do not automatically submit entries that were not yet submitted or resume a cancelled batch solely because the app restarted. The operator may explicitly retry eligible entries after recovery.
+    cancelled_durably: Record cancellation so a later session cannot treat a cancelled batch as permission to submit further entries. Once cancellation is confirmed durable, no new entry from that batch may be submitted; an entry whose submission had already begun may still complete and must be reconciled. Cancellation is not a claim that such work rolled back. If cancellation's durable outcome is unknown, disclose uncertainty and avoid automatic submission until reconciled. Coordination between concurrent submission and cancellation must establish which began first without prescribing a particular locking mechanism.
+    recovery_access: A readable operation record does not itself authorize display of source-derived private identifiers or restore GitHub access. Apply 0036 to its presentation; if local configuration or the operation record cannot be read, show a local recovery problem and do not claim an exhaustive list of batch outcomes.
     access_change: If identity or relevant access cannot be confirmed for a selected entry at processing time, do not create a Project under a fabricated or substituted Repository identity. Keep the entry unresolved or failed with a retry or recovery route; already completed entries remain intact. A temporary network failure alone is not an explicit access denial.
     privacy: Any saved Project or source data remains subject to the private-cache and explicit denial rules in 0036. Setup failures do not delete source GitHub objects.
     provenance: The owner chose default one Project per Repository; explicit confirmation, per-entry outcomes and interrupted-save recovery are agent-authored proposals.
@@ -53,6 +58,18 @@ specification:
       given: R was selectable but its access is explicitly denied before its entry is processed.
       when: The confirmation continues.
       then: The entry is not reported as a successful new Project under an assumed identity; other already saved entries remain intact and denial is distinguishable from offline.
+    stopped_before_second_entry:
+      given: A two-entry selection is durably confirmed; R1 was saved and R2 was not submitted before the process stopped.
+      when: The app restarts and reads the operation and Project configuration.
+      then: R1's saved Project is recoverable, R2 is shown as not completed, and R2 is not automatically submitted solely due to restart.
+    record_unavailable_before_start:
+      given: A newly confirmed selection cannot be durably recorded before any of its entries is submitted.
+      when: The app attempts to start that selection.
+      then: No Project mutation from that selection is submitted and the local persistence problem is identifiable; other existing Projects are unaffected.
+    cancelled_before_restart:
+      given: A selection has one confirmed saved entry and another not yet submitted, and cancellation was durably recorded.
+      when: The app restarts.
+      then: The saved Project remains and the unsubmitted entry is not automatically submitted; any in-flight entry is reconciled separately.
   unresolved:
-  - Exact persistence transaction and operation identity needed to reconcile an in-flight unknown outcome after process termination.
+  - Exact storage mechanism, concurrency and operation identity needed to enforce durable intent and reconcile an in-flight unknown outcome after process termination.
   - Source-specific evidence sufficient to establish accessible Repository identity and the detailed recovery interaction.

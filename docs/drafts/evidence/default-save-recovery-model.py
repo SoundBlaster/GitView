@@ -41,7 +41,7 @@ record = {
     'input_axes': ['configuration_readable', 'project_visible', 'matching_association_visible', 'membership_confirmed', 'operation_pending'],
     'combinations': 32,
     'decisions': counts,
-    'limitations': 'Author-built decision table only; it assumes reliable inputs and does not prove atomic writes, process termination, concurrent late commits, source access or persistence behavior.',
+    'limitations': 'Author-built decision table only; it assumes reliable inputs and does not model the batch operation record, cancellation, atomic writes, process termination, concurrent late commits, source access or persistence behavior.',
     'application_scenarios_executed': False,
 }
 out = drafts / 'evidence/autonomous-goal-default-save-model-20261114.json'

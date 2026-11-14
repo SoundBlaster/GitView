@@ -198,6 +198,11 @@ pending-состояния. Она не проверяет атомарност�
 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-startup-recovery-20261114.json)
 без findings и gaps. Восстановление хранилища и lifecycle iOS не проверялись.
 
+Следующее уточнение предлагает durable batch context до Project mutations и
+сохранение cancellation; новые 0022, 0045 и 0052 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-batch-recovery-20261114.json)
+без findings и gaps. Две авторские модели 0052 повторены с новой SHA-256;
+они не моделируют batch record или cancellation и не доказывают persistence.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.
