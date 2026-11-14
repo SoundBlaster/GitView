@@ -1,0 +1,23 @@
+{
+  "artifact_kind": "gitview_default_save_recovery_finite_model",
+  "spec": "GITVIEW-SPEC-0052",
+  "spec_sha256": "589ccbc85288a3ec314bec2f38110a18885c2cc3609f30862fd3cf09acd401be",
+  "input_axes": [
+    "configuration_readable",
+    "project_visible",
+    "matching_association_visible",
+    "membership_confirmed",
+    "operation_pending"
+  ],
+  "combinations": 32,
+  "decisions": {
+    "unknown_hold": 16,
+    "explicit_retry_may_create": 1,
+    "pending_hold": 1,
+    "inconsistent_hold": 10,
+    "membership_unverified_hold": 2,
+    "reuse_saved": 2
+  },
+  "limitations": "Author-built decision table only; it assumes reliable inputs and does not prove atomic writes, process termination, concurrent late commits, source access or persistence behavior.",
+  "application_scenarios_executed": false
+}

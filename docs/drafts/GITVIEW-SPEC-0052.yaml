@@ -1,0 +1,57 @@
+id: GITVIEW-SPEC-0052
+title: GitView - Recover an interrupted default Project save
+kind: spec
+created_at: '2026-11-14T14:32:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0045
+depends_on:
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0045.yaml
+  readiness_audit: docs/drafts/leaf-readiness-0025.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A completed default Project save is recoverable as a Project and its matching default association together.
+- A retry after an interrupted save reuses a confirmed saved association and does not create a duplicate default Project for the same Repository.
+- An unavailable or inconsistent local record is reported as unresolved rather than assumed absent or overwritten.
+- Recovery of one Repository's setup outcome does not delete or alter unrelated Projects, source objects or other Repository memberships.
+specification:
+  objective: Define observable recovery after a Project save is interrupted before its outcome can be reported.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  contract:
+    scope: The operation concerns one confirmed source Repository and its locally saved default Project association. Multi-selection can contain multiple such operations and retains per-entry outcomes under 0045.
+    atomic_visibility: For one newly created default Project, observers of durable local configuration must see either the previous state or a saved Project with its matching default association and Repository membership. The implementation may use any storage mechanism satisfying this observable invariant; this does not impose all-or-nothing behavior across the whole multi-selection.
+    recover_saved: After interruption or restart, if durable local configuration confirms an association to a valid saved Project containing that same Repository, report or reuse that Project. Do not create another default Project merely because the earlier completion acknowledgement was lost.
+    recover_absent: If durable local configuration is successfully read and establishes that no matching default association or pending indeterminate save exists, a later explicit retry may create the Project. An old custom Project with the same name or Repository is not silently relabeled as the default.
+    recover_unknown: If configuration is unavailable, inconsistent, or cannot establish whether the previous save completed, the result remains unknown and the operator can see a recovery or retry path. Do not claim the Project was not created and do not create another default under an unverified identity merely to clear the error. Recovery must not infer identity solely from a display name.
+    cancellation: A confirmed saved Project remains saved after cancellation or process interruption; a pending operation is not reported as rolled back until the durable configuration establishes its result. Other selected entries may independently succeed or remain unresolved.
+    access: Recovery of local configuration does not itself prove current source access. Visibility and subsequent refresh of private observations follow 0036; insufficient source identity follows 0038.
+    provenance: The owner chose default one Project per Repository and autonomous specification. Atomic visibility and conservative unknown-outcome recovery are agent-authored proposals.
+  scenarios:
+    acknowledgement_lost:
+      given: A default Project and association for R were durably saved but the process stopped before reporting success.
+      when: The application restarts and the operator retries R.
+      then: The saved association is found and the same Project is reused without a duplicate.
+    save_not_committed:
+      given: The process stopped before a default Project or association for R was durably saved.
+      when: Local configuration is successfully read and no pending indeterminate save remains, then the operator retries.
+      then: A new valid default Project may be created for R without modifying other Projects.
+    storage_unavailable:
+      given: The previous save outcome for R is unknown and durable local configuration cannot be read.
+      when: Recovery is attempted.
+      then: R remains unresolved and no claim of absence or successful duplicate-free creation is made.
+    inconsistent_configuration:
+      given: Local configuration references a default Project for R but that Project cannot be confirmed to contain R.
+      when: Recovery checks the association.
+      then: The inconsistency is surfaced for recovery and the app does not silently treat the reference as a valid default or create a second one.
+  unresolved:
+  - Local persistence mechanism and proof that a prior indeterminate operation cannot later commit after absence has been concluded.
+  - Recovery interaction and policy for resolving inconsistent configuration without accidental deletion.
+  - Cross-process or multi-scene concurrency and source access changes while recovery is underway.
