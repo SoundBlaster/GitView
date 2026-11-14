@@ -153,3 +153,8 @@ manual policies. Число declarations не является мерой смы
 Аудит смысловой полноты не завершён: остаются определения PR/Issue и CIStatus,
 значение Metric и его единиц, основания action-derived отношений и provenance
 источника. Обновление аудита не изменяет пакет или его статус.
+
+При уточнении Project lifecycle выявлен также [candidate gap удаления Repository](remove-repository-action-candidate.md):
+действие добавления в draft.5 есть, а соответствующее удаление из одного Project
+в specs описано отдельно. Формальное действие и семантика снятия membership пока
+не приняты и package не менялся.

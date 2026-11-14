@@ -286,3 +286,11 @@ Issue, сохраняя запрет выводить restricted private details
 Позднее уточнены локальные правила границ heading и поддерживаемых fence
 markers; это специально ограниченный профиль, не заявление о полном Markdown
 или проверенная реализация parser.
+
+## Проход 30: ontology gap действия удаления
+
+Сопоставление lifecycle Project с выбранной онтологией выявило: `AddRepository`
+объявлен как action, а удаление члена Project требуется 0005/0025, но отдельного
+действия для него в draft.5 нет. Подготовлен [непринятый candidate](../../ontology/review/remove-repository-action-candidate.md)
+с вопросом о необходимости action и семантике снятия membership. Package и
+context не менялись; absence relation не утверждается как action event.
