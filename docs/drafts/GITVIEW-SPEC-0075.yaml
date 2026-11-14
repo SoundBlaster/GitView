@@ -72,5 +72,5 @@ specification:
       then: Restricted content is removed according to access policy without waiting for the animation or gesture to finish, and the remaining permitted overview remains recoverable.
   unresolved:
   - Native gesture competition, preview dismissal, anchor geometry, cancellation handling and platform accessibility actions require device evaluation.
-  - Exact density levels, default density, timings and animation are not selected by this contract; targeted zoom across scopes and its first-version applicability are open under 0074.
+  - Exact density levels, default density, timings and animation are not selected by this contract; candidate 0120 proposes targeted first-version zoom across scopes but requires UX and native validation.
   - Future sliding preview, hover and edge autoscroll remain separate design work.

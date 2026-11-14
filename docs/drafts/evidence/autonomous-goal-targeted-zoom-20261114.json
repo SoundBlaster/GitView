@@ -1,0 +1,57 @@
+{
+  "scope": "Declared graph and SpecGraph domain_vocabulary; not native UX, semantics or product tests",
+  "context": "ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-targeted-zoom-nnr5pwz1",
+  "graph_report": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/targeted-zoom-readiness-20261114.json",
+  "graph_sha256": "7b44e332d161d4b60fa79b467608cbb0515effad9708ca2a27329e3460676626",
+  "node_count": 120,
+  "structural_leaves": 54,
+  "unrooted": [],
+  "acyclic_relations": [
+    "refines",
+    "depends_on",
+    "refines + depends_on"
+  ],
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0043",
+      "input_sha256": "0f4b78fcb8a17c5443484b743ec0d9fccba09899a2fbb33f9d174fc4e01447e6",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "5c455360664d7a308949e819c0693f16352ebab71c41421b4cde2e33a2127b4e"
+    },
+    {
+      "id": "GITVIEW-SPEC-0074",
+      "input_sha256": "b7d2571d6a4967f485b3bd521127ae357e787c87cff65bf36dd45e3520a9a46b",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "f52418290f9a251898b8459c71d8fbd7e89b7e809b1a0b85fabfd7b63b6f3b84"
+    },
+    {
+      "id": "GITVIEW-SPEC-0075",
+      "input_sha256": "e793f420a6a6d9d6127cd85ea7839efde99224cbee8976df97524be02b57f66a",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "56770b0ebe4ce157f4c9ef56bffe6d0c8ad7d5015bb6a1c876f48e7c45115dc4"
+    },
+    {
+      "id": "GITVIEW-SPEC-0120",
+      "input_sha256": "12e3c55500cd3706964beab274bdfe79faddd476553cad516dc151012a37a155",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "dc0983e05481f3be0d0b8a7125837cf878b36b258904a5132c00861721e66e75"
+    }
+  ]
+}

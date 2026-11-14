@@ -90,5 +90,5 @@ specification:
   unresolved:
   - Default density and available controls at each scope require UX and native-device evaluation.
   - Presentation of member overview, cross-repository selection and navigation transitions require detailed design.
-  - Decide whether and how a deliberately targeted zoom gesture crosses scope boundaries in the first version, including target selection, reversal and accessible alternatives; this is distinct from the separately deferred sliding preview.
+  - Candidate 0120 proposes targeted first-version zoom across scope boundaries, including target selection, reversal and accessible alternatives; validate its usability and native feasibility before implementation readiness. It is distinct from the separately deferred sliding preview.
   - No implementation, source integration or native navigation test has been performed.

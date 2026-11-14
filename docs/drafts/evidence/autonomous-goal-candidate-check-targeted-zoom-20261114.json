@@ -1,0 +1,86 @@
+[
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0043.yaml",
+      "spec_id": "GITVIEW-SPEC-0043",
+      "sha256": "0f4b78fcb8a17c5443484b743ec0d9fccba09899a2fbb33f9d174fc4e01447e6"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  },
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0074.yaml",
+      "spec_id": "GITVIEW-SPEC-0074",
+      "sha256": "b7d2571d6a4967f485b3bd521127ae357e787c87cff65bf36dd45e3520a9a46b"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  },
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0075.yaml",
+      "spec_id": "GITVIEW-SPEC-0075",
+      "sha256": "e793f420a6a6d9d6127cd85ea7839efde99224cbee8976df97524be02b57f66a"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  },
+  {
+    "artifact_kind": "product_workspace_candidate_check",
+    "schema_version": 1,
+    "status": "checked",
+    "canonical": false,
+    "source": {
+      "path": "docs/drafts/GITVIEW-SPEC-0120.yaml",
+      "spec_id": "GITVIEW-SPEC-0120",
+      "sha256": "12e3c55500cd3706964beab274bdfe79faddd476553cad516dc151012a37a155"
+    },
+    "authored_status": {
+      "status": "idea",
+      "draft_status": "pre_canonical"
+    },
+    "checked": [
+      "yaml_mapping",
+      "spec_kind",
+      "file_id_match"
+    ],
+    "next_action": "review_candidate"
+  }
+]

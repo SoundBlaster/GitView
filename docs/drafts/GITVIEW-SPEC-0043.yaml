@@ -74,6 +74,7 @@ depends_on:
 - GITVIEW-SPEC-0117
 - GITVIEW-SPEC-0118
 - GITVIEW-SPEC-0119
+- GITVIEW-SPEC-0120
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -219,6 +220,10 @@ specification:
       given: Project P contains A and B, the open-PR category is sufficiently observed for both, and B's applicable CI data is unavailable.
       when: The operator inspects P's open-PR and failed-CI signals.
       then: The open-PR value can retain its own supported completeness while failed-CI coverage is incomplete or unavailable; one successful category does not turn the other into zero or healthy.
+    targeted_zoom_single_member_return:
+      given: The proposed targeted zoom interaction identifies Project P containing one confirmed Repository R, and P's origin is the Projects overview.
+      when: The transition is committed and the operator later returns by an available zoom-return or Back action.
+      then: P's work opens without a redundant Repository screen, the same P and R remain attributable, and return follows the actual origin rather than a fabricated intermediate step.
     discovery_search_and_custom_intent:
       given: Existing Projects are visible and the operator starts custom Project creation, selects Repository A, then searches a partially observed discovery scope for B.
       when: The current search has no observed matches and a late response for an earlier query arrives.
