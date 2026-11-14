@@ -28,8 +28,8 @@ acceptance:
   current source state.
 - All lifecycle states in the current scope and time group are included by default; the user can explicitly
   exclude states.
-- Each PR or Issue occurs once in a selection, retains its repository identity and is not conflated with
-  a linked object.
+- Each source-confirmed PR or Issue occurs once in a selection, retains its repository identity and is not
+  conflated with a linked object; unresolved identity is not represented as confirmed uniqueness.
 - Filters, scope and selected time group remain identifiable and survive density changes and return navigation.
 - Incomplete, stale or unknown observations do not become a confirmed empty result or a successful current
   state.
@@ -72,9 +72,11 @@ specification:
       the unfiltered selection still contains the 100 PRs, subject to the same scope and observation coverage.
 
       '
-    identity: 'An object appears at most once within one selection even if several inclusion conditions
-      match. Repository identity is stable across source-confirmed rename or transfer as in GITVIEW-SPEC-0002.
-      Membership in multiple Projects does not merge their contexts.
+    identity: 'A source-confirmed object appears at most once within one selection even if several inclusion
+      conditions match. If available information cannot establish whether two observations identify the same
+      source object, retain the uncertainty without asserting that they are distinct or silently merging them
+      by display name. Repository identity is stable across source-confirmed rename or transfer as in
+      GITVIEW-SPEC-0002. Membership in multiple Projects does not merge their contexts.
 
       '
     reopened: 'A currently open object is included as unfinished even if it previously closed. Show its
