@@ -34,6 +34,7 @@ specification:
   contract:
     scope: A history-clear action concerns an explicitly described local metric-history scope. Before submission, make the affected data and any material consequences understandable; do not silently equate it with deleting a Project, disconnecting GitHub, clearing credentials or deleting GitHub source objects. Cancelling before submission leaves the previous history intact.
     initial_clear: As an agent-authored first-version proposal, offer a user-initiated action to clear all metric history retained by this GitView installation, including historical samples, retained outcome evidence and derived historical aggregates in that scope. Before explicit confirmation, disclose that it affects history used by all Projects, including shared Repositories, and that historical graphs may have gaps until supported evidence is acquired again. Do not disclose restricted Project or Repository identities in the explanation. This action is distinct from clearing current observation cache, local Project configuration, credentials, GitHub data or external backups. Project-only or Repository-only history clearing is not promised by this initial option; such a narrower option requires its own supported isolation and disclosure rules.
+    reacquisition_disclosure: Before confirmation, explain that this clears the specified local history rather than deleting GitHub events or permanently hiding them. A permitted new refresh or separately requested history retrieval may later obtain and retain an event whose source event time precedes the clear; ordinary retention and access rules still apply. A new state observation does not recreate an earlier state sample simply by reusing old cached data. Do not promise that past history will be restored, that automatic retrieval will occur, or that a reappearing event is the same local record. The disclosure must remain understandable and accessible without revealing restricted source identities or counts.
     current_vs_history: If current observations and history share underlying facts, the confirmed clear must enforce the described history boundary without silently deleting current cache or Project configuration. An old retained current fact is not automatically reintroduced as a new historical sample merely because the current view is opened after clear; a new qualifying observation or separately attributed supported history retrieval follows 0066. This is an observable requirement, not a mandate to duplicate physical data.
     shared_evidence: A Repository can belong to multiple Projects and historical inputs can be shared. The action must not promise Project-only removal while silently damaging history required by another Project. If the selected scope cannot be isolated from shared evidence, disclose the affected scope before submission or do not claim a narrower clear. No particular storage representation or duplication is mandated.
     durable_clear: Report a clear as confirmed only when the affected local scope and the protection against reintroducing pre-clear history are durably established. An implementation may use any mechanism that provides this observable behavior. The clear changes local retention, not what existed at GitHub in the past.
@@ -62,13 +63,17 @@ specification:
       when: The operator returns to its chart or a delayed app-owned point announcement is ready.
       then: The cleared historical value and dependent selection are not restored or announced as retained history; a safe cleared or unavailable state is reachable, while current cache and Projects retain their separate rules.
     stale_response_after_clear:
-      given: A metric refresh for R began before an explicit local history clear for R was durably confirmed.
+      given: A metric refresh for R began before an explicit all-local-history clear was durably confirmed.
       when: Its response and attempted retention arrive after the clear.
       then: The prior work does not silently recreate the cleared history, including after restart; its source response does not become a newly initiated observation.
     fresh_observation_after_clear:
-      given: R's local history clear is confirmed and current source access permits refresh.
+      given: An all-local-history clear is confirmed and current source access to R permits refresh.
       when: A new refresh is initiated afterward and yields a confirmed observation that is durably retained.
       then: The new sample can appear with its actual observation context, without claiming that earlier cleared points were restored or were zero.
+    rediscovered_event_disclosed:
+      given: Before confirming the all-local-history clear, the operator is told that later permitted refreshes may reacquire old GitHub events; the clear is then durably confirmed.
+      when: A newly initiated eligible refresh independently retrieves an event from before the clear and its evidence is durably retained.
+      then: The event may appear at its supported source event time with its new retrieval context; it is not described as a surviving cleared record, a source deletion failure or proof of complete historical coverage.
     shared_project_scope:
       given: Repository R belongs to Projects P and Q and both use some shared retained metric evidence; a future separately specified Project-only clear is under consideration.
       when: That narrower option is evaluated before being offered to the operator.
