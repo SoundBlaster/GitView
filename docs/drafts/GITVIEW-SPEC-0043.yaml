@@ -28,6 +28,7 @@ depends_on:
 - GITVIEW-SPEC-0052
 - GITVIEW-SPEC-0053
 - GITVIEW-SPEC-0054
+- GITVIEW-SPEC-0055
 - GITVIEW-SPEC-0056
 - GITVIEW-SPEC-0058
 - GITVIEW-SPEC-0059
@@ -83,6 +84,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    today_breakdown_changes_without_cohort:
+      given: A fully covered Project-wide Today selection and a separately captured fixed cohort each contain the same 100 PRs, of which 95 are observed merged and five open in a compatible context.
+      when: A new eligible distinct open PR is observed and the dynamic Today selection is completely reevaluated.
+      then: The current Today breakdown can show 101 PRs with 95 merged and six open, while the captured cohort still has its original 100 identities; neither count alone proves a historical trend or the number of merge events today.
     today_partial_refresh_and_membership_change:
       given: Project P previously held 100 permitted open PR observations across members A and B, and a Project-wide Today refresh begins.
       when: The saved membership changes to A and unobserved C, then the older A-B refresh returns an open-only subset and B's later request fails.

@@ -1,7 +1,7 @@
 {
   "artifact_kind": "gitview_calendar_history_author_model",
   "spec": "GITVIEW-SPEC-0069.yaml",
-  "spec_sha256": "7461f7f93b2fcd2bb16d1f6c1541d21d15b0a993e21b571223d30d47a19cc386",
+  "spec_sha256": "c98eb0e24e2ca45afb12fa18a30d2dc3177ff5477c697bc89c7f5acf83956e88",
   "examples": [
     "new_york_spring_23h",
     "new_york_autumn_25h",
