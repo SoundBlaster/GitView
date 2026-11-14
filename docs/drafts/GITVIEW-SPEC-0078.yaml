@@ -19,6 +19,7 @@ sources:
   source_research: docs/drafts/github-field-access-research-20261114.md
   github_closing_links: https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue
   github_issue_schema: https://docs.github.com/en/graphql/reference/issues
+  github_dependency_docs: https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies
   ontology_boundary: ontology/review/issue-pr-meaning-candidate.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
@@ -36,6 +37,7 @@ specification:
   - gitview:Project
   contract:
     relationship_kinds: Treat a source-reported PR mention, explicit closing connection, parent, direct child, blocked-by and blocking connection as distinct directional source facts when the source establishes each meaning. An object pair may have more than one independently supported relation; do not collapse them into one generic cause or invent a reciprocal relationship merely from its inverse without the applicable source semantics. Source links do not establish an Ontology actor-action relation or a particular actor's motive.
+    dependency_events: GitHub documents separate timeline events for adding and removing blocked-by and blocking relationships. An event may identify the actor who changed the relationship, its direction, target and time when those fields are available and permitted; its actor and target are nullable. This is evidence about that relationship change, not automatically evidence of the actor changing code, the actor's motive, an Issue causing a PR, or the relationship's current existence. Reconstructing a current relationship from events requires independently sufficient history, ordering, identity, scope and access evidence. A missing event or nullable actor does not establish that no action or actor existed. GitView need not retrieve or display these events in the first version.
     current_parent: The GitHub Issue parent field represents at most one current direct parent in its source context; a sub-issue collection describes direct children of its selected parent. A relationship observed at an earlier time does not establish that the same parent is current after a possible reassignment. When two incompatible parent observations cannot be ordered or otherwise reconciled under 0053, preserve the conflict rather than assert two simultaneous current parents or choose by response arrival. Source parent cardinality does not turn a failed, omitted, restricted or error-bearing parent response into confirmed absence.
     hierarchy_evidence: When source semantics and compatible identity, scope, access and timing evidence establish that B is a direct child of A, that relationship has the inverse interpretation that A is B's direct parent. A separately fetched child list and parent field can nevertheless be partial, inaccessible, stale or conflicting; no independent successful fetch, matching count or currently complete inverse collection follows merely from the relationship. Do not infer a transitive direct-child relationship from a longer chain.
     identity_and_scope: Resolve each endpoint by its confirmed source identity and Repository context. A repository-local number or a matching title is not global identity, and uncertain correspondence cannot be silently deduplicated. A linked object in a Repository outside the current Project does not change membership or automatically broaden the active work selection.
@@ -52,6 +54,14 @@ specification:
     navigation: A permitted linked object or source URL can be opened through an explicitly identifiable route where available, following 0024 and 0033. Preserve its source identity and distinguish the originating Project from any external Repository; if the target or URL is unavailable, do not fabricate one, silently open another object, or infer removal from a 404 alone. Return preserves the valid original Issue context or reports an origin change under 0024.
     provenance: The owner selected related PRs, hierarchy and blocking directions. The detailed coverage, identity and access rules are agent-authored refinements; the exact source permissions, relationship mapping and UI remain to be verified.
   scenarios:
+    dependency_event_then_removal:
+      given: A permitted source timeline reports that actor A added a blocked-by connection at T1 and removed the same connection at T2, with compatible identity and ordering, while no later current-relationship observation is available.
+      when: GitView evaluates historical evidence for the link and the current blocked-Issue signal.
+      then: The two events remain distinct evidence of relationship changes; the T1 addition alone does not establish a current link, an open blocker, code changes by A or A's motive. Current state requires sufficient later or complete historical evidence and otherwise remains uncertain.
+    dependency_event_missing_actor:
+      given: A source-confirmed dependency-change event is visible but its nullable actor or target field is unavailable.
+      when: Its supported meaning is considered.
+      then: GitView does not invent an actor or target, infer motive, or conclude that the corresponding actor or target never existed.
     parent_reassigned:
       given: Issue C was observed with parent A at T1 and is later source-confirmed with parent B at T2, with ordering and applicable identity established.
       when: The current parent is displayed.
