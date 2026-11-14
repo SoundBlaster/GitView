@@ -15,9 +15,9 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The app preserves scope, last successful observation time, coverage and latest refresh outcome separately.
-- A partial or failed refresh does not establish an empty or complete collection, delete unobserved records or advance the last complete observation time.
+- A partial or failed refresh alone does not establish an empty or complete collection, delete unobserved records or advance the last complete observation time; an independently supported complete observation remains attributable to its own scope and context.
 - A successful observation updates only the scope it actually covers, and source access policy applies when retained observations are displayed.
-- An older overlapping refresh must not silently overwrite a newer accepted observation for the same scope.
+- A source-confirmed older overlapping observation must not overwrite a source-confirmed newer value merely because its request completed later; unordered conflicting facts remain uncertain.
 specification:
   objective: Define the observable result of complete, partial, failed and overlapping source refreshes.
   ontology_refs:
@@ -28,9 +28,9 @@ specification:
     scope: An observation is interpreted with its source identity, requested repository or project scope, object category and time selection where applicable. A Project spanning repositories is not a single proof that all members were observed.
     complete: A complete success covers the requested scope and records its successful observation time and coverage. A complete empty collection is asserted only for that scope. This does not prove emptiness of another repository, category, time selection or inaccessible source.
     enumeration_evidence: Traversing every page reported by a source is evidence of completed traversal, but does not by itself establish an exhaustive or simultaneous collection if relevant items can move between pages during the traversal. A complete-scope claim requires source guarantees or a separately justified reconciliation rule sufficient for that specific claim. When such evidence is unavailable, preserve accepted facts with their context and report coverage as uncertain or incomplete; do not infer a missing record was deleted. No particular pagination algorithm or source guarantee is assumed.
-    partial: A partial response may update records it actually observes, but keeps the scope marked incomplete and retains last-known records not observed in that response. It records the time and coverage of the partial observation separately from the previous complete observation. Their presentation must not imply that all retained records were observed at the partial response time.
-    failure: A failed attempt that yields no accepted data leaves previously accepted values and their successful observation times intact, and records failure separately. Failure on first observation leaves that scope unobserved with an error, not empty.
-    ordering: A result that was requested before a later request for the same scope may finish afterwards. An older result must not replace newer accepted values for that same scope merely because it completed later. Cross-scope data and partial results require field-level or scope-level ordering without discarding unrelated successful observations; exact ordering token and source revision semantics remain open.
+    partial: A partial response may update records it actually observes, but its own scope coverage remains incomplete and last-known records not observed in that response remain attributed to their own evidence. A separately supported complete observation retains its own scope and reference; the partial response does not erase or acquire that separate coverage. It records the time and coverage of the partial observation separately from the previous complete observation. Their presentation must not imply that all retained records were observed at the partial response time.
+    failure: A failed attempt that yields no accepted data does not itself replace previously accepted values or advance their successful observation times, and records failure separately. An independent accepted observation may update the same scope while this attempt is in flight; attribute that result to its own evidence and do not restore an earlier snapshot merely because this attempt failed. Failure on first observation leaves that scope unobserved with an error unless another observation independently establishes data.
+    ordering: Requests for the same or overlapping scopes may start and finish in either order. Neither request start order nor completion order alone proves the freshness of their source facts. When applicable source evidence establishes that a comparable fact is older, it cannot replace a supported newer value merely because it arrived later. If incompatible facts cannot be ordered, preserve the resulting uncertainty under 0053 instead of declaring the earlier-started or later-finished response older. Cross-scope data and partial results need their own evidence; exact source revision semantics remain open.
     absence: Absence from a partial page, failed request or inaccessible source is not a deletion or lifecycle transition. Inferring closure or deletion from a fully observed result requires a separate explicit source-identity and scope rule; this specification does not infer it.
     private_access: Stored private content is eligible for display only under the current access policy in 0019. A temporary network failure alone is distinct from an explicit denial or local disconnect.
     display: Show the last relevant successful observation time and the latest applicable terminal request outcome for the relevant scope under 0044, while identifying any in-flight request and independently incomplete or uncertain coverage. A later successful attempt does not erase an earlier failed attempt's history, but the earlier failure is not represented as the current latest outcome after a sufficiently ordered later success. A successful request does not by itself resolve missing coverage, conflicting values or failure in another scope. When different values have different observation times or coverage, a summary does not imply one shared complete observation. The retention and presentation of earlier outcomes remain open.
@@ -44,6 +44,14 @@ specification:
       given: Refresh A starts before refresh B for the same scope, and B's newer observation is accepted first.
       when: A finishes later with older values.
       then: A does not replace B's accepted values for that scope and does not make them appear older or newer than observed.
+    earlier_request_observes_newer_fact:
+      given: Request A starts before B for the same PR field; B finishes first, and applicable source evidence establishes that A subsequently observed a newer value than B.
+      when: A's result arrives after B's result.
+      then: A's supported newer value may be accepted under 0053; the earlier request start does not make A's fact older, and unrelated fields keep their own evidence.
+    failure_does_not_undo_concurrent_success:
+      given: Request A for a PR scope is in flight while independent request B establishes a newer supported complete observation for that scope and its own timestamp.
+      when: A subsequently fails without accepted data.
+      then: A's failure is recorded as its own outcome and does not erase B's accepted data or complete observation; the latest terminal attempt and B's observation freshness remain independently interpretable.
     category_isolation:
       given: PR and Issue scopes have separate previous successful observations.
       when: The Issue refresh succeeds and PR refresh fails.
