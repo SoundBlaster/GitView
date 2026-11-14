@@ -174,3 +174,9 @@ manual policies. Число declarations не является мерой смы
 `motivcore:Motive` не выдаётся за доказанную причинность. Формальное
 сопоставление пользовательской идеи «Issue — мотив» с `issueMotiveLink`
 остаётся открытым; выбранный package не менялся.
+
+Сверены [границы Repository и Code](repository-boundary-candidate.md) и
+[кандидат удаления membership](remove-repository-action-candidate.md). Последний
+различает прекращение конкретного членства, удаление Project и удаление
+источника; формальная модель изменения отношения во времени остаётся открытой.
+Ни одно новое action или отношение в package не добавлено.

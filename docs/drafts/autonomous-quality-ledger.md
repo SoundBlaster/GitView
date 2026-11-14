@@ -485,3 +485,11 @@ false. Критерий приведён к существующей трёхз�
 «Issue — мотив» и `issueMotiveLink` к импортированному `Motive` пока не имеют
 принятого формального сопоставления. Исправлена слишком узкая подпись CIStatus
 в предметной карте; пакет и его draft status не менялись.
+
+## Repository и изменение Project membership
+
+В [кандидате границ Repository](../../ontology/review/repository-boundary-candidate.md)
+отделены Code, система контроля версий, source identity, адрес и GitHub
+management. [Кандидат удаления membership](../../ontology/review/remove-repository-action-candidate.md)
+дополнен конкретными до/после и отличием от удаления Project. Формальное
+снятие отношения во времени ещё не определено; package не менялся.

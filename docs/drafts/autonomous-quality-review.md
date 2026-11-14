@@ -280,6 +280,11 @@ checks и threads; определения в выбранном package не и�
 пользовательского примера с формальным `issueMotiveLink`. Пакет не изменялся;
 примеры не являются source API evidence или semantic approval.
 
+Сверены [границы Repository](../../ontology/review/repository-boundary-candidate.md)
+и [кандидат удаления membership](../../ontology/review/remove-repository-action-candidate.md).
+Новые предметные отношения в package не декларировались; формальная модель
+прекращения membership остаётся открытой, примеры не исполнены.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.
