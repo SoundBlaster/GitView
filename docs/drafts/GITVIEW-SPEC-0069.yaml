@@ -97,5 +97,5 @@ specification:
       then: The refreshed selection retains the original absolute boundaries and A interpretation; an explicitly requested reevaluation under B is a separate period context with independently assessed coverage.
   unresolved:
   - Confirm source-specific completeness, object and event identity, state-sample timestamps and retention for each series.
-  - Decide how other agreed summary metrics are selected and graphed beyond the initial presentation without silently removing them from product scope.
+  - Candidate 0097 proposes discoverable selection of other agreed summary metrics; resolve its exact native presentation and required source evidence without silently removing those metrics from product scope.
   - Native chart, period controls, accessible inspection, DST boundaries and device behavior require evaluation; these working defaults are not separately owner-selected.
