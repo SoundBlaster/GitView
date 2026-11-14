@@ -34,7 +34,7 @@ specification:
     source_404: A 404 alone does not prove deletion or access revocation and does not erase Repository identity, Project membership or previously saved observations. It leaves current source state uncertain; access to cached private content remains subject to the other applicable access evidence, not to a fabricated confirmed denial.
     ambiguous_status: Interpret source errors using the applicable operation, response evidence and connection context. An HTTP status alone is not a universal reason classifier; for example GitHub may return 403 for a rate limit as well as other failures. Do not report a confirmed repository-level denial, deletion or empty result without sufficient evidence. The particular source mapping remains to be specified.
     disconnect: A deliberate local disconnect stops new refresh for that identity, restricts private cached content and attempts local credential removal. Removal is confirmed only when established; an unsuccessful or uncertain result remains a recoverable local-security problem under 0058. Records remain until an explicit clear operation; source Repositories and unrelated local Project memberships are not removed.
-    reconnect: Successful reconnection identifies the source identity and re-establishes access to the affected repository before restricted private observations become eligible for display. A different identity or a connection with only partial repository access does not automatically unlock all prior private observations.
+    reconnect: Successful reconnection identifies the source identity but does not alone establish access to every Repository, category, object or field. Under 0112, applicable post-restriction evidence can restore the specific facts and scopes it supports; a successful Repository metadata read is not by itself permission to display earlier PRs, Issues, checks or derived historical metrics. A different identity or a connection with only partial access does not automatically unlock prior private observations, and a pre-restriction response arriving late cannot restore them merely by arriving after reconnection.
     discovery: Partial discovery records its incomplete scope and does not treat unreturned repositories as deleted or denied. Complete-discovery interpretation is subject to source and permission rules that remain to be specified.
     provenance: Offline behavior and visible update failure follow the owner's direction; private-cache restriction, local disconnect and restoration policy are agent-authored working decisions.
   scenarios:
@@ -50,6 +50,10 @@ specification:
       given: A local disconnect restricted previously observed private data for source identity A.
       when: A different source identity B connects.
       then: B's connection alone does not automatically unlock A's prior restricted private observations.
+    partial_reconnect_after_late_response:
+      given: Private PR and Issue observations were restricted after an explicit denial, an earlier background request remains unresolved, and the same account reconnects with a new successful Repository-name observation only.
+      when: The old request delivers a PR response after reconnection and the operator opens the Project.
+      then: The newly supported Repository name may be presented where permitted; the earlier PR response does not independently lift the restriction, and older PR, Issue and derived metric facts remain restricted or unknown until separately supported under 0112. The Project is not represented as empty merely because those facts cannot be shown.
     not_found:
       given: A saved Repository is referenced by an old source address.
       when: A source request returns 404.
