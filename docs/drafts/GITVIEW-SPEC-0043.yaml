@@ -35,6 +35,7 @@ depends_on:
 - GITVIEW-SPEC-0062
 - GITVIEW-SPEC-0063
 - GITVIEW-SPEC-0071
+- GITVIEW-SPEC-0072
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -60,6 +61,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    portfolio_return_after_refresh:
+      given: Projects P and Q are visible in stable order and the operator opens Q.
+      when: A background refresh changes P's signals and the operator returns.
+      then: P and Q retain their relative order and Q is restored as the position anchor if still available, with current access and observation limitations applied.
     local_retention_failure_restart:
       given: A Project has a previously saved PR observation and a later refresh obtains new PR facts while local retention fails.
       when: The operator sees the refresh outcome and restarts the application.

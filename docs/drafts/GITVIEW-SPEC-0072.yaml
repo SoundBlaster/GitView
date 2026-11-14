@@ -1,0 +1,71 @@
+id: GITVIEW-SPEC-0072
+title: GitView - Stable Project overview order and position
+kind: spec
+created_at: '2026-11-14T16:37:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0047
+depends_on:
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0045
+- GITVIEW-SPEC-0052
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0047.yaml
+  navigation: docs/drafts/GITVIEW-SPEC-0024.yaml
+  ux_direction: docs/drafts/ux-zoom-levels-proposal.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Existing Projects remain individually identifiable and retain a stable relative order across ordinary source refreshes and density changes.
+- Returning to the overview restores the same Project as position anchor when it remains available; an unavailable anchor is not silently replaced by a different Project as if it were the same one.
+- Adding or removing a Project changes the displayed collection without duplicating, deleting or reidentifying unrelated Projects.
+- A Project's position does not reveal a restricted source-derived name or imply a current urgency ranking.
+- The collection remains navigable through accessible alternatives and access restrictions take effect even during an interaction.
+specification:
+  objective: Define a predictable initial Project overview order and identity-based position continuity without prescribing a grid implementation.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  contract:
+    initial_order: As an agent-authored initial default, keep locally saved Projects in stable local insertion order, with newly saved Projects appended. The order is per Project identity and does not depend on GitHub names, organization, status, counts or refresh completion. It conveys no priority. Manual ordering, alternative sorts and synchronization between devices are not selected here.
+    durable_order: Preserve sufficient non-secret local ordering information across restarts so the same confirmed saved Projects retain their relative positions. In a multi-selection, append entries in the order their individual Project saves become durably confirmed; when that order is unprovable, choose a deterministic local tie-break independent of source names or private data. A prior independently confirmed order is not rearranged by retry or discovery of a duplicate association.
+    recovery: If ordering metadata is unavailable or inconsistent but the saved Project collection is independently readable, continue to represent eligible Projects without silently claiming the previous order was restored. Use a deterministic local fallback based on stable local Project identities, disclose the ordering limitation and allow recovery; do not reset Project membership or infer an empty collection. If even Project identity or collection completeness cannot be established, follow 0023 rather than inventing an exhaustive order. The repair mechanism is open.
+    return_position: During an active session, opening a Project and returning preserves that Project as the overview position or accessible-focus anchor when it is still present and eligible. The position may move as the viewport or density changes; the anchor is an identity, not a cell coordinate. A cold session follows 0024 and does not require preserving an old scroll position.
+    missing_anchor: If the Project was durably deleted, use the next surviving Project from the previous order; if none exists use the previous surviving Project, else begin at the collection's start. Identify the changed context and never treat a fallback as the removed Project. If previous order or current membership cannot be established, expose that uncertainty and use an available recovery route rather than claiming a definitive fallback.
+    interactions: A source refresh or density change alone does not reorder Projects. During an active gesture or accessibility focus interaction, avoid relocating an otherwise valid anchor due only to a collection update. If the membership change must be presented, maintain a coherent interaction and apply the identity-based fallback; the timing and native transition remain to be validated.
+    access: Apply denial and disconnection restrictions immediately under 0036, even if a gesture or transition is active; deferral of a visual rearrangement cannot defer removal of restricted content. A Project remains represented by a permitted neutral identity as required by 0047. Its order is not based on a restricted source-derived name or count.
+    provenance: Stable local insertion order and fallback behavior are agent-authored proposals responding to the owner's dense overview and continuity direction, not separately approved choices.
+  scenarios:
+    refresh_during_return:
+      given: The overview contains Projects P, Q and R in that order and the operator opened Q.
+      when: Source refresh changes R's attention count and the operator returns.
+      then: The relative order remains P, Q, R and Q is the position anchor if still permitted and present; R's changed signal does not become an implicit sort key.
+    add_during_session:
+      given: P and Q are saved and a new distinct Project R is confirmed while the overview is active.
+      when: The updated collection is presented.
+      then: P and Q keep their relative order and R is appended without changing either identity; an active gesture remains coherent.
+    deleted_anchor:
+      given: P, Q and R were displayed in that order and Q is durably removed while its detail is open.
+      when: The operator returns to the overview.
+      then: The changed origin is identifiable and R is the fallback anchor; R is not described as Q.
+    unreadable_order:
+      given: Saved Projects P and Q are independently readable but their ordering metadata is corrupt.
+      when: The overview is restored.
+      then: Both permitted Projects remain represented in a deterministic local fallback order with an identifiable ordering limitation, without claiming the previous order was restored.
+    access_during_gesture:
+      given: A Project name derived from a private Repository is visible while the operator is interacting with the overview.
+      when: Explicit source access denial is established before that interaction ends.
+      then: The restricted name and derived details are no longer exposed under 0036 even if the visual layout change is deferred; the neutral Project representation remains available.
+    interrupted_batch:
+      given: A confirmed repository batch saved Project P and the result for another selected Repository is unknown.
+      when: The application restarts and reconciles that result as a new saved Project Q.
+      then: P remains represented once and Q joins the ordering only after its saved identity is confirmed; retries do not create extra Projects or reorder P based on a source response.
+  unresolved:
+  - Native collection update, focus and gesture behavior requires accessibility and device verification.
+  - Ordering metadata storage, repair behavior and tie-break details need design and independent review.
+  - User-controlled sorting, cross-device order and ordering leakage from pre-existing metadata remain separate privacy and product questions.
