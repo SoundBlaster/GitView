@@ -52,6 +52,7 @@ depends_on:
 - GITVIEW-SPEC-0086
 - GITVIEW-SPEC-0087
 - GITVIEW-SPEC-0088
+- GITVIEW-SPEC-0089
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -77,6 +78,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    today_event_with_older_ci:
+      given: A PR has a confirmed merge event today and a failed check observed earlier for revision R1, but the current applicable revision or checks cannot be established.
+      when: The operator opens the failed-CI filtered Today collection.
+      then: The merge establishes base Today inclusion while the CI filter is uncertain, the earlier check keeps its own revision and time, and no current failure or exclusion is invented.
     day_change_denies_uncertain_candidate:
       given: A filtered Today grid contains a previously visible private PR whose CI match becomes uncertain while a pinch and local-day transition are in progress.
       when: Explicit denial restricts that PR's existence, identity and CI before the gesture ends.

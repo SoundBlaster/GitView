@@ -501,3 +501,9 @@ GitHub App user authorization — кандидат, а не подтверждё
 с перебором совместимых булевых миров и проверила пример 100 → 100 → 5 PR.
 Финальный результат относится к авторской модели и не проверяет приложение,
 source semantics, временной порядок или native privacy.
+
+Candidate 0089 и [временная сверка Today](today-temporal-evidence-review-20261114.md)
+разделяют event time, observation time и применимость CI к revision. Обе
+конечные модели Today повторены для новых bytes 0027, но они не моделируют
+временную согласованность или GitHub source behavior. [Проверка словаря](evidence/autonomous-goal-ontology-check-temporal-evidence-20261114.json)
+для 0027, 0043 и 0089 не нашла findings и gaps.
