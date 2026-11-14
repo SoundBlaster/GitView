@@ -47,6 +47,14 @@ specification:
       given: Confirmed Project P contains R and S, Q contains R, and R is P's associated default Repository.
       when: The operator durably removes R from P, then explicitly and durably adds the same identified R to P again.
       then: P retains its identity and now contains R and S, Q still contains R, and the default association removed by the first edit is not silently inferred from the re-addition. Any supported removal evidence remains historical.
+    setup_after_readdition:
+      given: R was removed from its former default Project P, later added back to P, and no active default association or indeterminate save for R remains.
+      when: The operator explicitly confirms default setup for R after reviewing the known effect under 0045.
+      then: A separate single-Repository default Project may be created without changing P; re-addition alone never restores P as the default.
+    existing_default_after_readdition:
+      given: R was re-added to P after its association was removed, and another valid Project Q is now R's default.
+      when: Default setup for R is confirmed.
+      then: Q remains the default or a recoverable conflict is reported under 0052; P is not silently assigned as the default and no second default is established.
     indistinguishable_intermediate_changes:
       given: Two comparable confirmed observations both contain R in P, with no evidence of intervening changes.
       when: The observations are compared.
@@ -61,5 +69,5 @@ specification:
       then: The two Projects are not treated as the same Project or as a removal and re-addition within one surviving Project.
   unresolved:
   - Whether and how membership action evidence should be retained or displayed is a separate product and storage decision.
-  - Explicitly restoring or reassigning a former default association after re-addition needs product review; membership alone is insufficient evidence.
+  - Whether to offer explicit restoration or reassignment to a former default Project is a separate product decision; the current candidate does not provide that operation.
   - Evidence compatibility, identity resolution and atomic save behavior require concrete implementation-level contracts and verification.

@@ -31,7 +31,7 @@ specification:
   contract:
     pending: A pending selection is separate from saved Project membership. An empty selection cannot be confirmed as a saved empty Project. Cancel before confirmation discards pending choices only.
     identity: Evaluate each selected entry by confirmed source Repository identity under 0002 and 0038. A duplicate reference to the same confirmed Repository in one selection is one entry; equal names or incomplete IDs do not prove two entries are identical.
-    confirmation: On explicit confirmation, for each eligible selected Repository reuse its existing default association under 0025 if the associated Project still contains that Repository; otherwise establish a separate single-repository default Project. The operation does not silently add the selected Repository to an arbitrary custom Project or combine selected Repositories into a multi-member Project.
+    confirmation: On explicit confirmation, for each eligible selected Repository reuse its existing default association under 0025 if the associated Project still contains that Repository; if no association exists and no earlier save remains indeterminate, establish a separate single-repository default Project. An inconsistent or unreadable association is unresolved under 0052, not evidence of absence. Before confirmation, disclose whether the currently known result is reuse, creation or unresolved, including creation of a separate Project when the Repository already belongs to a non-default Project; reevaluate at execution because the configuration may change. Any disclosed Project and Repository details remain subject to 0036. The operation does not silently add the selected Repository to an arbitrary custom Project or combine selected Repositories into a multi-member Project.
     durable_intent: Before submitting any entry of a newly confirmed selection for a Project mutation, durably record the confirmed operation and its selected entries, retaining enough stable source identity or explicitly unresolved identity to distinguish entries, relate outcomes to the selection and recover their processing state. Record the confirmed source account context or sufficient non-secret evidence to determine whether a later active connection is the same account. This does not prescribe a schema or store credentials or source text as part of the contract. If that durable record cannot be confirmed, do not begin this selection's Project mutations or claim confirmation succeeded; any earlier unrelated operation remains independently recoverable.
     outcomes: Each selected Repository has an observable result of saved, reused, pending, failed or unresolved identity/access. A multi-selection is complete only when all selected entries have a saved or reused result. The exact UI may summarize these outcomes but must permit the operator to identify entries needing attention.
     interrupted: If a failure or interruption occurs after some entries have saved, keep those completed saves and record or present unresolved entries as not yet confirmed. Retry works from the current saved associations and is idempotent for already completed entries. Do not claim an all-or-nothing rollback when saves have actually occurred.
@@ -50,6 +50,14 @@ specification:
       given: Two distinct accessible Repositories are selected and neither has an existing default Project.
       when: The operator confirms and both saves succeed.
       then: Two separate saved Projects each contain their corresponding Repository and both entries report success.
+    readded_to_former_default:
+      given: P formerly held R's default association; R was removed from P and explicitly added back, while P survives and no active association or indeterminate save for R exists.
+      when: The operator reviews and explicitly confirms default setup for R, and the conditions still hold at save time.
+      then: Setup discloses and may create a separate single-repository default Project for R; P and its membership remain intact, and the former association is not silently restored.
+    association_changes_after_review:
+      given: Setup initially indicates that a new default Project for R may be created, but a valid default association is established before its save.
+      when: The confirmed entry is processed against current durable configuration.
+      then: The valid existing default is reused or a recoverable conflict is reported; a second default is not created, and the result is disclosed.
     retry_after_partial:
       given: R1 was saved successfully and R2 failed during one confirmation.
       when: The operator retries both entries.
