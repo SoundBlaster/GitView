@@ -29,6 +29,7 @@ specification:
     scope: The initial product slice concerns one connected source identity. The GitView User is its operator and is not inferred to be the author or reviewer of a particular PR.
     no_account: An unconnected state provides a route to connect and is not evidence that GitHub contains no repositories. Cancellation leaves connection incomplete and preserves existing local Projects and observations.
     network_failure: A temporary network or rate failure leaves previously permitted cached observations eligible for display, with their observation time, coverage and visible refresh failure under 0003. It is not proof of access denial or repository deletion.
+    offline_after_restart: As an agent-authored working policy, after restart previously permitted cached observations remain eligible offline when the last confirmed local account context and relevant saved access restrictions are sufficiently readable and consistent, and no applicable durable denial, disconnect or unresolved access-changing operation is known. A locked or locally expired credential alone need not hide that content when the earlier account binding and absence of an unresolved replacement are independently supported. Show the prior observation time and that current access has not been reverified; do not present last-known evidence as a current grant. If the account or relevant restriction state is unreadable, inconsistent or known indeterminate, restrict only the affected private scope until recovery. This policy accepts that an event known only in a terminated process may be absent from durable evidence; it is not a guarantee that no such event occurred.
     explicit_denial: An explicit authentication or authorization denial is distinct from offline. Under the working private-cache policy from 0019, restrict display of affected private observations and their sensitive derived details until access is re-established or the records are explicitly cleared. The denial is not represented as an empty collection.
     source_404: A 404 alone does not prove deletion or access revocation and does not erase Repository identity, Project membership or previously saved observations. It leaves current source state uncertain; access to cached private content remains subject to the other applicable access evidence, not to a fabricated confirmed denial.
     ambiguous_status: Interpret source errors using the applicable operation, response evidence and connection context. An HTTP status alone is not a universal reason classifier; for example GitHub may return 403 for a rate limit as well as other failures. Do not report a confirmed repository-level denial, deletion or empty result without sufficient evidence. The particular source mapping remains to be specified.
@@ -53,6 +54,14 @@ specification:
       given: A saved Repository is referenced by an old source address.
       when: A source request returns 404.
       then: GitView records an uncertain source result and retains the Repository and membership instead of asserting deletion.
+    restart_offline_known_binding:
+      given: A terminated process left a readable consistent last confirmed account and previously permitted private observations, with no applicable durable denial or unresolved access-changing operation, and GitView is now offline.
+      when: The operator opens the Project.
+      then: Eligible last-known data can appear with its own observation time and unverified current access; a local credential that cannot currently be read does not itself establish denial or a new successful refresh.
+    restart_known_pending_disconnect:
+      given: A previously permitted private Repository has a durable record of a disconnect or access-changing operation whose outcome is not yet resolved.
+      when: GitView restarts offline.
+      then: The affected private scope remains restricted pending recovery while independently permitted unrelated data may remain available; the app does not assert that disconnect succeeded or failed without evidence.
   unresolved:
   - Distinguish source signals that prove an explicit repository-level denial from ambiguous HTTP or API failures.
   - Concurrent refresh and revocation ordering, exact authorization flow and secure credential lifecycle.
