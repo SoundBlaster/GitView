@@ -1,0 +1,16 @@
+{
+  "scope": "Rerun of existing finite independent-input abstraction and its assertions only; no source, Swift policy, real calendar, storage or UI executed",
+  "case_count": 34992,
+  "selection_counts": {
+    "false": 23552,
+    "unknown": 9312,
+    "true": 2128
+  },
+  "model_sha256": "32151b87f89dfe33b592d06eee3f2ba3b518c5ff953ffb95e485a979576affec",
+  "new_contract_sha256": "4b8bbdfdc920f85f01dc980e020e3bdb88bc2781b9e1a789e6b61b726615d007",
+  "limitations": [
+    "Boolean completions assume independent inputs",
+    "No source identity, real calendar, temporal applicability or real access policy validated",
+    "The model is prior design evidence, not generated from or exhaustive for candidate 0110"
+  ]
+}

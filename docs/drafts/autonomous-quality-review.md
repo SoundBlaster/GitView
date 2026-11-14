@@ -229,6 +229,14 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+[0110](GITVIEW-SPEC-0110.yaml) определяет входы и трёхзначный результат чистого
+Today selection, отдельно от coverage и privacy projection. [Оценка листа](today-policy-leaf-readiness-20261114.md)
+различает остающиеся проектные решения и будущие интеграционные проверки.
+Существующая упрощённая конечная модель повторно проверила 34 992 сочетания;
+это не тест Swift-кода или реальных source facts. Candidate и ontology advisory
+прошли без findings, gaps и warnings; в графе 110 кандидатов и 52 структурных
+листа, без отсутствующих целей и циклов.
+
 0060–0062 дополнены документальными границами GitHub для fork check-run
 association, combined `pending` без отдельных statuses и связи review с
 commit. [Четыре кандидата](evidence/autonomous-goal-ontology-check-ci-source-20261114.json)

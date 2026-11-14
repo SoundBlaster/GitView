@@ -1,0 +1,82 @@
+id: GITVIEW-SPEC-0110
+title: GitView - Pure Today selection decision contract
+kind: spec
+created_at: '2026-11-14T20:57:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0027
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0040
+- GITVIEW-SPEC-0042
+- GITVIEW-SPEC-0049
+- GITVIEW-SPEC-0079
+- GITVIEW-SPEC-0089
+- GITVIEW-SPEC-0101
+- GITVIEW-SPEC-0102
+- GITVIEW-SPEC-0107
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0027.yaml
+  temporal: docs/drafts/GITVIEW-SPEC-0089.yaml
+  model_review: docs/drafts/today-selection-access-model-review-20261114.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The selection decision receives normalized scoped facts, explicit filter context and their supported truth values; it performs no source, storage or navigation effects.
+- A confirmed true Today alternative remains sufficient when another alternative is unknown; a confirmed false required condition excludes within its valid context.
+- Each confirmed source object appears at most once, while unresolved identity and restricted presentation do not become a confirmed distinct card or revealing count.
+- Per-object classification, collection coverage and an intentional all-states-excluded result remain separate outcomes.
+- The output retains enough input and time context to avoid relabeling stale or mixed-time facts as a simultaneous current source snapshot.
+- The decision is specified for deterministic TDD with injected facts and time, while real source, storage and native interaction evidence remain separate.
+specification:
+  objective: Define an implementation-facing pure decision boundary for Today selection over already interpreted evidence without selecting source requests or UI components.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    scope: This contract evaluates normalized work candidates for one selected Project-wide or explicit Repository context, one local Today interval and explicit filters. It does not fetch candidates, prove the source population complete, order cells, perform access authorization or open an object. The application must complete applicable parent and dependency decisions before using this leaf to begin product implementation.
+    inputs: Supply the selected Project and Repository intent, captured eligible Repository identities or explicit membership uncertainty, current local-day start and next-day boundary, selected object types and lifecycle states, any active predicates, per-candidate normalized identity and permitted presentation status, and source-supported predicate facts with their observation, event-time, revision and applicability context. The caller also supplies a separate scoped population-coverage assessment and source or storage limitations where established. A fact omitted, incompatible, unobserved or inapplicable to the requested current context enters as unknown rather than false.
+    candidate_units: Before decision evaluation, source representations that are proven to denote one PR or Issue are associated under 0101. Evaluate each confirmed object identity once for the selected scope. An unresolved possible identity association is not silently coalesced by name or number and cannot yield an exact distinct-object count. A linked Issue and PR remain distinct. Identity and access restrictions are evaluated under 0036 before presenting a candidate or a derived count.
+    predicates: For each eligible candidate derive a three-valued scope condition S, open-work alternative O, in-day creation alternative C, and in-day closure or merge alternative E using the applicable facts and local half-open interval. Derive each explicitly active type, lifecycle or attention filter F independently. True and false mean supported in the stated context, not eternal or necessarily simultaneous source truth. A timestamp of retrieval alone is not an event; a prior-day closure is not a Today event. A candidate's current state and an event that qualifies it are distinct facts.
+    truth_domain: Use values true, false and unknown. For OR, true dominates; all operands false yields false; otherwise the result is unknown. For AND, false dominates; all operands true yields true; otherwise the result is unknown. No active optional filters means their conjunction is true. For each candidate evaluate base as O OR C OR E and result as S AND base AND every applicable active filter. Interpret true as a confirmed match in the supplied context, false as a confirmed non-match in that context and unknown as an uncertain candidate. A negated filter must preserve unknown rather than turning it into true.
+    applicability: Derive O, C, E and each filter only from facts applicable to the actual object type, identity, scope, event time and relevant revision under 0089. A true same-day event need not establish current lifecycle or a separate CI filter. An unavailable current CI value is unknown even if an old result remains visible as last known. A confirmed false condition may determine exclusion despite another unknown condition, but only for the supported scope and time. This pure decision must not turn an unsupported absence into false.
+    output: Return per permitted confirmed-identity candidate its classification and supporting context or references to that context, together with separately attributed population coverage and limitations. The decision does not need to expose restricted candidate identity or existence to report an allowed scope-level limitation. A complete per-candidate classification of the known input list does not prove the entire requested source population was observed. Do not derive a source count, current timestamp or coherent snapshot merely from the number of classified inputs.
+    filtered_empty: If the operator explicitly excludes every lifecycle state applicable to the selected object types, the visible result is intentionally filtered empty. Preserve the active exclusions and any separately applicable incomplete coverage, refresh failure or access limitation; this empty view is not evidence that the source has no work. In ordinary cases, confirmed empty requires adequate population and filter coverage under 0102 and no uncertain matching candidate in the claim's permitted scope.
+    effects_and_determinism: The same normalized inputs and captured calendar context yield the same classifications without reading a clock, database or network during evaluation. A day, time-zone, source, access or membership change is supplied as a new evaluation context, not an implicit mutation of the earlier result. A later observation or route transition cannot retroactively give an earlier mixed-time result a common snapshot time.
+    testing: Under 0040 and 0079 specify failing-then-passing behavior tests for the truth table, identity normalization, privacy projection, half-open time boundaries, stale or mismatched revision, incomplete population and all-states-excluded view. The existing finite model checks a simplified logic abstraction only; actual domain caller, source semantics, storage, platform calendar and UI remain separate evidence. Use SpecificationCore only if its chosen API preserves true, false, unknown and rule non-applicability as required under 0095.
+    provenance: The owner's requirements are unfiltered unfinished and same-day completed work, explicit filters and a dense overview. The three-valued truth rules and this pure-decision interface are agent-authored proposals; input names here describe a contract, not mandated Swift types or ontology entities.
+  scenarios:
+    open_with_unknown_closure:
+      given: A permitted identified Issue is in scope, is confirmed open, was not created today and has unknown closure history; no optional filter excludes it.
+      when: The decision evaluates Today.
+      then: The open alternative makes the base inclusion true and the Issue is a confirmed contextual match despite unknown closure history.
+    false_scope_masks_unknown:
+      given: A permitted identified PR is confirmed outside an explicitly selected Repository and its lifecycle and CI are unknown.
+      when: The current selection is evaluated.
+      then: The known false scope yields a contextual non-match without inventing its lifecycle or CI state.
+    same_day_event_unknown_ci:
+      given: A permitted PR has a confirmed merge event within Today and its applicable current CI is unknown while a failed-CI filter is active.
+      when: The decision evaluates the candidate.
+      then: Base inclusion is true, the filter is unknown and the final classification is uncertain rather than a confirmed match or exclusion.
+    one_object_many_representations:
+      given: A PR has two source-confirmed representations of one identity and satisfies both creation-today and merge-today alternatives.
+      when: Normalized input is evaluated.
+      then: The selected population contains that confirmed PR once; neither multiple representations nor multiple true alternatives create another card.
+    unobserved_population:
+      given: Every supplied PR is classified as a confirmed non-match but another Repository's applicable work population is unobserved.
+      when: The caller requests the Project-wide selection.
+      then: No supplied PR matches, but the unobserved scope remains incomplete and the Project is not declared confirmed empty.
+    intentional_empty_and_failed_refresh:
+      given: The operator excludes every applicable lifecycle state while the last scoped source refresh failed.
+      when: The selection is rendered.
+      then: The view is intentionally filtered empty, the active exclusions and refresh limitation remain discoverable, and no claim is made that GitHub contains no work.
+    restricted_unknown_candidate:
+      given: A private PR's identity and existence are restricted while its internal filter evaluation would otherwise be unknown.
+      when: The presentation result is prepared.
+      then: No revealing card or restricted derived count is exposed and any permitted scope-level uncertainty remains separate from a false filter result.
+  unresolved:
+  - Specify the exact typed representation and caller mapping against the chosen SpecificationCore version and domain boundary without collapsing unknown into rule non-applicability.
+  - Establish source-specific event, revision, identity and population evidence needed to populate the decision inputs; this contract does not assume GitHub supplies a complete snapshot.
+  - The finite model uses simplified assumptions; no actual Swift policy, TDD cycle, source adapter or native behavior has been executed.
