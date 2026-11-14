@@ -32,7 +32,7 @@ specification:
   - Given one repository in two projects, changing its source owner does not remove either membership.
   - Given repositories from different GitHub organizations, a project can include both.
   unresolved:
-  - Empty draft creation and handling the last membership during editing need interaction design.
+  - 0025 proposes rejecting a saved Project with an empty name or no members and preserving the last saved state; creation drafts, edit interaction and acceptance of this proposal remain open.
   - Automatic synchronization between default Project names and later repository rename is not assumed.
   evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
     selection and specification remain drafts; implementation is not claimed.

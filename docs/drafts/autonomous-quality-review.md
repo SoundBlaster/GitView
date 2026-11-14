@@ -55,6 +55,10 @@ UI state не преобразовывался в ontology entities; смысл�
 0048 проверены повторно по [словарю](evidence/autonomous-goal-ontology-check-overview-20261114.json)
 без findings и gaps; отчёт относится к более новым байтам 0004 и 0047.
 
+После приведения родительских 0005 и 0006 в соответствие с кандидатными
+уточнениями их новые байты проверены по [словарю](evidence/autonomous-goal-ontology-check-parents-0005-0006-20261114.json)
+без findings и gaps. Ссылка из родителя на предложение не равнозначна его принятию.
+
 Новые 0049 и 0050 получили `checked` по [словарю](evidence/autonomous-goal-ontology-check-0049-0050-20261114.json)
 без findings и gaps; их UX и platform-сценарии остаются неисполненными.
 После уточнения активного жеста новые байты 0049 проверены
