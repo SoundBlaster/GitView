@@ -1,0 +1,67 @@
+id: GITVIEW-SPEC-0067
+title: GitView - Clear and recover retained metric history
+kind: spec
+created_at: '2026-11-14T16:20:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0066
+depends_on:
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0048
+- GITVIEW-SPEC-0053
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0066.yaml
+  privacy: docs/drafts/GITVIEW-SPEC-0036.yaml
+  project: docs/drafts/GITVIEW-SPEC-0025.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- An explicit history-clear action identifies its local data scope and consequences before it is submitted.
+- A confirmed clear prevents older in-flight data from silently restoring cleared history, including after restart.
+- A failed, partial or indeterminate clear is distinguishable from confirmed success and is recoverable without inventing an empty history.
+- A later accepted fresh observation can form new history only with its actual observation context and current access eligibility.
+- Clearing history does not mutate GitHub or silently delete Projects and unrelated local data.
+specification:
+  objective: Define observable recovery and concurrency boundaries for explicit local metric-history clearing without choosing a storage implementation.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:Metric
+  contract:
+    scope: A history-clear action concerns an explicitly described local metric-history scope. Before submission, make the affected data and any material consequences understandable; do not silently equate it with deleting a Project, disconnecting GitHub, clearing credentials or deleting GitHub source objects. Exact available scopes, confirmation control and retention policy are open. Cancelling before submission leaves the previous history intact.
+    shared_evidence: A Repository can belong to multiple Projects and historical inputs can be shared. The action must not promise Project-only removal while silently damaging history required by another Project. If the selected scope cannot be isolated from shared evidence, disclose the affected scope before submission or do not claim a narrower clear. No particular storage representation or duplication is mandated.
+    durable_clear: Report a clear as confirmed only when the affected local scope and the protection against reintroducing pre-clear history are durably established. An implementation may use any mechanism that provides this observable behavior. The clear changes local retention, not what existed at GitHub in the past.
+    old_in_flight: Coordinate clear with in-flight refresh, retention and queued writes for the affected scope. Data observed before the clear boundary or from work begun before that boundary must not silently repopulate the cleared history after confirmed clear, even if its write or response arrives later or the app restarts. An already committed write is within the clear's affected scope and must be handled before reporting confirmed success. Exact admission and reconciliation mechanism remain open.
+    new_observation: A genuinely new permitted observation initiated after a confirmed clear can be retained under 0066 with its actual source and observation context. Its presence is not proof the cleared past was recovered. A new observation cannot relabel old cached data, old history or a late pre-clear response as newly observed; any source event history subsequently requested must be attributed to the new retrieval and its own evidence rather than silently restoring deleted local records.
+    failure: If clear is known not committed, do not report success and preserve last confirmed permitted history. If the result is partial or unknown, do not claim full removal or full rollback; identify the affected scope and allow recovery. If local configuration or clear status cannot be read, do not manufacture an empty graph or automatically replay pending old writes as if the clear were absent.
+    access: Apply current authorization and private-data restrictions before showing any retained or recovered data. Clearing metric history is independent of reconnecting; a clear operation or a late write does not re-establish access. Prevent a cleared historical value from leaking through stored derived aggregates where the clear scope includes them; current source-derived data outside the described clear scope follows its own policy.
+    later_graph: An empty local history after a confirmed clear means no retained local history for that cleared scope, not proof that the source had no events or work. A later source-supported event query or new observation can add separately attributed evidence under 0065 and 0066. Display gaps or unavailability rather than retroactive zeroes.
+    provenance: The owner requested local observations and graph history; this scoped clear and recovery contract is an agent-authored product proposal, not a claim that a particular clear control or storage architecture was selected.
+  scenarios:
+    stale_response_after_clear:
+      given: A metric refresh for R began before an explicit local history clear for R was durably confirmed.
+      when: Its response and attempted retention arrive after the clear.
+      then: The prior work does not silently recreate the cleared history, including after restart; its source response does not become a newly initiated observation.
+    fresh_observation_after_clear:
+      given: R's local history clear is confirmed and current source access permits refresh.
+      when: A new refresh is initiated afterward and yields a confirmed observation that is durably retained.
+      then: The new sample can appear with its actual observation context, without claiming that earlier cleared points were restored or were zero.
+    shared_project_scope:
+      given: Repository R belongs to Projects P and Q and both use some shared retained metric evidence.
+      when: The operator requests a clear described as affecting P's history only.
+      then: The app either isolates that scope or discloses the actual effect before submission; Q's history is not silently erased under a claim that it was unaffected.
+    acknowledgement_lost:
+      given: A clear may have committed but its acknowledgement was lost and local status cannot currently be read.
+      when: The operator reopens the history view.
+      then: The clear outcome remains unknown with a recovery path; no full success, full rollback or confirmed empty source history is invented.
+    cleared_local_not_source_zero:
+      given: A confirmed local history clear removed previously retained PR samples for the chosen scope.
+      when: A past graph is displayed before sufficient new historical evidence is obtained.
+      then: The missing local history is shown as unavailable or gaps rather than zero past PRs.
+  unresolved:
+  - Actual clearable scopes, shared-input handling and user-facing confirmation or recovery interaction.
+  - Durable ordering, concurrent admission, restart reconciliation and privacy-safe retention need storage-specific design and evidence.
+  - Whether or how a later explicit source-history query is offered after local clearing remains open; no automatic deletion of GitHub data is implied.
