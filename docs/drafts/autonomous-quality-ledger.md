@@ -567,3 +567,10 @@ configuration. Состав Project и действующая default associatio
 необходимому охвату. Исторические графики отличают события от snapshot;
 условная выборка прошедших проверки и review не объявлена merge readiness.
 Source mapping и конкретные периоды по-прежнему требуют уточнения.
+
+## Authorization и discovery
+
+Добавлены 0058 и 0059: жизненный цикл попытки подключения, поздний ответ после
+disconnect, ошибка удаления credential, принадлежность discovery-result к
+подключению и сохранение pending selection. Протокол GitHub, scopes и
+реализация secure storage не выбраны и не проверены этими сценариями.

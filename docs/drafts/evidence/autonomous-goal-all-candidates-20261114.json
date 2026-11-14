@@ -745,6 +745,32 @@
         "file_id_match"
       ],
       "next_action": "review_candidate"
+    },
+    {
+      "id": "GITVIEW-SPEC-0058",
+      "sha256": "64fa2eb91c2186065a2ed1fdaec30d9c4083baad8b8d3a5f8de7e409a13a44c0",
+      "exit_code": 0,
+      "status": "checked",
+      "reported_sha256": "64fa2eb91c2186065a2ed1fdaec30d9c4083baad8b8d3a5f8de7e409a13a44c0",
+      "checked": [
+        "yaml_mapping",
+        "spec_kind",
+        "file_id_match"
+      ],
+      "next_action": "review_candidate"
+    },
+    {
+      "id": "GITVIEW-SPEC-0059",
+      "sha256": "d4648a61134caa3c959ae85311dbebb3ed228499b37bc7815216f380f1510ae1",
+      "exit_code": 0,
+      "status": "checked",
+      "reported_sha256": "d4648a61134caa3c959ae85311dbebb3ed228499b37bc7815216f380f1510ae1",
+      "checked": [
+        "yaml_mapping",
+        "spec_kind",
+        "file_id_match"
+      ],
+      "next_action": "review_candidate"
     }
   ],
   "errors": []

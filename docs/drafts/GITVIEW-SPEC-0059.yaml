@@ -1,0 +1,61 @@
+id: GITVIEW-SPEC-0059
+title: GitView - Repository discovery and selection continuity
+kind: spec
+created_at: '2026-11-14T15:52:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0019
+depends_on:
+- GITVIEW-SPEC-0022
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0045
+- GITVIEW-SPEC-0058
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0019.yaml
+  first_launch: docs/drafts/GITVIEW-SPEC-0022.yaml
+  selection: docs/drafts/GITVIEW-SPEC-0045.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Discovery results identify their source account and coverage; an incomplete or failed result is distinct from an observed empty result.
+- An eligible discovered Repository can be selected by confirmed source identity without relying on its display name alone.
+- Refreshing or narrowing discovery does not silently discard a pending selection or mutate saved Project membership.
+- A stale discovery response cannot be relabeled as belonging to a different active connection or prove restored access after disconnect.
+- Confirmation rechecks the identity and applicable access required by the selected operation and preserves individual unresolved outcomes.
+specification:
+  objective: Specify continuity from authorized repository discovery to explicit Project setup while preserving identity and coverage.
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Repository
+  - gitview:Project
+  contract:
+    result_scope: Attribute each discovery result to its source identity, query or selection scope, applicable access context and coverage. Returned accessible Repositories may be offered for selection while the result is incomplete, with that limitation visible. Only sufficiently covered discovery can establish that no repositories match its stated scope; it does not establish that the source account has no other repositories outside that scope.
+    identity: Select and reconcile an entry by confirmed Repository identity under 0038. Different names or owners can refer to the same confirmed source object, while the same display name alone cannot establish identity. An entry lacking the identity or access evidence required for setup remains unresolved rather than being silently substituted or merged.
+    pending_selection: Pending selection is separate from discovery's visible subset and from saved Project membership. Pagination, a changed search query, a refresh or a temporary source failure does not silently clear previously selected confirmed identities. The operator can inspect and explicitly remove selections; an unavailable entry is identified as such without disclosing restricted details.
+    incomplete_or_absent: A Repository not returned by a partial result is not confirmed deleted, denied or deselected. A complete result can establish absence only within its stated source and query scope and according to source permissions; it does not alone delete saved Projects or prove source deletion. Explicit denial follows 0036.
+    confirm: The operator explicitly confirms a nonempty selection. Before a selected entry changes local Projects, establish the required source identity and applicable access at processing time; failures or uncertainties are per-entry outcomes under 0045. An earlier discovery result does not itself prove present access after a connection change.
+    changing_connection: Bind a discovery attempt to the identity and active connection context that initiated it. A late result after disconnect, authorization denial or confirmed replacement cannot re-enable access, replace the new account's results or make restricted private details visible. A new valid connection requires its own applicable discovery and access evidence.
+    retry: A retry or continuation preserves already confirmed selected identities and reports its own coverage and error without assuming the remaining source is empty. Exact source pagination, query syntax and selection layout remain unchosen.
+    provenance: Explicit default-per-Repository setup follows the owner's choice; continuity, scope and race boundaries are agent-authored refinements.
+  scenarios:
+    selection_across_search:
+      given: A Repository R with confirmed identity is selected in one partial discovery result.
+      when: The operator changes the search and R is not in the currently visible result.
+      then: R remains in the pending selection until explicitly removed and the visible subset is not presented as the complete source.
+    partial_result_failure:
+      given: Some accessible Repositories were returned and one was selected before discovery fails.
+      when: The selection screen displays the failure.
+      then: The selection and returned permitted entries remain available with incomplete coverage and a retry path; unreturned entries are not declared absent.
+    source_identity_changes:
+      given: Discovery began under source identity A and a different identity B is subsequently confirmed.
+      when: The late A result arrives.
+      then: It is not labeled as B's discovery or used to unlock A's restricted data; Project mutations are not initiated by its arrival.
+    lost_access_before_confirmation:
+      given: A Repository was selected from a previously permitted result but its access cannot be established when the selection is processed.
+      when: The operator confirms setup.
+      then: The affected entry is unresolved or failed under 0045 and no replacement Repository is inferred from a matching name; unrelated completed entries remain intact.
+  unresolved:
+  - Source-specific discovery scope, permission semantics, search and pagination evidence require verification.
+  - Exact behavior for an account switch with pending selection and the user-facing recovery interaction remain open.
+  - Device and real-adapter evidence is absent; no source endpoint or request budget is chosen.
