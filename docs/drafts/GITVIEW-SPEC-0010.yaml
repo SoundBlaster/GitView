@@ -24,8 +24,8 @@ specification:
   requirements:
   - Issue description format contains Problem, Motivation, Expected outcome and References.
   - PR description format contains Problem, Motivation, Expected outcome, Changes, Validation and References.
-  - Use templates and agent instructions to request these sections when creating Issue and PR descriptions
-    in participating repositories.
+  - Require the agreed sections in Issue and PR descriptions created through the participating repository process;
+    templates and agent instructions support that requirement but are not by themselves proof of enforcement.
   - Existing or external objects remain visible when their descriptions use another format or sections
     are missing; do not invent missing text.
   - Treat Motivation, Expected outcome and Validation as authored statements, not independently proved
@@ -40,8 +40,9 @@ specification:
     selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
   - Issue sections are Problem, Motivation, Expected outcome and References; PR adds Changes and Validation.
-  - Repository process should provide the selected templates and agent instructions. Any automated enforcement
-    is a separate deployment decision.
+  - In participating repositories the agreed format is required for newly created Issue and PR descriptions;
+    the process must cover the supported creation paths. Template installation and the enforcement mechanism
+    are separate deployment decisions and are not claimed to exist.
   - Display original text when a section cannot be reliably extracted, and never invent missing sections
     or suppress nonconforming external objects.
   - Treat declared motivation, expected outcome and validation as author statements, distinct from proved
@@ -59,8 +60,9 @@ specification:
     are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - Issue sections are Problem, Motivation, Expected outcome and References; PR adds Changes and Validation.
-- Repository process should provide the selected templates and agent instructions. Any automated enforcement
-  is a separate deployment decision.
+- In participating repositories the agreed format is required for newly created Issue and PR descriptions;
+  the process must cover the supported creation paths. Template installation and the enforcement mechanism
+  are separate deployment decisions and are not claimed to exist.
 - Display original text when a section cannot be reliably extracted, and never invent missing sections
   or suppress nonconforming external objects.
 - Treat declared motivation, expected outcome and validation as author statements, distinct from proved
