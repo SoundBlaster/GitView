@@ -532,3 +532,10 @@ Candidate 0092 и [сверка signal navigation](signal-navigation-filter-revi
 для 0043, 0047 и 0092 не нашла findings и gaps.
 Модель повторного открытия Issue повторена после изменения 0043, чтобы её
 входной hash соответствовал текущему сквозному узлу; её границы не изменились.
+
+Candidate 0093 и [сверка preview](first-preview-content-review-20261114.md)
+упорядочивают разрешённые сведения Project, Repository, PR и Issue, offline
+доступность и поздние ответы. Это авторский UX-контракт без native/source
+evidence; модель повторного открытия Issue снова привязана к bytes 0043.
+[Проверка словаря](evidence/autonomous-goal-ontology-check-preview-content-20261114.json)
+для 0043, 0050 и 0093 не нашла findings и gaps.

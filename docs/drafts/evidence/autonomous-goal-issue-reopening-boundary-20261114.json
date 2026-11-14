@@ -2,7 +2,7 @@
   "artifact_kind": "gitview_issue_reopening_boundary_example",
   "spec_sha256": {
     "GITVIEW-SPEC-0027.yaml": "b8b43b504c1323606486bbe19a2c90111b925d1184da6eeb6454f733409906bc",
-    "GITVIEW-SPEC-0043.yaml": "17f2ce8665fd29d7d4e5b3c12e5e1eb2a83f794de2b82b7032f34cb5338b9bb1",
+    "GITVIEW-SPEC-0043.yaml": "e32b0a2ac74f270594e020d60ecb8a75e99bc05a60aa4f2f4ef2ecfdd1048568",
     "GITVIEW-SPEC-0049.yaml": "8f41eaa6adf1726e4670a2d55ce76a79fba6f8626bc7dbc2bfb2d62816adf4e6",
     "GITVIEW-SPEC-0056.yaml": "d65ef64ac226f4bd1b696328d3e4ba49360969d7ceacc4cac498c1af940763f5",
     "GITVIEW-SPEC-0069.yaml": "7461f7f93b2fcd2bb16d1f6c1541d21d15b0a993e21b571223d30d47a19cc386",

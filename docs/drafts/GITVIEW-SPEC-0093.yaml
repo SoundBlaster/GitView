@@ -1,0 +1,99 @@
+id: GITVIEW-SPEC-0093
+title: GitView - First-version preview content and availability
+kind: spec
+created_at: '2026-11-14T18:32:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0050
+depends_on:
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0028
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0034
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0039
+- GITVIEW-SPEC-0041
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0061
+- GITVIEW-SPEC-0062
+- GITVIEW-SPEC-0063
+- GITVIEW-SPEC-0073
+- GITVIEW-SPEC-0075
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0050.yaml
+  preview_proposal: docs/drafts/ux-preview-interactions.md
+  selected_pr: docs/drafts/pull-request-ontology-options.md
+  selected_issue: docs/drafts/issue-ontology-options.md
+  owner_preview: conversation:gitview/excerpt-43
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- First-version preview identifies the selected permitted Project, Repository, PR or Issue without changing the origin scope or silently substituting another object.
+- Available lifecycle, review, CI, thread and Issue signals retain their own meanings, source context and limitations.
+- Compact presentation prioritizes identification and relevant state while keeping additional permitted selected facts reachable without requiring them all to fit simultaneously.
+- Unknown, incomplete, stale, restricted and confirmed empty values do not become fabricated zero, success or generated description text.
+- Cached permitted content can be previewed without waiting for a network request; late results cannot be attached to the wrong object or override access restrictions.
+- Opening and dismissal preserve the actual object and valid navigation context; optional source and share actions require an eligible link.
+- Preview content and essential actions remain accessible without relying only on color, long press or a fixed density.
+specification:
+  objective: Define the first-version static preview's content priorities, actions and evidence boundaries for each existing object type without choosing a native layout implementation.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:ReviewThread
+  - gitview:CIStatus
+  - gitview:Metric
+  contract:
+    first_version: A recognized long press can present one static preview for the selected object under 0015 and 0031. The preview offers an explicit path to open the same eligible object and a way to dismiss without opening. It does not implement or imply the later sliding rich preview, hover behavior or a new ontology entity.
+    priority: As an agent-authored compact-content proposal, prioritize permitted type and identity, name or title and relevant lifecycle or scope, followed by available attention signals, counters and short source text. Layout can adapt to screen size and Dynamic Type; not every selected detail must fit simultaneously. A permitted object overview or accessible inspection route can provide additional selected facts without pretending omitted preview content is absent at the source.
+    identity: Project uses its local identity and permitted name; Repository uses its confirmed source identity and permitted name or source context; PR and Issue use their object type, permitted title or name, source Repository context and repository-local number when known. An unavailable identifier or title remains unknown; never substitute another object with the same number or name. Restricted identity or existence is not disclosed to satisfy a preview requirement; offer only a permitted non-sensitive state or route.
+    project: Show a permitted Project name and available member count or scope, plus selected work and attention summaries when supported by their own coverage under 0047 and 0057. A source-derived restricted name or private derived count is not exposed. A GitView Project is local configuration and has no automatically implied GitHub URL.
+    repository: Show permitted Repository name and source context with available PR, Issue and attention summaries and their applicable coverage or observation limitations. A shared Repository retains the originating Project context; rename, transfer or an unavailable address does not authorize a substitute identity or fabricated source link.
+    pull_request: Show permitted PR title, number and Repository context with established open, merged or closed-without-merge state and draft flag as separate facts. Surface available CI category counts, review assessment and unresolved-thread count independently; their absence is not approval, success or zero. When space and evidence permit, additions, deletions, changed-file and commit counts remain separately scoped. The compact preview does not require a diff, individual check result, review-thread content or merge decision.
+    issue: Show permitted Issue title, number, Repository context and established open or closed state; a supported closure reason remains separate from completion. When space and evidence permit, surface assignees, discussion or direct sub-issue counters and explicit blocker information under 0039, 0063 and 0077. Issue comments are not PR review threads and Issue is not assigned an invented CI state.
+    source_text: When an applicable permitted body and recognized Problem or Motivation section exist, a short excerpt may show the author's original text and applicable context under 0034 and 0051. Truncation, absent excerpt or unavailable body is not proof the source has no text. Do not generate a motive, fill a missing section, attribute the author's statement to another actor, or equate authored Validation with observed CI.
+    availability: A confirmed zero, source-confirmed absence, unobserved value, partial collection, stale observation and restricted value remain distinct under 0044 and 0046. Retained permitted observations keep their own times and revision or scope where applicable. A newer title does not make earlier CI, review, counts or links current. Compact representation may summarize limitations, provided their relevant scope remains discoverable without exposing restricted details.
+    cached_and_refresh: An eligible preview can open from previously permitted saved data without requiring a new network response. If the app chooses to request additional facts, show only supported available content or an appropriate unavailable state while waiting; a successful title fetch is not complete preview coverage. Apply later facts only to the same confirmed object, field and source context, respecting ordering and current access under 0037 and 0053. A response after dismissal, retargeting, denial or scope invalidation must not populate another preview or restore restricted content by itself.
+    actions: Opening enters the same permitted object under 0031; dismissal returns according to 0024 and 0073. An optional source or share action for a Repository, PR or Issue uses an eligible object-associated link under 0033 and rechecks access at handoff. Do not infer a Project source URL from one member or disclose text or credentials through the default link-only sharing action. A stale or unavailable link remains uncertain or unavailable as specified in 0033.
+    accessibility: Available identity, state, limitations and actions have accessible non-color representations and do not require long press, hover, a timed gesture or eight columns. Large text and Reduce Motion can change presentation; exact control selection, truncation, voice announcements and system preview APIs require platform evaluation.
+    provenance: The owner requested static long-press preview in the first version and compact native presentation. Exact priorities, excerpt choice and asynchronous update handling are agent-authored proposals; selected fields are not a claim of verified source availability or native behavior.
+  scenarios:
+    same_number:
+      given: Two Repositories contain distinct PRs numbered 42 and the selected cell belongs to the second Repository.
+      when: Its preview is opened and then the object is opened.
+      then: The permitted Repository context identifies the second PR throughout; the first PR is not substituted by number or cell position.
+    offline_saved_preview:
+      given: A permitted Issue has saved title and lifecycle observations, an unobserved discussion count and the network is unavailable.
+      when: The operator previews it.
+      then: Saved facts remain attributable to their observation context, discussion is unknown rather than zero and preview is not blocked waiting for a network response.
+    stale_ci_new_title:
+      given: A PR has a newly observed title and an older failed check result for a different revision with no current CI observation.
+      when: Its preview is shown.
+      then: The title may be shown with its own context while the old CI is last known for its revision or unavailable; it is not presented as a confirmed current failure or success.
+    private_denial_while_open:
+      given: A private PR preview is open and a source refresh is in flight.
+      when: Explicit denial restricts its identity or source facts before the response arrives.
+      then: Restricted app-controlled visual and accessible content and pending announcements are removed under policy; the late response alone cannot repopulate the preview or authorize sharing.
+    late_different_object:
+      given: Preview for PR A was dismissed and the operator opened preview for Issue B while a request initiated for A remains in flight.
+      when: The A response arrives.
+      then: A's facts are not rendered under B's identity, and any storage or display of A remains subject to its own scope, ordering and access.
+    no_project_source:
+      given: A Project contains two Repositories and no source object represents the local Project.
+      when: Its preview offers available actions.
+      then: The app does not invent one GitHub Project link from either member; Repository source actions require an explicitly identified eligible Repository.
+    special_check:
+      given: A current PR check collection contains one skipped result and no classified success, pending or failure entries.
+      when: The preview and its accessible inspection path are used.
+      then: A total of one is not described as a successful executed check or a healthy merge decision; the special outcome remains discoverable under 0061.
+  unresolved:
+  - Native layout, system preview presentation, exact field order and truncation require UX and device evaluation.
+  - Source identity, per-field freshness, permissions and actual availability require source-specific evidence.
+  - The timing and cancellation of optional preview refresh and accessible announcements require an implemented platform design and tests.
