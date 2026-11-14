@@ -64,6 +64,7 @@ depends_on:
 - GITVIEW-SPEC-0099
 - GITVIEW-SPEC-0100
 - GITVIEW-SPEC-0101
+- GITVIEW-SPEC-0102
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -89,6 +90,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    summary_to_incomplete_destination:
+      given: A Project has a permitted source-supported failed-CI PR signal at T1; a later paged traversal succeeds but cannot establish complete coverage at T2.
+      when: The operator opens the signal and inspects its matching PR collection.
+      then: The signal's supported reference remains T1, the destination retains the failed-CI condition and exposes its own uncertainty, and success of the traversal is not represented as an exact current count or a confirmed empty list.
     github_issue_representation_of_pr:
       given: A source-confirmed PR is observed through both PR and PR-marked Issues representations, alongside a separate Issue linked to that PR in the same Repository.
       when: The Project Today grid and its counts are built from those observations.
