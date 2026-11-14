@@ -64,6 +64,7 @@ specification:
     historical_signal: A historical outcome signal that opens distinct work objects retains the event condition, scope and period under 0056; a currently reopened Issue may still qualify for an earlier closure. If the destination cannot support the original condition or its evidence is incomplete, expose that limitation.
     signal_update: A refreshed or partially loaded destination may differ from the observation underlying the originating signal. Its coverage and relevant observation context remain identifiable; unknown or restricted data is not displayed as an empty or healthy result.
     observations: An unobserved category remains unknown, partial and failed scopes remain identifiable, and stale data retains its observation context. Explicit denial follows 0036; no restricted private content or derived count is exposed as a healthy zero.
+    restricted_aggregation: Apply the conservative input-provenance and differential-disclosure policy of 0064 to current summary values as well as history. A persisted total containing a now-restricted input is not exposed alongside a permitted subset; an independently supported permitted subset may remain available under its safe scope and coverage. Do not reveal restricted membership counts, source names or exact contributions through labels, accessibility, navigation or sharing.
     scale_and_access: Density can change without altering the selected Project set or its accounting. Essential identification, navigation and refresh do not depend only on pinch, long press or color; accessible behavior follows 0032 and 0035.
     provenance: Multiple Projects, summary signals and a compact Apple-style overview follow the owner's product direction. Exact distribution of fields across densities and control placement remain agent-independent design questions.
   scenarios:
@@ -103,6 +104,10 @@ specification:
       given: A default Project was named from a private Repository and source access is explicitly denied.
       when: The Projects overview is displayed.
       then: The Project remains represented without exposing its restricted source-derived name or private counts, and the access problem is discoverable.
+    restricted_total_and_permitted_subset:
+      given: A previously displayed Project total of 10 includes seven PRs from permitted Repository A and three from Repository B, whose private PR data is now explicitly restricted.
+      when: The operator opens the summary and an A-only view.
+      then: The A-only seven may be shown where its scope is permitted, while the prior total and other app-controlled equivalents that expose B's contribution are suppressed; the Project is not reported as having only seven total PRs.
   unresolved:
   - Default layout, ordering of Projects and exact subset of signals shown at each density.
   - Exact visual and accessible controls for signal navigation and cross-Repository scope selection.

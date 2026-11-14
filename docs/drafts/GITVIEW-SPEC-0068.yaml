@@ -48,6 +48,7 @@ specification:
     selection_lifetime: A graph point and its object-selection request retain their actual evaluation scope, period, predicate, unit, coverage and source observation context. A later membership edit, time-zone change or refresh cannot relabel an older result as the newly selected graph or replace its historical object selection with a current list. Results arriving after the operator has selected a different metric or period do not overwrite that selection; permitted older evidence may remain associated with its own context. Access restrictions apply immediately before presentation and navigation, including to chart labels and app-controlled accessibility output.
     context: Opening or closing the history surface does not modify Project membership, underlying observations or existing work filters. Returning restores the originating context under 0024 where still valid. An independently selected historical period or metric is not silently relabeled as dynamic Today.
     access: Apply current access restrictions before drawing or announcing historical input or revealing derived counts. A chart with a restricted member is incomplete or unavailable rather than showing a full-project zero. A cleared local history is distinguished from no source events under 0067.
+    restricted_value_surfaces: Apply 0064's current input-provenance rule to chart marks, axes, value labels, selections, accessible representations, cached thumbnails and app-generated share content before each app-controlled presentation or handoff. Remove an affected exact point or display a permitted gap after restriction, and prevent a saved total plus a permitted subset from newly exposing the restricted contribution. A separately supported permitted subset may remain visible with safe scope and incomplete labeling. This does not promise retroactive erasure of an earlier observation or control of content already shared outside the app.
     accessibility: Essential metric names, values, units, scope and gaps have a non-color accessible representation and can be inspected without requiring a drag gesture or relying solely on spatial chart position. Preserve meaningful focus on return under 0032. Exact native controls and chart design require device evaluation.
     provenance: The owner accepted Project summaries and graphs where adequate history exists. The entry route, current-member default and concrete uncertainty behavior are agent-authored refinements; no running chart or source coverage is claimed.
   scenarios:
@@ -67,6 +68,10 @@ specification:
       given: A historical Project series has one accessible Repository and another whose private inputs are restricted.
       when: The chart is displayed visually or through accessibility.
       then: Restricted values and revealing derived counts are not exposed, and the Project series is incomplete or unavailable rather than a complete accessible-subset total.
+    restriction_while_chart_open:
+      given: A chart and accessible point detail show a supported total for A and B while a permitted A-only comparison also exists; B's private input then becomes restricted.
+      when: The chart updates or its point is selected or shared.
+      then: The affected total and its app-controlled accessible and share representations are no longer exposed, while a separately supported A-only value can remain with safe scope and coverage; the missing B contribution is not replaced with zero.
     return_to_project:
       given: The operator opens metric history from a Project overview and later returns while that Project is still valid.
       when: The overview is restored.

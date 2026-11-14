@@ -39,6 +39,9 @@ specification:
     state_series: A historical count of open PRs, open Issues or review/CI attention requires a qualifying observation at the stated point or independently justified reconstruction for that exact predicate and scope. An available present state or an isolated closure event alone does not establish a past snapshot. CI/review history and source retention may have separate limits; a skipped or missing collection is not zero.
     per_repository: Repository-level observations retain their own time, coverage, identity and access context. A previous aggregate for A and B cannot establish a total for A and C unless each required input, including C, independently supports the new point. If a permitted input covers only a subset, a partial observation may be shown with its stated coverage; it is not a complete total or an automatic current lower bound.
     privacy: Apply current access policy before showing historical values, source details or derived counts. Restricted data is not disclosed solely because it was available in an earlier snapshot. A mixed accessible/restricted series cannot treat restricted inputs as zero or silently present the accessible subset as the complete Project.
+    derived_value_admission: As a conservative first-version policy, a numeric historical point, total, trend or accessible textual equivalent is eligible only if every source-derived input needed to establish that particular value is currently permitted and its evidence supports the stated scope and coverage. An aggregate persisted before a restriction does not become an independently permitted input merely because it is stored separately. If input lineage or applicability cannot be established, suppress the exact affected value rather than treating it as safe. An independently computed value for an explicitly permitted subset can be shown only with safe scope and incomplete-coverage labeling, and only when it does not itself require a restricted input. This is a working privacy rule, not a claim that GitView can eliminate all possible inference.
+    differential_disclosure: Do not simultaneously offer an exact restricted-input total and its permitted subset, adjacent bucket, alternate selection or shareable representation from which the restricted contribution can be directly calculated. Reevaluate retained app-controlled summaries, tooltips, chart points, navigation payloads, accessible descriptions and share payloads under the current access context, including when restoring a saved screen. Suppress unsafe exact values consistently rather than merely hiding their visual bars. Independently permitted values need not disappear solely because another unrelated category is restricted.
+    disclosure_boundary: A newly established restriction governs future app-controlled presentation and handoff; it cannot retract values already seen, copied, screenshotted or delivered outside the app before the restriction. A general limitation may be shown only if its wording and detail are themselves permitted; do not reveal a restricted Repository identity or exact count just to explain a gap. Exact platform handling of system snapshots and already handed-off content remains subject to native evaluation.
     source_boundary: Repository source events, GitView local membership history and GitView local saved observations are distinct evidence classes. Their existence, availability, timestamps and retention do not imply one another. Specific API, snapshot storage, background schedule and retention policy are not selected here.
     provenance: The owner agreed Project metrics and graphs when sufficient history exists. The fixed current-member retrospective default is an agent-authored product proposal, not an independently selected owner policy.
   scenarios:
@@ -50,6 +53,18 @@ specification:
       given: A Project currently contains A and B but no record establishes whether B was a member last week.
       when: A graph is requested for actual membership at each past time.
       then: The historical-membership claim remains unavailable or incomplete; the current A and B set is not asserted as last week's membership.
+    subtractable_private_contribution:
+      given: A previously stored Project bucket totals 10 PRs from A and B, A's independently supported permitted contribution is 7, and B's private inputs have since become restricted.
+      when: GitView renders or restores the Project graph and an A-only view for the same bucket.
+      then: It may show the supported A-only 7 with safe scope and coverage, but suppresses the stored A-plus-B total and its accessible or shareable equivalents, so the app does not newly expose B's contribution by subtraction.
+    unknown_lineage:
+      given: A saved aggregate predates the current access restriction but its retained evidence cannot establish whether it depends on the restricted input.
+      when: The metric history is opened.
+      then: The exact aggregate remains unavailable until independently supported permitted inputs establish its scope; the app does not assert zero or use the stored value as an access witness.
+    limitation_already_seen:
+      given: The operator saw an aggregate before a later source restriction and may remember it.
+      when: The app applies the restriction.
+      then: App-controlled future output follows the present policy, without claiming to erase the operator's knowledge or retract prior external shares.
     old_series_after_edit:
       given: A displayed historical series was evaluated for current members A and B, and a later saved edit replaces B with C.
       when: The old series or a recalculated series is displayed.
@@ -71,6 +86,7 @@ specification:
       when: The graph is viewed again.
       then: Restricted data or revealing derived values are not exposed and the affected scope is unavailable or incomplete rather than zero.
   unresolved:
+  - Specify a practical provenance representation and evidence for whether a computed point depends on currently restricted inputs; validate any broader safe-aggregate policy before relaxing suppression.
   - Verify the current-member retrospective proposal as the desired product default and define native presentation when membership changes while a graph is visible.
   - Source-specific history completeness, event reason, CI/review reconstruction and membership retention guarantees remain unverified.
   - No local storage model, historical graph or device behavior has been implemented or tested.
