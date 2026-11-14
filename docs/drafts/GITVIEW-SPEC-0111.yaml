@@ -25,6 +25,7 @@ sources:
   storage: docs/drafts/GITVIEW-SPEC-0104.yaml
   specification_core_source: /Users/egor/Development/GitHub/Specification Project/SpecificationCore/Sources/SpecificationCore/Core/DecisionSpec.swift
   specification_core_observed_revision: 483214469828c42f7b615654aa70d0acbecc4dbf
+  unicode_whitespace: https://www.unicode.org/Public/17.0.0/ucd/PropList.txt
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - A pure Project configuration decision distinguishes supported validity, known invalidity and insufficient evidence without performing source or storage effects.
@@ -42,7 +43,10 @@ specification:
   - gitview:projectIncludesRepository
   contract:
     boundary: Evaluate one explicit proposed creation or edit against supplied confirmed or uncertain source identities, eligible access facts and the relevant saved Project and default-association context. Do not read GitHub, mutate storage, navigate, invent an ontology actor or assert that the operator performed an action. The same input context yields the same policy result; changes in source access or configuration require new evidence and reevaluation.
-    inputs: Supply the operation kind and identity, target Project identity and confirmed base evidence for an edit, proposed name and optional purpose, proposed member references, any affected default association, and the source identity and applicable access evidence needed for each newly added member. Input also identifies unresolved, unavailable or restricted facts rather than replacing them with empty collections. The name-validation rule is supplied as a typed fact until its exact whitespace and text policy is specified; an unavailable name is not a confirmed empty name.
+    inputs: Supply the operation kind and identity, target Project identity and confirmed base evidence for an edit, proposed name and optional purpose, proposed member references, any affected default association, and the source identity and applicable access evidence needed for each newly added member. Input also identifies unresolved, unavailable or restricted facts rather than replacing them with empty collections. An unavailable name is not a confirmed empty name; the caller supplies the actual available text or an explicit unavailable state.
+    name_policy: As an agent-authored first-version proposal, a supplied name is invalid when empty or when every Unicode scalar has the `White_Space` property in the Unicode 17.0.0 property data identified in sources. Otherwise this name rule is satisfied. Evaluate against that fixed property version, not a platform-dependent locale or an unspecified evolving system character set. The predicate does not automatically trim, case-fold, change Unicode normalization, derive a name from Repository identity or compare names for uniqueness. Save the operator-confirmed text as entered and display it only when permitted, subject to actual supported text and storage boundaries; an unsupported or unrepresentable input requires an explicit limitation rather than silent truncation. This rule defines whitespace-only validity, not a universal guarantee that every accepted string renders visibly on every device.
+    purpose_policy: Purpose is optional local text under 0025. Absence, an explicitly supplied value and an unavailable or restricted value are distinct; do not turn an unavailable value into absence or silently clear an existing purpose during another edit. An explicit clear produces absence, while an explicitly supplied text value is preserved as entered rather than automatically trimmed or borrowed from GitHub. The exact text-entry affordance and whether the UI offers an explicit empty value separately from clear require UX review; no arbitrary maximum is selected here.
+    duplicate_names: Project identity is independent of name. Two separately confirmed Projects may have identical or canonically equivalent displayed names; do not merge, reject or substitute one solely because its name matches. Where equal or visually ambiguous names make an action unclear, offer sufficient permitted context to identify the intended Project under 0047 and accessibility rules without exposing restricted Repository details.
     core_invariants: A confirmed valid saved Project has a nonempty name and at least one confirmed distinct GitHub-managed Repository member under 0025. Confirmed duplicate references to the same source Repository are one membership, not multiple; two different confirmed identities stay distinct even when names match. Membership in other Projects is permitted and is not itself a conflict. If identity equivalence, GitHub management or applicable eligibility for a newly added member cannot be established, the affected requirement is unknown rather than automatically valid or invalid.
     outcome_precedence: Return an explicit invalid proposal with the supported invariant violations when at least one required condition is confirmed false. Preserve independent unknown or unassessed conditions; invalid does not imply every condition was evaluated or every problem identified. If no condition is confirmed false and at least one required condition is unknown, return insufficient evidence. Return valid only when every applicable invariant is supported in the supplied context. An invalid or insufficient result must not request a durable write automatically.
     proposed_association: For an existing default Project, keep its default association if its associated Repository remains a member; if a confirmed valid edit removes that Repository while another remains, the proposed saved state removes that association under 0025. If whether the associated Repository remains cannot be established, do not propose a definite disassociation or claim a valid invariant. A separate intentional custom Project does not automatically become a default; default setup retains per-Repository uniqueness under 0052.
@@ -54,6 +58,18 @@ specification:
     verification: Under 0040 and 0079 prepare externally meaningful TDD cases for valid multi-organization membership, shared Repository, known empty name or membership, unknown identity and access, confirmed duplicate and ambiguous equivalence, default-member removal, stale edit, concurrent save and lost acknowledgement. Test pure outcomes separately from boundary tests with injected persistence and from actual durable restart or GitHub integration. A named policy and scenario set do not establish that any app test has run.
     provenance: Project composition, one default Project per Repository and shared membership follow the owner's choices. The three-outcome validity policy, precedence and domain-aware coordination are agent-authored working refinements; exact type names, validation APIs and database technology remain unselected.
   scenarios:
+    whitespace_only_name:
+      given: A proposed Project has otherwise supported membership and a name made entirely of space and a no-break space, both classified as White_Space in the specified Unicode property version.
+      when: The validity decision evaluates the name.
+      then: It reports the name invalid without saving a replacement or treating the Project as unnamed due to unavailable data.
+    preserve_text_and_identity:
+      given: Two distinct explicitly created Projects have the same operator-confirmed name, including leading and trailing spaces, and valid supported memberships.
+      when: Their configurations are saved and later inspected.
+      then: The entered name is not silently trimmed or used to merge their identities, and the operator has a permitted way to distinguish the Projects before acting.
+    unavailable_name_and_invalid_members:
+      given: A proposed Project name is unavailable while its member collection is confirmed empty.
+      when: The validity decision is evaluated.
+      then: The proposal is invalid for the supported no-member condition, while name validity remains unknown rather than being reported as a confirmed empty string.
     shared_membership:
       given: Confirmed Repository R is already a member of Project Q and a new explicitly named Project P proposes R and another confirmed eligible Repository S from a different organization.
       when: The pure configuration decision evaluates P with all other required facts supported.
@@ -87,6 +103,6 @@ specification:
       when: The caller interprets that absence.
       then: It reports an integration limitation rather than claiming the Project is valid, invalid or simply missing source evidence.
   unresolved:
-  - Define exact name and purpose text normalization, input types and SpecificationCore dependency version before declaring the decision independently implementable.
+  - Review the proposed Unicode whitespace-only name rule, invisible or otherwise ambiguous text, exact purpose entry semantics, input types and SpecificationCore dependency version before declaring the decision independently implementable.
   - Establish source identity and access eligibility mappings for newly added Repositories; candidates 0112–0114 propose eligibility, coordinated commit and credential recovery, but their concrete interfaces and behavior remain unverified.
   - No product policy, durable storage, source integration or TDD cycle has been implemented or verified.
