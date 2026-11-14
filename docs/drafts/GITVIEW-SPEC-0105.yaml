@@ -1,0 +1,66 @@
+id: GITVIEW-SPEC-0105
+title: GitView - Observation retention storage boundary
+kind: spec
+created_at: '2026-11-14T20:28:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0103
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0066
+- GITVIEW-SPEC-0067
+- GITVIEW-SPEC-0095
+- GITVIEW-SPEC-0097
+- GITVIEW-SPEC-0101
+- GITVIEW-SPEC-0102
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0103.yaml
+  observation: docs/drafts/GITVIEW-SPEC-0044.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- An accepted observation and the contexts required to interpret it remain associated through durable retention and recovery.
+- Source result, local retention outcome, population coverage and current access remain independently interpretable.
+- Retention retries do not create extra source observations or bypass a confirmed history clear.
+- A read with missing or invalid evidence is not returned as a confirmed empty collection or complete newer snapshot.
+- The boundary can be injected and exercised with deterministic failures independently of GitHub and UI.
+specification:
+  objective: Define domain-facing storage behavior for source observations, coverage evidence and separately retained metric history.
+  ontology_refs:
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    responsibility: A domain-aware observation boundary retains and reads normalized permitted source facts and their interpretation contexts under 0044, 0053 and 0101. Generic storage remains domain-neutral under 0095. It neither calls GitHub nor declares access renewed and it does not decide UI navigation.
+    retain_request: The caller supplies a 0103 logical retention operation with bound source and confirmed object identities where established, category, relevant Repository and selection scope, actual field or event values, source and observation times where supported, revision or ordering evidence, coverage and current retention eligibility. Unknown or incomplete items remain marked as such; an omitted field is not serialized as a confirmed empty value by assumption. Coverage claims follow 0102 and cannot be stronger than supplied evidence.
+    history_scope: Current cache and historical evidence are distinguishable outcomes even if they share a physical record. A history retention request includes the supported metric, unit, predicate version, subject, scope and observation context required by 0066 and 0097; it respects the 0067 clear boundary. A source response or a successful current-cache write alone does not confirm history retention.
+    durable_outcomes: A caller can distinguish source acceptance from applied, rejected or indeterminate local retention. A confirmed applied result requires recoverable association of the fact with its required context and operation outcome under 0071 and 0103. A repeated delivery of the same operation does not fabricate a second source observation; a fresh observation is separately contextualized even with the same value. Interruption or failed local save cannot advance a coverage boundary without independently recoverable evidence.
+    read_and_access: A read supplies an appropriately scoped set of recoverable facts with their own observation and coverage contexts, together with unavailable, inconsistent or unknown portions. It cannot turn a missing or invalid record into an empty source result. Apply the current access policy before exposing source-derived data or revealing counts; retained data and a prior permission observation do not renew access. Independently valid unrelated scopes remain separately interpretable.
+    ordering_and_clear: Reconcile incompatible facts using source-supported ordering under 0053, not storage arrival order. A confirmed clear prevents pre-clear work from silently recreating historical evidence even on replay or restart; an indeterminate clear keeps the affected admission outcome uncertain. A later explicitly initiated source-history retrieval or observation retains its own evidence and is not proof that deleted local records survived.
+    caller_contract: Selection and summary decisions consume prepared facts and explicit uncertainty rather than raw storage details. A page may show permitted transient facts while a local save is unconfirmed, but must not call them durable or attribute their time to older facts. A current read is separate from an earlier retention receipt and from the last complete coverage claim.
+    verification: Under 0040 and 0079 specify TDD scenarios for lost acknowledgement, same-operation replay, equal-value distinct observations, partial field writes, conflicting observations, clear races, denied access and restart. Verify actual persistence and source mappings separately from doubles, and native presentation separately from both.
+    provenance: Local cache, last-update visibility and history follow owner direction. This storage boundary and its separation of outcome types are agent-authored proposals, not a selected database, historical data source or implemented feature.
+  scenarios:
+    source_success_storage_unknown:
+      given: GitHub supplies a permitted updated PR title at T2 while the corresponding local retention outcome is indeterminate; T1 title evidence is independently recoverable.
+      when: The current session displays the result and later restarts.
+      then: T2 may be shown as transient with its source context, but not promised durable; after restart T1 is available only with its independently recovered context unless T2 is independently established.
+    omitted_field:
+      given: A T2 observation contains a PR title but omits its review assessment, which was last observed at T1.
+      when: The T2 observation is retained and read.
+      then: The T1 assessment is neither cleared nor relabeled as observed at T2 solely because the title was saved.
+    old_retention_after_clear:
+      given: A historical retention operation began before the confirmed history-clear boundary and its acknowledgement was lost.
+      when: Its delivery is retried after restart.
+      then: The old operation cannot restore cleared history as a new sample; a separately initiated fresh observation retains its actual later context.
+    incomplete_coverage_after_save:
+      given: An accepted page contains three supported PRs but does not establish complete population coverage.
+      when: The page is durably retained and read.
+      then: Its facts remain available with their own context while the Project total is not asserted complete merely because the write succeeded.
+  unresolved:
+  - Choose a concrete representation and commit boundary for facts, coverage, operation evidence and independent history outcomes.
+  - Establish source-specific field, timestamp and revision semantics and privacy-safe retention and compaction before selecting actual mappings.
+  - No source adapter, persistence implementation, process-restart or native behavior has been tested.

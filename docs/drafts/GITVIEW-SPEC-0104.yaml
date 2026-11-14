@@ -1,0 +1,63 @@
+id: GITVIEW-SPEC-0104
+title: GitView - Project configuration storage boundary
+kind: spec
+created_at: '2026-11-14T20:28:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0103
+depends_on:
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0045
+- GITVIEW-SPEC-0052
+- GITVIEW-SPEC-0082
+- GITVIEW-SPEC-0083
+- GITVIEW-SPEC-0095
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0103.yaml
+  project: docs/drafts/GITVIEW-SPEC-0025.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A Project read distinguishes a confirmed valid configuration, confirmed absence, and an unavailable or inconsistent result.
+- A Project write binds operation identity, target and reviewed intended configuration to the applicable saved-state preconditions.
+- Commit validation and the local effect preserve Project invariants despite concurrent writes or lost acknowledgements.
+- A confirmed operation outcome is distinguishable from the latest readable configuration and cannot resurrect a subsequently deleted Project.
+- The boundary can be injected and exercised with deterministic failures independently of source and UI.
+specification:
+  objective: Define domain-facing storage behavior for Project configuration and default associations without selecting a database or Swift API.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  contract:
+    responsibility: A domain-aware Project configuration boundary translates between retained local records and confirmed Project facts. Its generic storage mechanism may be shared under 0095 but must not implement GitView-specific identity or membership policy. It does not fetch GitHub or infer source access merely by reading local data.
+    read_request: A caller supplies the local Project identity, or the confirmed Repository identity when requesting its default association, and the relevant local context. Read results distinguish a valid saved Project and applicable version evidence, confirmed absence only where the read supports it, and unavailable or inconsistent data. A separately supplied latest operation receipt is not itself the current Project configuration.
+    intended_write: Creation, editing, default association change and deletion submit a 0103 logical operation identity, kind, target, immutable intended change, and relevant preconditions. For an existing Project edit the precondition identifies the confirmed base configuration; a reviewed revision is a new operation. Default setup additionally supplies its confirmed Repository identity and applies the global per-Repository default uniqueness constraint. Exact serialization and method signatures remain implementation design.
+    write_decision: At the effect boundary validate the bound operation, applicable saved base, valid nonempty Project name and membership, valid default association and domain identity requirements. A stale base yields a conflict or other explicitly supported safe result, not a silent full-state overwrite. A confirmed deletion makes old edits ineligible to recreate the Project. Validation and commit must be coordinated sufficiently to prevent an intervening write invalidating a previously successful check.
+    durable_outcomes: Return or allow recovery of the same operation's applied result, terminal rejection or conflict, or indeterminate outcome under 0103. A duplicate delivery of the same identity and compatible intent resolves to that operation's established outcome without a second effect. A mismatch is rejected or reported as conflict. Do not report rollback or confirmed absence while a prior effect can still commit.
+    historical_receipt: An applied receipt identifies what the operation established at its own commit context; it does not promise the Project still has that state after later edits or deletion. Obtain the current Project through an independently valid read. A replay after a later deletion may report the earlier operation's historical outcome where permitted but must not recreate the Project or report that it currently exists.
+    scope_and_isolation: A completed one-Repository default save has a Project, membership and matching association visible together under 0052. A custom Project save has a valid identity and configuration without changing other Projects or default associations. Batch setup retains individual operation outcomes; no all-batch atomicity is claimed. Changes to a Project do not delete source Repositories or other Projects' retained observations.
+    caller_contract: Callers distinguish the result of submitting or reconciling an operation from a separate current read; they preserve an indeterminate result for recovery and show conflicts or failures without exposing restricted details under 0036. Pages do not manufacture durable success from an optimistic UI update, and storage does not navigate or present a modal.
+    verification: Under 0040 and 0079 specify TDD boundary scenarios with injected storage covering same-operation replay, two intentional custom Projects with identical content, concurrent default setup, stale base, edit after deletion, lost acknowledgement, inaccessible read and interruption around commit. Verify actual persistence, process restart and platform behavior separately from doubles.
+    provenance: Shared Repository membership and default one-Repository Projects are owner decisions. This domain-facing boundary, version evidence and outcome vocabulary are agent-authored proposals and do not require an ontology entity per operation or a particular persistence technology.
+  scenarios:
+    applied_then_deleted:
+      given: Creation operation O durably produced Project P, and a later separate operation durably deleted P.
+      when: O is retried and P is read.
+      then: O can return its historical applied outcome, the valid current read reports P absent, and replay does not recreate it.
+    same_name_independent_creations:
+      given: Two separately confirmed custom creation operations have distinct identities but identical names and memberships.
+      when: Each passes its own preconditions and commits.
+      then: Two distinct valid Projects may exist; matching content is not a retry identity or a default association.
+    stale_write_after_newer_commit:
+      given: An edit targets Project P based on configuration V1 and a different edit commits V2 before the first reaches its effect boundary.
+      when: The earlier edit is submitted.
+      then: It cannot overwrite V2 as a successful V1 edit and yields a conflict or another explicitly supported safe outcome.
+    unavailable_default_read:
+      given: An earlier default setup operation may have committed but its association and pending outcome are unreadable.
+      when: The caller asks for a default Project and requests retry.
+      then: The boundary reports unavailable or indeterminate rather than confirmed absence, and does not claim a duplicate-free new Project was created without satisfying 0052 and 0103.
+  unresolved:
+  - Select concrete Project ownership, version evidence and commit mechanism after reviewing application composition and persistence candidates.
+  - Define migration, storage-unavailable interaction and actual cleanup of data no longer referenced by any Project without assuming a particular database.
+  - No production boundary, concurrent save, durable read or restart behavior has been implemented or verified.
