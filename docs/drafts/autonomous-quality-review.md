@@ -635,3 +635,13 @@ configuration имеют отдельные границы. Это не заяв
 [Проверка словаря](evidence/autonomous-goal-ontology-check-history-retention-20261114.json)
 для 0043, 0066, 0067 и 0071 не нашла findings или gaps; сквозной пример смены
 дня повторён после изменения 0043 и не проверяет очистку либо storage.
+
+[Архитектурная сверка](architecture-boundaries-review-20261114.md) и 0095
+уточняют направление FSD, границу domain-aware mapping и различие unknown и
+no-match в наблюдаемом локальном SpecificationCore. Ранее записанный FSD commit
+отсутствует в текущем checkout, поэтому тождество источников не установлено;
+ни код, ни реальный граф Swift dependencies не проверялись.
+[Проверка словаря](evidence/autonomous-goal-ontology-check-architecture-boundaries-20261114.json)
+для 0021, 0040, 0079 и 0095 не нашла findings или gaps. Новый срез содержит
+95 кандидатов и 43 структурных листа с открытыми вопросами; это не оценка
+готовности к реализации или доказательство существования Swift modules.

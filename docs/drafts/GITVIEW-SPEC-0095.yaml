@@ -1,0 +1,75 @@
+id: GITVIEW-SPEC-0095
+title: GitView - Architecture boundaries for overview decisions
+kind: spec
+created_at: '2026-11-14T19:10:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0021
+depends_on:
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0040
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0048
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0071
+- GITVIEW-SPEC-0079
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0021.yaml
+  fsd_layers: /Users/egor/Development/GitHub/FSD_iOS/FSDDemoApp/docs/rules/fsd-layers.md
+  fsd_dependencies: /Users/egor/Development/GitHub/FSD_iOS/FSDDemoApp/docs/rules/fsd-imports.md
+  fsd_slices: /Users/egor/Development/GitHub/FSD_iOS/FSDDemoApp/docs/rules/fsd-slices.md
+  fsd_observed_revision: 21731b9dd7d5008b832af5caca6d19f7a36fe54f
+  specification_core_readme: /Users/egor/Development/GitHub/Specification Project/SpecificationCore/README.md
+  specification_core_decision: /Users/egor/Development/GitHub/Specification Project/SpecificationCore/Sources/SpecificationCore/Core/DecisionSpec.swift
+  specification_core_observed_revision: 483214469828c42f7b615654aa70d0acbecc4dbf
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Product composition gives each navigation context, domain decision, adapter and effect an identifiable responsibility without requiring a module or ontology entity for every term.
+- FSD dependencies point down; same-layer sibling slices do not depend directly on one another and product-specific policy is not hidden in generic shared infrastructure.
+- Project, source, time and access facts reach selection and summary decisions with their relevant uncertainty and observation context intact.
+- Suitable stable decisions use SpecificationCore without equating an unknown domain result with a missing rule match or a successful Boolean.
+- Network, storage, time and other relevant effects are replaceable at explicit composition boundaries; policy evaluation itself does not perform those effects.
+- Test evidence distinguishes deterministic decisions and doubles from actual persistence, source, platform and accessibility behavior.
+specification:
+  objective: Propose responsibility and test boundaries for the agreed Project overview and Today journey while preserving FSD direction and named domain decisions.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    fsd_direction: Follow the currently inspected FSD iOS responsibility order from app through pages, widgets, features, entities and shared as applicable. App composes dependencies; route-level pages compose a user journey; widgets are meaningful reusable compositions; features own bounded user actions; entity slices own coherent domain concepts; shared owns generic infrastructure. Layers and segments are created for real responsibilities, not to satisfy a diagram. Sibling widgets, features or entities do not directly depend on one another; composition of siblings occurs above them. A filesystem folder or module name is not itself proof of compliant type dependencies.
+    source_and_storage: Generic transport, clock or storage mechanisms may be shared only when they do not depend on GitView concepts. GitHub-specific source mapping and persistence mapping translate external responses and stored records into appropriately scoped product facts at a domain-aware boundary; they preserve identity, access, field coverage, source and observation times and revision evidence under 0044 and 0053. A source adapter does not decide UI navigation, and a generic infrastructure service does not import Project, PR or Issue merely to apply domain policy. Exact module topology, transport and persistence technology remain open.
+    cross_entity_decisions: Today selection and Project summaries require facts about a Project's membership, source Repository identities, PRs or Issues and observation context. Do not solve this by introducing direct sibling-entity imports that violate the inspected FSD rules, or by moving GitView-specific meaning into generic shared. An implementation may place a coherent set of closely related domain concepts and policies in one appropriately owned entity slice, or compose independent entity facts and a decision at a valid higher layer. Choose the actual boundary from reuse and responsibility and validate the resulting dependency graph; this candidate does not create a new Ontology entity named after a code slice.
+    typed_decisions: Select stable named policies where they clarify a domain choice, including Today inclusion and filter applicability, membership validity or summary coverage. Provide already-observed typed facts and required clock or calendar context as inputs; return results that preserve confirmed match, confirmed non-match and unknown or other applicable distinctions under 0027. A single Boolean or a missing rule match must not erase a supported unknown state. SpecificationCore is required for suitable named policies under 0021; do not require it for every parser branch, field projection, loop, UI gesture or I-O operation.
+    no_match: In the inspected SpecificationCore source DecisionSpec may return no result when a rule does not match. A domain outcome meaning unknown is not automatically that no-match condition; model and test the distinction whenever both are meaningful. A fallback is chosen only where it preserves the product contract. Exact API and package version must be verified against the eventually resolved dependency rather than assumed from this local checkout or this document.
+    ownership_and_effects: The applicable page or composition owner retains the current Project, selected scope, filters, period, density and navigation origin under 0024 and 0074. A bounded refresh or Project edit coordinates effects through supplied capabilities; changing a filter or evaluating a policy does not itself fetch, write, navigate, share or mutate GitHub. Source results, durable writes, access changes and route changes remain separately attributable. The final ownership of state across scenes requires platform design; no particular SwiftUI state wrapper, DI library or framework is mandated.
+    injection: Compose replaceable network or source, local persistence, clock or calendar, scheduling, credential and applicable platform handoff capabilities at an explicit boundary. Inject only dependencies used by the behavior, and supply deterministic failures, partial responses, ordering and time in tests. A platform share or background opportunity is an external effect with its own observed result, not a successful domain decision. No protocol-per-type or global service locator is required.
+    verification: Under 0040 and 0079, specify behavior tests before implementation and perform the TDD cycle for the actual product slice. Verify decision outcomes and real callers, including unknown and no-match, stale evidence, scope and access changes; separately verify adapter mappings, durable recovery, source integration and native interaction where applicable. A static architecture linter, candidate graph, mock-only test or source document is not proof that all runtime boundaries or platform behaviors are correct.
+    provenance: The owner chose FSD iOS, SpecificationCore, DI, TDD and network/data doubles. Boundary examples are agent-authored proposals based on the locally inspected sources, not an implemented module graph or a selected package version. The previously recorded FSD revision in 0021 is absent from the current FSDDemoApp object database, so this candidate does not claim that the current files are identical to that earlier reference.
+  scenarios:
+    today_unknown_and_no_match:
+      given: A source-confirmed Today candidate has an unavailable CI fact and a failed-CI filter is active; a separate candidate rule is not applicable to that object.
+      when: The policy evaluates the prepared facts without source I-O.
+      then: The filter result remains domain-unknown rather than a confirmed non-match, while the rule's inapplicability remains separately representable if the selected policy composition needs it.
+    shared_repositories:
+      given: Two Projects refer to the same confirmed Repository and a unique portfolio total needs Project membership and PR facts.
+      when: A domain-aware decision evaluates the prepared identities and coverage.
+      then: The Repository contributes in each Project and once to the unique portfolio scope without a generic shared transport service importing GitView domain types.
+    offline_refresh:
+      given: A page displays permitted retained observations and an injected source dependency reports a deterministic network failure.
+      when: The refresh effect finishes.
+      then: The presentation can retain the applicable successful observation time and show the scoped failure without a pure inclusion policy performing network or storage work.
+    source_and_storage_diverge:
+      given: An injected source accepts a new PR observation while a supplied persistent-storage boundary fails to save it.
+      when: The page renders and the application is later restored.
+      then: Source success and local failure are distinguishable, and only independently confirmed durable evidence is available after restart under 0071.
+  unresolved:
+  - Concrete slices, module topology, composition owner and cross-scene lifecycle require review against the completed parent and dependency graph.
+  - Resolve and verify actual SpecificationCore and FSD integration versions before selecting APIs or claiming source compatibility.
+  - Real production dependencies, TDD evidence, source mapping, storage recovery and native interactions do not exist or have not been validated by this candidate.

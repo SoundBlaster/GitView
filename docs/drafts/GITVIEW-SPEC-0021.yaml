@@ -18,6 +18,9 @@ sources:
   fsd_layers: /Users/egor/Development/GitHub/FSD_iOS/FSDDemoApp/docs/rules/fsd-layers.md
   fsd_dependencies: /Users/egor/Development/GitHub/FSD_iOS/FSDDemoApp/docs/rules/fsd-imports.md
   fsd_source_commit: 58a9d54751c122b9c290fc173b770401ee2229c5
+  fsd_current_reference: /Users/egor/Development/GitHub/FSD_iOS/FSDDemoApp/docs/rules/fsd-layers.md
+  fsd_current_revision: 21731b9dd7d5008b832af5caca6d19f7a36fe54f
+  fsd_revision_boundary: The earlier recorded revision was not found in the current FSDDemoApp object database; equivalence to current local files is not established.
   specification_core: /Users/egor/Development/GitHub/Specification Project/SpecificationCore/README.md
   specification_core_source_commit: 483214469828c42f7b615654aa70d0acbecc4dbf
   autonomous_pilot: conversation:gitview/excerpt-72
