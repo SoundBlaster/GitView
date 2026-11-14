@@ -1,9 +1,10 @@
 # Issue и PullRequest: кандидаты значений и границы связей
 
 Статус: **смысловой кандидат для review**, не утверждение целого package или
-спецификаций. В `local.gitview.domain@0.2.0-draft-composition.5` оба понятия
-объявлены `ont:DomainEntity`; статус package — `draft`. Предложения ниже не
-изменяют его деклараций, полей, links или импорта `motivcore:Motive`.
+спецификаций. Исходный разбор подготовлен для draft.5; после
+[дополнительной сверки](issue-pr-motive-attribution-audit.md) выбран рабочий
+draft.9 с уточнёнными описаниями. Оба понятия остаются `ont:DomainEntity`,
+package остаётся `draft`, а импорт `motivcore:Motive` не изменён.
 
 ## Понятия отдельно от свойств и связей
 

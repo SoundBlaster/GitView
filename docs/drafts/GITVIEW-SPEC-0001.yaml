@@ -29,7 +29,7 @@ sources:
     sha256: 56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f
   ontology_draft: ontology/packages/gitview/README.md
   ontology_composition_pilot: ontology/pilots/motivation-composition/README.md
-  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.8/composition-context.yaml
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.9/composition-context.yaml
   project_sources_commit_scope: Pins the earlier background source documents; the later identity decision
     is separately pinned by sketch revision, excerpt refs and review document digest.
   repository_identity_decision:
@@ -70,17 +70,19 @@ specification:
     GitHub: The actor that establishes repository management through RegisterRepository.
     GitHubRepository: The contextual role of a Repository under GitHub management. The working ontology
       represents it as a protocol over the same Repository identity.
-    Issue: A GitHub issue shown in the overview; an issue may provide a motive for an actor but does not
-      itself act.
-    PullRequest: A GitHub pull request associated with proposed code changes. Creating a pull request
-      does not imply merging it.
+    Issue: A source-recorded issue addressing a question, problem or work request. An Issue may be
+      associated with a motive for an actor in a particular case but does not itself act; the association
+      and actor are not inferred merely from an Issue or a link.
+    PullRequest: A source-recorded proposal of code changes for consideration and possible inclusion.
+      Creating a pull request does not imply approval, merging or an achieved outcome.
     ReviewThread: A discussion relevant to review. Duration and resolution are separate; thresholds and
       data availability remain open.
-    CIStatus: Working term for observed check state. The owner selected counters of current individual
-      PR checks following GitHub's behavior, not counts of workflow runs or accumulated attempts. Exact
+    CIStatus: Working term for the observed source-reported state of one status-check entry. The owner
+      selected counters of current individual PR checks following GitHub's behavior, not counts of workflow
+      runs or accumulated attempts. Exact
       source mapping, special states, freshness and readiness interpretation remain open.
-    Metric: A measurement used in the overview. Its population, period and units need a separate definition
-      for each metric.
+    Metric: A measured result interpreted according to a rule and applicable subject, scope, time and
+      evidence. Its population, period and units need a separate definition for each metric.
   terminology_status:
     source_refs:
     - conversation:gitview/excerpt-16

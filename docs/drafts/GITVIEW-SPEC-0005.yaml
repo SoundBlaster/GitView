@@ -15,7 +15,7 @@ sources:
   authorization: conversation:gitview/excerpt-68
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   ontology_selection_scope: The draft.5 selection records an earlier context; the current working composition is recorded separately.
-  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.8/composition-context.yaml
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.9/composition-context.yaml
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
   objective: Maintain a named GitView project containing one or more GitHub-managed repositories.

@@ -34,6 +34,10 @@ specification:
     lifecycle: Refreshing the source body updates the observed description according to the scoped observation contract; an old extracted section is not presented as if extracted from a new body when extraction or refresh failed.
     provenance: The owner selected structured formats; extraction reliability and uncertainty behavior are agent-authored proposals.
   scenarios:
+    linked_issue_and_authored_reason:
+      given: A PR mentions an Issue and its description contains an authored Motivation section referring to that Issue.
+      when: The link and source text are presented.
+      then: Both remain identifiable with their own provenance; they do not by themselves establish which actor was motivated, that the PR caused a specific outcome or that the Issue is already resolved.
     unstructured:
       given: A legacy PR has a nonempty unstructured description without the selected headings.
       when: The PR overview is shown.

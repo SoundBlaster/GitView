@@ -1,0 +1,29 @@
+artifact_kind: specgraph_project_ontology_selection
+schema_version: 1
+packages:
+- id: local.gitview.domain
+  namespace: gitview
+  version: 0.2.0-draft-composition.9
+  source: ontology/candidates/domain-v0.2.0-draft.9/composition/domain-ontology-package.yaml
+  source_sha256: 8f54c12eeb8665c9763f7a347d2a67bf5e88920883d7318f08365e03a4e42b0f
+  ir: ontology/candidates/domain-v0.2.0-draft.9/composition/generated/ontology.normalized.json
+  ir_sha256: 6d3b5a2a7a18391eacfc4d09ecc22a533e1e3547c3ab6fa968067311327c6297
+- id: org.0al.motivation.core
+  namespace: motivcore
+  version: 0.1.0
+  source: ontology/pilots/motivation-composition/dependencies/motivation-core/domain-ontology-package.yaml
+  source_sha256: 3061eca33ddc2296c2c292695d98daf6697e92fb582da544bc1d5107721ae955
+  ir: ontology/pilots/motivation-composition/dependencies/motivation-core/generated/ontology.normalized.json
+  ir_sha256: 25da040f4bd0b014014b1ed996250cd4c17a64503355f6f558917bec9ddd1fe9
+- id: org.0al.events.core
+  namespace: eventcore
+  version: 0.2.0
+  source: ontology/pilots/motivation-composition/dependencies/events-core/domain-ontology-package.yaml
+  source_sha256: 92a3245fc9acd15748fd1fa3cfb8e4fdc8fda429a5fd6cffd7a97bc13f2f359e
+  ir: ontology/pilots/motivation-composition/dependencies/events-core/generated/ontology.normalized.json
+  ir_sha256: e6c932ad8c492d168b63dbe112335c270d88ff758e016f3502031aefe9dea916
+profiles:
+- ontologyc-motivation-composition-v1
+composition:
+  dependency_rule: explicit
+  name_resolution_rule: qualified
