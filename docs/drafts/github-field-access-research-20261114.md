@@ -54,6 +54,14 @@ GitHub отдельно указывает, что check и commit status с о�
 Эта документация не устанавливает, как GitView должен отнести каждый
 special conclusion к цвету или считать повторные попытки.
 
+В [REST combined commit status](https://docs.github.com/en/rest/commits/statuses)
+общий `pending` возможен даже при отсутствии statuses. Он не является отдельным
+pending check и не покрывает автоматически check runs. В документации
+[check runs](https://docs.github.com/en/rest/checks/runs) отдельно описаны
+фильтры `latest` и `all`, а также пустой `pull_requests` для некоторых
+fork-сценариев. Последний не доказывает отсутствие связи с PR. Это границы
+кандидатов 0060–0061, не подтверждение полного status box в GitView.
+
 GitHub описывает `neutral`, `skipped`, `cancelled`, `timed_out`, `stale` и
 `action_required` как отдельные conclusions, а не одно состояние исполнения.
 В документации required checks `skipped` и `neutral` могут считаться успешными
@@ -73,6 +81,11 @@ approval. [GitHub: GraphQL pull requests](https://docs.github.com/en/graphql/ref
 Отзыв review и применимость approval также зависят от изменений и настроек;
 это не выводится из количества открытых тредов. [GitHub: dismissing a review](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/dismissing-a-pull-request-review).
 Документация не заменяет проверку выбранного query и прав доступа.
+
+Схема [GraphQL PullRequestReview](https://docs.github.com/en/graphql/reference/pulls)
+также содержит отдельную связь с commit и время отправки review. Эта связь не
+заменяет текущий `reviewDecision` и сама не устанавливает, применимо ли старое
+approval к новой head-ревизии.
 
 ## Дополнение: имена refs и смысл агрегатов
 

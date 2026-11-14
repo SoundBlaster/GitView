@@ -92,6 +92,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    empty_status_rollup_on_fork:
+      given: A fork-based PR has a source combined commit-status state pending because no status contexts exist, and check-run association and coverage are not established.
+      when: The Project and PR CI summaries are evaluated.
+      then: The aggregate pending state does not fabricate an individual pending check, an empty pull_requests array does not prove no checks apply, and the complete CI total remains unknown.
     source_labels_do_not_imply_other_facts:
       given: A source PR observation supplies a head ref name without confirming that the ref is still accessible, and a linked Issue has a sub-issue summary whose completed value is not established as equivalent to all closed children.
       when: Their selected overview facts are displayed.

@@ -229,6 +229,12 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+0060–0062 дополнены документальными границами GitHub для fork check-run
+association, combined `pending` без отдельных statuses и связи review с
+commit. [Четыре кандидата](evidence/autonomous-goal-ontology-check-ci-source-20261114.json)
+прошли проверки без findings, gaps и warnings. Эквивалентность реальному PR
+status box, source mapping и review policy остаются непроверенными.
+
 В 0039 и 0041 добавлены документированные ограничения GitHub: имя ref может
 сохраниться после удаления ветки; PR commits connection имеет смысл
 head-versus-base; `subIssuesSummary.completed` без дополнительного evidence

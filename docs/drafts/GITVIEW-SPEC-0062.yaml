@@ -13,6 +13,7 @@ sources:
   parent: docs/drafts/GITVIEW-SPEC-0028.yaml
   agreed_summary: docs/drafts/project-summary-proposal.md
   access_research: docs/drafts/github-field-access-research-20261114.md
+  github_review_schema: https://docs.github.com/en/graphql/reference/pulls
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Outstanding review requests, source review assessment and unresolved review threads are separate facts with separately attributable coverage and observation context.
@@ -29,6 +30,7 @@ specification:
   contract:
     requests: An outstanding-review-request condition requires evidence that at least one person or team is currently requested for this PR in the observation context. It is distinct from a source decision that review is required and from a personal request to the GitView operator. GitHub documents that a requested reviewer is removed from the requested-reviewer result when they submit a review; absence from that result alone does not establish approval or even the reason for absence.
     assessment: A changes-requested condition uses the applicable current source review assessment with its own scope and observation time. An individual historical review or a newly observed head revision alone is not proof of the current aggregate assessment; dismissed or superseded reviews require source-specific interpretation. A source assessment remains distinct from thread resolution and outstanding review requests.
+    review_commit: GitHub's individual PR review can have an associated commit and a submission time, while the PR reviewDecision is a separate current assessment. Preserve any supported individual review commit and observation context where used; a review's commit alone neither establishes the current aggregate decision nor proves that an earlier approval is valid or invalid for a newer head. A nullable or unavailable commit is not evidence of an empty review or a successful assessment.
     threads: An unresolved-thread condition concerns identifiable review threads whose source resolution state is known. A positive observation can establish an affected PR under partial coverage; a known zero or absence requires sufficiently complete relevant threads and resolution states. Thread count, PRs with at least one unresolved thread and affected Repositories are different units. An unresolved thread need not mean that the source assessment is changes requested, and a changes-requested assessment can exist without an unresolved thread.
     scope_and_route: Project counts in 0057 count distinct open PRs for each named attention condition. A destination opened from one of those counts retains its originating Project, open lifecycle, named predicate, applicable time and source scope. A thread-count origin can open distinct affected PRs without asserting equal numbers of threads and cards. Explicitly changing a filter is distinct from silently changing the origin condition.
     uncertainty: Each predicate uses its own identity, access, source and time evidence. An incomplete request list, unavailable assessment or incomplete thread collection is not a confirmed negative. Known positive observations may be shown with incomplete coverage; stale or differently timed inputs are not represented as one simultaneous current review state without evidence under 0044 and 0046.
@@ -56,6 +58,10 @@ specification:
       given: Review approval was observed at T1 and the PR head changed at T2 without a new review assessment.
       when: The PR is previewed.
       then: The old approval retains its context and is not asserted to apply to the new revision solely because the head was refreshed.
+    review_commit_without_current_decision:
+      given: An individual submitted review is associated with commit A, the PR head is now B, and no current reviewDecision is observed.
+      when: Review signals are displayed.
+      then: The individual review's supported commit and time may be retained as historical context, but neither a current approval nor a current rejection is inferred solely from its association with A.
   unresolved:
   - Verify source-specific semantics and permissions for review decisions, reviewer requests, dismissals and thread resolution, including partial responses.
   - Define exact display and accessibility treatment when review signals overlap or have different observation times.
