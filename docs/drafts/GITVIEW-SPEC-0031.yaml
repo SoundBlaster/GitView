@@ -7,7 +7,6 @@ draft_status: pre_canonical
 refines:
 - GITVIEW-SPEC-0015
 depends_on:
-- GITVIEW-SPEC-0016
 - GITVIEW-SPEC-0017
 - GITVIEW-SPEC-0019
 - GITVIEW-SPEC-0023
