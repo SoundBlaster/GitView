@@ -482,3 +482,9 @@ GitHub App user authorization — кандидат, а не подтверждё
 источники, permissions, confidential participant и native flow требуют
 дальнейшей проверки. [Проверка словаря](evidence/autonomous-goal-ontology-check-authorization-choice-20261114.json)
 для 0019, 0043 и 0087 не нашла findings и gaps.
+
+[Документальная сверка категорий GitHub App](github-app-permission-coverage-20261114.md)
+отделяет примеры source permissions от непроверенного полного набора. Candidate
+0088 уточняет работу обзора при неполном grant, не выбирая конкретные запросы;
+реальный source и нативный интерфейс не проверялись. [Проверка словаря](evidence/autonomous-goal-ontology-check-capability-coverage-20261114.json)
+для 0043 и 0088 не нашла findings и gaps.

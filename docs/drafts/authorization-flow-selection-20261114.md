@@ -66,3 +66,8 @@
 [installation and authorization](https://docs.github.com/en/apps/using-github-apps/installing-a-github-app-from-a-third-party).
 Они подтверждают документированные границы на момент проверки, но не доступность
 всех данных GitView или реальную работу устройства.
+
+[Сверка выбранных категорий](github-app-permission-coverage-20261114.md)
+приводит документированные примеры read permissions и отдельные пробелы.
+Продуктовое поведение при частичном доступе предложено в 0088; это не выбор
+окончательного permission set или подтверждение GraphQL query.
