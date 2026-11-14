@@ -493,3 +493,11 @@ false. Критерий приведён к существующей трёхз�
 management. [Кандидат удаления membership](../../ontology/review/remove-repository-action-candidate.md)
 дополнен конкретными до/после и отличием от удаления Project. Формальное
 снятие отношения во времени ещё не определено; package не менялся.
+
+## Влияние ontology gaps на specs
+
+Создана [матрица влияния](../../ontology/review/specification-impact-matrix.md),
+различающая необходимость формального binding и возможность продолжать
+поведенческие specs. Сверена хронология identity: первоначальный выбор A не
+выбирал формат ID, но позднее сохранённое `excerpt-60-reply` подтверждает
+согласие с предложенными numeric REST правилами в узком scope одного GitHub.
