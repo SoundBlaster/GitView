@@ -63,8 +63,9 @@ specification:
       content from display but retain records until the user clears them. Successful reauthorization for
       the same source identity may restore access. A temporary network failure alone does not lock previously
       authorized data.
-    disconnect: Provide a deliberate local disconnect action that removes the app's credential and stops
-      refresh for that account. Lock its private cached content while disconnected and retain records
+    disconnect: Provide a deliberate local disconnect action that stops new refresh for that account and
+      attempts to remove the app's credential. Confirm local credential removal only when established;
+      an unsuccessful or uncertain removal remains a visible recovery problem under 0058. Lock its private cached content while disconnected and retain records
       until the user explicitly clears local data. Reconnecting the same source identity and re-establishing
       access may unlock content. No GitHub object is deleted.
   scenarios:
@@ -85,8 +86,8 @@ specification:
     disconnected:
       given: One GitHub account is connected.
       when: The operator disconnects it.
-      then: The local credential is removed, refresh stops, private cached content is locked, and no repository
-        is deleted from GitHub.
+      then: New refresh stops and private cached content is locked. Credential removal is reported as complete
+        only if confirmed; otherwise the local removal problem remains visible. No repository is deleted from GitHub.
   unresolved:
   - Exact authorization method, least-required GitHub permissions, token lifecycle and account recovery.
   - Exact local clear-data interaction and behavior after device change.

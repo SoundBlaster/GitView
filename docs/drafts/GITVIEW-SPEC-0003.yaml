@@ -40,17 +40,17 @@ specification:
   - gitview:Issue
   failed_refresh_feedback:
     required: Show the last successful update time for the affected data and a visible indication that
-      the GitHub refresh failed. If there has been no successful update, show that no data has been loaded
-      yet.
+      the GitHub refresh failed. If no observation has been accepted for the affected scope, show that it
+      remains unobserved; partial accepted observations retain their own context and incomplete coverage.
     example: Updated at 14:32 · Could not refresh GitHub data
     proposed_placement: A visible status in the affected view, such as a warning icon with a text label
       in the toolbar. The exact component remains open.
   proposed_behavior:
-    read: Render available stored data without waiting for a GitHub request. A refresh may run separately;
+    read: Render available stored data eligible for display under the current access policy without waiting for a GitHub request. A refresh may run separately;
       opening a view does not require a new fetch for every visible object.
     refresh: Apply a successful observation to the scope it covers and record the time that scope was
       observed. For example, reading repository metadata alone does not refresh its PR or Issue lists.
-    failed_refresh: Keep last known data and its observation time. Record the outcome of the refresh separately
+    failed_refresh: Keep last known data and its observation time, with display subject to the access policy in 0019. Record the outcome of the refresh separately
       so a failed attempt does not make older values appear current.
     no_observation: Show that GitView has no data for the scope yet. An empty result requires a successful
       observation with enough coverage to confirm it.
@@ -72,7 +72,7 @@ specification:
       responses and respect GitHub retry or reset headers when present.
   review_scenarios:
     open_from_storage:
-      given: GitView previously saved observations for a repository and its PRs.
+      given: GitView previously saved observations for a repository and its PRs that remain permitted for display.
       when: The overview opens while GitHub is unreachable.
       then: The stored overview can open and indicates when the data was last observed.
     successful_scoped_refresh:
@@ -82,8 +82,8 @@ specification:
         recorded.
     failed_refresh:
       given: A PR list has a previous successful observation.
-      when: The next refresh fails.
-      then: The previous list remains available. The view shows the previous successful update time and
+      when: The next refresh fails temporarily without an explicit access denial.
+      then: The permitted previous list remains available. The view shows the previous successful update time and
         a visible GitHub refresh error.
     first_load_without_data:
       given: GitView has never successfully observed this Issue list.
@@ -121,12 +121,12 @@ specification:
     observation time for its requested scope; successfully observed facts from a partial response may retain
     their own observation time while scope coverage remains incomplete. A never-loaded collection is distinct
     from confirmed empty.
-  - Manual refresh, stale-on-open refresh and system-granted background refresh use the same budget and
-    observable outcome; iOS background execution is opportunistic.
+  - Manual refresh, stale-on-open refresh and system-granted background refresh obey applicable shared source
+    limits and report their own scoped outcomes; execution budgets may differ and iOS background execution is opportunistic.
   - A page-limited result remains partial, and unavailable private source data is not proof of deletion.
   pilot_scenarios:
     partial_refresh:
-      given: Two repositories have last-known PR lists.
+      given: Two repositories have last-known PR lists permitted for display.
       when: Refreshing the first succeeds and the second fails.
       then: The first list receives its own observation time; the second retains its earlier data and
         shows failure and time.
@@ -143,8 +143,8 @@ acceptance:
   observation time for its requested scope; successfully observed facts from a partial response may retain
   their own observation time while scope coverage remains incomplete. A never-loaded collection is distinct
   from confirmed empty.
-- Manual refresh, stale-on-open refresh and system-granted background refresh use the same budget and
-  observable outcome; iOS background execution is opportunistic.
+- Manual refresh, stale-on-open refresh and system-granted background refresh obey applicable shared source
+  limits and report their own scoped outcomes; execution budgets may differ and iOS background execution is opportunistic.
 - A page-limited result remains partial, and unavailable private source data is not proof of deletion.
 acceptance_evidence:
 - criterion: The pilot contract and its boundary scenarios are independently checkable.

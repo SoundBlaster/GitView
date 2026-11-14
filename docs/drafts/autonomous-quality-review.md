@@ -359,3 +359,8 @@ Candidate 0074 уточняет области, плотность и возвр
 Candidate 0075 уточняет конкуренцию scroll, pinch и static preview;
 [проверка словаря](evidence/autonomous-goal-ontology-check-grid-gestures-20261114.json)
 не нашла findings и gaps. Gesture arbitration и доступность на iOS не проверены.
+
+[Сверка крупных ветвей](product-graph-balance-review-20261114.md) выявила
+две несогласованности между родителями и уточнениями. Родители 0003 и 0019
+исправлены и прошли [проверку словаря](evidence/autonomous-goal-ontology-check-parent-reconciliation-20261114.json)
+без findings и gaps. Это не исчерпывающая проверка всех зависимостей.
