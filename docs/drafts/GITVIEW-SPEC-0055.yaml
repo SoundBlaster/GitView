@@ -1,0 +1,62 @@
+id: GITVIEW-SPEC-0055
+title: GitView - Fixed PR cohort completion view
+kind: spec
+created_at: '2026-11-14T15:19:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0030
+depends_on:
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0046
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0030.yaml
+  owner_today: conversation:gitview/excerpt-55-reply
+  owner_unfinished: conversation:gitview/excerpt-56-reply
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A PR completion view states the fixed cohort, its source scope, capture time and coverage before presenting progress.
+- Current observed open, merged, closed without merge and unknown PR states remain distinguishable for that cohort.
+- A stale, incomplete, identity-ambiguous or restricted input is not presented as an exact current total or silently treated as zero.
+- A PR cohort is not labeled a count of independent tasks and does not merge linked Issues into the PR count.
+specification:
+  objective: Offer an interpretable way to follow the completion of a fixed set of PRs without assuming that current states reconstruct historical events.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Metric
+  contract:
+    cohort: For this working proposal, a fixed cohort is the distinct source-confirmed PR identities in an explicitly identified Project, Repository or unique portfolio selection at a stated capture time. Capture retains the selection, filter and relevant Repository membership context; later additions or removals from Today or Project membership do not silently add or remove identities from that cohort. A new capture is a different cohort. The operator must be able to tell which cohort and scope are being displayed; exact capture interaction remains open.
+    start_quality: The capture states whether the selected scope and identities were sufficiently observed. If capture is incomplete or identity is ambiguous, any shown cohort describes the observed subset with that limitation; it is not called the complete starting population. A last-known value is not automatically a lower bound on present work.
+    current_breakdown: For the captured identities, show the latest permitted source-observed lifecycle as open, merged, closed without merge or unknown, together with relevant observation times and coverage. Draft is a separate attribute of open PRs. Do not infer that every closed-without-merge PR was completed successfully or that an unknown state is closed.
+    arithmetic: A remaining-open count counts distinct cohort PRs confirmed open in the stated observation context. It is not calculated as cohort size minus merged count because closed-without-merge and unknown states exist. Exact category totals for the full cohort require sufficiently complete identity, state and access evidence. Observations at different times are not labeled as a single simultaneous source snapshot without additional evidence.
+    transitions: A later confirmed reopening or state change updates the same cohort PR's current observed category rather than creating another cohort identity. Past open-state trend points require an observation or reliable reconstructible state at the relevant time; current state alone does not prove the path, event count or values between snapshots under 0030.
+    evolving_work: New PRs created after capture are not silently included in the fixed cohort, though they can remain visible in Today or a separately defined new capture. The view must not imply that the fixed cohort represents all current Project work after its scope or membership changes.
+    scope_and_access: Shared Repository identities are deduplicated for a unique portfolio cohort under 0029. A Project cohort retains the membership basis at capture for that labeled cohort; this does not assert historical membership before capture. Explicit access denial or disconnect restricts private inputs and derived counts under 0036 and 0046 rather than counting them as zero.
+    presentation: A current breakdown and a historical open-work trend are separate claims. Use the term burn-down for a trend only when the measured unit, fixed cohort, time points and sufficient coverage are clear; otherwise show the known breakdown or an incomplete series without claiming a verified burn-down. Layout and exact capture control are not prescribed.
+    provenance: The owner wants to see a day's substantial work remain visible while it completes. A fixed captured PR cohort and its measurement semantics are agent-authored proposals, not an independently accepted product policy.
+  scenarios:
+    hundred_prs:
+      given: A complete fixed cohort contains 100 distinct PRs; a later sufficiently covered observation reports 95 merged and 5 open.
+      when: The cohort breakdown is displayed.
+      then: It identifies the same 100 PR cohort, 95 merged and 5 open, with its scope and observation context; it does not claim 100 independent human tasks or infer intermediate history.
+    closed_without_merge:
+      given: A sufficiently observed 100-PR cohort contains 90 merged, 5 closed without merge and 5 open.
+      when: Remaining open is displayed.
+      then: The open count is 5 and the 5 unmerged closures remain separate; subtracting merged from 100 would not be a valid open count.
+    new_pr_and_reopening:
+      given: A fixed cohort has been captured; afterward a new PR appears and a cohort PR is observed open after a prior closure.
+      when: The cohort breakdown is updated.
+      then: The new PR is not silently added to the fixed cohort, and the reopened cohort PR remains the same identity in the open category.
+    missing_state:
+      given: A 100-PR cohort has 95 confirmed merged, 4 confirmed open and one PR whose current state is unknown.
+      when: Current counts are shown.
+      then: The unknown PR is not silently counted as open or closed and the result is not labeled a fully classified exact current snapshot.
+  unresolved:
+  - Whether and how the operator initiates and retains a fixed cohort, and whether this view belongs to the first release.
+  - Source evidence, freshness and storage sufficient for cohort capture and historical points; no API or persistence mechanism is selected.
+  - Whether an analogous Issue cohort or a different definition of burn-down is desired; neither is implied by PR counts.
