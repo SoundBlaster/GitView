@@ -117,8 +117,10 @@ specification:
   pilot_contract:
   - Read previously stored observations first; record source scope, successful observation time, completeness
     and failed refresh separately.
-  - A failed or interrupted refresh cannot erase last successful data or advance its success timestamp;
-    a never-loaded collection is distinct from confirmed empty.
+  - A failed or interrupted refresh cannot erase last successful data or advance the last complete successful
+    observation time for its requested scope; successfully observed facts from a partial response may retain
+    their own observation time while scope coverage remains incomplete. A never-loaded collection is distinct
+    from confirmed empty.
   - Manual refresh, stale-on-open refresh and system-granted background refresh use the same budget and
     observable outcome; iOS background execution is opportunistic.
   - A page-limited result remains partial, and unavailable private source data is not proof of deletion.
@@ -137,8 +139,10 @@ specification:
 acceptance:
 - Read previously stored observations first; record source scope, successful observation time, completeness
   and failed refresh separately.
-- A failed or interrupted refresh cannot erase last successful data or advance its success timestamp;
-  a never-loaded collection is distinct from confirmed empty.
+- A failed or interrupted refresh cannot erase last successful data or advance the last complete successful
+  observation time for its requested scope; successfully observed facts from a partial response may retain
+  their own observation time while scope coverage remains incomplete. A never-loaded collection is distinct
+  from confirmed empty.
 - Manual refresh, stale-on-open refresh and system-granted background refresh use the same budget and
   observable outcome; iOS background execution is opportunistic.
 - A page-limited result remains partial, and unavailable private source data is not proof of deletion.
