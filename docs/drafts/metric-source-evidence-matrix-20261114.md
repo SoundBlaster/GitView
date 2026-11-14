@@ -41,3 +41,7 @@ scope, identity, access, времени, predicate version и соответст
 ## Ограничение источника истории check runs
 
 [REST API check runs](https://docs.github.com/en/rest/checks/runs) указывает, что при превышении лимита одноимённых runs в check suite GitHub начинает автоматически удалять старые; операции перечисления также предлагают фильтры `latest` и `all`. Вывод для GitView: `all` не доказывает существование уже удалённых записей и полноту прошлой истории. Отсутствие конкретного run не устанавливает причину его отсутствия. Ранее сохранённое разрешённое наблюдение сохраняет свой контекст и независимые правила доступа и очистки. Документация не доказывает конкретную историю или права данного аккаунта.
+
+## Состояние и события review
+
+[GraphQL PullRequest](https://docs.github.com/en/graphql/reference/pulls#pullrequest) описывает `reviewDecision` как текущее состояние и отдельно перечисляет запросы и threads; [типы событий review](https://docs.github.com/en/graphql/reference/pulls#reviewrequestedevent) включают запрос, удаление запроса и dismiss. [REST review requests](https://docs.github.com/en/rest/pulls/review-requests#get-all-requested-reviewers-for-a-pull-request) указывает, что после отправки review человек больше не входит в текущий список requested reviewers. Вывод для GitView: событие не равно состоянию на произвольную прошлую дату и не подтверждает полноту Project; для реконструкции требуется отдельно обоснованная полнота baseline и переходов. Наличие конкретных событий, доступ и их полноценность для аккаунта не проверены.
