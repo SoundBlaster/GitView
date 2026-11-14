@@ -1,0 +1,39 @@
+{
+  "scope": "Declared graph links and SpecGraph domain_vocabulary advisory; not behavior or semantic acceptance",
+  "context": "ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml",
+  "raw_reports": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-signal-origin-aggregation-xmsxqcxs",
+  "graph_report": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/signal-origin-readiness-20261114.json",
+  "graph_sha256": "3dd5c336e8ec0b30a5cee43ab1356135700c5835c2e1ee9fec8d5cd22085f218",
+  "graph_node_count": 119,
+  "graph_structural_leaves": 53,
+  "unrooted": [],
+  "acyclic_relations": [
+    "refines",
+    "depends_on",
+    "refines + depends_on"
+  ],
+  "navigation_depends_on_aggregation": true,
+  "aggregation_reaches_navigation": false,
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0092",
+      "input_sha256": "9ea3480b9b379fd613eaf0b1020be8f4bc6590400f2eab2decf420a637529d83",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "a6c7a6d10b94ed888be4e0fd856aa1c22d36970e36cfa2c73e7f5ae7bb02db8b"
+    },
+    {
+      "id": "GITVIEW-SPEC-0119",
+      "input_sha256": "7af41c04c40649fabc92b046498af541aeef81bac38ef5fbff37e3a7e4350106",
+      "outcome": "checked",
+      "findings": 0,
+      "warnings": 0,
+      "gaps": 0,
+      "passed_checks": 0,
+      "raw_report_sha256": "53ea011e7e2b6e0063d601a08c6121b6cd91b7c66604e5f3f424c1a36b3800b2"
+    }
+  ]
+}
