@@ -32,6 +32,7 @@ depends_on:
 - GITVIEW-SPEC-0058
 - GITVIEW-SPEC-0059
 - GITVIEW-SPEC-0061
+- GITVIEW-SPEC-0062
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -113,6 +114,10 @@ specification:
       given: A Project's complete observed CI summary contains one open PR with a timed-out current entry and a second open PR with a skipped entry, with no source changes during navigation.
       when: The operator opens the failure-category signal, previews the matching PR, then inspects the second PR in the unfiltered grid.
       then: The timeout contributes one affected PR and remains identifiable as a timeout; the skipped result is not described as a successful execution or hidden from an accessible inspection path.
+    review_signal_to_preview:
+      given: One open PR has a current changes-requested assessment and zero unresolved threads, while another has two unresolved threads and unknown assessment.
+      when: The operator opens each Project review-attention signal and previews its matching PR with no intervening source change.
+      then: The changes-requested destination identifies the first PR; the thread destination identifies the second as one affected PR with two threads, and neither signal invents the other's review assessment.
     denied_preview_and_share:
       given: A private PR preview is open and a source link was eligible before explicit access denial.
       when: Denial is applied and the operator attempts to share the link.

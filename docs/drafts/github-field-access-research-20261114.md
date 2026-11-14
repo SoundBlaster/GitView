@@ -50,3 +50,14 @@ GitHub описывает `neutral`, `skipped`, `cancelled`, `timed_out`, `stale
 [required checks](https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks).
 Candidate [0061](GITVIEW-SPEC-0061.yaml) предлагает консервативные счётчики;
 это решение GitView, а не утверждение о точных цветах GitHub.
+
+## Дополнение: review
+
+GitHub документирует отдельные поля `reviewDecision`, `reviewRequests` и
+`reviewThreads` у PR. В REST результат requested reviewers перестаёт включать
+reviewer после отправки им review; сам по себе этот факт не доказывает
+approval. [GitHub: GraphQL pull requests](https://docs.github.com/en/graphql/reference/pulls),
+[REST review requests](https://docs.github.com/en/rest/pulls/review-requests).
+Отзыв review и применимость approval также зависят от изменений и настроек;
+это не выводится из количества открытых тредов. [GitHub: dismissing a review](https://docs.github.com/en/pull-requests/how-tos/review-pull-requests/dismissing-a-pull-request-review).
+Документация не заменяет проверку выбранного query и прав доступа.

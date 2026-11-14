@@ -1,0 +1,62 @@
+id: GITVIEW-SPEC-0062
+title: GitView - Independent review attention conditions
+kind: spec
+created_at: '2026-11-14T16:08:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0028
+depends_on:
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0046
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0028.yaml
+  agreed_summary: docs/drafts/project-summary-proposal.md
+  access_research: docs/drafts/github-field-access-research-20261114.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Outstanding review requests, source review assessment and unresolved review threads are separate facts with separately attributable coverage and observation context.
+- The agreed Project attention counts and destinations use the same open-PR scope and named condition; thread counts and affected-PR counts remain different units.
+- Neither zero outstanding reviewers nor zero unresolved threads alone establishes approval, completed review or merge readiness.
+- Incomplete or unavailable review evidence remains uncertain and is not announced as a healthy zero.
+specification:
+  objective: Preserve independent review signals from Project summary through PR inspection without inferring missing decisions.
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:ReviewThread
+  contract:
+    requests: An outstanding-review-request condition requires evidence that at least one person or team is currently requested for this PR in the observation context. It is distinct from a source decision that review is required and from a personal request to the GitView operator. GitHub documents that a requested reviewer is removed from the requested-reviewer result when they submit a review; absence from that result alone does not establish approval or even the reason for absence.
+    assessment: A changes-requested condition uses the applicable current source review assessment with its own scope and observation time. An individual historical review or a newly observed head revision alone is not proof of the current aggregate assessment; dismissed or superseded reviews require source-specific interpretation. A source assessment remains distinct from thread resolution and outstanding review requests.
+    threads: An unresolved-thread condition concerns identifiable review threads whose source resolution state is known. A positive observation can establish an affected PR under partial coverage; a known zero or absence requires sufficiently complete relevant threads and resolution states. Thread count, PRs with at least one unresolved thread and affected Repositories are different units. An unresolved thread need not mean that the source assessment is changes requested, and a changes-requested assessment can exist without an unresolved thread.
+    scope_and_route: Project counts in 0057 count distinct open PRs for each named attention condition. A destination opened from one of those counts retains its originating Project, open lifecycle, named predicate, applicable time and source scope. A thread-count origin can open distinct affected PRs without asserting equal numbers of threads and cards. Explicitly changing a filter is distinct from silently changing the origin condition.
+    uncertainty: Each predicate uses its own identity, access, source and time evidence. An incomplete request list, unavailable assessment or incomplete thread collection is not a confirmed negative. Known positive observations may be shown with incomplete coverage; stale or differently timed inputs are not represented as one simultaneous current review state without evidence under 0044 and 0046.
+    compact: A compact card or preview can prioritize a subset of the review facts but provides an accessible non-color route to the available separate signals and their limitations without requiring individual thread content. Zero unresolved threads or no outstanding reviewer is not rendered as approval or completed review by itself. Exact glyphs and layout remain open.
+    source_boundary: GitHub documents separate review requests, current review decision and review-thread connections. This motivates separate facts but does not prove a particular query, permission, availability, freshness or equivalence to the GitHub interface. GitView remains read-only and does not resolve threads, submit reviews or change source state.
+    provenance: Review attention and counters were selected by the owner; precise predicates, uncertainty and routing here are agent-authored refinements.
+  scenarios:
+    request_removed_after_review:
+      given: GitHub reports no currently requested reviewers after a reviewer submitted a comment-only review, and no approval assessment is established.
+      when: Review attention is shown.
+      then: The app does not infer approval or a completed approval requirement from the empty request result.
+    changes_without_open_threads:
+      given: An open PR has a current changes-requested assessment and a complete observation of zero unresolved threads.
+      when: Project and PR review signals are displayed.
+      then: It contributes to the changes-requested PR count but not the unresolved-thread count, with both facts separately identifiable.
+    thread_without_changes:
+      given: An open PR has two confirmed unresolved review threads and no source assessment establishing changes requested.
+      when: A thread-count signal is opened.
+      then: The source signal can report two threads and the destination one affected PR, without inventing a changes-requested assessment.
+    partial_review_requests:
+      given: One open PR has a confirmed outstanding review request and another PR's request collection is incomplete with no known request.
+      when: The Project's requested-review count and destination are shown.
+      then: The confirmed positive remains available, the second PR is not declared a confirmed non-match and Project coverage remains incomplete.
+    stale_review_and_new_head:
+      given: Review approval was observed at T1 and the PR head changed at T2 without a new review assessment.
+      when: The PR is previewed.
+      then: The old approval retains its context and is not asserted to apply to the new revision solely because the head was refreshed.
+  unresolved:
+  - Verify source-specific semantics and permissions for review decisions, reviewer requests, dismissals and thread resolution, including partial responses.
+  - Define exact display and accessibility treatment when review signals overlap or have different observation times.
+  - No native UI, GitHub query or review-policy behavior has been executed or validated.

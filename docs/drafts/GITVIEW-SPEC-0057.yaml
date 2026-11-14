@@ -14,6 +14,7 @@ depends_on:
 - GITVIEW-SPEC-0046
 - GITVIEW-SPEC-0056
 - GITVIEW-SPEC-0061
+- GITVIEW-SPEC-0062
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0013.yaml
   agreed_summary: docs/drafts/project-summary-proposal.md
@@ -40,7 +41,7 @@ specification:
     repository_count: Count distinct confirmed saved member Repository identities. If configuration or identity is uncertain, do not assert an exact distinct count. A coverage indication identifies the particular observed category and scope it describes; available membership is not itself evidence of successful GitHub observation.
     open_work: Count distinct source-confirmed open PRs, open draft PRs and open Issues separately for the stated observation context. Draft PRs are a subset of open PRs, not an additional category of work. Source data must establish identity, open lifecycle and, for the subset, the draft flag; an unknown flag is not non-draft. PR and Issue counts are not a count of independent tasks.
     failed_ci: Count distinct open PRs with at least one confirmed current status-check entry in the failure category of 0061 for the applicable revision and observation context. This includes a supported timeout or status error without calling either a failed test. A positive may be known with partial check coverage, but absence requires sufficient coverage under 0028 and 0061. Optionally also report distinct affected Repositories as a separate unit; neither count is the number of failed entries. A zero failure count does not classify special outcomes or establish healthy CI.
-    review_waiting: Count distinct open PRs for which source evidence establishes an outstanding review request in the stated context. A request for a team or person is not automatically a request to the GitView operator, and an unknown request state is not zero. Source semantics for identifying an outstanding request remain to be verified.
+    review_waiting: Count distinct open PRs for which source evidence establishes an outstanding review request in the stated context under 0062. A request for a team or person is not automatically a request to the GitView operator or proof of a review-required decision, and an unknown request state is not zero.
     changes_requested: Count distinct open PRs whose applicable source review assessment reports changes requested. Preserve its revision and observation context; do not derive it from thread count or assume every change request leaves an unresolved thread.
     unresolved_review_threads: Report the number of distinct unresolved review threads and the number of distinct open PRs containing at least one separately. The first unit is threads, the second PRs. A confirmed unresolved thread can establish a positive partial observation, while an empty or complete total requires sufficient thread identity and resolution coverage.
     blocked_issues: Count distinct open Issues with at least one explicitly linked blocking Issue that is confirmed open in the relevant observation context. A mention, parent relationship or unknown blocker state is not proof of this predicate. Keep the relation and each observed lifecycle context distinct; incomplete source links or states prevent a confirmed absence.
