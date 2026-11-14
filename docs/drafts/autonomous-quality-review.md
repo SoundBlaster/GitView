@@ -245,6 +245,12 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 [проверку словаря](evidence/autonomous-goal-ontology-check-architecture-20261114.json)
 без findings и gaps; Swift dependency graph и TDD evidence не проверялись.
 
+Обновлённый 0043 связывает новые межветвевые сценарии и зависимости;
+[матрица приёмки](cross-branch-acceptance-matrix.md) отделяет ожидаемые
+результаты от необходимых будущих свидетельств. 0043 прошёл [проверку словаря](evidence/autonomous-goal-ontology-check-cross-branch-20261114.json)
+без findings и gaps, а объединённый граф 54 узлов — ручную проверку ссылок и
+циклов. Ни один из сквозных сценариев не выполнялся.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.

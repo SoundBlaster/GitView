@@ -15,11 +15,19 @@ depends_on:
 - GITVIEW-SPEC-0028
 - GITVIEW-SPEC-0029
 - GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0032
 - GITVIEW-SPEC-0033
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0037
 - GITVIEW-SPEC-0039
 - GITVIEW-SPEC-0041
+- GITVIEW-SPEC-0045
+- GITVIEW-SPEC-0046
+- GITVIEW-SPEC-0048
+- GITVIEW-SPEC-0049
+- GITVIEW-SPEC-0052
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0054
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -69,6 +77,30 @@ specification:
       given: A refresh of a private Repository was started before an explicit source access denial.
       when: Its response arrives after denial without access having been re-established.
       then: The response alone does not unlock the restricted private data or change the denial into a successful empty result.
+    interrupted_setup_restart:
+      given: A confirmed two-repository setup has durable selection context; the first Project is saved and the second outcome is unknown when the process stops.
+      when: A new session reads local configuration and the operation record.
+      then: The first Project remains available, the second outcome is reconciled or remains explicitly unknown, and no second default association or automatic submission is invented.
+    deferred_and_coalesced_refresh:
+      given: A Project view requests refresh of PRs and Issues while an existing request covers PRs only, and the Issue request cannot start because of a known budget constraint.
+      when: The PR request succeeds and the operator opens another Project.
+      then: Only the original Project's covered PR scope receives that result; its Issue scope remains deferred or incomplete and the other Project is not marked refreshed.
+    partial_signal_navigation:
+      given: A Project has an observed failed check on one identified PR and another PR has unknown checks, with incomplete Project coverage.
+      when: The operator opens the failed-CI signal.
+      then: The observed PR is available under the failed-check condition, the unknown portion is not silently excluded as healthy, and the destination does not claim an exhaustive current total.
+    denied_preview_and_share:
+      given: A private PR preview is open and a source link was eligible before explicit access denial.
+      when: Denial is applied and the operator attempts to share the link.
+      then: Restricted content is absent from visual and assistive representations, the link is not supplied to the share flow after denial, and an accessible recovery path is available.
+    historical_outcome_reopened:
+      given: An Issue was closed in the selected past week and subsequently reopened, with source evidence sufficient for that event.
+      when: The operator opens the week's distinct-Issue closure selection.
+      then: The Issue can appear once with its current open state; the historical condition is not silently replaced with a current-closed or Today filter.
+    format_and_external_objects:
+      given: A participating authoring process requires the agreed PR sections and a separate external Issue has an unstructured description.
+      when: A new participating PR is evaluated and GitView displays the external Issue.
+      then: The required PR format is evaluated under the participating process, while the Issue's original text remains visible without invented sections; the presence of a template alone is not reported as proof of enforcement.
   unresolved:
   - Precise device and source fixtures, credentials, test levels and executable acceptance procedures depend on implementation and platform decisions.
   - Exact source mapping, refresh concurrency reconciliation and view composition remain open in dependency branches.

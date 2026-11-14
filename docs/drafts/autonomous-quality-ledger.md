@@ -442,3 +442,10 @@ domain policies; неизвестный результат нельзя свод
 В 0040 уточнено, что TDD red должен указывать на отсутствующее поведение, а не
 посторонний compiler/environment failure. [Аудит](leaf-readiness-0040.md)
 не заявляет реальных Swift tests или архитектурной compliance.
+
+## Межветвевые сценарии приёмки
+
+0043 дополнен переходами между setup recovery, refresh, частичным CI, доступом,
+историческими событиями и процессом обязательного формата. Матрица в
+[cross-branch acceptance](cross-branch-acceptance-matrix.md) разделяет будущие
+проверки на policy, storage, source и platform; сценарии не исполнялись.
