@@ -168,3 +168,9 @@ manual policies. Число declarations не является мерой смы
 отдельно рассмотрены состояние checks, counts, review assessment и ReviewThread.
 Гранулярность `CIStatus` остаётся открытой; новые классы или actor/action
 отношения без предметного основания не добавлялись.
+
+Подготовлен [кандидат значений Issue и PullRequest](issue-pr-meaning-candidate.md),
+в котором свойства и source links отделены от определений, а связь с
+`motivcore:Motive` не выдаётся за доказанную причинность. Формальное
+сопоставление пользовательской идеи «Issue — мотив» с `issueMotiveLink`
+остаётся открытым; выбранный package не менялся.

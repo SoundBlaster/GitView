@@ -477,3 +477,11 @@ false. Критерий приведён к существующей трёхз�
 для различения CIStatus, counts, review assessment и ReviewThread. Найденная
 неопределённость гранулярности CIStatus сохранена явно; пакет draft.5 не
 менялся и новые classes/actions по одному наличию значков не добавлялись.
+
+## Issue, PullRequest и Motive
+
+Подготовлены [кандидаты значений](../../ontology/review/issue-pr-meaning-candidate.md)
+отдельно от их свойств и source links. Отмечено, что пользовательский пример
+«Issue — мотив» и `issueMotiveLink` к импортированному `Motive` пока не имеют
+принятого формального сопоставления. Исправлена слишком узкая подпись CIStatus
+в предметной карте; пакет и его draft status не менялись.

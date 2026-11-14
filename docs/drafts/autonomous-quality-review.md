@@ -275,6 +275,11 @@ compiler provenance остаётся `not_verified`, semantic approval — `not_
 checks и threads; определения в выбранном package не изменялись. Примеры не
 являются source API evidence или выполненными tests.
 
+Для Issue и PullRequest подготовлен [кандидат значений и границ связей](../../ontology/review/issue-pr-meaning-candidate.md).
+Он не приравнивает ссылку к мотиву актора и оставляет открытым сопоставление
+пользовательского примера с формальным `issueMotiveLink`. Пакет не изменялся;
+примеры не являются source API evidence или semantic approval.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.
