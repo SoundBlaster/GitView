@@ -36,6 +36,7 @@ specification:
     claim_time: A complete sum of individually covered inputs observed at unequal times may be reported only with that scope and timing made clear; it is not a point-in-time snapshot unless a separate source guarantee supports the shared time. A change in membership or an unknown identity cannot be hidden by reusing an earlier total.
     partial: If some eligible inputs are missing or incomplete, a sum over accepted known observations can be shown as an observed partial value only with clearly associated scope and coverage. It is not a confirmed complete total. An unobserved Repository contributes unknown, not zero.
     attention_predicate: For a named attention condition, a confirmed positive observation on an identified permitted PR may contribute that PR once to an observed affected-PR subset even if the Project or the PR's check or thread collection is incomplete. A missing positive observation is not evidence of a negative predicate when the relevant inputs are incomplete or unmapped. Any subset is attributed to its revision and observation context and is not automatically a current lower bound or a complete Project total.
+    compound_inputs: If a metric combines independently observed lifecycle, CI or review facts, its claim must preserve the relevant time, revision and coverage of each input. A recently refreshed title or lifecycle does not refresh earlier CI or review facts. Unless supported by source evidence, the combined result is not represented as a single simultaneous current snapshot, even if each separate input was once confirmed.
     stale: A past observation records a fact at its observation time, not a guaranteed present fact. A partial sum containing stale open-work observations is not automatically a lower bound on the number currently open; a previously open PR may have closed or an unseen one may have opened. Show relevant times or stale indication instead of using arithmetic to imply freshness.
     private: If an input becomes restricted under 0036, do not display its restricted private content or a derived private count that reveals it. An aggregate spanning allowed and restricted inputs can represent the allowed subset as incomplete or unavailable; it cannot silently treat the restricted input as zero or claim full coverage.
     deduplication: Deduplicate confirmed Repository and object identities for a unique portfolio total as in 0029. If identity is insufficient to deduplicate, report the affected uniqueness or coverage as uncertain instead of silently merging by a display name.
@@ -66,6 +67,10 @@ specification:
       given: One identified PR has a confirmed failed check in its partially observed relevant revision, while another PR's check results are unknown.
       when: The Project's failed-CI attention is summarized for those observations.
       then: The first PR can be included once in the observed affected subset with incomplete coverage; the second is not silently classified as unaffected and no full current Project total is asserted.
+    mixed_time_attention:
+      given: A PR's failed CI was last observed at T1 and its lifecycle was separately observed open at T2, with no evidence that the CI value still applies at T2.
+      when: A Project summary combines open PRs and failed CI.
+      then: The input times and uncertainty remain attributable; GitView does not claim the combined condition was confirmed simultaneously at T2.
   unresolved:
   - Exact representation of coverage and multiple observation times at each density.
   - Per-metric rules establishing sufficiently complete and current source evidence.

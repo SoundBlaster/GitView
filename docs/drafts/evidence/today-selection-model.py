@@ -31,7 +31,7 @@ record = {'artifact_kind':'gitview_three_valued_selection_model', 'spec':'GITVIE
           'spec_sha256':hashlib.sha256(spec.read_bytes()).hexdigest(), 'input_variables':5,
           'domain':list(values), 'combinations':cases, 'result_counts':counts,
           'model':'(open OR same_day_outcome OR same_day_creation) AND scope AND active_filter',
-          'claims':'Finite model checks logical consequences only; it does not validate source mapping, actual coverage, UI, persistence, or application behavior.',
+          'claims':'Finite model checks logical consequences only; it does not model mixed observation times, freshness or revisions, and does not validate source mapping, actual coverage, UI, persistence, or application behavior.',
           'application_scenarios_executed':False}
 out = spec.parent / 'evidence/autonomous-goal-today-logic-20261114.json'
 out.write_text(json.dumps(record, indent=2, ensure_ascii=False)+'\n')

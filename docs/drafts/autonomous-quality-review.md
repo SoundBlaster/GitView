@@ -222,6 +222,12 @@ labels для private данных; новые 0017, 0032 и 0050 прошли [
 без findings и gaps; redirects, recipient access и системный share flow не
 проверялись.
 
+Для фильтров и сводок уточнён контекст mixed-freshness входов: отдельные
+наблюдения не доказывают одновременную текущую комбинацию. Новые 0027, 0042 и
+0046 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-filter-freshness-20261114.json)
+без findings и gaps. Модель Today повторена для новой SHA, но она не моделирует
+различные времена, freshness или revisions и не проверяет приложение.
+
 При сверке Project lifecycle и preview уточнён возврат после удаления origin;
 недоступность локальной конфигурации не считается удалением. Новые 0015, 0024,
 0025 и 0031 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-project-navigation-20261114.json)
