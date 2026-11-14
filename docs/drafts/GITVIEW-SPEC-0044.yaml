@@ -36,6 +36,7 @@ specification:
     partial: A successful subset can provide accepted facts and its own observation time while scope coverage remains partial. It must not replace the prior complete-observation timestamp with the subset's time or attribute that subset time to retained unobserved facts.
     failed_after_success: A failed refresh records its own failure and retains the preceding accepted data and successful time. A failure can coexist with previously complete or partial coverage; do not model failure as erasing the previous coverage history.
     overlapping_attempts: For the same requested scope, distinguish in-flight attempts from terminal attempt outcomes. The most recently completed attempt is the terminal attempt with the latest completion time; an in-flight attempt does not erase an earlier failure. Completion order describes attempts only, not source revision order or coverage. If completion times cannot be ordered, retain the ambiguity instead of fabricating an order. Display of a terminal success does not imply that unresolved conflicts or incomplete coverage have been repaired.
+    outcome_after_restart: As an agent-authored working policy, retain the latest relevant terminal attempt outcome and its scope for recovery under 0105 when local persistence succeeds. A restored failure remains an earlier attempt outcome with its own time and permitted reason; a later ordered success changes the latest outcome only for the scope it actually covers. A request that was in flight when the process ended is not automatically a GitHub failure or success. If the outcome or its ordering cannot be recovered, the latest outcome is unknown or unavailable, rather than asserted successful or failed; independently recoverable source facts and observation times may still be shown under current access policy. A local save failure is distinct from a source error.
     access: Explicit denial or disconnect can restrict display of private cached data independently of whether an earlier observation succeeded. A temporary network failure alone does not change previously permitted data into a confirmed denial. Actual content display follows 0036.
     summary: A Project or portfolio covering multiple scopes may report a summary status, but the operator can identify affected scopes and unequal freshness or coverage. It cannot declare all inputs current solely because one scope refreshed.
     ordering: Conflicting or concurrent results follow 0037; a request completion timestamp alone is not a source freshness ordering.
@@ -61,6 +62,14 @@ specification:
       given: Two refresh attempts cover the same PR scope, A and B; A starts first and B fails while A is still in flight.
       when: A later completes successfully with only partial data.
       then: Before A finishes, B's failure and A's in-flight state are distinguishable. After A finishes, its terminal outcome is later in completion order, while incomplete coverage and any unresolved conflicting source values remain independently visible; this ordering says nothing about which source values are newer.
+    restart_after_durable_failure:
+      given: An Issue refresh fails after a previous successful observation and the terminal failure, scope and permitted reason are durably recorded.
+      when: The app restarts offline and successfully reads those records.
+      then: The last supported Issue observation retains its original time and the earlier failure remains discoverable with its own scope and attempt time; no new request or success is invented.
+    restart_with_unrecoverable_attempt_outcome:
+      given: An Issue refresh fails but local storage cannot establish whether its terminal outcome was retained before the process stops; the earlier Issue observation is independently recoverable.
+      when: The app restarts and no applicable later attempt has completed.
+      then: The earlier permitted observation may be shown with its own time, but the latest attempt outcome is unknown rather than falsely reported as success or as a recovered failure. A known local recovery problem remains distinct from an invented GitHub error.
     terminal_page_unproven:
       given: A prior complete Issue observation exists and the source collection changes during a later traversal whose consistency cannot be established.
       when: All pages returned by that traversal finish successfully.
@@ -76,5 +85,5 @@ specification:
   unresolved:
   - Exact scope representation and completeness proof for individual source endpoints.
   - Freshness thresholds, per-field granularity, UI representation and durable storage mechanism.
-  - Retention and user-facing presentation of older attempt outcomes when a subsequent attempt completes; timestamps with insufficient precision cannot establish their order.
+  - The 0105 working policy retains the latest applicable terminal attempt when possible; retention and presentation of older outcomes, exact recovery feedback and ordering when timestamps are insufficient remain open.
   - Source-specific semantics for omitted, null-like, empty and error-bearing fields; these cannot be inferred from representation alone.
