@@ -1,0 +1,60 @@
+id: GITVIEW-SPEC-0030
+title: GitView - Time series, coverage and observed outcomes
+kind: spec
+created_at: '2026-11-14T13:37:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0013
+depends_on:
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0029
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0013.yaml
+  summary: docs/drafts/GITVIEW-SPEC-0029.yaml
+  today: docs/drafts/GITVIEW-SPEC-0027.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A series identifies the measured subject, unit, scope, time buckets, source and coverage.
+- A missing or insufficiently observed period is a gap or explicitly incomplete value, not a confirmed zero.
+- Open-work snapshots and merged PR or closed Issue outcomes remain separate measurements and do not imply a combined task count.
+- Historical state or events are not reconstructed solely from the current object state.
+specification:
+  objective: Show meaningful trends only where the underlying observation supports their scope and time semantics.
+  ontology_refs:
+  - gitview:Metric
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    measurement: Each series identifies an object type and unit, source or observation basis, selected scope, bucket boundaries, measured period and coverage. The Project and portfolio rules in 0029 apply to each bucket.
+    snapshots: A count of open work at a past time requires an observation or reliable reconstructible state for that time and scope. A later snapshot does not establish values for earlier days or prove that no transitions occurred between snapshots.
+    outcomes: PR merge outcomes and Issue closure outcomes are separate series. Distinguish Issue closure reason when known; an unknown or non-completion closure is not counted as a confirmed completed task. A source link between PR and Issue does not make them one measured object or two independent human tasks.
+    gaps: Show a confirmed zero only for a bucket with sufficient coverage to support zero. If coverage is absent, show a gap. If some repositories or events are covered but not the full scope, show an incomplete observation with its coverage rather than a full zero or total. Interpolation, if later introduced, must remain distinguishable from observed data.
+    changes: The reported period and time-zone interpretation are visible or discoverable. Re-evaluation after a time-zone change may change bucket membership without altering original source timestamps. Reopenings and repeated closures require actual event history before a claim about event counts is made.
+    burn_down: A burn-down-style view is desired but is not specified by adding PR and Issue totals. It requires a separately defined cohort, unit, initial population, transitions and treatment of reopened items; until those are decided, show separately defined work and outcome series without a burn-down claim.
+    provenance: Desire for graphs and completion visibility follows the owner; the data-sufficiency and display rules are agent-authored proposals.
+  scenarios:
+    missing_day:
+      given: The selected Project has no reliable work-state observation for Tuesday.
+      when: A daily open-work series includes Monday through Wednesday.
+      then: Tuesday is a gap, not a confirmed zero or a copied Monday value.
+    partial_project:
+      given: One of two Project Repositories has no observed outcomes for a daily bucket.
+      when: The daily merged-PR series is shown.
+      then: The known contribution may be shown as incomplete, without claiming the Project total is complete.
+    same_work:
+      given: A PR and an Issue are linked and both reach a source outcome in the selected period.
+      when: Outcome series are shown.
+      then: The PR and Issue appear in their respective series without claiming that two independent tasks were completed.
+    reopen:
+      given: An Issue closed, reopened and closed again but the app has only its present closed state.
+      when: An event-count series is requested.
+      then: The missing transition history is not invented and the relevant coverage remains insufficient.
+  unresolved:
+  - Exact supported metrics, bucket defaults, retention and acceptable data sources.
+  - A formal burn-down cohort, unit, transitions and treatment of partial observations.
+  - Cross-device time-zone handling for historical views and exact accessible chart presentation.
