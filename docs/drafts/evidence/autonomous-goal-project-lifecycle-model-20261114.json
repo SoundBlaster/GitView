@@ -1,0 +1,28 @@
+{
+  "artifact_kind": "gitview_project_lifecycle_finite_model",
+  "specifications": {
+    "GITVIEW-SPEC-0025": "f178ee5b7e9946f69ca54a1c506dc9e4fee386d3a8971c2f7e28b8a62294f460",
+    "GITVIEW-SPEC-0045": "7264373f5f649bbdb1c5d8d19e9dd675196df1724696322fbf9654f20be843b1"
+  },
+  "bounded_domain": {
+    "repositories": 2,
+    "project_slots": 2
+  },
+  "valid_states_examined": 64,
+  "transitions_checked": {
+    "create_default": 24,
+    "reuse_default": 64,
+    "add_member": 60,
+    "remove_member": 100,
+    "reject_last_member": 60,
+    "delete_project": 110
+  },
+  "invariants": [
+    "saved projects are nonempty",
+    "default association points to an existing member",
+    "edits preserve other project memberships",
+    "repeat confirmation reuses default"
+  ],
+  "limitations": "Author-built abstract model only; no concurrency, source access, persistence, UI or real GitHub behavior is executed.",
+  "application_scenarios_executed": false
+}
