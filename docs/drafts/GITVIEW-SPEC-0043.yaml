@@ -34,6 +34,7 @@ depends_on:
 - GITVIEW-SPEC-0061
 - GITVIEW-SPEC-0062
 - GITVIEW-SPEC-0063
+- GITVIEW-SPEC-0071
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -59,6 +60,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    local_retention_failure_restart:
+      given: A Project has a previously saved PR observation and a later refresh obtains new PR facts while local retention fails.
+      when: The operator sees the refresh outcome and restarts the application.
+      then: Source success and retention failure remain distinguishable; after restart the Project uses only confirmed recoverable facts and their own coverage and times, without inventing a new durable history point or an empty source.
     first_overview:
       given: No Projects exist; the operator connects one source identity and confirms two accessible repositories in different organizations.
       when: Two single-repository default Projects are saved and source observations are obtained.
