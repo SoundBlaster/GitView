@@ -1,0 +1,81 @@
+{
+  "artifact_kind": "gitview_ontology_removal_candidate_verification",
+  "date": "2026-11-14",
+  "candidate_status": "draft_not_selected",
+  "runtime_revision": "3593bd75",
+  "compiler_sha256": "30dd324aa1f641e7274a49fd6f158cced5ed95d810b6b275353d3d10f19a27cb",
+  "compiler_provenance": "local_snapshot_not_independently_verified",
+  "source_sha256": "2d5e18173b175254b5449e9e9542948893ddb30e4ba50267fa45cdb31df7c549",
+  "ir_sha256": "ce0e3895f3bdf9b47d6c9d3e333c69044bd629d54718ceb84629ef1e389a79e8",
+  "selection_sha256": "034ab8a3d6021c3477887ae755705bb613c710283b9c0463d90ae1e51ba4df5c",
+  "consumer_sha256": "39e6998c5d629576ff2d0ed65591eb9a7bc3a89fe9cfb8c6aecf06a49d3be389",
+  "compiler_check": "passed_zero_diagnostics",
+  "typescript_compile": "passed",
+  "typecheck_strict": "passed",
+  "consumer_execution": {
+    "status": "passed",
+    "before": {
+      "p": [
+        "r1",
+        "r2"
+      ],
+      "q": [
+        "r1"
+      ]
+    },
+    "after": {
+      "p": [
+        "r2"
+      ],
+      "q": [
+        "r1"
+      ]
+    },
+    "unknown_reference": "rejected_by_consumer",
+    "absent_membership": "rejected_by_consumer",
+    "last_member": "rejected_by_consumer",
+    "malformed_reference_and_wrong_actor": "rejected_by_generated_schema",
+    "wrong_reference_target_object_and_data_only_actor": "rejected_by_typescript_negative_controls"
+  },
+  "context_outcome": "verified",
+  "context_revision": "sha256:e8adc00713102d5003e7b9e28769737c663e96fc18ff12ef68b875f2ca74bce8",
+  "semantic_approval": "not_established",
+  "domain_vocabulary": {
+    "targets": [
+      {
+        "id": "GITVIEW-SPEC-0005",
+        "sha256": "48d9e4cb8cc8431813f9fef3e197dc18b66bf48666e63c382e059bce4a1aeb86",
+        "outcome": "checked",
+        "finding_count": 0,
+        "gap_count": 0
+      },
+      {
+        "id": "GITVIEW-SPEC-0025",
+        "sha256": "0507ba94057e9820ce5c053fcf1be0a6dc55a40d0dbd43e572917be1771e5c53",
+        "outcome": "checked",
+        "finding_count": 0,
+        "gap_count": 0
+      },
+      {
+        "id": "GITVIEW-SPEC-0082",
+        "sha256": "967750381c2c5f9edf0fbce31b0593120aa459622a13e54d306044211d1982c9",
+        "outcome": "checked",
+        "finding_count": 0,
+        "gap_count": 0
+      },
+      {
+        "id": "GITVIEW-SPEC-0083",
+        "sha256": "42a907d64a5c762bc30904e093cbb80ad3ef816fdc0ed768dd869b96767168a9",
+        "outcome": "checked",
+        "finding_count": 0,
+        "gap_count": 0
+      }
+    ],
+    "scope": "structural term resolution; targets do not reference new action"
+  },
+  "limitations": [
+    "explicit test handler supplies all membership changes and rejection behavior",
+    "no GitView implementation, persistence, concurrency, actual actor event or source integration",
+    "working project context remains draft.5"
+  ]
+}
