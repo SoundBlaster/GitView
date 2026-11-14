@@ -47,6 +47,7 @@ depends_on:
 - GITVIEW-SPEC-0081
 - GITVIEW-SPEC-0082
 - GITVIEW-SPEC-0083
+- GITVIEW-SPEC-0084
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -72,6 +73,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    membership_readded_after_removal:
+      given: P contains R and S with R associated as default, and Q also contains R.
+      when: R is durably removed from P and later explicitly re-added to the same P.
+      then: R is present in both P and Q, the old removal remains historical if supported by evidence, and P's removed default association is not inferred merely from current membership.
     review_conflicting_project_edit:
       given: The operator drafted removal of Repository B from Project P while another confirmed edit added Repository C.
       when: The operator reviews the newer saved configuration and explicitly retries removal of B against it.

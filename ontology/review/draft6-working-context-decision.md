@@ -41,4 +41,6 @@
 ontology gaps. Не выполнялись GitView product tests, реальная запись в storage,
 native interaction или интеграция GitHub. Следующий шаг — рассмотреть
 формализацию lifecycle membership и evidence actor/action отдельно от фиксации
-текущего Project state.
+текущего Project state. [Последующий разбор](membership-lifecycle-state-evidence.md)
+и candidate 0084 предлагают это разделение; они не утверждают семантику пакета
+и не требуют сохранения истории.

@@ -424,3 +424,9 @@ Candidate 0081 предлагает понятное восстановлени�
 Candidate 0083 предлагает review и retry конфликтной правки Project;
 [проверка словаря](evidence/autonomous-goal-ontology-check-project-conflict-20261114.json)
 не нашла findings и gaps. UI и commit coordination не проверены.
+
+Candidate 0084 разделяет текущее membership, намерение, неопределённую
+запись и свидетельство прошлого действия; сквозной сценарий добавлен в 0043.
+[Проверка словаря](evidence/autonomous-goal-ontology-check-membership-lifecycle-20261114.json)
+не нашла findings и gaps. Она не проверяет корректность семантики, UI или
+storage и не доказывает факт выполнения действий.

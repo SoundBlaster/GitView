@@ -1,0 +1,65 @@
+id: GITVIEW-SPEC-0084
+title: GitView - Project membership lifecycle and evidence
+kind: spec
+created_at: '2026-11-14T17:28:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0025
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0052
+- GITVIEW-SPEC-0082
+- GITVIEW-SPEC-0083
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0025.yaml
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.6/composition-context.yaml
+  ontology_review: ontology/review/membership-lifecycle-state-evidence.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Current membership is determined from a confirmed valid Project configuration, scoped to the identified Project and Repository.
+- An unsaved intention, uncertain write, confirmed current membership and evidence of an earlier action remain distinguishable.
+- Removing and later explicitly re-adding a Repository to the same Project preserves their identities and does not alter other Projects or the source Repository.
+- A later membership does not make an earlier supported removal false or automatically restore a removed default association.
+- Missing, incomplete or incompatible evidence is not converted into a successful action, its actor, its motive or a historical timeline.
+specification:
+  objective: Clarify the lifetime and evidence of Project membership without requiring an event journal or changing source Repositories.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:AddRepository
+  - gitview:addsRepositoryTo
+  - gitview:RemoveRepository
+  - gitview:removesRepositoryFrom
+  - gitview:projectIncludesRepository
+  contract:
+    current_state: A membership is a scoped relation between a saved Project and a Repository, not an attribute of the Repository independent of Project. Evaluate present or absent only against a confirmed valid configuration for that Project and an established Repository identity. An unreadable, inconsistent or indeterminate configuration yields unknown, not absent. An empty temporary editor is not a valid saved Project under 0025.
+    intention_and_outcome: An editor selection or submission expresses an intention, not a confirmed change. A missing acknowledgement or cancellation after submission does not establish either commit or rollback. Reconcile as required by 0082 and 0083; apply access restrictions under 0036. A saved configuration alone does not establish who acted, why, when or by which action.
+    observation: A comparison may identify a membership difference only between compatible confirmed configurations for the same Project and Repository identity. It does not alone establish actor, cause, exact time or a complete sequence; intermediate removal and re-addition may be invisible. Keep the scope and time of any actual observation when available and do not invent evidence.
+    readdition: A later explicit valid edit may add the same identified Repository back to the same surviving Project. The resulting present membership describes the new current state; a supported past removal remains past evidence. Other Projects, source Repository and source data are unaffected by the membership operation. Deleting a Project and later creating another does not preserve the deleted Project identity.
+    default_association: Membership and the default association are separate. When removal of the associated Repository durably removes the association under 0025, later adding that Repository back to the surviving Project does not by itself prove the association has been restored. Explicit setup and its association rules remain governed by 0025 and 0052; do not infer an association from membership alone.
+    evidence_boundary: Candidate ontology action and relation names provide vocabulary, not proof that a User executed an action or that a handler or persistent event exists. Actual action evidence, if available, must be attributed only to its supported scope. No event journal, mandatory retention of membership history or historical user interface is imposed by this specification.
+    provenance: Shared membership is an owner decision. The evidence and re-addition rules are agent-authored proposals derived from that decision and the existing lifecycle draft, pending semantic review.
+  scenarios:
+    removal_and_readdition:
+      given: Confirmed Project P contains R and S, Q contains R, and R is P's associated default Repository.
+      when: The operator durably removes R from P, then explicitly and durably adds the same identified R to P again.
+      then: P retains its identity and now contains R and S, Q still contains R, and the default association removed by the first edit is not silently inferred from the re-addition. Any supported removal evidence remains historical.
+    indistinguishable_intermediate_changes:
+      given: Two comparable confirmed observations both contain R in P, with no evidence of intervening changes.
+      when: The observations are compared.
+      then: Membership is present at both observation points, but neither uninterrupted membership nor an intervening removal and re-addition is asserted.
+    unknown_save_outcome:
+      given: The operator submits removal of R from P, the acknowledgement is lost and the saved configuration cannot be read or otherwise reconciled.
+      when: P is displayed.
+      then: Membership and dependent summaries are uncertain; neither a completed removal nor a rollback is claimed, and Q is not changed.
+    same_name_new_identity:
+      given: Project P is deleted and a later separate Project has the same name and contains R.
+      when: Membership observations are compared.
+      then: The two Projects are not treated as the same Project or as a removal and re-addition within one surviving Project.
+  unresolved:
+  - Whether and how membership action evidence should be retained or displayed is a separate product and storage decision.
+  - Explicitly restoring or reassigning a former default association after re-addition needs product review; membership alone is insufficient evidence.
+  - Evidence compatibility, identity resolution and atomic save behavior require concrete implementation-level contracts and verification.
