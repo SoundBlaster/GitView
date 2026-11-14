@@ -1,0 +1,29 @@
+{
+  "scope": "domain_vocabulary; structural advisory only",
+  "semantic_approval": "not_established",
+  "compiler_provenance": "not_verified",
+  "context_revision": "sha256:34c22c8224bcd060c427dae3820c62c3c37cd3da6c298593597ac54bba701598",
+  "results": [
+    {
+      "id": "GITVIEW-SPEC-0043",
+      "sha256": "0e4442125e974b7b7c008c8f71c180107c3a7543eb97da6496fc5a219aa9002c",
+      "outcome": "checked",
+      "finding_count": 0,
+      "gap_count": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0048",
+      "sha256": "3e19220a664d45248aafb04ef14e07d9b0301a3c91e329d461e3888743b1df3f",
+      "outcome": "checked",
+      "finding_count": 0,
+      "gap_count": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0053",
+      "sha256": "8d3e8de399ced423eab2054a7970c15688f17d5307aeefc40aace7a9ec2c104a",
+      "outcome": "checked",
+      "finding_count": 0,
+      "gap_count": 0
+    }
+  ]
+}

@@ -58,6 +58,10 @@ specification:
       given: Two competing PR state observations remain unordered and the evidence required to compare one competitor is unavailable.
       when: A subsequent observation is newer than the other competitor but cannot be compared to the unavailable one.
       then: The fact remains uncertain; success of the later request alone cannot establish that it supersedes both observations.
+    retry_still_unordered:
+      given: A permitted last-known PR state conflicts with another observation and the operator can identify the affected scope.
+      when: A user-requested retry receives a response that cannot be ordered against every competing observation.
+      then: The retry response and unresolved conflict remain distinguishable; the last-known value retains its own time and an unrelated Issue scope keeps its independent state and observation time.
     revision_does_not_order_review:
       given: A PR's head revision changes and a later response contains the new revision but no review assessment.
       when: GitView interprets a previously observed review assessment.

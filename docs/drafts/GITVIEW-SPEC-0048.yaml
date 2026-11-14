@@ -11,6 +11,7 @@ depends_on:
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0037
 - GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0053
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0003.yaml
   manual_refresh: conversation:gitview/excerpt-64
@@ -42,6 +43,7 @@ specification:
     concurrent: If another refresh is already active, the app may coalesce or schedule the request, but it must not lose the operator's requested scope or report success before the relevant work has an observable outcome. Conflicting results and access changes follow 0037; exact scheduling and duplicate-request strategy remain open.
     coalesced_coverage: A shared refresh may satisfy a request only to the extent that its actual covered scope includes that request's required inputs. A shared success for PRs cannot complete a request for both PRs and Issues, and a partial response does not become complete merely because several triggers share it. Requests can have distinct outcomes while reusing accepted facts.
     feedback: The operator can discover whether the relevant scope is loading, complete, incomplete or failed and see the applicable last successful observation time when available. UI placement and animation are not prescribed.
+    conflict_recovery: When a scope contains an unresolved observation conflict, the operator can discover the affected scope and uncertainty and request a refresh where access and scheduling permit. A queued retry, a received response and resolution of the conflict are distinct outcomes. Even a successful source response does not establish resolution or a new complete-scope observation when the requirements of 0053 and 0044 remain unsatisfied. Previously accepted permitted values and their own observation context can remain available as last known. An explicit access denial requires the access recovery path in 0036 and does not permit disclosure merely to explain the conflict.
     boundaries: Do not specify an exact GitHub endpoint, page size, request count, numerical polling frequency or iOS execution guarantee here. Exact source mapping, budget and scheduling are later technical work.
     provenance: Background opportunities, refresh on stale open and manual refresh follow the owner's discussion; scope and outcome behavior are agent-authored refinements.
   scenarios:
@@ -77,6 +79,10 @@ specification:
       given: A manual request covers PRs and Issues while an existing refresh covers only PRs.
       when: The PR refresh completes successfully and Issue data is still unobserved.
       then: The PR result may satisfy that portion but the combined request is not reported as fully successful or complete.
+    retry_does_not_prove_resolution:
+      given: A Project has an unresolved PR state conflict, a permitted last-known value and an earlier complete-scope observation time.
+      when: The operator requests refresh and a source response arrives successfully but cannot be ordered against all conflicting observations.
+      then: The affected scope and uncertainty remain discoverable, the permitted value remains last known with its own context, and the response alone does not advance the complete-scope time or declare the conflict resolved.
   unresolved:
   - Staleness classification and policies when refresh is deferred by source budget or platform constraints.
   - Exact scheduling and coalescing behavior for overlapping requests, including user-visible pending state.
