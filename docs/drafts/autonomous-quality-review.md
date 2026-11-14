@@ -60,6 +60,9 @@ UI state не преобразовывался в ontology entities; смысл�
 После уточнения активного жеста новые байты 0049 проверены
 [повторно](evidence/autonomous-goal-ontology-check-0049-revision-20261114.json)
 без findings и gaps; прежний отчёт для 0049 относится к старой версии.
+После уточнения критерия coverage новые байты 0049 проверены
+[ещё раз](evidence/autonomous-goal-ontology-check-0049-coverage-20261114.json)
+без findings и gaps; эта проверка также не доказывает source coverage.
 
 ## Существенные нерешённые зависимости
 
