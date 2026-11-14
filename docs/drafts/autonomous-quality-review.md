@@ -475,3 +475,10 @@ Candidate 0086 уточняет credential replacement, прерванную з�
 Сценарии и требования TDD остаются будущими: secure store, GitHub и iOS не
 проверялись. [Проверка словаря](evidence/autonomous-goal-ontology-check-credential-replacement-20261114.json)
 для 0043, 0058, 0085 и 0086 не нашла findings и gaps.
+
+Candidate 0087 и [сравнение authorization](authorization-flow-selection-20261114.md)
+разделяют read-only поведение, фактический grant и public-client границу.
+GitHub App user authorization — кандидат, а не подтверждённая архитектура;
+источники, permissions, confidential participant и native flow требуют
+дальнейшей проверки. [Проверка словаря](evidence/autonomous-goal-ontology-check-authorization-choice-20261114.json)
+для 0019, 0043 и 0087 не нашла findings и gaps.

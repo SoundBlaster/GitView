@@ -1,0 +1,72 @@
+id: GITVIEW-SPEC-0087
+title: GitView - Authorization selection and grant transparency
+kind: spec
+created_at: '2026-11-14T18:03:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0019
+depends_on:
+- GITVIEW-SPEC-0022
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0058
+- GITVIEW-SPEC-0059
+- GITVIEW-SPEC-0085
+- GITVIEW-SPEC-0086
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0019.yaml
+  source_comparison: docs/drafts/github-ios-access-research-20261114.md
+  selection_review: docs/drafts/authorization-flow-selection-20261114.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The operator can identify the source account, purpose and material access being requested before granting access.
+- The selected authorization design separates GitView's read-only behavior from the actual capabilities of the credential granted by the source.
+- Missing organization installation, approval or repository grant remains distinguishable from an empty account or deleted Repository.
+- The design does not depend on a secret embedded in a public iOS client remaining confidential or on an installation private key shipped in the app.
+- A cancelled, failed, superseded or interrupted authorization follows the established connection and credential recovery contracts.
+- Any proposed server or other trust participant, its role and access to credentials or source data are explicit before it becomes part of the product design.
+specification:
+  objective: Set product and trust requirements for selecting a GitHub authorization method without prematurely choosing endpoint details or claiming a live integration.
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Project
+  - gitview:Repository
+  contract:
+    owner_and_scope: The first product slice supports one active GitHub identity and a read-only overview across selected accessible Repositories, including Repositories in different organizations. The operator is not necessarily the author or reviewer. Multiple active identities, GitHub Enterprise and source work mutations are outside the initial scope under 0019.
+    user_journey: As an agent-authored product proposal, offer an understandable GitHub connection route using a system-supported authorization experience when the selected provider flow permits it. The operator can cancel or return without creating a confirmed account, deleting Projects or treating an incomplete source as empty. Do not require an ordinary operator to enter a GitHub password into a GitView-owned form. Exact authorization UI and token type are not selected here.
+    grant_and_behavior: GitView's product behavior reads GitHub work and opens or shares source links; it does not create, review, merge or edit source work in the initial scope. Separately identify what the chosen credential actually permits. Request the least privileges that support the chosen data and operations, and do not label a source grant read-only merely because GitView intends only to read. A design needing broader write-capable source privileges must disclose the actual grant and justify it before adoption rather than silently treating it as read-only.
+    candidate: A GitHub App acting on behalf of the user is a working candidate because fine-grained repository permissions and selected installations can constrain access. This is an agent-authored recommendation, not a chosen implementation, assurance that all selected fields are available, or an assertion that every repository requires the same installation path. Validate requested fields, permissions, account coverage and authentication architecture before selecting it.
+    installations: When the chosen method requires installation or approval for particular private organization resources, distinguish user authorization from installation, repository selection and organization approval. Explain a missing grant or pending approval when supported by evidence, retain other accessible scopes and provide an appropriate recovery route. Do not infer an organization is empty, a Repository deleted or a person's GitHub access denied merely because the application lacks an installation or grant.
+    client_trust: An iOS binary is a public client. Do not rely on an embedded client secret as a confidential credential or proof that a caller is authentic. Never distribute a GitHub App installation private key in the native app. GitHub documents an authorization-code exchange that requires a client secret; PKCE protects particular authorization-code threats but does not make an embedded secret confidential or by itself prove a secretless exchange. Evaluate any public-client exchange against current source guidance and the chosen threat model rather than silently assuming one.
+    device_flow: GitHub documents device flow for constrained or headless situations and cautions against enabling it without a reason. It is not the assumed default for an iPhone browser-capable application; any proposal to use it must document the user journey and its source-supported security tradeoff. Its existence does not itself prove that the complete GitView permission and organization coverage is available.
+    additional_service: No independent server is selected by this specification. If a proposed flow introduces one, specify its operator, purpose, trust boundary, credential and data exposure, availability, recovery and privacy implications before relying on it. Do not claim that GitView works independently of a service when the selected flow requires it; system GitHub authorization and normal GitHub API access are separate external dependencies.
+    identity_access_and_recovery: Confirm an authorized source identity and locally protected credential under 0058 and 0086. A verified account is distinct from access to each Repository, and an installation is not proof of a current successful fetch. Cancellation, expiry, explicit denial, disconnect, uncertain writes and late responses retain the boundaries of 0036, 0059 and 0085–0086.
+    observable_and_accessible: Explain material requested access and missing source scopes without leaking credential values or restricted repository details. The connection, cancellation and recovery path is accessible without relying on color, long press or a timed gesture. The native presentation and exact copy require device evaluation.
+    evidence: Before treating a flow as selected for implementation, trace each first-version data category to source-supported access, validate the actual grant and public-client exchange, document installation and organization constraints, and verify identity, callback handling, secret storage and failure recovery at the appropriate real source and native boundaries. A documentation read or mocked flow alone is not proof of end-to-end compatibility.
+    provenance: A personal GitHub overview and Apple-native presentation come from the owner; the one-account slice and preferred GitHub App candidate are agent-authored proposals. Neither the owner nor a source document has accepted a concrete GitView authorization architecture.
+  scenarios:
+    app_grant_missing:
+      given: A connected identity can access public information and one organization, but an applicable second organization has not installed or approved the candidate app.
+      when: Repository discovery is shown.
+      then: Available permitted results remain usable, the ungranted scope is not labeled an empty organization, and a supported explanation or recovery route is available without disclosing inaccessible Repository details.
+    broad_oauth_grant:
+      given: A proposed OAuth scope needed for the desired private data includes write capabilities according to the source.
+      when: The authorization design is reviewed.
+      then: The grant is not described as read-only merely because the application plans read operations; its wider capabilities require explicit justification and disclosure before adoption.
+    callback_and_late_result:
+      given: The operator cancels a pending authorization and subsequently confirms a different attempt.
+      when: A callback from the cancelled attempt arrives.
+      then: It cannot replace the confirmed identity, create a second active connection or unlock restricted content under 0058 and 0086.
+    service_dependency:
+      given: A proposed authorization-code exchange requires a separate service to hold or use an app credential.
+      when: That design is evaluated.
+      then: The service's role, data and credential handling, availability and recovery implications are documented rather than assumed absent or confidential within the native client.
+    same_identity_partial_grant:
+      given: The previously connected identity is confirmed again but only one of two previously restricted private Repositories has re-established access.
+      when: The operator opens their Projects.
+      then: Eligible data for that Repository may be shown with its actual observation context while the other remains restricted under 0036.
+  unresolved:
+  - GitHub App permission coverage and installation experience for the complete first-version field set need source-specific verification and an authorized real integration.
+  - Whether the chosen public-client exchange, confidential service or another supported architecture meets product and security requirements is not decided.
+  - Actual credential lifetimes, rotation, callback security, platform behavior, device experience and grant recovery require separate implementation-level evidence.

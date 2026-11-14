@@ -33,3 +33,9 @@ authorization flow, сопоставление errors и безопасная з
 безусловную сохранность credential при неизвестном исходе. Конкретные atomicity,
 secure-store recovery и provider rotation по-прежнему требуют определения и
 независимого evidence.
+
+[0087](GITVIEW-SPEC-0087.yaml) формулирует требования к выбору authorization:
+read-only поведение отдельно от реальных capabilities grant, public-client
+граница и прозрачность дополнительного сервиса. GitHub App user authorization
+остается кандидатом; конкретный flow и полномочия не утверждены. Сравнение
+источников и открытые проверки — в [отдельном разборе](authorization-flow-selection-20261114.md).

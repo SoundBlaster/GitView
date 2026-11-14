@@ -44,8 +44,11 @@ specification:
 
       '
     access: 'Request only access needed for the selected repositories and supported read-only overview.
-      The exact authorization method, scope names and GitHub API mapping require implementation research.
-      The app does not create, review, merge or otherwise mutate GitHub objects in this pilot.
+      Distinguish the app''s read-only behavior from permissions actually granted to a credential; any
+      broader grant needs explicit justification and disclosure under 0087. The exact authorization method,
+      scope names and GitHub API mapping require research. The app does not create, review, merge or otherwise
+      mutate source work objects in this pilot; user-mediated authorization or installation is a separate
+      provider-side access decision.
 
       '
     discovery: 'Once authorized, let the operator find and select accessible GitHub repositories. Source

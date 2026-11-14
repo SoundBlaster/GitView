@@ -50,6 +50,7 @@ depends_on:
 - GITVIEW-SPEC-0084
 - GITVIEW-SPEC-0085
 - GITVIEW-SPEC-0086
+- GITVIEW-SPEC-0087
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -75,6 +76,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    authorization_and_missing_installation:
+      given: The operator connects one source identity and a GitHub App-based proposal has access to one organization but lacks an installation or grant for another.
+      when: Repository discovery and Project setup are opened.
+      then: Permitted results remain selectable, the missing scope is not labeled an empty organization and existing Projects are not deleted or silently rewritten.
     disconnect_during_credential_replacement:
       given: A credential replacement for account A is in flight and its private Repository observations are stored locally.
       when: The operator disconnects A and the older credential write completes late.
