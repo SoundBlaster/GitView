@@ -1,0 +1,42 @@
+# GitView: соответствие продуктовых требований графу
+
+Это авторская содержательная сверка исходного намерения и обсуждённых решений
+с текущими кандидатами. Наличие ссылки означает, что требование **описано**, но
+не доказывает его полноту, утверждение, готовность leaf или выполнение в app.
+Структурные снимки и проверки SpecGraph ограничены их указанным scope.
+
+| Требование | Кандидаты с основным поведением | Что остаётся до реализуемого графа |
+| --- | --- | --- |
+| Project содержит один или несколько Repository; один Repository может входить в разные Projects; организации — metadata. По умолчанию один Project на Repository. | [0005](GITVIEW-SPEC-0005.yaml), [0025](GITVIEW-SPEC-0025.yaml), [0052](GITVIEW-SPEC-0052.yaml), [0084](GITVIEW-SPEC-0084.yaml) | Конкретный commit/recovery contract и проверяемая модель локальной конфигурации; default-association lifecycle — авторское уточнение. |
+| Rename/transfer не меняют подтверждённую Repository identity; совпадение адреса не объединяет разные объекты. | [0002](GITVIEW-SPEC-0002.yaml), [0038](GITVIEW-SPEC-0038.yaml), [0080](GITVIEW-SPEC-0080.yaml), [0101](GITVIEW-SPEC-0101.yaml) | Применимые source identity и ordering evidence для выбранных операций и локальных adapters. |
+| Главный обзор Projects и вход в Project с одним или несколькими Repository. | [0004](GITVIEW-SPEC-0004.yaml), [0047](GITVIEW-SPEC-0047.yaml), [0072](GITVIEW-SPEC-0072.yaml), [0074](GITVIEW-SPEC-0074.yaml), [0091](GITVIEW-SPEC-0091.yaml) | Конкретные нативные состояния, навигация и восстановление позиции; порядок и shortcut — авторские предложения. |
+| Today показывает незавершённую работу и сохранившиеся результаты дня; исключение статусов — явное. | [0007](GITVIEW-SPEC-0007.yaml), [0027](GITVIEW-SPEC-0027.yaml), [0042](GITVIEW-SPEC-0042.yaml), [0089](GITVIEW-SPEC-0089.yaml), [0102](GITVIEW-SPEC-0102.yaml) | Доказуемое или честно ограниченное покрытие выбранных source operations; позднее — реальное поведение фильтра и графика обновлений. |
+| Плотная сетка с несколькими уровнями масштаба внутри одного scope и статический long-press preview в первой версии. | [0014](GITVIEW-SPEC-0014.yaml), [0035](GITVIEW-SPEC-0035.yaml), [0075](GITVIEW-SPEC-0075.yaml), [0031](GITVIEW-SPEC-0031.yaml), [0093](GITVIEW-SPEC-0093.yaml) | Поддерживаемые плотности, нативная arbitration, focus и проверка читаемости; HTML prototype не доказывает их на iOS. |
+| PR и Issue показывают согласованные поля и остаются разными объектами; CI, review и threads не смешиваются. | [0008](GITVIEW-SPEC-0008.yaml), [0009](GITVIEW-SPEC-0009.yaml), [0028](GITVIEW-SPEC-0028.yaml), [0039](GITVIEW-SPEC-0039.yaml), [0041](GITVIEW-SPEC-0041.yaml), [0061](GITVIEW-SPEC-0061.yaml), [0101](GITVIEW-SPEC-0101.yaml) | Полевая source mapping, freshness и capability evidence для каждого согласованного поля; конкретные способы получения и условия ошибок. |
+| Согласованные разделы Issue и PR и обязательность формата в участвующем процессе. | [0034](GITVIEW-SPEC-0034.yaml), [0051](GITVIEW-SPEC-0051.yaml), [0076](GITVIEW-SPEC-0076.yaml), [0090](GITVIEW-SPEC-0090.yaml) | Реально выбрать участников, пути создания, checkpoint и механизм проверки; GitView остаётся reader для внешних и старых описаний. |
+| Переход к GitHub и лёгкий sharing. | [0016](GITVIEW-SPEC-0016.yaml), [0033](GITVIEW-SPEC-0033.yaml), [0093](GITVIEW-SPEC-0093.yaml) | Source URL и подтверждение identity назначения; реальные системные open/share и accessibility. Link-only — авторское начальное предложение. |
+| Метрики, проблемы и доступные графики без подмены отсутствующих данных нулями. | [0029](GITVIEW-SPEC-0029.yaml), [0046](GITVIEW-SPEC-0046.yaml), [0057](GITVIEW-SPEC-0057.yaml), [0064](GITVIEW-SPEC-0064.yaml), [0068](GITVIEW-SPEC-0068.yaml), [0069](GITVIEW-SPEC-0069.yaml), [0097](GITVIEW-SPEC-0097.yaml) | Нужны source evidence и retention для каждой серии, а также реализуемый chart contract; долгий thread пока описан авторским proxy, не установленной длительностью ожидания ответа. |
+| Локальные данные, отметка последнего обновления и ошибка, ручной refresh и opportunistic background refresh. | [0003](GITVIEW-SPEC-0003.yaml), [0044](GITVIEW-SPEC-0044.yaml), [0048](GITVIEW-SPEC-0048.yaml), [0071](GITVIEW-SPEC-0071.yaml), [0105](GITVIEW-SPEC-0105.yaml), [0106](GITVIEW-SPEC-0106.yaml) | Выбрать реализуемые storage/source boundaries и поведение восстановления; iOS background delivery не гарантирует периодическое исполнение. |
+| Apple Look, системные компоненты и доступность без обязательных жестов и цвета. | [0017](GITVIEW-SPEC-0017.yaml), [0032](GITVIEW-SPEC-0032.yaml), [0035](GITVIEW-SPEC-0035.yaml), [0073](GITVIEW-SPEC-0073.yaml), [0075](GITVIEW-SPEC-0075.yaml) | Поддерживаемый deployment target, системные API и конкретные native accessibility/gesture contracts; реальные device проверки выполняются после реализации. |
+| Онтология удерживает терминологию, не моделирует каждую кнопку; FSD-iOS, SpecificationCore, DI, TDD и doubles направляют разработку. | [0021](GITVIEW-SPEC-0021.yaml), [0040](GITVIEW-SPEC-0040.yaml), [0079](GITVIEW-SPEC-0079.yaml), [0095](GITVIEW-SPEC-0095.yaml), [0107](GITVIEW-SPEC-0107.yaml) | Semantic review ontology и зависимости, выбранные реальные версии и публичные interfaces, независимая проверка фактической архитектуры и TDD на коде. |
+
+Calendar как самый дальний временной вид, более глубокое содержимое PR и
+скользящий rich preview зафиксированы в [0018](GITVIEW-SPEC-0018.yaml) и
+[0015](GITVIEW-SPEC-0015.yaml) как дальнейшие возможности; их нельзя объявлять
+реализуемыми из этих черновиков или молча превращать в первые обязательства.
+`Activity` остаётся гипотезой о действиях, а не новой сущностью по умолчанию.
+
+## Сквозная связь
+
+[0043](GITVIEW-SPEC-0043.yaml) дополняет корневую приёмку [0020](GITVIEW-SPEC-0020.yaml)
+сценариями критических маршрутов. Зависимость 0043 от [0108](GITVIEW-SPEC-0108.yaml)
+явно связывает эти сценарии с setup и через него — с композициями work,
+Project/observation storage и операционными границами. Это объявленные рёбра,
+не доказательство отсутствия других недостающих зависимостей. Проверенные пути
+к 0103–0108 и SHA 108 кандидатов сохранены в [отчёте](evidence/autonomous-goal-product-crosswalk-20261114.json).
+
+На текущем проходе остаются три общие категории незавершённой работы: конкретные
+source и storage contracts; согласование используемых платформенных и библиотечных
+границ; содержательная проверка каждой выбранной ветви и её зависимостей на
+противоречия и проверяемость. Некоторые пункты требуют будущих интеграционных
+наблюдений и не должны ошибочно объявляться уже выполненными спецификациями.

@@ -65,6 +65,7 @@ depends_on:
 - GITVIEW-SPEC-0100
 - GITVIEW-SPEC-0101
 - GITVIEW-SPEC-0102
+- GITVIEW-SPEC-0108
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -90,6 +91,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    confirmed_setup_to_offline_work:
+      given: Under a confirmed GitHub identity the operator explicitly selects eligible Repository R and its default Project is durably saved; its work has not yet been observed.
+      when: The operator enters that Project and its first PR and Issue refresh fails while offline.
+      then: The same saved Project and R remain identifiable where permitted, the work scopes remain unobserved with a visible refresh limitation, and neither an empty source nor a failed Project creation is inferred.
     late_history_for_former_members:
       given: A history graph request uses Project members A and B; after membership changes the operator explicitly selects an A and C graph, with C's historical coverage incomplete.
       when: The older A and B result arrives after the new graph is selected.
