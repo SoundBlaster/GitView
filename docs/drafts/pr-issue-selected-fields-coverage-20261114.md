@@ -4,8 +4,8 @@
 [Issue options](issue-ontology-options.md), объединён в 0001. Это авторская
 сверка групп полей с candidate specs на 14 ноября, не source mapping и не
 подтверждение implementation readiness. Понятия Issue и PullRequest в
-выбранной композиции `local.gitview.domain@0.2.0-draft-composition.5` имеют
-draft-статус; их [кандидатные значения](../../ontology/review/issue-pr-meaning-candidate.md)
+рабочей композиции `local.gitview.domain@0.2.0-draft-composition.10` имеют
+draft-статус; их [исторический разбор и кандидатные значения](../../ontology/review/issue-pr-meaning-candidate.md)
 не утверждают автоматических причинных связей или действий акторов.
 
 | Выбранный состав | Основные specs | Граница проверки и открытый вопрос |

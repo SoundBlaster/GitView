@@ -32,4 +32,36 @@ Issues, Checks и Commit statuses на уровне read **для указанн
 Их объединение не объявляется обязательным минимумом для всего продукта:
 альтернативные запросы, доступ к публичным данным, field-level GraphQL
 permissions, ранее выбранные метрики и организация конкретного grant ещё не
-проверены. Не выбран client flow, размеры запросов или расписание обновлений.
+проверены. На момент этого среза client flow, размеры запросов и расписание
+обновлений ещё не были выбраны.
+
+## Рабочий профиль и сверка групп полей
+
+[0098](GITVIEW-SPEC-0098.yaml) предлагает GitHub App user token с PKCE, а
+[0100](GITVIEW-SPEC-0100.yaml) — начальный кандидатный профиль `Metadata`,
+`Pull requests`, `Issues`, `Checks` и `Commit statuses`, все repository
+permissions на чтение. Это обоснованная отправная точка, не подтверждённый
+полный minimum: конкретные операции, GraphQL permissions, доступ к private
+targets и реальные grants требуют проверки. `Contents` не предлагается только
+из-за присутствия Code в онтологии: GitView не обещает доступ к файлам или
+clone. GitHub документирует альтернативу `Contents: read` для
+[Get a pull request](https://docs.github.com/en/rest/pulls/pulls#get-a-pull-request),
+но существование альтернативы само по себе не делает её необходимой GitView.
+
+| Согласованная группа | Документированный ориентир | Граница до подтверждения |
+| --- | --- | --- |
+| Repository discovery и identity | [Installations и доступные repositories](https://docs.github.com/en/rest/apps/installations); repository listing для user token указывает Metadata read. | Не доказывает весь GitHub аккаунт, source identity mapping или доступ к PR/Issue. |
+| PR identity, текст, lifecycle, branches, author и счётчики | [Pull requests](https://docs.github.com/en/rest/pulls/pulls), [GraphQL PullRequest](https://docs.github.com/en/graphql/reference/pulls#pullrequest); документированы, например, additions и changed files. | Список и отдельная карточка могут иметь разные поля; counts, revision и полный PR A–G mapping ещё не доказаны. |
+| PR review и reviewers | [Reviews](https://docs.github.com/en/rest/pulls/reviews#list-reviews-for-a-pull-request) и [requested reviewers](https://docs.github.com/en/rest/pulls/review-requests#get-all-requested-reviewers-for-a-pull-request) документируют Pull requests read. | Список reviews не равен aggregate decision; GraphQL reviewThreads, comment-age и access каждого поля требуют проверки. |
+| PR checks и statuses | [Check runs](https://docs.github.com/en/rest/checks/runs#list-check-runs-for-a-git-reference) — Checks read; [commit statuses](https://docs.github.com/en/rest/commits/statuses#list-commit-statuses-for-a-reference) — Commit statuses read. | Один доступный тип не доказывает другой; нужны applicable revision, retry semantics, идентичность и полнота. |
+| Issue identity, текст, состояние, роли и type | [Get an issue](https://docs.github.com/en/rest/issues/issues#get-an-issue) — Issues read для указанной fine-grained операции; [GraphQL Issue](https://docs.github.com/en/graphql/reference/issues#issue) описывает поля. | Права на отдельные GraphQL поля и source-представления type, reason и связей не следуют из одного REST разрешения. |
+| Issue hierarchy и blockers | [Sub-issues](https://docs.github.com/en/rest/issues/sub-issues#list-sub-issues) и [dependencies](https://docs.github.com/en/rest/issues/issue-dependencies#list-dependencies-an-issue-is-blocked-by) документируют Issues read. | Доступ к связанному target, его состоянию, полнота связи и scope вне Project остаются независимы. |
+| Issue ↔ PR связи | [Issue.closedByPullRequestsReferences](https://docs.github.com/en/graphql/reference/issues#issue) имеет `includeClosedPrs`, по умолчанию false; [PullRequest.closingIssuesReferences](https://docs.github.com/en/graphql/reference/pulls#pullrequest) описывает ссылки на потенциально закрываемые Issues. | Open-only результат не доказывает весь выбранный набор. Closing связь, mention и мотив различны; права конкретного GraphQL query и visibility targets не установлены. |
+| Issue comments, authors, последнее время | [Issue comments](https://docs.github.com/en/rest/issues/comments#list-issue-comments) допускает Issues read или Pull requests read для указанной операции. | `Issue.participants` описывает Users, участвующих в обсуждении; это не автоматически число авторов выбранных comments, которое может включать иных actors. Содержимое comment не обязательно показывать или сохранять. |
+| Исторические outcomes | [Issue timeline](https://docs.github.com/en/rest/issues/timeline), [ClosedEvent](https://docs.github.com/en/graphql/reference/issues#closedevent) и PR `mergedAt` — ориентиры для конкретных событий. | Не доказаны полнота периода и объектов, event identity и причина каждого closure; snapshot не превращается в source history. |
+
+Уже установленная App может сохранить прежние права, пока новые permissions не
+одобрены. Это документирует [GitHub](https://docs.github.com/en/apps/using-github-apps/approving-updated-permissions-for-a-github-app);
+такой исход не подтверждает доступность новой категории и не требует подавлять
+независимые ранее доступные данные. Пользовательский опыт, источник точного
+статуса approval и раздельные сроки наблюдений задаются 0088 и 0100.

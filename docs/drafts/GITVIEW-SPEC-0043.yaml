@@ -62,6 +62,7 @@ depends_on:
 - GITVIEW-SPEC-0094
 - GITVIEW-SPEC-0098
 - GITVIEW-SPEC-0099
+- GITVIEW-SPEC-0100
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -87,6 +88,10 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    partially_approved_github_data_categories:
+      given: A Project's permitted Issue and PR information is observed, but an additional source category for checks is unavailable or its permission update has not been approved.
+      when: The operator opens the Project and a PR overview.
+      then: Available facts retain their own source times, the missing check information is not shown as green or zero, and a specific permission cause is asserted only if source evidence supports it.
     first_setup_partial_github_installation:
       given: A GitHub identity is confirmed, Repository A is accessible through one app installation, and a separate organization-scope approval remains pending with source-supported evidence.
       when: The operator explicitly selects A for default setup while the other scope remains unresolved.

@@ -744,3 +744,13 @@ GitHub identity, installation, Repository grant и work-data observation.
 без findings/gaps. В графе 99 кандидатов, отсутствующих ссылок и циклов не
 найдено. Реальные installation, discovery, permissions, сохранение и UX не
 проверялись; результаты относятся к структурной проверке candidate bytes.
+
+[0100](GITVIEW-SPEC-0100.yaml) предлагает начальный профиль из пяти
+repository read-permissions GitHub App и связывает его с согласованными
+группами данных. Это не доказанный минимальный набор: concrete GraphQL queries,
+private targets и действительные installation grants остаются открытыми.
+В 0077 уточнено, что GitHub User participants не обязательно равны авторам
+comments; в 0078 — что open-only список связанных PR не покрывает закрытые.
+Шесть изменённых кандидатов прошли [candidate и ontology advisory checks](evidence/autonomous-goal-ontology-check-permission-profile-20261114.json)
+без findings/gaps. В графе 100 кандидатов, отсутствующих ссылок и циклов не
+найдено. Ни разрешения, ни реальный source mapping не проверялись запросами.
