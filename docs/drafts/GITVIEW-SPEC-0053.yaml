@@ -29,6 +29,7 @@ specification:
   contract:
     comparable: A conflict requires values for the same confirmed source object, field and compatible scope. Different Repository identities, object types, time windows or semantically different metrics are not silently merged merely because their names or displayed numbers coincide.
     ordered: When reliable source evidence establishes that one observed value is older than another for the same fact and source state, keep the confirmed newer accepted value. A request's start or completion order alone is not that evidence.
+    evidence_scope: A revision, version or source timestamp establishes ordering only for facts and scope that its documented semantics actually cover. An updated PR head revision does not automatically order unrelated review assessments, comments, repository metadata or every field of a partial response. A later observation time alone is not a source revision for an omitted field.
     unordered: If incompatible values cannot be ordered, the affected fact remains uncertain. Preserve enough provenance to report that uncertainty and avoid claiming a coherent newer complete observation for its scope. A previously accepted permitted value may remain visible as last known with its own time and a conflict or incomplete indication, but is not silently labeled current or successful.
     retained_conflict_evidence: Until a conflict is legitimately resolved, retain the evidence needed to identify the affected fact and scope, establish that competing observations remain unresolved, and assess whether a proposed resolution supersedes all relevant competitors. If this evidence is incomplete or lost, retain the affected fact as uncertain and do not claim resolution. The representation and whether individual private values need to be retained are not prescribed here.
     no_baseline: If no previously accepted value is available and the competing values cannot be ordered, the fact is unknown or conflicted rather than invented from either arrival order. This does not require displaying restricted source contents.
@@ -57,6 +58,10 @@ specification:
       given: Two competing PR state observations remain unordered and the evidence required to compare one competitor is unavailable.
       when: A subsequent observation is newer than the other competitor but cannot be compared to the unavailable one.
       then: The fact remains uncertain; success of the later request alone cannot establish that it supersedes both observations.
+    revision_does_not_order_review:
+      given: A PR's head revision changes and a later response contains the new revision but no review assessment.
+      when: GitView interprets a previously observed review assessment.
+      then: The prior assessment is not silently assigned to the new revision or declared superseded solely by the changed head; its own source and observation context remains necessary.
   unresolved:
   - Source-specific evidence that establishes a comparable field revision or ordering across partial responses.
   - Exact user-facing conflict representation, persistence of candidate values and resolution after a source cannot supply ordering evidence.

@@ -297,6 +297,12 @@ checks и threads; определения в выбранном package не и�
 0044 прошли [проверку словаря](evidence/autonomous-goal-ontology-check-pagination-20261114.json)
 без findings и gaps; реальные source guarantees и reconciliation не проверялись.
 
+В 0044 и 0053 дополнены правила происхождения полей и области действия revision:
+omitted и error-bearing значения не приравниваются к подтверждённой пустоте.
+Их новые байты прошли [проверку словаря](evidence/autonomous-goal-ontology-check-field-evidence-20261114.json)
+без findings и gaps. Pagination counterexample перезапущен для новой SHA 0044;
+семантику конкретных GitHub responses и revision он не проверяет.
+
 После уточнения границы показа данных при temporary failure и explicit denial
 0023 прошёл [повторную проверку словаря](evidence/autonomous-goal-ontology-check-0023-access-20261114.json)
 без findings и gaps. Реальная защита приватного кэша не проверялась.

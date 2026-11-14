@@ -27,6 +27,8 @@ specification:
   - gitview:Issue
   contract:
     axes: For each meaningful scope retain separately the accepted known observations, whether the requested scope was unobserved, partial or sufficiently covered, the last relevant successful observation time, the outcome of the latest request, and whether previously saved private data may currently be displayed. These are product-state properties, not new ontology entities.
+    field_evidence: Interpret an individual field only within the source response, object identity, applicable scope and observation context that established it. A field omitted because it was not requested, unavailable, inaccessible or affected by a source error is unknown for that observation, not automatically empty, zero or a deletion. An explicit empty or absent value may be reported as known only when the selected source contract establishes that meaning for the field and the relevant response is usable; a null-like representation alone is not universally equivalent to any one meaning.
+    field_refresh: A later response that observes one field does not refresh omitted fields merely because they belong to the same object. A previously accepted permitted value may remain available with its own earlier observation context and applicable stale or incomplete indication; do not attribute the later field's time or revision to it without evidence.
     unobserved: Before any accepted observation of a collection, the collection is unknown. A first failed request adds a failure outcome but does not make the collection a known empty result.
     confirmed_empty: A known empty result requires a successful observation sufficient for the exact Repository, object category and time or filter scope being described. Complete coverage of one scope does not establish emptiness in another.
     traversal_vs_coverage: A successful final page is an outcome of traversal, not automatically proof of an exhaustive source state. When changes during traversal or gaps in source guarantees leave coverage unproven, mark the collection's coverage uncertain or incomplete and retain any earlier successful complete-observation time with its original scope. Do not equate uncertainty about completeness with proof that a specific item is absent or present.
@@ -62,7 +64,16 @@ specification:
       given: A prior complete Issue observation exists and the source collection changes during a later traversal whose consistency cannot be established.
       when: All pages returned by that traversal finish successfully.
       then: The latest traversal outcome is distinguishable from its unproven coverage; the old complete time is not advanced as if the newer traversal had proved an exhaustive snapshot.
+    omitted_review:
+      given: A PR review assessment was observed at T1 and a later response observes only its title at T2.
+      when: The PR overview is displayed.
+      then: The title may carry its T2 context, while the earlier review assessment retains T1 or is shown unavailable under current policy; it is not silently refreshed, cleared or assigned T2.
+    null_with_error:
+      given: A requested PR field is represented as null-like in a response accompanied by an error affecting that field and its source contract does not establish an authoritative empty value.
+      when: The field is interpreted.
+      then: Its value is unknown or unavailable for that observation rather than a confirmed empty value, zero or absence.
   unresolved:
   - Exact scope representation and completeness proof for individual source endpoints.
   - Freshness thresholds, per-field granularity, UI representation and durable storage mechanism.
   - Retention and user-facing presentation of older attempt outcomes when a subsequent attempt completes; timestamps with insufficient precision cannot establish their order.
+  - Source-specific semantics for omitted, null-like, empty and error-bearing fields; these cannot be inferred from representation alone.
