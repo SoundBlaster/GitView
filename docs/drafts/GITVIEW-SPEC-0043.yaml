@@ -1,0 +1,75 @@
+id: GITVIEW-SPEC-0043
+title: GitView - Cross-branch overview and recovery scenarios
+kind: spec
+created_at: '2026-11-14T13:55:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0020
+depends_on:
+- GITVIEW-SPEC-0022
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0028
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0037
+- GITVIEW-SPEC-0039
+- GITVIEW-SPEC-0041
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0020.yaml
+  root_intent: .specgraph/root_intent.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- The end-to-end path preserves source identity, Project membership and explicit scope from setup to overview, preview and source navigation.
+- Same-day outcomes remain visible without lifecycle exclusions and can be explicitly filtered without deleting work records.
+- Partial, stale, failed and explicitly denied data remain distinguishable throughout the overview and recovery paths.
+- Shared Repositories are included in each relevant Project and deduplicated in portfolio-wide unique totals.
+- Evidence distinguishes a planned scenario, a deterministic test with doubles, a real source integration observation and a native device observation.
+specification:
+  objective: Combine selected user journeys into verifiable expectations across the refined specification branches.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    composition: Each scenario assumes the applicable parent and dependency rules; no scenario's successful outcome implies that another branch or the entire application is implemented or accepted.
+    observations: Counts and selections are evaluated only for the source scope and coverage stated in the scenario. Unknown, partial or denied information remains visible as such rather than being converted to a successful zero.
+    identity: PR and Issue identity is resolved in source Repository context; Project identity is local and multiple Projects may share a Repository.
+    evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
+    provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
+  scenarios:
+    first_overview:
+      given: No Projects exist; the operator connects one source identity and confirms two accessible repositories in different organizations.
+      when: Two single-repository default Projects are saved and source observations are obtained.
+      then: Both Projects are identifiable, each has the confirmed source Repository, and available work can be reached without conflating organizations with Projects.
+    shared_repository:
+      given: Repository R belongs to both Project P and Project Q and contains one observed open PR under complete coverage.
+      when: P, Q and a portfolio-wide unique total are displayed.
+      then: The PR contributes once to each Project and once to the unique portfolio total; the source Repository is unchanged.
+    work_completes:
+      given: Today contains 100 distinct PRs in the selected Project with complete coverage.
+      when: Ninety-five become merged today and the unfiltered selection is refreshed successfully.
+      then: All 100 remain visible with current observed states; excluding merged explicitly retains only the other matching PRs without deleting the merged records.
+    preview_and_source:
+      given: A filtered dense Project grid contains PR 42 in Repository R2, and another Repository has a different PR 42.
+      when: The operator previews R2's PR, opens it and requests its original source.
+      then: Preview, overview and source request all refer to R2's PR; returning preserves the originating context under 0024.
+    offline_and_denial:
+      given: A private Repository has a prior permitted observation and belongs to a Project.
+      when: A refresh first fails offline and a later source response explicitly denies access.
+      then: During offline the previously permitted data can remain visible with time and failure; after denial the restricted private data is hidden while the Repository and membership are retained.
+    result_after_denial:
+      given: A refresh of a private Repository was started before an explicit source access denial.
+      when: Its response arrives after denial without access having been re-established.
+      then: The response alone does not unlock the restricted private data or change the denial into a successful empty result.
+  unresolved:
+  - Precise device and source fixtures, credentials, test levels and executable acceptance procedures depend on implementation and platform decisions.
+  - Exact source mapping, refresh concurrency reconciliation and view composition remain open in dependency branches.
+  - These scenarios sample critical paths but do not establish complete coverage of the graph.
