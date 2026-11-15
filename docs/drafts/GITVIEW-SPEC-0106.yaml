@@ -14,12 +14,13 @@ depends_on:
 - GITVIEW-SPEC-0066
 - GITVIEW-SPEC-0071
 - GITVIEW-SPEC-0082
-- GITVIEW-SPEC-0096
 - GITVIEW-SPEC-0097
 - GITVIEW-SPEC-0102
 - GITVIEW-SPEC-0103
 - GITVIEW-SPEC-0104
 - GITVIEW-SPEC-0105
+relates_to:
+- GITVIEW-SPEC-0096
 sources:
   conditional_history_clear: docs/drafts/GITVIEW-SPEC-0067.yaml
   parent: docs/drafts/GITVIEW-SPEC-0095.yaml
