@@ -1,6 +1,6 @@
 # 0043: карта сценариев приёмки
 
-Авторская навигационная классификация 96 сценариев [0043](GITVIEW-SPEC-0043.yaml) на SHA-256 `6f3f9922ff14faa2784f1c01b3c30d64db0a8b20a850ebf11a1cf3ebec6ae8d2`.
+Авторская навигационная классификация 95 сценариев [0043](GITVIEW-SPEC-0043.yaml) на SHA-256 `d6825f5785eee69e6c7bbfeb7d3680a9671bd661493db71e77b7e0da7bcbcd1b`.
 Каждый сценарий указан один раз по основной теме; он может проверять и другие ветви.
 Это не semantic approval, не доказательство полноты и не выполненные тесты.
 
@@ -163,6 +163,28 @@ baseline или rollback, а `local_recovery_without_assumed_baseline` пров�
 
 ## Обзор, фильтры и навигация
 
+Сверка с [0027](GITVIEW-SPEC-0027.yaml), [0031](GITVIEW-SPEC-0031.yaml),
+[0042](GITVIEW-SPEC-0042.yaml), [0074](GITVIEW-SPEC-0074.yaml),
+[0092](GITVIEW-SPEC-0092.yaml) и [0110](GITVIEW-SPEC-0110.yaml):
+
+| Область | Сценарии и их разные гарантии |
+| --- | --- |
+| Основной Today | `work_completes` проверяет сохранение 95 merge и явное исключение; `complete_multi_repository_today_journey` добавляет два Repository, preview и возврат; `today_breakdown_changes_without_cohort` проверяет новый объект без фиксации cohort. |
+| Фильтр и данные | `check_count_to_changed_project_selection` различает checks и PR при изменении данных; `signal_filter_changed_after_entry` проверяет явное снятие условия; `summary_to_incomplete_destination` не выводит полноту из успешной пагинации. |
+| Масштаб и доступность | `dense_grid_zoom_preview_round_trip`, `accessible_dense_grid_equivalent`, `grid_pinch_not_preview` и `targeted_zoom_single_member_return` различают обычное масштабирование, альтернативный путь, конфликт жестов и предложенный переход scope. |
+| Предметные детали | `pr_selected_facts_after_compact_preview`, `issue_selected_facts_after_compact_preview`, `partial_issue_discussion`, `issue_link_denied` сохраняют разные поля, ограничения и правила раскрытия. |
+| Навигация и focus | `direct_signal_return`, `accessible_focus_after_refresh`, `portfolio_return_after_refresh` и `preview_and_source` различают origin, identity/focus и переход к источнику. |
+| Сигналы | `partial_signal_navigation`, `timeout_signal_to_preview`, `review_signal_to_preview`, `old_thread_partial_signal` и `blocked_issue_external_source` проверяют независимые predicate и единицы, а не один общий статус здоровья. |
+
+`today_event_with_older_ci` пересекался с `today_typed_decision_to_overview`:
+оба проверяли merged Today при неизвестной применимости CI. В оставшийся случай
+перенесены старая revision R1 и её время; одновременно сохранены отдельная
+неполнота другого Repository и граница отсутствующего результата policy.
+Прежний сценарий доступен в Git-истории; иных ссылок на его ID в текущем
+дереве до изменения не найдено. Другие перечисленные случаи намеренно сохранены:
+их условия или наблюдаемые результаты различаются. Это не доказательство
+полноты всех 31 оставшихся случаев группы или поведения устройства.
+
 - `check_count_to_changed_project_selection`
 - `today_typed_decision_to_overview`
 - `confirmed_setup_to_offline_work`
@@ -175,7 +197,6 @@ baseline или rollback, а `local_recovery_without_assumed_baseline` пров�
 - `targeted_zoom_single_member_return`
 - `old_thread_partial_signal`
 - `signal_filter_changed_after_entry`
-- `today_event_with_older_ci`
 - `day_change_denies_uncertain_candidate`
 - `issue_link_denied`
 - `partial_issue_discussion`

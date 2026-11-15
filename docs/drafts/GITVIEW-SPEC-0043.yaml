@@ -127,9 +127,9 @@ specification:
       when: It starts the Project overview and a background refresh opportunity is offered.
       then: It preserves the store, admits neither incompatible writes nor a first-run reset, identifies a local compatibility limitation and offers an available update or recovery route without claiming that GitHub or the Project collection is empty.
     today_typed_decision_to_overview:
-      given: In a Project-wide Today selection, a permitted identified PR is confirmed merged today but its current CI is unknown; the operator has activated a failed-CI filter and another Repository's work population is not fully observed.
+      given: In a Project-wide Today selection, a permitted identified PR is confirmed merged today and has a failed check observed earlier for revision R1, but its current applicable revision or checks cannot be established. The operator has activated a failed-CI filter and another Repository's work population is not fully observed.
       when: The caller evaluates the normalized PR under 0110 and renders the filtered Project collection.
-      then: The PR is an uncertain candidate rather than a confirmed match or exclusion, the unobserved population remains an independent coverage limitation, and the overview does not claim an exact zero or a complete failed-CI count. A top-level rule unexpectedly returning no result is an integration limitation rather than that domain uncertainty.
+      then: The merge supports base Today inclusion while the earlier failed check retains its own revision and time. The CI filter remains uncertain, so the PR is an uncertain candidate rather than a confirmed current failure or exclusion. The unobserved population remains an independent coverage limitation, and the overview does not claim an exact zero or a complete failed-CI count. A top-level rule unexpectedly returning no result is an integration limitation rather than that domain uncertainty.
     source_revoked_between_admission_and_save:
       given: A Repository selection is locally admitted under source-supported access for account A, and GitHub revokes access before local save without GitView yet observing the revocation.
       when: The Project save succeeds and an applicable denial is observed afterward.
@@ -306,10 +306,6 @@ specification:
       given: An Issue is independently confirmed currently open after a reported earlier closure, but no sufficient evidence establishes that closure's event time or complete history.
       when: The new Today and a previous-day closure selection are evaluated.
       then: The Issue qualifies for Today as open, while the previous-day event match remains uncertain rather than a confirmed match or zero; the current open fact is not proof of the missing event time.
-    today_event_with_older_ci:
-      given: A PR has a confirmed merge event today and a failed check observed earlier for revision R1, but the current applicable revision or checks cannot be established.
-      when: The operator opens the failed-CI filtered Today collection.
-      then: The merge establishes base Today inclusion while the CI filter is uncertain, the earlier check keeps its own revision and time, and no current failure or exclusion is invented.
     day_change_denies_uncertain_candidate:
       given: A filtered Today grid contains a previously visible private PR whose CI match becomes uncertain while a pinch and local-day transition are in progress.
       when: Explicit denial restricts that PR's existence, identity and CI before the gesture ends.
