@@ -21,6 +21,7 @@ depends_on:
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0013.yaml
   agreed_summary: docs/drafts/project-summary-proposal.md
+  today_history_example: docs/drafts/today-to-history-worked-example-20261115.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The operator can reach available metric history for a Project while preserving its identity and the selected metric and period.
