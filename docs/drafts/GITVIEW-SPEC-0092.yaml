@@ -115,9 +115,9 @@ specification:
       when: The operator follows an applicable signal to the object collection.
       then: Each qualifying object remains separately represented in its own source identity; their link does not collapse them into one card or manufacture a third object.
     checks_and_objects:
-      given: A permitted Project signal counts five failed checks across two distinct PRs under the same complete observation context.
-      when: The operator opens it without intervening source changes.
-      then: The destination identifies the failure condition and two PR cards without claiming five PRs or that three cards are missing.
+      given: A permitted Project signal counts five failed checks across two distinct PRs under the same complete observation context. Separately supported applicable object-level evidence identifies both permitted PRs and their matching conditions for the destination, with sufficient selection coverage.
+      when: The operator opens it without intervening source, membership, access or period changes.
+      then: The destination identifies the failure condition and two PR cards without claiming five PRs or that three cards are missing. The cards are supported by the separate object evidence, not inferred from the aggregate alone.
     clear_signal_condition:
       given: The operator opened a failed-CI Project signal and its failure condition is identifiable as active in the destination.
       when: The operator explicitly clears that condition.
