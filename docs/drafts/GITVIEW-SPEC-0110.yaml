@@ -71,6 +71,10 @@ specification:
     testing: Under 0040 and 0079 specify failing-then-passing behavior tests for the truth table, identity normalization, privacy projection, half-open time boundaries, stale or mismatched revision, incomplete population and all-states-excluded view. The existing finite model checks a simplified logic abstraction only; actual domain caller, source semantics, storage, platform calendar and UI remain separate evidence. Use SpecificationCore only if its chosen API preserves true, false, unknown and rule non-applicability as required under 0095.
     provenance: The owner's requirements are unfiltered unfinished and same-day completed work, explicit filters and a dense overview. The three-valued truth rules and this pure-decision interface are agent-authored proposals; input names here describe a contract, not mandated Swift types or ontology entities.
   scenarios:
+    last_known_open_and_today_creation:
+      given: Two permitted identified PRs are in the selected scope with supported type and unrestricted filters. The first was observed open before Today but has no applicable current lifecycle, its creation is known before Today, and in-day outcome evidence is incomplete. The second has a supported creation within Today and unknown current lifecycle.
+      when: The current-context Today policy evaluates the prepared alternatives.
+      then: The first is an uncertain candidate, not a confirmed current-open match or a confirmed non-match; its permitted earlier observation retains its original time and remains inspectable through the uncertainty route. The second is a match by creation while its lifecycle remains unknown. Neither individual result establishes complete population coverage or a new source observation.
     event_precision_overlaps_day_boundary:
       given: An eligible Issue has a supported closure event whose source semantics establish only a possible time range spanning the captured start of Today; open and creation alternatives are independently false, and no other in-day outcome is established.
       when: The Today decision is prepared and evaluated.
