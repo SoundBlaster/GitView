@@ -49,8 +49,8 @@ specification:
     GitHub repositories; membership does not copy repository data.
   - An existing repository may occur in several projects; a project may contain repositories in different
     organizations.
-  - Provide a way to create, rename and edit a project and select its repositories; default discovery
-    starts with one project per repository.
+  - Provide a way to create, rename and edit a project and select its repositories. The proposed default
+    setup creates or reuses one Project per eligible selected Repository after explicit confirmation under 0022 and 0045; discovery alone does not create a Project.
   - Removing a membership affects only the selected project; it does not delete the source repository
     or alter other projects. The user must not be left with an invalid empty saved project; exact editing
     flow is open.
@@ -70,8 +70,8 @@ acceptance:
   GitHub repositories; membership does not copy repository data.
 - An existing repository may occur in several projects; a project may contain repositories in different
   organizations.
-- Provide a way to create, rename and edit a project and select its repositories; default discovery starts
-  with one project per repository.
+- Provide a way to create, rename and edit a project and select its repositories. The proposed default setup
+  creates or reuses one Project per eligible selected Repository after explicit confirmation under 0022 and 0045; discovery alone does not create a Project.
 - Removing a membership affects only the selected project; it does not delete the source repository or
   alter other projects. The user must not be left with an invalid empty saved project; exact editing flow
   is open.
