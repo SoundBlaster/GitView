@@ -1,5 +1,12 @@
 # Готовность архитектуры маршрута Project → Today
 
+В 0119 уточнён обмен чистого summary decision с caller: один валидный metric
+request получает complete, observed-subset или unavailable результат с его
+контекстом. Отсутствие применимого top-level результата не становится нулём;
+source effects, хранение, privacy projection и переход к объектам остаются
+отдельными обязанностями. Это информационный контракт, не выбранные Swift types
+или подтверждение работы приложения.
+
 Дополнение: локальный tag SpecificationCore `2.1.0` указывает на commit
 `9b5fc40c16677e868856d0b24b70019cd5ea4687`; три проверенных пути —
 `DecisionSpec.swift`, `FirstMatchSpec.swift` и `Package.swift` — совпадают
