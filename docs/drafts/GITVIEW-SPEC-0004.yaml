@@ -77,7 +77,7 @@ specification:
     project_entry: Start from the existing compact proposal with the permitted Project name and Repository count.
       When space permits, surface open PRs and Issues separately, failed CI, review waiting and recent
       results. The Project summary already defines the scope of these signals. The subset shown at the
-      initial density remains open.
+      initial density is proposed in 0047 and remains subject to native and accessibility evaluation.
     navigation: Open a Project from its entry. A signal can provide a direct path to the corresponding
       filtered PR or Issue view within that Project.
     incomplete_data: Keep the affected Project visible and distinguish partial or stale observations from
@@ -113,9 +113,9 @@ specification:
       when: The main overview opens.
       then: The empty state is distinct from a loading failure.
   deferred:
-  - Default density and arrangement, and which of the existing signals fit at that density. Candidate 0072 proposes stable local Project insertion order subject to review.
+  - Candidate 0047 proposes an adaptive initial density and field priority; exact arrangement and native validation remain open. Candidate 0072 proposes stable local Project insertion order subject to review.
   - First-launch and launch restoration are refined by 0022 and 0024; their open decisions remain explicit there.
-  - Exact default density, alternative sorting, control placement and empty-state wording.
+  - Alternative sorting, control placement and empty-state wording.
   - Detailed Project navigation is specified separately in GITVIEW-SPEC-0006.
   provenance_boundary: The owner suggested starting from the main screen and reusing the interactive prototype.
     Prototype observations describe the view inside a Project. The overview of multiple Projects uses
