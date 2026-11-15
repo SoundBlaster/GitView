@@ -1,0 +1,92 @@
+id: GITVIEW-SPEC-0001
+title: GitView - product intent and scope
+kind: spec
+created_at: '2026-11-15T17:42:00Z'
+updated_at: '2026-11-15T17:44:00Z'
+status: outlined
+depends_on: []
+relates_to: []
+sources:
+  root_intent: .specgraph/root_intent.md
+  discovery_draft: docs/product-discovery.md
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0001.yaml
+  predecessor_revision: 77bea62b255c4ac6ada9228111c1f2b72b0944c9
+  current_work_decision:
+    path: conversation_memory/sketches/gitview/revisions/a748240310ba46aca7e16424b35f2b3c/notes.hc
+    node: grid-today-current-work
+  merged_pr_decision:
+    path: conversation_memory/sketches/gitview/revisions/a939a7dabd094fe29fa89305b56695d6/notes.hc
+    node: current-work-merge-metrics-decision
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Give a person managing many GitHub repositories a compact native iOS overview of current
+    PR and Issue work, including work produced by coding agents, attention and outcomes, with a path to
+    the original GitHub objects.
+  authority_boundary: This root records the owner's selected product direction. Linked drafts and the
+    selected ontology package remain drafts; this node does not accept their full contents, assert that
+    the application exists, or declare any branch ready for implementation. Refinements must distinguish
+    owner decisions, proposals and open questions.
+  product_scope:
+    organization: GitView Projects each contain one or more GitHub repositories. A repository may belong
+      to more than one Project; by default one Project corresponds to one repository. A Project can include
+      repositories from different GitHub organizations.
+    repository_identity: A source-confirmed rename or transfer of the same GitHub repository preserves
+      its identity, history and Project membership. A reused address or name does not itself establish
+      identity.
+    current_work: Today presents the current picture of work rather than a required calendar-day or past-state
+      viewer. An applicable confirmed merged PR leaves the current unfinished-work selection; its supported
+      result is reflected in the appropriate metric when sufficient evidence exists. A partial or failed
+      refresh does not by itself establish a merge, deletion or empty selection.
+    overview: The operator can inspect PRs and Issues with their source context and selected status, review,
+      CI and discussion signals, including failed CI and unresolved or long-waiting review threads. Distinct
+      source facts and metrics retain their meanings; missing or stale observations are not reported as
+      success or zero. The meaning and evidence for long-waiting attention remain open.
+    interaction: A Photos-inspired zoomable grid supports inspecting work at different densities using
+      pinch, and navigation from Projects to their work and object overviews. First-version long-press
+      preview, opening an object, returning to context and accessible alternatives to gestures are part
+      of the selected direction. Exact transitions and gesture arbitration require refinement; sliding
+      preview and deeper in-app PR exploration are later ideas.
+    source: GitView offers a path to the original GitHub object and lightweight sharing; it is an overview,
+      not a replacement for GitHub.
+    history: Historical measurements and charts are in scope. A viewer reconstructing the Project at an
+      earlier date is not required. A contribution-style calendar is a possible farthest zoom level; calendar
+      time cells and Project or repository cells have different meanings. Metric units, period, scope
+      and evidence require refinement.
+    descriptions: The owner selected structured Issue and PR description templates, including Problem,
+      Motivation, Expected outcome and References; the PR template also includes Changes and Validation.
+      Their application and enforcement for different authoring paths remain to be specified; existing
+      external objects retain their original content.
+    filters: The operator can explicitly filter applicable work by lifecycle state. For a selection defined
+      to include all applicable lifecycle states, all are included by default and the operator may explicitly
+      exclude states. This does not create such a selection by itself; the separately selected rule removes
+      confirmed merged PRs from current unfinished work. The availability and composition of other views
+      containing completed objects require refinement.
+    data: Previously received data may be stored locally. A failed GitHub refresh must be clearly indicated,
+      with the last successful update time for its supported scope when known; incomplete or failed refresh
+      is not a confirmed empty result. Observation times and limitations retain their actual scopes. Private
+      offline disclosure is an open product decision.
+    platform: Prefer Apple system appearance and components, SF Symbols, system colors and Liquid Glass
+      with minimal decoration, while providing accessibility and alternatives to gesture- or color-only
+      operation.
+    engineering: The owner requested SpecGraph in a separate product workspace, testability, dependency
+      injection, TDD and appropriate network and data mocks, FSD-iOS for architectural organization and
+      SpecificationCore for suitable named domain decisions. Concrete integration requires refinement
+      and verification.
+  open_questions:
+  - Treatment of PRs closed without merge and closed Issues in current work.
+  - Exact meaning of ready or attention and the evidence for any derived signal.
+  - Privacy and availability policy for previously permitted private data offline or after restoration.
+  - Sharing payload, historical metric periods and membership basis, supported devices and exact native
+    interactions.
+  - Detailed GitHub source mappings, authorization, storage guarantees and implementation-ready leaf contracts.
+  ontology_status: The project selects local.gitview.domain at 0.2.0-draft-composition.13 as a working
+    terminology context. This specification does not grant semantic approval to the ontology or assert
+    a particular action, motivation or source event.
+acceptance:
+- The specification identifies the intended operator outcome and GitHub boundary without claiming implementation.
+- The selected Project and repository composition, current-work direction and merged-PR outcome are distinguishable
+  from open product decisions.
+- Core interaction, accessibility, historical-metric and observation-failure expectations are recorded
+  without selecting a storage or API implementation.
+- Child specifications and evidence are refined and reviewed separately before implementation readiness
+  is claimed.
