@@ -50,7 +50,7 @@ specification:
 acceptance:
 - Offer an original GitHub source link for a Repository, PR or Issue when an eligible source URL is available;
   do not manufacture an unverified URL or present a known misdirected address as that object.
-- Use the native share flow for an eligible source link after applicable handoff admission; sharing a link does not grant recipient access or establish delivery.
+- When source-link sharing is offered, use the native share flow for an eligible link after applicable handoff admission; sharing a link does not grant recipient access or establish delivery. The default payload remains an agent-authored candidate.
 - As an agent-authored pilot candidate, default to sharing the source link and avoid automatically exporting private descriptions,
   repository contents or screenshots. Additional share payload is a later decision.
 - If no eligible source-associated URL, including a permitted last-known link, is available, indicate that source opening or link sharing is unavailable rather than opening
