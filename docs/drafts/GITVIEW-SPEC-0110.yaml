@@ -137,6 +137,10 @@ specification:
       given: An Issue created before today has a source-confirmed closure event today and is independently observed open after a reopen.
       when: The unfiltered Today decision evaluates it.
       then: It is one confirmed matching Issue through both supported alternatives, with current open state and the earlier closure event kept distinct; it is not two cards or proof that every intervening event was observed.
+    repeated_closure_one_card:
+      given: A permitted Issue created before Today has two independently confirmed closure events during Today, a supported intervening reopen, and a later applicable open observation; both closure events were independently recovered after restart.
+      when: The unfiltered Today selection and a separately selected current-open filter are evaluated.
+      then: The same confirmed Issue matches once in the grid and the open filter on the supported current observation; its two historical closures remain separate evidence and do not create extra cards or imply exhaustive history.
     title_without_lifecycle:
       given: A partial response contains a permitted PR identity and title but fails to provide applicable lifecycle, creation and closure-or-merge evidence.
       when: The unfiltered Today decision evaluates the candidate.

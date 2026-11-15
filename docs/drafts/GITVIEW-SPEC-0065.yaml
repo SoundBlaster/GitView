@@ -53,6 +53,14 @@ specification:
       given: A source-confirmed closure concerns a GitHub PullRequest, and the GitHub Issues interface also exposes its issue number.
       when: The distinct closed-Issue and merged-PR metrics are evaluated for the period.
       then: The PR closure is not counted as an Issue closure; it contributes to merged PRs only if independent merge evidence establishes that outcome in the period.
+    repeated_closures_different_units:
+      given: One permitted Issue has two source-identified closure events within the same selected period with a supported reopen between them; one event was observed again during a later refresh. No other eligible events or objects are established.
+      when: The consumer evaluates an event-count metric and a distinct-Issue-with-closure metric using these known observations.
+      then: The known observations support two distinct closure events and one distinct Issue, not three events or two Issues. Neither quantity is an exact total for the period without independent relevant population, access and event coverage; a current-open snapshot is a separate question.
+    same_time_unresolved_event_identity:
+      given: Two permitted closure observations for one Issue report the same time but their event identities cannot be associated or shown distinct with sufficient source evidence.
+      when: A distinct-event bucket is assembled.
+      then: The bucket preserves that identity limitation and does not infer one event or two from matching timestamps; a separately supported distinct-Issue count can still count that confirmed Issue once for this bucket, subject to its own coverage.
     unresolved_closure_subject_type:
       given: A supported closure event falls within the period, but available subject evidence does not determine whether it is an Issue or PullRequest.
       when: A closed-Issue outcome is calculated.
