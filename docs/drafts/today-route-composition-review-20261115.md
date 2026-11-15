@@ -1,6 +1,6 @@
 # Project → Today → filters: сверка композиции
 
-Авторская сверка кандидатов [0042](GITVIEW-SPEC-0042.yaml) `5e6096223bb6ea831535ea52189f96f8d27209a2bd5f4b6cb1d16de177c507db`, [0092](GITVIEW-SPEC-0092.yaml) `59c6f6419d8b4d1171f0d4847d500f0c392a9843e9c7d320046a4b1a0d83b6f0`, [0110](GITVIEW-SPEC-0110.yaml) `557e83fdd7066f5b77d86cfc88ebc206e604e4b3df8160fd6342fb516233e14a`, [0115](GITVIEW-SPEC-0115.yaml) `617649c4913d7211697ffd8237497dfef201d2393abb8ac6942ba7a44bff2696`, [0119](GITVIEW-SPEC-0119.yaml) `ebaad0e2fbf703882fc658bb7db4b25b704376768f925fbcfa5f8923bc73eb0c` (SHA-256). Состояние — `idea / pre_canonical`.
+Историческая авторская сверка кандидатов [0042](GITVIEW-SPEC-0042.yaml) `5e6096223bb6ea831535ea52189f96f8d27209a2bd5f4b6cb1d16de177c507db`, [0092](GITVIEW-SPEC-0092.yaml) `59c6f6419d8b4d1171f0d4847d500f0c392a9843e9c7d320046a4b1a0d83b6f0`, [0110](GITVIEW-SPEC-0110.yaml) `557e83fdd7066f5b77d86cfc88ebc206e604e4b3df8160fd6342fb516233e14a`, [0115](GITVIEW-SPEC-0115.yaml) `617649c4913d7211697ffd8237497dfef201d2393abb8ac6942ba7a44bff2696`, [0119](GITVIEW-SPEC-0119.yaml) `ebaad0e2fbf703882fc658bb7db4b25b704376768f925fbcfa5f8923bc73eb0c` (SHA-256). Состояние — `idea / pre_canonical`.
 
 | Граница | Согласованный контракт | Открыто |
 | --- | --- | --- |
