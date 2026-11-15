@@ -269,7 +269,7 @@ specification:
       when: The saved membership changes to A and unobserved C, then the older A-B refresh returns an open-only subset and B's later request fails.
       then: The A-C selection does not claim completeness or a new complete time; applicable A facts keep their own evidence, C remains unobserved, B's failure retains its old request scope, and missing open-list entries are not invented as merges or deletions.
     complete_multi_repository_today_journey:
-      given: Project P has two confirmed Repositories with 100 distinct permitted open PRs in total, and relevant Today, lifecycle and identity coverage is sufficient.
+      given: The proposed Project-wide work collection is selected for a multi-Repository Project P. P has two confirmed Repositories with 100 distinct permitted open PRs in total, and relevant Today, lifecycle and identity coverage is sufficient.
       when: The operator enters P's all-members Today work collection, 95 PRs merge today, then the operator previews and opens one of those PRs and returns without applying a lifecycle exclusion.
       then: The selection still contains the same 100 PRs subject to the stated observations, the 95 merged PRs retain their distinct identities and current source states, the opened PR retains its Repository and Project context, and return preserves the collection's valid scope, filters, density and identity-based position.
     project_summary_at_dense_scale:
