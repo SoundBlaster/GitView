@@ -1,0 +1,21 @@
+{
+  "artifact": "graphql_schema_validation",
+  "date": "2026-11-15",
+  "schema_source": "https://docs.github.com/public/fpt/schema.docs.graphql",
+  "schema_snapshot_path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/github-public-schema-20261115.graphql",
+  "schema_sha256": "46f1d455d72ab784c6cb2b86e9b023df195dcfd2ed92099108b0faa5faa5d1fc",
+  "schema_build_assume_valid": true,
+  "validator": "graphql-core 3.2.6",
+  "document": "docs/drafts/review-thread-volume-graphql-20261115.md",
+  "document_sha256": "771a2a10d29276f6e38cf7b4920724865c6fcdf22ff48afd88a1b071c35391a9",
+  "operation": "GitViewReviewThreadVolumes",
+  "operation_sha256": "27f3c93bbf54354c9b6389f29b798f894c3345f8e99730061b30807128fc73cf",
+  "operation_hash_input": "UTF-8 fenced GraphQL body including final newline",
+  "errors": [],
+  "limits": [
+    "static syntax, fields and type compatibility only",
+    "no live GitHub request, permission or source coverage check",
+    "schema snapshot is not a live endpoint",
+    "schema loaded with assume_valid"
+  ]
+}
