@@ -1,0 +1,36 @@
+artifact_kind: gitview_scenario_level_pilot
+status: agent_proposal
+description: >-
+  Review-only classification of selected existing scenarios. The level describes
+  their principal purpose, not truth, maturity, release inclusion, test execution
+  or an accepted SpecGraph schema. A scenario can be mixed; its level does not
+  determine the level of its entire specification.
+levels:
+  product: Explains a user-visible outcome, meaningful choice or consequence.
+  technical: Specifies an implementation-facing mechanism or its failure boundary.
+  mixed: Connects a user-visible outcome to a particular technical mechanism.
+scenarios:
+- spec: GITVIEW-SPEC-0127
+  scenario: project_membership_is_local
+  level: product
+  rationale: Removing membership affects one Project without deleting the source or changing the other Project.
+- spec: GITVIEW-SPEC-0127
+  scenario: dynamic_today_and_fixed_cohort
+  level: product
+  rationale: Distinguishes a changing Today view from a proposed fixed set of PRs.
+- spec: GITVIEW-SPEC-0043
+  scenario: dense_grid_zoom_preview_round_trip
+  level: product
+  rationale: Connects density, object inspection and return through a user journey.
+- spec: GITVIEW-SPEC-0043
+  scenario: github_token_rotation_response_lost
+  level: mixed
+  rationale: Connects an optional token-rotation mechanism to offline data and user recovery.
+- spec: GITVIEW-SPEC-0117
+  scenario: old_response_after_clear
+  level: technical
+  rationale: Describes generation ordering when an optional history-clear feature is used.
+- spec: GITVIEW-SPEC-0114
+  scenario: secure_write_before_commit
+  level: technical
+  rationale: Describes interruption recovery for one optional credential-storage protocol.
