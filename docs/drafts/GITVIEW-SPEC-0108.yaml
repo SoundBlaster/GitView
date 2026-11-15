@@ -28,6 +28,7 @@ depends_on:
 - GITVIEW-SPEC-0112
 - GITVIEW-SPEC-0113
 - GITVIEW-SPEC-0114
+- GITVIEW-SPEC-0122
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0022.yaml
   work_route: docs/drafts/GITVIEW-SPEC-0107.yaml
@@ -49,6 +50,7 @@ specification:
   - gitview:Repository
   contract:
     startup_owner: App composition supplies local configuration, connection and access capabilities. The overview or its setup route reads the Project collection through the 0104 domain-aware boundary and retains its own route state. A complete valid empty collection offers setup; a partial read may expose independently valid permitted Projects with a coverage limitation; unreadable or inconsistent configuration offers local recovery without declaring first launch or erasing data. A local empty collection, expired credential and failed GitHub discovery are distinct conditions.
+    store_and_connection_startup: Compose local store opening and schema evolution under 0122 with connection recovery under 0114 as independent outcomes. A usable credential does not turn an unreadable, migrating or newer incompatible store into an empty Project collection or authorize writes to it; a successfully migrated store does not prove its secure item or source connection usable. Where the relevant store is not ready for writes, keep setup mutations pending or unavailable with a local recovery path. Independently eligible connection or source observations may proceed only where their own boundaries allow, but their success does not create a Project or complete migration. Once the store is ready, reread and reconcile saved Projects and pending operations before offering a retry; do not automatically submit an unstarted selection or treat a recovered receipt as a current Project read.
     source_ownership: The connection responsibility owns the user-authorized account session and credential lifecycle under 0098, with recoverable local binding under 0114. Installation and Repository discovery provide separately scoped source observations under 0059 and 0099. They do not own local Project configuration and an external return does not establish a grant, a selected Repository or a Project. App-level composition supplies access-scoped capabilities; setup presentation and Project domain policies do not hold raw tokens or directly import an authentication sibling feature.
     external_return: Keep the GitHub user-authorization callback in the connection responsibility under 0098 and installation access review under 0099. An installation setup redirect, its untrusted installation identifier or a manual return is not an authorization-code callback and cannot establish account, grant or a local Project. The setup page can offer a user-initiated recheck using the current confirmed identity, preserve the permitted pending intent and receive separately attributed discovery outcomes; account replacement, lost state and unavailable source evidence follow their own recovery rules. No automatic Project confirmation follows a browser return or foreground transition.
     recheck_to_selection: Discovery returns supported per-scope observations and limitations to the setup route with their source, account, attempt and coverage context under 0059 and 0099. The route retains the pending intent separately and projects each selected identity as eligible, unresolved or restricted only to the extent applicable evidence and current disclosure permit. It does not map an unreturned entry to an empty account, a denial or a removed selection. Confirmation and 0113 admission independently reevaluate eligible entries; a recheck alone does not submit a Project mutation or refresh PR and Issue observations.
@@ -69,6 +71,14 @@ specification:
     verification: Under 0040 and 0079 specify TDD scenarios with injected local configuration, source, access, clock and operation outcomes for empty versus unreadable startup, partial discovery, account switch, durable intent failure, cancellation race, lost acknowledgement and later work refresh failure. Check actual authorization, source grant changes, persistent restart and native accessibility separately. These are planned tests, not executed product evidence.
     provenance: One default Project per Repository, custom multi-Repository Projects, retained local data and FSD with DI and TDD are owner choices. The setup page ownership and composition are agent-authored proposals; they do not claim a selected screen hierarchy, live installation, database or implementation.
   scenarios:
+    connection_ready_store_incompatible:
+      given: A recoverable connection is usable, but the local Project store has a newer incompatible schema and its saved contents cannot be read by this app version.
+      when: The operator opens setup or a source discovery result arrives.
+      then: Connection and local incompatibility remain separate, no empty portfolio or failed login is asserted, and no Project creation is admitted to that store. An available compatible-reader or update route is offered without deleting the store.
+    store_ready_connection_unavailable:
+      given: A supported local schema upgrade completes and saved Projects can be read, but the active connection's secure item cannot be recovered.
+      when: The operator returns to the overview.
+      then: The saved Projects remain locally configured, connection recovery is offered separately, and source-derived content is shown only to the extent allowed by current access policy without claiming a successful source refresh.
     unreadable_startup_with_saved_data:
       given: A valid Project was previously saved but the current local Project collection read is unavailable.
       when: The app starts while GitHub is also offline.
