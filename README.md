@@ -11,6 +11,7 @@ behavior has been implemented or tested on a device.
 - [Root intent](.specgraph/root_intent.md) — pre-canonical product input.
 - [Discovery notes](docs/product-discovery.md) — agreed direction, ideas, and
   unresolved questions from the initial conversation.
+- [First autonomous product pass](docs/drafts/product-first-pass-20261115.md) — product outcomes, relationships and open questions.
 - [Product foundation draft](docs/drafts/product-foundation.md) — idea,
   candidate vocabulary, application boundary, UX and proposed spec map.
 - [Product overview specification candidate](docs/drafts/GITVIEW-SPEC-0001.yaml)
