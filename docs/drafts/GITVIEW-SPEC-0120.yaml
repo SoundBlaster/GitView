@@ -1,5 +1,5 @@
 id: GITVIEW-SPEC-0120
-title: GitView - Targeted zoom across overview scopes
+title: GitView - Candidate zoom navigation between overview scopes
 kind: spec
 created_at: '2026-11-14T22:29:00Z'
 status: idea
@@ -25,15 +25,13 @@ sources:
   density_prototype: docs/drafts/dense-overview-prototype.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- An agent-authored first-version proposal offers a deliberate targeted zoom transition in addition to in-scope density adjustment and explicit open or back actions.
-- A scope transition requires one identifiable eligible target or an existing valid return route, observable transition intent and a committed gesture; ambiguous focus or cancellation does not open an arbitrary object.
-- Target identity, Project and Repository context, selected filters, relevant period, coverage and actual navigation origin are preserved or explicitly changed by the chosen route.
-- A return follows the real route and restores its valid density and position without fabricating intermediate screens, even for a single-Repository Project or signal shortcut.
-- Concurrent access, membership, day and source changes are reevaluated before presentation without silently substituting a target or revealing restricted data.
-- Equivalent opening and return remain available without pinch, while static long-press preview and separately deferred sliding preview retain their own behavior.
-- Native feasibility, exact gesture interaction and accessibility need verification; this candidate is not a claim of implemented or user-approved behavior.
+- Pinch changes density within the current overview as described by 0035 and 0075; moving between scopes remains an intentional, distinguishable action.
+- A zoom-based scope transition is a candidate interaction, not an established first-version requirement or a prerequisite for ordinary navigation.
+- If adopted, a transition opens the intended eligible target and retains the actual origin and applicable context; an ambiguous, cancelled or no-longer-permitted target is not silently substituted.
+- Opening and returning remain accessible without pinch, and static preview remains separate from the deferred sliding preview.
+- The interaction and its native feasibility require evaluation; no implementation or device behavior is claimed.
 specification:
-  objective: Propose a reviewable Photos-inspired path between overview scopes while keeping the existing in-scope scaling and navigation contracts distinct.
+  objective: Keep the Photos-inspired possibility of zoom navigation reviewable without prematurely fixing its gesture mechanics.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -41,52 +39,30 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    proposal_scope: As an agent-authored working proposal for the first version, permit a deliberately targeted outward pinch to enter an eligible focused Project, Repository, PR or Issue from an overview, and an inward pinch to return to the actual previous route where that route has an eligible zoom-return interaction. Tap or an equivalent accessible Open action and a standard Back or accessible return remain available. This proposes an interaction rather than claiming a particular system component, continuous native animation or automatic scope changes at every density step. Calendar and sliding preview remain separately scoped.
-    density_before_navigation: Within the current overview an ordinary pinch changes presentation density and keeps scope, selection and filters under 0035 and 0075. Only after reaching the applicable detailed boundary may a further deliberate outward motion request a scope transition. A pinch that ends at or before that boundary does not navigate. Exact levels, motion distance, thresholds, timing and visual interpolation require native prototyping rather than fixed numbers here.
-    target_and_arming: At transition intent, resolve the gesture focus against the current rendered overview and current applicable identity and access. Arm only one unambiguous eligible cell and bind the proposed transition to its stable identity and originating route; a midpoint on empty space, overlapping or otherwise ambiguous targets, incomplete identity or restricted target cannot pick an arbitrary neighbor. Communicate the pending target and that a transition is armed using a perceptible, non-color-only indication that respects system preferences and does not reveal restricted details. No hidden timer or unannounced activation is a substitute for intentional navigation.
-    commit_and_cancel: As a working gesture proposal, crossing the distinct transition boundary and ending that gesture while the same target remains eligible commits at most one navigation. Reversing before commit, ending without reaching the transition boundary, platform cancellation or loss of target eligibility leaves the operator in the originating overview or an appropriate safe state; it does not open another object. A later completion of a cancelled async request is not a committed gesture. Exact recognizer coordination, the presentation of arming and feasibility of cancellation require device evaluation.
-    destination: Resolve the same route that explicit Open would use under 0074, 0091 and 0115. A Project whose complete valid saved membership is established as exactly one Repository opens its Project-wide work without an invented Repository step; a multi-member Project opens its member overview with a reachable Project-wide work route. A selected Repository retains the originating Project, and a PR or Issue opens the same source-identified object with the relevant scope. An unresolved or denied target yields a safe limitation or recovery route instead of selecting a different Project, Repository or number-matched object.
-    return_zoom: As a complementary working proposal, when an overview reached through a valid prior route is at its least-detailed in-scope boundary, a further intentional inward pinch may arm a return to that actual origin; the return commits on the corresponding completed gesture. Do not treat an ordinary density reduction as Back, infer a synthetic Repository step, or return to a different Project sharing the Repository. If no parent route exists, keep the current scope and density usable. Ordinary system Back remains available. A detail surface without an appropriate overview gesture does not need an invented pinch recognizer; standard return remains sufficient until its own platform behavior is specified.
-    origin_context: Preserve the actual origin route and its still-valid Project identity, selected scope, period, filters, density, permitted anchor and focus under 0024 and 0074. Entering a new child scope uses its own established initial selection under 0074 rather than silently applying incompatible parent filters. On return restore the original valid context; if it is removed, unreadable or restricted, follow the appropriate safe fallback without presenting a different object as the same one. An explicit user position or newer navigation action is not overridden by a delayed completion.
-    concurrent_updates: A source update, membership edit, local day change or access restriction can happen while a transition is armed. Before commit and before destination presentation revalidate the same captured identity and applicable route context; never retarget an armed transition to the new cell at the same index or position. If the object stops matching only the original filter but remains independently openable, the chosen transition is permitted only if its still-valid explicit origin and access rules support it; otherwise cancel or surface a safe limitation. A denial takes effect immediately and cannot be postponed for animation.
-    interaction_priority: A pending long press cancelled by a recognized pinch does not also produce a static preview under 0075. An already presented static preview remains associated with its original object or is dismissed according to 0031 and 0075; it does not turn into a sliding preview or a second navigation. Scrolling, density change, zoom navigation and object open each have distinct committed outcomes; an interrupted gesture is not an open, share or source mutation.
-    accessibility: A user can identify and open the same permitted target and return through a discoverable non-pinch action, without color, precise gesture timing or animation as the only cue. System text and motion preferences can change presentation; focus returns to the same permitted object or an honest safe fallback under 0032 and 0073. A touch arming cue is not a substitute for equivalent accessible operations. Actual VoiceOver, Switch Control and native system behavior need verification on supported devices.
-    verification: First review the proposal against the selected top-level navigation and source contracts. Before treating this interaction as implementation-ready, define and evaluate native target hit-testing, intent feedback, recognizer arbitration, cancellability, animation and preference handling with realistic dense and sparse grids. Plan deterministic state-transition cases with supplied identity, access and route changes, and separately test actual gestures, focus and accessibility on supported devices. No prototype or product test is claimed by this document.
-    provenance: The owner requested a Photos-inspired multi-density overview and movement between Projects and work; the focused-boundary gesture and commit-on-release rules are agent-authored candidates, not individually confirmed user choices or native feasibility evidence. Static preview is first-version scope; sliding rich preview is a later concept under 0015.
+    scope: The owner requested a Photos-inspired overview with multiple densities and navigation between Projects and their work. Whether pinch itself should also cross navigation scopes, and whether that interaction belongs in the first version, remain open. Explicit opening and return under 0074 and 0024 provide the established route.
+    possible_interaction: A targeted pinch beyond a density boundary, with an indication of the target and confirmation on gesture completion, is one agent-authored possibility. It is not a selected threshold, recognizer design or required sequence; other interactions or no cross-scope pinch may better fit the platform.
+    identity_and_origin: If zoom navigation is selected, resolve the intended permitted object by stable identity, use the same destination as an explicit open, and preserve the real origin and applicable context under 0024 and 0074. Do not replace an ambiguous, cancelled, removed or restricted target with another object at the same position. Apply current access rules before showing content.
+    interaction_and_accessibility: In-scope scaling must not itself silently navigate. A chosen transition must be distinguishable from scaling, scrolling and static preview; support opening and returning without pinch under 0032. Sliding rich preview remains a later concept under 0015.
+    verification: Compare viable navigation interactions using native and accessibility evaluation before selecting mechanics. Check identity and origin across reflow, source and access changes, cancellation and return; do not claim device behavior from this proposal.
+    provenance: Multi-density overview and navigation are owner direction. Cross-scope pinch and the detailed boundary interaction are agent-authored options, not individually confirmed choices.
   scenarios:
     density_only:
-      given: A filtered Project work grid is shown at a dense scale and the operator begins an outward pinch.
-      when: The gesture ends before the separate scope-transition boundary.
-      then: Density may change, but the same Project, selected scope, period and filters remain and no PR or Issue opens.
-    targeted_entry:
-      given: An eligible Project cell is unambiguously targeted at the detailed boundary and the transition indication identifies that same Project.
-      when: The operator deliberately crosses the transition boundary and ends the gesture while the Project is still eligible.
-      then: At most one explicit Project entry commits through 0074 and retains the real originating overview and Project identity.
-    ambiguous_target:
-      given: The outward-pinch focus is between two Project cells and no single eligible target is established.
-      when: The gesture exceeds a density boundary and ends.
-      then: Neither Project is silently opened, and the overview remains usable with its actual density and scope.
-    reverse_before_commit:
-      given: A transition is armed for PR 42 in Repository B while another Repository contains PR 42.
-      when: The operator reverses the gesture before committing or the platform cancels the touch sequence.
-      then: Neither PR is opened and the originating collection remains available; a later callback does not commit the cancelled gesture.
-    one_repository_round_trip:
-      given: Project P has one confirmed member R and is entered directly from the Projects overview by targeted zoom.
-      when: The operator uses a valid zoom-return or Back from P's work view.
-      then: The return reaches the actual Projects overview with its valid context and does not invent a separate R screen.
-    denial_while_armed:
-      given: A private PR is armed as the zoom target and its applicable source access is then explicitly denied.
-      when: The gesture completes.
-      then: Restricted identity and details are not newly presented, the old target cannot be replaced by another cell, and an appropriate non-sensitive limitation or recovery path remains.
-    pending_press_then_pinch:
-      given: A long press is pending on a PR cell but has not opened a preview.
-      when: A density or targeted zoom pinch is recognized.
-      then: The pending preview is cancelled; no static preview and scope transition are both committed from the same pending press.
+      given: A filtered Project work grid is shown at a dense scale.
+      when: The operator performs an in-scope pinch.
+      then: Density may change, but the scope, period and filters remain and no object opens solely from that scaling.
+    conditional_targeted_entry:
+      given: A zoom navigation interaction is selected and identifies an eligible Project.
+      when: The operator intentionally completes that navigation.
+      then: The same Project opens through 0074 with its actual origin; ambiguous or ineligible targets do not open a different Project.
+    conditional_return:
+      given: Project P has one confirmed member R and was entered from the Projects overview.
+      when: The operator returns through a supported route.
+      then: The actual Projects overview and its valid context are restored without inventing a separate R screen.
     accessible_open_and_return:
       given: An operator cannot use pinch and a permitted Repository cell is available inside a multi-member Project.
-      when: The operator uses the accessible open action and then the available return action.
-      then: The same Repository and original Project context are preserved without requiring gesture thresholds, color or animation.
+      when: The operator uses an accessible open action and then the available return action.
+      then: The same Repository and original Project context are preserved without requiring pinch, color or animation.
   unresolved:
-  - Validate whether the proposed boundary, target arming and commit-on-release interaction are discoverable and practical in the first version; exact thresholds and ambiguity rules require native UX prototyping.
-  - Choose and verify native collection, gesture arbitration, visual continuity, focus and accessibility on supported iOS versions; no system API or device behavior is assumed.
-  - Resolve how targeted zoom interacts with multi-scene lifecycle, live source changes and applicable route restoration after the prerequisite architecture and access contracts are ready.
+  - Decide whether cross-scope pinch is useful and belongs in the first version; compare it with explicit opening and return before selecting a gesture.
+  - If selected, choose and verify native gesture arbitration, visual continuity, focus and accessibility on supported iOS versions; no system API or device behavior is assumed.
+  - If selected, resolve interaction with live source changes and applicable route restoration after the prerequisite access and navigation contracts are ready.

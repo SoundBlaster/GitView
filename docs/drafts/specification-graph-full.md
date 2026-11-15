@@ -4,7 +4,7 @@
 
 Все статусы показаны как записаны в файлах. Структура не доказывает смысловую полноту, принятие, готовность к реализации или выполненные тесты.
 
-Кандидатов: **126**. SHA-256 имён и содержимого исходных YAML: `815500e98704e56ce6f371d4be9c2a93601814d0085958c17fe22cc389e0a163`.
+Кандидатов: **126**. SHA-256 имён и содержимого исходных YAML: `880ba5e22b69210963ed917568a6750db005527158c034943b5cf39054a9b0c6`.
 
 Воспроизведение и проверка снимка: `python docs/drafts/evidence/render-specification-graph.py` и та же команда с `--check` в Python environment SpecGraph.
 
@@ -50,7 +50,7 @@
       - [GITVIEW-SPEC-0024](GITVIEW-SPEC-0024.yaml): Navigation context and restoration — idea / pre_canonical
       - [GITVIEW-SPEC-0074](GITVIEW-SPEC-0074.yaml): Overview levels and scope transitions — idea / pre_canonical
         - [GITVIEW-SPEC-0091](GITVIEW-SPEC-0091.yaml): Work scope continuity as Project membership changes — idea / pre_canonical
-        - [GITVIEW-SPEC-0120](GITVIEW-SPEC-0120.yaml): Targeted zoom across overview scopes — idea / pre_canonical
+        - [GITVIEW-SPEC-0120](GITVIEW-SPEC-0120.yaml): Candidate zoom navigation between overview scopes — idea / pre_canonical
     - [GITVIEW-SPEC-0022](GITVIEW-SPEC-0022.yaml): First launch and project setup — idea / pre_canonical
       - [GITVIEW-SPEC-0045](GITVIEW-SPEC-0045.yaml): Confirm and recover repository selection — idea / pre_canonical
         - [GITVIEW-SPEC-0052](GITVIEW-SPEC-0052.yaml): Recover an interrupted default Project save — idea / pre_canonical
