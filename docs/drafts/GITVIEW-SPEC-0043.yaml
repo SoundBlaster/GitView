@@ -378,6 +378,14 @@ specification:
       given: The operator begins touching a PR cell in a filtered Project grid but has not activated preview.
       when: A second contact results in a recognized pinch that changes density.
       then: The pending preview does not open, no object is entered and the same Project, selection and filters remain identifiable.
+    dense_grid_zoom_preview_round_trip:
+      given: Project P's permitted Today collection contains approximately 100 identified PRs and Issues, is shown at a compact density around eight cells across, and has an explicit lifecycle filter. One visible PR is identifiable in its Repository context.
+      when: The operator changes density within that collection, opens the same PR's static preview, enters its overview and returns to the retained work route.
+      then: Density changes do not change Project, Repository scope, Today or filters; preview and overview refer to the same source PR and return preserves the valid route and identity-based position. If source observations changed independently during the journey, the collection is reevaluated with its actual coverage rather than forcing the prior card count. The exact column counts are adaptive, not fixed device requirements.
+    accessible_dense_grid_equivalent:
+      given: The same permitted dense Project collection is used with an accessibility service and enlarged text; two PRs share a local number but belong to different Repositories.
+      when: The operator changes density using an available non-pinch action, identifies and opens one PR without long press, then returns.
+      then: The chosen PR is distinguishable by its permitted Repository context, the overview opens that identity, and the actual Project, active selection and valid focus or honest fallback are preserved. Essential meaning and return do not rely solely on color, touch timing or animation.
     direct_signal_return:
       given: The operator opens a failed-CI signal on Project P in the portfolio and the affected PRs are in two different member Repositories.
       when: The operator inspects the cross-repository selection and returns without entering a member Repository separately.
