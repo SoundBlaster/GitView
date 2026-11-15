@@ -49,15 +49,6 @@ specification:
   unresolved:
   - Exact period default and predicate for a 'checks and review passed' selection remain open; do not
     claim merge readiness.
-  pilot_contract:
-  - Compute each Repository summary from applicable supported observations and distinct confirmed identities; count open PRs, draft subset and
-    open Issues separately. An observed subset is not automatically a complete or current total.
-  - Project summaries aggregate their member repositories without dropping a repository that belongs to
-    another Project; portfolio totals use unique repository and object identities.
-  - A failed-check indicator can count affected PRs and affected repositories, separate from the number
-    of failed checks; overlapping signals are not added as independent problems.
-  - Outcomes are scoped to an explicitly selected period and are distinct from current-state counts. Partial
-    or stale coverage is visible. An actionable signal preserves its unit and condition when opening an object selection; checks, threads or events need not equal the number of cards.
   pilot_scenarios:
     overlap:
       given: One PR has failed CI, a change request and an unresolved thread.

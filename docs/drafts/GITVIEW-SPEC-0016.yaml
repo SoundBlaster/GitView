@@ -37,14 +37,6 @@ specification:
   - Given no source URL, do not construct an unverified URL and present it as confirmed.
   unresolved:
   - Exact UI affordance and optional additional payload require product and privacy review.
-  pilot_contract:
-  - Offer an original GitHub source link for a Repository, PR or Issue when an eligible source URL is available;
-    do not manufacture an unverified URL or present a known misdirected address as that object.
-  - Use the native share flow for an eligible source link after applicable handoff admission; sharing a link does not grant recipient access or establish delivery.
-  - For the pilot, default to sharing the source link and avoid automatically exporting private descriptions,
-    repository contents or screenshots. Additional share payload is a later decision.
-  - If no eligible source-associated URL, including a permitted last-known link, is available, indicate that source opening or link sharing is unavailable rather than opening
-    a different object.
   pilot_scenarios:
     private_link:
       given: A PR belongs to a private Repository and has an eligible source-associated URL, with access permitted through the applicable handoff boundary.

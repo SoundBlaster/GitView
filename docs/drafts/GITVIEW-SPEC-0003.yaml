@@ -116,16 +116,6 @@ specification:
     and identified background refresh, refresh on stale open and API limits as design inputs. Manual refresh
     is required with an interaction appropriate to each screen. Local placement, priority, batching and
     individual controls are proposals for review. The scenarios are intended checks awaiting execution.
-  pilot_contract:
-  - When recoverable and eligible observations exist, make them available without waiting for a new source request; record source scope, supported successful observation time, completeness
-    and refresh outcome separately.
-  - A failed or interrupted refresh does not itself erase accepted data or advance the last complete successful
-    observation time for its requested scope. Independently accepted observations, explicit clearing or access changes retain their own effects and must not be undone by that failure. Successfully observed facts from a partial response may retain
-    their own observation time while scope coverage remains incomplete. A never-loaded collection is distinct
-    from confirmed empty.
-  - Manual refresh, stale-on-open refresh and system-granted background refresh obey applicable shared source
-    limits and report their own scoped outcomes; execution budgets may differ and iOS background execution is opportunistic.
-  - A result stopped before sufficient supported page or population coverage remains incomplete, and unavailable private source data is not proof of deletion.
   pilot_scenarios:
     partial_refresh:
       given: Two repositories have last-known PR lists permitted for display.

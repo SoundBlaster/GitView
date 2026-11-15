@@ -43,14 +43,6 @@ specification:
     tasks.
   unresolved:
   - Retention, event reconstruction, metric period and burn-down definition.
-  pilot_contract:
-  - Metric descriptions identify subject, unit, scope, time period, source and coverage; current snapshots
-    are distinct from historical events.
-  - Show current open PR and Issue counts separately; when adequate history exists show merged PR and
-    closed Issue outcomes separately with source closure reasons.
-  - A historical metric without sufficient applicable evidence remains a gap or is explicitly incomplete; a single current snapshot is not backfilled as past history. A later source observation may independently support an earlier event within its actual coverage.
-  - The desired burn-down view is completion and unfinished-work visibility; its formal formula and cohort
-    are not assumed.
   pilot_scenarios:
     history_gap:
       given: An open-work state series has no eligible Tuesday sample or other sufficient evidence for the stated metric.

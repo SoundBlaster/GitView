@@ -40,14 +40,6 @@ specification:
   unresolved:
   - Exact native accessibility actions, focus fallback and supported platform versions require device
     checks.
-  pilot_contract:
-  - Every essential operation can be reached without relying exclusively on pinch, long press, hover or
-    color.
-  - Assistive labels identify object type and permitted repository context, title or number and important state when
-    known; unknown data is not announced as success and restricted data is not disclosed.
-  - Dynamic Type permits a more spacious layout; Reduce Motion avoids requiring motion to understand navigation.
-  - Restoring accessibility focus after preview or return should use the original object when it remains
-    available and a sensible fallback otherwise.
   pilot_scenarios:
     voiceover:
       given: VoiceOver is active on a dense Project grid.

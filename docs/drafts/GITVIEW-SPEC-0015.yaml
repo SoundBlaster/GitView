@@ -42,12 +42,6 @@ specification:
   unresolved:
   - Later sliding activation, edge behavior, long-press/pan coordination and release behavior need native
     prototyping.
-  pilot_contract:
-  - 'First version: a recognized long press on an eligible Project, Repository, PR or Issue presents that same object as a static preview, with an
-    explicit way to open it and a way to dismiss without navigation; access and changed-origin limitations remain applicable.'
-  - On dismissal or return retain the originating scope, filter and density and restore position where
-    valid and available; if the origin no longer exists, provide a meaningful available fallback.
-  - An accessible non-long-press path to inspect or open the object is required.
   pilot_scenarios:
     same_object:
       given: The user long-presses PR 42 in repository R.

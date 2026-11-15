@@ -41,13 +41,6 @@ specification:
   - Given unavailable thread count, do not present it as zero.
   unresolved:
   - Exact field layout and truncation; source mapping and availability.
-  pilot_contract:
-  - A PR overview retains its confirmed object and Repository context and exposes the agreed field set when supported and permitted. Unavailable fields and source links remain unavailable or last known with their context; do not substitute another object.
-  - Separate open/closed/merged from draft, review decision, thread counts and check counts; missing values
-    are not zero or approval.
-  - Expose supported permitted changed-line, changed-file and commit counts with their observation context; unavailable counts are not zero. Do not embed diff, file, commit or run detail.
-  - Read authored Problem, Motivation, Expected outcome, Changes, Validation and References as authored
-    text when present and permitted; offer source and share actions when an eligible link is available under 0033.
   pilot_scenarios:
     pr_context:
       given: Repositories R1 and R2 both have PR 42.

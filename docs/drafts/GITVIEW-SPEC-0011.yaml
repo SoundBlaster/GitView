@@ -39,15 +39,6 @@ specification:
     of the thread count.
   unresolved:
   - Exact GitHub status mappings, check identity, head revision and retry equivalence require API verification.
-  pilot_contract:
-  - Count current individual PR checks only when the applicable set and revision are supported, not workflow runs or every historical attempt; retain total as
-    a separate count from red/yellow/green and expose incomplete or unknown coverage.
-  - Preserve review assessment, review request and unresolved thread count independently; neither status
-    implies the other.
-  - Pending or unavailable signals do not establish success; special check conclusions are not silently
-    counted as green without a defined mapping.
-  - A complete zero-check result is distinguishable from unobserved checks and is not automatically a
-    merge-ready verdict.
   pilot_scenarios:
     retry:
       given: A check failed and source evidence establishes a later successful attempt as the applicable current check for the same logical check and revision.

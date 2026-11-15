@@ -40,12 +40,6 @@ specification:
   - Given a PR overview, offer the source without implying an in-app diff viewer exists.
   unresolved:
   - Calendar metric, data source, navigation and future PR depth remain undefined.
-  pilot_contract:
-  - The calendar is a possible later time-oriented view; day cells have time semantics and are not Project
-    or Repository identity cells.
-  - Do not equate contribution activity with completed work, CI success or review approval.
-  - Deeper in-app PR exploration and sliding rich preview are later scopes; the first pilot does not depend
-    on them.
   future_scenarios:
     calendar_missing:
       given: Historical activity for a day is unavailable.

@@ -39,15 +39,6 @@ specification:
   - Given a PR Validation statement, show it separately from observed CI.
   unresolved:
   - Template installation targets, enforcement, parsing and versioning remain outside this reading contract.
-  pilot_contract:
-  - Issue sections are Problem, Motivation, Expected outcome and References; PR adds Changes and Validation.
-  - In participating repositories the agreed format is required for newly created Issue and PR descriptions;
-    the process must cover the supported creation paths. Template installation and the enforcement mechanism
-    are separate deployment decisions and are not claimed to exist.
-  - Display original text when a section cannot be reliably extracted, and never invent missing sections
-    or suppress nonconforming external objects.
-  - Treat declared motivation, expected outcome and validation as author statements, distinct from proved
-    causal motives, actual outcomes and observed CI.
   pilot_scenarios:
     legacy_description:
       given: A legacy PR contains unstructured text and no section headings.
