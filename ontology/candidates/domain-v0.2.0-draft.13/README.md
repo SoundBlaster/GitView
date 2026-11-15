@@ -20,3 +20,20 @@ SpecGraph `ontology-doctor` с явным selection и тем же pinned compil
 Проверка формы не устанавливает правильность предлагаемого значения или
 совместимость всех spec bindings. Настройка проекта по-прежнему выбирает
 draft.12; новые ID, действия, поля, связи и кардинальности не добавлены.
+
+## Сравнение candidate specs
+
+На копии workspace на TB5 проверены все 127 одинаковых YAML candidates с
+draft.12 и draft.13 через Supervisor, scope `domain_vocabulary`, с одинаковым
+compiler, указанным выше. Ошибок запуска нет. Сырые отчёты всех 127 пар
+различаются ожидаемыми версией и provenance пакета. После явной нормализации
+только версии, URI версии, source/IR hashes и context revision совпали
+сравниваемые outcome, diagnostics, summary, binding index и validation report;
+неожиданных различий нет. Полный список замен и поузловых результатов находится
+в `GitView-a40d73ccf162f8d8/gitview-draft12-13-7elehatc/normalized-summary.json`,
+исходные отчёты — рядом в `comparisons/`.
+
+В 0001 остаётся один gap и одно warning для `GitView` как имени продукта.
+Совпадение структурной диагностики не устанавливает semantic approval,
+полноту specification metamodel или правильность и применимость каждого узла.
+Рабочий context этим сравнением не переключался.
