@@ -18,7 +18,7 @@ sources:
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   autonomous_refinement: conversation:gitview/excerpt-69-reply
 acceptance:
-- A multi-repository Project exposes its members and a route to each member's PR and Issue objects.
+- A multi-repository Project exposes its permitted members and a route to each permitted member's PR and Issue objects, with access-safe limitations where needed.
 - A multi-repository Project also offers a Project-wide work collection without requiring a signal-specific filter.
 - A single-repository Project reaches its work without a redundant repository step; Project and Repository
   remain distinct.
@@ -44,8 +44,8 @@ specification:
   navigation_contract:
     entry: The visible context identifies the GitView Project. Membership follows repository identity,
       not organization or the current owner and name.
-    multiple: Offer the Project's repositories and a route to the PR and Issue collection of each member.
-      Repositories from different organizations remain in the same Project.
+    multiple: Offer the Project's permitted repositories and a route to the PR and Issue collection of each permitted member.
+      Repositories from different organizations remain in the same Project; restricted identities and revealing counts follow 0074 and 0036.
     all_members: Offer an explicitly identifiable Project-wide work collection across its confirmed current members independently of a signal shortcut. Its initial Today selection and lifecycle defaults follow 0074 and 0007; an unobserved member makes the applicable coverage incomplete rather than empty.
     single: Skip a redundant intermediate repository screen while retaining Project and Repository as
       separate identities and retaining sufficient source context.
@@ -58,7 +58,7 @@ specification:
       scope is distinguishable from a density change.
     unknown: An unavailable member remains in the Project; unknown data is not an observed empty result.
   requirements:
-  - A multi-repository project can reveal its repositories and their PRs and Issues.
+  - A multi-repository project can reveal its permitted repositories and their permitted PRs and Issues without exposing restricted membership.
   - A single-repository project opens its work without a redundant intermediate repository screen, while
     retaining both identities.
   - A project summary signal opens the corresponding filtered work across project repositories, with each
@@ -87,7 +87,7 @@ specification:
       when: The operator returns.
       then: The Project, filter and density remain, and the previous location is restored when available.
     incomplete_project:
-      given: P contains two repositories and one has incomplete observations.
+      given: P contains two permitted repositories and one has incomplete observations.
       when: The operator enters P.
       then: Both members remain represented and missing work is not presented as an observed empty repository.
   unresolved:
