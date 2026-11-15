@@ -7,6 +7,7 @@ status: idea
 draft_status: pre_canonical
 canonical_successor: specs/nodes/GITVIEW-SPEC-0001.yaml
 successor_scope: The successor records a bounded root direction. This older consolidated draft remains noncanonical source material; its remaining details and ontology candidates are not automatically accepted by the successor.
+current_today_decision: The earlier statement that Today is not a calendar-day view predates the owner's approval in sketch revision cc419cb9283f471b88b6f4b66e56c5ad. Consult the successor and draft 0007 for the current decision and its limits.
 sources:
   root_intent: .specgraph/root_intent.md
   discovery: docs/product-discovery.md
