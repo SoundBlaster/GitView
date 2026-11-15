@@ -23,7 +23,7 @@ acceptance:
 - If this candidate protocol is selected, A confirmed active binding ties one verified source identity, current connection generation and recoverable matching credential to the same still-eligible attempt.
 - If this candidate protocol is selected, An interrupted write or uncertain commit is reconciled from both stores, or remains explicitly uncertain without inventing rollback or source authorization.
 - If this candidate protocol is selected, A confirmed disconnect or superseding account generation prevents a late old candidate from becoming active in the continuing store lineage, even if its credential write later completes; an older restored snapshot follows 0122.
-- If this candidate protocol is selected, Known pending access changes restrict affected private data while an ordinary offline restart with a consistent prior context follows 0036.
+- If this candidate protocol is selected, known pending access changes restrict affected private data; an ordinary offline restart follows the separately selected private-cache policy, which remains a product decision under 0036.
 - If this candidate protocol is selected, Old or orphan credential cleanup is separately evidenced and cannot invalidate the active binding or claim remote revocation.
 specification:
   objective: Propose one optional recoverable, non-atomic protocol for binding a validated GitHub credential to local account and admission state.
@@ -50,6 +50,10 @@ specification:
     provenance: The owner requested local cached data, background refresh where supported, DI, TDD and autonomous specification. Isolated slots, the local prepare and binding protocol are agent-authored working choices and do not claim a deployed authentication service, secure-store item or application.
   scenario_scope: The following scenarios apply to this protocol if selected. Equivalent product-relevant security and recovery outcomes remain required under 0086 and applicable parent contracts for any alternative.
   scenarios:
+    protocol_selection_does_not_select_offline_policy:
+      given: This credential-binding protocol is selected and a previously permitted private observation and its consistent local account and restriction context are recovered offline, with no known pending access change or denial.
+      when: The product's private-cache policy has not been selected.
+      then: Selecting the protocol does not decide whether the observation may be displayed offline or establish current GitHub access. The proposed last-known policy can be evaluated as an option, while the disclosure choice remains open under 0036.
     old_attempt_after_new_binding:
       given: Attempt A's activation acknowledgement is lost, and independently consistent durable evidence later establishes B as the current active binding and prevents A from superseding B, while A's own historical outcome is unreadable.
       when: Recovery presents the current connection and A's earlier outcome.
