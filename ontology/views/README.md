@@ -1,5 +1,32 @@
 # GitView ontology overview
 
+## Current draft.13 reference
+
+[HC](gitview-draft13.hc) and [HCS](gitview-draft13.hcs) are a structural
+export from the separately authored [selection HC](gitview-draft13.selection.hc)
+and [selection HCS](gitview-draft13.selection.hcs). The exporter checked ten
+class references against the working draft.13 source and returned `exported`,
+with semantic approval not established. Its HC is byte-identical to the older
+agent-authored selection below; HCS now binds to draft.13 and its recorded hashes.
+
+The exporter does **not** include class descriptions in the HC/HCS output.
+The proposed meaning of Project must therefore be read in the [draft.13 source](../candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml)
+or [semantic review](../review/project-repository-spec-alignment-20261115.md);
+the HCS reference identifies that source, but the overview alone does not show
+the wording. The user's `gitview-proposed.hc` remains the preferred reading
+composition and is not replaced by this class-only export. In particular, this
+export does not include its `GitView` root, `User`, contextual protocol or
+relationships; hierarchy is not evidence of the latter.
+
+Exported with SpecGraph runtime `3593bd75`, Hypercode binary SHA-256
+`44ce61494b3a88af849db10ebd7914638a8aa36427a98b2a9e336353dffe3cef`,
+and locally built `ontologyc` SHA-256
+`3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720`.
+Output was first inspected on TB5 in
+`GitView-a40d73ccf162f8d8/ontology-overview-draft13-20261115/`.
+
+## Historical context and owner's composition
+
 The later [consolidated domain model](../domain-model.md) and
 [completeness audit](../review/completeness.md) reconcile the conversation beyond
 the pinned package. The owner has clarified `User` as the GitView operator;
@@ -11,7 +38,7 @@ reading arrangement below for discussion. The owner corrected the indentation:
 `GitView` is the single root; `User` and `Project` are its children. The earlier
 three-root layout was a typo, not an intended model of multiple applications.
 It is an unbound draft: `GitView`,
-`User`, and `GitHubRepository` are not classes in the selected 0.1.0 package,
+`User`, and `GitHubRepository` were not classes in the historical 0.1.0 package,
 and the current overview exporter requires an explicit versioned ontology
 binding for each occurrence. Do not invent bindings or add ontology
 entities just to make it export. The meaning of its nesting and the appropriate

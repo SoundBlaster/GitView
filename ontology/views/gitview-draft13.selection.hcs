@@ -1,0 +1,32 @@
+'#project':
+  overview_name: "Project"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/Project"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+'#repository':
+  overview_name: "Repository"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/Repository"
+'#code':
+  overview_name: "Code"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/Code"
+'#version-control':
+  overview_name: "VersionControlSystem"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/VersionControlSystem"
+'#github':
+  overview_name: "GitHub"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/GitHub"
+'#issue':
+  overview_name: "Issue"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/Issue"
+'#pull-request':
+  overview_name: "PullRequest"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/PullRequest"
+'#review-thread':
+  overview_name: "ReviewThread"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/ReviewThread"
+'#ci-status':
+  overview_name: "CIStatus"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/CIStatus"
+'#metric':
+  overview_name: "Metric"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/Metric"

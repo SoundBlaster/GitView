@@ -1,0 +1,95 @@
+Project:
+  composition_status: "proposed"
+  hc_sha256: "587aed40564a75c6956d3061026fbec311bf7c1f7fe9ed7247e3085275e8fa48"
+  hypercode_sha256: "44ce61494b3a88af849db10ebd7914638a8aa36427a98b2a9e336353dffe3cef"
+  input_hc_sha256: "761165bd2417c9845c467d884ebf72cdb53d152aad339da1614cee028ea59e55"
+  input_hcs_sha256: "d0c3819bafb348bf5927b7f445b7a2227859ef15d7bfbbed36c217af9182d029"
+  ontology_compiler_sha256: "3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720"
+  ontology_ir_sha256: "385822dc475b4a9cd49d42458c457cf4de75b80e9037dcab60493dc030d57780"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/Project"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  projection_profile: "specgraph-ontology-overview-v1"
+  role_id: "project"
+  source_type: "Project"
+
+Project > Repository:
+  ontology_compiler_sha256: "3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720"
+  ontology_ir_sha256: "385822dc475b4a9cd49d42458c457cf4de75b80e9037dcab60493dc030d57780"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/Repository"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  role_id: "repository"
+  source_type: "Repository"
+
+Project > Repository > Code:
+  ontology_compiler_sha256: "3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720"
+  ontology_ir_sha256: "385822dc475b4a9cd49d42458c457cf4de75b80e9037dcab60493dc030d57780"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/Code"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  role_id: "code"
+  source_type: "Code"
+
+Project > Repository > VersionControlSystem:
+  ontology_compiler_sha256: "3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720"
+  ontology_ir_sha256: "385822dc475b4a9cd49d42458c457cf4de75b80e9037dcab60493dc030d57780"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/VersionControlSystem"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  role_id: "version-control"
+  source_type: "VersionControlSystem"
+
+Project > Repository > GitHub:
+  ontology_compiler_sha256: "3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720"
+  ontology_ir_sha256: "385822dc475b4a9cd49d42458c457cf4de75b80e9037dcab60493dc030d57780"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/GitHub"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  role_id: "github"
+  source_type: "GitHub"
+
+Project > Repository > Issue:
+  ontology_compiler_sha256: "3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720"
+  ontology_ir_sha256: "385822dc475b4a9cd49d42458c457cf4de75b80e9037dcab60493dc030d57780"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/Issue"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  role_id: "issue"
+  source_type: "Issue"
+
+Project > Repository > PullRequest:
+  ontology_compiler_sha256: "3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720"
+  ontology_ir_sha256: "385822dc475b4a9cd49d42458c457cf4de75b80e9037dcab60493dc030d57780"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/PullRequest"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  role_id: "pull-request"
+  source_type: "PullRequest"
+
+Project > Repository > PullRequest > ReviewThread:
+  ontology_compiler_sha256: "3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720"
+  ontology_ir_sha256: "385822dc475b4a9cd49d42458c457cf4de75b80e9037dcab60493dc030d57780"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/ReviewThread"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  role_id: "review-thread"
+  source_type: "ReviewThread"
+
+Project > Repository > PullRequest > CIStatus:
+  ontology_compiler_sha256: "3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720"
+  ontology_ir_sha256: "385822dc475b4a9cd49d42458c457cf4de75b80e9037dcab60493dc030d57780"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/CIStatus"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  role_id: "ci-status"
+  source_type: "CIStatus"
+
+Project > Repository > PullRequest > Metric:
+  ontology_compiler_sha256: "3e7b70f3789e683de177d7f5d78e507fda993c4aa2990baabe31530db0e63720"
+  ontology_ir_sha256: "385822dc475b4a9cd49d42458c457cf4de75b80e9037dcab60493dc030d57780"
+  ontology_ref: "ontology://local.gitview.domain/0.2.0-draft-composition.13/classes/Metric"
+  ontology_sha256: "3c603ccf59b9efba2f3d0e1c152e21f320b09f508594f1942f5161e3380e6feb"
+  ontology_source: "ontology/candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml"
+  role_id: "metric"
+  source_type: "Metric"
