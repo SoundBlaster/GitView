@@ -1,0 +1,76 @@
+id: GITVIEW-SPEC-0003
+title: GitView - Stored observations and refresh
+kind: spec
+created_at: '2026-11-15T21:19:00Z'
+updated_at: '2026-11-15T21:19:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0002
+relates_to: []
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0003.yaml
+  predecessor_revision: 852649f
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Reuse previously received data while keeping refresh outcomes, freshness and incomplete coverage
+    understandable.
+  authority_boundary: The owner proposed app-owned persisted data and requested visible refresh failure,
+    opportunistic background updates, stale-on-open and manual refresh. This node does not select a database,
+    exact API limits or a background schedule, establish permission to display retained private data,
+    or claim implementation readiness.
+  requirements:
+    stored: Store accepted observations for reuse across launches; storage failure and actual recoverability
+      do not imply unconditional preservation. When stored observations are recoverable and eligible for
+      display, make them available without waiting for a new GitHub request; apply the applicable access
+      policy.
+    scope: Apply accepted successful observations to the facts and scope they support. Record and present
+      the supported scope and time of a successful observation separately from refresh attempt outcomes.
+      Updating repository metadata does not itself update the PR or Issue list or its last successful
+      time.
+    failure: A failed refresh visibly identifies the affected scope and GitHub failure and shows its last
+      supported successful observation time when known and permitted. Retain eligible last-known data
+      without presenting it as newly refreshed. No successful observation is distinct from a confirmed
+      empty result; do not invent a success time.
+    partial: A partial response or interrupted retrieval retains actual observation context and incomplete
+      coverage. A partial observation has its own time and does not advance the last complete successful
+      observation time of the requested scope or establish complete coverage. Failure alone does not erase
+      accepted data, establish deletion or turn unknown work into a confirmed empty collection. Explicit
+      clearing, independent accepted updates and access changes retain their own effects.
+    foreground: On opening with stale data, request an update of the applicable scope subject to available
+      API budget. Exact staleness and ordering policy remain open.
+    background: Request background refresh opportunities; iOS controls whether and when execution is granted.
+      Do not promise a fixed frequency, and keep work bounded by the granted opportunity.
+    manual: Offer pull-to-refresh where appropriate to the screen or an equivalent explicit refresh action.
+      Manual requests follow applicable source limits and show their own result.
+    source_limits: Account for shared applicable GitHub rate limits across manual, foreground and background
+      work, query cost and partial retrieval; avoid flooding. When source-directed retry or reset constraints
+      apply, avoid retrying before they permit it. Exact request sizes, concurrency, pagination, retry
+      scheduling and REST or GraphQL choices require later refinement.
+  scenarios:
+    failed_refresh: Previously observed PR data remains eligible after a temporary refresh failure without
+      access denial. Show the permitted last-known data and supported observation time alongside a visible
+      scoped GitHub error.
+    independent_scopes: A metadata refresh succeeds while the PR list was not refreshed. The PR list retains
+      its own previous observation time and is not presented as newly fetched.
+    partial_pages: A retrieval stops before all pages are received. Supported observations may remain
+      usable with incomplete coverage; an individual response is not by itself proof that it was durably
+      saved.
+    first_load: The first Issue-list refresh fails with no prior accepted observation. Show the failure
+      and unobserved state, not a zero count or a fabricated last-success time.
+  open_questions:
+  - Access and disclosure policy for retained private observations, including revocation and account changes.
+  - Storage schema and durability, staleness, prioritization, pagination, retries and exact source budget.
+  - Presentation of partial data and exact refresh controls in each interaction context.
+  ontology_status: GitHub, Repository, PullRequest and Issue use the working draft vocabulary; an observation
+    or link alone does not establish a domain action or ontology approval.
+acceptance:
+- Eligible last-known data can be used without waiting for a new request, subject to applicable access
+  restrictions.
+- Refresh failure and last supported successful time are distinguishable for the affected scope when known.
+- Partial coverage remains visible as incomplete whether the supported selection is empty or nonempty;
+  its observation time does not establish a fully refreshed scope.
+- Partial, failed or never-observed data is not silently represented as a complete empty result.
+- Manual and stale-on-open refresh and system-granted background opportunities respect applicable source
+  limits.

@@ -1,0 +1,69 @@
+id: GITVIEW-SPEC-0013
+title: GitView - Metrics, history and charts
+kind: spec
+created_at: '2026-11-15T21:19:00Z'
+updated_at: '2026-11-15T21:19:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0003
+relates_to:
+- GITVIEW-SPEC-0047
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0013.yaml
+  predecessor_revision: 852649f
+  owner_selection: docs/drafts/project-summary-proposal.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Make work and completion trends interpretable without inventing historical observations.
+  authority_boundary: Metrics, graphs and visibility of completion and unfinished work are selected. Exact
+    metric predicates, periods, source reconstruction, history retention and burn-down formula remain
+    open; this node does not establish implementation readiness or a completed data collection.
+  requirements:
+    definitions: A measurement identifies its subject, unit, scope, period, source and coverage as applicable.
+      Distinguish current-state snapshots from historical events and keep observation time separate from
+      event time.
+    current: Show supported permitted current open PR and open Issue counts separately with their coverage;
+      draft PRs are a subset of open PRs. Linked PRs and Issues are distinct source objects but are not
+      automatically independent tasks.
+    outcomes: With sufficient supported evidence, show merged PR and closed Issue outcomes separately
+      for an identified period; preserve supported Issue closure reasons and unknowns. Closed does not
+      automatically mean completed.
+    graphing: Show graphs of applicable summary measurements when sufficient history exists. A missing
+      historical value remains a gap or explicitly incomplete, not a zero or a current snapshot backfilled
+      as past history.
+    late_evidence: A later permitted source observation may support an earlier event with its real event
+      and observation times, but one known event does not prove complete period coverage or reconstruct
+      an earlier current-state population.
+    burndown: Support understanding of unfinished work and completion; do not claim a defined burn-down
+      formula, fixed cohort or independent-task total until separately specified.
+    coverage: Each value preserves applicable scope, access, freshness and coverage. Mixed observation
+      times or missing data do not become a complete simultaneous snapshot, a successful observation or
+      a confirmed zero.
+  scenarios:
+    history_gap: A historical open-work measurement has no sufficient Tuesday evidence. Show Tuesday as
+      unavailable or incomplete, not a fabricated zero or an interpolation described as observed.
+    later_observed_event: A later eligible observation establishes one Issue closure on Tuesday. It supports
+      that event within its actual scope but does not establish every Tuesday closure or Tuesday's number
+      of open Issues.
+    linked_work: A PR and Issue refer to the same work. Their separate supported measurements are not
+      summed as two completed tasks.
+    reopened: An Issue closes, reopens, then closes again. A measurement requiring both closure events
+      is asserted only when adequate source or retained event evidence supports it; the latest state alone
+      does not establish the event sequence.
+  open_questions:
+  - Metric-specific predicates, evidence, source mappings and distinction between event counts and distinct
+    objects.
+  - History retention, membership basis, time buckets, chart presentation and access policy.
+  - Burn-down population, cohort and formula if a formal burn-down chart is selected.
+  ontology_status: Metric, Project, Repository, PullRequest and Issue use working draft vocabulary; a
+    displayed metric does not establish ontology approval or a concrete actor action.
+acceptance:
+- Current work and period outcomes retain distinct subjects, units, scopes and applicable observation
+  contexts.
+- PR and Issue counts or series are not represented as independent tasks merely because the objects differ.
+- Insufficient historical evidence remains a gap or explicitly incomplete rather than a fabricated zero.
+- A later-observed event retains its event and observation times and does not prove complete historical
+  coverage.
+- Formal burn-down semantics are not assumed by this overview.

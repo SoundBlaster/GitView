@@ -1,0 +1,64 @@
+id: GITVIEW-SPEC-0014
+title: GitView - Zoomable grid
+kind: spec
+created_at: '2026-11-15T21:21:00Z'
+updated_at: '2026-11-15T21:21:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0006
+depends_on:
+- GITVIEW-SPEC-0007
+relates_to: []
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0014.yaml
+  predecessor_revision: 852649f
+  dense_prototype: docs/drafts/dense-overview-prototype.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Provide a Photos-inspired grid that moves between dense overview and more detailed cards
+    within a stable scope.
+  authority_boundary: The owner selected multiple density levels and pinch, with dense work-grid examples.
+    Exact native layout, anchoring, gesture arbitration and performance require refinement and device
+    verification; this node does not assert an implementation.
+  requirements:
+    density: Support several levels of grid density within the same Project or Repository scope. Pinch
+      changes scale and the amount of visible information without itself changing scope, selected period,
+      filters or the selected objects.
+    independent_changes: Source observations or membership may independently change the selection; a zoom
+      gesture does not guarantee a fixed dataset when other events occur. Preserve the focused identity
+      where possible and convey incomplete coverage.
+    dense_view: Support a compact bird's-eye work view; approximately eight cells per row and 100 simultaneously
+      visible objects illustrate the intended scale, not fixed columns, a device-independent fit guarantee
+      or a performance benchmark.
+    recognition: Distinguish PR and Issue at compact scale and expose meaningful state without relying
+      on color alone. More information can appear as cells grow; content adapts to available space and
+      text size.
+    navigation: Inspecting or opening an object is distinguishable from changing density. Return retains
+      the valid scope, applicable filters and scale, and restores position when possible without silently
+      switching the origin.
+    preview: First-version long-press preview supports inspecting an object before opening it. A later
+      sliding rich preview lets the operator inspect neighboring cells without leaving the dense overview;
+      its activation and gesture arbitration remain open.
+    accessibility: Offer an accessible way to change density and open or inspect an object without requiring
+      pinch, precise tiny targets or color alone. Adapt layout for large text rather than forcing the
+      illustrative column count.
+    appearance: Prefer iOS system appearance, colors, typography and SF Symbols with restrained Liquid
+      Glass in keeping with the selected Apple Look; exact components remain subject to design and platform
+      validation.
+  scenarios:
+    pinch: A filtered selection contains 100 confirmed objects and no independent data change occurs during
+      the gesture. Increasing card size retains the same selected objects, Project, period and filter.
+    large_text: When the illustrative eight columns cannot present legible content at the selected text
+      size, adapt the layout rather than shrinking required content merely to preserve eight columns.
+  open_questions:
+  - Native collection behavior, zoom anchors, transitions and gesture conflicts, and measured device performance.
+  - Exact object cues at each density, accessible controls and changed-origin recovery interaction.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; presentation
+    does not establish ontology approval.
+acceptance:
+- Pinch changes grid density and detail within its current scope without itself changing the selected
+  set or filters.
+- Dense view supports the intended scale of approximately 100 simultaneously visible objects without treating
+  illustrative object and column counts as fixed device-independent requirements.
+- Object type and meaningful state remain accessible without reliance on color or pinch alone.
+- Opening an object is distinct from changing density; returning preserves valid context where possible.
