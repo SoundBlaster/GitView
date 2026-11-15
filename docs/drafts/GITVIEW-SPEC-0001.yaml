@@ -128,11 +128,10 @@ specification:
       GitLab and BitBucket are possible later providers, not included integrations.
   selected_property_sets:
     status: User-selected scope for further specification; not a complete typed schema or state machine.
-    selected_items_source: docs/drafts/root-selected-property-sets.yaml
     project_summary: docs/drafts/project-summary-proposal.md
     pull_request: docs/drafts/pull-request-ontology-options.md
     issue: docs/drafts/issue-ontology-options.md
-    boundary: The referenced selection retains the exact itemized choices and source references previously in this root; it does not establish ontology acceptance, implementation or independent-task counts.
+    boundary: The linked source-attributed checklists retain the itemized choices, their qualifications and references; they do not establish ontology acceptance, implementation or independent-task counts. Candidate 0005 refines Project, 0008 PullRequest and 0009 Issue.
   description_format:
     source_document: docs/drafts/github-templates/README.md
     source_refs:
