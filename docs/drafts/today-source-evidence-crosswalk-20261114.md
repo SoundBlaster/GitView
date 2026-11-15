@@ -33,6 +33,18 @@
 
 ## Кандидат mapping для отдельных GraphQL facts
 
+На следующем проходе 0101 уточняет документированные enum значения:
+PR `OPEN` / `CLOSED` / `MERGED` и Issue `OPEN` / `CLOSED` — разные
+типизированные множества. У Issue `stateReason` хранится отдельно, а
+`ClosedEvent.stateReason` относится к конкретному событию. Например, текущий
+`REOPENED` и более ранний `NOT_PLANNED` не заменяют друг друга. Неизвестное
+новое enum значение не превращается в один из известных статусов.
+[GitHub PullRequestState](https://docs.github.com/en/graphql/reference/pulls#pullrequeststate),
+[IssueState и IssueStateReason](https://docs.github.com/en/graphql/reference/issues#issuestatereason),
+[ClosedEvent](https://docs.github.com/en/graphql/reference/issues#closedevent).
+Это mapping документированных полей, не проверка доступа, query, полноты
+timeline или выполняющегося приложения.
+
 [0101](GITVIEW-SPEC-0101.yaml) теперь описывает документированный кандидат:
 типизированные `Issue` / `PullRequest` с подтверждённым source и Repository,
 Node ID и контекстом доступа; `createdAt` для создания, наблюдаемый `state`
