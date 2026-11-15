@@ -36,6 +36,7 @@ sources:
   preview: docs/drafts/GITVIEW-SPEC-0093.yaml
   original_source: docs/drafts/GITVIEW-SPEC-0033.yaml
   assembly_state_candidate: docs/drafts/today-assembly-state-contract-20261115.md
+  source_union_example: docs/drafts/today-source-union-worked-example-20261115.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - One route instance composes a confirmed Project and its selected scope, applicable observations, Today policy and independent population coverage without conflating them.
