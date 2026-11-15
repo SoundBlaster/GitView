@@ -86,6 +86,10 @@ specification:
       given: Two PRs in separate Repositories have five failed checks in total and one also has an unresolved review thread.
       when: The product description explains the Project summary and its associated PR selection.
       then: It distinguishes checks, affected PRs and Repositories, without adding overlapping attention signals as separate tasks or promising that five checks produce five PR cards.
+    summary_to_updated_selection:
+      given: A Project signal reported two PRs with failed CI at an earlier supported observation, and a later applicable observation confirms that one no longer matches.
+      when: The product description explains opening the signal's selection.
+      then: It retains the Project and condition, distinguishes the earlier count from the newer supported selection, and does not invent an explanation if the destination's coverage is incomplete.
     technology_not_predetermined:
       given: Two storage approaches can preserve the same agreed last-known-data and failure behavior.
       when: The owner reviews the first product pass.
@@ -94,6 +98,10 @@ specification:
       given: A candidate uses a 24-hour interval to highlight an inactive review discussion.
       when: The product description presents that candidate.
       then: It labels the threshold as agent-proposed and does not assert that a particular person owes an answer.
+    readiness_meanings:
+      given: A merged PR, an open non-draft PR and an open PR with supported approval and passing observed checks are considered separately.
+      when: The product description explains what ready might mean.
+      then: It identifies merged as an established lifecycle outcome, distinguishes the optional non-draft filter and review or CI signals, and does not claim merge eligibility or completed linked Issues from those facts alone.
     changed_project_membership:
       given: A Repository was added to a Project after a historical period being inspected.
       when: The product description explains a graph for the current membership over that period.
@@ -106,6 +114,10 @@ specification:
       given: The user inspects work at different grid densities and can open a Project or object.
       when: The product description explains pinch and navigation.
       then: It distinguishes in-scope density changes from the still-open candidate to cross navigation scopes using pinch itself.
+    dense_preview_and_return:
+      given: A dense filtered grid contains a permitted PR whose cell changes position after a source update.
+      when: The operator previews and opens that object and returns to the grid.
+      then: The description preserves the same PR identity and available source context, keeps the valid Project, filters and density on return, and does not require all selected fields to fit in the cell or reveal information whose access became restricted.
   unresolved:
   - Whether the working product projection sufficiently communicates all intended nuances requires product review; clarify any missing behavior without demanding implementation detail merely for its own sake.
   - Meaning of ready for an open PR, broad discussion participation and true responsibility for a reply remain distinguishable from narrower observable indicators.

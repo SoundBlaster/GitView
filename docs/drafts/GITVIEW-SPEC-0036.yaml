@@ -15,7 +15,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Temporary connectivity failure, explicit authorization denial and deliberate local disconnection have distinguishable effects on access to prior observations.
-- Explicit denial or disconnection prevents restricted private cached content from being displayed while retaining the local records until an explicit clear operation.
+- An applicable denial or disconnection known to the current process or recoverable from durable evidence prevents affected private cached content from being displayed while retaining the local records until an explicit clear operation. The candidate offline policy cannot guarantee detection of a restriction lost before it became durable or missing from an older restored snapshot.
 - A source 404 or an incomplete discovery result alone is not treated as a confirmed deletion or revocation.
 - Reconnection does not silently change the identity of existing Projects or treat a different source identity as proof of restored access.
 specification:
@@ -72,11 +72,16 @@ specification:
       given: After restart a previously confirmed account association and its restriction records are consistently readable, no applicable denial or unresolved access-changing operation is known, and the corresponding secure credential slot is confirmed missing.
       when: The operator opens previously permitted private observations.
       then: They may be shown as last-known data with their own observation times and unverified current access; connection recovery is available and no authenticated refresh is claimed usable. A missing slot alone is not labeled a source denial or a proven rollback.
+    denial_lost_before_restart:
+      given: A process observed an explicit denial, then terminated before its restriction became durable; after restart GitView is offline and the recovered records independently appear consistent with the earlier permitted account context and contain no evidence of the denial or an unresolved access change.
+      when: The operator requests the previously permitted private observation under the candidate offline policy.
+      then: The earlier observation may be eligible as last known with its own time and unverified current access. The recovered state cannot establish that no denial occurred; this scenario exposes a privacy limitation of the candidate, not an owner-approved guarantee or proof that the actual denial was undone.
     missing_credential_and_unreadable_restriction:
       given: The saved account association is readable and the secure credential is confirmed missing, but the applicable private restriction or disconnect state cannot be recovered consistently.
       when: The operator opens the affected Project.
       then: The affected private content remains withheld pending recovery rather than assuming that no denial occurred; the local Project is not presented as deleted or an empty source.
   unresolved:
+  - Decide the product tradeoff for private cached content when a denial or disconnect may have been lost across interruption or backup restore; the current candidate favors eligible last-known access and does not guarantee revocation detection.
   - Distinguish source signals that prove an explicit repository-level denial from ambiguous HTTP or API failures.
   - Concurrent refresh and revocation ordering, exact authorization flow and secure credential lifecycle.
   - Explicit clear-data UX, retention scope and behavior after device migration.

@@ -63,8 +63,8 @@ specification:
       '
     failure: Distinguish temporary network or rate failures from observed authentication and authorization
       failures. Temporary failures follow the last-known-data contract in GITVIEW-SPEC-0003. A 404 alone
-      cannot prove deletion or revocation. After explicit access denial, lock affected private cached
-      content from display but retain records until the user clears them. Successful reauthorization for
+      cannot prove deletion or revocation. While an explicit access denial remains applicable and known to the process or recoverable from durable evidence, lock affected private cached
+      content from display but retain records until the user clears them. The candidate offline policy does not guarantee recovery of a denial lost before persistence or absent from an older backup; this product tradeoff remains open under 0036. Successful reauthorization for
       the same source identity may restore access only when supported under 0036 and 0112. A temporary network failure alone does not establish a new
       access denial; independently applicable restrictions and unknown restriction state still govern disclosure.
     disconnect: Provide a deliberate local disconnect action that stops new refresh for that account and

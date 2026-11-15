@@ -48,6 +48,10 @@ specification:
       given: A PR description says validation passed but the observed CI failed.
       when: Both are available.
       then: The description and failed CI remain separate and the CI failure is visible.
+    authored_motivation_and_source_link:
+      given: A PR description contains an author's Motivation statement referring to Issue I, and source evidence separately establishes a link between the PR and I.
+      when: The permitted authored text and source link are presented.
+      then: The text remains attributable to its author and the link retains its source meaning; neither alone establishes a specific actor's motive or proves that the Issue caused a code change or a PR outcome.
 acceptance:
 - Issue sections are Problem, Motivation, Expected outcome and References; PR adds Changes and Validation.
 - In participating repositories the agreed format is required for newly created Issue and PR descriptions;

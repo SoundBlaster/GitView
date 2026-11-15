@@ -45,7 +45,7 @@ entities или доказанными API-полями.
 выбраны счётчики CI и threads; они не требуют отображать содержимое проверок
 или тредов. Символы и цвета — presentation, а не новые состояния онтологии.
 
-## Открытые решения
+## Исторические открытые решения draft.5
 
 - Для `CIStatus` нужно отдельно решить гранулярность: одно состояние проверки,
   aggregate или ограниченное семейство значений. Нельзя делать вид, что
@@ -62,4 +62,15 @@ entities или доказанными API-полями.
 [0028](../../docs/drafts/GITVIEW-SPEC-0028.yaml),
 [0041](../../docs/drafts/GITVIEW-SPEC-0041.yaml),
 [аудит 0028](../../docs/drafts/leaf-readiness-0028.md) и
-[действующий package](../candidates/domain-v0.2.0-draft.5/composition/domain-ontology-package.yaml).
+[исторический package draft.5](../candidates/domain-v0.2.0-draft.5/composition/domain-ontology-package.yaml).
+
+## Сверка с текущим draft.12
+
+В [текущем source package](../candidates/domain-v0.2.0-draft.12/composition/domain-ontology-package.yaml)
+`CIStatus` обозначает состояние **одной** status-check entry, а не агрегат;
+счётчик проверок — отдельный результат измерения. Это рабочая граница draft,
+не утверждение об истине или установленной GitHub availability. Выбранный в
+[0011](../../docs/drafts/GITVIEW-SPEC-0011.yaml) принцип подсчёта отдельных
+актуальных проверок ей соответствует. Сопоставление source entries, актуальной
+revision, повторов и специальных исходов остаётся вопросом спецификаций и
+проверки источника. Ни зелёная проверка, ни её цвет не доказывают mergeability.

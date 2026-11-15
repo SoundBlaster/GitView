@@ -45,6 +45,10 @@ specification:
       given: An Issue mentions PR A and has an explicit closing reference to PR B.
       when: Its relationships are shown.
       then: A is a mention and B is a closing reference; no actor motive is inferred.
+    same_pr_two_supported_links:
+      given: Source evidence independently supports both a mention and a closing reference between this Issue and the same PR, without evidence of merge or an actor's motive.
+      when: The operator inspects the Issue's permitted PR links.
+      then: The PR is identified once in its Repository context with both supported link meanings; neither a completed outcome nor a causal motive is inferred from the links.
     unknown_reason:
       given: An Issue is closed but its reason is unavailable.
       when: Its summary is shown.
