@@ -1,6 +1,6 @@
 # 0043: карта сценариев приёмки
 
-Авторская навигационная классификация 95 сценариев [0043](GITVIEW-SPEC-0043.yaml) на SHA-256 `d6825f5785eee69e6c7bbfeb7d3680a9671bd661493db71e77b7e0da7bcbcd1b`.
+Авторская навигационная классификация 96 сценариев [0043](GITVIEW-SPEC-0043.yaml) на SHA-256 `9e2311c67ad1afbf13a5d0d377cddd827f30cc6fcfdabeb92a1add0be038bb70`.
 Каждый сценарий указан один раз по основной теме; он может проверять и другие ветви.
 Это не semantic approval, не доказательство полноты и не выполненные тесты.
 
@@ -84,6 +84,12 @@ merged, а `complete_multi_repository_today_journey` — переход и во�
 
 ## Source, cache и восстановление
 
+Дополнение: `resolved_pr_association_survives_restart` связывает ранее
+раздельные контракты нормализации source representation и устойчивого
+восстановления association по 0124. Потерянное подтверждение, восстановленное
+evidence и оригинальные времена не заменяют population coverage или текущий
+access. Это новый план сквозной проверки, не выполненный тест.
+
 Сверка с [0003](GITVIEW-SPEC-0003.yaml), [0036](GITVIEW-SPEC-0036.yaml),
 [0105](GITVIEW-SPEC-0105.yaml), [0112](GITVIEW-SPEC-0112.yaml) и
 [0122](GITVIEW-SPEC-0122.yaml) обнаружила одно пересечение:
@@ -116,6 +122,7 @@ baseline или rollback, а `local_recovery_without_assumed_baseline` пров�
 - `retention_recovery_after_restart`
 - `retention_recovery_still_unreadable`
 - `local_recovery_without_assumed_baseline`
+- `resolved_pr_association_survives_restart`
 - `github_issue_representation_of_pr`
 - `partially_approved_github_data_categories`
 - `identity_changes_during_inspection_and_refresh`
