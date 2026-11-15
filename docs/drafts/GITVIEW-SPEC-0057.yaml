@@ -62,6 +62,10 @@ specification:
     complete_history_catalog: Candidate 0097 defines proposed discovery and retention for the other agreed summary metrics beyond the four initially presented series, including locally observed Project membership count. A metric's historical availability remains conditioned on its actual evidence and access; current-members retrospective scope cannot establish actual past Project membership.
     provenance: The Project summary and graphs are owner-agreed; exact count predicates and evidence requirements are agent-authored refinements. Source-specific mappings, current-state freshness thresholds and supported historical reconstruction remain open.
   scenarios:
+    unknown_selection_is_not_unknown_lifecycle_count:
+      given: An Issue is known and permitted but its Today inclusion is uncertain because its current open state and relevant event coverage are unavailable; a different Issue is confirmed to belong to Today through its creation time but its current lifecycle is unknown. Overall Project coverage is incomplete.
+      when: The Project's Today lifecycle breakdown is evaluated for that captured day and unfiltered context.
+      then: The confirmed Today member can contribute once to the supported unknown-lifecycle subset; the candidate with uncertain Today inclusion is separately identifiable as uncertain and is not counted as an established Today member. Neither fact establishes an exact unknown-lifecycle total or a count of undiscovered Issues.
     repeated_outcome_across_summary_and_history:
       given: Project P contains Repositories A and B. One permitted Issue in A has two distinct supported closure events today, a supported reopen between them and an applicable current open observation. One event is reobserved after restart; B's relevant private evidence is restricted or unavailable.
       when: The operator inspects the Today lifecycle breakdown and today's distinct closed-Issue history bucket for the captured local day.

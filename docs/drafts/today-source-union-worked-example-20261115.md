@@ -27,6 +27,26 @@ GitHub would remain a separate claim and could not by itself identify missing
 cards. The Issue's closed state does not imply successful completion; the PR's
 merge does not imply the status of CI or review.
 
+## Project measurements from this example
+
+| Measurement | Supported contribution | What it does not establish |
+| --- | --- | --- |
+| Current Today PR lifecycle | X contributes one open PR and Z one merged PR in the known subset. | Two total Today PRs for P, a complete source snapshot, or a historical burn-down. |
+| Current Today Issue lifecycle | Y contributes one closed Issue in the known subset. U's inclusion in Today is unknown, so U is not a confirmed member of the Today lifecycle-unknown category. | Exactly one closed Issue for P, a completed task, or zero Issues with unknown lifecycle. |
+| Current open work | X can contribute one open PR; U's open state remains unknown. | A complete Project open-PR or open-Issue total; Y and Z are not open merely because they are in Today. |
+| Merged PR outcome in the day | Z contributes one distinct merged PR for the captured interval where its merge evidence is applicable. | Complete period coverage, the number of CI successes, or independent tasks finished. |
+| Closed Issue outcome in the day | Y's current closed state alone supplies no confirmed closure event within the interval. | A zero closure outcome, a closure time or a completion reason. |
+| Repository membership | The independently confirmed Project configuration establishes members A and B, subject to disclosure. | Successful source discovery or complete PR, Issue, CI or review coverage. |
+
+All numerical contributions here are permitted **observed subsets**, not
+necessarily lower bounds for a later present-time state. If another Project Q
+also contains A, A contributes within each Project's own scope; a separate
+unique-portfolio measurement must deduplicate confirmed Repository and work
+identities instead of adding Project totals. A lifecycle-unknown breakdown
+category counts a confirmed Today member whose current lifecycle is unknown;
+it does not absorb candidates such as U whose membership in Today itself is
+unresolved, nor does it represent an invented count of undiscovered objects.
+
 If the local day rolls forward while a request for this interval is pending,
 reevaluate supported observations against the newly captured interval. The old
 request cannot be relabeled as complete coverage of the new day. An event
