@@ -134,6 +134,10 @@ specification:
       given: A dense filtered grid contains a permitted PR whose cell changes position after a source update.
       when: The operator previews and opens that object and returns to the grid.
       then: The description preserves the same PR identity and available source context, keeps the valid Project, filters and density on return, and does not require all selected fields to fit in the cell or reveal information whose access became restricted.
+    later_sliding_preview:
+      given: The operator wants to inspect several dense cells without leaving the overview.
+      when: The product description explains the later sliding-preview direction.
+      then: It describes one preview changing with the inspected cell while retaining the overview, identifies long-press activation as unverified, and does not present the future interaction as already implemented or required for the first version.
   unresolved:
   - Whether the working product projection sufficiently communicates all intended nuances requires product review; clarify any missing behavior without demanding implementation detail merely for its own sake.
   - Meaning of ready for an open PR, broad discussion participation including coding agents, and true responsibility for a reply remain distinguishable from narrower observable indicators.
