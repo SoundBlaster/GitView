@@ -71,6 +71,10 @@ specification:
       given: Project P contains A and B. One permitted identified Issue in A has two distinct confirmed closures during the same local day, is independently observed open after reopening, and one closure has been reobserved. Relevant B inputs are restricted. A's observations independently support the stated A-scoped predicates and current disclosure.
       when: The Today open-Issue summary and a distinct closed-Issue outcome for that day are separately evaluated.
       then: Each can include the Issue once in its own A-scoped supported subset with its actual temporal context and safe limitation; the repeated event observation adds neither another Issue nor another closure. Neither value is promoted to a complete P result or combined to infer B's contribution. An event-count metric, if separately requested and supported, uses two distinct events rather than the one distinct Issue.
+    overlapping_thread_and_ci_units:
+      given: Under sufficient compatible evidence for one permitted Project context, open PR A has three unresolved threads and four failed check entries, while open PR B has two unresolved threads and no failed checks in its complete applicable set.
+      when: Separate review-thread, affected-PR and failed-CI PR measurements are evaluated.
+      then: The supported measurements are five unresolved threads, two PRs with unresolved threads and one failed-CI PR. They are separate overlapping units and populations, not eight independent objects or four failing PRs; deriving a filtered destination still requires independently supported PR identities and predicates.
     candidate_non_draft_partial_and_unknown:
       given: Project P contains A and B. A has one identified applicable open non-draft PR and another open PR with an unavailable applicable draft fact; B's PR population is unobserved.
       when: The candidate open non-draft summary and destination are evaluated independently for the same stated context.

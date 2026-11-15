@@ -75,6 +75,10 @@ specification:
     verification: Apply 0040 and 0079 to controlled scenarios for different metric units, filter changes, updated source observations, changed membership, historical event periods and explicit denial. Source mappings and native navigation or accessibility require separate evidence; this contract is not evidence of implemented behavior.
     provenance: Signal-based navigation and explicit filtering derive from the owner's overview direction. Editable signal selection, context retention and update handling are agent-authored proposals requiring UX review.
   scenarios:
+    intersect_thread_and_ci_signals:
+      given: In one permitted Project and compatible observation context, open PR A has three unresolved review threads and four failed check entries, while open PR B has two unresolved threads and a sufficiently observed check set with no failure. The source establishes identity, applicable revision and completeness for the stated conditions and scope.
+      when: The operator opens the signal for five unresolved threads, explicitly adds the failed-CI PR condition, then clears only that added condition and returns to the signal's origin.
+      then: The initial destination contains two distinct PR cards A and B, not five cards. The intersection contains only A, not four cards or a claim that all its tests failed; clearing that added condition restores both subject to current independently evaluated evidence. The original signal remains five threads with its own context, and return uses the actual Project origin. Neither the count of threads nor checks becomes an additional PR or a merge verdict; any later access or evidence change follows the current applicable limitation rules.
     shared_repository_signal_origin:
       given: Repository R belongs to Projects P and Q; within P's member overview a permitted actionable R signal reports two open PRs, and Q also has other work.
       when: The operator opens that R signal, inspects the resulting PR collection, and returns without changing membership or access.
