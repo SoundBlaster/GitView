@@ -102,10 +102,18 @@ specification:
       given: A merged PR, an open non-draft PR and an open PR with supported approval and passing observed checks are considered separately.
       when: The product description explains what ready might mean.
       then: It identifies merged as an established lifecycle outcome, distinguishes the optional non-draft filter and review or CI signals, and does not claim merge eligibility or completed linked Issues from those facts alone.
+    issue_participant_population:
+      given: A source-supported count describes GitHub participating Users for an Issue, while the population of all comment authors and other actors is not established.
+      when: The product description explains the selected discussion-participant count.
+      then: It preserves the source-defined population and does not present that count as the confirmed number of all human and agent participants or as an identical count of comment authors.
     changed_project_membership:
       given: A Repository was added to a Project after a historical period being inspected.
       when: The product description explains a graph for the current membership over that period.
       then: It distinguishes that proposed retrospective basis from evidence of which Repositories actually belonged to the Project in the past, and identifies missing history rather than treating it as zero.
+    dynamic_today_and_fixed_cohort:
+      given: An adequately observed Today selection has 100 PRs, 95 currently merged, and a new eligible open PR appears afterward.
+      when: The product description explains completion visibility and a possible fixed-cohort trend.
+      then: It can describe a new dynamic selection of 101 PRs with six open without silently adding the new PR to an earlier captured cohort or claiming that two current breakdowns establish all intermediate history; a fixed cohort remains an optional proposal.
     offline_restriction_limit:
       given: The product description explains last-known private data after an interruption or restoration of an older local copy.
       when: It describes the agent-authored offline access policy.
@@ -120,6 +128,6 @@ specification:
       then: The description preserves the same PR identity and available source context, keeps the valid Project, filters and density on return, and does not require all selected fields to fit in the cell or reveal information whose access became restricted.
   unresolved:
   - Whether the working product projection sufficiently communicates all intended nuances requires product review; clarify any missing behavior without demanding implementation detail merely for its own sake.
-  - Meaning of ready for an open PR, broad discussion participation and true responsibility for a reply remain distinguishable from narrower observable indicators.
+  - Meaning of ready for an open PR, broad discussion participation including coding agents, and true responsibility for a reply remain distinguishable from narrower observable indicators.
   - The historical membership basis, broader past-period grid, cross-scope pinch, and private-cache and backup tradeoffs require explicit product evaluation; existing proposals do not establish owner selections.
   - No implementation, device behavior, source availability or executed acceptance is claimed by this first-pass specification.
