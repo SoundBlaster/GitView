@@ -6,8 +6,8 @@
 [project-repository-spec-alignment-20261115.md](project-repository-spec-alignment-20261115.md).
 
 **Текущий контекст, 15 ноября:** `specgraph.project.yaml` выбирает
-[составной draft.12](../candidates/domain-v0.2.0-draft.12/README.md), а не
-исторические draft.5 или draft.6. Пакет остаётся `draft`; последующие
+[составной draft.13](../candidates/domain-v0.2.0-draft.13/README.md); draft.12,
+draft.5 и draft.6 — исторические контексты. Пакет остаётся `draft`; последующие
 структурные проверки не утверждают его смысл. Таблицы и выводы ниже относятся
 к обозначенным в них историческим снимкам, не к текущему составу пакета.
 

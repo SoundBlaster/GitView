@@ -2,7 +2,7 @@
 
 Статус: **предметный разбор и кандидат**, не утверждённое действие и не
 новая версия ontology package. Он первоначально проводился для draft.10;
-текущий рабочий контекст — `local.gitview.domain@0.2.0-draft-composition.12`,
+текущий рабочий контекст — `local.gitview.domain@0.2.0-draft-composition.13`,
 где `versionControlsCode` по-прежнему объявлен через domain/range с открытыми
 действием и возникающим свойством. Проверка терминов не устанавливает истинности
 модели или выполнения действий.
@@ -88,14 +88,14 @@ identity локальной Code-папки или конкретное дейс
 [0001](../../docs/drafts/GITVIEW-SPEC-0001.yaml),
 [0002](../../docs/drafts/GITVIEW-SPEC-0002.yaml),
 [исторический draft.10](../candidates/domain-v0.2.0-draft.10/composition/domain-ontology-package.yaml),
-[текущий source package draft.12](../candidates/domain-v0.2.0-draft.12/composition/domain-ontology-package.yaml).
+[текущий source package draft.13](../candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml).
 
 ## Решение для текущего объёма GitView — 15 ноября
 
 Для завершаемой продуктовой спецификации сохраняем `versionControlsCode` как
 **структурную связь-кандидат** между `VersionControlSystem` и `Code`, не как
 формализованное действие или доказанное происшествие. Так трактуется её запись
-`domain`/`range` в выбранном draft.12. Она поддерживает употребление понятий
+`domain`/`range` в выбранном draft.13. Она поддерживает употребление понятий
 в исходном описании Repository, но не отвечает на вопрос, каким действием и
 когда возникло конкретное отношение. Это ограничение сохраняется в ontology.
 
