@@ -31,7 +31,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The proposed initial connection uses GitHub App user authorization via an external system-supported browser session and authorization code with S256 PKCE, with a separate validated attempt and callback state.
-- GitView uses a user access token rather than a GitHub App installation private key, and a public-client identifier or embedded client secret is not treated as proof of a genuine app instance or confidential material.
+- Under the proposed GitHub App connection, GitView uses a user access token rather than an installation private key, and a public-client identifier or embedded client secret is not treated as proof of a genuine app instance or confidential material.
 - User identity, token usability, GitHub App installation, repository grant and actual data coverage remain independently established facts.
 - Renewal of an expiring credential cannot be treated as a locally reversible operation if GitHub may have rotated the credential remotely; an indeterminate result offers safe recovery.
 - Cancelled, replayed, mismatched or superseded authorization results cannot establish a connection or undo a later disconnect.

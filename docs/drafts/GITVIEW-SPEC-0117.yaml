@@ -22,7 +22,7 @@ sources:
   metric_inputs: docs/drafts/metric-source-evidence-matrix-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A confirmed clear durably removes the described history from the continuing local store and prevents pre-clear work from restoring it after a late response, replay or ordinary restart; an older restored backup is outside this fence.
+- If the agent-proposed history-clear feature is included, a confirmed clear durably removes the described history from the continuing local store and prevents pre-clear work from restoring it after a late response, replay or ordinary restart; an older restored backup is outside this fence.
 - A fresh source operation is eligible to contribute new history only under the current history generation and its independently supported access and source evidence.
 - A source success, current-cache save and historical retention remain separate outcomes; an uncertain clear or unreadable generation does not become an empty source or confirmed history.
 - A retried clear retains its logical operation identity; a second intentionally confirmed clear is a separate operation that cannot be mistaken for that retry.
