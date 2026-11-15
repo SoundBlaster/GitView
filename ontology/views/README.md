@@ -2,6 +2,13 @@
 
 ## Current draft.13 reference
 
+[Readable composition](composition-draft13.md) is a separate source-derived
+projection of all `spec` sections in the GitView, motivation-core and
+events-core packages, including their definitions and links. It records each
+source hash and retains complete declaration values. Foundation imports are
+not expanded there; the projection is not an ontology package or proof of
+semantic approval. It does not replace the structurally checked HC/HCS pair.
+
 [HC](gitview-draft13.hc) and [HCS](gitview-draft13.hcs) are a structural
 export from the separately authored [selection HC](gitview-draft13.selection.hc)
 and [selection HCS](gitview-draft13.selection.hcs). The exporter checked ten
