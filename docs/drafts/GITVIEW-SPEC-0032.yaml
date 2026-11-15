@@ -32,7 +32,7 @@ specification:
   - gitview:Issue
   contract:
     object: An assistive representation communicates the object type and enough permitted identity to distinguish it within the current scope, including source Repository context where PR or Issue numbers could collide and disclosure is permitted. It exposes known permitted title or number and relevant available status; a missing value remains unknown rather than success. If identifying details are restricted, use a non-sensitive representation and an access-recovery route rather than disclosing them to distinguish objects.
-    actions: An accessible way to connect or recover access, select repositories, manage Projects, change grid density, select and open an object, dismiss a preview, return, refresh, reach active filters and invoke available source or share actions is available without relying solely on pinch, long press, pointer hover or color. Exact native controls and actions remain implementation decisions.
+    actions: An accessible way to connect or recover access, select repositories, manage Projects, change grid density, select and open an object, invoke and dismiss its eligible static preview, return, refresh, reach active filters and invoke available source or share actions is available without relying solely on pinch, long press, pointer hover or color. Exact native controls and actions remain implementation decisions.
     setup_accessibility: During connection, discovery and confirmation, provide accessible operation intent, selection state and permitted Repository identity. A selected item remains inspectable and removable when hidden by search or pagination, through an accessible pending-selection route. Explain whether confirmation is expected to reuse an existing default, create a separate Project or remains unresolved under 0045, subject to current access. Per-entry progress, recovery and any partial outcome remain discoverable without relying only on a transient announcement or color. Distinguish local storage failure from source access or discovery failure without exposing restricted information. Native authentication screens remain subject to their platform and provider behavior, not an app-level guarantee.
     focus: On dismissing preview or returning from an object, restore accessibility focus to the same object when it remains available in the active selection. If it is gone, use the same surviving successor/predecessor anchor rule as 0024 where possible; otherwise focus a meaningful element describing the updated collection or its empty/error state. Do not falsely announce another object as the original.
     status: Loading, failure, incomplete scope and explicit access denial remain distinguishable through non-color information and must not expose restricted private content. Presenting a changing status must not automatically claim every category has refreshed.
@@ -49,6 +49,10 @@ specification:
       given: Two Repositories in a Project each contain an Issue numbered 42.
       when: A VoiceOver user reaches each Issue in the grid.
       then: The descriptions identify the source Repository sufficiently to distinguish the two Issues.
+    dense_cell_preview_without_long_press:
+      given: An assistive user inspects a permitted Issue 42 in Repository B at a compact density, and Repository A also contains Issue 42.
+      when: The user changes density using an accessible control, invokes the eligible static preview without long press, then dismisses it without opening the Issue.
+      then: The preview identifies B's same Issue and offers its available actions; dismissal returns to that Issue when still eligible or to the prescribed safe fallback, without opening A's Issue or changing the active scope and filters solely because of these interactions.
     preview_removed:
       given: A previewed PR no longer matches its original filter and VoiceOver is active.
       when: The operator dismisses its preview.
