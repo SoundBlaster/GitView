@@ -24,8 +24,7 @@ acceptance:
   discovery distinctly.
 - Credentials are protected using platform-provided secure storage and are not included in shared content
   or ordinary diagnostic logs.
-- A network failure preserves previously observed data and reports refresh failure; explicit authentication
-  or permission denial is distinguished from a successful empty result.
+- A network failure does not itself erase previously accepted observations; eligible last-known data and the affected refresh failure remain distinguishable. Explicit authentication or permission denial is distinguished from a successful empty result.
 - The operator can reconnect or disconnect the account; disconnection does not issue GitHub mutations
   or silently delete source repositories.
 acceptance_evidence:
@@ -66,8 +65,8 @@ specification:
       failures. Temporary failures follow the last-known-data contract in GITVIEW-SPEC-0003. A 404 alone
       cannot prove deletion or revocation. After explicit access denial, lock affected private cached
       content from display but retain records until the user clears them. Successful reauthorization for
-      the same source identity may restore access. A temporary network failure alone does not lock previously
-      authorized data.
+      the same source identity may restore access only when supported under 0036 and 0112. A temporary network failure alone does not establish a new
+      access denial; independently applicable restrictions and unknown restriction state still govern disclosure.
     disconnect: Provide a deliberate local disconnect action that stops new refresh for that account and
       attempts to remove the app's credential. Confirm local credential removal only when established;
       an unsuccessful or uncertain removal remains a visible recovery problem under 0058. Lock its private cached content while disconnected and retain records
@@ -75,14 +74,13 @@ specification:
       access may unlock content. No GitHub object is deleted.
   scenarios:
     first_connection:
-      given: No GitHub account is connected.
-      when: The operator authorizes access and selects a repository.
-      then: Its source identity is recorded and the operator can enter a default Project after data is
-        observed.
+      given: No GitHub account is connected and the operator begins the proposed setup route.
+      when: The source identity is independently confirmed, a Repository is discovered with applicable eligibility, and the operator explicitly confirms default setup.
+      then: After a valid Project is established or reused, the operator can enter it even while PR and Issue observations are unobserved or loading. Authorization or selection alone does not establish a Repository grant, save a Project or prove work data is observed; unresolved setup remains recoverable under 0022 and 0045.
     temporary_offline:
-      given: A connected account has stored observations.
-      when: A refresh fails because the network is unavailable.
-      then: The last-known data and observation time remain available with a visible refresh failure.
+      given: A connected account has stored observations and supported observation times eligible for display under the current access policy.
+      when: A refresh fails because the network is unavailable, with no independently accepted newer observation or change in access.
+      then: The eligible last-known data and its supported observation time remain available with a visible refresh failure for the affected scope.
     explicit_access_denial:
       given: A previously observed private repository is explicitly denied by the source.
       when: Its refresh is attempted.
