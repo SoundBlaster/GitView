@@ -102,6 +102,10 @@ specification:
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
     optional_cohort_boundary: The dynamic Today journey and its acceptance do not require capturing a fixed PR cohort. Candidate 0055 describes a separate proposed view whose first-release scope is unresolved; its conditional scenarios apply if that capability is included, without making it a prerequisite for the core journey.
   scenarios:
+    discovery_gap_after_scope_and_access_change:
+      given: Project P formerly contained A and B and has a retained recent-work gap for B under account X and an earlier local day. A repair for B began, then P changes to A and C and B becomes restricted before that repair returns; C has not yet been observed.
+      when: The operator opens P's current Today collection and the old repair response arrives.
+      then: The active selection retains P and its valid filters with current A-and-C membership; C remains unobserved and B is not disclosed or presented as a current member. The old gap and response keep their original account, Repository and day context and cannot restore B's private content, complete C or relabel old-day work as the current Today coverage. Independently permitted A facts retain their own times and a non-sensitive applicable limitation remains discoverable.
     portfolio_configuration_recovers_during_refresh:
       given: The local identity set contains P and Q but Q's configuration is unreadable; P is independently available, and a source refresh for a previously known Q Repository finishes while Q's configuration remains unavailable.
       when: The overview shows P with a local limitation, the operator moves to P, a newer local read establishes Q's valid configuration, and an older local read then finishes.
