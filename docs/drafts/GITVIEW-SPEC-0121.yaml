@@ -15,9 +15,10 @@ depends_on:
 - GITVIEW-SPEC-0079
 - GITVIEW-SPEC-0081
 - GITVIEW-SPEC-0112
-- GITVIEW-SPEC-0113
 - GITVIEW-SPEC-0086
 - GITVIEW-SPEC-0115
+relates_to:
+- GITVIEW-SPEC-0113
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0033.yaml
   local_access_order: docs/drafts/GITVIEW-SPEC-0113.yaml
@@ -47,6 +48,7 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
+    ordering_design_boundary: The handoff requires coordination against locally established applicable restrictions at each app-controlled payload boundary. Candidate 0113 describes one local coordination direction; a selected alternative must independently establish and verify the same applicable ordering without claiming control over an unobserved remote change or a payload already handed off. A contextual link to 0113 is not itself evidence of ordering or platform behavior.
     attempt_context: An explicit Open or Share attempt captures its operation identity, original route, source instance and selected Repository and object identity, link evidence and observation context, and current account or connection generation where relevant. A local Project is not a GitHub source object and must not acquire a member's link by implication. A source-confirmed same Repository identity after rename or transfer preserves membership but does not prove an old address still resolves to that object under 0033, 0038 and 0081.
     related_target_context: For an action from an already committed related-object route under 0078, bind the attempt to the explicitly selected target and its source Repository, not to the original Issue or PR or its Project membership. Revalidate the target's link evidence and current target disclosure at each applicable admission or provider callback. The prior relation is navigation provenance, not target authorization or part of the proposed default link-only payload; do not disclose a restricted origin, relation or derived details in app-controlled labels, metadata or diagnostics merely to explain the target. A removed or restricted relationship alone does not invalidate an otherwise still-valid committed target route or establish a target denial; apply the target's actual access and 0024 changed-origin rules separately. Closing or superseding the actual target route invalidates its uncommitted app-controlled attempt under lifecycle_and_results.
     link_candidate: Under the proposed link-only default, a prepared candidate contains only the source-associated eligible HTTPS link and the non-secret evidence required to assess its selected-object association, permitted source origin and applicable access. In that candidate, sharing passes the link without automatically attaching source descriptions or credentials under 0033; the default payload remains a product decision. A malformed, unsafe, credential-bearing, known-reused or unassociated link is not sent or printed in ordinary diagnostics; do not silently repair a link and assert the result has the same target without evidence. A permitted previously associated link without contradictory evidence may be offered as last known with its uncertainty, not as a verified current destination.
