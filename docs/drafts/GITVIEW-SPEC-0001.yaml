@@ -128,108 +128,11 @@ specification:
       GitLab and BitBucket are possible later providers, not included integrations.
   selected_property_sets:
     status: User-selected scope for further specification; not a complete typed schema or state machine.
-    counting_boundary: Item counts below refer to the source checklists, not atomic fields, requirements,
-      completion percentages or new canonical specification IDs.
-    project:
-      source_document: docs/drafts/project-summary-proposal.md
-      source_refs:
-      - conversation:gitview/excerpt-40
-      - conversation:gitview/excerpt-41
-      selected_items:
-      - A1. Stable local ID.
-      - A2. Name.
-      - A3. Optional purpose description.
-      - A4. Membership through references to GitHubRepository identities.
-      - B1. Repository count and data coverage, such as available data for four of five repositories.
-      - B2. Open PR, draft subset and open Issue counts, separately.
-      - B3. Attention signals for CI, review, unresolved threads and Issue blockers.
-      - B4. A checks-and-review-passed selection only if the separate Repository D rule is later selected.
-      - B5. Merged PR and closed Issue counts by reason for one selected period.
-      - B6. Charts of those indicators when sufficient history exists.
-      - C1. Navigate through the repository grid into PR and Issue; a single-repository Project skips
-        the duplicate repository screen without becoming identical to Repository.
-      - C2. Navigate directly from a Project counter to the corresponding filtered objects across its
-        repositories, retaining each object's source repository context.
-      summary_boundary: A repository may contribute to each Project containing it, but portfolio totals
-        count shared repositories and their objects once. Project totals cannot simply be added. PR and
-        Issue counts are not a count of independent tasks. A Project summary is derived from membership,
-        not an additional source state or a new Aggregate entity.
-      conditional_rule: The Repository summary and its D readiness-like predicate remain agent proposals.
-        Selecting Project B4 did not activate that predicate or choose default reporting periods.
-      open: Identity representation, membership edits, default-project creation, filter rules, periods,
-        aggregation, freshness and navigation mechanics need bounded specifications.
-    pull_request:
-      source_document: docs/drafts/pull-request-ontology-options.md
-      source_refs:
-      - conversation:gitview/excerpt-33
-      - conversation:gitview/excerpt-34
-      - conversation:gitview/excerpt-35-reply
-      - conversation:gitview/excerpt-38
-      selected_items:
-      - A1. Source ID and PR number within its repository.
-      - A2. Title.
-      - A3. Description text with the selected PR sections.
-      - A4. URL of the original object.
-      - B1. Open, closed without merge, or merged lifecycle state.
-      - B2. Draft flag separately from lifecycle, CI and review.
-      - B3. Labels.
-      - C1. Target GitHubRepository.
-      - C2. Source and target branches and reference to the current change revision.
-      - C3. Author or creator as a source participant role.
-      - C4. Requested reviewers.
-      - C5. Linked Issues.
-      - D1. Available aggregate review assessment with the source's meaning.
-      - D3. Total review-thread count and unresolved review-thread count, separately.
-      - E.red. Current red-check count.
-      - E.yellow. Current yellow-check count.
-      - E.green. Current green-check count.
-      - E.total. Total current-check count.
-      - F1. Added and removed lines, separately.
-      - F2. Changed-file count.
-      - F3. Commit count.
-      - G1. Created and last-updated times.
-      - G2. Closed or merged time when applicable.
-      - G3. Observation time and source.
-      excluded_detail: D2 individual ReviewThread objects/content were not selected. CI and change-size
-        sections are counters only; no run, log, file, commit or diff viewer is implied.
-      open: Value types, unknown/null representation, source identities and bindings, review applicability,
-        timing and state transitions remain to be specified. Creator identity does not prove coding-agent
-        provenance, User identity or who changed Code.
-    issue:
-      source_document: docs/drafts/issue-ontology-options.md
-      source_refs:
-      - conversation:gitview/excerpt-36
-      - conversation:gitview/excerpt-38
-      selected_items:
-      - A1. Source ID and Issue number within its repository.
-      - A2. Title.
-      - A3. Description text with the selected Issue sections.
-      - A4. URL of the original object.
-      - B1. Open or closed state.
-      - B2. State or closure reason when provided by the source.
-      - B3. Labels.
-      - B4. Issue type when present.
-      - C1. Source GitHubRepository.
-      - C2. Author or creator as a participant role.
-      - C3. Assignees.
-      - D1. Linked PR with closing links distinguished from mentions where available.
-      - D2. Parent Issue and sub-issues.
-      - D3. Blocking and blocked Issues.
-      - D4. Milestone when present.
-      - E1. Comment count.
-      - E2. Discussion participant count.
-      - F1. Total direct sub-issue count.
-      - F2. Closed direct sub-issue count.
-      - G1. Created and last-updated times.
-      - G2. Closed time when applicable.
-      - G3. Observation time and source.
-      - G4. Last-comment time when available.
-      interpretation_boundary: Issue comments are not PR review threads. Closed does not necessarily mean
-        completed; assigning someone does not establish that work started. An update is not necessarily
-        a comment. The closed sub-issue ratio is not a work-completion percentage. CI and diff metrics
-        belong to related PR, not automatically to Issue itself.
-      open: Exact source bindings, availability, types, unknown values, linked-object semantics and timing
-        rules remain to be specified. Source links do not alone establish actor actions or causation.
+    selected_items_source: docs/drafts/root-selected-property-sets.yaml
+    project_summary: docs/drafts/project-summary-proposal.md
+    pull_request: docs/drafts/pull-request-ontology-options.md
+    issue: docs/drafts/issue-ontology-options.md
+    boundary: The referenced selection retains the exact itemized choices and source references previously in this root; it does not establish ontology acceptance, implementation or independent-task counts.
   description_format:
     source_document: docs/drafts/github-templates/README.md
     source_refs:
