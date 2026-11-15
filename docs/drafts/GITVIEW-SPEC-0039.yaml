@@ -13,6 +13,7 @@ depends_on:
 - GITVIEW-SPEC-0034
 - GITVIEW-SPEC-0044
 sources:
+  issue_project_review: docs/drafts/issue-project-contract-review-20261115.md
   parent: docs/drafts/GITVIEW-SPEC-0009.yaml
   github_graphql_issue: https://docs.github.com/en/graphql/reference/issues
   selected_fields: docs/drafts/issue-ontology-options.md

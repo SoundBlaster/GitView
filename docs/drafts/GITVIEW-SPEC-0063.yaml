@@ -57,6 +57,10 @@ specification:
       given: An open Issue in Repository A is directly blocked by an open Issue in Repository B, which is not a member of the selected Project; all relevant evidence is permitted.
       when: The blocked-Issue signal is evaluated.
       then: The Issue in A can contribute once, B is not added to the Project, and the destination remains scoped to the affected Issue in A.
+    shared_affected_issue_and_linked_pr:
+      given: Projects P and Q both contain Repository A. Its open Issue I has two permitted confirmed open direct blockers in external Repository B and a separate supported closing association to PR R; I, both blockers and R have distinct confirmed source identities and applicable evidence. No other affected Issues exist in the sufficiently covered requested scopes.
+      when: The operator inspects the blocked-Issue signals for P and Q, a unique-portfolio blocked-Issue total, and I's related-work section.
+      then: I contributes once to P and once to Q, while the separately deduplicated unique-portfolio value counts I once. The two blockers remain separate directed relations, R remains a PR with its own closing-association meaning, and B is not made a member of either Project by those links. Neither link kind establishes an actor's motive, a completed task or another blocked Issue; the operator can open an eligible relation target under its own identity and access.
     private_blocker_unavailable:
       given: An accessible open Issue may depend on an Issue whose private details or lifecycle are restricted and no other open blocker is confirmed.
       when: The Project signal and Issue preview are displayed.
