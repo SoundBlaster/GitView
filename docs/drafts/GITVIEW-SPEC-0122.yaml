@@ -73,10 +73,10 @@ specification:
       given: A previous application version opens a store upgraded by a later version with an unsupported schema.
       when: The older version prepares its normal Project writes.
       then: Those writes are not admitted, the existing store is preserved, and an update or compatible recovery route is offered if available.
-    credential_missing_after_upgrade:
-      given: A supported store upgrade is confirmed but the credential slot referenced by the saved connection is inaccessible after a device restore.
+    credential_inaccessible_after_upgrade:
+      given: A supported store upgrade is confirmed but the credential slot referenced by the saved connection is inaccessible after a device restore; its presence or absence has not been established.
       when: The operator opens the application.
-      then: Connection availability follows its own recovery policy, Projects are not deleted, and neither GitHub access nor an empty portfolio is inferred from the missing slot.
+      then: Connection availability follows its own recovery policy, Projects are not deleted, and neither GitHub access, a confirmed missing credential nor an empty portfolio is inferred from an inaccessible slot.
     preserved_history_fence:
       given: The old store contains a confirmed history clear generation and an operation that began before that clear.
       when: Schema migration completes and the old operation is replayed.

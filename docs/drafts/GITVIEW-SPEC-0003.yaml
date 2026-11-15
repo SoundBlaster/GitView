@@ -116,15 +116,15 @@ specification:
     is required with an interaction appropriate to each screen. Local placement, priority, batching and
     individual controls are proposals for review. The scenarios are intended checks awaiting execution.
   pilot_contract:
-  - Read previously stored observations first; record source scope, successful observation time, completeness
-    and failed refresh separately.
-  - A failed or interrupted refresh cannot erase last successful data or advance the last complete successful
-    observation time for its requested scope; successfully observed facts from a partial response may retain
+  - When recoverable and eligible observations exist, make them available without waiting for a new source request; record source scope, supported successful observation time, completeness
+    and refresh outcome separately.
+  - A failed or interrupted refresh does not itself erase accepted data or advance the last complete successful
+    observation time for its requested scope. Independently accepted observations, explicit clearing or access changes retain their own effects and must not be undone by that failure. Successfully observed facts from a partial response may retain
     their own observation time while scope coverage remains incomplete. A never-loaded collection is distinct
     from confirmed empty.
   - Manual refresh, stale-on-open refresh and system-granted background refresh obey applicable shared source
     limits and report their own scoped outcomes; execution budgets may differ and iOS background execution is opportunistic.
-  - A page-limited result remains partial, and unavailable private source data is not proof of deletion.
+  - A result stopped before sufficient supported page or population coverage remains incomplete, and unavailable private source data is not proof of deletion.
   pilot_scenarios:
     partial_refresh:
       given: Two repositories have last-known PR lists permitted for display.
@@ -134,19 +134,19 @@ specification:
     interrupted_page:
       given: A list spans several pages.
       when: The budget expires before all pages are read.
-      then: Fetched information remains usable and the list is marked incomplete, not empty.
+      then: Supported permitted fetched information remains usable within its actual transient or durable context and the list is marked incomplete, not empty. A source response alone does not prove it was saved.
   pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
     are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
-- Read previously stored observations first; record source scope, successful observation time, completeness
-  and failed refresh separately.
-- A failed or interrupted refresh cannot erase last successful data or advance the last complete successful
-  observation time for its requested scope; successfully observed facts from a partial response may retain
+- When recoverable and eligible observations exist, make them available without waiting for a new source request; record source scope, supported successful observation time, completeness
+  and refresh outcome separately.
+- A failed or interrupted refresh does not itself erase accepted data or advance the last complete successful
+  observation time for its requested scope. Independently accepted observations, explicit clearing or access changes retain their own effects and must not be undone by that failure. Successfully observed facts from a partial response may retain
   their own observation time while scope coverage remains incomplete. A never-loaded collection is distinct
   from confirmed empty.
 - Manual refresh, stale-on-open refresh and system-granted background refresh obey applicable shared source
   limits and report their own scoped outcomes; execution budgets may differ and iOS background execution is opportunistic.
-- A page-limited result remains partial, and unavailable private source data is not proof of deletion.
+- A result stopped before sufficient supported page or population coverage remains incomplete, and unavailable private source data is not proof of deletion.
 acceptance_evidence:
 - criterion: The pilot contract and its boundary scenarios are independently checkable.
   evidence: The pilot_scenarios describe expected results for future verification; no app test has run.
