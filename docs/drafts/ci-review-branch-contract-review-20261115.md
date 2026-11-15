@@ -14,6 +14,28 @@ change the owner's decision to defer visual review-indicator work.
 | Long or unresolved review threads | 0057/0094 separately describe unresolved counts and a proposed 24-hour observed-comment proxy. | Validate that the proxy matches the intended product meaning and identify source operations, applicability and coverage. It does not measure actual thread age or silence. | Live evidence and usability review; no claim that the owner approved this threshold. |
 | Ready work | 0125 proposes a separate open non-draft filter; 0028 does not treat CI or review as a merge decision. | Resolve the broader meaning of ready and whether any combined predicate is in release scope. | Later source/policy verification for whatever meaning is selected. |
 
+## Long discussion: meaning before measurement
+
+The owner requested a way to notice long review threads while selecting only
+thread counters for the PR overview. The following are distinct possible
+meanings, not interchangeable signals:
+
+| Meaning | What would support it | What it does not establish |
+| --- | --- | --- |
+| Long-lived unresolved discussion | Adequate evidence of when the currently unresolved interval began and whether it continued. | An old comment alone does not prove that interval. |
+| Little recent activity | Evidence of the latest relevant activity and adequate coverage of it. | An old observed comment does not prove no later comment exists. |
+| Substantial discussion | A separately defined count of relevant comments with adequate coverage. | Volume does not prove elapsed duration or who owes a reply. |
+| Old observed comment on an unresolved thread | An applicable unresolved state and at least one supported old comment. | Continuous duration, inactivity and reviewer responsibility remain unknown. |
+
+The last row is the optional 0094 proxy, not a selected interpretation. The
+current recorded review-thread query returns identity and resolution state but
+no comments or comment times; it alone cannot decide any of these temporal or
+volume meanings. The separate evidence matrix documents a possible comment-time
+field, not live access or coverage. 0062 keeps the product obligation visible
+without inventing a threshold, showing thread bodies or declaring the ordinary
+unresolved count sufficient. A precise predicate and suitable evidence remain
+necessary before a long-discussion counter is implementation-ready.
+
 ## Source boundaries checked here
 
 GitHub's [REST combined commit-status endpoint](https://docs.github.com/en/rest/commits/statuses#get-the-combined-status-for-a-specific-reference)
