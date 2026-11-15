@@ -15,7 +15,7 @@ sources:
   readiness_audit: docs/drafts/leaf-readiness-0025.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A completed default Project save is recoverable as a Project and its matching default association together.
+- Under the agent-proposed default-association mechanism, a completed default Project save is recoverable as a Project and its matching association together; the mechanism remains a product candidate.
 - Recovery reconciles the interrupted operation's own outcome and independently respects a confirmed current association without creating a duplicate default Project for the same Repository.
 - Concurrent or late save attempts for the same Repository cannot both establish distinct active default associations for it.
 - An unavailable or inconsistent local record is reported as unresolved rather than assumed absent or overwritten.

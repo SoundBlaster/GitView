@@ -31,7 +31,7 @@ acceptance:
 - A pure Project configuration decision distinguishes supported validity, known invalidity and insufficient evidence without performing source or storage effects.
 - A confirmed no-member proposal is invalid even when another input is unknown; under the agent-proposed name policy a confirmed empty name is also invalid, but that name policy remains a product decision. Missing identity or access evidence alone does not become confirmed invalidity or absence.
 - Confirmed Repository identities are compared within source context and may belong to more than one Project; unknown equivalence is not silently merged by name.
-- A valid proposal describes required default-association effects but does not claim that a save occurred or that a stale base can commit.
+- If the proposed default-association mechanism is selected, a valid proposal describes its applicable association effects; a valid result does not claim that a save occurred or that a stale base can commit.
 - The storage boundary atomically or equivalently revalidates applicable preconditions and invariants at the actual effect boundary.
 - Results, permitted explanations and verification preserve current access restrictions and distinguish policy, concurrency and durable outcomes.
 specification:
