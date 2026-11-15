@@ -65,7 +65,6 @@ depends_on:
 - GITVIEW-SPEC-0118
 - GITVIEW-SPEC-0119
 - GITVIEW-SPEC-0121
-- GITVIEW-SPEC-0122
 - GITVIEW-SPEC-0124
 - GITVIEW-SPEC-0126
 relates_to:
@@ -73,6 +72,7 @@ relates_to:
 - GITVIEW-SPEC-0052
 - GITVIEW-SPEC-0108
 - GITVIEW-SPEC-0113
+- GITVIEW-SPEC-0122
 - GITVIEW-SPEC-0098
 - GITVIEW-SPEC-0099
 - GITVIEW-SPEC-0100
@@ -106,6 +106,7 @@ specification:
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
     optional_default_association_boundary: The persistent default association and its confirmation and recovery protocols in 0045 and 0052 are an agent-authored candidate. Scenarios that assert its association lifecycle or uniqueness, including sole_member_replacement_preserves_route_and_scope, membership_readded_after_removal, project_deletion_review_and_shared_repository, default_setup_review_changes_in_flight and interrupted_setup_restart, apply to that candidate if selected. Their general outcomes, including preserving Project identity, other memberships, source data and truthful recovery, still need an applicable contract for any alternative. A default Project in a generic first-setup scenario does not alone establish a persistent association.
     storage_candidate_boundary: Candidate 0113 combines provider-independent persistence outcomes with a proposed coordination design and conditional SQLite profile. Regardless of provider, an implemented journey must preserve eligible last-known data, distinguish local failure and unknown outcomes from source results, and respect current applicable access as described by 0003, 0019 and 0025. The selected technical storage design must separately demonstrate its actual consistency, access ordering and recovery; this contextual reference alone does not establish them.
+    migration_candidate_boundary: Candidate 0122 proposes schema evolution and backup recovery for one local database direction. The upgrade_and_recover_portfolio and unsupported_schema_at_startup scenarios exercise that candidate where its versioned-store conditions apply; a selected alternative must still preserve supported saved Projects and observation meaning, avoid representing unreadable data as a fresh empty portfolio, and expose applicable migration or recovery limitations. Actual upgrade and restore behavior requires separate provider and platform evidence.
     optional_long_thread_proxy_boundary: The 24-hour comment-age interpretation in 0094 is an agent-authored option; scenarios specifically evaluating it apply only if it is selected. The initial long-discussion volume interpretation is defined in 0062; duration and inactivity remain distinct unresolved meanings.
     optional_history_clear_boundary: The all-local-history clear in 0067 and its protocol in 0117 are agent-authored optional candidates with undecided first-release inclusion. Scenarios involving this clear apply only if it is included; chart history and local observations remain independently required. Other deletion and access rules are unaffected.
     optional_review_stage_boundary: The agent-proposed open non-draft filter in 0125 is conditional, not a prerequisite for the core Today journey. Its acceptance scenario applies only if it is included; the owner's broader ready-work need remains unresolved.
