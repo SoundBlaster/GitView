@@ -63,14 +63,14 @@ specification:
       '
     failure: Distinguish temporary network or rate failures from observed authentication and authorization
       failures. Temporary failures follow the last-known-data contract in GITVIEW-SPEC-0003. A 404 alone
-      cannot prove deletion or revocation. While an explicit access denial remains applicable and known to the process or recoverable from durable evidence, lock affected private cached
+      cannot prove deletion or revocation. Under the agent-authored candidate offline policy, while an explicit access denial remains applicable and known to the process or recoverable from durable evidence, lock affected private cached
       content from display but retain records until the user clears them. The candidate offline policy does not guarantee recovery of a denial lost before persistence or absent from an older backup; this product tradeoff remains open under 0036. Successful reauthorization for
       the same source identity may restore access only when supported under 0036 and 0112. A temporary network failure alone does not establish a new
       access denial; independently applicable restrictions and unknown restriction state still govern disclosure.
     disconnect: Provide a deliberate local disconnect action that stops new refresh for that account and
       attempts to remove the app's credential. Confirm local credential removal only when established;
       an unsuccessful or uncertain removal remains a visible recovery problem under 0058. Lock its private cached content while disconnected and retain records
-      until the user explicitly clears local data. Reconnecting the same source identity and re-establishing
+      until the user explicitly clears local data under the agent-authored candidate offline policy in 0036. Reconnecting the same source identity and re-establishing
       access may unlock content. No GitHub object is deleted.
   scenarios:
     first_connection:
@@ -82,12 +82,12 @@ specification:
       when: A refresh fails because the network is unavailable, with no independently accepted newer observation or change in access.
       then: The eligible last-known data and its supported observation time remain available with a visible refresh failure for the affected scope.
     explicit_access_denial:
-      given: A previously observed private repository is explicitly denied by the source.
+      given: A previously observed private repository is explicitly denied by the source, and the candidate offline policy is selected.
       when: Its refresh is attempted.
       then: The app distinguishes denial from an empty repository, locks the affected private cache and
         preserves it for reauthorization or explicit clearing.
     disconnected:
-      given: One GitHub account is connected.
+      given: One GitHub account is connected and the candidate offline policy is selected.
       when: The operator disconnects it.
       then: New refresh stops and private cached content is locked. Credential removal is reported as complete
         only if confirmed; otherwise the local removal problem remains visible. No repository is deleted from GitHub.
