@@ -25,7 +25,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - An object's inclusion evidence, each active filter input and its displayed current state retain their own time, revision, scope and coverage where applicable.
-- A confirmed same-day event can establish Today inclusion without establishing the object's present lifecycle or the outcome of another filter.
+- A supported past event and the object's present lifecycle or another filter are independent facts; whether that event supports current-work inclusion depends on the selected completed-card policy.
 - An obsolete or inapplicable lifecycle or CI observation is not used as a confirmed current match or exclusion merely because another field refreshed.
 - A confirmed false required condition can exclude only within the time and source context that supports that condition; an unknown required condition remains uncertain unless another applicable false condition decides the conjunction.
 - A source-confirmed newer PR revision does not silently inherit status checks observed for an older revision.
