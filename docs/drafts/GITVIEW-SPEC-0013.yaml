@@ -32,12 +32,12 @@ specification:
   - Define each metric by subject, unit, scope, period and available coverage; distinguish snapshots from
     events.
   - Display merged PRs and closed Issues as distinct series and preserve closure reasons.
-  - Missing observations and unavailable history are gaps, not zeroes; do not claim a historical trend
-    from one current snapshot.
+  - A historical value without sufficient applicable evidence is a gap or explicitly incomplete, not zero; do not claim a historical trend
+    from one current snapshot. Separately supported source history can establish a past event even when it was observed later.
   - A burndown-style understanding of unfinished work and completion is desired; exact calculation and
     graph form remain open.
   review_scenarios:
-  - Given missing observations for a day, a chart shows a gap rather than a zero.
+  - Given neither an eligible state sample nor sufficient other evidence for a particular day and metric, its chart shows a gap rather than a zero.
   - Given a PR and an Issue describing the same work, series remain separate and are not called two completed
     tasks.
   unresolved:
@@ -49,14 +49,18 @@ specification:
     are distinct from historical events.
   - Show current open PR and Issue counts separately; when adequate history exists show merged PR and
     closed Issue outcomes separately with source closure reasons.
-  - Missing historical observations remain gaps; a single current snapshot is not backfilled as past history.
+  - A historical metric without sufficient applicable evidence remains a gap or is explicitly incomplete; a single current snapshot is not backfilled as past history. A later source observation may independently support an earlier event within its actual coverage.
   - The desired burn-down view is completion and unfinished-work visibility; its formal formula and cohort
     are not assumed.
   pilot_scenarios:
     history_gap:
-      given: There is no reliable observation for Tuesday.
+      given: An open-work state series has no eligible Tuesday sample or other sufficient evidence for the stated metric.
       when: A trend spanning Monday through Wednesday is drawn.
       then: Tuesday is a gap, not a zero or interpolation presented as observed.
+    later_observed_event:
+      given: No observation was taken on Tuesday, but a later permitted source observation sufficiently establishes a specific Issue closure event that occurred during Tuesday.
+      when: A Tuesday closure outcome is evaluated.
+      then: The event can support that Issue's contribution with its actual event and observation times. The single event does not establish complete bucket coverage, a zero for other Issues or Tuesday's open-work state.
     reopen:
       given: An Issue closes, reopens and later closes again.
       when: Historical metrics are requested.
@@ -69,7 +73,7 @@ acceptance:
   are distinct from historical events.
 - Show current open PR and Issue counts separately; when adequate history exists show merged PR and closed
   Issue outcomes separately with source closure reasons.
-- Missing historical observations remain gaps; a single current snapshot is not backfilled as past history.
+- A historical metric without sufficient applicable evidence remains a gap or is explicitly incomplete; a single current snapshot is not backfilled as past history. A later source observation may independently support an earlier event within its actual coverage.
 - The desired burn-down view is completion and unfinished-work visibility; its formal formula and cohort
   are not assumed.
 acceptance_evidence:

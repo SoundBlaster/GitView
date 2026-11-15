@@ -36,8 +36,8 @@ specification:
     attention categories as if disjoint.
   - Show merged PRs and closed Issues by reason for a selected period; do not conflate PR and Issue totals
     with independent tasks.
-  - A project summary includes all member repositories, including those shared with other projects; portfolio
-    totals deduplicate repository and object identities.
+  - A Project summary uses its applicable member scope, including a Repository shared with another Project; portfolio
+    totals deduplicate confirmed Repository and object identities. Restricted membership and revealing counts remain subject to access policy.
   - Expose partial coverage and freshness rather than treating an unavailable repository as zero.
   - A preliminary passed-checks-and-review selection remains conditional until its predicate is defined;
     do not label it merge-ready.
@@ -51,14 +51,14 @@ specification:
   evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
     selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
-  - Compute a Repository summary over its distinct observed objects; count open PRs, draft subset and
-    open Issues separately.
+  - Compute each Repository summary from applicable supported observations and distinct confirmed identities; count open PRs, draft subset and
+    open Issues separately. An observed subset is not automatically a complete or current total.
   - Project summaries aggregate their member repositories without dropping a repository that belongs to
     another Project; portfolio totals use unique repository and object identities.
   - A failed-check indicator can count affected PRs and affected repositories, separate from the number
     of failed checks; overlapping signals are not added as independent problems.
   - Outcomes are scoped to an explicitly selected period and are distinct from current-state counts. Partial
-    or stale coverage is visible.
+    or stale coverage is visible. An actionable signal preserves its unit and condition when opening an object selection; checks, threads or events need not equal the number of cards.
   pilot_scenarios:
     overlap:
       given: One PR has failed CI, a change request and an unresolved thread.
@@ -72,14 +72,14 @@ specification:
   pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
     are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
-- Compute a Repository summary over its distinct observed objects; count open PRs, draft subset and open
-  Issues separately.
+- Compute each Repository summary from applicable supported observations and distinct confirmed identities; count open PRs, draft subset and open
+  Issues separately. An observed subset is not automatically a complete or current total.
 - Project summaries aggregate their member repositories without dropping a repository that belongs to
   another Project; portfolio totals use unique repository and object identities.
 - A failed-check indicator can count affected PRs and affected repositories, separate from the number
   of failed checks; overlapping signals are not added as independent problems.
 - Outcomes are scoped to an explicitly selected period and are distinct from current-state counts. Partial
-  or stale coverage is visible.
+  or stale coverage is visible. An actionable signal preserves its unit and condition when opening an object selection; checks, threads or events need not equal the number of cards.
 acceptance_evidence:
 - criterion: The pilot contract and its boundary scenarios are independently checkable.
   evidence: The pilot_scenarios describe expected results for future verification; no app test has run.
