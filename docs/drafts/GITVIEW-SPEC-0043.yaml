@@ -102,6 +102,10 @@ specification:
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
     optional_cohort_boundary: The dynamic Today journey and its acceptance do not require capturing a fixed PR cohort. Candidate 0055 describes a separate proposed view whose first-release scope is unresolved; its conditional scenarios apply if that capability is included, without making it a prerequisite for the core journey.
   scenarios:
+    sole_member_replacement_preserves_route_and_scope:
+      given: Project P has sole member A, is A's default and is open on its Project-wide Today grid with an explicit filter and density. Another Project Q also contains A; an A PR preview is open and permitted, while B is an eligible Repository whose work is unobserved.
+      when: One reviewed local edit replaces A with B in P, its complete effect is durably confirmed, and the operator dismisses the preview and returns to the work collection.
+      then: The preview remains bound to the A PR until dismissal; P retains its identity, its current Project-wide scope becomes B with the same period, filter and density, and incomplete B coverage is discoverable. The old A observation is not relabeled as B or proof of B's empty work, and the former A default association is removed without assigning B as default. Q and both source Repositories remain unchanged; the route does not silently switch to Q, invent a replacement anchor or infer an individual ontology-action sequence.
     discovery_gap_after_scope_and_access_change:
       given: Project P formerly contained A and B and has a retained recent-work gap for B under account X and an earlier local day. A repair for B began, then P changes to A and C and B becomes restricted before that repair returns; C has not yet been observed.
       when: The operator opens P's current Today collection and the old repair response arrives.
