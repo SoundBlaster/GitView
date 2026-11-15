@@ -47,7 +47,7 @@ acceptance_evidence:
 - criterion: Acceptance scenarios and their verification obligations are reviewable.
   evidence: The scenarios below and linked nodes describe expected outcomes. Executable procedures, fixtures and applicable integration or device evidence remain to be specified; no app build, UI run or source integration has been observed.
 specification:
-  current_intent_boundary: The owner clarified Today means current work, with history in aggregate metrics and charts. Prior same-day-retention and historical-view scenarios below are superseded candidates; the owner selected the merged-PR metric outcome; the later owner clarification selects an all-states unfiltered Today grid and persistent filters. Source range and persistence scope remain open. Other pilot outcomes remain applicable.
+  current_intent_boundary: The owner selected Today with older unfinished work and work completed in the current calendar day in the user's local time zone; a previous day's completion alone does not qualify an object for the new Today. Unfiltered Today includes applicable lifecycle states and selected filters persist. A historical work viewer, additional inclusion conditions, account count and detailed pilot design remain candidates; source coverage and filter persistence scope remain open. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c. This draft remains pre-canonical and does not establish implementation readiness.
   objective: Define the coherent first useful GitView pilot and its observable end-to-end outcomes.
   ontology_refs:
   - gitview:User
@@ -58,7 +58,7 @@ specification:
   - gitview:Issue
   - gitview:Metric
   first_slice:
-  - One authorized GitHub identity; selected repositories and local Projects, including overlap.
+  - Selected repositories and local Projects, including overlap; one authorized GitHub identity as an agent-authored pilot candidate, not an owner-selected account limit.
   - Project overview, member or signal navigation, Today selection and explicit lifecycle filters.
   - Multi-density native grid, first-version Peek and Pop, PR/Issue overview, original source and link
     sharing.
@@ -67,7 +67,7 @@ specification:
   - Accessibility alternatives and native iOS visual conventions.
   later:
   - Sliding rich preview; gesture hypothesis needs native prototyping.
-  - Calendar overview, deeper PR internals, additional Git hosting providers and multiple accounts.
+  - Calendar overview, deeper PR internals and additional Git hosting providers; postponing multiple accounts is an agent-authored candidate, not a selected limitation.
   - GitHub write operations such as merge, approve and editing Issues.
   scenarios:
     happy_path:

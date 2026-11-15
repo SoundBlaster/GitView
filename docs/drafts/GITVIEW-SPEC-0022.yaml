@@ -4,6 +4,8 @@ kind: spec
 created_at: '2026-11-14T12:46:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0022.yaml
+successor_scope: The successor records bounded first-setup outcomes; association, authorization, recovery and detailed UI contracts remain candidates.
 refines:
 - GITVIEW-SPEC-0004
 depends_on:

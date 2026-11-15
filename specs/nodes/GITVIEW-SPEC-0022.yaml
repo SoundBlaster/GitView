@@ -1,0 +1,84 @@
+id: GITVIEW-SPEC-0022
+title: GitView - First launch and Project setup
+kind: spec
+created_at: '2026-11-15T21:35:00Z'
+updated_at: '2026-11-15T21:35:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0004
+depends_on:
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0019
+relates_to:
+- GITVIEW-SPEC-0003
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0022.yaml
+  predecessor_revision: 33887d5
+  root_intent: .specgraph/root_intent.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Let the operator progress from an empty Project collection to a GitHub-backed Project without
+    confusing missing data and failures.
+  authority_boundary: One Project per Repository is the selected default. The detailed onboarding flow,
+    default association and recovery mechanism are agent-authored candidates, not independently selected
+    owner decisions; no actual account or Project is created by this node.
+  requirements:
+    empty: When a supported current local read establishes an empty Project collection, offer a discoverable
+      path toward GitHub connection and repository selection. An unreadable or incomplete local collection
+      is not a confirmed empty collection or evidence that the app has never been used. Preserve existing
+      saved Projects and membership; make the local limitation and a supported retry discoverable without
+      promising recovery.
+    connection: The operator can initiate authorization and discover eligible repositories under 0019.
+      Cancellation or failure leaves an understandable path to continue and does not establish a connected
+      account or successful empty source. Cancellation or failure alone does not delete saved Projects
+      or accepted observations; display remains subject to the applicable access policy.
+    discovery: A partially observed repository collection remains incomplete, not an exhaustive list.
+      Make the limitation visible, offer supported permitted results for selection and a supported retry
+      where available. A confirmed zero matches only its actual search and access scope; no search match
+      does not prove an empty account. Choosing a Repository does not by itself prove that a Project was
+      saved or that all work was observed.
+    setup: Support a default Project corresponding to one eligible Repository while keeping Project and
+      Repository distinct. A Project may contain more Repositories or share one with another Project under
+      0005; the exact setup mechanism is open. If a multi-Repository default selection is supported, its
+      default corresponds to one Project per Repository, not an implicitly combined Project; this does
+      not mandate multi-selection or a specific association.
+    outcomes: Distinguish a supported successful Project save from failure or indeterminate result. Do
+      not silently create a duplicate while an earlier possible creation effect remains unresolved; recovery
+      depends on available evidence and is not guaranteed.
+    initial_work: Once a valid Project is established, distinguish work still unobserved or loading from
+      a confirmed empty list. A successfully saved, identifiable and permitted Project can be reached
+      and opened into its work. An authorized account or selected Repository is not itself evidence that
+      PR and Issue data has been obtained.
+  scenarios:
+    successful_setup: Given an eligible Repository, supported authorization and successful required operations,
+      the operator can complete default setup, obtain a saved identifiable Project for that Repository
+      and open its permitted work; work may still be unobserved.
+    cancelled: The operator cancels authorization from the setup path. No account success or empty GitHub
+      source is inferred; an available route to continue remains.
+    partial: Discovery has returned some Repositories but is incomplete. Supported choices remain distinguishable
+      from a complete inventory; no unobserved Repository is declared absent.
+    uncertain_save: A Project creation outcome is indeterminate. Do not announce success or issue a potentially
+      duplicating retry without reconciling evidence; preserve uncertainty when reconciliation is unavailable.
+    partial_save: A supported first Project save succeeds but another outcome is unresolved. Retain the
+      confirmed configuration, make it available when permitted and distinguish the other unresolved outcome
+      without claiming recovery is guaranteed.
+  open_questions:
+  - Exact cold-launch, authorization and repository-selection controls, and default-association or alternative
+    setup design.
+  - Recovery after interrupted setup and save outcomes, accessible feedback and disclosure for restricted
+    source data.
+  - Loading order and the threshold for a complete current local collection.
+  ontology_status: User, GitHub, Project and Repository use the working draft vocabulary; setup does not
+    establish ontology approval.
+acceptance:
+- With an eligible selected Repository and successful required operations, the operator can complete default
+  setup and open the saved identifiable Project's permitted work.
+- A supported empty collection offers a path to connect and select Repositories without equating incomplete
+  data with emptiness.
+- Cancellation, failure and indeterminate save do not fabricate successful authorization or a saved Project.
+- The selected default retains Project and Repository as distinct and does not imply work data is already
+  loaded.
+- A successfully saved, identifiable and permitted Project can be opened into its work; unobserved work
+  remains distinct from empty.
+- Existing accepted configuration is not erased by cancellation or failure; partial and uncertain outcomes
+  remain distinguishable.
