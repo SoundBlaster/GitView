@@ -18,6 +18,8 @@ sources:
   github_graphql_issues: https://docs.github.com/en/graphql/reference/issues
   github_graphql_users: https://docs.github.com/en/graphql/reference/users#userconnection
   github_rest_comments: https://docs.github.com/en/rest/issues/comments
+  participant_query_candidates: docs/drafts/participants-discussion-graphql-candidates-20261115.md
+  participant_schema_validation: docs/drafts/evidence/github-public-schema-participants-validation-20261115.json
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Issue comment count, distinct discussion-participant count and latest comment time retain their own units, scope and observation context.
@@ -47,6 +49,7 @@ specification:
     removal_and_access: A deleted, inaccessible or newly restricted comment is not automatically evidence of a source-empty discussion or historical absence. Re-evaluate the stated current population and any retained observations under their coverage and source semantics. Restrict private source content and revealing derived counts under 0036; a public Issue alone does not prove every linked or historical detail is eligible to disclose.
     partial: A successfully observed subset can contribute permitted known comment identities and authors with their observation times. It cannot establish the complete current comment count, participants or latest time unless separate source evidence suffices. A new Issue title or lifecycle observation does not refresh an omitted discussion field; an earlier result retains its own context under 0044 and conflicts follow 0053.
     presentation: Show the selected aggregate units and available time without requiring a comment browser, participant list or review-thread viewer. The GitHub participating-Users value is identified as such; unknown broader participant coverage is not represented as complete. If the selected source cannot provide a supported metric, preserve an unknown or partial result rather than replacing it with a semantically different source count. Access to the original Issue remains available under the source-navigation contract.
+    graphql_discussion_query_candidates: The accompanying schema-checked examples request a source participating-Users aggregate, a separately paged assignee collection and independently paged comment IDs with creation and update times. Bind each usable field to the identified Issue and Repository with its actual response, time and access context; do not treat one field as proof of another or turn a terminal cursor into a simultaneous complete population. An observed latest creation time remains subset-scoped until the exact maximum is independently justified. The examples do not select production operations or establish permissions, deleted-comment history or equivalence between the source participant population and all actors.
     provenance: The owner selected comment and participant counts plus last-comment time. The source-aligned participating-Users mapping, separate comment-author population, inclusion of eligible actor types and completeness rules are agent-authored candidates. GitHub documents the field types and count, but no particular operation, permissions or product integration has been verified.
   scenarios:
     repeated_author:
