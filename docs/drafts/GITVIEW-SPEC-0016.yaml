@@ -40,7 +40,7 @@ specification:
   - Evaluate the proposed link-only default, optional additional payload and exact UI affordance against product usefulness and privacy; no recipient access is guaranteed by sharing.
   pilot_scenarios:
     private_link:
-      given: A PR belongs to a private Repository and has an eligible source-associated URL, with access permitted through the applicable handoff boundary.
+      given: The proposed link-only default is selected, and a PR belongs to a private Repository and has an eligible source-associated URL, with access permitted through the applicable handoff boundary.
       when: The operator explicitly shares it and the platform receives the link.
       then: The app-controlled default payload is the selected PR link without private body text or credentials. Recipient delivery and access remain separate and are not inferred from presenting the share flow.
     missing_url:
