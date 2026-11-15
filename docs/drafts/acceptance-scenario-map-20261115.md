@@ -1,6 +1,6 @@
 # 0043: карта сценариев приёмки
 
-Авторская навигационная классификация 97 сценариев [0043](GITVIEW-SPEC-0043.yaml) на SHA-256 `4c83f509cb69a8ebce23d6675315b1da4f2faadb9c6200ebcbe4a7b0619c88c8`.
+Авторская навигационная классификация 96 сценариев [0043](GITVIEW-SPEC-0043.yaml) на SHA-256 `6f3f9922ff14faa2784f1c01b3c30d64db0a8b20a850ebf11a1cf3ebec6ae8d2`.
 Каждый сценарий указан один раз по основной теме; он может проверять и другие ветви.
 Это не semantic approval, не доказательство полноты и не выполненные тесты.
 
@@ -84,6 +84,26 @@ merged, а `complete_multi_repository_today_journey` — переход и во�
 
 ## Source, cache и восстановление
 
+Сверка с [0003](GITVIEW-SPEC-0003.yaml), [0036](GITVIEW-SPEC-0036.yaml),
+[0105](GITVIEW-SPEC-0105.yaml), [0112](GITVIEW-SPEC-0112.yaml) и
+[0122](GITVIEW-SPEC-0122.yaml) обнаружила одно пересечение:
+`partial_check_capability` проверял те же доступные PR/Issue и недоступный CI,
+что `partially_approved_github_data_categories`. Условие об отдельно доступном
+Issue и обнаруживаемость ограничения сохранены во втором сценарии; прежняя
+формулировка сохранена в Git-истории. В текущем дереве иных ссылок на удалённый
+ID до изменения не найдено.
+
+Остальные похожие сценарии проверяют разные результаты. В частности,
+`retention_recovery_after_restart` допускает последующее подтверждение одного
+history sample, `retention_recovery_still_unreadable` запрещает выдумывать
+baseline или rollback, а `local_recovery_without_assumed_baseline` проверяет
+состояние самого обзора. `address_conflict_recheck` дополнительно проверяет,
+что успешный recheck не разрешает конфликт без порядка; `same_id_address_uncertain`
+проверяет представление существующего конфликта до такого результата.
+`upgrade_and_recover_portfolio` и `unsupported_schema_at_startup` относятся к
+поддержанной миграции и неподдерживаемой более новой схеме соответственно.
+Это авторская выборочная оценка, не доказательство минимальности всех случаев.
+
 - `discovery_gap_after_scope_and_access_change`
 - `portfolio_configuration_recovers_during_refresh`
 - `upgrade_and_recover_portfolio`
@@ -99,7 +119,6 @@ merged, а `complete_multi_repository_today_journey` — переход и во�
 - `github_issue_representation_of_pr`
 - `partially_approved_github_data_categories`
 - `identity_changes_during_inspection_and_refresh`
-- `partial_check_capability`
 - `address_conflict_recheck`
 - `same_id_address_uncertain`
 - `local_retention_failure_restart`

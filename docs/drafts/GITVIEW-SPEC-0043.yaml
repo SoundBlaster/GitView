@@ -183,9 +183,9 @@ specification:
       when: The Project Today grid and its counts are built from those observations.
       then: The PR contributes once and the independent Issue contributes separately when each matches the selection; unsupported association or incomplete coverage cannot establish an exact total.
     partially_approved_github_data_categories:
-      given: A Project's permitted Issue and PR information is observed, but an additional source category for checks is unavailable or its permission update has not been approved.
+      given: A Project has a source-confirmed permitted PR and an independently accessible Issue, but the check collection is unavailable or its permission update has not been approved.
       when: The operator opens the Project and a PR overview.
-      then: Available facts retain their own source times, the missing check information is not shown as green or zero, and a specific permission cause is asserted only if source evidence supports it.
+      then: Available facts retain their own source times, the missing check category is discoverable and is not shown as healthy, green or zero, and a specific permission cause is asserted only if source evidence supports it.
     first_setup_partial_github_installation:
       given: A GitHub identity is confirmed, Repository A is accessible through one app installation, and a separate organization-scope approval remains pending with source-supported evidence.
       when: The operator explicitly selects A for default setup while the other scope remains unresolved.
@@ -314,10 +314,6 @@ specification:
       given: A filtered Today grid contains a previously visible private PR whose CI match becomes uncertain while a pinch and local-day transition are in progress.
       when: Explicit denial restricts that PR's existence, identity and CI before the gesture ends.
       then: Restricted visual and app-controlled accessible facts and revealing counts are removed immediately; the app does not label the PR a confirmed non-match or expose it as an uncertain candidate, while permitted scope and recovery remain available.
-    partial_check_capability:
-      given: A Project has a source-confirmed PR while its check collection is unavailable and an Issue remains independently accessible.
-      when: The operator opens the Project overview.
-      then: The permitted PR and Issue retain their observation context, CI is not labeled healthy or known zero and the missing category is discoverable without inventing a permission diagnosis.
     authorization_and_missing_installation:
       given: The operator connects one source identity and a GitHub App-based proposal has access to one organization but lacks an installation or grant for another.
       when: Repository discovery and Project setup are opened.
