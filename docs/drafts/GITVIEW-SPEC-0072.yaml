@@ -12,6 +12,7 @@ depends_on:
 - GITVIEW-SPEC-0025
 - GITVIEW-SPEC-0032
 - GITVIEW-SPEC-0036
+relates_to:
 - GITVIEW-SPEC-0045
 - GITVIEW-SPEC-0052
 sources:
@@ -32,6 +33,7 @@ specification:
   - gitview:Project
   - gitview:Repository
   contract:
+    setup_boundary: Ordering consumes confirmed saved Project identities and supported local ordering evidence regardless of the selected setup design. Candidates 0045 and 0052 describe one way a setup or recovery can establish a saved identity; when that design is selected, assess their applicable obligations separately. An unknown setup outcome is not itself a saved Project.
     initial_order: As an agent-authored first-version default, keep saved Projects in a stable local order independent of GitHub names, organization, status, counts or refresh completion. Prefer the retained insertion order when supported; the order conveys no priority. Manual ordering, alternative sorts and synchronization between devices are not selected.
     durable_order: Preserve the supported local order across restarts when ordering data remains readable. When it is unavailable or inconsistent, keep independently readable Projects accessible in a deterministic local identity-based fallback and do not claim the previous order was restored. A retry, rename, membership edit or source refresh must not itself reidentify a Project.
     creation_sequence_candidate: An insertion-order key or another local ordering representation may be used, but a particular counter, transaction, allocation protocol or globally increasing sequence is not a product requirement. New Projects are appended when the retained order supports it; if ordering metadata is unavailable, a valid Project can still be created and included in the deterministic fallback. Do not duplicate an identity or derive chronology from callback arrival.

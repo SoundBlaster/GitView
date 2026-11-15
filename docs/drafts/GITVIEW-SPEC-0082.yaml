@@ -10,6 +10,7 @@ depends_on:
 - GITVIEW-SPEC-0024
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0038
+relates_to:
 - GITVIEW-SPEC-0045
 - GITVIEW-SPEC-0052
 sources:
@@ -41,6 +42,7 @@ specification:
     input_and_invariants: A saved Project cannot have zero members. Under the proposed name policy, a save also cannot persist an empty Project name; that policy remains unselected under 0111. Source Repository identity must be sufficiently established for any newly added member; a same-named discovery result, a late response from another account or lack of access does not authorize a substitution. Removing a member affects only the selected Project and associated local default configuration when applicable; it never deletes a GitHub Repository or another Project's membership.
     recoverable_interaction: The operator can distinguish a stale-base conflict, an unknown save outcome, an invalid proposed membership and a confirmed deletion, and can reach an appropriate review, retry or exit route without relying only on color or a timed gesture. Show only permitted names, membership details and source context; unreadable or restricted information is not a confirmed empty Project.
     provenance: Project composition and shared membership follow the owner's choices. Stale-edit rejection, durable ordering and interaction boundaries are agent-authored refinements rather than claims of a selected database, multi-scene feature or implemented behavior.
+  scenario_scope: Assertions about a persistent default association, including setup races and association removal, apply when the 0045 and 0052 candidate is selected. General protection against stale edits, unintended deletion and changes to unrelated Projects remains applicable for any setup design; an alternative requires its own applicable recovery contract.
   scenarios:
     concurrent_membership_edits:
       given: Project P is saved with members A and B; two pending edits start from that same configuration, one adding C and one removing B.
