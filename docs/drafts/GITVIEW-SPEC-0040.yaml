@@ -34,7 +34,7 @@ specification:
     workflow: For a product behavior change, express the intended externally observable behavior in a failing automated test, implement the minimum behavior to pass, then refactor while retaining passing tests. The initial failure must demonstrate the missing or incorrect behavior, not merely a compiler error, unavailable service or unrelated environment failure. Tests check meaningful contract outcomes and failure modes rather than requiring a duplicate test for every trivial branch or private helper.
     real_boundaries: Passing isolated tests using doubles establishes behavior only under the supplied test conditions. Verify real adapter serialization and response handling, source integration with authorized access, platform behavior and native interaction separately where their contracts require evidence. A missing live or device check remains an explicit gap.
     privacy: Fixtures and logs used in tests must not include credentials or unapproved private source content. Test failures do not change a user's actual GitHub state.
-    evidence: A verification report identifies the tested specification, scenario, test level, input conditions and observed outcome. Proposed scenarios and unexecuted tests are not reported as passes.
+    evidence: A verification report identifies the tested specification, scenario, test level, input conditions and observed outcome. Candidate 0079 refines the logical review record and TDD trace, including the distinction between a behavioral failing run and an environment failure. Proposed scenarios and unexecuted tests are not reported as passes.
     provenance: The owner requested testability, DI, TDD and network/data mocks; boundary placement and test-level distinctions are agent-authored refinements.
   scenarios:
     offline_refresh:
@@ -59,4 +59,4 @@ specification:
       then: The review can trace the rule to a test that first exposed the missing behavior and to the passing result after implementation.
   unresolved:
   - Concrete Swift test tools, dependency wiring and continuous-integration topology are implementation decisions.
-  - Precise retention and reproducibility format for red-green-refactor evidence requires development workflow design.
+  - Candidate 0079 proposes the minimum red-green review record; its serialized format and retention require development workflow design.
