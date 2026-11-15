@@ -1,5 +1,11 @@
 # Issue и PR: сверка спецификаций с ontology draft.12
 
+Это историческая сверка draft.12. Текущий выбранный контекст —
+[draft.13](../candidates/domain-v0.2.0-draft.13/README.md); сравнение
+исходных YAML зафиксировано в [продуктовой сверке](product-projection-alignment-20261115.md).
+Указанные ниже результаты инструментов относятся к draft.12 и не переносятся
+на новую версию автоматически.
+
 Авторская выборочная сверка `local.gitview.domain@0.2.0-draft-composition.12`
 со спецификациями 0034, 0039, 0041, 0057, 0062–0063 и 0077–0078. Источник
 пакета: `composition/domain-ontology-package.yaml`, SHA-256

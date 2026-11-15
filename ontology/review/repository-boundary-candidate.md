@@ -1,9 +1,10 @@
 # Repository, Code и управление: смысловые границы
 
-Статус: **кандидат для review**, не изменённый ontology package. Выбранный
-`local.gitview.domain@0.2.0-draft-composition.5` остаётся `draft`.
-Это исторический разбор draft.5; рабочий context обновлён до draft.11. Уточнение
-VCS-действия для него находится в [отдельном разборе](version-control-action-boundary-20261114.md).
+Статус: **кандидат для review**, не изменённый ontology package. Это
+исторический разбор draft.5; текущий рабочий контекст —
+[draft.13](../candidates/domain-v0.2.0-draft.13/README.md), он остаётся
+`draft`. Уточнение VCS-действия находится в
+[отдельном разборе](version-control-action-boundary-20261114.md).
 
 ## Исходное различение
 

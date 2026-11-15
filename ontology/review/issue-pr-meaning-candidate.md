@@ -5,7 +5,7 @@
 [дополнительной сверки](issue-pr-motive-attribution-audit.md) выбран рабочий
 draft.9 с уточнёнными описаниями. Оба понятия остаются `ont:DomainEntity`,
 package остаётся `draft`, а импорт `motivcore:Motive` не изменён.
-Текущая рабочая композиция — [draft.12](../candidates/domain-v0.2.0-draft.12/README.md);
+Текущая рабочая композиция — [draft.13](../candidates/domain-v0.2.0-draft.13/README.md);
 этот текст сохраняет историю первоначального рассмотрения, а не объявляет
 draft.9 выбранной версией. Сверка текущих деклараций и границ находится в
 [issue-pr-spec-alignment-20261115.md](issue-pr-spec-alignment-20261115.md).
@@ -58,4 +58,4 @@ source facts; причина закрытия и доказательство д
 [выбор PR](../../docs/drafts/pull-request-ontology-options.md),
 [domain model](../domain-model.md) и
 [исторический package draft.5](../candidates/domain-v0.2.0-draft.5/composition/domain-ontology-package.yaml),
-[текущий source package draft.12](../candidates/domain-v0.2.0-draft.12/composition/domain-ontology-package.yaml).
+[текущий source package draft.13](../candidates/domain-v0.2.0-draft.13/composition/domain-ontology-package.yaml).
