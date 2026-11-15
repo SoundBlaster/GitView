@@ -26,6 +26,9 @@ sources:
   today_timezone:
     path: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc
     node: today-timezone-decision
+  historical_signal_filter_override:
+    path: conversation_memory/sketches/gitview/revisions/32213bd5294945d0ba9f0a63c37298de/notes.hc
+    node: historical-signal-filter-decision
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Give a person managing many GitHub repositories a compact native iOS overview of current
@@ -75,7 +78,10 @@ specification:
       includes all applicable states; explicitly selected filters persist between app launches and are
       restored when applicable, so a saved exclusion may narrow the opening view. Failed or unavailable
       persistence must not be presented as a confirmed save. The exact scope of saved filters, reset interaction
-      and synchronization across devices require refinement.
+      and synchronization across devices require refinement. Opening a historical merged-PR counter temporarily
+      overrides a saved exclusion of merged PRs for that transition so its supported result can be shown;
+      this temporary override does not itself rewrite the saved preference. Other filter interactions
+      and return behavior require refinement.
     data: Previously received data may be stored locally. A failed GitHub refresh must be clearly indicated,
       with the last successful update time for its supported scope when known; incomplete or failed refresh
       is not a confirmed empty result. Observation times and limitations retain their actual scopes. Private

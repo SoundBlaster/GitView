@@ -65,5 +65,6 @@ acceptance:
   fields.
 - Lifecycle, draft, review assessment, thread counts, check counts and change counts remain distinct and
   unknown values are not zero.
-- The overview offers the source route and preserves authored description separately from observed CI.
+- The overview offers the source route when an eligible link is available and indicates unavailability
+  otherwise; authored description remains separate from observed CI.
 - The selected scope does not require in-app diff, individual thread, file, commit or run details.

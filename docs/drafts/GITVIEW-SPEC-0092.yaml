@@ -38,6 +38,7 @@ acceptance:
 - Refresh, membership changes, incomplete coverage and access restrictions preserve their own scope and do not silently substitute another Project or period.
 - Return uses the actual originating surface, preserving valid context without exposing restricted source details.
 specification:
+  owner_historical_signal_filter_decision: When an explicit historical merged-PR counter transition conflicts with a saved merged exclusion, temporarily override that exclusion for the transition so the counter's supported permitted result can be shown. The transition does not itself rewrite the saved preference. The counter's actual historical period, scope and coverage remain distinct; other counters, other filters and return behavior require refinement. Owner response is captured in conversation_memory/sketches/gitview/revisions/32213bd5294945d0ba9f0a63c37298de/notes.hc. Other candidate contracts below are not automatically accepted.
   current_intent_boundary: The owner selected Today to include older unfinished work and work completed during the current calendar day in the user local time zone; a previous day completion alone does not qualify an object for the new Today. Applicable states remain visible without saved exclusions and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical object viewing and the technical contracts below remain candidates. The following historical boundary predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
   historical_intent_boundary_before_local_day_approval: Earlier examples that depend on a calendar Today or historical object-list viewer are conditional historical candidates. Signal identity, scope, units, filters, partial coverage and access remain applicable when the corresponding feature is selected.
   objective: Make signal-origin navigation and subsequent explicit filter changes understandable across updates without prescribing UI controls.
@@ -79,6 +80,10 @@ specification:
     provenance: Signal-based navigation and explicit filtering derive from the owner's overview direction. Editable signal selection, context retention and update handling are agent-authored proposals requiring UX review.
   scenario_scope: Scenarios for the 0094 comment-age proxy apply only if that optional interpretation is selected; the owner-requested long-thread attention need remains independently open.
   scenarios:
+    saved_merged_exclusion_historical_counter:
+      given: A saved filter hides merged PRs; a historical merged-PR counter for last week has permitted but partially covered results.
+      when: The operator opens that counter.
+      then: The destination temporarily overrides the conflicting merged exclusion and shows supported permitted results in the counter's historical period and scope with partial coverage visible. The transition does not rewrite the saved preference; handling of other filters and return remains open.
     inactive_review_signal_to_prs:
       given: Project P has open PR A with a confirmed unresolved thread whose latest submitted comment was published exactly 24 hours before the reference, open PR B with a sufficiently established sole unresolved thread containing a confirmed newer submitted comment, and open PR C with incomplete comment traversal and only an older observed comment.
       when: The operator opens the inactive-review signal into its PR selection at the same supported reference.

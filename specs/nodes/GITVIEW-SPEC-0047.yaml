@@ -15,6 +15,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0047.yaml
   predecessor_revision: 05c27259cd47f1967ec871802579414dac47301e
   owner_selection: docs/drafts/project-summary-proposal.md
+  historical_signal_filter_override: conversation_memory/sketches/gitview/revisions/32213bd5294945d0ba9f0a63c37298de/notes.hc
   metric_candidate: docs/drafts/GITVIEW-SPEC-0057.yaml
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
@@ -54,7 +55,10 @@ specification:
     navigation: An actionable Project signal opens its corresponding selection across the applicable Project
       member scope as described by 0006, retaining the condition and permitted source context. A selection
       and its earlier summary need not have equal counts after facts change; preserve their respective
-      observation context and coverage.
+      observation context and coverage. On an explicit historical merged-PR counter transition, temporarily
+      override a saved exclusion of merged PRs, so the supported result can be shown. This transition
+      does not itself rewrite the saved filter; source coverage, access and the counter's historical period
+      remain applicable. Interactions with other filters and exact return behavior require refinement.
     portfolio: A Repository shared by two Projects contributes to each applicable Project summary. Any
       combined portfolio total of unique Repositories or source objects counts each supported identity
       once rather than simply summing Project totals.
@@ -62,6 +66,10 @@ specification:
       without requiring all details to fit a compact cell. Exact density, accessible controls and arrangement
       remain open.
   scenarios:
+    historical_filter_override: A saved filter hides merged PRs; the operator opens a supported historical
+      merged-PR counter for last week. Temporarily override that conflicting exclusion for the destination,
+      retain the counter's historical period and scope, and show supported permitted results without rewriting
+      the saved filter or claiming completeness without evidence.
     shared_repository: Projects P and Q share Repository R. R's permitted work contributes to each Project
       summary, while a supported unique portfolio total does not count R or the same source object twice.
     partial_coverage: A Project contains two members; Issue observations are available for one and unavailable
@@ -82,6 +90,8 @@ specification:
   ontology_status: Project, Repository, PullRequest, Issue and Metric use working draft vocabulary. A
     summary is a presentation, not a new domain entity or evidence that an actor performed an action.
 acceptance:
+- A historical merged-PR counter transition temporarily overrides a saved exclusion of merged PRs without
+  itself rewriting the saved preference; supported period, scope and coverage remain distinct.
 - A permitted Project summary distinguishes membership and coverage, current work, attention and period
   outcomes by their meanings.
 - Draft PRs are a subset of open PRs, and unlike units are not presented as the same count or as independent

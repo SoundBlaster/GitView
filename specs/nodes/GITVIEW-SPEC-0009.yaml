@@ -64,4 +64,5 @@ acceptance:
 - A closing reference and mention remain distinct supported meanings; a link does not establish motive.
 - Relationship directions and selected count units remain distinct, and unknowns are not presented as
   zeros or completion.
-- The overview offers the source route and retains the selected description as authored where available.
+- The overview offers the source route when an eligible link is available and indicates unavailability
+  otherwise; the selected description remains as authored where available.

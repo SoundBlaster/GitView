@@ -48,7 +48,9 @@ specification:
       alone no longer qualifies another PR. Neither outcome deletes the object or excludes it for every
       other reason.
     filter_restore: The operator hides merged and closed states, leaves the app and returns. Once the
-      saved selection is restored, matching eligible objects remain hidden until the filter is changed.
+      saved selection is restored in the ordinary Today view, matching eligible objects remain hidden
+      while that filter applies; a separately opened historical merged counter can temporarily override
+      its conflicting merged exclusion under 0047.
     distinct_identity: A linked Issue and PR each have their own cell; two repositories' Issue number
       42 represent separate objects when source identity confirms they are distinct.
     incomplete_refresh: A previously seen PR is absent from an open-only or failed refresh. That omission
