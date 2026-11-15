@@ -18,7 +18,7 @@ motivation-core и events-core imports. Каждый из 10 файлов в out
 
 - GitView composition: `17b530b94f21ee78d6a8ee69a57f4ec1eafe4a02ff5973360cc811075fa22f7d`.
 - motivation-core: `3061eca33ddc2296c2c292695d98daf6697e92fb582da544bc1d5107721ae955`.
-- events-core: `92a3245fc9acd15748fd1fa3cfb8e4fdc8fda429a5fd7a97bc13f2f359e`.
+- events-core: `92a3245fc9acd15748fd1fa3cfb8e4fdc8fda429a5fd6cffd7a97bc13f2f359e`.
 
 Результаты сравнения сохранены на TB5 в каталоге
 `GitView-a40d73ccf162f8d8/gitview-compiler-comparison-nigsebbr/`. Это
@@ -27,3 +27,20 @@ motivation-core и events-core imports. Каждый из 10 файлов в out
 повторялись все SpecGraph bindings и не изменялись выбранные compiler hashes,
 ontology package или статус `draft`. Содержательное принятие онтологии и
 полнота графа этим экспериментом не установлены.
+
+## Проверка выбранного draft.12
+
+Тем же независимо собранным бинарником 15 ноября повторно выполнены `check`
+и `compile --target typescript` выбранной композиции draft.12 с её двумя
+импортами; оба завершились успешно. Из десяти файлов компилятора в GitView
+сохранён один — `ontology.normalized.json`: его SHA-256 совпал с новым выводом
+(`5e37009a03f4354d988ebef78976d8edffe2e9460ecd7f7309ca2ccb05e86055`).
+Остальные девять файлов новой генерации не с чем сравнить в сохранённом
+каталоге. Новый вывод находится на TB5 в
+`GitView-a40d73ccf162f8d8/gitview-draft12-rebuilt-5vhmp8uf/`.
+
+Таким образом, сохранённый IR выбранного пакета воспроизведён с известным
+исходным checkout и закреплёнными imports. Это не устанавливает происхождение
+ранее использованного бинарника, семантическую правильность пакета или
+эквивалентность compiler на других входах; проектная настройка и артефакты
+пакета не менялись.
