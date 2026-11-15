@@ -24,8 +24,8 @@ specification:
   - gitview:ReviewThread
   - gitview:CIStatus
   requirements:
-  - Count current individual checks for the PR, following the GitHub check list, as red, yellow, green
-    and total.
+  - For the applicable source-supported PR check set, show individual-check counts as red, yellow, green
+    and total when evidence suffices. If the current set or revision cannot be established, retain the limitation rather than claim a complete current count.
   - Do not sum workflow runs or historical attempts as independent current checks; retain special or unknown
     cases without pretending all categories sum to total.
   - Show aggregate review assessment and total/unresolved thread counts separately from CI.
@@ -41,8 +41,8 @@ specification:
   evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
     selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
-  - Count current individual PR checks, not workflow runs or every historical attempt; retain total as
-    a separate count from red/yellow/green.
+  - Count current individual PR checks only when the applicable set and revision are supported, not workflow runs or every historical attempt; retain total as
+    a separate count from red/yellow/green and expose incomplete or unknown coverage.
   - Preserve review assessment, review request and unresolved thread count independently; neither status
     implies the other.
   - Pending or unavailable signals do not establish success; special check conclusions are not silently
@@ -51,18 +51,18 @@ specification:
     merge-ready verdict.
   pilot_scenarios:
     retry:
-      given: A check failed and a current later attempt succeeds.
+      given: A check failed and source evidence establishes a later successful attempt as the applicable current check for the same logical check and revision.
       when: Current checks are counted.
-      then: The failed old attempt is not added as another current check.
+      then: The failed old attempt is not added as another current check. If equivalence, revision or coverage is unestablished, do not infer a complete current set under 0060.
     review_without_thread:
-      given: A reviewer requests changes without an unresolved thread.
+      given: A source review assessment reports a change request and sufficiently covered thread evidence independently establishes zero unresolved threads.
       when: The review summary is displayed.
       then: The change request and zero known unresolved threads remain separate.
   pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
     are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
-- Count current individual PR checks, not workflow runs or every historical attempt; retain total as a
-  separate count from red/yellow/green.
+- Count current individual PR checks only when the applicable set and revision are supported, not workflow runs or every historical attempt; retain total as a
+  separate count from red/yellow/green and expose incomplete or unknown coverage.
 - Preserve review assessment, review request and unresolved thread count independently; neither status
   implies the other.
 - Pending or unavailable signals do not establish success; special check conclusions are not silently
