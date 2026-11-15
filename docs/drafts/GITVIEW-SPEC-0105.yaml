@@ -26,7 +26,7 @@ acceptance:
 - Source result, local retention outcome, population coverage and current access remain independently interpretable.
 - Retention retries do not create extra source observations or bypass a confirmed history clear.
 - A read with missing or invalid evidence is not returned as a confirmed empty collection or complete newer snapshot.
-- The boundary can be injected and exercised with deterministic failures independently of GitHub and UI.
+- The observation retention boundary can be injected and exercised with deterministic storage failures independently of GitHub and UI, including its own fact, coverage and recovery outcomes.
 specification:
   objective: Define domain-facing storage behavior for source observations, coverage evidence and separately retained metric history.
   ontology_refs:

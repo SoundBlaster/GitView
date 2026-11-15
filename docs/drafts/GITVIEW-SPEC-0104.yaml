@@ -24,7 +24,7 @@ acceptance:
 - A Project write binds operation identity, target and reviewed intended configuration to the applicable saved-state preconditions.
 - Commit validation and the local effect preserve Project invariants despite concurrent writes or lost acknowledgements.
 - A confirmed operation outcome is distinguishable from the latest readable configuration and cannot resurrect a subsequently deleted Project.
-- The boundary can be injected and exercised with deterministic failures independently of source and UI.
+- The Project configuration boundary can be injected and exercised with deterministic storage failures independently of source and UI, including its own read, edit and recovery outcomes.
 specification:
   objective: Define domain-facing storage behavior for Project configuration and default associations without selecting a database or Swift API.
   ontology_refs:
