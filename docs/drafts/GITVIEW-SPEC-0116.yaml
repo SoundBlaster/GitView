@@ -18,6 +18,7 @@ depends_on:
 - GITVIEW-SPEC-0112
 - GITVIEW-SPEC-0113
 sources:
+  today_exchange_contract: docs/drafts/today-boundary-exchange-contract-20261115.md
   parent: docs/drafts/GITVIEW-SPEC-0105.yaml
   normalization: docs/drafts/GITVIEW-SPEC-0101.yaml
   coverage: docs/drafts/GITVIEW-SPEC-0102.yaml
