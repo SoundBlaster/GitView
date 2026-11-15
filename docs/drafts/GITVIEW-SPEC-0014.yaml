@@ -42,17 +42,6 @@ specification:
   unresolved:
   - Native collection behavior, zoom anchoring, gesture arbitration and measured performance need device
     validation.
-  pilot_contract:
-  - The grid supports several density levels within the same selected scope; an in-scope pinch changes scale and visible
-    detail without itself changing selected objects or filters. Independent observations or membership changes may change the selection under 0035.
-  - A small scale can show approximately eight cells per row and around 100 objects as a design example,
-    not a fixed layout or performance benchmark.
-  - Use distinct type and meaningful state cues; color alone is not required to identify an object. Text
-    can expand as density permits.
-  - Entering an object is distinguishable from changing density; return retains scope, filters and scale,
-    restoring position when possible.
-  - When content or data changes, preserve the focused object's identity where possible; do not claim
-    all items are present when data coverage is incomplete.
   pilot_scenarios:
     same_scope:
       given: A filtered Project grid has 100 known objects at a dense scale and no independent source or membership change occurs during the gesture.
