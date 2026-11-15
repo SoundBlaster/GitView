@@ -1,0 +1,62 @@
+id: GITVIEW-SPEC-0015
+title: GitView - Preview and future sliding inspection
+kind: spec
+created_at: '2026-11-15T21:23:00Z'
+updated_at: '2026-11-15T21:23:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0014
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+relates_to: []
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0015.yaml
+  predecessor_revision: 852649f
+  owner_direction: docs/drafts/ux-preview-interactions.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Let the operator inspect an object without losing the surrounding bird's-eye overview.
+  authority_boundary: The owner requested long-press preview in the first version and described a later
+    sliding rich preview. Exact native components, activation of sliding, arbitration and access policy
+    require refinement; no implementation is established.
+  requirements:
+    first_version: A recognized long press on an eligible Project, Repository, PR or Issue opens a static
+      preview of that same object, exposing additional available permitted details readably without leaving
+      the overview. The operator can explicitly open that object or dismiss the preview without navigating.
+    identity: The preview and any explicit opening retain the selected object's identity and permitted
+      source context; an object with the same visible name or number is not substituted. Apply the current
+      access policy.
+    return: Dismissing the preview or returning from an object preserves valid originating scope, period,
+      filters and density, restoring position when possible. When the origin is no longer valid or cannot
+      be verified, provide an available meaningful fallback without silently claiming the old scope.
+    accessibility: Offer accessible alternatives to long press for preview, dismissal and direct object
+      opening. Direct opening does not replace access to preview.
+    later_sliding: A later rich preview can update a single bubble as the operator moves across cells,
+      inspecting objects without navigating into each and without leaving the dense overview. Its content
+      corresponds to the current object under the finger; a delayed result for a prior object is not presented
+      as the current object's details. This is not a first-version prerequisite. Long press as its activation
+      remains a hypothesis; pointer hover is optional and is not available on every device.
+    observation: Unknown or stale displayed details keep their limitations; a preview must not establish
+      success or identity from missing data or bypass applicable restrictions.
+  scenarios:
+    same_object: Long-pressing PR 42 in Repository R previews that PR; explicit opening reaches the same
+      PR in R when eligible.
+    dismiss: Dismissing a preview from a filtered dense grid retains its valid scope, filter and density
+      without opening the object.
+    later_slide: In the later sliding mode, moving over three cells changes the same preview without opening
+      three screens.
+    later_delayed_result: In the later mode the finger moves from A to B while a result for A is delayed;
+      A's late details are not shown as B's, and the bubble remains associated with the current object.
+  open_questions:
+  - Native preview and context-menu behavior, gesture coordination, cancellation and changed-origin fallback.
+  - Sliding activation, release and edge behavior; applicability of pointer hover.
+  - Display, accessibility, freshness and access details for each object kind.
+  ontology_status: Project, Repository, PullRequest and Issue use draft vocabulary; preview is an interaction,
+    not a new domain entity.
+acceptance:
+- First-version preview presents readable additional available permitted details for the same eligible
+  object on recognized long press without leaving the overview, and offers explicit open and dismissal.
+- Accessible non-long-press paths support preview, dismissal and direct opening.
+- Valid origin context is retained on dismissal or return; an invalid origin is not silently substituted.
+- Sliding rich inspection remains a later direction with activation and gesture details open.

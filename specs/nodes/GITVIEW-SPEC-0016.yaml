@@ -1,0 +1,57 @@
+id: GITVIEW-SPEC-0016
+title: GitView - Original source and sharing
+kind: spec
+created_at: '2026-11-15T21:24:00Z'
+updated_at: '2026-11-15T21:24:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+relates_to: []
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0016.yaml
+  predecessor_revision: 852649f
+  owner_direction: docs/drafts/product-foundation.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Let the operator reach the original GitHub object and share useful context from the overview.
+  authority_boundary: Source navigation and lightweight sharing are selected. The default payload, private-data
+    policy, exact native control and external delivery remain to be specified; this node does not establish
+    implementation readiness.
+  requirements:
+    source: For a Repository, PR or Issue with an eligible source-associated GitHub URL, offer a route
+      to that source object. Associate the URL with the correct object and source context. If no eligible
+      URL is known, indicate unavailability rather than inventing a confirmed URL or substituting another
+      object.
+    share: Offer lightweight sharing using the platform's native sharing experience when applicable, subject
+      to the selected access and handoff policy. The exact content and default payload require separate
+      refinement.
+    external_boundary: Sharing a link does not grant recipient access, establish delivery or prove the
+      external handler loaded the intended object. Do not claim any of these outcomes merely because the
+      share flow or source handoff was initiated.
+    access: Current applicable access and disclosure restrictions govern source handoff and shared material.
+      A previously observed address is not automatically eligible if its identity, direction or current
+      disclosure is uncertain.
+    candidate: Source-link-only sharing without automatic private text, repository contents or screenshots
+      is an agent-authored candidate, not an independently selected owner requirement.
+  scenarios:
+    unavailable: A selected Issue has no eligible known source URL. Offer an understandable unavailable
+      state instead of opening a different object or a fabricated link.
+    available: An eligible permitted PR source URL is known. Offer an action to open that source and lightweight
+      sharing through the native experience when applicable, without claiming delivery.
+    private_link: An eligible source link refers to a private Repository's PR. Presenting sharing does
+      not assert that a recipient can open it or that delivery occurred.
+  open_questions:
+  - Default sharing payload, optional extra context and private-data disclosure.
+  - Native controls, source address evidence, eligibility and external handoff behavior.
+  ontology_status: Repository, PullRequest and Issue use working draft vocabulary; source navigation does
+    not establish actor motives or ontology semantic approval.
+acceptance:
+- An eligible known GitHub source link remains associated with its correct object and Repository context.
+- Offer a source-opening route for an eligible known URL and native lightweight sharing when applicable.
+- If source-link sharing is offered but no eligible link is available, show that link sharing is unavailable;
+  other separately authorized payloads remain open.
+- Lightweight sharing does not itself grant recipient access or establish delivery.
+- Missing or ineligible source evidence is not replaced by a fabricated or misdirected URL.

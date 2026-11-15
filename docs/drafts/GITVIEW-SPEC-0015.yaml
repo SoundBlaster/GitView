@@ -5,6 +5,8 @@ created_at: '2026-11-10T00:00:00Z'
 updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0015.yaml
+successor_scope: The successor records first-version preview and later sliding direction; native gestures, accessibility details and access behavior remain separate candidates.
 refines:
 - GITVIEW-SPEC-0014
 depends_on:

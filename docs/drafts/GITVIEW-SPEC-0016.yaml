@@ -5,6 +5,8 @@ created_at: '2026-11-10T00:00:00Z'
 updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0016.yaml
+successor_scope: The successor records selected source-navigation and sharing outcomes; payload, access and detailed handoff contracts remain separate candidates.
 refines:
 - GITVIEW-SPEC-0001
 depends_on:

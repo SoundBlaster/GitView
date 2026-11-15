@@ -24,9 +24,9 @@ specification:
     metric predicates, visual arrangement, disclosure policy and the full predecessor draft require separate
     refinement. This node does not establish a running app, ontology approval or implementation readiness.
   requirements:
-    projects: The overview represents saved GitView Projects and identifies them where permitted. A GitHub
-      organization is source metadata, not a GitView Project boundary. A Repository may contribute to
-      each Project containing it.
+    projects: The overview represents saved GitView Projects whose representation is permitted and identifies
+      them where permitted. A GitHub organization is source metadata, not a GitView Project boundary.
+      A Repository may contribute to each Project containing it.
     summary: A Project summary makes available its member Repository count and observation coverage, open
       PRs with draft as a subset, open Issues, and attention signals for failed CI, waiting for review,
       changes requested, unresolved thread count and affected PR count, and blocked Issues. It distinguishes
@@ -43,9 +43,11 @@ specification:
       explicitly distinguish their actual observation contexts and avoid suggesting incompatible values
       are directly comparable.
     coverage: A missing or inaccessible observation is not a confirmed zero or healthy result. A Project
-      remains represented when one of its members is unobserved; supported partial information retains
-      its limitations, observation context and applicable access restrictions. Do not infer one category's
-      freshness from another category's refresh.
+      remains represented when one of its members is unobserved if the representation itself is permitted;
+      otherwise convey an access-safe limitation at a permitted scope when one can be disclosed without
+      revealing restricted existence; non-disclosure alone does not establish an empty or complete scope.
+      Supported partial information retains its limitations, observation context and applicable access
+      restrictions. Do not infer one category's freshness from another category's refresh.
     history: Distinguish current observations from outcomes over a selected period. A graph needs sufficient
       evidence for its own metric and time scope; unavailable history is not a fabricated zero or a copy
       of the current value.

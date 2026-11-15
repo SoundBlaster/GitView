@@ -1,0 +1,60 @@
+id: GITVIEW-SPEC-0021
+title: GitView - Testability and architecture direction
+kind: spec
+created_at: '2026-11-15T21:25:00Z'
+updated_at: '2026-11-15T21:25:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on: []
+relates_to:
+- GITVIEW-SPEC-0003
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0021.yaml
+  predecessor_revision: 852649f
+  root_intent: .specgraph/root_intent.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Make product behavior testable and guide implementation without choosing a premature module
+    structure.
+  authority_boundary: The owner requested testability, dependency injection, TDD, network and data mocks,
+    and use of FSD iOS and SpecificationCore. Exact versions, integration, modules and the equivalence
+    of currently available checkouts to originally named paths require separate verification; no code
+    or integration is established by this node.
+  requirements:
+    architecture: Use FSD iOS as the intended direction for organizing app responsibilities. Define actual
+      layers and dependencies when responsibilities are understood; do not require empty modules or assume
+      unverified source versions.
+    decisions: Use SpecificationCore for suitable named domain decisions where it clarifies composition
+      and testability. Preserve meaningful results such as unknown when required; selection of exact policies
+      and integration remains open.
+    dependency_injection: Make network, data persistence and other nondeterministic dependencies replaceable
+      at appropriate boundaries. A particular DI framework or a protocol for every type is not required
+      by this product direction.
+    tests: Develop product behavior with TDD and provide appropriate deterministic network and data mocks,
+      stubs or fakes; exercise meaningful success, failure and uncertainty. Choose each test double for
+      the scenario rather than mandating a specific implementation for every test.
+    evidence: Independently tested domain decisions do not prove a live GitHub integration or native UI
+      works. Verify relevant adapters and integration paths separately when implementation exists.
+    context: Preserve source, scope, freshness and uncertainty across decisions and presentation instead
+      of coercing unknown observations into success or zero.
+  scenarios:
+    offline_test: A behavior uses injected deterministic network or data substitutes to exercise a failure
+      without contacting GitHub. A named domain decision receives the resulting observations or failure
+      as input rather than performing I/O itself.
+    unknown: An unavailable input remains distinguishable from a supported positive or negative result
+      through a named decision.
+  open_questions:
+  - Confirm intended FSD iOS and SpecificationCore sources, versions and integration compatibility before
+    implementation.
+  - Select actual modules, dependency composition and domain policies after the corresponding product
+    contracts are sufficiently refined.
+  - Define appropriate integration and device verification for implemented slices.
+  ontology_status: Domain vocabulary remains the selected draft; dependency boundaries do not establish
+    ontology approval.
+acceptance:
+- The architecture direction includes FSD iOS and appropriately selected SpecificationCore decisions without
+  claiming integration exists.
+- Network and data dependencies are replaceable for meaningful deterministic TDD with suitable test doubles.
+- Unknown and partial source information retain their meanings across decisions and presentation.
+- Passing isolated tests is not presented as proof of live GitHub or native UI integration.

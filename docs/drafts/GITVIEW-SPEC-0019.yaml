@@ -5,6 +5,8 @@ created_at: '2026-11-10T07:33:00Z'
 updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0019.yaml
+successor_scope: The successor records bounded connection and discovery outcomes; account model, offline access policy, setup, credentials lifecycle and source integration remain candidates.
 refines:
 - GITVIEW-SPEC-0001
 depends_on:

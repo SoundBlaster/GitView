@@ -1,0 +1,64 @@
+id: GITVIEW-SPEC-0019
+title: GitView - GitHub access and repository discovery
+kind: spec
+created_at: '2026-11-15T21:28:00Z'
+updated_at: '2026-11-15T21:28:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0005
+relates_to: []
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0019.yaml
+  predecessor_revision: 32f79fa
+  root_intent: .specgraph/root_intent.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Provide the operator a path to connect GitHub and find eligible repositories for a GitView
+    Project.
+  authority_boundary: GitHub access is necessary to the selected product direction. Initial account count,
+    authorization method, permission mapping, offline disclosure policy and setup flow are not selected
+    by this node; predecessor details remain candidates. This specification does not establish a live
+    connection, source grant, ontology approval or implementation readiness.
+  requirements:
+    connect: Offer a way for the operator to authorize access and identify the connected GitHub source
+      account. GitView User is the operator and need not be the author or assignee of any source object.
+    discovery: Support finding and selecting Repositories available to the connected account for Project
+      composition. Incomplete discovery or insufficient access is distinguishable from a confirmed empty
+      result; a selection alone does not establish a saved Project or an independent source grant.
+    credentials: Protect credentials using platform-provided secure storage and do not include them in
+      shared content or ordinary diagnostics. Exact authorization and permission requirements require
+      source-specific refinement.
+    failure: Distinguish an explicit authentication or permission denial from a temporary network failure
+      and a successful empty result. Failure alone does not erase accepted observations or prove deletion;
+      display of retained private data is governed by a separately defined access policy.
+    account_change: Provide an intentional way to disconnect or reconnect. Disconnection must not be presented
+      as deletion of a GitHub Repository; handling of retained private data and outcomes of credential
+      removal require separate refinement.
+    boundaries: GitView is an overview with a path to GitHub; source authorization or installation is
+      distinct from modifying a PR, Issue or Repository. Additional write features and account models
+      are outside this node's selected scope.
+  scenarios:
+    incomplete_discovery: Some accessible repositories have been observed but discovery is incomplete.
+      Show supported results and the limitation rather than stating the list is complete or that unobserved
+      repositories do not exist.
+    temporary_failure: A refresh fails without a new access decision. A network failure alone does not
+      become a confirmed denial or deletion; display remains subject to actual applicable access policy.
+  open_questions:
+  - Account count, GitHub host scope, authorization and required permission set.
+  - Retained private-data disclosure under offline, revoked, disconnected and account-changed conditions.
+  - Repository selection, onboarding, stopping refresh on disconnect, credential removal and uncertain-removal
+    recovery, and exact UI behavior.
+  ontology_status: User, GitHub, Repository and Project use working draft vocabulary; authorization does
+    not establish an actor's motive.
+acceptance:
+- The operator can initiate and complete supported source authorization and identify the connected account.
+- The operator can select an eligible discovered Repository for Project composition without treating selection
+  alone as a saved Project.
+- Discovery distinguishes an incomplete or access-limited result from a confirmed empty result.
+- Credentials are protected and are not included in shared content or ordinary diagnostics.
+- A network error is not represented as a confirmed source denial, deletion or successful empty result.
+- Local disconnection does not by itself delete GitHub Repositories.

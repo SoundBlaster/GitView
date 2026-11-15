@@ -1,0 +1,70 @@
+id: GITVIEW-SPEC-0004
+title: GitView - Main overview
+kind: spec
+created_at: '2026-11-15T21:26:00Z'
+updated_at: '2026-11-15T21:26:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0005
+relates_to:
+- GITVIEW-SPEC-0006
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0047
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0004.yaml
+  predecessor_revision: 32f79fa
+  root_intent: .specgraph/root_intent.md
+  project_summary: docs/drafts/project-summary-proposal.md
+  dense_prototype: docs/drafts/dense-overview-prototype.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Help the operator survey Projects and choose where to inspect current work and attention.
+  authority_boundary: This node records the selected Project overview and its relation to work. Exact
+    cold-launch navigation, restoration, layout and access behavior remain to be refined; the current-work
+    Today mode is not itself a required historical viewer. No native implementation or accepted ontology
+    is established.
+  requirements:
+    projects: Provide an overview of saved GitView Projects whose representation is permitted, identifiable
+      where their information is permitted, with available work and attention signals inspectable. Project
+      means a user-defined collection of Repositories, not a GitHub organization.
+    summary: Preserve the actual scope, unit, observation and coverage of Project summaries under 0047;
+      do not silently add overlapping Project totals as unique portfolio totals.
+    navigation: The operator can open a selected Project and use actionable Project signals to reach corresponding
+      scoped work under 0006. The Today work selection follows 0007; the default ordinary multi-member
+      Project entry remains an open choice. Today is the opening current-work mode, not a decision that
+      the work grid must be the first app screen; cold-launch navigation remains open.
+    data_states: Distinguish confirmed empty local Project collection from incomplete or unobserved data,
+      stale results and refresh failure. A failed refresh retains eligible prior observations and exposes
+      scoped failure and supported observation time according to 0003; missing data is not confirmed absence.
+    presentation: Use the selected Photos-inspired grid with pinch and multiple density levels within
+      a scope under 0014, and Apple system look, with accessible alternatives to gestures and color-only
+      distinctions. Exact density, controls and how details fit at different scales require refinement.
+    context: Changing density and opening or returning from an object retain valid Project, selection
+      and permitted source context; do not silently switch to an unrelated Project when the original cannot
+      be established.
+  scenarios:
+    choose_project: Several identifiable permitted Projects are visible. The operator selects one and
+      can reach its work in that context.
+    partial: One Project has incomplete source observations. If its representation is permitted, keep
+      it visible with an access-safe limitation rather than presenting its work as confirmed empty. Otherwise
+      convey an access-safe scope-level limitation when one can be disclosed without revealing restricted
+      existence, names or counts; non-disclosure alone is not proof of an empty or complete scope.
+    signal: Selecting a Project's failed-CI signal opens its corresponding selection in that Project,
+      with permitted source context.
+  open_questions:
+  - First launch and subsequent launch restoration, exact interaction order and multi-Repository default
+    entry.
+  - Exact layout and accessible control placement across densities, and disclosure of restricted Project
+    information.
+  - Local collection coverage, loading, failure and ordering contracts in detailed scenarios.
+  ontology_status: User, Project and Repository use the working draft vocabulary; an overview is a presentation,
+    not a new domain entity.
+acceptance:
+- Permitted Projects are identifiable and their available work and attention are inspectable.
+- Project and actionable-signal navigation preserve applicable scope and source context.
+- An unobserved or failed source refresh does not become a confirmed empty Project or an invented success
+  time.
+- The overview remains operable without reliance on color or a single gesture.
