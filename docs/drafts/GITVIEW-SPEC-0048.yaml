@@ -37,7 +37,9 @@ specification:
   - gitview:Issue
   contract:
     manual: An explicit operator action requests refresh for the currently described view or selected scope. Pull-to-refresh is appropriate where it fits; an equivalent accessible action is available when it does not. Triggering a request does not itself imply completion or success.
-    foreground: When a view with previously saved observations opens, permitted saved content can be displayed without waiting for a network response. If its scope is considered stale, the app requests a bounded refresh when conditions and available budget allow; the actual staleness policy and prioritization require further definition.
+    foreground: When a view with previously saved observations opens, permitted saved content can be displayed without waiting for a network response. The app evaluates the relevant visible scope under the working freshness policy below and requests a bounded refresh when applicable conditions and available budget allow. This is an eligibility decision, not a promise that GitHub can be contacted or that every requested field will be obtained.
+    initial_freshness_policy: As an agent-authored first-version default, a required visible Repository/category scope with no applicable accepted observation, an unavailable observation time, or a most recent applicable accepted observation at least 15 elapsed minutes old is eligible for refresh when that scope is opened or the app returns to it. A younger applicable observation does not trigger an additional foreground refresh solely due to age. Evaluate the scope and timestamp of each required category independently; a new title or Issue observation does not refresh PR checks or another Repository. Use the local time at which an observation was accepted for this scheduling decision, not a source event timestamp; preserve the source reference and coverage separately. If elapsed time cannot be reliably calculated, including an observation time in the future after a clock change, freshness is unknown and the affected scope is eligible rather than silently marked recent. This threshold is a tunable product proposal, not a GitHub limit, data validity guarantee, automatic timer or fixed polling schedule.
+    incomplete_and_retry: An accepted partial observation retains its actual coverage. A recent observation of one portion does not make an unobserved required portion recent or complete; remaining work is eligible for a later bounded opportunity under 0102. Do not start an unbounded automatic retry loop simply because the view remains visible, a response is partial, or source evidence cannot establish a complete snapshot. An explicit manual refresh remains available regardless of the age threshold, subject to source backoff, access and execution constraints. Foreground re-entry or a later granted opportunity may reconsider pending scopes; retry timing, request coalescing and source-specific backoff remain separate policies.
     background: The app may request or use an iOS-granted background opportunity for bounded refresh. iOS controls whether and when it runs; absence of a background opportunity is not reported as a successful update or as an application failure.
     deferred: When a manual or foreground request cannot start because of a known budget or execution constraint, the affected scope remains identifiable as deferred or pending with a recoverable reason where available. No new source success time, confirmed empty result or fabricated GitHub failure is recorded merely because no source request was attempted. When the constraint is lifted, the request may be retried under the applicable scheduling policy; exact retry timing is not guaranteed.
     storage_unavailable: Under the working policy of 0105, a manual refresh can still be attempted transiently when local admission cannot be durably confirmed, if source access and execution permit. Its accepted facts and result are session-scoped unless their independent retention is established; make the storage limitation discoverable. Do not claim crash recovery or durable attempt history, and do not turn a local storage problem into a GitHub error. If source execution is also unavailable, use the applicable deferred or source-failure state instead of promising a request.
@@ -58,6 +60,18 @@ specification:
     boundaries: Do not specify an exact GitHub endpoint, page size, request count, numerical polling frequency or iOS execution guarantee here. Exact source mapping, budget and scheduling are later technical work.
     provenance: Background opportunities, refresh on stale open and manual refresh follow the owner's discussion; scope and outcome behavior are agent-authored refinements.
   scenarios:
+    fresh_and_unobserved_categories:
+      given: A visible Project has a permitted PR category observed five minutes ago and its required Issue category has never been observed; no other input is required for this example.
+      when: The view opens under the initial freshness policy and an eligible refresh opportunity is available.
+      then: The PR observation may be shown without an age-only refresh, while the Issue category is eligible for a bounded request and remains unknown until supported evidence arrives; neither category's time is transferred to the other.
+    threshold_and_clock_change:
+      given: One applicable scope was accepted exactly fifteen minutes before the captured evaluation time, while another has an acceptance time later than the current wall clock after a device clock change.
+      when: The scope is evaluated on foreground entry under the initial policy.
+      then: The first is eligible at the threshold and the second has unknown age and is eligible rather than being labeled recent; either request remains subject to access, scheduling and source constraints.
+    recent_partial_not_retry_loop:
+      given: An accepted partial observation contains a recent PR title but leaves the required check category unobserved, and no further execution opportunity is granted while the view stays open.
+      when: The view displays its saved data and limitations.
+      then: The title keeps its own recent context, checks remain unobserved and eligible for later bounded work, and the app does not continuously retry or claim a complete current PR overview.
     completed_work_not_covered_by_open_list:
       given: A Project's unfiltered Today contains previously observed work and its requested refresh completes only the open-PR source scope, without establishing today's merge or closure population.
       when: The refreshed Project work collection is displayed.
@@ -127,6 +141,6 @@ specification:
       when: The operator requests refresh and a source response arrives successfully but cannot be ordered against all conflicting observations.
       then: The affected scope and uncertainty remain discoverable, the permitted value remains last known with its own context, and the response alone does not advance the complete-scope time or declare the conflict resolved.
   unresolved:
-  - Staleness classification and policies when refresh is deferred by source budget or platform constraints.
+  - Validate the agent-authored fifteen-minute eligibility default against actual use, energy, data volume and user experience; source budget and platform constraints can still defer work.
   - Exact scheduling and coalescing behavior for overlapping requests, including user-visible pending state.
   - Device evidence for background execution and accessible manual refresh controls.
