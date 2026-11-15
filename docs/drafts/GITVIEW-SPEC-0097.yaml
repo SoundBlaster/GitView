@@ -31,7 +31,7 @@ sources:
   metric_source_evidence: docs/drafts/metric-source-evidence-matrix-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- The owner-agreed summary metrics have individually identifiable history selections when their supported evidence is available; the initial four displayed series are not treated as the complete metric catalog.
+- Under the agent-proposed history selector, supported summary metrics have individually identifiable history selections when their evidence is available; the proposed initial four displayed series are not treated as the complete metric catalog.
 - Historical open-draft PR, failed-CI PR, review-required PR, review-request PR, changes-requested PR, unresolved review-thread, affected-PR and blocked-Issue values preserve the exact current-state predicate and distinct unit they represent.
 - Historical Repository membership count distinguishes observed past Project membership from a fixed current-member retrospective scope.
 - A retained metric result preserves its predicate, unit, actual observation context, membership basis, coverage and access limitations; missing or incompatible evidence cannot become a zero or a complete point.

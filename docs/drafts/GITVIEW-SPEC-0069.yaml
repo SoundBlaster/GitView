@@ -20,8 +20,8 @@ sources:
   earlier_period_proposal: docs/drafts/repository-summary-proposal.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- The initial history presentation identifies separate open-PR, open-Issue, merged-PR and closed-Issue series and their different units.
-- Calendar-day buckets have explicit local time-zone interpretation, boundaries and current-day incompleteness.
+- Under the agent-proposed initial history presentation, open-PR, open-Issue, merged-PR and closed-Issue series and their different units are identified separately; the initial presentation remains a candidate.
+- Under the agent-proposed calendar-day buckets, the time-zone interpretation, boundaries and current-day incompleteness are explicit.
 - A daily state display uses actual supported observation times and does not invent a day-end snapshot or fill missing days.
 - Outcome buckets count distinct eligible objects for their own interval, with separate closure reasons when supported and uncertainty otherwise.
 - A history period opened from a summary retains its actual originating boundaries rather than silently converting a rolling interval into calendar days.
