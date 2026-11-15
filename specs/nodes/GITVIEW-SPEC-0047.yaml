@@ -16,6 +16,7 @@ sources:
   predecessor_revision: 05c27259cd47f1967ec871802579414dac47301e
   owner_selection: docs/drafts/project-summary-proposal.md
   historical_signal_filter_override: conversation_memory/sketches/gitview/revisions/32213bd5294945d0ba9f0a63c37298de/notes.hc
+  historical_membership_decision: conversation_memory/sketches/gitview/revisions/a55f271ca16f4283bfaf67095616ee7a/notes.hc
   metric_candidate: docs/drafts/GITVIEW-SPEC-0057.yaml
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
@@ -52,6 +53,9 @@ specification:
     history: Distinguish current observations from outcomes over a selected period. A graph needs sufficient
       evidence for its own metric and time scope; unavailable history is not a fabricated zero or a copy
       of the current value.
+    project_history_membership: Project historical graphs use current Project Repository membership over
+      the selected period as described in 0013. Identify that basis and preserve incomplete history and
+      access limitations; do not present it as the actual Project composition at earlier dates.
     navigation: An actionable Project signal opens its corresponding selection across the applicable Project
       member scope as described by 0006, retaining the condition and permitted source context. A selection
       and its earlier summary need not have equal counts after facts change; preserve their respective
@@ -84,7 +88,8 @@ specification:
   open_questions:
   - Exact definitions, source mappings, freshness and coverage requirements for each metric and attention
     signal.
-  - Period selection, event versus object units, membership basis and evidence for historical values.
+  - Period selection, event versus object units and evidence for historical values, including uncertain
+    current membership.
   - Disclosure of restricted identities and aggregates, compact layout and accessible signal controls.
   - Predicate and applicability of the conditional checks-and-review-passed selection.
   ontology_status: Project, Repository, PullRequest, Issue and Metric use working draft vocabulary. A

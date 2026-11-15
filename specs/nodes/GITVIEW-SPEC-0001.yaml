@@ -29,6 +29,9 @@ sources:
   historical_signal_filter_override:
     path: conversation_memory/sketches/gitview/revisions/32213bd5294945d0ba9f0a63c37298de/notes.hc
     node: historical-signal-filter-decision
+  historical_membership_decision:
+    path: conversation_memory/sketches/gitview/revisions/a55f271ca16f4283bfaf67095616ee7a/notes.hc
+    node: historical-project-membership-decision
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Give a person managing many GitHub repositories a compact native iOS overview of current
@@ -68,7 +71,9 @@ specification:
       not a replacement for GitHub.
     history: Historical measurements and charts are in scope. A viewer reconstructing the Project at an
       earlier date is not required. A contribution-style calendar is a possible farthest zoom level; calendar
-      time cells and Project or repository cells have different meanings. Metric units, period, scope
+      time cells and Project or repository cells have different meanings. Historical Project graphs are
+      recalculated over the selected period using current Project Repository membership, subject to applicable
+      evidence and access; this does not reconstruct past Project membership. Metric units, period, scope
       and evidence require refinement.
     descriptions: The owner selected structured Issue and PR description templates, including Problem,
       Motivation, Expected outcome and References; the PR template also includes Changes and Validation.
@@ -99,8 +104,8 @@ specification:
   - Scope, reset behavior and cross-device synchronization, if any, for persistent filters.
   - Exact meaning of ready or attention and the evidence for any derived signal.
   - Privacy and availability policy for previously permitted private data offline or after restoration.
-  - Sharing payload, historical metric periods and membership basis, supported devices and exact native
-    interactions.
+  - Sharing payload, historical metric periods and handling uncertain current membership, supported devices
+    and exact native interactions.
   - Detailed GitHub source mappings, authorization, storage guarantees and implementation-ready leaf contracts.
   ontology_status: The project selects local.gitview.domain at 0.2.0-draft-composition.13 as a working
     terminology context. This specification does not grant semantic approval to the ontology or assert

@@ -14,6 +14,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0013.yaml
   predecessor_revision: 852649f
   owner_selection: docs/drafts/project-summary-proposal.md
+  historical_membership_decision: conversation_memory/sketches/gitview/revisions/a55f271ca16f4283bfaf67095616ee7a/notes.hc
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Make work and completion trends interpretable without inventing historical observations.
@@ -33,6 +34,12 @@ specification:
     graphing: Show graphs of applicable summary measurements when sufficient history exists. A missing
       historical value remains a gap or explicitly incomplete, not a zero or a current snapshot backfilled
       as past history.
+    project_history_membership: Recalculate a Project's historical graph over the selected period using
+      the Project's current Repository membership. Adding a Repository can include its supported earlier
+      activity; removing it excludes its contribution on subsequent recalculation. Identify the actual
+      membership basis and do not present it as the Project's historical membership. Access, evidence
+      and coverage still apply; an unavailable earlier contribution is not zero and a partial result is
+      not complete.
     late_evidence: A later permitted source observation may support an earlier event with its real event
       and observation times, but one known event does not prove complete period coverage or reconstruct
       an earlier current-state population.
@@ -49,17 +56,24 @@ specification:
       of open Issues.
     linked_work: A PR and Issue refer to the same work. Their separate supported measurements are not
       summed as two completed tasks.
+    membership_change: Repository R is added to Project P today. On a supported recalculation of last
+      month's Project graph, R's permitted evidence for that earlier period contributes under the current
+      membership basis; unavailable history remains incomplete. If R is later removed, a subsequent recalculation
+      excludes it without asserting that source history was deleted.
     reopened: An Issue closes, reopens, then closes again. A measurement requiring both closure events
       is asserted only when adequate source or retained event evidence supports it; the latest state alone
       does not establish the event sequence.
   open_questions:
   - Metric-specific predicates, evidence, source mappings and distinction between event counts and distinct
     objects.
-  - History retention, membership basis, time buckets, chart presentation and access policy.
+  - History retention, time buckets, chart presentation and access policy; evidence when current Project
+    membership is uncertain.
   - Burn-down population, cohort and formula if a formal burn-down chart is selected.
   ontology_status: Metric, Project, Repository, PullRequest and Issue use working draft vocabulary; a
     displayed metric does not establish ontology approval or a concrete actor action.
 acceptance:
+- Historical Project graphs use the current Repository membership basis and do not claim it is historical
+  Project membership.
 - Current work and period outcomes retain distinct subjects, units, scopes and applicable observation
   contexts.
 - PR and Issue counts or series are not represented as independent tasks merely because the objects differ.

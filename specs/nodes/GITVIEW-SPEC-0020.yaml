@@ -1,0 +1,97 @@
+id: GITVIEW-SPEC-0020
+title: GitView - Product journey and acceptance direction
+kind: spec
+created_at: '2026-11-15T22:03:00Z'
+updated_at: '2026-11-15T22:03:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0004
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0006
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+- GITVIEW-SPEC-0013
+- GITVIEW-SPEC-0014
+- GITVIEW-SPEC-0015
+- GITVIEW-SPEC-0016
+- GITVIEW-SPEC-0017
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0022
+- GITVIEW-SPEC-0047
+relates_to:
+- GITVIEW-SPEC-0021
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0020.yaml
+  predecessor_revision: 5bae442
+  root_intent: .specgraph/root_intent.md
+  historical_membership_decision: conversation_memory/sketches/gitview/revisions/a55f271ca16f4283bfaf67095616ee7a/notes.hc
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Describe a coherent product journey and observable outcomes without declaring the specification
+    graph or implementation complete.
+  authority_boundary: These outcomes combine selected directions and conditional scenarios from child
+    nodes. They do not select an account count, private-data policy, cold-launch layout, technical implementation
+    or timing of a pilot. All dependent contracts and unresolved product decisions need review before
+    any implementation readiness assessment.
+  journey:
+    setup: An operator can connect GitHub, select eligible Repositories and establish Projects. One Project
+      per Repository is the default; Projects may contain multiple Repositories and share them. Selection
+      or connection alone does not prove a saved Project or observed work. Incomplete discovery and failed
+      or uncertain saves remain distinguishable. Authorization cancellation, explicit denial, network
+      failure and confirmed empty source are distinct; cancellation or failure leaves an available path
+      to continue where supported.
+    overview: The operator can identify permitted Projects, inspect available summaries and navigate through
+      members or actionable signals to work, preserving source context and truthful coverage. Source restrictions
+      are subject to the applicable policy. Any claimed unique portfolio total deduplicates shared supported
+      identities.
+    current_work: Today includes older unfinished work and work completed during the current user-local
+      calendar day. Applicable PR and Issue lifecycle states remain visible without saved exclusions.
+      Explicit filters persist, and the selected historical merged-counter transition temporarily overrides
+      its conflicting saved merged exclusion without rewriting that preference. The historical destination
+      retains the counter's own period and scope rather than becoming ordinary Today; access and coverage
+      limitations remain applicable.
+    inspection: A Photos-inspired grid changes density with pinch and accessible alternatives. Each eligible
+      confirmed PR or Issue in the selection has one cell. First-version long-press preview of an eligible
+      Project, Repository, PR or Issue reveals permitted detail and offers explicit opening of the same
+      object or dismissal without navigation, preserving valid origin context; accessible alternatives
+      remain available. Object overviews preserve independent states and offer source and sharing routes
+      when eligible. Sliding preview and deeper PR exploration are later directions.
+    data_and_metrics: Reuse eligible saved observations, request bounded refresh, show scoped errors and
+      truthful freshness, and distinguish incomplete from empty. Metrics retain unit, scope and coverage;
+      historical charts require sufficient evidence and do not fabricate zeros. Project historical graphs
+      are recalculated with current Project membership after membership changes, not as a reconstruction
+      of past membership. A limited or restricted result is not a confirmed healthy or complete result.
+    accessibility: Essential interactions do not rely on color or a single gesture; supported accessibility
+      context and alternatives remain available, including for preview.
+  scenarios:
+    supported_path: An operator connects an account, selects eligible Repositories and completes supported
+      Project setup. With applicable observations and access, the operator opens work, adjusts density,
+      previews an object and can open its source if an eligible link exists.
+    completion: With complete coverage, unchanged scope and access, 100 distinct PRs in Today include
+      95 merged on the same local calendar day. With no lifecycle exclusion they remain visible as their
+      own cells; a saved merged exclusion may hide them.
+    missing_data: A Project has a supported prior observation for one scope and another scope fails to
+      refresh. The permitted last-known facts retain their own time and the affected failure is visible
+      without claiming complete current data.
+  open_questions:
+  - Private-data access after revocation, disconnect, offline and account change, and exact disconnect
+    outcome.
+  - Historical metric measurement units; treatment of other signal-filter conflicts and exact return behavior.
+  - Actual first-launch interaction, source coverage and selected account/authorization model.
+  - Each product branch needs further refinement and evidence appropriate to its eventual transition;
+    this node is not a release gate.
+  ontology_status: The selected domain vocabulary is draft; a product journey does not establish specific
+    actor motivations or ontology approval.
+acceptance:
+- The described supported path connects Project setup, overview, work selection, inspection and an eligible
+  GitHub source route.
+- Unfinished and same-day completed work, persistent filters and the bounded historical merged-counter
+  override retain their distinct meanings.
+- Refresh failures, restricted or incomplete data and unavailable history are not presented as confirmed
+  healthy, complete or empty results.
+- Product requirements remain distinct from proof of implementation, integration, device behavior or release
+  readiness.

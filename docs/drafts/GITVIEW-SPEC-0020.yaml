@@ -5,6 +5,8 @@ created_at: '2026-11-10T07:33:00Z'
 updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0020.yaml
+successor_scope: The successor records an outlined product journey, not acceptance of the pilot design, readiness for implementation or the full predecessor draft.
 refines:
 - GITVIEW-SPEC-0001
 depends_on:
