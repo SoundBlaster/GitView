@@ -43,7 +43,7 @@ acceptance:
 - Opening and dismissal preserve the actual object and valid navigation context; optional source and share actions require an eligible link.
 - Preview content and essential actions remain accessible without relying only on color, long press or a fixed density.
 specification:
-  current_intent_boundary: Earlier dense-grid examples assuming all same-day completed cards remain visible are a superseded Today population candidate. Preview identity, access, supported facts, independent signals and partial-observation requirements remain applicable.
+  current_intent_boundary: Today includes older unfinished work and work completed during the current calendar day in the user's local time zone; a prior day's completion alone does not qualify an object for the new Today. Applicable states appear without saved exclusions, subject to supported identity, scope, access and coverage. Other inclusion alternatives remain open. Preview identity, access, supported facts, independent signals and partial-observation requirements remain applicable. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
   objective: Define the first-version static preview's content priorities, actions and evidence boundaries for each existing object type without choosing a native layout implementation.
   ontology_refs:
   - gitview:User
