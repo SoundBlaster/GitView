@@ -28,7 +28,6 @@ depends_on:
 - GITVIEW-SPEC-0052
 - GITVIEW-SPEC-0053
 - GITVIEW-SPEC-0054
-- GITVIEW-SPEC-0055
 - GITVIEW-SPEC-0056
 - GITVIEW-SPEC-0058
 - GITVIEW-SPEC-0059
@@ -101,6 +100,7 @@ specification:
     identity: PR and Issue identity is resolved in source Repository context; Project identity is local and multiple Projects may share a Repository.
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
+    optional_cohort_boundary: The dynamic Today journey and its acceptance do not require capturing a fixed PR cohort. Candidate 0055 describes a separate proposed view whose first-release scope is unresolved; its conditional scenarios apply if that capability is included, without making it a prerequisite for the core journey.
   scenarios:
     upgrade_and_recover_portfolio:
       given: A supported older local schema contains Projects P and Q sharing Repository R and independently retained PR observations for R.
@@ -223,9 +223,9 @@ specification:
       when: The operator opens the Project overview and the historical series.
       then: The current source observation and local retention failure are distinguishable, the prior retained point keeps its time, and neither the day without an observation nor the failed write is represented as a durable zero or invented sample.
     today_breakdown_changes_without_cohort:
-      given: A fully covered Project-wide Today selection and a separately captured fixed cohort each contain the same 100 PRs, of which 95 are observed merged and five open in a compatible context.
+      given: A fully covered Project-wide Today selection contains 100 PRs, of which 95 are observed merged and five open in a compatible context, with no fixed cohort captured.
       when: A new eligible distinct open PR is observed and the dynamic Today selection is completely reevaluated.
-      then: The current Today breakdown can show 101 PRs with 95 merged and six open, while the captured cohort still has its original 100 identities; neither count alone proves a historical trend or the number of merge events today.
+      then: The current Today breakdown can show 101 PRs with 95 merged and six open without creating a cohort; those counts alone prove neither a historical trend nor the number of merge events today.
     today_partial_refresh_and_membership_change:
       given: Project P previously held 100 permitted open PR observations across members A and B, and a Project-wide Today refresh begins.
       when: The saved membership changes to A and unobserved C, then the older A-B refresh returns an open-only subset and B's later request fails.

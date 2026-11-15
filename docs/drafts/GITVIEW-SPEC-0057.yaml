@@ -73,7 +73,7 @@ specification:
     new_pr_after_breakdown:
       given: The preceding 100-PR Today selection is fully covered and a new distinct eligible open PR is then confirmed in the same Project and local day.
       when: A new sufficiently covered dynamic Today breakdown is evaluated.
-      then: It contains 101 PRs with 95 merged and six open; an earlier fixed 100-PR cohort remains unchanged and neither observation alone establishes intermediate trend points.
+      then: It contains 101 PRs with 95 merged and six open without requiring a fixed cohort; neither observation alone establishes intermediate trend points.
     filtered_not_all_today:
       given: A complete Today PR selection contains both open and merged PRs and the operator explicitly excludes merged PRs.
       when: A breakdown of the currently filtered selection is shown.
