@@ -81,6 +81,18 @@ specification:
     verification: Prepare TDD cases with injected source responses and local outcomes for a partial response with a failed sibling field, PR issue representation, unknown identity, overlapping unordered attempts, denied access, lost save acknowledgement and restart. Verify real GitHub response mapping, persistent storage and native rendering separately from deterministic doubles. This specification and ontology checks do not demonstrate any implemented adapter or product.
     provenance_note: Offline last-known data, visible update errors, a dense Today overview and DI with TDD were requested by the owner. The evidence dimensions and boundary are agent-authored working refinements; they introduce no new product ontology entity or mandatory source API.
   scenarios:
+    compatible_shared_portion_distinct_projects:
+      given: Projects P and Q both currently contain confirmed Repository R and request the same permitted open-PR discovery portion under the same active account, source and effective parameters. A shared source attempt returns one identified PR with a supported open state and an incomplete traversal; the fact's local retention is indeterminate.
+      when: Each Project assembles its own Today selection while current disclosure still permits that fact.
+      then: Each may evaluate the same PR once in its own Project context using the original observation and an independently attributed transient-save limitation. Neither receives a complete Project population, a later observation timestamp or a second PR from sharing the attempt; P and Q retain their own remaining portions and request outcomes.
+    same_repository_different_day_cursor:
+      given: A recent-Issue traversal for R captured day D1 and its since predicate, leaving a continuation cursor. The local day changes to D2 while the source account and Repository identity remain unchanged, and no source guarantee establishes that the old cursor is valid for D2's different effective predicate.
+      when: A new Today route requests D2 discovery.
+      then: The D1 cursor and coverage are not treated as D2 continuation or complete D2 discovery merely because R is unchanged. An independently applicable permitted object fact can be reevaluated against D2 with its original observation context, while any necessary new traversal and its coverage remain separate.
+    same_repository_changed_account:
+      given: A private PR observation and an incomplete source attempt for R were obtained under account A. Account B is now active, but its permission to that private PR and the affected Repository is not established.
+      when: A Project containing R requests the corresponding portion under B.
+      then: The A attempt, its cursor and prior authorization do not establish B's access or satisfy B's request. The private identity and revealing values stay withheld under the current policy; any later B observation needs its own supported association, access and scope, and does not retroactively change A's original result.
     requested_portion_missing_from_shared_response:
       given: One admitted request was intended to retrieve open PRs and open Issues for the same permitted Repository, but the response contains a usable PR page and omits the requested Issue subtree without sufficient evidence of a semantic empty result; a separate recent-Issue portion has not been admitted.
       when: The boundary returns its outcomes and the caller assembles Today.
