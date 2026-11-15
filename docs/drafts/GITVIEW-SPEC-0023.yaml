@@ -99,6 +99,6 @@ specification:
       when: The overview is presented.
       then: The Project remains available in a non-sensitive form where permitted, affected private facts and revealing counts are withheld, and a local recovery limitation is distinguishable from an empty source or a GitHub denial.
   unresolved:
-  - Freshness classification thresholds and display of coverage by metric require the observation and summary branches.
+  - The working foreground refresh eligibility threshold and category-specific coverage follow 0048 and 0057; evaluate their presentation and actual behavior during implementation.
   - Candidates 0037 and 0112 propose access-change and in-flight refresh handling; exact source-to-field mapping, local recovery presentation and actual ordering remain to be established.
   - The placement, lifetime and resolution criteria of the older-snapshot recovery indication require UX and recovery-policy review; no universal rollback detection is assumed.

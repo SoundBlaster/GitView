@@ -121,6 +121,6 @@ specification:
       when: The app restores a usable position in the collection.
       then: It may present the permitted object as a fallback without identifying it as the former anchor, exposing the restricted identity or asserting a nearest successor or deletion. Any limitation or recovery indication uses only currently permitted information.
   unresolved:
-  - Stable sort order for the collection is owned by 0007 and proposed in 0042; this fallback operates on the last known ordered collection. The ordering proposal still needs review.
+  - Use the initial work ordering in 0042 and stable Project ordering in 0072 for this fallback; concrete collection behavior and accessible focus require native verification.
   - System lifecycle boundaries, multiple scenes and the account-changing UX require platform and access refinement; cold-launch overview is an agent-authored default, not an explicit owner selection.
   - Exact presentation and accessible focus after a deleted Project or temporarily unavailable local configuration require native UX evaluation.
