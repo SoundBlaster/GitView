@@ -23,6 +23,9 @@ sources:
   today_calendar_boundary:
     path: conversation_memory/sketches/gitview/revisions/cc419cb9283f471b88b6f4b66e56c5ad/notes.hc
     node: today-calendar-boundary-decision
+  today_timezone:
+    path: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc
+    node: today-timezone-decision
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Give a person managing many GitHub repositories a compact native iOS overview of current
@@ -40,14 +43,15 @@ specification:
       its identity, history and Project membership. A reused address or name does not itself establish
       identity.
     current_work: Today is the opening view of current work, not a past-state viewer. It includes unfinished
-      work from earlier days and work completed during the current calendar day. A completion on the previous
-      day alone does not qualify an object for the next day's Today; other applicable conditions may do
-      so. Its unfiltered Project grid includes PRs and Issues in all lifecycle states, including merged
-      and closed; explicit filters may hide them. An applicable confirmed merged PR leaves an unfinished-only
-      selection, not the unfiltered Today grid; its supported result is reflected in the appropriate metric
-      when sufficient evidence exists. A partial or failed refresh does not by itself establish a merge,
-      deletion or empty selection. Source coverage and how much historical work is loaded remain to be
-      specified; an unfiltered view alone does not prove every source object was retrieved.
+      work from earlier days and work completed during the current calendar day in the user's local time
+      zone. A completion on the previous day alone does not qualify an object for the next day's Today;
+      other applicable conditions may do so. Its unfiltered Project grid includes PRs and Issues in all
+      lifecycle states, including merged and closed; explicit filters may hide them. An applicable confirmed
+      merged PR leaves an unfinished-only selection, not the unfiltered Today grid; its supported result
+      is reflected in the appropriate metric when sufficient evidence exists. A partial or failed refresh
+      does not by itself establish a merge, deletion or empty selection. Source coverage and how much
+      historical work is loaded remain to be specified; an unfiltered view alone does not prove every
+      source object was retrieved.
     overview: The operator can inspect PRs and Issues with their source context and selected status, review,
       CI and discussion signals, including failed CI and unresolved or long-waiting review threads. Distinct
       source facts and metrics retain their meanings; missing or stale observations are not reported as
@@ -84,8 +88,8 @@ specification:
       SpecificationCore for suitable named domain decisions. Concrete integration requires refinement
       and verification.
   open_questions:
-  - Day boundary and time-zone behavior, other inclusion conditions, and source coverage represented by
-    the unfiltered Today grid.
+  - Behavior when the user's time zone or day changes, other inclusion conditions, and source coverage
+    represented by the unfiltered Today grid.
   - Scope, reset behavior and cross-device synchronization, if any, for persistent filters.
   - Exact meaning of ready or attention and the evidence for any derived signal.
   - Privacy and availability policy for previously permitted private data offline or after restoration.

@@ -5,6 +5,8 @@ created_at: '2026-11-10T00:00:00Z'
 updated_at: '2026-11-10T07:17:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0007.yaml
+successor_scope: The successor records selected Today grid, local-day and lifecycle-filter outcomes. This draft remains noncanonical source material; detailed temporal, navigation and source contracts require separate review.
 refines:
 - GITVIEW-SPEC-0006
 depends_on:
@@ -44,7 +46,7 @@ acceptance_evidence:
   evidence: cross_repository_identity, reopened_item and incomplete_observation are expectations for future
     verification.
 specification:
-  current_intent_boundary: The owner selected the current work picture and later approved retaining older unfinished work and work completed during the current calendar day; a previous day's completion alone does not qualify an object for the new Today. See sketch revision cc419cb9283f471b88b6f4b66e56c5ad. The local-device time zone, detailed temporal rules, other inclusion conditions and historical viewer remain proposals, not owner decisions. The all-states unfiltered grid and persistent filters are selected. Preserve identity, filters, uncertainty and access; source coverage and persistence scope remain open.
+  current_intent_boundary: The owner selected the current work picture and approved retaining older unfinished work and work completed during the current calendar day; a previous day's completion alone does not qualify an object for the new Today. The user selected their local time zone in sketch revision 3077fdcd9a8247769def8d6403c2e61c. Device time-zone determination, detailed temporal rules, other inclusion conditions and historical viewer remain proposals, not owner decisions. The all-states unfiltered grid and persistent filters are selected. Preserve identity, filters, uncertainty and access; source coverage and persistence scope remain open.
   objective: Let the user see work and its completion in the selected Project or Repository and time group,
     with explicit filters.
   ontology_refs:
@@ -211,8 +213,8 @@ specification:
     position fallback and sorting, subject to review.
   - Source mapping, pagination, history availability and exact freshness thresholds; see GITVIEW-SPEC-0003.
   provenance_boundary: 'All lifecycle states by default, retaining today''s completed work, older unfinished
-    work and explicit state filtering follow the user''s discussion. The local-day interpretation and
-    detailed interaction and uncertainty rules are working specification choices, not previously observed
+    work and explicit state filtering follow the user''s discussion. The user selected their local time zone;
+    device binding and detailed interaction and uncertainty rules are working specification choices, not previously observed
     app behavior. Scenarios are expected behavior for later checks; no app implementation or executed
     UI test is claimed.
 

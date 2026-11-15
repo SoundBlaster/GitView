@@ -1,0 +1,69 @@
+id: GITVIEW-SPEC-0007
+title: GitView - Today work grid and lifecycle filters
+kind: spec
+created_at: '2026-11-15T19:23:00Z'
+updated_at: '2026-11-15T19:23:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on: []
+relates_to:
+- GITVIEW-SPEC-0005
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0007.yaml
+  predecessor_revision: 256e9dbf865f54deabe1ac3844ce21a98ca690ac
+  all_states_and_filters: conversation_memory/sketches/gitview/revisions/ed322706b55a4798a4328a69982fcbae/notes.hc
+  calendar_day_decision: conversation_memory/sketches/gitview/revisions/cc419cb9283f471b88b6f4b66e56c5ad/notes.hc
+  timezone_decision: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Let the operator see current work and today's completed work together in a compact Project
+    grid and narrow it explicitly.
+  authority_boundary: This node records the selected Today and lifecycle-filter outcomes, not the complete
+    predecessor draft, an accepted ontology, source integration, storage mechanism or implementation readiness.
+  requirements:
+    scope: Today provides an overview of applicable PRs and Issues in the selected Project and their source
+      Repository context. Membership and access eligibility remain subject to their respective contracts.
+    time: Unfinished work remains eligible even if it began on an earlier day. Work completed during the
+      current calendar day remains eligible. The day uses the user's local time zone. Completion on the
+      previous day alone does not qualify an object for the new Today; other applicable conditions may
+      do so.
+    identity: Each source-confirmed PR or Issue has one cell in a selection, even if several inclusion
+      conditions apply. A linked PR and Issue are distinct objects; equal issue or PR numbers in different
+      repositories do not establish identity. Unresolved identity is not presented as confirmed uniqueness.
+    states: Without an applicable saved exclusion, eligible objects are shown in all lifecycle states,
+      including merged and closed. A PR merged today updates the same cell and remains in unfiltered Today;
+      it leaves an unfinished-only selection. Closed without merge is not called merged.
+    filters: The operator can explicitly hide applicable states, including merged and closed. Selected
+      filters persist between launches and are restored when applicable; failed or unknown persistence
+      is not reported as a confirmed save. Filters narrow the view rather than changing source objects.
+    observations: Incomplete or failed refresh, missing pages or unknown status do not prove a merge,
+      deletion or empty selection. Last supported permitted observations retain their freshness and access
+      limitations; an unfiltered grid is not proof of complete GitHub coverage.
+  scenarios:
+    completion: With complete coverage and unchanged scope and access, 100 distinct PRs in Today remain
+      100 visible cells after 95 are confirmed merged during the current local day, if no lifecycle exclusion
+      hides them.
+    next_day: On a new local calendar day, an older open PR remains eligible, while yesterday's merge
+      alone no longer qualifies another PR. Neither outcome deletes the object or excludes it for every
+      other reason.
+    filter_restore: The operator hides merged and closed states, leaves the app and returns. Once the
+      saved selection is restored, matching eligible objects remain hidden until the filter is changed.
+    distinct_identity: A linked Issue and PR each have their own cell; two repositories' Issue number
+      42 represent separate objects when source identity confirms they are distinct.
+    incomplete_refresh: A previously seen PR is absent from an open-only or failed refresh. That omission
+      alone does not establish its completion, deletion, or the absence of work.
+  open_questions:
+  - Other inclusion conditions, handling of older closed work and source history coverage.
+  - How local time zone is determined and what happens when the zone or calendar day changes during interaction.
+  - Exact filter scope, controls, reset behavior, and cross-device synchronization if any.
+  - Source identity and coverage evidence, access policy, uncertainty presentation and navigation details.
+  ontology_status: Project, Repository, PullRequest and Issue use the working draft vocabulary; this node
+    does not establish semantic approval or infer actor actions from observations.
+acceptance:
+- Earlier unfinished work and work completed on the current local calendar day remain eligible in Today.
+- A change of lifecycle state updates the same object's cell; a linked PR and Issue remain distinct.
+- All applicable lifecycle states are visible without saved exclusions, and explicit lifecycle filters
+  persist across launches.
+- A previous day's completion alone does not qualify an object for the new Today.
+- Incomplete source observations do not become confirmed success, deletion or an exhaustive empty result.
