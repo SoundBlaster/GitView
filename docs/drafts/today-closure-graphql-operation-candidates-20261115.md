@@ -1,6 +1,6 @@
 # Closure-event acquisition candidates for Today
 
-Status: agent-authored design candidates, pre-canonical. These operations supplement the candidate discovery operations in `today-graphql-operation-candidates-20261115.md`; they do not select the product API or establish a complete history.
+Status: agent-authored working direction, pre-canonical. Specification 0102 selects these typed timeline operations when supported closure evidence is needed for a discovered or retained object. They supplement the selected initial discovery operations; they do not establish a complete history, verified permission or live source behavior.
 
 Given a separately identified candidate object, query its typed timeline and request source event and subject identities. Both operations take an object Node ID, a page size and cursor. No temporal cutoff is applied here: eligibility for a captured local day is assessed from each supported event time. Page size, request budget, stopping policy, mutation during pagination and authorization remain open. A null node, wrong type, field error, partial response or incomplete traversal is not evidence of absence. Even successful traversal requires independent justification of visibility, temporal scope, pagination behavior and subject association before any exhaustive history claim.
 
