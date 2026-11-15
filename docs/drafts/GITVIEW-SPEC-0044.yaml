@@ -78,10 +78,10 @@ specification:
       given: A prior complete Issue observation exists and the source collection changes during a later traversal whose consistency cannot be established.
       when: All pages returned by that traversal finish successfully.
       then: The latest traversal outcome is distinguishable from its unproven coverage; the old complete time is not advanced as if the newer traversal had proved an exhaustive snapshot.
-    omitted_review:
-      given: A PR review assessment was observed at T1 and a later response observes only its title at T2.
+    omitted_review_and_checks:
+      given: A PR review assessment and check counts were observed at T1 and a later response observes only its title at T2.
       when: The PR overview is displayed.
-      then: The title may carry its T2 context, while the earlier review assessment retains T1 or is shown unavailable under current policy; it is not silently refreshed, cleared or assigned T2.
+      then: The title may carry its T2 context, while the earlier review assessment and check counts retain T1 or are shown unavailable under current policy; they are not silently refreshed, cleared or assigned T2.
     null_with_error:
       given: A requested PR field is represented as null-like in a response accompanied by an error affecting that field and its source contract does not establish an authoritative empty value.
       when: The field is interpreted.

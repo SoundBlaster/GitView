@@ -124,14 +124,6 @@ specification:
       given: A PR has a known commit count but additions and deletions are unavailable.
       when: Change counters are shown.
       then: The commit count remains known while additions and deletions are unknown, not zero.
-    authored_validation:
-      given: A PR description claims validation passed while observed CI has a failure.
-      when: Both appear in its overview.
-      then: The authored text and failed CI are separately represented without converting the claim into CI success.
-    title_only_refresh:
-      given: A PR had a review assessment and check counts observed at T1; a later response at T2 contains only a changed title.
-      when: The PR overview is displayed.
-      then: The title may carry T2 while review and checks retain their T1 context or are unavailable; they are not silently assigned T2 or cleared.
   unresolved:
   - Source mapping and availability of the selected facts, including revision association for counters.
   - Display priority, truncation and behavior for removed or inaccessible source branches.
