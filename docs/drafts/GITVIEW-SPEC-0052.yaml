@@ -27,7 +27,7 @@ specification:
   - gitview:Project
   - gitview:Repository
   contract:
-    scope: The operation concerns one confirmed source Repository and its locally saved default Project association. Multi-selection can contain multiple such operations and retains per-entry outcomes under 0045.
+    scope: Under the proposed persistent default-association mechanism, this operation concerns one confirmed source Repository and its locally saved default Project association. Multi-selection can contain multiple such operations and retains per-entry outcomes under 0045. The mechanism is not required by the owner's one-Repository default; an alternative must independently satisfy the applicable setup and safe-recovery outcomes.
     atomic_visibility: For one newly created default Project, observers of durable local configuration must see either the previous state or a saved Project with its matching default association and Repository membership. The implementation may use any storage mechanism satisfying this observable invariant; this does not impose all-or-nothing behavior across the whole multi-selection.
     concurrent_uniqueness: The local configuration enforces at most one active default association for a confirmed source Repository even if two create or retry attempts overlap or an earlier attempt commits late. At most one distinct Project can win that association. A losing or conflicting attempt must resolve to the confirmed existing Project or report a recoverable conflict; it must not overwrite an unrelated Project, erase memberships or report a second successful default association. The choice of locking, transactions, compare-and-swap or another mechanism is not prescribed.
     losing_operation_result: Candidate 0104 specifies that a losing operation may report durable reuse only when the currently valid winning association, membership and its own operation result are coordinated. An earlier observed winner that is removed before this boundary does not alone support reuse. An unresolved earlier attempt cannot be bypassed with a distinct new operation while its late effect could violate uniqueness.
@@ -39,6 +39,7 @@ specification:
     cancellation: A confirmed saved Project remains saved after cancellation or process interruption; a pending operation is not reported as rolled back until the durable configuration establishes its result. Other selected entries may independently succeed or remain unresolved.
     access: Recovery of local configuration does not itself prove current source access. Visibility and subsequent refresh of private observations follow 0036; insufficient source identity follows 0038.
     provenance: The owner chose default one Project per Repository and autonomous specification. Atomic visibility and conservative unknown-outcome recovery are agent-authored proposals.
+  scenario_scope: These scenarios evaluate the proposed persistent default-association mechanism if selected; they do not select it or prescribe the storage mechanism for alternatives.
   scenarios:
     acknowledgement_lost:
       given: Operation O durably saved a default Project and association for R together with its recoverable bound result, but the process stopped before reporting success.

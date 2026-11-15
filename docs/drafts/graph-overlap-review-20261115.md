@@ -93,3 +93,31 @@ durable pending access change сохраняет ограничение. Вос�
 уточнение ссылки в 0093 без установленного противоречия. Сверка ограничена
 перечисленными полями и сценариями. Все изменения остаются черновыми;
 выбор политики, проверка текущего доступа и нативная реализация не выполнены.
+
+## Статус default association при создании Project
+
+Исходная ревизия — `f7c4b8dfef5f6586331506de1c84e8d779f7cc28`. Согласно
+[карте решений](product-open-decisions-20261115.md),
+[сравнению механизмов](project-default-association-review-20261115.md) и
+0022/0025, владелец выбрал один Project на Repository по умолчанию, один или
+несколько Repository в Project и возможное участие Repository в разных
+Projects. **Постоянная default association**, её reuse при повторном setup и
+детали подтверждения — предложение агента. Альтернатива может предложить
+выбор существующего Project или создание нового; она тоже должна сохранять
+reviewed intent и безопасно разрешать неопределённый результат предыдущего
+сохранения. Само членство не определяет автоматически default.
+
+| Область и проверенные адреса | Результат |
+| --- | --- |
+| 0045 `acceptance`, `contract.default_design_status`, `confirmation`, `interrupted`; `scenario_scope`, `scenarios.retry_after_partial`, `storage_outcome_uncertain` | Явно относится к предлагаемому setup. Частичное сохранение не отменяет другие Projects; повтор при неизвестном исходе требует reconciliation. Постоянная association не выдана за выбор владельца. |
+| 0052 `acceptance`, `contract.scope`, `atomic_visibility`, `concurrent_uniqueness`, `recover_unknown`; `scenarios.acknowledgement_lost` | Acceptance условны, но отдельные scope и сценарии без контекста могли выглядеть общими. Добавлены явные границы candidate в `contract.scope` и `scenario_scope`; инварианты выбранного механизма не ослаблены. |
+| 0082 `acceptance`, `contract.default_association`, `input_and_invariants`, `scenario_scope`; `scenarios.concurrent_membership_edits`, `edit_maybe_committed`, `setup_races_with_removal` | Гонки association условны; защита сохранённой конфигурации, непустой состав и запрет молчаливой перезаписи остаются применимыми и при альтернативе. Эти условия описывают результаты, а не единственный способ их достичь. |
+| 0104 `contract.candidate_boundary`, `write_decision`, `retry_after_outcome`; `scenarios.applied_then_deleted`, `same_name_independent_creations` | Это составной кандидат, явно включающий предложенную association. Его прямые зависимости не означают, что любая другая storage-граница обязана реализовать association; альтернативе нужны собственные подтверждённые контракты identity и восстановления. |
+| 0025 `contract.default_association`, `creation`; 0022 `contract.empty_with_pending_creation` | Три пункта могли читаться как безусловный механизм из-за формулировок или ссылок на candidate. Явно отмечена условность; безопасная обработка неизвестного результата и сохранение других Projects оставлены общими обязательствами. |
+
+Например, если подтверждение создания Project потеряло acknowledgement, ни
+association, ни ручной выбор не должны объявлять попытку неуспешной и создавать
+потенциальный дубликат, пока поздний исход может примениться. При подтверждённом
+сохранении Project остаётся доступным по собственной identity. Это контроль
+наблюдаемого результата, а не доказательство выбранного протокола или того, что
+любая конкретная альтернатива уже удовлетворяет требованию.
