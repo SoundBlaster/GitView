@@ -113,9 +113,9 @@ specification:
       when: The main overview opens.
       then: The empty state is distinct from a loading failure.
   deferred:
-  - Default density and arrangement, sorting, and which of the existing signals fit at that density.
+  - Default density and arrangement, and which of the existing signals fit at that density. Candidate 0072 proposes stable local Project insertion order subject to review.
   - First-launch and launch restoration are refined by 0022 and 0024; their open decisions remain explicit there.
-  - Exact default density, sorting, control placement and empty-state wording.
+  - Exact default density, alternative sorting, control placement and empty-state wording.
   - Detailed Project navigation is specified separately in GITVIEW-SPEC-0006.
   provenance_boundary: The owner suggested starting from the main screen and reusing the interactive prototype.
     Prototype observations describe the view inside a Project. The overview of multiple Projects uses

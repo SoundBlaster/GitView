@@ -134,6 +134,6 @@ specification:
       when: The operator opens the summary and an A-only view.
       then: The A-only seven may be shown where its scope is permitted, while the prior total and other app-controlled equivalents that expose B's contribution are suppressed; the Project is not reported as having only seven total PRs.
   unresolved:
-  - Default layout, ordering of Projects and exact subset of signals shown at each density.
+  - Default layout and exact subset of signals shown at each density; candidate 0072 proposes local insertion order and leaves alternative ordering open.
   - Exact visual and accessible controls for signal navigation and cross-Repository scope selection.
   - Classification of local Project names that were independently supplied by the operator versus derived from a private source requires privacy and storage refinement.
