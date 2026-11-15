@@ -43,13 +43,12 @@ specification:
   evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
     selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
-  - A PR overview identifies its repository, number, title, source URL and observed lifecycle; expose
-    the agreed field set when available.
+  - A PR overview retains its confirmed object and Repository context and exposes the agreed field set when supported and permitted. Unavailable fields and source links remain unavailable or last known with their context; do not substitute another object.
   - Separate open/closed/merged from draft, review decision, thread counts and check counts; missing values
     are not zero or approval.
-  - Expose changed lines, changed file and commit counts without embedding diff, file, commit or run detail.
+  - Expose supported permitted changed-line, changed-file and commit counts with their observation context; unavailable counts are not zero. Do not embed diff, file, commit or run detail.
   - Read authored Problem, Motivation, Expected outcome, Changes, Validation and References as authored
-    text when present; link source and share.
+    text when present and permitted; offer source and share actions when an eligible link is available under 0033.
   pilot_scenarios:
     pr_context:
       given: Repositories R1 and R2 both have PR 42.
@@ -62,13 +61,12 @@ specification:
   pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
     are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
-- A PR overview identifies its repository, number, title, source URL and observed lifecycle; expose the
-  agreed field set when available.
+- A PR overview retains its confirmed object and Repository context and exposes the agreed field set when supported and permitted. Unavailable fields and source links remain unavailable or last known with their context; do not substitute another object.
 - Separate open/closed/merged from draft, review decision, thread counts and check counts; missing values
   are not zero or approval.
-- Expose changed lines, changed file and commit counts without embedding diff, file, commit or run detail.
+- Expose supported permitted changed-line, changed-file and commit counts with their observation context; unavailable counts are not zero. Do not embed diff, file, commit or run detail.
 - Read authored Problem, Motivation, Expected outcome, Changes, Validation and References as authored
-  text when present; link source and share.
+  text when present and permitted; offer source and share actions when an eligible link is available under 0033.
 acceptance_evidence:
 - criterion: The pilot contract and its boundary scenarios are independently checkable.
   evidence: The pilot_scenarios describe expected results for future verification; no app test has run.

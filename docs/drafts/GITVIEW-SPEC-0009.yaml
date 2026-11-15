@@ -42,8 +42,7 @@ specification:
   evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
     selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
-  - An Issue overview presents repository, source ID/number, title, description, source link, state and
-    available state reason.
+  - An Issue overview retains its confirmed object and Repository context and presents the selected fields and state reason when supported and permitted. Unavailable fields and source links remain unavailable or last known with their context; do not substitute another object.
   - Expose selected labels, type, author, assignees, milestone, related Issues and PRs, discussion and
     direct-sub-issue counts when available.
   - Differentiate an explicit closing PR reference from a mention; do not infer motive or actor from the
@@ -62,8 +61,7 @@ specification:
   pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
     are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
-- An Issue overview presents repository, source ID/number, title, description, source link, state and
-  available state reason.
+- An Issue overview retains its confirmed object and Repository context and presents the selected fields and state reason when supported and permitted. Unavailable fields and source links remain unavailable or last known with their context; do not substitute another object.
 - Expose selected labels, type, author, assignees, milestone, related Issues and PRs, discussion and direct-sub-issue
   counts when available.
 - Differentiate an explicit closing PR reference from a mention; do not infer motive or actor from the
