@@ -71,7 +71,7 @@ Swift imports. В частности, связь чистой policy со спе
 | Граница | Предлагаемый владелец и вход | Выход / оставшееся |
 | --- | --- | --- |
 | Контекст маршрута | Route-level page: Project, Project-wide или Repository scope, период, фильтры, плотность и origin. | Передаёт явный контекст; точные scene lifecycle и native API ещё не выбраны. |
-| Решение Today | Именованная policy: предметные факты, доступ, покрытие и наблюдённое время + управляемый clock/calendar. | Match, non-match или unknown для кандидатов и отдельный coverage всей популяции; отсутствие rule match не подменяет unknown. |
+| Решение Today | Именованная policy получает факты одного допустимого typed candidate и захваченный контекст времени, области и фильтров. | Match, non-match или unknown для этого объекта; отдельная сборка получает coverage всей популяции и не выводит его из отдельных решений. Отсутствие rule match не подменяет unknown. |
 | Обновление | Отдельная ответственность с зафиксированными source и scope, внедрёнными сетью и storage. | Раздельные source result, принятые факты, coverage и durable outcome; не импортирует sibling selection feature. |
 | Сборка данных | Domain-aware adapter и верхний composition связывают Project, Repository и PR/Issue. | Generic shared не получает продуктовые типы; точная группировка entity slices и типы ссылок ещё требуют дизайна. |
 | Представление | Page/widgets получают только разрешённый результат с его контекстом. | Сохраняют identity, фильтры и неопределённость; действительную доступность и жесты надо проверять на iOS. |
