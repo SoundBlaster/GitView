@@ -21,11 +21,9 @@ depends_on:
 - GITVIEW-SPEC-0037
 - GITVIEW-SPEC-0039
 - GITVIEW-SPEC-0041
-- GITVIEW-SPEC-0045
 - GITVIEW-SPEC-0046
 - GITVIEW-SPEC-0048
 - GITVIEW-SPEC-0049
-- GITVIEW-SPEC-0052
 - GITVIEW-SPEC-0053
 - GITVIEW-SPEC-0054
 - GITVIEW-SPEC-0056
@@ -73,6 +71,8 @@ depends_on:
 - GITVIEW-SPEC-0124
 - GITVIEW-SPEC-0126
 relates_to:
+- GITVIEW-SPEC-0045
+- GITVIEW-SPEC-0052
 - GITVIEW-SPEC-0098
 - GITVIEW-SPEC-0099
 - GITVIEW-SPEC-0100
@@ -104,6 +104,7 @@ specification:
     identity: PR and Issue identity is resolved in source Repository context; Project identity is local and multiple Projects may share a Repository.
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
+    optional_default_association_boundary: The persistent default association and its confirmation and recovery protocols in 0045 and 0052 are an agent-authored candidate. Scenarios that assert its association lifecycle or uniqueness, including sole_member_replacement_preserves_route_and_scope, membership_readded_after_removal, project_deletion_review_and_shared_repository, default_setup_review_changes_in_flight and interrupted_setup_restart, apply to that candidate if selected. Their general outcomes, including preserving Project identity, other memberships, source data and truthful recovery, still need an applicable contract for any alternative. A default Project in a generic first-setup scenario does not alone establish a persistent association.
     optional_long_thread_proxy_boundary: The 24-hour comment-age interpretation in 0094 is an agent-authored option; scenarios specifically evaluating it apply only if it is selected. The initial long-discussion volume interpretation is defined in 0062; duration and inactivity remain distinct unresolved meanings.
     optional_history_clear_boundary: The all-local-history clear in 0067 and its protocol in 0117 are agent-authored optional candidates with undecided first-release inclusion. Scenarios involving this clear apply only if it is included; chart history and local observations remain independently required. Other deletion and access rules are unaffected.
     optional_review_stage_boundary: The agent-proposed open non-draft filter in 0125 is conditional, not a prerequisite for the core Today journey. Its acceptance scenario applies only if it is included; the owner's broader ready-work need remains unresolved.
