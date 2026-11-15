@@ -76,6 +76,7 @@ depends_on:
 - GITVIEW-SPEC-0119
 - GITVIEW-SPEC-0120
 - GITVIEW-SPEC-0121
+- GITVIEW-SPEC-0122
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
   root_intent: .specgraph/root_intent.md
@@ -101,6 +102,14 @@ specification:
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
   scenarios:
+    upgrade_and_recover_portfolio:
+      given: A supported older local schema contains Projects P and Q sharing Repository R and independently retained PR observations for R.
+      when: The app completes a supported upgrade under 0122 and the overview reads the migrated configuration while GitHub is offline.
+      then: P and Q retain their identities and shared membership; permitted observations remain scoped to R with their original freshness and coverage, and the offline state is distinguishable from a failed migration or a new empty portfolio.
+    unsupported_schema_at_startup:
+      given: A previously installed application version encounters a local store created by a newer incompatible version.
+      when: It starts the Project overview and a background refresh opportunity is offered.
+      then: It preserves the store, admits neither incompatible writes nor a first-run reset, identifies a local compatibility limitation and offers an available update or recovery route without claiming that GitHub or the Project collection is empty.
     today_typed_decision_to_overview:
       given: In a Project-wide Today selection, a permitted identified PR is confirmed merged today but its current CI is unknown; the operator has activated a failed-CI filter and another Repository's work population is not fully observed.
       when: The caller evaluates the normalized PR under 0110 and renders the filtered Project collection.
