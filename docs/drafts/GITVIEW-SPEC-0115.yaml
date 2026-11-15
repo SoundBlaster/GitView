@@ -79,8 +79,12 @@ specification:
       then: A's supported facts can be evaluated only within their actual times and revisions; B's coverage is incomplete or unavailable rather than zero, and neither the readable title nor a prior receipt establishes a complete current Project count or new CI observation.
     resume_partial_today:
       given: A Project has a permitted last-known old-open Issue from Repository A and an independently retained recently merged PR from B; the prior recent-work traversal for B ended early and no complete Project coverage is established.
-      when: The app reopens the same Today route and the source continuation is unavailable.
+      when: The operator explicitly opens a new ordinary Today route for that Project and the source continuation is unavailable.
       then: The two supported candidates remain inspectable under their own times and current access, incomplete coverage and an available refresh route are discoverable, and no missing-card count or exact percentage is invented. A new attempt does not claim that the earlier traversal was complete.
+    cold_start_after_filtered_route:
+      given: A previous session ended on Project P's failed-CI-filtered grid. Its saved Project configuration and some source observations are independently recoverable after restart, but the saved object population is incomplete.
+      when: A cold session opens the portfolio and the operator explicitly enters P's ordinary Project-wide work route without choosing a signal.
+      then: The new route uses the ordinary Today and filter defaults under 0024 and 0074 rather than silently restoring the old failed-CI filter or scroll anchor. Recoverable permitted observations are reevaluated under their own times, revisions and current access; the collection makes incomplete coverage discoverable and does not claim a new complete refresh merely because the route was opened. A preserved in-memory session instead follows its retained route context.
     partial_member_access_restored:
       given: Project P contains A and B; A has permitted Today observations, B was restricted, and an applicable post-restriction response independently supports one identified B PR matching Today and the active filters while B's remaining PR population and Issues remain unobserved.
       when: The current Project-wide Today route is reevaluated with its existing filters and density.
