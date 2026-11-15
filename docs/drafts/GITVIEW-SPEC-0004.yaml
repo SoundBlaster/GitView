@@ -30,7 +30,7 @@ sources:
   autonomous_refinement: conversation:gitview/excerpt-69-reply
 acceptance:
 - The overview represents each Project and makes its permitted identifying information, available work and attention signals inspectable.
-- Opening a Project preserves its identity; opening a signal shows the corresponding objects in that Project.
+- Opening a Project preserves its identity; an actionable signal opens its corresponding selection in that Project with its applicable scope and observation limitations.
 - A failed refresh does not itself erase prior observations. Show eligible last-known data, the affected scope and failure, and a supported permitted successful observation time when available; an unobserved scope has no invented successful time.
 - A repository shared by Projects contributes to each Project and only once to a unique portfolio total.
 - The overview is usable without relying exclusively on a specific gesture or on color.

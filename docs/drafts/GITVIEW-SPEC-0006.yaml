@@ -22,7 +22,7 @@ acceptance:
 - A multi-repository Project also offers a Project-wide work collection without requiring a signal-specific filter.
 - A single-repository Project reaches its work without a redundant repository step; Project and Repository
   remain distinct.
-- A Project signal opens matching objects across its member repositories and identifies their source repositories.
+- An actionable Project signal opens its corresponding selection across the applicable member scope, identifying source repositories where permitted and preserving uncertainty and coverage limitations.
 - Changing density does not silently change Project, repository scope, period or filter; return restores
   context and location when possible.
 - Incomplete observations do not remove a member or present unknown work as an empty repository.
@@ -49,11 +49,11 @@ specification:
     all_members: Offer an explicitly identifiable Project-wide work collection across its confirmed current members independently of a signal shortcut. Its initial Today selection and lifecycle defaults follow 0074 and 0007; an unobserved member makes the applicable coverage incomplete rather than empty.
     single: Skip a redundant intermediate repository screen while retaining Project and Repository as
       separate identities and retaining sufficient source context.
-    signal_route: A Project signal opens matching objects across its member repositories. The active signal
-      or filter and each object's repository are identifiable.
-    return: Restore the originating Project, filter and scale, and prior location when still available.
-      If data or membership changed, retain Project and filter and provide an understandable position;
-      exact mechanics remain open.
+    signal_route: An actionable Project signal opens the corresponding selection within its applicable member scope. The active signal
+      or filter and each object's repository are identifiable where permitted. Unknown predicates or incomplete coverage remain distinguishable; the destination is not claimed exhaustive or equal to the earlier signal count without supporting evidence under 0092.
+    return: Restore the originating Project, filter and scale, and prior location when still valid and available.
+      If data or membership changed, preserve the valid context and provide an understandable position; if the originating Project or selected member is no longer valid or cannot be verified, follow 0024 rather than silently switching scope.
+      Exact mechanics remain open.
     zoom: Changing density within a scope does not itself change membership or filters. Entry into a different
       scope is distinguishable from a density change.
     unknown: An unavailable member remains in the Project; unknown data is not an observed empty result.

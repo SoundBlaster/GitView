@@ -26,8 +26,7 @@ sources:
     package: local.gitview.domain@0.2.0-draft-composition.5
 acceptance:
 - The unfiltered Today view includes unfinished PRs and Issues, including those created before today.
-- PRs merged or closed and Issues closed today remain visible in the unfiltered Today view with their
-  current source state.
+- A confirmed same-day PR merge or closure or Issue closure supports inclusion in unfiltered Today within applicable scope and access. Show current source state only when supported and permitted; otherwise preserve its actual observation context or mark it unknown.
 - All lifecycle states in the current scope and time group are included by default; the user can explicitly
   exclude states.
 - Each source-confirmed PR or Issue occurs once in a selection, retains its repository identity and is not
@@ -64,14 +63,15 @@ specification:
 
       '
     today_results: 'Include a PR merged or closed without merge today and an Issue closed today, even
-      if it was created before today. Show the current state. Closing an Issue is not automatically successful
+      if it was created before today. Show the current state only with applicable evidence; an unavailable
+      current state remains unknown and a retained earlier state keeps its observation context. Closing an Issue is not automatically successful
       completion; keep its source reason when available. When the source provides a creation time within
       today, retain that object''s card within the current day''s unfiltered selection.
 
       '
     same_day_continuity: 'When an observed open item closes or merges today, update its card rather than
       removing it merely because its lifecycle state changed. For example, if 95 of today''s 100 PRs merge,
-      the unfiltered selection still contains the 100 PRs, subject to the same scope and observation coverage.
+      the unfiltered selection still contains the 100 PRs, subject to confirmed identities, same scope, access and observation coverage; an open-only refresh does not by itself prove what happened to unreturned PRs.
 
       '
     identity: 'A source-confirmed object appears at most once within one selection even if several inclusion
