@@ -287,7 +287,7 @@ specification:
       when: The current search has no observed matches and a late response for an earlier query arrives.
       then: A and the custom-creation intent remain pending, no source-wide absence or saved Project is asserted, the earlier response is not labeled as the current query, and the existing portfolio remains intact.
     create_custom_project_from_shared_repositories:
-      given: Two eligible Repositories each already have a saved default Project and belong to different organizations.
+      given: The proposed custom-creation route is selected, and two eligible Repositories each already have a saved default Project and belong to different organizations.
       when: The operator explicitly creates a separate custom Project containing both and opens it from the overview.
       then: The new Project has its own identity and both members, the prior Projects and defaults remain intact, and its initial multi-member route is scoped to that new Project.
     project_purpose_across_edit:
