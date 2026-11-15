@@ -30,7 +30,7 @@ sources:
   source_revision: 9c27b27f91c5499aa72e0af70d02f362
   root_intent: .specgraph/root_intent.md
   product_projection: docs/drafts/product-first-pass-20261115.md
-  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.12/composition-context.yaml
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 acceptance:
 - The first autonomous pass makes the owner's idea and its meaningful product consequences understandable through connected concepts, user journeys and outcomes.
 - The product description distinguishes owner-selected choices, agent-proposed refinements and still-open meanings without presenting a proposal as an owner decision.

@@ -29,7 +29,7 @@ sources:
     sha256: 56fd32cf5118687e2b14d8058fa35ca644e19b91f67b2091bb09b5fcd3ca7d4f
   ontology_draft: ontology/packages/gitview/README.md
   ontology_composition_pilot: ontology/pilots/motivation-composition/README.md
-  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.12/composition-context.yaml
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
   project_sources_commit_scope: Pins the earlier background source documents; the later identity decision
     is separately pinned by sketch revision, excerpt refs and review document digest.
   repository_identity_decision:
@@ -286,7 +286,7 @@ specification:
       dependencies, until leaves in scope are sufficiently specified for implementation and verification.
       Defer pilot implementation and premature API budget decisions; assess readiness using the complete
       branch and its dependencies, not leaf position or a structural check alone.
-    technical_boundary: The working draft.12 composition explicitly declares User and the GitHubRepository
+    technical_boundary: The working draft.13 composition explicitly declares User and the GitHubRepository
       contextual protocol. These declarations and the action-derived relationships remain draft; neither
       a vocabulary check nor this specification establishes a particular action or canonical acceptance.
       This context does not select sgcore as the product domain vocabulary or activate the proposed external

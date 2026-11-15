@@ -14,7 +14,7 @@ depends_on:
 - GITVIEW-SPEC-0083
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0025.yaml
-  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.12/composition-context.yaml
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
   ontology_review: ontology/review/membership-lifecycle-state-evidence.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
