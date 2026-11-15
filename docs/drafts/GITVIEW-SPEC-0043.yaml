@@ -78,6 +78,7 @@ depends_on:
 - GITVIEW-SPEC-0121
 - GITVIEW-SPEC-0122
 - GITVIEW-SPEC-0124
+- GITVIEW-SPEC-0125
 - GITVIEW-SPEC-0126
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
@@ -88,6 +89,7 @@ acceptance:
 - Same-day outcomes remain visible without lifecycle exclusions and can be explicitly filtered without deleting work records.
 - Partial, stale, failed and explicitly denied data remain distinguishable throughout the overview and recovery paths.
 - Shared Repositories are included in each relevant Project and deduplicated in portfolio-wide unique totals.
+- The explicit open non-draft PR filter remains distinct from unrestricted Today, review assignment and merge eligibility throughout preview and return.
 - Evidence distinguishes a planned scenario, a deterministic test with doubles, a real source integration observation and a native device observation.
 specification:
   objective: Combine selected user journeys into verifiable expectations across the refined specification branches.
@@ -105,6 +107,10 @@ specification:
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
     optional_cohort_boundary: The dynamic Today journey and its acceptance do not require capturing a fixed PR cohort. Candidate 0055 describes a separate proposed view whose first-release scope is unresolved; its conditional scenarios apply if that capability is included, without making it a prerequisite for the core journey.
   scenarios:
+    review_stage_filter_preview_and_return:
+      given: A single-Repository Project P's permitted unrestricted Today view contains an open non-draft PR A, an open draft PR B and a same-day merged PR C, with independently supported typed identities and applicable facts. The operator selected a dense layout; source evidence and permissions are sufficient for these three objects but do not establish an exhaustive population or merge policy.
+      when: The operator explicitly selects the open non-draft filter, uses an accessible preview to open A, returns to the work grid and clears only that filter.
+      then: Initially all three supported cards remain visible. The filtered selection includes A without asserting a review request, approval or merge eligibility; the preview and overview remain bound to A and its Repository. On return P, Today and density remain; clearing the condition makes B and C eligible again under current independently applicable evidence. No complete Project count is inferred from these three observations, no unrelated filter or GitHub object is changed, and any source or access limitations remain discoverable where permitted.
     check_count_to_changed_project_selection:
       given: At T1 Project P contains Repositories A and B. Two distinct permitted open PRs, one in each Repository, have five applicable failure-category check entries between them; the separately identified Project failed-CI signal counts two affected PRs while the check total is five. Both values carry their actual T1 scope and sufficient T1 evidence.
       when: Before opening the Project signal, a later independently supported observation establishes that the A PR no longer matches failed CI while the B PR still does; the operator opens the signal and then explicitly clears its failure condition.
