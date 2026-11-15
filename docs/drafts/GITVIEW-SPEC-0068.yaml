@@ -38,7 +38,7 @@ specification:
   - gitview:Issue
   - gitview:Metric
   contract:
-    entry: Provide a discoverable route from a Project summary to available metric history for that same Project. The operator can identify the displayed metric and period; a Project with no usable history still exposes an understandable unavailable or incomplete state rather than a fabricated empty chart. Exact control, layout and initial set of visible series remain open.
+    entry: Provide a discoverable route from an identifiable permitted Project context or its summary to that same Project's history surface, including when no usable history has yet been established. The operator can identify the displayed metric and period; a Project with no usable history still exposes an understandable unavailable or incomplete state rather than a fabricated empty chart. Exact control, layout and initial set of visible series remain open.
     agreed_metric_selection: Candidate 0097 proposes discoverable access to the remaining agreed summary metrics beyond the initial four series in 0069. An unavailable series remains identifiable with its limitation; its inclusion in a catalog does not prove usable history or authorize reconstruction from current state.
     scope: Describe the membership basis and included Repository scope under 0064. As a working proposal, source-work retrospective metrics initially use the confirmed current members captured for evaluation; do not call that the actual past membership. Candidate 0097's separately labeled observed local membership-count history has its own actual-configuration observation basis. If configuration becomes unavailable or membership changes, a displayed source-work series retains its prior basis or is explicitly recalculated with the new basis and coverage.
     units: Display open PR and open Issue state series separately; merged PR and closed Issue outcome series are separate from them and from each other. Identify whether outcomes count events or distinct objects and identify the applicable time buckets. Do not label the sum of PR and Issue as independent completed tasks or imply a burn-down without the defined cohort and evidence in 0055.
@@ -56,6 +56,10 @@ specification:
     accessibility: Essential metric names, values, units, scope and gaps have a non-color accessible representation and can be inspected without requiring a drag gesture or relying solely on spatial chart position. Preserve meaningful focus on return under 0032. Exact native controls and chart design require device evaluation.
     provenance: The owner accepted Project summaries and graphs where adequate history exists. The entry route, current-member default and concrete uncertainty behavior are agent-authored refinements; no running chart or source coverage is claimed.
   scenarios:
+    first_project_without_history:
+      given: A Project has been saved and is identifiable, but no eligible local history samples or independently supported historical source facts are available for its selected metrics.
+      when: The operator opens its history from the Project context.
+      then: The history route and selected metrics remain identifiable with an unavailable or insufficient-history state, not a graph of zeroes or a claim that GitHub had no work. Opening the surface does not itself create a historical sample, promise background collection or imply a source refresh; any separately available eligible recovery or refresh action remains explicit and access-safe.
     first_history_with_mixed_evidence:
       given: A permitted Project has an open-PR sample at Tuesday 10:30, a complete zero merged-PR outcome for Tuesday, and no supported closed-Issue outcome for that day; the selected period and membership basis are known.
       when: The operator opens the initial history view visually or through an accessible alternative.
