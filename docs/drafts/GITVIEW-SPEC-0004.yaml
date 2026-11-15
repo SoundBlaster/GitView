@@ -117,7 +117,7 @@ specification:
       when: The main overview opens.
       then: The empty state is distinct from a loading failure.
   deferred:
-  - Candidate 0047 proposes an adaptive initial density and field priority; exact arrangement and native validation remain open. Candidate 0072 proposes stable local Project insertion order subject to review.
+  - Candidate 0047 proposes an adaptive initial density and field priority; exact arrangement and native validation remain open. Candidate 0072 proposes a stable local Project order, preferring retained insertion order when supported and using a deterministic fallback.
   - First-launch and launch restoration are refined by 0022 and 0024; their open decisions remain explicit there.
   - Alternative sorting, control placement and empty-state wording.
   - Detailed Project navigation is specified separately in GITVIEW-SPEC-0006.
