@@ -24,6 +24,17 @@
 
 Если проект, access, query или local day меняются, новые evaluation и disclosure применяются отдельно. Старый progress не переносится в другой Repository или interval; неактуальный scope не раскрывается через описание ошибки. Это не требует длительной DB transaction во время сети или Keychain.
 
+Если один сохранённый progress использовался двумя Projects, он остаётся
+свидетельством своей source portion, а не двумя независимыми source attempts.
+После restart каждый потребитель заново устанавливает свой Project, текущий
+membership, account и применимость query. Удаление Repository из одного Project
+само по себе не удаляет его допустимый progress для другого, но наличие другого
+Project не обходит текущий access restriction. Для восстановления статуса
+каждого исходного пользовательского refresh дополнительно необходим его
+собственный recoverable request context; один общий cursor не доказывает, что
+обе Project-wide операции завершились. Недоступный контекст одного потребителя
+не превращается в успешный или пустой результат другого.
+
 ## Проверяемые примеры
 
 - Факты страницы сохранены, disposition и progress совместно committed, acknowledgement потерян: сверять прежний operation binding; до восстановления outcome indeterminate.

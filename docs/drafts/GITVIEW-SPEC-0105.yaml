@@ -66,6 +66,10 @@ specification:
     verification: Under 0040 and 0079 specify TDD scenarios for lost acknowledgement, same-operation replay, equal-value distinct observations, partial field writes, conflicting observations, clear races, denied access and restart. Verify actual persistence and source mappings separately from doubles, and native presentation separately from both.
     provenance: Local cache, last-update visibility and history follow owner direction. This storage boundary, the SQLite direction in 0113 and separation of outcome types are agent-authored proposals, not an implemented database or a selected historical data source.
   scenarios:
+    shared_progress_after_one_membership_changes:
+      given: Two Project requests used one compatible Repository R discovery attempt. Its portion context, continuation and an explicit earlier-page gap are durably recoverable; the individual request context for P is unreadable, while Q's request context and current membership of R are readable. Before restart P removed R, and current source account and access for R remain independently applicable.
+      when: The application restores the two Project overviews and considers continuing Q's discovery.
+      then: Q may use the compatible R continuation with the original gap still visible and eligible for repair under 0102; neither terminal traversal nor the shared cursor establishes complete Q coverage. P's unreadable historical request remains a safe local limitation and R is not reinserted into P. The stored portion does not claim that both original Project requests succeeded or create a second source observation.
     changed_association_during_read:
       given: A local read begins while permitted representation X has a supported association with PR A, and a coordinated correction changes that association to PR B before the read has obtained every required context. A separate fact for PR C remains independently readable.
       when: The storage boundary prepares the result for the Project route.
