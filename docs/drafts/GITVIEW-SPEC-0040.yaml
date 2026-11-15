@@ -38,7 +38,7 @@ specification:
     provenance: The owner requested testability, DI, TDD and network/data mocks; boundary placement and test-level distinctions are agent-authored refinements.
   scenarios:
     offline_refresh:
-      given: A data fake contains a last-known PR observation with a successful time and the network double returns a deterministic failure.
+      given: A data fake contains a last-known PR observation with a successful time eligible for display and the network double returns a deterministic failure; no independent accepted observation or access change occurs.
       when: Refresh behavior is exercised.
       then: The stored observation and time remain and a scoped failure is visible, without contacting GitHub.
     unknown_filter:

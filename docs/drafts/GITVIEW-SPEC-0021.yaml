@@ -94,9 +94,9 @@ specification:
       when: A portfolio total is computed.
       then: The decision receives identities and coverage explicitly and counts that Repository once.
     offline_refresh_test:
-      given: A test injects saved observations and a network dependency that fails deterministically.
-      when: The application refreshes the observations.
-      then: It preserves the last known data and reports the failure and last successful update time.
+      given: A test injects saved observations and supported observation times eligible for display, together with a network dependency that fails deterministically; no independent accepted observation or access change occurs.
+      when: The application refreshes the affected scope.
+      then: The eligible last-known data and its supported time remain available with the scoped failure. A first failed observation has no invented successful time; actual adapters and source integration require separate evidence.
     real_adapter_check:
       given: Isolated behavior tests pass using test doubles.
       when: The actual adapter and authorized GitHub integration are checked separately.
