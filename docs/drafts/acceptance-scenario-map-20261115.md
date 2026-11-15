@@ -25,6 +25,21 @@ merged, а `complete_multi_repository_today_journey` — переход и во�
 
 ## Setup и создание
 
+Содержательная сверка группы с [0022](GITVIEW-SPEC-0022.yaml),
+[0045](GITVIEW-SPEC-0045.yaml) и [0108](GITVIEW-SPEC-0108.yaml):
+
+| Обязательство | Сценарии 0043 | Граница сравнения |
+| --- | --- | --- |
+| Частичный GitHub scope и доступный выбор | `first_setup_partial_github_installation`, `authorization_and_missing_installation` | Первый проверяет сохранение одного default Project и отсутствие наблюдений работы; второй — доступность выбора и сохранность уже существующих Projects. Pending approval не тождественен произвольной неустановленной причине. |
+| Поиск и намерение | `discovery_search_and_custom_intent` | Поздний результат другого поиска не подменяет текущий запрос или custom intent; пустая видимая выдача не доказывает пустой источник. |
+| Custom Project из общих Repository | `create_custom_project_from_shared_repositories` | Один новый Project не меняет существующие defaults и состав других Projects. Это не default batch. |
+| Конкурирующий default | `default_setup_review_changes_in_flight` | Проверяется смена результата *после* review; это отличается от заранее известного default, который повторный setup может переиспользовать по 0022. |
+| Смена аккаунта и прерывание записи | `setup_changes_account`, `interrupted_setup_restart` | Первый проверяет неподходящий source account и unsubmitted entry; второй — уже неизвестный исход после перезапуска. Отмена авторизации до создания описана отдельно в 0022. |
+
+Удалять сценарии этой группы по признаку схожего названия не обосновано.
+Оценка не устанавливает полноту all-paths setup и не доказывает выполнение
+приёмки: источники, durable recovery и native UX требуют собственных проверок.
+
 - `first_setup_partial_github_installation`
 - `discovery_search_and_custom_intent`
 - `create_custom_project_from_shared_repositories`
