@@ -62,6 +62,10 @@ specification:
       given: Previously saved local Project configuration cannot be read at launch.
       when: The product description explains the opening state.
       then: It identifies a recoverable local-data problem instead of claiming a first launch, a confirmed empty portfolio or an automatic reset.
+    mixed_refresh_and_local_retention:
+      given: One Project Repository refresh succeeds while another fails, and the successful source facts have an unconfirmed local retention outcome.
+      when: The product description explains the update result and recovery.
+      then: It attributes each source outcome to its actual scope and observation time, distinguishes the local retention limitation from a GitHub failure, and does not promise the new facts will survive restart or that the whole Project is current.
     project_membership_is_local:
       given: A Repository belongs to two GitView Projects.
       when: The user removes it from the first Project.
