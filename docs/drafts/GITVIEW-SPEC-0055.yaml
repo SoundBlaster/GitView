@@ -19,7 +19,7 @@ sources:
   owner_unfinished: conversation:gitview/excerpt-56-reply
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A PR completion view states the fixed cohort, its source scope, capture time and coverage before presenting progress.
+- If the agent-proposed fixed-cohort completion view is offered, it states the cohort, source scope, capture time and coverage before presenting progress; ordinary dynamic Today is not required to use a fixed cohort.
 - Current observed open, merged, closed without merge and unknown PR states remain distinguishable for that cohort.
 - A stale, incomplete, identity-ambiguous or restricted input is not presented as an exact current total or silently treated as zero.
 - A PR cohort is not labeled a count of independent tasks and does not merge linked Issues into the PR count.

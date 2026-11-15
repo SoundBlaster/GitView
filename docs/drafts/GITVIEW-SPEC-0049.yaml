@@ -19,7 +19,7 @@ sources:
   apple_date_interval: https://developer.apple.com/documentation/foundation/dateinterval
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- The Today selection tracks the current local calendar day without changing stored source timestamps.
+- Under the agent-proposed local-day interpretation, Today tracks the device current local calendar day without changing stored source timestamps; the product time-zone interpretation remains a candidate.
 - A day or time-zone change does not silently change the Project, Repository scope or explicit filters.
 - A selected object overview or preview is not replaced with another object solely because Today changes.
 - Missing coverage for the newly evaluated day remains unknown or partial rather than a confirmed empty selection.
@@ -31,7 +31,7 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    today: Today is the device's current local calendar day, with an inclusive start and exclusive next-day boundary. Re-evaluate it when the current day or device time zone changes; use local calendar boundaries rather than assuming every day has the same duration.
+    today: As an agent-authored working interpretation, Today is the device's current local calendar day, with an inclusive start and exclusive next-day boundary. Re-evaluate it when the current day or device time zone changes; use local calendar boundaries rather than assuming every day has the same duration.
     evaluation_context: For each calculation capture one consistent evaluation instant, system calendar and time-zone context, and derive the containing local day and its next boundary from that context. A changed system calendar, time zone or wall clock can require reevaluation even if a previously rendered date label looks the same. Compare event instants against the captured half-open boundaries; do not use a fixed 24-hour duration or mix a start calculated in one time zone with an end calculated in another. A calendar calculation that cannot establish boundaries yields an unavailable period rather than a fabricated UTC day.
     foundation_boundary: Apple's DateInterval is documented as closed. If a Foundation calendar API supplies a DateInterval for its day boundaries, the product selection still uses start inclusive and end exclusive, including for filters and historical buckets; do not rely on closed-interval containment for this policy. An event exactly at the next start belongs to the new local day, not both days. This is an implementation-facing constraint derived from the product period contract, not a claim that any platform code has been executed.
     resume_and_ordering: On returning to an active view or receiving a supported calendar or clock change, obtain a fresh context and re-evaluate dynamic Today; do not depend on the application being scheduled precisely at midnight in the background. Bind asynchronous results to their captured period, membership and filters. A late evaluation for the old day, time zone or prior wall-clock context cannot replace a selected newer context merely because it finishes last. Retained source instants and observation times remain unchanged.
