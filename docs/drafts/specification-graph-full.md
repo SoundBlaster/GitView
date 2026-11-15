@@ -4,7 +4,7 @@
 
 Все статусы показаны как записаны в файлах. Структура не доказывает смысловую полноту, принятие, готовность к реализации или выполненные тесты.
 
-Кандидатов: **126**. SHA-256 имён и содержимого исходных YAML: `fd1e86cfbe26d1f59efb52b7eab98d193e49285a69dd52b7bda1561e366d1dff`.
+Кандидатов: **126**. SHA-256 имён и содержимого исходных YAML: `66969edf187dae6e0e5d8ce8cc7e8f3cfeef8bc8252fdc62eb9a7d1734bceaff`.
 
 Воспроизведение и проверка снимка: `python docs/drafts/evidence/render-specification-graph.py` и та же команда с `--check` в Python environment SpecGraph.
 

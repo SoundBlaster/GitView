@@ -1,0 +1,39 @@
+{
+  "artifact": "graphql_schema_validation",
+  "date": "2026-11-15",
+  "schema_source": "https://docs.github.com/public/fpt/schema.docs.graphql",
+  "schema_sha256": "46f1d455d72ab784c6cb2b86e9b023df195dcfd2ed92099108b0faa5faa5d1fc",
+  "schema_snapshot_path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/github-public-schema-20261115.graphql",
+  "schema_build_assume_valid": true,
+  "validator": "graphql-core 3.2.6",
+  "document": "docs/drafts/today-graphql-operation-candidates-20261115.md",
+  "document_sha256": "9207992e075d36cd1627dce090685f87d7c029166a86d3ccb49489b20652e3b0",
+  "operations": [
+    {
+      "operation": "GitViewOpenIssues",
+      "sha256": "f380f02a9272a3d5d22add639dbbdb9ed520932f27dec8553723dcb6094c6e29",
+      "errors": []
+    },
+    {
+      "operation": "GitViewRecentIssues",
+      "sha256": "9bdd976ea15ec87da05edfc8d481eb824a9e7636eacaafd0155e02e54f2d25ad",
+      "errors": []
+    },
+    {
+      "operation": "GitViewOpenPullRequests",
+      "sha256": "a9de35fb1aab405d0072642a7ead99b06ac3d6ac3b7753a1abed7138adc203be",
+      "errors": []
+    },
+    {
+      "operation": "GitViewRecentPullRequests",
+      "sha256": "5df1c2215b45e844d9e5f3697772b45699d1dfae79702effce85a7df03292e5f",
+      "errors": []
+    }
+  ],
+  "limits": [
+    "static syntax, fields and type compatibility only",
+    "no GitHub request or permission check",
+    "schema snapshot is not a live endpoint",
+    "schema loaded with assume_valid"
+  ]
+}
