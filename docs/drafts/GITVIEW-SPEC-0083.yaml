@@ -22,7 +22,7 @@ acceptance:
 - A retry is an explicit new submission based on a confirmed current configuration and applies only the operator-reviewed desired changes.
 - A second intervening change, an unreadable current configuration or an indeterminate prior submission cannot be bypassed by replaying an old draft.
 - Conflict recovery does not recreate a confirmed deleted Project or reveal restricted source-derived details.
-- A resulting Project remains named, has at least one Repository and preserves Repository identity; if the proposed default-association mechanism is selected, its association rules also apply.
+- A resulting Project retains its name field, has at least one Repository and preserves Repository identity; nonempty-name validation and default-association rules apply only if their respective proposed policies are selected.
 - Review, retry and exit are accessible without relying solely on color, long press or a timed gesture.
 specification:
   objective: Propose a review-first recovery interaction for conflicting local Project edits while preserving confirmed work and the operator's explicit intent.
