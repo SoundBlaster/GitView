@@ -22,7 +22,7 @@ sources:
 acceptance:
 - Opening or sharing uses an eligible source link associated by observation with that Repository, PR or Issue, without claiming a last-known link still resolves there when its current destination is unverified.
 - Missing or unverified source links do not silently navigate to a different source object.
-- Default sharing passes the source link through the platform sharing flow without automatically including private object contents or credentials.
+- Under the agent-proposed link-only default, sharing passes the source link through the platform sharing flow without automatically including private object contents or credentials; the default payload remains a product decision.
 - A source link does not imply that a recipient has access or that an external application successfully opened it.
 specification:
   objective: Preserve object identity and access boundaries when moving from a GitView overview to its source or sharing a link.

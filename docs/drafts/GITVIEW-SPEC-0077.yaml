@@ -28,7 +28,7 @@ acceptance:
 - A missing or incomplete comment population, unavailable author identity or restricted evidence cannot silently become a complete zero or exact comment-author count; the separately supported source participants aggregate retains its own evidence.
 - A comment's creation time is distinct from Issue update time, observation time and a later comment edit.
 - When a distinct comment-author metric is evaluated, two comments by the same confirmed author count once and unresolved identities are not silently merged by display name.
-- The distinct comment-author count, including supported non-User actors, is separately discoverable with its own population and coverage.
+- Under the agent-proposed separate comment-author metric, its count, including supported non-User actors, is discoverable with its own population and coverage; whether to expose this additional metric remains a product decision.
 - A supported GitHub participating-Users count is available with its source-defined population and is not presented as a complete count of all possible discussion actors.
 - The Issue overview does not require showing individual comment text or identifying restricted participants to display a permitted aggregate.
 specification:
