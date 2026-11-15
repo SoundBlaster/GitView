@@ -35,6 +35,7 @@ depends_on:
 - GITVIEW-SPEC-0062
 - GITVIEW-SPEC-0063
 - GITVIEW-SPEC-0066
+- GITVIEW-SPEC-0070
 - GITVIEW-SPEC-0071
 - GITVIEW-SPEC-0072
 - GITVIEW-SPEC-0073
@@ -240,7 +241,7 @@ specification:
       when: The operator opens the proposed all-local-history clear from a Project context, reviews its disclosed scope and confirms it successfully.
       then: The action does not claim to affect P alone, the disclosed historical scope is cleared for both Projects, their configurations and permitted current observations remain, and graphs do not turn the cleared history into zero source activity.
     current_refresh_with_missing_history:
-      given: A Project has a previously retained open-PR sample, the next day's background opportunity does not occur, and a later source refresh succeeds while retaining its new history sample fails.
+      given: A Project has a previously retained open-PR sample, the next day's background opportunity does not occur and no other sufficient evidence establishes that day's open-PR state; a later source refresh succeeds while retaining its new history sample fails.
       when: The operator opens the Project overview and the historical series.
       then: The current source observation and local retention failure are distinguishable, the prior retained point keeps its time, and neither the day without an observation nor the failed write is represented as a durable zero or invented sample.
     today_breakdown_changes_without_cohort:

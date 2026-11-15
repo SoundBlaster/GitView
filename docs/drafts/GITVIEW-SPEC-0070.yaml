@@ -58,7 +58,7 @@ specification:
     partial_members:
       given: A Project has complete A observations, unobserved B and a known value for A.
       when: Its historical Project metric is presented.
-      then: The value is identified as incomplete or unavailable for A and B, and B is not treated as zero.
+      then: The supported A-scoped value may be shown with its own context where permitted, while the requested A-and-B result is identified as incomplete or unavailable and B is not treated as zero.
     integration_gap:
       given: Controlled history decision tests pass but real GitHub adapter and native accessibility checks have not run.
       when: The verification result is reported.
