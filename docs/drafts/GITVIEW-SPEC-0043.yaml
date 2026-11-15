@@ -194,6 +194,14 @@ specification:
       given: A historical outcome point is inspectable with permitted partial evidence and an object selection is open when access to a contributing private Repository becomes restricted.
       when: The operator returns using an accessible navigation path.
       then: Restricted details and inferable totals are not newly exposed, the earlier point is not mislabeled as a new scope, and a safe limitation or recovery route retains the permitted period and context where valid.
+    closure_chart_distinct_period_and_navigation:
+      given: An identified Issue closes on two different days in a selected fixed historical period, with a reopening between them and sufficient permitted event, identity and coverage evidence for that Issue. Another Repository in the same Project has no eligible historical evidence.
+      when: The operator inspects daily closure buckets, the period-wide distinct-Issue total and the supported object selection for one bucket without requiring pinch or long press.
+      then: The Issue contributes once to each supported daily bucket but only once to a distinct total over those days; the Project-wide result remains incomplete because of the unobserved Repository. The destination retains the selected bucket's actual bounds and predicate and does not fabricate an object count or a complete Project history.
+    captured_chart_period_after_zone_change:
+      given: The operator opened a historical outcome chart with local-day bucket boundaries captured in time zone A and a permitted event exactly on the boundary of two adjacent buckets.
+      when: The device changes to time zone B, the operator refreshes that existing selection without explicitly reevaluating its period, and inspects the boundary event.
+      then: The chart and eligible destination retain the captured absolute boundaries and A interpretation; the event belongs only to the later half-open bucket. A newly requested period in B is separately identified and does not silently rewrite the earlier selection or its coverage.
     history_retry_across_restart:
       given: A permitted source refresh yields an open-PR history observation, its retention may have committed, and its acknowledgement is lost before restart.
       when: GitView recovers the retention attempt and retries or reconciles it.
