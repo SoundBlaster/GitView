@@ -16,10 +16,10 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Under the agent-proposed default-association mechanism, a completed default Project save is recoverable as a Project and its matching association together; the mechanism remains a product candidate.
-- Recovery reconciles the interrupted operation's own outcome and independently respects a confirmed current association without creating a duplicate default Project for the same Repository.
-- Concurrent or late save attempts for the same Repository cannot both establish distinct active default associations for it.
-- An unavailable or inconsistent local record is reported as unresolved rather than assumed absent or overwritten.
-- Recovery of one Repository's setup outcome does not delete or alter unrelated Projects, source objects or other Repository memberships.
+- Under that proposed mechanism, recovery reconciles the interrupted operation's own outcome and independently respects a confirmed current association without creating a duplicate default Project for the same Repository.
+- Under that proposed mechanism, concurrent or late save attempts for the same Repository cannot both establish distinct active default associations for it.
+- Under that proposed mechanism, an unavailable or inconsistent local record is reported as unresolved rather than assumed absent or overwritten.
+- Under that proposed mechanism, recovery of one Repository's setup outcome does not delete or alter unrelated Projects, source objects or other Repository memberships.
 specification:
   objective: Define observable recovery after a Project save is interrupted before its outcome can be reported.
   ontology_refs:

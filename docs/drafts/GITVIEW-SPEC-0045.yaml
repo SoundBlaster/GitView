@@ -17,10 +17,10 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Under the proposed explicit-confirmation setup route, selecting repositories does not create saved Projects until the operator confirms a nonempty selection.
-- "Each confirmed selection entry has an individually attributable result: saved or reused when supported, pending or unresolved when the outcome is not established, or failed when non-application is confirmed. A saved or reused default Project contains that same confirmed Repository."
+- "Under the proposed default-association setup, each confirmed selection entry has an individually attributable result: saved or reused when supported, pending or unresolved when the outcome is not established, or failed when non-application is confirmed. A saved or reused default Project contains that same confirmed Repository."
 - Under the proposed default-association setup, a partial save followed by retry does not duplicate already saved associations or roll back unrelated saved Projects.
-- Cancelling an unconfirmed selection preserves saved Projects; cancellation after partial saving does not imply that already completed saves were undone.
-- Submitted entries retain enough durable evidence to reconcile uncertain effects; saving or restoring the entire pending multi-selection is not required.
+- Under the proposed setup, cancelling an unconfirmed selection preserves saved Projects; cancellation after partial saving does not imply that already completed saves were undone.
+- Under the proposed setup, submitted entries retain enough durable evidence to reconcile uncertain effects; saving or restoring the entire pending multi-selection is not required.
 specification:
   objective: Make the results of a multi-repository setup confirmation recoverable and attributable to the correct source identities.
   ontology_refs:
@@ -51,7 +51,7 @@ specification:
     account_change: If the confirmed source account changes while a selection is pending or a confirmed batch still has unsubmitted entries, do not silently apply the earlier confirmation under the new identity. Preserve known completed and indeterminate outcomes for reconciliation without disclosing restricted data. Remaining entries need explicit operator confirmation in the new account context and fresh applicable source identity and access evidence; previously submitted writes may still complete and are reconciled independently. Returning to the same source identity does not by itself prove Repository access or authorize automatic restart after process termination.
     privacy: Any saved Project or source data remains subject to the private-cache and explicit denial rules in 0036. Setup failures do not delete source GitHub objects.
     provenance: The owner chose default one Project per Repository; explicit confirmation, per-entry outcomes and interrupted-save recovery are agent-authored proposals.
-  scenario_scope: Scenarios mentioning a durably retained complete batch or durable cancellation describe an optional stronger implementation, not a first-version requirement. The ephemeral_batch_restart scenario expresses the selected minimum.
+  scenario_scope: These scenarios describe the proposed setup in the default_design_status contract, not an independently selected owner mechanism. Scenarios mentioning a durably retained complete batch or durable cancellation describe an optional stronger implementation, not a first-version requirement. The ephemeral_batch_restart scenario expresses the minimum proposed for this candidate.
   scenarios:
     ephemeral_batch_restart:
       given: The operator confirmed R1 and R2; the R1 Project saved, and R2 was not submitted when the app process terminated. No durable batch selection exists.
