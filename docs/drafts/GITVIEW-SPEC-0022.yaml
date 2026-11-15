@@ -42,7 +42,7 @@ specification:
     initial_data: The Project can be identified while work observations are loading. Never present an unobserved PR or Issue scope as a confirmed empty list; preserve explicit failure, last-success time and coverage under 0003 and 0019.
     repeat_entry: With existing Projects, preserve configured membership. A cold session opens the normal overview; an already retained session follows the valid route-restoration policy in 0024. Do not assume setup repeats.
     configuration_recovery: If local Project configuration cannot be read or its completeness cannot be established, present a recoverable local-data problem and retain saved data; do not offer an automatic first-run reset or claim that no Projects exist. A retry that successfully reads saved Projects updates the overview with their identities and memberships intact, without displacing a newer explicit route under 0023 and 0024. This state is distinct from GitHub being offline, disconnected or denying source access.
-    partial_batch_on_launch: If an interrupted confirmed selection left some Projects durably saved and other entries unresolved, show the confirmed saved Projects in the normal overview after configuration is readable. Recover the durable operation context and make unresolved entries discoverable under 0045 and 0052 when that context is readable; otherwise expose a local recovery problem. Do not assert that unconfirmed entries succeeded or erase confirmed Projects.
+    partial_batch_on_launch: If an interrupted selection left saved Projects and a submitted operation with an uncertain outcome, show independently readable saved Projects and make the uncertain submitted outcome recoverable under 0045 and 0052. Unsubmitted selections need not have been retained; the operator can select them again, and the app does not automatically resume them. Do not assert unconfirmed entries succeeded or erase confirmed Projects.
     boundary: Candidate 0098 proposes GitHub App public-client authorization and 0099 refines installation-scoped setup. Exact discovery queries, screen composition and copy remain unspecified; these are agent-authored proposals rather than claims of explicit owner selection.
   scenarios:
     empty_portfolio_with_unresolved_setup:
@@ -94,7 +94,7 @@ specification:
       when: The overview opens.
       then: The local-data problem is identifiable and recoverable; the app neither claims no Projects exist nor resets the saved configuration as a first-run default.
     restart_after_partial_selection:
-      given: One selected Repository's default Project was durably saved, while another selection's outcome was unresolved when the app stopped.
+      given: One selected Repository's default Project was durably saved, while another submitted operation's outcome was unresolved when the app stopped.
       when: A new session successfully reads the saved configuration.
       then: The confirmed Project is available in the overview; any recoverable pending outcome remains distinct from a confirmed failure or success under 0052.
   unresolved:
