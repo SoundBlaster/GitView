@@ -101,3 +101,9 @@ candidate contracts, не проверка реального GitHub или ок
 права отдельных полей, сопоставление типов identity и гарантии coverage; их
 нельзя закрыть одним `checked` или искусственным примером. Точные бюджеты и
 число запросов не выбираются на этом проходе.
+
+## Null-элемент в GraphQL PR connection
+
+Рабочее уточнение [0116](GITVIEW-SPEC-0116.yaml) SHA-256 `accb40dcd3a83ac8132582f01c2e5bdfb6bdbf6ba1fa2b750ae4410cc75e1f46`: [GitHub документирует](https://docs.github.com/en/graphql/reference/pulls#pullrequestconnection) `PullRequestConnection.nodes` как `[PullRequest]`, а `PullRequest.isDraft` как `Boolean!`. По [правилам обработки ошибок GraphQL](https://spec.graphql.org/September2025/#sec-Handling-Execution-Errors) ошибка non-null поля может подняться до допускающего null родителя. Для подходящей формы запроса это может дать null-элемент вместо объекта, тогда как соседний PR и `pageInfo` вернулись.
+
+Такой элемент не даёт identity или значение `isDraft`; его нельзя преобразовать в карточку или false. Последняя страница сама по себе не восстанавливает потерянную материализацию или не доказывает полноту. Это условный анализ документированных типов и правил, а не запись фактического ответа GitHub или доказательство конкретного query, grants и source consistency. Сценарий в 0116 остаётся текстовым.
