@@ -61,6 +61,10 @@ specification:
     named_request_query_candidate: The accompanying typed reviewRequests query statically validates against the recorded schema snapshot and requests source-supported reviewer fields for each documented union type. Bind usable requests and reviewer identities to the confirmed PR, Repository and actual access context; a null target, partial list, unsupported future type or field error does not become an empty request or fabricated person. The example does not prove a live permission, complete request population, current review decision or applicability to the GitView operator.
     provenance: Review attention and counters were selected by the owner; precise predicates, uncertainty and routing here are agent-authored refinements.
   scenarios:
+    inactive_discussion_at_threshold:
+      given: An open PR has one unresolved thread; sufficient applicable permitted evidence establishes that its latest submitted review-comment publication was exactly 24 elapsed hours before the captured reference.
+      when: The initial inactivity predicate is evaluated.
+      then: The thread is a confirmed match at the inclusive boundary, with threshold and evidence context retained. It is not called continuously unresolved for 24 hours or proof that a particular actor owes a reply.
     inactive_discussion_recent_comment:
       given: An open PR has an unresolved review thread with one confirmed submitted comment 30 hours ago and another confirmed submitted comment one hour ago at the same applicable reference.
       when: The 24-hour inactivity predicate is evaluated.
