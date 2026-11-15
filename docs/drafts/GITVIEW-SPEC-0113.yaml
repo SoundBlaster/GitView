@@ -32,7 +32,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The proposed local persistence direction supports one coordinated commit for a Project effect and its operation evidence while exposing domain-facing interfaces to callers.
-- Default association uniqueness and operation identity are enforced in the chosen local consistency boundary rather than inferred from a prior read.
+- Operation identity and, if the proposed default-association mechanism is selected, association uniqueness are enforced in the chosen local consistency boundary rather than inferred from a prior read.
 - Known conflict, unavailable storage and indeterminate outcomes remain distinguishable across interruption and retry.
 - If SQLite is selected, its build, journal and durability configuration are not assumed safe without target-specific evidence, including applicable WAL defects.
 - Credential storage, source access and local database commits retain their distinct boundaries and recovery outcomes.

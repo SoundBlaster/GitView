@@ -29,9 +29,9 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Logical retained data distinguishes Project configuration, source identities, observation evidence, history and operation outcomes by their ownership and interpretation; history-clear state is distinguished when that optional feature exists.
-- Default association uniqueness and Project membership invariants are enforced at a coordinated commit boundary, including concurrent and interrupted attempts.
+- Project membership invariants and, if the proposed default-association mechanism is selected, association uniqueness are enforced at a coordinated commit boundary, including concurrent and interrupted attempts.
 - A field value is not combined with an unrelated identity, scope, time, access or coverage claim to manufacture a stronger observation.
-- A confirmed clear and the admission of in-flight history writes are durably ordered so pre-clear work cannot restore cleared history.
+- If the optional history-clear feature is included, a confirmed clear and in-flight history writes are durably ordered so pre-clear work cannot restore cleared history.
 - Current cache, metric history and Project configuration have separately observable outcomes even if an implementation uses shared physical storage.
 - The model can be implemented with replaceable persistence and tested with controlled commit and recovery failures without network access.
 specification:

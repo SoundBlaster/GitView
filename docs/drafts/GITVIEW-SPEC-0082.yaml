@@ -21,7 +21,7 @@ acceptance:
 - A save based on an obsolete Project configuration does not silently replace a newer confirmed edit.
 - Conflicting or indeterminate edit outcomes remain distinguishable from confirmed save, cancellation and confirmed rollback.
 - A confirmed Project deletion cannot be silently undone by an edit submitted against its earlier identity.
-- Concurrent default-Project setup and membership edits retain at most one valid default association for the same confirmed Repository.
+- Under the proposed persistent default-association mechanism, concurrent setup and membership edits retain at most one valid association for the same confirmed Repository.
 - A Project edit preserves the nonempty membership invariant and does not mutate unrelated Projects or GitHub source objects.
 - Recovery paths and required conflict information respect private-data access and are reachable without relying solely on a gesture or color.
 specification:

@@ -21,7 +21,7 @@ acceptance:
 - Current membership is determined from a confirmed valid Project configuration, scoped to the identified Project and Repository.
 - An unsaved intention, uncertain write, confirmed current membership and evidence of an earlier action remain distinguishable.
 - Removing and later explicitly re-adding a Repository to the same Project preserves their identities and does not alter other Projects or the source Repository.
-- A later membership does not make an earlier supported removal false or automatically restore a removed default association.
+- A later membership does not make an earlier supported removal false; under the proposed default-association mechanism it does not automatically restore a removed association.
 - Missing, incomplete or incompatible evidence is not converted into a successful action, its actor, its motive or a historical timeline.
 specification:
   objective: Clarify the lifetime and evidence of Project membership without requiring an event journal or changing source Repositories.

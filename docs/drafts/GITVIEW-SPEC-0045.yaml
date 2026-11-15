@@ -16,9 +16,9 @@ sources:
   github_user_access: https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/authenticating-with-a-github-app-on-behalf-of-a-user
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Selecting repositories does not create saved Projects until the operator confirms a nonempty selection.
-- Each confirmed selection entry has an individually attributable result: saved or reused when supported, pending or unresolved when the outcome is not established, or failed when non-application is confirmed. A saved or reused default Project contains that same confirmed Repository.
-- A partial save followed by retry does not duplicate already saved default associations or roll back unrelated saved Projects.
+- Under the proposed explicit-confirmation setup route, selecting repositories does not create saved Projects until the operator confirms a nonempty selection.
+- "Each confirmed selection entry has an individually attributable result: saved or reused when supported, pending or unresolved when the outcome is not established, or failed when non-application is confirmed. A saved or reused default Project contains that same confirmed Repository."
+- Under the proposed default-association setup, a partial save followed by retry does not duplicate already saved associations or roll back unrelated saved Projects.
 - Cancelling an unconfirmed selection preserves saved Projects; cancellation after partial saving does not imply that already completed saves were undone.
 - Submitted entries retain enough durable evidence to reconcile uncertain effects; saving or restoring the entire pending multi-selection is not required.
 specification:
