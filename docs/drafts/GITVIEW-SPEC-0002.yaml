@@ -68,6 +68,13 @@ specification:
   identity_rule: Two valid GitHub REST repository observations with the same numeric id from the same
     GitHub instance identify one Repository. A different numeric id in that scope identifies a different
     object. The GitHubRepository context and every Project membership follow the Repository identity.
+  version_control_boundary: The owner's working Repository meaning is Code in which a version control
+    system acts; Code is described as essentially a folder of files. This is a conceptual boundary, not a
+    requirement for GitView to possess a local folder or execute Git. A source-confirmed Repository identity,
+    rename or PR commit count does not alone establish a specific Code identity, recorded revision action,
+    actor, action time or uninterrupted management interval. The package's versionControlsCode link and
+    managesRepository vocabulary do not independently prove a concrete action; preserve the source facts
+    and their scope without constructing missing events. The applicable action and its evidence remain open.
   address_rule: Owner, name and URL describe the source address. GitView compares the source identity
     before applying an address change or associating history and memberships with a repository. Matching
     identity alone does not establish which conflicting address is newer; 0038 and 0053 describe the
@@ -75,6 +82,10 @@ specification:
   unavailable_rule: HTTP 404 supplies no current repository object. Keep the last known record and distinguish
     unknown current state from a confirmed change.
   scenarios:
+    continuity_without_vcs_event:
+      given: GitHub confirms that Repository R has the same source identity after a rename, and a PR in R reports an increased commit count; GitView has no independently supported revision-action record.
+      when: GitView updates R and its permitted PR overview.
+      then: R retains its confirmed identity and Project memberships and the PR count keeps its own observation context. GitView does not invent a local Code folder, a specific revision action, its actor or a time solely from the rename and count.
     confirmed_rename:
       given: Repository R with REST id 42 is tracked in Projects P and Q at egor/OldName.
       when: The same GitHub instance returns id 42 at egor/NewName and sufficient source evidence confirms the change is current.
