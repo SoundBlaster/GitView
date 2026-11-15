@@ -19,7 +19,7 @@ sources:
   autonomous_refinement: conversation:gitview/excerpt-69-reply
 acceptance:
 - A multi-repository Project exposes its permitted members and a route to each permitted member's PR and Issue objects, with access-safe limitations where needed.
-- A multi-repository Project also offers a Project-wide work collection without requiring a signal-specific filter.
+- Ordinary entry opens the Project-wide work collection directly for one or several repositories, without requiring a repository or signal selection.
 - A single-repository Project reaches its work without a redundant repository step; Project and Repository
   remain distinct.
 - An actionable Project signal opens its corresponding selection across the applicable member scope, identifying source repositories where permitted and preserving uncertainty and coverage limitations.
@@ -47,7 +47,7 @@ specification:
       not organization or the current owner and name.
     multiple: Offer the Project's permitted repositories and a route to the PR and Issue collection of each permitted member.
       Repositories from different organizations remain in the same Project; restricted identities and revealing counts follow 0074 and 0036.
-    all_members: Offer an explicitly identifiable Project-wide work collection across its confirmed current members independently of a signal shortcut. Its initial Today selection and lifecycle defaults follow 0074 and 0007; an unobserved member makes the applicable coverage incomplete rather than empty.
+    all_members: Open an explicitly identifiable Project-wide work collection directly on ordinary Project entry across its confirmed current members independently of a signal shortcut. Its initial Today selection and lifecycle defaults follow 0074 and 0007; an unobserved member makes the applicable coverage incomplete rather than empty.
     single: Skip a redundant intermediate repository screen while retaining Project and Repository as
       separate identities and retaining sufficient source context.
     signal_route: An actionable Project signal opens the corresponding selection within its applicable member scope. The active signal
@@ -78,7 +78,7 @@ specification:
     multiple_repositories:
       given: P includes R1 and R2 from different organizations.
       when: The operator opens P.
-      then: Both repositories remain accessible under P.
+      then: P opens directly to Project-wide work across R1 and R2, with each source identifiable where permitted and member-specific routes available.
     signal_across_repositories:
       given: P has failed-CI PRs in R1 and R2.
       when: The operator opens the failed-CI Project signal.
@@ -90,6 +90,6 @@ specification:
     incomplete_project:
       given: P contains two permitted repositories and one has incomplete observations.
       when: The operator enters P.
-      then: Both members remain represented and missing work is not presented as an observed empty repository.
+      then: The Project-wide work view can show permitted observed work and its incomplete coverage; the unobserved member is not presented as an empty repository.
   unresolved:
   - Exact transition remains open; restoration after data changes and initial work ordering are proposed in 0024 and 0042, with their unresolved cases retained.

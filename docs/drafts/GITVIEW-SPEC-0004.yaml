@@ -65,8 +65,8 @@ specification:
       stale data and refresh failures. An unavailable observation is not a confirmed empty collection.
     freshness: Keep the applicable observation scope and time when components have different freshness.
       The exact placement and component of an error indication are open.
-    navigation: Opening a Project enters that Project. An actionable signal opens the corresponding filtered
-      objects in the same Project; their repository identities remain available.
+    navigation: Opening a Project enters its Project-wide work grid directly, for one or several member repositories. An actionable signal opens the corresponding filtered
+      objects in the same Project; their repository identities remain available where permitted. The multi-member entry is an agent-authored interpretation of the owner's Project-grid direction.
     visual_direction: Use system iOS typography, colors and components, SF Symbols and restrained Liquid
       Glass. Color alone must not carry a necessary distinction.
     boundary: This screen does not require mutation of GitHub data or prescribe API request sizes.
