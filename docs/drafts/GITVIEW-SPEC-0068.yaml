@@ -56,6 +56,10 @@ specification:
     accessibility: Essential metric names, values, units, scope and gaps have a non-color accessible representation and can be inspected without requiring a drag gesture or relying solely on spatial chart position. Preserve meaningful focus on return under 0032. Exact native controls and chart design require device evaluation.
     provenance: The owner accepted Project summaries and graphs where adequate history exists. The entry route, current-member default and concrete uncertainty behavior are agent-authored refinements; no running chart or source coverage is claimed.
   scenarios:
+    restricted_member_and_reopened_issue:
+      given: A fixed-day distinct closed-Issue outcome for Project P uses captured members A and B. For permitted A, one confirmed Issue has two distinct in-day closure events and is now observed open; B's relevant history becomes restricted. Only A's evidence can independently support an outcome value and object selection.
+      when: The operator inspects the chart and opens the A-scoped outcome selection visually or through an accessible path.
+      then: A safely permitted A-only value may show one distinct Issue with its own fixed day, basis and coverage, and the destination shows that Issue once with its separately contextualized current open state. Neither the point nor the destination is labeled as the complete P outcome, and restricted B input, prior mixed-scope totals and their revealing equivalents are withheld under 0064. Two event occurrences are not two Issues; current open state does not erase the past closures.
     first_project_without_history:
       given: A Project has been saved and is identifiable, but no eligible local history samples or independently supported historical source facts are available for its selected metrics.
       when: The operator opens its history from the Project context.

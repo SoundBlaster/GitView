@@ -62,6 +62,10 @@ specification:
     complete_history_catalog: Candidate 0097 defines proposed discovery and retention for the other agreed summary metrics beyond the four initially presented series, including locally observed Project membership count. A metric's historical availability remains conditioned on its actual evidence and access; current-members retrospective scope cannot establish actual past Project membership.
     provenance: The Project summary and graphs are owner-agreed; exact count predicates and evidence requirements are agent-authored refinements. Source-specific mappings, current-state freshness thresholds and supported historical reconstruction remain open.
   scenarios:
+    repeated_outcome_across_summary_and_history:
+      given: Project P contains Repositories A and B. One permitted Issue in A has two distinct supported closure events today, a supported reopen between them and an applicable current open observation. One event is reobserved after restart; B's relevant private evidence is restricted or unavailable.
+      when: The operator inspects the Today lifecycle breakdown and today's distinct closed-Issue history bucket for the captured local day.
+      then: The known Issue can contribute once to A's open Today subset and once to A's distinct-Issue closure bucket when each evaluation has sufficient applicable permitted evidence. The event observations do not create extra cards or imply a second Issue; neither A-scoped value is an exact P total or a permitted disclosure of B's contribution. The current-open and historical-closure claims keep their separate predicates, references and coverage.
     review_threads_open_scope:
       given: A sufficiently covered Project contains open PR P with two unresolved review threads and merged PR Q with four independently observed unresolved review threads; both remain visible in the unfiltered Today selection.
       when: The Project's open-work review attention and Q's own PR overview are inspected.
