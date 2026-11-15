@@ -1,6 +1,6 @@
 # Сверка замысла владельца с графом и прототипами
 
-Рабочая авторская сверка текущего [product discovery](../product-discovery.md), [трассировки требований](autonomous-requirement-trace.md), выбранных [полей PR](pull-request-ontology-options.md) и [Issue](issue-ontology-options.md), а также [описаний сохранённых прототипов](../../prototypes/README.md) с кандидатными спецификациями. Корень [0001](GITVIEW-SPEC-0001.yaml) SHA-256 `61e1c859be2d6a3dede8bee73633729ef3b02ce082c68b3a54703a5574f0732b`. Сверка не является исчерпывающей проверкой всех реплик, source APIs или implementation readiness.
+Рабочая авторская сверка текущего [product discovery](../product-discovery.md), [трассировки требований](autonomous-requirement-trace.md), выбранных [полей PR](pull-request-ontology-options.md) и [Issue](issue-ontology-options.md), а также [описаний сохранённых прототипов](../../prototypes/README.md) с кандидатными спецификациями. Исторический снимок корня [0001](GITVIEW-SPEC-0001.yaml) SHA-256 `61e1c859be2d6a3dede8bee73633729ef3b02ce082c68b3a54703a5574f0732b`. Сверка не является исчерпывающей проверкой всех реплик, source APIs или implementation readiness.
 
 | Направление | Кандидаты и состояние | Граница |
 | --- | --- | --- |
