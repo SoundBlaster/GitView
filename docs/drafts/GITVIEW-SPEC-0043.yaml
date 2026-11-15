@@ -354,6 +354,14 @@ specification:
       given: An Issue overview has a recent title observation and an older partial discussion observation with an unknown comment author.
       when: The operator opens the Issue from its Project grid.
       then: The title and discussion keep their respective contexts, the exact participant count and latest comment time remain uncertain, and missing discussion data is not shown as zero.
+    pr_selected_facts_after_compact_preview:
+      given: A permitted identified PR appears in a dense Project grid. Its static preview shows its title and a CI signal; independently supported author, requested reviewers, branch names, change counters and original body are available for the same PR, while the review assessment is unavailable.
+      when: The operator opens that PR's overview through an accessible route and inspects its selected facts.
+      then: The available selected context, counters and original body are reachable in GitView with their own source and observation contexts. The missing review assessment is distinguishable from approval or no reviews, the preview does not substitute another PR, and an eligible source link can be opened separately rather than being the only path to already available selected facts.
+    issue_selected_facts_after_compact_preview:
+      given: A permitted Issue appears in a Project grid with a compact preview. Its author, assignees and one related PR are supported; its relationship population and direct-child closed count remain incomplete, and an available original body contains no recognized structured sections.
+      when: The operator opens the same Issue's overview and inspects its selected details.
+      then: The supported roles and related PR are accessible with their actual scope, incomplete relationships and unknown child count are not presented as empty or zero, and the original body remains available without invented sections. A related Repository outside the Project is not added to its membership, and individual discussion contents are not required.
     description_edit_after_assessment:
       given: A participating PR had a structurally conforming description and GitView displayed its original permitted body.
       when: The PR description changes but the new body has not yet received an applicable external assessment.
