@@ -293,6 +293,7 @@ specification:
     - Internal pull-request exploration is deferred; its later scope is open.
     - A ready label, a failed check, review status and activity volume are not interchangeable.
     - Unknown or stale information must not be presented as confirmed ready.
+    readiness_gap: The owner's original request to see what is ready remains a product obligation whose meaning has not yet been established. Showing merged PRs and closed Issues addresses observable completed lifecycle outcomes but does not establish whether an open PR is ready for review, ready for merge, or ready in another intended sense. The optional checks-and-review-passed candidate in 0057 is not a confirmed interpretation or a complete mergeability decision. Keep these outcomes and independent source signals inspectable without presenting the ready-work need as resolved; further refinement must define the intended subject, predicate, applicable evidence and unknown state before offering a ready label or count.
     undecided: Readiness criteria, thresholds, data freshness, sharing content, supported accounts, access
       and synchronization need further specification.
   experience:
