@@ -37,7 +37,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - A startup route distinguishes a confirmed empty Project collection from partial or unreadable local configuration and connection state.
-- Connection, app installation, discovery and explicit Project save remain independently evidenced and owned throughout setup.
+- Connection, discovery and explicit Project save remain independently evidenced and owned throughout setup; app installation is a distinct step only under the proposed GitHub App direction.
 - Default batch setup and custom Project creation preserve their distinct intent, identities and outcomes.
 - Interrupted or cancelled batch work is recovered without automatic submission of unstarted entries or duplication of confirmed Projects.
 - The page composes connection, discovery and local save through injected public boundaries without sibling-feature dependencies or raw credentials in presentation state.

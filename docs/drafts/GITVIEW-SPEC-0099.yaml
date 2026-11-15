@@ -26,7 +26,7 @@ sources:
   github_public_permissions: https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/choosing-permissions-for-a-github-app
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A confirmed GitHub identity, an observable app installation, an accessible Repository and a successful work-data observation are separate claims in first setup and recovery.
+- Under the proposed GitHub App direction, a confirmed GitHub identity, an observable app installation, an accessible Repository and a successful work-data observation are separate claims in first setup and recovery.
 - The operator has an accessible user-initiated route to review installation or repository access when a relevant scope cannot be used, without interpreting missing evidence as a specific confirmed cause.
 - A complete empty installation or Repository result describes only the exact source scope observed and does not assert that the GitHub account or organization has no Repositories.
 - Eligible discoveries from available scopes remain selectable when other installation or category observations are incomplete, subject to current access and identity evidence.

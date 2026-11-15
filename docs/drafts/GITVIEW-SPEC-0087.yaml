@@ -21,7 +21,7 @@ sources:
 acceptance:
 - The operator can identify the source account, purpose and material access being requested before granting access.
 - The selected authorization design separates GitView's read-only behavior from the actual capabilities of the credential granted by the source.
-- Missing organization installation, approval or repository grant remains distinguishable from an empty account or deleted Repository.
+- Under the proposed GitHub App direction, missing organization installation, approval or repository grant remains distinguishable from an empty account or deleted Repository; other authorization designs may have different access scopes.
 - The design does not depend on a secret embedded in a public iOS client remaining confidential or on an installation private key shipped in the app.
 - A cancelled, failed, superseded or interrupted authorization follows the established connection and credential recovery contracts.
 - Any proposed server or other trust participant, its role and access to credentials or source data are explicit before it becomes part of the product design.
