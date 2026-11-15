@@ -41,6 +41,27 @@ query GitViewIssueCommentTimes($objectID: ID!, $pageSize: Int!, $cursor: String)
 
 This candidate fetches no comment bodies or authors. Distinguish a comment's creation and edit times and the retrieval time. A known maximum among observed comment creation times is only an observed maximum until population, ordering, visibility, access, pagination and consistency evidence support a claim for the applicable population. GitHub's documented update ordering alone does not identify latest creation. A terminal cursor alone is not a snapshot guarantee; missing or restricted nodes cannot yield a known empty population. This operation does not prove deleted-comment history or participant counts.
 
+## Distinct Issue comment authors
+
+For the separately labeled comment-author count, this operation requests identity metadata, not comment text. Actor is an interface and an actor without a supported Node identity remains unknown; matching login alone is not an identity rule. Pagination, errors, access and consistency independently limit the count. An Issue creator is counted only if also an observed comment author under this working definition.
+
+```graphql
+query GitViewIssueCommentAuthors($objectID: ID!, $pageSize: Int!, $cursor: String) {
+  node(id: $objectID) {
+    __typename
+    ... on Issue {
+      id repository { id }
+      comments(first: $pageSize, after: $cursor) {
+        pageInfo { hasNextPage endCursor }
+        nodes { id author { __typename ... on Node { id } } }
+      }
+    }
+  }
+}
+```
+
+The query shape is checked separately from GitHub authorization, visibility, coverage and actual behavior. No claim is made that all actors have a Node identity or that this count equals GitHub participating-Users total.
+
 ## Named PR review requests
 
 ```graphql
