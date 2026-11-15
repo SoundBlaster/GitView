@@ -41,6 +41,39 @@ The report checks YAML mapping, spec kind and filename/ID consistency; it does
 not validate ontology, dependencies, acceptance or maturity and does not
 materialize the draft into `specs/nodes/`.
 
+## Independent specification review
+
+For a new or substantively revised specification, run the structural
+candidate check and request semantic review from a read-only subagent before
+using the draft to assess readiness for the next stage. Review one node or a
+small group of nodes that describe the same behavior.
+
+State the review objective in the brief. Choose it from the work the draft
+is doing and the specific problem under review.
+
+- **First draft.** Check that the draft captures the recorded intent, defines
+  its scope and makes the expected outcomes and open choices visible. Ask for
+  an example where omitted intent or an unstated choice could change the draft.
+- **Refinement.** Compare the draft with the preceding revision and applicable
+  parent and dependency contracts. Check that criteria and scenarios agree
+  about observable outcomes, boundary cases and the status of product choices.
+- **Correction.** Give the reviewer the reported defect and an example that
+  exercises it. Ask them to trace the example before and after the change
+  and check nearby cases for unintended effects.
+
+Give the reviewer the exact Git revision or artifact digest, the agreed intent,
+the relevant parent and dependency contracts, and the required behavior.
+Use fresh context and let the reviewer derive expected outcomes from these
+sources before comparing them with the draft. Ask for findings with a stable
+locator, a concrete example and the consequence for the proposed behavior.
+
+Record the reviewed revision, objective, scope, findings and the author's
+disposition in the corresponding review note. Send substantive corrections
+back for focused review on the updated revision. If a reviewer is unavailable,
+record the pending review for that scope. The review can support a readiness
+assessment. Product approval and authorization to proceed follow the project's
+governance process.
+
 ## Product ontology
 
 Read `ontology/domain-model.md` for the consolidated semantic model and
