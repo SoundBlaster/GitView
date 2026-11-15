@@ -1,6 +1,6 @@
 # GitView: состав ontology draft.13
 
-Это читаемая структурная проекция трёх source packages: локального GitView, motivation-core и events-core. Foundation imports здесь не разворачиваются: их экспорты разрешаются отдельно выбранным контекстом. Описания и все данные деклараций приведены из указанных YAML; структура страницы не является новым пакетом, semantic approval или доказательством реальных фактов.
+Это читаемая структурная проекция трёх source packages: локального GitView, motivation-core и events-core. Ниже также приведены точные каталоги foundation, которые разрешает выбранный контекст; эти каталоги перечисляют символы, но не содержат их смысловых определений. Описания и все данные деклараций приведены из указанных YAML; структура страницы не является новым пакетом, semantic approval или доказательством реальных фактов.
 
 ## local.gitview.domain @ 0.2.0-draft-composition.13
 
@@ -2039,3 +2039,84 @@ invalidationTriggers:
     contract changes.
 ```
 
+
+## Foundation: каталоги символов
+
+Каталоги ниже извлечены из зафиксированных Git commits и проверены по hash, указанному в отчёте ontology context. Они не содержат определений; список имён не следует считать полным смысловым описанием классов. Второй каталог в отчёте назван `specgraph.foundation`, но исходный JSON сам содержит `id: ontology.foundation`; здесь сохранены оба названия без их отождествления.
+
+### ontology.foundation @ 0.2.0
+
+Источник: `Ontology@40672c189f33dee2b8c6fdac903758e90d9fba86:SPECS/ontology/foundation/0.2.0/exports.json`
+SHA-256: `0444a5848b89cc8b0505ebc8a3114d07bfce9c9089a07f1c5a952f6ce8087841`
+
+```json
+{
+  "classes" : [
+    "Action",
+    "Capability",
+    "Command",
+    "DomainEntity",
+    "Event",
+    "Invariant",
+    "Policy",
+    "StateMachine",
+    "ValueObject"
+  ],
+  "id" : "ontology.foundation",
+  "namespace" : "ont",
+  "policyBases" : [
+    "Policy"
+  ],
+  "protocols" : [
+    "Approvable",
+    "Auditable",
+    "DeviceBound",
+    "RestrictableCapability",
+    "Signable",
+    "TimeBound",
+    "Versioned"
+  ],
+  "schemaVersion" : 1,
+  "version" : "0.2.0"
+}
+```
+
+### Дополнительный каталог SpecGraph
+
+Источник: `Ontology@c52553f872f440dde26c61abf9193f5fff171d98:SPECS/ontology/foundation/0.1.0/exports.json`
+SHA-256: `1c6b3ac3e4aa9b4e56d823b3645f94c126840c1922c555998b848e9e0fe18f8f`
+
+```json
+{
+  "classes" : [
+    "Actor",
+    "Capability",
+    "Command",
+    "DomainEntity",
+    "Event",
+    "Invariant",
+    "Policy",
+    "StateMachine",
+    "SystemActor",
+    "ValueObject"
+  ],
+  "id" : "ontology.foundation",
+  "namespace" : "ont",
+  "policyBases" : [
+    "Policy"
+  ],
+  "protocols" : [
+    "Approvable",
+    "Auditable",
+    "DeviceBound",
+    "RestrictableCapability",
+    "Signable",
+    "TimeBound",
+    "Versioned"
+  ],
+  "schemaVersion" : 1,
+  "version" : "0.1.0"
+}
+```
+
+Сопутствующая модель типов `ontology.foundation@0.2.0` в том же исходном commit: [`foundation-types.md`](https://github.com/0al-spec/Ontology/blob/40672c189f33dee2b8c6fdac903758e90d9fba86/SPECS/ontology/foundation-types.md). Это описание типов и отношений, а не набор проверенных конкретных экземпляров.
