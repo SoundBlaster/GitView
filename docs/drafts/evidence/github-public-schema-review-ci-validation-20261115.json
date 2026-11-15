@@ -1,0 +1,39 @@
+{
+  "artifact": "graphql_schema_validation",
+  "date": "2026-11-15",
+  "schema_source": "https://docs.github.com/public/fpt/schema.docs.graphql",
+  "schema_sha256": "46f1d455d72ab784c6cb2b86e9b023df195dcfd2ed92099108b0faa5faa5d1fc",
+  "schema_snapshot_path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/github-public-schema-20261115.graphql",
+  "schema_build_assume_valid": true,
+  "validator": "graphql-core 3.2.6",
+  "document": "docs/drafts/pr-review-ci-graphql-candidates-20261115.md",
+  "document_sha256": "9bc9d85994130c75c2dd94ad3981fe2192783fbaf694708f61b5d8bf57fb833b",
+  "operations": [
+    {
+      "operation": "GitViewReviewDecision",
+      "sha256": "e9fb86110a6b0692766c99a747514d1e6ebf4399ba238f6a58dfedaad032adfa",
+      "errors": []
+    },
+    {
+      "operation": "GitViewReviewThreads",
+      "sha256": "5250f6ad945595e9bcc3779561dcb92ff490f6253b19f2a158d926e33700a008",
+      "errors": []
+    },
+    {
+      "operation": "GitViewReviewRequests",
+      "sha256": "37795b43f93225d62772ad5464e584d0c26124ea3ab622521cc85455095d05cb",
+      "errors": []
+    },
+    {
+      "operation": "GitViewHeadCheckContexts",
+      "sha256": "72fe26e87064408ff55e6459431c82088b75073f46cca85622291aa9567c45b7",
+      "errors": []
+    }
+  ],
+  "limits": [
+    "static syntax, fields and type compatibility only",
+    "no GitHub request or permission check",
+    "schema snapshot is not a live endpoint",
+    "schema loaded with assume_valid"
+  ]
+}

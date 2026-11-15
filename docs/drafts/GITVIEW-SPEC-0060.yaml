@@ -17,6 +17,8 @@ sources:
   github_check_runs: https://docs.github.com/en/rest/checks/runs
   github_commit_statuses: https://docs.github.com/en/rest/commits/statuses
   github_required_checks: https://docs.github.com/en/pull-requests/how-tos/merge-and-close-pull-requests/troubleshooting-required-status-checks
+  review_ci_queries: docs/drafts/pr-review-ci-graphql-candidates-20261115.md
+  review_ci_schema_validation: docs/drafts/evidence/github-public-schema-review-ci-validation-20261115.json
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The displayed status-check counts identify their PR, relevant source revision or revisions, observation context and coverage.
@@ -39,6 +41,7 @@ specification:
     categories: For source entries whose meaning and current applicability are sufficiently established, show failure, pending and success counts and a total as in 0028. Candidate 0061 proposes a conservative mapping for special outcomes; preserve these outcomes or mark them unclassified rather than forcing them into success to make three categories add up. Mapping requires source and UX validation and must not infer merge permission.
     partial: A confirmed current failure in the covered revision may establish a positive observed failure even with other entries missing. No observed failure, an empty response or a single available source family cannot establish a complete zero or absence of failure while any applicable entry, family, identity or revision remains unobserved. Retain applicable time and coverage under 0044 and 0046.
     action: Present the counters as status-check observations for review and navigation, not as a branch-protection decision or authorization to merge. Required-check policy, review state, thread resolution and merge eligibility remain distinct.
+    graphql_head_rollup_candidate: The accompanying candidate queries the PR head-ref rollup, its separately returned commit OID, typed CheckRun and StatusContext entries and page information. The saved public schema statically accepts the shape; require a usable identified PR and Repository witness, applicable entry and revision context and actual response interpretation before counting. A missing rollup or commit, an unassociated entry, unknown union type or incomplete page is not zero or success. This query alone does not establish a coherent snapshot, retry selection, test-merge results or equivalence to the full GitHub PR status box; no live source operation or permission is proven.
     provenance: Counting individual current checks and following GitHub were selected by the owner. The cross-family entry definition is an agent-authored working interpretation; source-specific mapping and behavior are not yet verified against a real PR.
   scenarios:
     same_name_different_families:
