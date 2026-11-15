@@ -86,7 +86,7 @@ specification:
       then: The valid Project, filter and density context remains available where the system and current data permit.
     closed_route_reopened:
       given: During an active session an operator modifies the filters and density of Project P's work collection, then explicitly goes back far enough to close that collection route.
-      when: The operator later opens P through ordinary Project entry rather than returning to the retained route.
+      when: The operator later opens a new ordinary work route for P rather than returning to the retained route.
       then: The new route uses the initial Today selection and initial density under 0074, without silently restoring the previous route's edited filter or anchor; P and its saved observations remain intact.
     resumed_across_day_boundary:
       given: A retained Project work route has dynamic Today, explicit failed-CI and open-PR conditions, a density and a permitted PR anchor, and the app is suspended across a local-day change.

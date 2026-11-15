@@ -77,7 +77,7 @@ specification:
         remains identifiable.
     multiple_repositories:
       given: P includes R1 and R2 from different organizations.
-      when: The operator opens P.
+      when: The operator opens P under the proposed direct Project-wide entry route.
       then: P opens directly to Project-wide work across R1 and R2, with each source identifiable where permitted and member-specific routes available.
     signal_across_repositories:
       given: P has failed-CI PRs in R1 and R2.
