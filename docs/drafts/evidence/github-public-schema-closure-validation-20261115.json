@@ -1,0 +1,29 @@
+{
+  "artifact": "graphql_schema_validation",
+  "date": "2026-11-15",
+  "schema_source": "https://docs.github.com/public/fpt/schema.docs.graphql",
+  "schema_sha256": "46f1d455d72ab784c6cb2b86e9b023df195dcfd2ed92099108b0faa5faa5d1fc",
+  "schema_snapshot_path": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/github-public-schema-20261115.graphql",
+  "schema_build_assume_valid": true,
+  "validator": "graphql-core 3.2.6",
+  "document": "docs/drafts/today-closure-graphql-operation-candidates-20261115.md",
+  "document_sha256": "3eb82cda3261ab873c58592d661135a356b94e35b60376819831a01e9f6b478d",
+  "operations": [
+    {
+      "operation": "GitViewIssueClosures",
+      "sha256": "e0bf929ef9c10f2b2064124c1b59ad4f7ede3e59246cf0733096c9613d47045e",
+      "errors": []
+    },
+    {
+      "operation": "GitViewPullRequestClosures",
+      "sha256": "9098b6a9d79e6bae77be8b96bbbb01c3373485158b54a46b1ec0f13f2873274a",
+      "errors": []
+    }
+  ],
+  "limits": [
+    "static syntax, fields and type compatibility only",
+    "no GitHub request or permission check",
+    "schema snapshot is not a live endpoint",
+    "schema loaded with assume_valid"
+  ]
+}
