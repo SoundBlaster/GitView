@@ -22,7 +22,7 @@ acceptance:
 - A prepared credential candidate is isolated from the active account binding and cannot activate itself by completing a Keychain write.
 - A confirmed active binding ties one verified source identity, current connection generation and recoverable matching credential to the same still-eligible attempt.
 - An interrupted write or uncertain commit is reconciled from both stores, or remains explicitly uncertain without inventing rollback or source authorization.
-- A confirmed disconnect or superseding account generation prevents a late old candidate from becoming active, even if its credential write later completes.
+- A confirmed disconnect or superseding account generation prevents a late old candidate from becoming active in the continuing store lineage, even if its credential write later completes; an older restored snapshot follows 0122.
 - Known pending access changes restrict affected private data while an ordinary offline restart with a consistent prior context follows 0036.
 - Old or orphan credential cleanup is separately evidenced and cannot invalidate the active binding or claim remote revocation.
 specification:
