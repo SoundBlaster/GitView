@@ -61,20 +61,15 @@ specification:
     User: The operator of GitView, as explicitly selected by the owner. GitHub identities and source authors,
       reviewers and assignees are separate roles or references; identity details remain open.
     Project: A GitView project; the membership rules below are distinct from the meaning of the term itself.
-    Repository: Code in which a version control system acts, in the owner's working formulation. For the
-      same GitHub object confirmed by the source, rename/transfer preserve one Repository, history and
-      Project membership. The numeric GitHub REST repository id is compared within one GitHub instance.
+    Repository: Code in which a version control system acts, in the owner's working formulation.
     Code: Code is essentially a folder with files in the owner's working formulation; its precise boundary
       remains open.
     VersionControlSystem: A system that acts on code to manage versions; Git is an example.
-    GitHub: The actor that establishes repository management through RegisterRepository.
+    GitHub: GitHub as the source service and an actor in the working domain model.
     GitHubRepository: The contextual role of a Repository under GitHub management. The working ontology
       represents it as a protocol over the same Repository identity.
-    Issue: A source-recorded issue addressing a question, problem or work request. An Issue may be
-      associated with a motive for an actor in a particular case but does not itself act; the association
-      and actor are not inferred merely from an Issue or a link.
+    Issue: A source-recorded issue addressing a question, problem or work request.
     PullRequest: A source-recorded proposal of code changes for consideration and possible inclusion.
-      Creating a pull request does not imply approval, merging or an achieved outcome.
     ReviewThread: A discussion relevant to review. Duration and resolution are separate; thresholds and
       data availability remain open.
     CIStatus: Working term for the observed source-reported state of one status-check entry. The owner
@@ -83,6 +78,18 @@ specification:
       source mapping, special states, freshness and readiness interpretation remain open.
     Metric: A measured result interpreted according to a rule and applicable subject, scope, time and
       evidence. Its population, period and units need a separate definition for each metric.
+  terminology_usage:
+    repository_identity: For the same GitHub object confirmed by the source, rename or transfer preserves
+      one Repository, history and Project membership. Compare the numeric GitHub REST repository ID within
+      one GitHub instance; detailed evidence and unresolved identity follow 0002 and 0038.
+    github_management: The working ontology models GitHub registering a Repository through
+      RegisterRepository, giving rise to the candidate management relation. This declaration is distinct
+      from GitHub's meaning and does not establish that a specific action occurred.
+    issue_motive: An Issue may be associated with a motive for an actor in a particular case but does not
+      itself act; neither the association nor actor is inferred merely from an Issue or a link.
+    pull_request_outcome: Creating a PullRequest does not imply approval, merging or an achieved outcome.
+    boundary: Definitions, properties, links, action-derived relations and evidence of a particular action
+      are distinct; these usage rules do not create additional ontology entities.
   terminology_status:
     source_refs:
     - conversation:gitview/excerpt-16
