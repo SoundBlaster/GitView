@@ -1,0 +1,76 @@
+id: GITVIEW-SPEC-0123
+title: GitView - Recoverable observation evidence record contract
+kind: spec
+created_at: '2026-11-15T00:26:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0105
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0071
+- GITVIEW-SPEC-0101
+- GITVIEW-SPEC-0102
+- GITVIEW-SPEC-0113
+- GITVIEW-SPEC-0116
+- GITVIEW-SPEC-0117
+- GITVIEW-SPEC-0122
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0105.yaml
+  exchange: docs/drafts/GITVIEW-SPEC-0116.yaml
+  storage_direction: docs/drafts/GITVIEW-SPEC-0113.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A retained field, event or aggregate is recoverable only with the identity, scope and interpretation evidence needed for its own claim.
+- Unobserved, supported absence, a supported value and conflicting observations are distinguishable without fabricating zero, empty or current state.
+- Reusing context or retrying a local write cannot attach another object's evidence, create another source observation or advance unrelated coverage.
+- A separately retained coverage claim, request outcome and metric-history point remain independently interpretable from a current field value.
+- Access restrictions, identity ambiguity and history-clear generations remain applicable after recovery and migration.
+- The logical model supports controlled verification without implying that a concrete schema, source integration or restart test exists.
+specification:
+  objective: Define the minimum recoverable associations and value states for local evidence consumed by Today and Project summary.
+  ontology_refs:
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    scope: This agent-authored logical record contract refines 0105 under the SQLite direction in 0113. The named record responsibilities may be implemented as tables, immutable bundles or another verified representation; they are not new product ontology entities, an implemented schema or an instruction to retain all source payloads.
+    identity: Associate a stored claim with a confirmed source instance and typed subject identity, including the Repository where required. A PR, Issue, Repository, source event and local operation occupy distinct identifier domains; retain source ID kind and any independently supported association under 0038 and 0101. A repository-local number or mutable name alone cannot silently become a global identity. A record whose subject cannot be established cannot be relabeled as a confirmed object or used for a definite distinct count.
+    evidence_envelope: For each accepted fact retain or reliably reference its field or event meaning and interpretation version, supported value or semantic absence, observation context, source and subject, applicable source or event instant and precision when supported, relevant revision or ordering witness, captured scope and access context, and limitations needed to interpret it. Optional context may be explicitly unknown, but a missing required association prevents the stronger claim. Preserve event time separately from retrieval and durable-save times; a shared immutable or versioned context is allowed only while its precise association remains recoverable.
+    field_state: A known value, including a justified zero or empty collection, and source-supported semantic absence are accepted observations with their own evidence. Not requested, request failure and an error-affected field are attempt outcomes, not replacement values or implicit deletions. If no earlier accepted record can be independently read, the field is unknown or unavailable; if a permitted earlier record exists, it retains its own context. Incompatible observations without sufficient ordering remain a conflict or uncertainty rather than being overwritten by arrival order. Access restriction is a current disclosure decision, not an invented value or permanent proof of future denial.
+    event_and_aggregate: An event claim retains its event type, source-supported event identity where available, confirmed subject and event time or explicit time limitation; equal timestamps or text do not prove event identity. An aggregate claim retains its metric and predicate version, unit, scope, reference or period, coverage and disclosure lineage. An aggregate value alone does not identify its constituent objects, establish membership materialization or support subtraction across incompatible contexts. Source facts, derived values and local observations are not interchangeable merely because their numeric values match.
+    independent_coverage: A coverage record or recoverable equivalent identifies the exact source, account, Repository set, object category, predicate, period, access context, supported reference and evidence for its claim under 0102. Link it only to the observations and retained evidence it actually covers. A persisted field, final page, aggregate or later timestamp does not independently prove full population or advance an unrelated coverage reference. If supporting context becomes unavailable, downgrade the affected claim rather than manufacture a complete scope.
+    attempts_and_effects: A source attempt, Project-level refresh request, accepted fact and local retention operation have separate identities and outcomes under 0103 and 0105. Bind each retention effect to its immutable logical operation and actual source observation; replay cannot become a newly initiated observation. If an effect and its required operation evidence cannot be jointly established after interruption, report the outcome as indeterminate. A historical applied receipt does not by itself prove that the fact and its interpretation are still readable.
+    history_boundary: Current-cache facts and historical retention have independently recoverable outcomes even if physical storage is shared. A history-capable write carries the generation captured for the initiating work and is admitted under 0117; an old replay cannot re-create cleared history. Reconstructing an aggregate from retained inputs requires the same predicate, subject, scope, time and access evidence as a directly retained result. A current cache read is not itself a new historical sample.
+    access_and_migration: Reevaluate current disclosure before returning source-derived values, identities or revealing aggregates to any presentation or handoff. A recovered old access context describes provenance, not a fresh permission. Schema migration under 0122 must preserve each claim's identity and interpretation associations and the clear fence; where a required association cannot be validated, return a limited or unavailable claim without attaching another context or deleting unrelated Projects. Do not persist credentials or raw authorization responses as evidence.
+    verification: Before declaring the boundary implementation-ready, define physical encoding, constraints, atomic write and read contracts, retention and compaction rules, migration and provider-specific failure mapping. Plan deterministic TDD for same-ID replay, equal-value distinct observations, partial writes, omitted versus empty fields, unordered conflicts, access change, coverage evidence loss and clear races. Verify actual SQLite, interruption, restart, Keychain and source mappings separately; this document does not establish any of those results.
+    provenance: Offline observations, metrics and testability follow owner direction. These record associations and evidence states are agent-authored refinements and are not proof of a selected database wrapper or implementation.
+  scenarios:
+    shared_context_without_relabeling:
+      given: A permitted PR title and CI result are retained with separately identified observations at T2 and T1 respectively, and both refer to the same confirmed PR.
+      when: The local boundary recovers them for Today and summary.
+      then: Title keeps T2 and CI keeps T1; their shared object identity does not make CI current at T2 or establish a simultaneous source snapshot.
+    lost_coverage_evidence:
+      given: A numeric Project aggregate and its metric context are readable but evidence needed to establish one member's coverage is unavailable after recovery.
+      when: The summary requests a complete Project measurement.
+      then: The aggregate cannot be reported as complete solely because the number is readable; independently supported permitted values retain their own context and the affected coverage remains limited or unknown.
+    empty_versus_missing:
+      given: A complete supported observation establishes an Issue assignee collection is empty, while a later attempt does not request that field.
+      when: The earlier evidence and later attempt are recovered.
+      then: The earlier empty collection retains its supported time and scope, and the later omission neither deletes it nor gives it a new observation time.
+    restricted_old_evidence:
+      given: A private Repository's old evidence remains readable in local storage after an applicable access denial.
+      when: The route requests a summary or candidate input.
+      then: Restricted source details and revealing values are not exposed as current presentation; the earlier record does not renew access or establish an empty Repository.
+    old_history_generation:
+      given: A source observation began under an earlier history generation and a clear was durably confirmed before its retention replay.
+      when: The replay reaches historical admission after restart.
+      then: It cannot be retagged as post-clear work or recreate the cleared history, while any independently permitted current-cache treatment follows its own rules.
+  unresolved:
+  - Select physical schema, identifier encoding, evidence-reference constraints, provider and migration paths without losing these associations.
+  - Define bounded retention, compaction and privacy-safe lineage for aggregate and operation evidence, including unresolved late delivery.
+  - Verify actual source fields, storage failure and restart behavior and real platform protection separately; no product implementation or TDD cycle has run.
