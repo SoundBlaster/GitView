@@ -1,0 +1,26 @@
+artifact_kind: gitview_review_example
+authority: author_assessment_only
+profile: product_clarification_draft
+snapshot: 7ba894d865fcbbb645cfa573df9904f86277749d
+criterion:
+  id: today-completed-visible
+  question: Does the draft describe eligibility of work completed today in unfiltered Today?
+result: described
+evidence:
+- kind: specification_text
+  path: docs/drafts/GITVIEW-SPEC-0007.yaml
+  sha256: 11968c887a0f9b0f353eee0edc81f0a121f2ffe2f3968ecd8237cbd2db8f23dc
+  locator: acceptance[1]
+  text: A confirmed same-day PR merge or closure or Issue closure supports inclusion
+    in unfiltered Today within applicable scope and access. Show current source state
+    only when supported and permitted; otherwise preserve its actual observation context
+    or mark it unknown.
+limitations:
+- This is a manually interpreted draft requirement, not owner approval or application
+  behavior.
+- The referenced acceptance does not prove complete source data, presentation or live
+  tests.
+not_established:
+- implementation_readiness
+- production_readiness
+- runtime_execution
