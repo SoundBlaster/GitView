@@ -42,7 +42,8 @@ acceptance:
 - The named cross-entity selection policy, replaceable effects and their callers have planned TDD and boundary-specific verification under 0040 and 0079.
 - This responsibility proposal does not claim that the entire product graph or this route is ready for implementation.
 specification:
-  current_intent_boundary: The calendar-based Today population and source-route examples below are historical candidates requiring re-evaluation after the owner current-work clarification. Keep route identity, access, refresh and coverage boundaries independently of the eventual selection policy.
+  current_intent_boundary: The owner selected Today to include older unfinished work and work completed during the current calendar day in the user local time zone; a previous day completion alone does not qualify an object for the new Today. Applicable states remain visible without saved exclusions and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical object viewing and the technical contracts below remain candidates. The following historical boundary predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
+  historical_intent_boundary_before_local_day_approval: The calendar-based Today population and source-route examples below are historical candidates requiring re-evaluation after the owner current-work clarification. Keep route identity, access, refresh and coverage boundaries independently of the eventual selection policy.
   objective: Make one proposed FSD-compatible composition concrete enough to evaluate responsibilities and gaps for the Project to Today work journey.
   ontology_refs:
   - gitview:User

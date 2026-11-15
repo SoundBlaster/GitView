@@ -38,7 +38,8 @@ acceptance:
 - Refresh, membership changes, incomplete coverage and access restrictions preserve their own scope and do not silently substitute another Project or period.
 - Return uses the actual originating surface, preserving valid context without exposing restricted source details.
 specification:
-  current_intent_boundary: Earlier examples that depend on a calendar Today or historical object-list viewer are conditional historical candidates. Signal identity, scope, units, filters, partial coverage and access remain applicable when the corresponding feature is selected.
+  current_intent_boundary: The owner selected Today to include older unfinished work and work completed during the current calendar day in the user local time zone; a previous day completion alone does not qualify an object for the new Today. Applicable states remain visible without saved exclusions and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical object viewing and the technical contracts below remain candidates. The following historical boundary predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
+  historical_intent_boundary_before_local_day_approval: Earlier examples that depend on a calendar Today or historical object-list viewer are conditional historical candidates. Signal identity, scope, units, filters, partial coverage and access remain applicable when the corresponding feature is selected.
   objective: Make signal-origin navigation and subsequent explicit filter changes understandable across updates without prescribing UI controls.
   ontology_refs:
   - gitview:User

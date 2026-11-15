@@ -39,7 +39,8 @@ acceptance:
 - The first product pass does not require choosing a unique storage scheme, API query, protocol, UI control or module arrangement where alternatives can satisfy the product outcomes.
 - Explicit owner-requested qualities including testability, dependency injection, TDD and suitable mocks remain visible as cross-cutting expectations for later development.
 specification:
-  current_intent_boundary: The owner clarified Today as the current picture of work and historical aggregate metrics and graphs, without a required past-state viewer. Calendar-day Today and mandatory same-day retention examples below are historical candidates; confirmed merged PRs leave unfinished work and appear in supported metrics; unfiltered Today includes all applicable states and selected filters persist; source range and persistence scope remain open.
+  current_intent_boundary: The owner selected Today to include older unfinished work and work completed during the current calendar day in the user local time zone; a previous day completion alone does not qualify an object for the new Today. Applicable states remain visible without saved exclusions and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical object viewing and the technical contracts below remain candidates. The following historical boundary predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
+  historical_intent_boundary_before_local_day_approval: The owner clarified Today as the current picture of work and historical aggregate metrics and graphs, without a required past-state viewer. Calendar-day Today and mandatory same-day retention examples below are historical candidates; confirmed merged PRs leave unfinished work and appear in supported metrics; unfiltered Today includes all applicable states and selected filters persist; source range and persistence scope remain open.
   objective: Clarify the owner's product intent enough to discuss user-visible consequences and relationships before implementation-specific refinement.
   ontology_refs:
   - gitview:User
@@ -81,7 +82,7 @@ specification:
       then: The product description makes clear that the merged work stays visible by default and that the user can explicitly filter it out.
     today_rollover:
       given: A PR was merged yesterday and another PR from yesterday remains open.
-      when: The product description explains the agent-proposed local-day Today selection on the following day.
+      when: The product description explains the selected user-local-day completion boundary on the following day; exact device binding and broader inclusion formulas remain candidates.
       then: It distinguishes the unfinished PR that remains eligible from the previous-day result that no longer qualifies solely on that outcome, and does not imply that historical work was deleted.
     shared_repository:
       given: One Repository is included in two GitView Projects.
