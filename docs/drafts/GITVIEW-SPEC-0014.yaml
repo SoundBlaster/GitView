@@ -44,8 +44,8 @@ specification:
   evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
     selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
-  - The grid supports several density levels within the same selected scope; pinch changes scale and visible
-    detail without silently changing selected objects or filters.
+  - The grid supports several density levels within the same selected scope; an in-scope pinch changes scale and visible
+    detail without itself changing selected objects or filters. Independent observations or membership changes may change the selection under 0035.
   - A small scale can show approximately eight cells per row and around 100 objects as a design example,
     not a fixed layout or performance benchmark.
   - Use distinct type and meaningful state cues; color alone is not required to identify an object. Text
@@ -56,7 +56,7 @@ specification:
     all items are present when data coverage is incomplete.
   pilot_scenarios:
     same_scope:
-      given: A filtered Project grid has 100 known objects at a dense scale.
+      given: A filtered Project grid has 100 known objects at a dense scale and no independent source or membership change occurs during the gesture.
       when: The operator pinches to make cells larger.
       then: The scope, filter and underlying 100-object selection remain unchanged.
     density_not_navigation:
@@ -70,16 +70,16 @@ specification:
   pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
     are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
-- The grid supports several density levels within the same selected scope; pinch changes scale and visible
-  detail without silently changing selected objects or filters.
+- The grid supports several density levels within the same selected scope; an in-scope pinch changes scale and visible
+  detail without itself changing selected objects or filters. Independent observations or membership changes may change the selection under 0035.
 - A small scale can show approximately eight cells per row and around 100 objects as a design example,
   not a fixed layout or performance benchmark.
 - Use distinct type and meaningful state cues; color alone is not required to identify an object. Text
   can expand as density permits.
-- Entering an object is distinguishable from changing density; return retains scope, filters and scale,
-  restoring position when possible.
+- Entering an object is distinguishable from changing density; return retains valid scope, filters and scale,
+  restoring position when possible or using the applicable changed-origin fallback.
 - When content or data changes, preserve the focused object's identity where possible; do not claim all
-  items are present when data coverage is incomplete.
+  items are present when data coverage is incomplete. An accessible alternative to pinch is available under 0032 and 0035.
 acceptance_evidence:
 - criterion: The pilot contract and its boundary scenarios are independently checkable.
   evidence: The pilot_scenarios describe expected results for future verification; no app test has run.
