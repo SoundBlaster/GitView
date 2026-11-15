@@ -40,8 +40,8 @@ specification:
     cancellation: Cancelling before confirmation discards only the pending selection, preserves previously saved Projects and source observations, and leaves the operator able to resume setup. A failure to save must not report a Project as created unless it is actually saved; retries must preserve successful creations and avoid duplicates.
     rediscovery: A previously selected Repository that is temporarily absent from discovery remains associated with saved Projects; absence from a partial result is not deletion or proof of denied access. Source identity and permission handling follow 0002 and 0019.
     initial_data: The Project can be identified while work observations are loading. Never present an unobserved PR or Issue scope as a confirmed empty list; preserve explicit failure, last-success time and coverage under 0003 and 0019.
-    repeat_entry: With existing Projects, use the normal overview and preserve configured membership. Launch restoration is a separate contract in 0024, not an assumption that setup repeats.
-    configuration_recovery: If local Project configuration cannot be read or its completeness cannot be established, present a recoverable local-data problem and retain saved data; do not offer an automatic first-run reset or claim that no Projects exist. A retry that successfully reads saved Projects returns to the overview with their identities and memberships intact. This state is distinct from GitHub being offline, disconnected or denying source access.
+    repeat_entry: With existing Projects, preserve configured membership. A cold session opens the normal overview; an already retained session follows the valid route-restoration policy in 0024. Do not assume setup repeats.
+    configuration_recovery: If local Project configuration cannot be read or its completeness cannot be established, present a recoverable local-data problem and retain saved data; do not offer an automatic first-run reset or claim that no Projects exist. A retry that successfully reads saved Projects updates the overview with their identities and memberships intact, without displacing a newer explicit route under 0023 and 0024. This state is distinct from GitHub being offline, disconnected or denying source access.
     partial_batch_on_launch: If an interrupted confirmed selection left some Projects durably saved and other entries unresolved, show the confirmed saved Projects in the normal overview after configuration is readable. Recover the durable operation context and make unresolved entries discoverable under 0045 and 0052 when that context is readable; otherwise expose a local recovery problem. Do not assert that unconfirmed entries succeeded or erase confirmed Projects.
     boundary: Candidate 0098 proposes GitHub App public-client authorization and 0099 refines installation-scoped setup. Exact discovery queries, screen composition and copy remain unspecified; these are agent-authored proposals rather than claims of explicit owner selection.
   scenarios:
@@ -82,9 +82,9 @@ specification:
       when: The operator confirms the selection.
       then: Two distinct single-repository Projects are saved, and both are visible; no combined Project is implied.
     interrupted_save:
-      given: A multi-selection is being saved and one default Project has been saved before a failure.
-      when: The operator retries the same selection.
-      then: The already saved default Project is reused and remaining selected repositories can be saved without a duplicate default Project.
+      given: A multi-selection is being saved; one default Project is confirmed saved, while another submitted entry has an indeterminate outcome after interruption.
+      when: The operator resumes the selection.
+      then: The confirmed Project remains available; reconcile the original unresolved operation before an unsafe repeat under 0045 and 0052. A new save is not assumed safe merely because its Project is absent from one read, and no duplicate or unproven success is reported.
     cancel_pending:
       given: The operator has pending repository selections and previously saved Projects.
       when: The operator cancels before confirmation.
