@@ -68,3 +68,15 @@ Node ID и контекстом доступа; `createdAt` для создан�
 недавно обновлённых Issue, а PR — отдельная `Repository.pullRequests`
 connection со своими аргументами. Это маршруты обнаружения кандидатов,
 а не доказательство полного Today, прав GraphQL или стабильности страниц.
+
+При последующем проходе 0102 выбрал эту схему как **рабочее направление** для
+первой версии: отдельные open и recent portions по каждому типу и Repository,
+типизированные факты 0101 и отдельное получение подтверждённых close events,
+когда они нужны. Для recent PR используется отдельная all-state connection
+с доступной сортировкой по обновлению; это не доказанная полная выборка
+событий. Не выбраны состав окончательного query, конкретные размеры страниц,
+стоимость, field permissions или гарантия completeness. Если часть источника
+недоступна, разрешённые подтверждённые карточки остаются полезными с явным
+ограничением. Основание: [GitHub Repository GraphQL](https://docs.github.com/en/graphql/reference/repos),
+[Issues](https://docs.github.com/en/graphql/reference/issues),
+[Pull requests](https://docs.github.com/en/graphql/reference/pulls).
