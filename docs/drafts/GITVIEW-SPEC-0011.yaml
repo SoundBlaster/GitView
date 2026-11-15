@@ -5,6 +5,8 @@ created_at: '2026-11-10T00:00:00Z'
 updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0011.yaml
+successor_scope: The successor records selected independent check and review signal boundaries; exact GitHub mappings and detailed observation contracts remain candidates.
 refines:
 - GITVIEW-SPEC-0008
 depends_on:

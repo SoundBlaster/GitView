@@ -1,0 +1,57 @@
+id: GITVIEW-SPEC-0010
+title: GitView - Issue and PR description formats
+kind: spec
+created_at: '2026-11-15T21:32:00Z'
+updated_at: '2026-11-15T21:32:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+relates_to: []
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0010.yaml
+  predecessor_revision: 3fbc0f9
+  owner_selection: docs/drafts/github-templates/README.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Preserve authored Issue and PR descriptions while supporting the selected structured formats.
+  authority_boundary: The owner selected mandatory templates and sections for the participating repository
+    process. Template deployment, enforcement across creation paths, parsing and versioning need separate
+    specification and have not been implemented.
+  requirements:
+    issue_format: Issue descriptions use Problem, Motivation, Expected outcome and References.
+    pr_format: PR descriptions use Problem, Motivation, Expected outcome, Changes, Validation and References.
+    participating_process: Require the agreed sections in new Issue and PR descriptions through the participating
+      repository process and cover its supported creation paths. Provide the agreed templates for that
+      process; templates and agent instructions alone are not evidence of enforcement.
+    external: Existing or external objects with another format or missing sections remain visible. Preserve
+      their authored text, indicate a confirmed missing section and do not invent material or silently
+      discard nonconforming objects.
+    meaning: Motivation, Expected outcome and Validation are authored statements. A linked Issue is not
+      proof of a specific actor's motive; declared outcome is not proof it happened; declared validation
+      is distinct from observed CI and independent test evidence. Preserve attribution of authored text
+      and the meaning of independently supported source links when available, without inferring an actor's
+      motive or causation.
+    extraction: When a section cannot reliably be extracted, retain the original permitted text instead
+      of inventing structured content.
+  scenarios:
+    legacy: An existing PR has unstructured text and no headings. Keep the text accessible and do not
+      fabricate sections.
+    disagreement: A PR description claims validation passed while supported current CI failed. Preserve
+      the author's statement and observed CI separately; do not suppress the failure.
+  open_questions:
+  - Participating repository scope, supported creation paths, installation, versioning and enforcement
+    mechanisms.
+  - Extraction, display and handling of unavailable or restricted authored content.
+  ontology_status: Issue and PullRequest use the working draft vocabulary; authored text does not establish
+    actor motives as facts.
+acceptance:
+- The selected Issue and PR formats retain their distinct named sections and apply to new descriptions
+  through all supported creation paths of the participating process; the templates support but do not
+  prove enforcement.
+- External or legacy descriptions remain visible without fabricated sections or silently discarded original
+  text.
+- Authored motivation, outcomes and validation are distinguishable from independently established facts
+  and CI.

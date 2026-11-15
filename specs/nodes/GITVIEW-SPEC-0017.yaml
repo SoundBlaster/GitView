@@ -1,0 +1,53 @@
+id: GITVIEW-SPEC-0017
+title: GitView - Accessibility and platform behavior
+kind: spec
+created_at: '2026-11-15T21:33:00Z'
+updated_at: '2026-11-15T21:33:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0014
+- GITVIEW-SPEC-0015
+- GITVIEW-SPEC-0016
+relates_to: []
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0017.yaml
+  predecessor_revision: 3fbc0f9
+  root_intent: .specgraph/root_intent.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Make overview, preview and object access usable with platform accessibility features.
+  authority_boundary: Accessible alternatives and Apple system appearance are selected directions. Exact
+    native controls, supported platform versions and device behavior require refinement and validation;
+    no accessibility testing is claimed.
+  requirements:
+    alternatives: Essential navigation, density, preview, dismissal and opening must not rely exclusively
+      on pinch, long press, pointer hover, precise tiny targets or color. Direct object opening does not
+      replace accessible preview.
+    descriptions: Assistive technologies receive understandable object type, permitted identity and source
+      context, relevant known state and limitations. Unknown and stale observations retain their status
+      and applicable scope and time when supported; stale success is not announced as current. Unknown
+      data is not announced as success, and restricted information is not disclosed to identify an object.
+    adaptive: Adapt layout to Dynamic Type and interaction to Reduce Motion. Large text can require fewer
+      columns; motion must not be necessary to understand navigation.
+    focus: On dismissal or return, restore accessibility focus to the original object when available and
+      valid, or provide a sensible available fallback without silently switching origin.
+    visual: Prefer system iOS typography, colors, SF Symbols and native controls where appropriate, consistent
+      with the selected Apple Look.
+  scenarios:
+    voiceover: With VoiceOver active on a dense grid, the operator can identify and open an eligible PR
+      without interpreting color; its supported permitted context and known state are available.
+    adaptive_layout: With large text and Reduce Motion enabled, the grid can become more spacious while
+      content and navigation remain understandable.
+  open_questions:
+  - Exact native accessibility actions, focus fallback, minimum platform support and device verification.
+  - Access-safe labels and treatment of unavailable or changing data in each view.
+  ontology_status: User, Project, Repository, PullRequest and Issue use working draft vocabulary; accessibility
+    controls add no domain entities.
+acceptance:
+- Essential interactions have accessible alternatives to a single gesture and color-only communication.
+- Assistive descriptions preserve permitted identity, known state and applicable uncertainty without restricted
+  disclosure.
+- Larger text and Reduce Motion retain understandable content and navigation without fixed density.
+- Return focus uses the valid original object when available or a sensible available fallback.

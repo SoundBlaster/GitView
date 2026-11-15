@@ -1,0 +1,65 @@
+id: GITVIEW-SPEC-0011
+title: GitView - Current checks and review signals
+kind: spec
+created_at: '2026-11-15T21:31:00Z'
+updated_at: '2026-11-15T21:31:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0008
+depends_on:
+- GITVIEW-SPEC-0003
+relates_to: []
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0011.yaml
+  predecessor_revision: 3fbc0f9
+  owner_selection: docs/drafts/pull-request-ontology-options.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Keep current PR check counts, review assessments and thread counts independently interpretable.
+  authority_boundary: The owner selected counts and GitHub behavior as the direction; actual source representations,
+    retry equivalence, revision mapping and special conclusions require verification. No native behavior
+    or API implementation is established.
+  requirements:
+    checks: Show supported counts of current individual PR checks as red, yellow, green and total, retaining
+      applicable revision, observation and coverage. A workflow run or historical attempt is not automatically
+      another current check. When the current check set or revision cannot be established, report the
+      limitation rather than a complete count.
+    categories: Special or unknown outcomes remain distinguishable until a supported mapping exists. Do
+      not assume red, yellow and green sum to total, or that an absent, pending or unknown check result
+      is successful.
+    review: Show supported permitted source review assessment and both total and unresolved thread counts;
+      a review request remains independently meaningful. Where evidence supports it, distinguish an unavailable
+      assessment, absence of reviews and a source-reported review requirement. Preserve each fact's context
+      and do not infer one from another signal.
+    readiness: A CI color, review assessment, zero visible threads or single glyph alone does not establish
+      merge readiness. A complete zero-check result is distinct from unobserved checks and is not automatically
+      merge-ready.
+    revisions: Facts from an earlier revision remain associated with that observation; do not silently
+      present an old approval or check outcome as current for a newly observed revision without applicable
+      evidence.
+    scope: These are counts and summary signals; the selected PR overview does not require in-app thread
+      content or run details.
+  scenarios:
+    retry: A failed check has a later successful result confirmed as the current equivalent for the applicable
+      revision. Count the current check once rather than adding the old attempt; unresolved equivalence
+      does not prove a complete set.
+    review_without_thread: A source reports changes requested while independently supported thread evidence
+      establishes zero unresolved threads. Show both facts without treating zero threads as approval or
+      a ready-to-merge verdict.
+    new_revision: Earlier approval and green CI concern a prior revision; a newer revision has no supported
+      current review or CI. Keep old observations in their context or mark the current facts unavailable,
+      rather than reporting current approval or green.
+  open_questions:
+  - Actual GitHub mappings for checks, retries, head revision and special or unknown conclusions.
+  - Observation coverage and the exact UI representation of partial or unavailable signals.
+  ontology_status: PullRequest, ReviewThread and CIStatus use the selected draft vocabulary; counters
+    do not establish actor actions.
+acceptance:
+- Supported permitted review assessment and both thread counts are shown; unavailable assessment, absence
+  of reviews and source-reported review requirement remain distinct when supported.
+- Current check counts retain supported revision and coverage; old attempts are not counted as new current
+  checks without evidence.
+- Review assessment, review request and thread counts remain independent; unknown or pending is not a
+  confirmed success.
+- Confirmed zero checks is distinguishable from unobserved checks and does not by itself establish merge
+  readiness.
