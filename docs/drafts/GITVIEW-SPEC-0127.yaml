@@ -1,0 +1,76 @@
+id: GITVIEW-SPEC-0127
+title: GitView - First autonomous product clarification
+kind: spec
+created_at: '2026-11-15T09:24:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0004
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0006
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+- GITVIEW-SPEC-0010
+- GITVIEW-SPEC-0011
+- GITVIEW-SPEC-0012
+- GITVIEW-SPEC-0013
+- GITVIEW-SPEC-0014
+- GITVIEW-SPEC-0015
+- GITVIEW-SPEC-0016
+- GITVIEW-SPEC-0017
+- GITVIEW-SPEC-0019
+sources:
+  owner_criterion: conversation:gitview/first-autonomous-pass-20261115
+  source_sketch: conversation_memory/sketches/gitview
+  source_revision: 9c27b27f91c5499aa72e0af70d02f362
+  root_intent: .specgraph/root_intent.md
+  product_projection: docs/drafts/product-first-pass-20261115.md
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.12/composition-context.yaml
+acceptance:
+- The first autonomous pass makes the owner's idea and its meaningful product consequences understandable through connected concepts, user journeys and outcomes.
+- The product description distinguishes owner-selected choices, agent-proposed refinements and still-open meanings without presenting a proposal as an owner decision.
+- First-version behavior and later ideas are distinguishable, including the scope of preview, filtering and source navigation.
+- Meaningful absence, partial or stale observations, access limitations and user-visible failure are explained as product behavior rather than hidden behind implementation details.
+- The first product pass does not require choosing a unique storage scheme, API query, protocol, UI control or module arrangement where alternatives can satisfy the product outcomes.
+- Explicit owner-requested qualities including testability, dependency injection, TDD and suitable mocks remain visible as cross-cutting expectations for later development.
+specification:
+  objective: Clarify the owner's product intent enough to discuss user-visible consequences and relationships before implementation-specific refinement.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    product_boundary: Preserve the user's compact GitHub overview, Project and Repository relationships, Today and lifecycle visibility, zoom and preview, selected work fields, attention, metrics, sharing, local last-known data and Apple-style accessibility as product outcomes. Explain what connects them and what a person observes.
+    interpretation: Separate approved selections from agent-authored choices, conditional ideas and unresolved semantics. A useful working proposal can make a product consequence concrete without asserting that the owner selected its exact threshold, source representation or interface.
+    later_engineering: Existing detailed technical contracts remain available for the subsequent implementation-ready refinement under 0020 and 0021. Their existence, concrete technology choices, speculative recovery mechanisms or verified external runtime are not prerequisites for understanding or evaluating this first product clarification. Explicit owner-requested architecture and testing qualities are retained, not treated as product features.
+    stop: The first pass is reviewable when the agreed product routes and important outcomes are connected and understandable, known consequential ambiguity is visible, and no further detail is needed solely to explain the user's idea. This is a product-level assessment, not proof that code can be implemented without further specification, that the whole draft has been owner-approved or that an application exists.
+    verification: Review product coverage against the owner's recorded selections and the product projection; review ontology terminology in its declared draft context. Structural graph checks and readable examples support the review but do not independently establish semantic completeness.
+  scenarios:
+    completed_today:
+      given: The user is examining today's PR collection and some visible PRs merge.
+      when: The source-supported state updates.
+      then: The product description makes clear that the merged work stays visible by default and that the user can explicitly filter it out.
+    shared_repository:
+      given: One Repository is included in two GitView Projects.
+      when: Each Project and a unique portfolio summary are considered.
+      then: The product distinguishes membership in each Project from deduplication in the portfolio; organization is not a Project boundary.
+    technology_not_predetermined:
+      given: Two storage approaches can preserve the same agreed last-known-data and failure behavior.
+      when: The owner reviews the first product pass.
+      then: The product outcome is understandable without declaring either storage approach to be the sole approved implementation.
+    proposed_review_threshold:
+      given: A candidate uses a 24-hour interval to highlight an inactive review discussion.
+      when: The product description presents that candidate.
+      then: It labels the threshold as agent-proposed and does not assert that a particular person owes an answer.
+  unresolved:
+  - Whether the working product projection sufficiently communicates all intended nuances requires product review; clarify any missing behavior without demanding implementation detail merely for its own sake.
+  - Meaning of ready for an open PR, broad discussion participation and true responsibility for a reply remain distinguishable from narrower observable indicators.
+  - No implementation, device behavior, source availability or executed acceptance is claimed by this first-pass specification.

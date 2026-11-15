@@ -4,7 +4,7 @@
 
 Все статусы показаны как записаны в файлах. Структура не доказывает смысловую полноту, принятие, готовность к реализации или выполненные тесты.
 
-Кандидатов: **126**. SHA-256 имён и содержимого исходных YAML: `1da3158eb08d73554b345371000d38dffb8f96abb595bed426c0599b146d1a12`.
+Кандидатов: **127**. SHA-256 имён и содержимого исходных YAML: `fa755242c5abfc8d1d16290f59cafc8c3a7c83d5af4330a73f4bedc5b82938e5`.
 
 Воспроизведение и проверка снимка: `python docs/drafts/evidence/render-specification-graph.py` и та же команда с `--check` в Python environment SpecGraph.
 
@@ -137,6 +137,7 @@
       - [GITVIEW-SPEC-0106](GITVIEW-SPEC-0106.yaml): Logical local data composition and commit boundaries — idea / pre_canonical
         - [GITVIEW-SPEC-0113](GITVIEW-SPEC-0113.yaml): Local transactional storage direction — idea / pre_canonical
           - [GITVIEW-SPEC-0122](GITVIEW-SPEC-0122.yaml): Local store schema evolution and recovery — idea / pre_canonical
+  - [GITVIEW-SPEC-0127](GITVIEW-SPEC-0127.yaml): First autonomous product clarification — idea / pre_canonical
 
 ## Прямые зависимости
 
@@ -268,3 +269,4 @@
 | [0124](GITVIEW-SPEC-0124.yaml) | [0036](GITVIEW-SPEC-0036.yaml), [0053](GITVIEW-SPEC-0053.yaml), [0079](GITVIEW-SPEC-0079.yaml), [0101](GITVIEW-SPEC-0101.yaml), [0103](GITVIEW-SPEC-0103.yaml), [0113](GITVIEW-SPEC-0113.yaml), [0122](GITVIEW-SPEC-0122.yaml) |
 | [0125](GITVIEW-SPEC-0125.yaml) | [0027](GITVIEW-SPEC-0027.yaml), [0032](GITVIEW-SPEC-0032.yaml), [0039](GITVIEW-SPEC-0039.yaml), [0041](GITVIEW-SPEC-0041.yaml), [0042](GITVIEW-SPEC-0042.yaml), [0057](GITVIEW-SPEC-0057.yaml), [0061](GITVIEW-SPEC-0061.yaml), [0062](GITVIEW-SPEC-0062.yaml), [0089](GITVIEW-SPEC-0089.yaml), [0092](GITVIEW-SPEC-0092.yaml), [0110](GITVIEW-SPEC-0110.yaml), [0119](GITVIEW-SPEC-0119.yaml) |
 | [0126](GITVIEW-SPEC-0126.yaml) | [0036](GITVIEW-SPEC-0036.yaml), [0053](GITVIEW-SPEC-0053.yaml), [0102](GITVIEW-SPEC-0102.yaml), [0103](GITVIEW-SPEC-0103.yaml), [0113](GITVIEW-SPEC-0113.yaml), [0116](GITVIEW-SPEC-0116.yaml), [0122](GITVIEW-SPEC-0122.yaml), [0123](GITVIEW-SPEC-0123.yaml), [0124](GITVIEW-SPEC-0124.yaml) |
+| [0127](GITVIEW-SPEC-0127.yaml) | [0002](GITVIEW-SPEC-0002.yaml), [0003](GITVIEW-SPEC-0003.yaml), [0004](GITVIEW-SPEC-0004.yaml), [0005](GITVIEW-SPEC-0005.yaml), [0006](GITVIEW-SPEC-0006.yaml), [0007](GITVIEW-SPEC-0007.yaml), [0008](GITVIEW-SPEC-0008.yaml), [0009](GITVIEW-SPEC-0009.yaml), [0010](GITVIEW-SPEC-0010.yaml), [0011](GITVIEW-SPEC-0011.yaml), [0012](GITVIEW-SPEC-0012.yaml), [0013](GITVIEW-SPEC-0013.yaml), [0014](GITVIEW-SPEC-0014.yaml), [0015](GITVIEW-SPEC-0015.yaml), [0016](GITVIEW-SPEC-0016.yaml), [0017](GITVIEW-SPEC-0017.yaml), [0019](GITVIEW-SPEC-0019.yaml) |

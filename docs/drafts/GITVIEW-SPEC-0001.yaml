@@ -270,6 +270,7 @@ specification:
     first_autonomous_pass: The owner defines the first autonomous pass as product clarification of the original idea. Make user-visible purposes, concepts, relationships, interactions, outcomes and consequential ambiguities understandable to the owner. Do not require one implementation choice where multiple approaches satisfy the same product behavior. The later implementation-ready graph remains a separate refinement stage; implementation details and existing technical proposals do not by themselves determine completion of the first product pass. Preserve explicitly requested engineering qualities as cross-cutting constraints.
     first_autonomous_pass_source: conversation:gitview/first-autonomous-pass-20261115
     product_first_projection: docs/drafts/product-first-pass-20261115.md
+    first_pass_acceptance: docs/drafts/GITVIEW-SPEC-0127.yaml
     source_refs:
     - conversation:gitview/excerpt-07
     - conversation:gitview/excerpt-08
