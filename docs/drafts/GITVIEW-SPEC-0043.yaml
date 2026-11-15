@@ -441,9 +441,9 @@ specification:
       when: The operator previews R2's PR, opens it and requests its original source.
       then: Preview, overview and source request all refer to R2's PR; returning preserves the originating context under 0024.
     offline_and_denial:
-      given: A private Repository has a prior permitted observation and belongs to a Project.
-      when: A refresh first fails offline and a later source response explicitly denies access.
-      then: During offline the previously permitted data can remain visible with time and failure; after denial the restricted private data is hidden while the Repository and membership are retained.
+      given: A private Repository has a prior permitted observation and belongs to a Project; the applicable account and restriction context supports last-known display.
+      when: A refresh first fails offline, a later response independently supports a rate limit with a valid retry delay, and an applicable subsequent response explicitly denies access.
+      then: During offline and the rate-limit wait, the previously permitted data can remain visible with its observation time and the applicable failure or deferral; a manual refresh does not bypass the supported wait. The rate-limit response is not described as a Repository denial or empty result. After the independently established denial, affected private data is hidden while the Repository and membership are retained.
     result_after_denial:
       given: A refresh of a private Repository was started before an explicit source access denial.
       when: Its response arrives after denial without access having been re-established.
