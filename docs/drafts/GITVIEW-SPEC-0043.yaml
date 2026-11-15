@@ -71,12 +71,12 @@ depends_on:
 - GITVIEW-SPEC-0115
 - GITVIEW-SPEC-0118
 - GITVIEW-SPEC-0119
-- GITVIEW-SPEC-0120
 - GITVIEW-SPEC-0121
 - GITVIEW-SPEC-0122
 - GITVIEW-SPEC-0124
 - GITVIEW-SPEC-0126
 sources:
+  conditional_cross_scope_zoom: docs/drafts/GITVIEW-SPEC-0120.yaml
   conditional_clear_protocol: docs/drafts/GITVIEW-SPEC-0117.yaml
   conditional_comment_age_proxy: docs/drafts/GITVIEW-SPEC-0094.yaml
   parent: docs/drafts/GITVIEW-SPEC-0020.yaml
@@ -106,6 +106,7 @@ specification:
     optional_long_thread_proxy_boundary: The 24-hour comment-age interpretation in 0094 is an agent-authored option; scenarios specifically evaluating it apply only if it is selected. The initial long-discussion volume interpretation is defined in 0062; duration and inactivity remain distinct unresolved meanings.
     optional_history_clear_boundary: The all-local-history clear in 0067 and its protocol in 0117 are agent-authored optional candidates with undecided first-release inclusion. Scenarios involving this clear apply only if it is included; chart history and local observations remain independently required. Other deletion and access rules are unaffected.
     optional_review_stage_boundary: The agent-proposed open non-draft filter in 0125 is conditional, not a prerequisite for the core Today journey. Its acceptance scenario applies only if it is included; the owner's broader ready-work need remains unresolved.
+    optional_cross_scope_zoom_boundary: The targeted pinch transition between scopes in 0120 is conditional and not a prerequisite for the initial navigation and density-change journey. Its scenario applies only if the interaction is selected; ordinary explicit opening, return and within-scope pinch remain independently required.
     optional_cohort_boundary: The dynamic Today journey and its acceptance do not require capturing a fixed PR cohort. Candidate 0055 describes a separate proposed view whose first-release scope is unresolved; its conditional scenarios apply if that capability is included, without making it a prerequisite for the core journey.
   scenarios:
     review_stage_filter_preview_and_return:
@@ -273,7 +274,7 @@ specification:
       when: The operator inspects P's open-PR and failed-CI signals.
       then: The open-PR value can retain its own supported completeness while failed-CI coverage is incomplete or unavailable; one successful category does not turn the other into zero or healthy.
     targeted_zoom_single_member_return:
-      given: The proposed targeted zoom interaction identifies Project P containing one confirmed Repository R, and P's origin is the Projects overview.
+      given: The optional targeted zoom interaction is included and identifies Project P containing one confirmed Repository R, and P's origin is the Projects overview.
       when: The transition is committed and the operator later returns by an available zoom-return or Back action.
       then: P's work opens without a redundant Repository screen, the same P and R remain attributable, and return follows the actual origin rather than a fabricated intermediate step.
     share_boundary_then_denial:
