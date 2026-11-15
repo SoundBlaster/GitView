@@ -17,10 +17,10 @@ depends_on:
 - GITVIEW-SPEC-0063
 - GITVIEW-SPEC-0077
 - GITVIEW-SPEC-0078
-- GITVIEW-SPEC-0094
 - GITVIEW-SPEC-0098
 - GITVIEW-SPEC-0099
 sources:
+  conditional_comment_age_proxy: docs/drafts/GITVIEW-SPEC-0094.yaml
   parent: docs/drafts/GITVIEW-SPEC-0088.yaml
   selected_fields: docs/drafts/pr-issue-selected-fields-coverage-20261114.md
   permission_matrix: docs/drafts/github-app-permission-coverage-20261114.md

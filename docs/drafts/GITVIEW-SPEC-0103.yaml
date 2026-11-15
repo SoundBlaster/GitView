@@ -11,11 +11,11 @@ depends_on:
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0045
 - GITVIEW-SPEC-0052
-- GITVIEW-SPEC-0067
 - GITVIEW-SPEC-0082
 - GITVIEW-SPEC-0083
 - GITVIEW-SPEC-0102
 sources:
+  conditional_history_clear: docs/drafts/GITVIEW-SPEC-0067.yaml
   parent: docs/drafts/GITVIEW-SPEC-0071.yaml
   project_recovery: docs/drafts/GITVIEW-SPEC-0052.yaml
   history_clear: docs/drafts/GITVIEW-SPEC-0067.yaml

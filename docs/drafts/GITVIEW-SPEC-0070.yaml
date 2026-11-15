@@ -12,11 +12,11 @@ depends_on:
 - GITVIEW-SPEC-0064
 - GITVIEW-SPEC-0065
 - GITVIEW-SPEC-0066
-- GITVIEW-SPEC-0067
 - GITVIEW-SPEC-0068
 - GITVIEW-SPEC-0069
 - GITVIEW-SPEC-0102
 sources:
+  conditional_history_clear: docs/drafts/GITVIEW-SPEC-0067.yaml
   parent: docs/drafts/GITVIEW-SPEC-0040.yaml
   owner_requirements: conversation:gitview/excerpt-74
   history_audit: docs/drafts/history-branch-readiness-20261114.md
@@ -40,12 +40,13 @@ specification:
     injected_inputs: Domain-level tests supply deterministic clock, calendar and time-zone inputs as well as source facts, membership, scope, access and persistence outcomes. Network and data doubles are replaceable at explicit boundaries under 0040. Use SpecificationCore for suitable named domain policies as required by 0021 without collapsing unknown or partial into a Boolean.
     calendar: Verify half-open boundaries, current-day evaluation cutoff, relevant time-zone changes and 23-hour and 25-hour local days. Assertions must target user-visible period membership and actual timestamps rather than just restating an implementation helper. Host-side examples alone do not establish iOS calendar behavior or accessible presentation.
     history: Verify distinct-object versus event counts, reason unknown versus completed, repeated closure, separate PR and Issue series, current membership basis and missing or partial Repository inputs. Confirm that a later partial sample is not labeled a complete latest sample and that mismatched observation times do not become a fabricated simultaneous snapshot.
-    storage: Exercise accepted source observations, persistence failure or unknown outcome, scoped clear and a late pre-clear response using controlled storage and network boundaries. Verify confirmed clearing does not let earlier admitted work silently repopulate removed history and that a genuinely new later observation can be retained. A fake-storage test is not by itself proof of actual durable ordering or restart behavior; test the chosen persistent implementation and restart boundary separately once specified.
+    storage: Exercise accepted source observations and persistence failure or unknown outcome using controlled storage and network boundaries. If optional history clear is implemented, also test a scoped clear and late pre-clear response, ensuring earlier admitted work does not silently repopulate removed history and a genuinely new later observation can be retained. A fake-storage test is not by itself proof of actual durable ordering or restart behavior; test the chosen persistent implementation and restart boundary separately once specified.
     navigation: Verify that an actionable period-outcome entry opens the same Project, period and condition and distinguishes event counts from distinct object cards. Verify return, incomplete history and restricted private inputs without requiring live data. Native accessibility and visual distinctions need separate device or appropriate platform-level evidence under 0032 and 0068.
     competing_graph_evaluations: With controlled completion order, verify that a graph evaluated for an old member set or period cannot overwrite a newly selected graph or become its object list. Verify that denied inputs are removed from app-controlled chart and accessibility output before a late response can be presented. These checks do not establish an actual native implementation.
     real_boundaries: For a chosen source mapping, separately verify documented API field and permission assumptions, actual parsing and partial or error behavior with an authorized, deliberately scoped test source. Verify platform background delivery only as observed, not as a guaranteed schedule. Avoid using a user's private data unless explicitly authorized for that test; never mutate source GitHub objects as part of read-only validation.
     evidence: Record what ran, tested version, scenario, controlled inputs, test level and observed result; identify unavailable live or device checks. The author's calendar-history model and SpecGraph structural checks are design evidence only and do not claim the application implementation passed.
     provenance: Testability, DI, TDD and network/data doubles were requested by the owner. History-specific verification cases are agent-authored refinements and no product test has run.
+  scenario_scope: Scenarios involving history clear or the comment-age proxy apply only when the corresponding optional feature is included; other agreed metric and history behavior remains independent.
   scenarios:
     dst_boundary:
       given: A controlled clock and calendar place an event at the exclusive end of a 23-hour local day.

@@ -14,8 +14,8 @@ depends_on:
 - GITVIEW-SPEC-0104
 - GITVIEW-SPEC-0105
 - GITVIEW-SPEC-0086
-- GITVIEW-SPEC-0117
 sources:
+  conditional_clear_protocol: docs/drafts/GITVIEW-SPEC-0117.yaml
   parent: docs/drafts/GITVIEW-SPEC-0113.yaml
   logical_data: docs/drafts/GITVIEW-SPEC-0106.yaml
   connection_binding: docs/drafts/GITVIEW-SPEC-0086.yaml

@@ -15,16 +15,16 @@ depends_on:
 - GITVIEW-SPEC-0046
 - GITVIEW-SPEC-0056
 - GITVIEW-SPEC-0057
-- GITVIEW-SPEC-0067
 - GITVIEW-SPEC-0073
 - GITVIEW-SPEC-0074
 - GITVIEW-SPEC-0088
 - GITVIEW-SPEC-0089
 - GITVIEW-SPEC-0091
-- GITVIEW-SPEC-0094
 - GITVIEW-SPEC-0102
 - GITVIEW-SPEC-0119
 sources:
+  conditional_history_clear: docs/drafts/GITVIEW-SPEC-0067.yaml
+  conditional_comment_age_proxy: docs/drafts/GITVIEW-SPEC-0094.yaml
   parent: docs/drafts/GITVIEW-SPEC-0047.yaml
   summary: docs/drafts/GITVIEW-SPEC-0029.yaml
   owner_filters: conversation:gitview/excerpt-55-reply

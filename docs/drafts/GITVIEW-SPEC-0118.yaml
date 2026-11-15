@@ -14,7 +14,6 @@ depends_on:
 - GITVIEW-SPEC-0056
 - GITVIEW-SPEC-0064
 - GITVIEW-SPEC-0065
-- GITVIEW-SPEC-0067
 - GITVIEW-SPEC-0069
 - GITVIEW-SPEC-0079
 - GITVIEW-SPEC-0092
@@ -22,6 +21,7 @@ depends_on:
 - GITVIEW-SPEC-0112
 - GITVIEW-SPEC-0116
 sources:
+  conditional_history_clear: docs/drafts/GITVIEW-SPEC-0067.yaml
   parent: docs/drafts/GITVIEW-SPEC-0068.yaml
   periods: docs/drafts/GITVIEW-SPEC-0069.yaml
   privacy: docs/drafts/GITVIEW-SPEC-0064.yaml

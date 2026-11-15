@@ -12,8 +12,8 @@ depends_on:
 - GITVIEW-SPEC-0040
 - GITVIEW-SPEC-0053
 - GITVIEW-SPEC-0066
-- GITVIEW-SPEC-0067
 sources:
+  conditional_history_clear: docs/drafts/GITVIEW-SPEC-0067.yaml
   parent: docs/drafts/GITVIEW-SPEC-0044.yaml
   storage_intent: conversation:gitview/excerpt-61
   refresh_intent: conversation:gitview/excerpt-63

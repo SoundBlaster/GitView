@@ -16,9 +16,9 @@ depends_on:
 - GITVIEW-SPEC-0057
 - GITVIEW-SPEC-0064
 - GITVIEW-SPEC-0065
-- GITVIEW-SPEC-0067
 - GITVIEW-SPEC-0102
 sources:
+  conditional_history_clear: docs/drafts/GITVIEW-SPEC-0067.yaml
   parent: docs/drafts/GITVIEW-SPEC-0013.yaml
   agreed_summary: docs/drafts/project-summary-proposal.md
   today_history_example: docs/drafts/today-to-history-worked-example-20261115.md

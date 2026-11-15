@@ -11,12 +11,12 @@ depends_on:
 - GITVIEW-SPEC-0044
 - GITVIEW-SPEC-0053
 - GITVIEW-SPEC-0066
-- GITVIEW-SPEC-0067
 - GITVIEW-SPEC-0095
 - GITVIEW-SPEC-0097
 - GITVIEW-SPEC-0101
 - GITVIEW-SPEC-0102
 sources:
+  conditional_history_clear: docs/drafts/GITVIEW-SPEC-0067.yaml
   parent: docs/drafts/GITVIEW-SPEC-0103.yaml
   observation: docs/drafts/GITVIEW-SPEC-0044.yaml
   progress_transaction_candidate: docs/drafts/discovery-progress-transaction-candidate-20261115.md
