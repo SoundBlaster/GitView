@@ -78,9 +78,9 @@ specification:
       when: Its default Project is established and its work has not yet been observed.
       then: The Project is identifiable, and its PR and Issue data is shown as unobserved or loading, not confirmed empty.
     multi_selection:
-      given: Two distinct accessible repositories are selected and neither has a default Project.
-      when: The operator confirms the selection.
-      then: Two distinct single-repository Projects are saved, and both are visible; no combined Project is implied.
+      given: Two distinct eligible Repositories are selected for default setup, neither has a default association or unresolved competing creation, and both proposed names satisfy Project validity.
+      when: The operator confirms the selection, both independent creation operations durably succeed, and their current configurations can be read and disclosed.
+      then: Two distinct single-Repository Projects are visible under their saved identities; no combined Project is implied. A different per-entry outcome follows 0045 rather than being reported as a successful save.
     interrupted_save:
       given: A multi-selection is being saved; one default Project is confirmed saved, while another submitted entry has an indeterminate outcome after interruption.
       when: The operator resumes the selection.
