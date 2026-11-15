@@ -18,11 +18,11 @@ sources:
 acceptance:
 - Saved Projects have stable local identities, names and at least one repository member.
 - A Project's optional purpose description can be inspected, set, changed and explicitly cleared without changing its identity or source Repository.
-- The operator can explicitly create a distinct Project from one or more eligible Repositories without changing their existing memberships or default associations.
+- Under the agent-proposed custom creation route, the operator can explicitly create a distinct Project from one or more eligible Repositories without changing their existing memberships or default associations; the route remains a product candidate.
 - A Repository may participate in several Projects and an edit to one membership does not mutate other Projects or GitHub.
-- Default Project creation is idempotent for an existing default association and deletion does not silently remove the repository or its other memberships.
+- Under the agent-proposed persistent default association, default Project creation is idempotent for an existing association. Deleting a Project does not silently remove its Repository or other memberships.
 - Cancelling an unsubmitted project edit or an invalid attempt to remove the final member preserves the last saved Project.
-- An interrupted edit is reconciled from durable configuration without presenting an unverified mixture of old and new membership or a dangling default association.
+- An interrupted edit is reconciled from durable configuration without presenting an unverified mixture of old and new membership; the proposed default-association design also preserves association consistency.
 specification:
   objective: Specify creation, editing and removal of local Projects and the default association used by setup.
   ontology_refs:
