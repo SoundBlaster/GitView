@@ -51,6 +51,32 @@ it is never supplied with a guessed default.
    incomplete source coverage and an intentionally empty filter are distinct
    outcomes. None is silently converted into another.
 
+## Limitations that cross a boundary
+
+These are semantic cases, not a prescribed exception hierarchy. An outcome may
+carry multiple independent limitations; the consuming route must not flatten
+them to one success flag or one catch-all empty collection.
+
+| Origin and condition | Minimum supported handoff | What the receiver can and cannot conclude |
+| --- | --- | --- |
+| Local Project read unavailable or inconsistent | Read context, safe local limitation and any independently valid isolated entries. | It cannot confirm an empty portfolio or admit writes whose required configuration is unverified. Source reachability is independent. |
+| Source portion not admitted, deferred or locally cancelled before a usable result | Captured portion and scheduling outcome; preserve a real source-attempt time if independently established, without inventing one for unstarted work. | It is unobserved, not a GitHub error or a terminal empty page. Cancellation does not prove an independently submitted storage effect was undone. |
+| Source request failed, was rate-limited or timed out | Attempt scope and only the reason and retry constraints supported by actual evidence; the source outcome is separate from saved facts. | Eligible last-known facts retain their time and access limitations. An ambiguous error is not automatically a credential rejection, Repository denial or zero. |
+| Source response has usable facts plus a field/portion error | Supported facts plus an attributable field or scope limitation, each with its own context. | A title can be usable while CI or review is unavailable; neither the sibling success nor HTTP status makes the whole selection complete. An unscoped error does not identify a particular hidden object. |
+| Current credential generation is authoritatively rejected | Applicable generation and restriction context under 0112, separate from the reason for rejection. | Affected private material is restricted; do not invent whether expiry, revocation or a particular Repository caused it. A late rejection for an older generation is not automatically a rejection of its replacement. |
+| Fact or limitation write is indeterminate | Original logical operation identity, bound intent, effect and indeterminate outcome. | Source evidence may remain usable transiently if allowed; the write is neither confirmed rolled back nor durable, and an unsafe new operation is not admitted. |
+| Current local fact read unavailable or evidence binding inconsistent | Requested scope and safely attributable local limitation, plus any independently recoverable compatible facts. | A historical receipt does not substitute for a readable current fact; an unrelated fact does not repair the missing field, coverage or time. |
+| Candidate identity, scope or fact applicability unresolved | Safe unresolved scope or candidate limitation where disclosure permits; preserve any separately supported facts. | It cannot be sent as a different confirmed object, a confirmed non-match or a source deletion. A restricted identity need not be revealed in an uncertainty list. |
+| Decision has an invalid required input or an unexpected no-result | Integration/preparation failure tied to its captured evaluation, without assigning a domain decision. | Do not interpret it as `unknown`, `false`, source failure or empty selection. Valid domain `unknown` remains a separate supported result. |
+| Route or disclosure context changes before completion | Result's original evaluation and access scope, and a later current-context check. | Preserve eligible facts for their own scope if policy allows, but do not replace newer choices or expose content under an invalidated grant. Re-evaluation has its own identity. |
+
+For every case, raw authorization values, private source paths and unneeded
+error messages stay outside the presentation contract. Last-success timestamps
+belong only to the source scope and meaning they actually establish. A
+limitation remains recoverable after restart only if its own attributable
+evidence was retained and can be read; otherwise report the supported unknown,
+not a reconstructed error reason.
+
 The [worked example](today-source-union-worked-example-20261115.md) and
 [assembly state](today-assembly-state-contract-20261115.md) specify expected
 observable behavior. TDD should exercise the exchanges using separately
