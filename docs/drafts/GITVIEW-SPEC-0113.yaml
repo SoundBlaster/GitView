@@ -28,6 +28,7 @@ sources:
   apple_swiftdata: https://developer.apple.com/documentation/swiftdata/modelcontext
   swift_actor_reentrancy: https://github.com/swiftlang/swift-evolution/blob/main/proposals/0306-actors.md
   fence_reasoning: docs/drafts/admission-fence-reasoning-20261114.md
+  project_recovery_data: docs/drafts/project-creation-recovery-data-contract-20261115.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The proposed local persistence direction supports one coordinated commit for a Project effect and its operation evidence while exposing domain-facing interfaces to callers.
