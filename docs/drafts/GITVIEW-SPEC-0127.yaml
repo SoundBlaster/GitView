@@ -34,7 +34,7 @@ sources:
 acceptance:
 - The first autonomous pass makes the owner's idea and its meaningful product consequences understandable through connected concepts, user journeys and outcomes.
 - The product description distinguishes owner-selected choices, agent-proposed refinements and still-open meanings without presenting a proposal as an owner decision.
-- First-version behavior and later ideas are distinguishable, including the scope of preview, filtering and source navigation.
+- First-version behavior and later ideas are distinguishable, including preview, calendar, filtering and source navigation.
 - Meaningful absence, partial or stale observations, access limitations and user-visible failure are explained as product behavior rather than hidden behind implementation details.
 - The first product pass does not require choosing a unique storage scheme, API query, protocol, UI control or module arrangement where alternatives can satisfy the product outcomes.
 - Explicit owner-requested qualities including testability, dependency injection, TDD and suitable mocks remain visible as cross-cutting expectations for later development.
