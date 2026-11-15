@@ -19,6 +19,8 @@ sources:
   overview_query_candidates: docs/drafts/object-overview-graphql-operation-candidates-20261115.md
   overview_query_schema_validation: docs/drafts/evidence/github-public-schema-overview-validation-20261115.json
   selected_field_source_readiness: docs/drafts/selected-field-source-readiness-20261115.md
+  label_ref_queries: docs/drafts/labels-ref-repositories-graphql-candidates-20261115.md
+  label_ref_schema_validation: docs/drafts/evidence/github-public-schema-label-ref-validation-20261115.json
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - An Issue is identified in its source Repository and presents selected available identity, state, description and participant fields without inventing missing values.
@@ -52,6 +54,7 @@ specification:
     timestamps: Creation, update, closure, last comment and observation times have different meanings. A source update time is not automatically a last-comment time; an unavailable time remains unknown.
     partial_fields: Apply the field evidence and refresh rules in 0044 independently to state, reason, participants, links, counters and body. A newer title or state observation does not make omitted links, counts or description current. Preserve previously accepted permitted facts with their own context or indicate unavailability; a null-like error or omitted association is not automatically a known empty set.
     graphql_overview_candidate: The accompanying typed Issue overview query is a statically schema-checked example for individual selected scalar facts, authored body, comment total and Repository witness. Attribute each usable fact only to the confirmed Issue and Repository with its actual access and response context under 0101 and 0116. Null, omitted, failed and unavailable fields follow their actual semantics and error paths; a body does not prove an outcome and a comment count is not a participant count or a complete timeline. The example does not cover all selected relationships and fields, select a production operation, or establish permissions or runtime behavior.
+    graphql_labels_candidate: The accompanying separately paged Issue labels query is accepted by the recorded public schema snapshot. Associate usable labels with the confirmed Issue and source Repository and preserve identity, actual page, field, access and observation context. Null, error, omitted or partial data does not become a confirmed empty set; color is not Issue type or lifecycle. This example establishes neither permission nor complete source coverage.
     description: Structured sections follow 0034. Authored motivation remains a statement, not proof of an actor's motive or observed result.
     provenance: The selected fields and role distinctions follow the owner's accepted Issue field set; the detailed unknown and evidence handling are agent-authored refinements.
   scenarios:
