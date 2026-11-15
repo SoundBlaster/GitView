@@ -77,6 +77,10 @@ specification:
       given: A private historical point detail schedules a return focus or announcement and an applicable restriction is established before that app-owned work is issued.
       when: The delayed work becomes eligible to run.
       then: GitView rechecks the current context, does not issue newly restricted details and offers a safe permitted context or recovery route; it does not promise to retract speech already delivered.
+    partial_restoration_before_return:
+      given: A chart point combines permitted Repository A and private Repository B, and its historical object selection is open. B becomes restricted; a later applicable observation restores only B's Repository name, not the historical inputs used by the point.
+      when: The operator returns to the chart and an earlier app-owned focus or announcement for that point is pending.
+      then: The old A-and-B value and dependent payload remain restricted, the newly supported B name does not restore them, and the delayed work does not announce the old value. An independently supported A-only point may be offered with safe scope and coverage, but is not identified as the original A-and-B point; a permitted heading or recovery route remains available.
     clear_before_return:
       given: A historical point and its drilldown were loaded from retained evidence, then all local metric history is durably cleared before the operator returns.
       when: The drilldown closes or its delayed app-controlled announcement would run.
