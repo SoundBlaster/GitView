@@ -92,6 +92,9 @@ specification:
       of time-zone changes during an active interaction and historical grouping remains to be refined.
 
       '
+    temporal_mode_boundary: 'As an agent-authored first-version navigation direction, distinguish the ordinary dynamic Today selection from an explicitly opened historical outcome selection. Today uses its current local day and unfinished-work alternatives; an outcome selection uses the origin''s fixed period, captured Repository basis and named event predicate under 0056. A historical merged-PR or closed-Issue list is a selection for that condition, not a complete general timeline of everything created, updated, closed without merge or open in that period. The all-lifecycle default means no implicit current-lifecycle restriction within the selected mode; it does not expand the origin''s historical event predicate. A broader general past-period grid and its event and membership semantics remain open, rather than being silently replaced with an outcome list or implied by a chart. A direct ordinary Project entry starts in Today under 0024; selecting or leaving a historical mode follows an explicit route and preserves its actual context.
+
+      '
     incomplete: 'A missing lifecycle state, relevant timestamp, repository observation or page is not
       evidence of exclusion or of an empty period. Use known observations without presenting unknown or
       stale values as current facts; expose affected coverage or freshness according to GITVIEW-SPEC-0003.
@@ -178,6 +181,14 @@ specification:
       when: The operator returns after the PR no longer matches the active filter.
       then: The Project, Today, filter and density remain; the list reflects the updated state predictably
         and restores position where possible.
+    historical_outcome_is_not_general_timeline:
+      given: A Project history chart has a permitted distinct merged-PR outcome for a fixed past interval; another PR was closed without merge in that interval and an Issue was created then without a supported closure.
+      when: The operator opens the merged-PR outcome without applying a current-state filter.
+      then: The destination identifies its fixed interval, captured scope and merge-event condition, and displays supported matching PR identities once with their separately observed current states. It does not claim to show every past PR or Issue, silently include the other objects as merge matches, or infer their absence from history. A broader past-period grid remains a separate unselected contract.
+    clear_last_historical_condition:
+      given: A fixed historical outcome selection has only its origin event condition and the operator removes that condition.
+      when: No other valid temporal mode remains selected.
+      then: The route requests or exposes explicit time-scope selection under 0092 instead of silently presenting the old objects as dynamic Today or an exhaustive general history. Explicitly choosing Today evaluates its current scope and evidence independently.
     date_boundary:
       given: The device's local calendar day changes while the app is open.
       when: The Today selection is next updated.
