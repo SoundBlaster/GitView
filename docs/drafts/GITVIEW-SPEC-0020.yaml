@@ -38,17 +38,15 @@ acceptance:
   Issue work.
 - Today retains unfinished work and same-day results while explicit filters and zoom preserve the intended
   scope.
-- The operator can inspect a card through a first-version preview, open its overview and navigate or share
-  its GitHub source.
+- The operator can inspect an eligible card through a first-version preview and open its overview; an eligible associated GitHub link can be opened or shared under the source-handoff policy.
 - Current CI, review and thread counts remain distinct; incomplete, stale, failed and unauthorized data
   are not represented as successful empty data.
 - Summaries and available charts use explicit scopes and do not double-count shared repository identities
   in portfolio totals.
 - Essential navigation is accessible without relying solely on color or a gesture.
 acceptance_evidence:
-- criterion: Each acceptance item has an executable verification plan.
-  evidence: The scenarios below and linked nodes define future checks; no app build, UI run or source
-    integration has been observed.
+- criterion: Acceptance scenarios and their verification obligations are reviewable.
+  evidence: The scenarios below and linked nodes describe expected outcomes. Executable procedures, fixtures and applicable integration or device evidence remain to be specified; no app build, UI run or source integration has been observed.
 specification:
   objective: Define the coherent first useful GitView pilot and its observable end-to-end outcomes.
   ontology_refs:
@@ -73,17 +71,17 @@ specification:
   - GitHub write operations such as merge, approve and editing Issues.
   scenarios:
     happy_path:
-      given: An authorized operator selects two repositories in a Project and data is observed.
+      given: An authorized operator selects two repositories in a Project, applicable data is observed and the selected PR has an eligible source link.
       when: The operator opens the Project, filters failed CI, zooms the grid and previews a PR.
       then: Matching PRs retain repository context, the preview identifies the selected PR, and the operator
         can open its GitHub source.
     completed_work:
-      given: Today contains 100 PRs within a known complete scope.
-      when: Ninety-five are merged today.
+      given: Today contains 100 distinct permitted PRs within a known complete scope.
+      when: Source-supported compatible observations establish that ninety-five were merged today and the remaining five are open.
       then: All 100 remain visible without state exclusions, with current states; filtering merged leaves
         the remaining matching work.
     offline_resume:
-      given: The app has previously stored observations and the network is unavailable.
+      given: The app has previously stored observations with supported successful times and the network is unavailable.
       when: The operator reopens a Project and requests refresh.
       then: Previously observed data remains visible only where current local access policy permits it, with
         its last-success time and the applicable refresh limitation. Restricted or unverifiable private data
@@ -99,7 +97,7 @@ specification:
         the repository is empty.
   unresolved:
   - Exact iOS deployment target, performance thresholds and device-based usability evidence.
-  - Concrete authorization method, GitHub API mappings, cache schema and private cache retention policy.
+  - Verify and refine the candidate authorization method and its integration, GitHub API mappings, cache schema and private cache retention policy.
   - Precise chart definitions and historical data requirements for each supported metric.
   boundary: This is a pilot specification and verification plan, not evidence of implementation or executed
     acceptance tests.
