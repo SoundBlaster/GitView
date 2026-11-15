@@ -86,3 +86,7 @@ clone. GitHub документирует альтернативу `Contents: rea
 GitHub App user token, а не утверждение, что любая комбинация grants даст
 такие ответы в конкретном Repository. Public resources, частичные ответы и
 доступ конкретного пользователя имеют собственные условия.
+
+## Issue type и scope каталога
+
+GitHub документирует отдельные каталоги Issue types: для [Repository](https://docs.github.com/en/rest/repos/issue-types) — `Metadata: read`, для [User](https://docs.github.com/en/rest/users/issue-types) и [Organization](https://docs.github.com/en/rest/orgs/issue-types) — соответствующий `Issue Types: read` в своём scope. Это свойства отдельных операций, а не доказанный permission profile конкретного GraphQL-поля или необходимость запрашивать все три каталога. Доступные в Repository типы не сообщают, какой тип назначен конкретной Issue. Выбранное поле и его фактический источник ещё требуют проверки; [0100](GITVIEW-SPEC-0100.yaml) сохраняет его unknown при недостатке evidence.
