@@ -444,6 +444,10 @@ specification:
       given: Today contains 100 distinct PRs in the selected Project with complete coverage.
       when: Ninety-five become merged today and the unfiltered selection is refreshed successfully.
       then: All 100 remain visible with current observed states; excluding merged explicitly retains only the other matching PRs without deleting the merged records.
+    completed_work_filtered_during_refresh_failure:
+      given: A permitted Project Today collection previously observed 100 distinct PRs with sufficient coverage, including 95 observed merged today and five observed open. The operator has not excluded merged work.
+      when: A later refresh fails, the operator explicitly excludes merged PRs, previews one of the five last-observed open PRs and returns, then clears the exclusion.
+      then: The five last-observed open PRs remain eligible subject to their applicable observation and access context; the refresh failure and observation time remain discoverable without claiming their current GitHub state or current complete coverage. Preview and return retain the selected PR and Project context. Clearing the exclusion again permits the 95 previously observed merged PRs to appear without implying they were re-fetched or that no other work exists; filtering does not delete their records.
     preview_and_source:
       given: A filtered dense Project grid contains PR 42 in Repository R2, and another Repository has a different PR 42.
       when: The operator previews R2's PR, opens it and requests its original source.
