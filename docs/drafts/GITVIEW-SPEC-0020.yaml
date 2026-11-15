@@ -98,6 +98,6 @@ specification:
   unresolved:
   - Exact iOS deployment target, performance thresholds and device-based usability evidence.
   - Verify and refine the candidate authorization method and its integration, GitHub API mappings, cache schema and private cache retention policy.
-  - Precise chart definitions and historical data requirements for each supported metric.
+  - Precise chart definitions and historical data requirements for each supported metric. Candidate 0055 proposes a separate fixed cohort; its release scope remains undecided and dynamic Today does not depend on it.
   boundary: This is a pilot specification and verification plan, not evidence of implementation or executed
     acceptance tests.

@@ -24,7 +24,7 @@ acceptance:
 - A stale, incomplete, identity-ambiguous or restricted input is not presented as an exact current total or silently treated as zero.
 - A PR cohort is not labeled a count of independent tasks and does not merge linked Issues into the PR count.
 specification:
-  objective: Offer an interpretable way to follow the completion of a fixed set of PRs without assuming that current states reconstruct historical events.
+  objective: Propose an interpretable optional way to follow completion of a fixed set of PRs without assuming that current states reconstruct historical events. This candidate is not a prerequisite for dynamic Today or its first-version acceptance; its release scope remains undecided.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
