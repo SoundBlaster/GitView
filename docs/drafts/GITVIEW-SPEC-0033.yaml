@@ -50,13 +50,13 @@ specification:
     cross_repository:
       given: Two repositories have Issues numbered 42 and each has its own observed source URL.
       when: The operator opens or shares the second repository's Issue 42.
-      then: The URL passed to the platform belongs to that Issue and is not the first repository's URL.
+      then: The URL passed to the platform is the eligible URL source-associated with that Issue and is not the first repository's URL; any unverified current destination remains qualified under observed_link.
     shared_related_target:
       given: The operator is viewing permitted PR B in Repository R2 after following a relation from Issue A in Repository R1 and Project P; distinct eligible links exist for A and B.
       when: The operator explicitly shares from B's committed overview.
       then: The app-controlled default payload is B's eligible link only, not A's link or a statement about their relationship; R2 is not added to P and the share flow is not proof of delivery.
     missing:
-      given: A selected PR has no verified source URL.
+      given: A selected PR has no source-observed association with an eligible URL; neither a current nor a last-known eligible link is established.
       when: The operator tries to open or share its source.
       then: The operation is unavailable or reports why it cannot proceed and does not fabricate a URL.
     private_share:
@@ -75,6 +75,10 @@ specification:
       given: A private PR link was visible while allowed, but explicit access denial is established before the operator starts sharing.
       when: GitView evaluates the share action.
       then: The restricted link is not supplied to the platform flow and an accessible recovery path is available.
+    independent_link_with_incomplete_ci:
+      given: A permitted identified PR has an eligible source-associated link, while its current checks or review observations are incomplete.
+      when: The operator opens or shares the source link.
+      then: The action can use the eligible link under its own association and access context without claiming CI or review completeness; an independently unverified current destination remains identified as last known.
     permitted_last_known_link:
       given: An object has a previously source-associated eligible link, no conflicting address evidence and no current resolution observation, while access policy permits its use.
       when: The operator opens or shares the source.
