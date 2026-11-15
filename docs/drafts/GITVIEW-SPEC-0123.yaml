@@ -14,8 +14,9 @@ depends_on:
 - GITVIEW-SPEC-0071
 - GITVIEW-SPEC-0101
 - GITVIEW-SPEC-0102
-- GITVIEW-SPEC-0113
 - GITVIEW-SPEC-0116
+relates_to:
+- GITVIEW-SPEC-0113
 - GITVIEW-SPEC-0122
 sources:
   conditional_clear_protocol: docs/drafts/GITVIEW-SPEC-0117.yaml
@@ -41,7 +42,7 @@ specification:
   - gitview:Issue
   - gitview:Metric
   contract:
-    scope: This agent-authored logical record contract refines 0105 independently of the persistence provider; 0113 describes SQLite as one candidate. The named record responsibilities may be implemented as tables, immutable bundles or another verified representation; they are not new product ontology entities, an implemented schema or an instruction to retain all source payloads.
+    scope: This agent-authored logical record contract refines 0105 independently of the persistence provider; 0113 describes SQLite as one candidate and 0122 a proposed migration and recovery approach. An alternative must independently establish applicable evidence association, access, migration and recovery guarantees; a contextual link is not proof of these guarantees. The named record responsibilities may be implemented as tables, immutable bundles or another verified representation; they are not new product ontology entities, an implemented schema or an instruction to retain all source payloads.
     today_record_layout_candidate: >-
       As an agent-authored initial relational direction for the Today route, keep a stable local work reference with its confirmed PR or Issue kind; separately associate each source-identity alias with its source instance, identifier kind, applicable scope, exact value and evidence. Multiple supported aliases may point to the same work reference, while a single confirmed alias in the same identity scope cannot point to two work references. A local observation-context reference identifies the actual source attempt or retrieval, account and Repository context, purpose and supported times or limitations; it is not a source-object identity. Each accepted field observation references its work subject, field meaning and interpretation version, its own observation context and a tagged supported value or supported semantic absence. A source-event observation additionally retains the event kind, applicable source-event identity or explicit identity limitation and event time or explicit time limitation. A separate portion-progress record associates the actual discovery purpose and effective source predicates with any recoverable continuation and its outcome. A separate coverage claim identifies the stated scope and its supporting evidence. A retention-operation record binds an opaque logical operation identity to its immutable intent and supported local outcome. These names describe record responsibilities and cardinality, not mandatory Swift types, table spelling, a complete physical schema or an assertion that all context is known. An unresolved representation may retain only its supported permitted evidence and is not represented as a confirmed work subject merely by acquiring a local reference.
     today_record_constraints_candidate: >-

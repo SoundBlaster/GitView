@@ -12,6 +12,7 @@ depends_on:
 - GITVIEW-SPEC-0079
 - GITVIEW-SPEC-0101
 - GITVIEW-SPEC-0103
+relates_to:
 - GITVIEW-SPEC-0113
 - GITVIEW-SPEC-0122
 sources:
@@ -32,7 +33,7 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    scope: This agent-authored candidate refines 0123 for a single continuing local store lineage. It covers an association between one retained representation and an independently confirmed work object, not source fetching, Project membership edits, GitHub mutation, or attribution of actor motives. SQLite is the working persistence direction in 0113; these logical constraints are not a complete schema or a promise about an unverified provider.
+    scope: This agent-authored candidate refines 0123 for a single continuing local store lineage. It covers an association between one retained representation and an independently confirmed work object, not source fetching, Project membership edits, GitHub mutation, or attribution of actor motives. SQLite and schema recovery are proposed directions in 0113 and 0122; any chosen provider must separately establish the applicable consistency, access, migration and recovery guarantees, including the limitations of an older restored snapshot. These logical constraints are not a complete schema or a promise about an unverified provider.
     inputs: The caller supplies a stable local representation reference, a confirmed typed source-object identity with its source instance and applicable identity-kind scope, a supported Repository association where required, the independently obtained evidence linking this specific representation and target, the evidence's own source and observation context, and a local operation identity with immutable intent. A local token, owner and name, title, URL or repository-local number alone is not proof of target identity. Missing or conflicting required evidence prevents confirmed association and remains a limited or conflicted result.
     identity_key: A confirmed target identity is scoped by source instance, source object kind, identifier kind and any additional scope required by that identifier's source contract, plus its exact value. Preserve opaque identifiers without lossy numeric conversion or inappropriate case normalization. Different identifier kinds are not equal merely because their values look alike; aliasing requires its own supporting evidence. A Repository-local number is not promoted to a globally scoped object identity. Validate every mandatory identity component before attempting a confirmed association.
     durable_effect: In one local consistency boundary, validate the operation binding and current source and access admission rules, retain or reference the necessary immutable association evidence, establish or reuse the confirmed target identity, bind this representation to that target, and record the terminal operation outcome. An implementation may use a single transaction or an independently verified recoverable staged protocol under 0113. Confirm durable success only when the association, required evidence and matching receipt are independently recoverable together. Source requests, Keychain operations and UI interaction do not run inside a database write transaction.
