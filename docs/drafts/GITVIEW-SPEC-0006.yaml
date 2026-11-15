@@ -18,7 +18,7 @@ sources:
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   autonomous_refinement: conversation:gitview/excerpt-69-reply
 acceptance:
-- A multi-repository Project exposes its permitted members and a route to each permitted member's PR and Issue objects, with access-safe limitations where needed.
+- A multi-repository Project provides a reachable grid of its permitted members and a route to each permitted member's PR and Issue objects, with access-safe limitations where needed.
 - Ordinary entry opens the Project-wide work collection directly for one or several repositories, without requiring a repository or signal selection.
 - A single-repository Project reaches its work without a redundant repository step; Project and Repository
   remain distinct.
@@ -45,7 +45,7 @@ specification:
   navigation_contract:
     entry: The visible context identifies the GitView Project. Membership follows repository identity,
       not organization or the current owner and name.
-    multiple: Offer the Project's permitted repositories and a route to the PR and Issue collection of each permitted member.
+    multiple: Offer a secondary grid of the Project's permitted repositories and a route to the PR and Issue collection of each permitted member.
       Repositories from different organizations remain in the same Project; restricted identities and revealing counts follow 0074 and 0036.
     all_members: Open an explicitly identifiable Project-wide work collection directly on ordinary Project entry across its confirmed current members independently of a signal shortcut. Its initial Today selection and lifecycle defaults follow 0074 and 0007; an unobserved member makes the applicable coverage incomplete rather than empty.
     single: Skip a redundant intermediate repository screen while retaining Project and Repository as
