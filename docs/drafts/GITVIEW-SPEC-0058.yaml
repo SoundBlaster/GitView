@@ -36,9 +36,9 @@ specification:
     provenance: Secure credential handling and read-only access follow 0019; attempt ordering and interrupted disconnect behavior are agent-authored proposals that require native and source-specific validation.
   scenarios:
     cancelled_reauthorization:
-      given: A confirmed connection for A exists and a new authorization attempt is pending.
+      given: A confirmed connection for A exists, its durable binding remains supported, and a new authorization attempt is pending with no independent invalidation.
       when: The operator cancels the new attempt.
-      then: A remains the confirmed connection unless separately disconnected, saved Projects remain, and the cancelled attempt cannot later replace A.
+      then: A remains the confirmed connection in that supported context, saved Projects remain, and the cancelled attempt cannot later replace A. An independent rejection, disconnect or indeterminate binding follows its own recovery rules.
     stale_callback_after_disconnect:
       given: Authorization for A is in progress and the operator disconnects A before the attempt completes.
       when: A late result from the invalidated attempt arrives.
@@ -53,8 +53,8 @@ specification:
       then: Private observations remain restricted and refresh is stopped, while failed local credential removal is reported rather than claimed complete.
     partial_reconnect:
       given: A had prior private observations in R1 and R2 and was explicitly disconnected.
-      when: A reconnects and only R1 access is re-established.
-      then: R1 may become eligible for display under current access policy and R2 remains restricted pending its own access evidence.
+      when: A reconnects and only a post-restriction R1 metadata request establishes its returned permitted fields.
+      then: Those supported R1 metadata fields may become eligible under current access policy, while R1 work fields and R2 remain restricted or unknown until their own applicable evidence supports disclosure under 0112. Reconnection or metadata alone does not restore older cached work.
   unresolved:
   - Actual supported GitHub authorization flow, minimum permissions, callback validation and source identity verification require source and platform research.
   - Token expiry and recovery are refined in 0085; the authorization mechanism, provider-side revocation and policy for an interrupted secure-store operation remain open.
