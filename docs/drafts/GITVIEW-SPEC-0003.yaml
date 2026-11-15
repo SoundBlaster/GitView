@@ -42,9 +42,7 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   failed_refresh_feedback:
-    required: Show the last successful update time for the affected data and a visible indication that
-      the GitHub refresh failed. If no observation has been accepted for the affected scope, show that it
-      remains unobserved; partial accepted observations retain their own context and incomplete coverage.
+    required: Show a visible indication that the GitHub refresh failed for the affected scope. Show the last relevant successful observation time only when it is supported and permitted; if no observation has been accepted, identify the scope as unobserved without inventing a successful time. Partial accepted observations retain their own context and incomplete coverage. Apply current access restrictions before displaying saved details.
     example: Updated at 14:32 · Could not refresh GitHub data
     proposed_placement: A visible status in the affected view, such as a warning icon with a text label
       in the toolbar. The exact component remains open.

@@ -31,7 +31,7 @@ sources:
 acceptance:
 - The overview represents each Project and makes its permitted identifying information, available work and attention signals inspectable.
 - Opening a Project preserves its identity; opening a signal shows the corresponding objects in that Project.
-- A failed refresh preserves last-known data and indicates the error and the last successful update time.
+- A failed refresh does not itself erase prior observations. Show eligible last-known data, the affected scope and failure, and a supported permitted successful observation time when available; an unobserved scope has no invented successful time.
 - A repository shared by Projects contributes to each Project and only once to a unique portfolio total.
 - The overview is usable without relying exclusively on a specific gesture or on color.
 acceptance_evidence:
@@ -96,10 +96,14 @@ specification:
       when: The user reads the main overview.
       then: The Project remains available with an indication of the observation's limits.
     failed_refresh:
-      given: A Project summary has previously observed PR data.
-      when: Refreshing the PR scope fails.
-      then: The saved information remains visible with the last successful update time and an explicit
+      given: A Project summary has previously observed PR data and its successful observation time remains known; both are eligible for display.
+      when: Refreshing the PR scope fails without a separately accepted newer observation or change in access.
+      then: The eligible information remains visible with its supported observation time and an explicit
         GitHub refresh error for the affected scope.
+    first_refresh_fails:
+      given: The Project exists, but its Issue scope has no accepted observation.
+      when: The first Issue refresh fails.
+      then: The affected scope is shown as unobserved with a discoverable refresh failure; no successful observation time or zero Issue count is invented.
     unobserved_scope:
       given: The Issue list for a Project has never been obtained.
       when: The summary is shown.
