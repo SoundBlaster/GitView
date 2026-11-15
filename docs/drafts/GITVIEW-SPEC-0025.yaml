@@ -11,7 +11,7 @@ depends_on:
 - GITVIEW-SPEC-0019
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0005.yaml
-  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.10/composition-context.yaml
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.11/composition-context.yaml
   startup: docs/drafts/GITVIEW-SPEC-0022.yaml
   autonomy: conversation:gitview/excerpt-77
 acceptance:

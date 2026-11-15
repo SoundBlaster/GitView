@@ -1,0 +1,153 @@
+{
+  "artifact_kind": "gitview_draft11_rebinding_check",
+  "scope": "24 updated candidate inputs; structural vocabulary advisory only",
+  "runtime": "3593bd75",
+  "compiler_provenance": "not_verified",
+  "raw": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-draft11-rebind-8wlw9v7q",
+  "rows": [
+    {
+      "id": "GITVIEW-SPEC-0001",
+      "sha256": "b42be8bc0c4d0804649e6c33df96c4375a9ffbd3092549cabcace1fd9c429729",
+      "gaps": 1,
+      "warnings": 1
+    },
+    {
+      "id": "GITVIEW-SPEC-0002",
+      "sha256": "40d41c69d232e5be467af98227bae5b317c1c919a04190cb62237a7cb7292704",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0003",
+      "sha256": "9921710a565301703b08e88bb7216494d3dafe48f2904a407f55203488ead293",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0004",
+      "sha256": "4c1d8b64bd216a2711fff65b1f291681dc27b7b018b60bce2899255445c830ca",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0005",
+      "sha256": "faf6a8bc80d1821faa545562a10ff9264ed1c02fade484b70584b0efb9eeb240",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0006",
+      "sha256": "c372916afdaa0e246fd2798bf6f776756a4a0df7f35f53a0410898012af598a5",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0007",
+      "sha256": "b4df41632aa4af5d0f8a344ea1d2c3a38f8cd68092059c3bc821c708aef67c81",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0008",
+      "sha256": "cc10a7c87b52f762d46e15c12d5022e014a0a41d0a0dcff1b61b8dbaaa063bc2",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0009",
+      "sha256": "833fca12e1974a6e2a119dba28ad98f6616c1847f48b5af409ef2e7a0bfb2542",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0010",
+      "sha256": "6c859b1b5057813fe39e16325639f699e790844b12b0a8d2d4af92f095f13d71",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0011",
+      "sha256": "2a5d91e6e6c3d746092c5e6a2f5e9b77eacb4332695edf1905761e596d31a986",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0012",
+      "sha256": "8e43e2b1aa7ae27b3da88f03c034952ac7aed9d2c8fcc7ae365ff04300e32779",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0013",
+      "sha256": "e1a5ecb7cfd5b5cca3cdd24414e95f8313e30956bcc73dd5fbe32cea1d508a72",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0014",
+      "sha256": "25b4a5c46b4f1af753d2d4656d2636f407e4085cd5b6ab880d1ec4c1a9d9f4e5",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0015",
+      "sha256": "3b3ac95554c09887c54b09a647d7c7a17442b3b47f7f3a9face8dda83131fcb6",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0016",
+      "sha256": "855876379ab2271f543157e5cefc4c004a13a03c37931bcb38154d9f262016f2",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0017",
+      "sha256": "6bc4e05f703c9289230b75aa293e86108966209833e85470fb5da939435d732f",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0018",
+      "sha256": "d164647824904adb0e18590cb8f66193705f6f6fc4f242d683eb0e392fbfb5f4",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0019",
+      "sha256": "d65744e9a936d0e5cb391aa5aea630f56832dec57d01cc970c6c370b2d80f056",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0020",
+      "sha256": "beaefc18831ba5081874d77b36a2227e27c303baaac190a2173aca8cd84c48ad",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0021",
+      "sha256": "8a3ddbd7029e80c0d345b9bbbb92d6f423c16582abb0d9c66fdd4accec0846f9",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0025",
+      "sha256": "8550247d8c3fa58b0b525fcc6b0c935b326003af6fdd385aed3da07c0d7af837",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0080",
+      "sha256": "4a8d5bce5555d55eeeff98c1f30c17449b7d2689a459f43630ca850785d0f8b4",
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0084",
+      "sha256": "45478ba72631e90f05e53fdac17fc014add05028acb0f904834df4149b4fac7a",
+      "gaps": 0,
+      "warnings": 0
+    }
+  ]
+}

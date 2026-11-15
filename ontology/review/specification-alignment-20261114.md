@@ -1,5 +1,9 @@
 # Сверка онтологии с графом GitView
 
+Дополнение 15 ноября: текущим рабочим context выбран draft.11 после сравнения
+123 одинаковых входов; [новая проверка](../candidates/domain-v0.2.0-draft.11/full-verification.json).
+Описанные ниже результаты и версии остаются историческим срезом draft.10.
+
 Статус: авторский аудит рабочего context `local.gitview.domain@0.2.0-draft-composition.10`,
 не принятие онтологии или спецификаций. Источник проекта имеет `approvalStatus:
 draft`, source SHA-256 `73dfccf3c7b360ee6dd9e943f8603bde6bff63d3fcf85c478aacf7759a40905c`.

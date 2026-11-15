@@ -1,0 +1,1242 @@
+{
+  "artifact_kind": "gitview_full_draft10_draft11_comparison",
+  "scope": "Same 123 candidate bytes; scoped domain vocabulary structural advisory only; no semantic approval or executed product behavior.",
+  "runtime": "3593bd75",
+  "compiler_sha256": "30dd324aa1f641e7274a49fd6f158cced5ed95d810b6b275353d3d10f19a27cb",
+  "compiler_provenance": "not_verified",
+  "draft10_raw": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-all-draft10-1_iwm_fi",
+  "draft11_raw": "/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/gitview-all-draft11-w4e5ihtu",
+  "differences": [],
+  "rows": [
+    {
+      "id": "GITVIEW-SPEC-0001",
+      "sha256": "5184876bb38ffff8901a02ac7fc0b54be7bad6c55234de7a484b9ac85c6b9b39",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 1,
+      "warnings": 1
+    },
+    {
+      "id": "GITVIEW-SPEC-0002",
+      "sha256": "0be05a15dcda62539b5fe0a47df000b424cefc2f77269386bc3a8b3e731146ce",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0003",
+      "sha256": "09f9fecd55d89ace06cc4b59cd96e8d82ab1719311f7530deb3092f6c29577b3",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0004",
+      "sha256": "d8c3da86ecbbf408e91bbdfd34642434572743994c320ba78ed2089260782027",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0005",
+      "sha256": "0b994a2105a7cd9a36991bd7cb07911a9e2c9ffd6e9acad8e5665f2aa7908eb8",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0006",
+      "sha256": "37dfa78d9380dce12303939da81b6e67c804bbc88aa66aa34203333cc82b9344",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0007",
+      "sha256": "14722f672fd4d524084aec8c670c837e8854c303c23c8be1383fb0f41fa64547",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0008",
+      "sha256": "60ef75f597f82d93244a8c0e3170debdd266605d0c45540ff9de3d12d3c1fed9",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0009",
+      "sha256": "67d3ce0830c0475fe1e10361f95ac052b12074c77b30f08c8d1a64e08fa73489",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0010",
+      "sha256": "0a4f3f0205d63e7e4af7b0160d3df0d27886ec1a362a717a597ef5a45b819a25",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0011",
+      "sha256": "1cee56d3aafbad1a44d5124577963a67ec6c03f359f541e065b861158f6e2983",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0012",
+      "sha256": "2cc615c457f2b3c0d09196a232d92fc2990c6832d45e3bbcbc1995bbec5246ca",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0013",
+      "sha256": "b7f3d7cff77cc8c7be720e9180f99fad827855b946d809e00fee998512a4408b",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0014",
+      "sha256": "05d3271953e2daf23a112ac3bec3a90e54cb588f24a0e1566b6387b30883cdb9",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0015",
+      "sha256": "7a9b6fd476a6ade697fbf28028ad9ad2f51570a434d965461a3a86c14ed4cc29",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0016",
+      "sha256": "eae1afa8e64fe775c09c6686e2cb3b11590a9a2e2c1a3a53186c18ac8acd1ba0",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0017",
+      "sha256": "b32b1a9230aa82f478930b0cbeb598d4b7b2b36d53dfa951f97056e18a103bfa",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0018",
+      "sha256": "29f4994c0cde2c8ede0cf1227e32458c167100038996fc01b4fb00ad959a4266",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0019",
+      "sha256": "3c451c99f9cb105f669e869be0a056277b280bf8008d69ef81f7e83bcaf7ccc4",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0020",
+      "sha256": "764780a8a58243fe90d348ffd21490eeb94b1a0550e9db13ee771fe61c5d45a6",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0021",
+      "sha256": "b6671ebaf9f22f2c9f0a582116f19faf83ebf79cdaded8f2227559f55ef75aec",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0022",
+      "sha256": "17dccab2ebf2079482353ebc2b81ad4a3695042ed5d4f6318867718437c6eeec",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0023",
+      "sha256": "150ad103d2d58f64409990e91e5b2cd60c252289029662266f9de7ec1b24fa57",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0024",
+      "sha256": "78143fcbb4ca4bf4ef11c2d9055a16502af2644953b79e5d52dfe2add3655a66",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0025",
+      "sha256": "7ac850b6010556bb33b4e193c7087ab0fa9e31c49081150354987ae368b82e8a",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0026",
+      "sha256": "d11756ebf1503f6166b896745e26e0740195a006e0a10189607bf3cf8f39d4db",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0027",
+      "sha256": "6d7658c5cecfe16e166ea81b485294bd09761b37a72c56a385de7719c9b6818b",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0028",
+      "sha256": "ebc6967c0cf7bf76b85b143e8b1154984cb6f1a4b46f7aefa9a6baeaeb03c0d0",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0029",
+      "sha256": "632c98369cd4447a02e9587521ee64e44b40de3a68092ba0b323064bd4bdae1c",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0030",
+      "sha256": "52e18e0377de83b9b1e2502dafa2d077d31afe0f9e459ab2b8b9ea8b1731b365",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0031",
+      "sha256": "914a10e36f38e52ab02553ac62d54b910541a539dad79e3630631288fceea76b",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0032",
+      "sha256": "34e772f3839846f250ce07002eaf7be65e9ba9cd157019af0d85066d1cd534f0",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0033",
+      "sha256": "9eca3492c2a20ce81c0909e978ec63a9b9f21ffa72f5a402643ffe5c409a5d58",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0034",
+      "sha256": "befb9848d4f9934e0e9aa222ba7753db3b3952cc6688662355f6acd5102e8b18",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0035",
+      "sha256": "e3ac46431e38aa656af01f3f8b2d24b23cf3c46e922a52c928da09cb0470f051",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0036",
+      "sha256": "70ce4d2b4990ce945cf4bbb25f752d706b8ad6fb5d1511f42cb48daf431d7bd6",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0037",
+      "sha256": "453f0df516d023a618b15ed657b48f92734bd4cc4a49e71594fb3826fff33012",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0038",
+      "sha256": "106e7e0a6d4f14eeb0443aa56d8a2e2c620a421ada86f93d89773015913a8b35",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0039",
+      "sha256": "f1a0e0843cc0b137650be64aab8ff5ddeb37034668588b63901686eebe8ce142",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0040",
+      "sha256": "5b13d89f38070ffdbdd1f998cff9e0b5dcfa5c536f8d03a21dcaa6818b324c26",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0041",
+      "sha256": "0a91c6415bcf04c5cb52eb0cd8bf55545a94439319137a06ca7563eef484ebb5",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0042",
+      "sha256": "01c59a59e815bf0882a4b6c97c427c6c82bb72304557019b475ac4a395931b71",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0043",
+      "sha256": "356aedfc59506db9110e0a36bb604602c12cf7950c490a1721cd0a8a44f0ff35",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0044",
+      "sha256": "6d7299e653d88c683be61d3f3d2cdbd07c1140caea504c15a368abc611778206",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0045",
+      "sha256": "623a98b24f21863fa4f4a54ad7cafe7c803c3f9b1a8820a78b8e7545e469bfd9",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0046",
+      "sha256": "56e17fde826588b9c9e24d46f8c4c8fea00473d4cae5a90007a60bc7102b4d21",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0047",
+      "sha256": "cdbbdbbcee976ad6ffe2bfea0d26c8059cec76bf66c43381e884a24208a746b4",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0048",
+      "sha256": "3a7b98f3a8dd2ded68c9c33ba06a0a05f1723a3a1bd979a27027135e937b0258",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0049",
+      "sha256": "957f7462d469056bbd4e5b1fac5741c8314021627fc499b37921437134c624e2",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0050",
+      "sha256": "683fc8e37af4e85d7d67453eefb33f6977d06dd4a757a11f21d79df47fa550ac",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0051",
+      "sha256": "8843d2a2cb6a3d2a7567bec05389347887355a30e799d12d84bb412bc268ec6a",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0052",
+      "sha256": "89f707a95efb0c026399236e1319542267ad511c5dd1b901194204b15c346e2c",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0053",
+      "sha256": "8d3e8de399ced423eab2054a7970c15688f17d5307aeefc40aace7a9ec2c104a",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0054",
+      "sha256": "1973c8d4d1ce36a0a1f29f1819ef143c74ca2626dd655b27145ae7cb3af1dd0b",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0055",
+      "sha256": "d5c1c5b9afadacd715cd0ca9c50d6717728040e4e24e7bc4df0f3aae939e6648",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0056",
+      "sha256": "2e4eed1364012bb512acae36027d91070773fd379e54cb80f7d24a516c8d9f10",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0057",
+      "sha256": "b66e0ca384d7adfb9a5ff53adb23f6829f695e96c0fd6f777d0f4842f486e0b0",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0058",
+      "sha256": "31c5a71a6506fe5f4ef27f2b7269bc39881d3c77477b593e4592909c6d8e65e9",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0059",
+      "sha256": "0c4272a78f14e211995bdffffb28b2bf63b9b2d3b85c1e6b867a1dea21d25489",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0060",
+      "sha256": "877ff8611ac0e18b94f8c370e15e34beaf191a2069e43baaadf06e4e7dab0d9a",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0061",
+      "sha256": "8089a881307bb867a595bff47d9c6c4801411858b23847a15a92d52cc0819cbf",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0062",
+      "sha256": "9c72bd1f8f356be8d3c17e62bb78fb0e758430bf030825436b08825fdb596737",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0063",
+      "sha256": "127bd80004a8a798d32b8ad3f6f8bcd9709839b94cad846796f66c4314a0a2a9",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0064",
+      "sha256": "011fc20e5b8b712b7692fa724c30fa871ae73637c3cb84df7e505bc57dad839d",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0065",
+      "sha256": "1bfd9cab00325491c8e9fc49b64667f9fe37bb7931161a8f6a2e94f6acb7d715",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0066",
+      "sha256": "294de1845fd748e3ed20f7a87023137e9f795280089c180db12e60af9d8f55ff",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0067",
+      "sha256": "56593af3b73588941596671d3b5f7855139f01df589c36485eb62715ff1fbb4a",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0068",
+      "sha256": "e1a1d0b992b6369fcb77fb1a75d4441cedf11070859926094fefe89b1e6e6ad3",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0069",
+      "sha256": "2c942c4749306322ffb05ac73b8abe62363211ec47ad8f08711ab205bdba3dc8",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0070",
+      "sha256": "58650d2e467359238b30dcc1a61089cc21f59cfafdc66ecc1494dbbeac4e60d4",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0071",
+      "sha256": "f1f2aa735bd19021ed004118ef4fd79f8bac40f8f5a653d85d8969f4fadfa246",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0072",
+      "sha256": "2fdcdee02d0b37bcf6b0bc6616c95c87eaa5122d62ec07d538159f2a5cc893ab",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0073",
+      "sha256": "0f2eae1eb21232393de9b4d24c4a0627b9483948fbbc29c2e52337a44a2a21b2",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0074",
+      "sha256": "b62ce2ac6fcc1b06e1674c258879e43789b328e95742c5abfbb786672d611db1",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0075",
+      "sha256": "c72d08714eaabbb13ef74ce0b25ebafbf3969d9da35674955df86133e50ddbc4",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0076",
+      "sha256": "8ff0196be94887428f8d53f439beee7e46f031ad936e60bde42b6593c109a787",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0077",
+      "sha256": "1c5725975db513395e8e4c50a997201b79db4ff22e7ab1b15a24b4dd3a9c65cc",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0078",
+      "sha256": "a60b17fd4dc7624820f2c3d478e21b66aca22f06a7339f282ecac10a62477834",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0079",
+      "sha256": "14775bb4b7c35c95847f7239e88ef18826acb726d73d734d4421d69538d3a2cc",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0080",
+      "sha256": "bfc72da9df2625ae0ce8e9f81b330149eea5074491ba0a04ccd8ead05690e587",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0081",
+      "sha256": "4e0100ffa66882b1f07a884ff3c7f3f7508a15b0a9559e0181552011d695e6f4",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0082",
+      "sha256": "dfff3a749b526c4d6fd5b2643c0373218ff79af04889269602e66228730de3fc",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0083",
+      "sha256": "18497103c99fbb13160a5b3be26de99ec1a8276b00b66f562f502342126a26b8",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0084",
+      "sha256": "f5b34b7791fca647da442e1fec6b3c215de4bbf120d9ac821918061f4ec44006",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0085",
+      "sha256": "757b3c2aff46415a3dd3c93acec0d4c115418a0d0c1b5313941bc5db5b952df0",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0086",
+      "sha256": "761fbfe167880690a988ee0f68152cfcc1651d9970e6879669bdd8e0431f5d22",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0087",
+      "sha256": "97f3639b38de77edd508ed70aa66d11ad067d7e78f9bf2e887ce2f5dafc4b0d5",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0088",
+      "sha256": "b602a4be6ebbd457bafcbebffd60cb5aac9c495c782647b3316413ef757f332e",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0089",
+      "sha256": "4e6973e68c8bd8df28374935778262cad9abaa7d9f1f26dbb19a5fcd9b186d5e",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0090",
+      "sha256": "254f3d948a7f9db3c4aed860120ee026c568afdeb87e228f6617228ad526cdb0",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0091",
+      "sha256": "6f159424dd671351ef1a169e1be24ddfc3d37466c37dd8ff96786d3e0a1acdf3",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0092",
+      "sha256": "e8cca37b13b42a0a56260854afefaf90bdd875951f79799b79295b511a4cbdcd",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0093",
+      "sha256": "3e56f2304f7fc4a31130544162daee5eb52405b221ddc4d05980e2a65af1c1e2",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0094",
+      "sha256": "64873cf0e0a63a14e098b75bc0c3b5a28f9f24e3301cc7e79413f1955ff2450d",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0095",
+      "sha256": "7669987ed6462e8e84137469d1d655fab64ca0b9cea77bc5647a3cd6d0fca218",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0096",
+      "sha256": "0b510ba9877c4d73ef7724dcf53b9e5ada2092d06182b673e9ecb3e06ad11aba",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0097",
+      "sha256": "9e514424760ca602e9ab7bbc5fc3fc238acef37cd930b8f9d05173b042e0a34a",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0098",
+      "sha256": "3e3f1872a52eea36fe4766bdbcfabffb61f9d43564b91a843950a56e82135528",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0099",
+      "sha256": "0d53078d6e7832223a991dca019d15b3ba2239686c1aaa59c0e6e9d27804b187",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0100",
+      "sha256": "2133befb9a3cebce043ddc1f2331a0b1ee943a8fa582b7e7603304c10c172998",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0101",
+      "sha256": "0f13632a7e7c2e904dd7e66dc8d7fef7730b1e692623786d61f7fc201ae05fa4",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0102",
+      "sha256": "58853893fa07daee5a7936a5a76f0d258687a38341b75cd54b6631e62d602195",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0103",
+      "sha256": "95bc8d462c0c7f755d744fb715ddfcd35d2c10c11a5d07357616aae2189155c1",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0104",
+      "sha256": "2bdc271c8661fc38f18cce4ff186e7337a17158c8ca0e3b77a50d20098645335",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0105",
+      "sha256": "36a0a0a48246e9893da0187db4d65ce674c0bb3e29fba7963ed047c69502c4e3",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0106",
+      "sha256": "78db609e41a6a12e8c7302419a3fc693bd467ce4f51e22953726a938dc2489f7",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0107",
+      "sha256": "6a426d6021b847f42b37e21920043cba4b2de3ae28749fdf3f34b00e70e6eb14",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0108",
+      "sha256": "76a9b13f4d127491b44e46e6ab50485867788643acf9c80b843cc658ff0ed252",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0109",
+      "sha256": "8e79d5eb8f2819428cd41f6bc5a979477a12d45ccf123968f570f6b5eb73de74",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0110",
+      "sha256": "863fa06c5db60284dc0f43636d36d174ffaa6f6aaca1ddd002605ac1215f9611",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0111",
+      "sha256": "6c3d81625d9990000656d05d889bcf61441eac47bbd5bbe0ce01c8ca6e686518",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0112",
+      "sha256": "7a84004905cd835ac0cf354c0d14a49d2dad3cd577bdb2dda8c5d486dbcb885a",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0113",
+      "sha256": "9f474428d082fc1fd3c84e3bed4e89c5d5ea240b66c708e6cb18e3ede67c3950",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0114",
+      "sha256": "085495b5345117927364651ec97d719d9ee7727406ebdf00ccd5b9338aecea28",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0115",
+      "sha256": "637ea26f215ec1e294191d5b67371d6a5f4f317f8571c78d3189f4b9714c3b34",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0116",
+      "sha256": "8bfe679cebcb81debafdb9b1d286feb95d8d12603b03477e67ad8243fdd6b03b",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0117",
+      "sha256": "9495b2fc9a97a7f50ee70aa7770bc3a393fd146f490c50720ccb18d79c277f27",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0118",
+      "sha256": "d320d435d6ef99ccf59b6451656716a2bbce11e7d6568221b8a87fb96fac3ca2",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0119",
+      "sha256": "b9b065410c5614d7e62b8beffcae4e679b7d6186311193fa94db051d73edb639",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0120",
+      "sha256": "06eb08b47b71cef148bafefef308b7331631d5347766d2c4598ef83770c69164",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0121",
+      "sha256": "307703ba134a5a57de58fb5b4e4a5eda00aca7dd2719fb82d3c6e2c3c7b8e129",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0122",
+      "sha256": "a01cb1a975429329cb41354b168365eb1f80ed166967ea3e7282351830c6db8d",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    },
+    {
+      "id": "GITVIEW-SPEC-0123",
+      "sha256": "5c1ab5516d4293a96381f3ce3fe6cc5b47cd3f4c984445d9ea4ea786406cde98",
+      "same_input": true,
+      "same_summary": true,
+      "same_gaps": true,
+      "same_findings": true,
+      "gaps": 0,
+      "warnings": 0
+    }
+  ]
+}
