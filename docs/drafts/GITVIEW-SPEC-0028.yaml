@@ -12,6 +12,7 @@ depends_on:
 - GITVIEW-SPEC-0019
 - GITVIEW-SPEC-0026
 sources:
+  branch_contract_review: docs/drafts/ci-review-branch-contract-review-20261115.md
   parent: docs/drafts/GITVIEW-SPEC-0011.yaml
   pr_overview: docs/drafts/GITVIEW-SPEC-0008.yaml
   observations: docs/drafts/GITVIEW-SPEC-0026.yaml
