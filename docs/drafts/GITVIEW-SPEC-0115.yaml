@@ -95,6 +95,10 @@ specification:
       given: A previous session ended on Project P's failed-CI-filtered grid. Its saved Project configuration and some source observations are independently recoverable after restart, but the saved object population is incomplete.
       when: A cold session opens the portfolio and the operator explicitly enters P's ordinary Project-wide work route without choosing a signal.
       then: The new route uses the ordinary Today and filter defaults under 0024 and 0074 rather than silently restoring the old failed-CI filter or scroll anchor. Recoverable permitted observations are reevaluated under their own times, revisions and current access; the collection makes incomplete coverage discoverable and does not claim a new complete refresh merely because the route was opened. A preserved in-memory session instead follows its retained route context.
+    member_change_then_denial_during_progress:
+      given: P changes from A and B to A and C; Q still contains B. A B-scoped page and an already admitted progress write are pending, then the running app observes an applicable denial for B. C has no source observation.
+      when: The older B page and progress result arrive while P's new route is visible.
+      then: P remains scoped to A and C, C stays unobserved rather than inheriting B coverage, and no restricted B identity or revealing count is shown. The B operation remains independently reconcilable in its original context without reauthorizing presentation or new repair; Q's saved membership is not deleted and does not bypass the same denial. Any restored session uses actual durable fence evidence and the known crash limitation rather than assuming an unrecorded denial survived.
     partial_member_access_restored:
       given: Project P contains A and B; A has permitted Today observations, B was restricted, and an applicable post-restriction response independently supports one identified B PR matching Today and the active filters while B's remaining PR population and Issues remain unobserved.
       when: The current Project-wide Today route is reevaluated with its existing filters and density.
