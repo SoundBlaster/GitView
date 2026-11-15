@@ -5,6 +5,8 @@ created_at: '2026-11-09T19:03:26Z'
 updated_at: '2026-11-09T19:30:21Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0002.yaml
+successor_scope: The successor records the owner's identity continuity decision and scoped product outcomes. This draft remains noncanonical source material; detailed source contracts and ontology bindings require separate review.
 refines:
 - GITVIEW-SPEC-0001
 sources:

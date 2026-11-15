@@ -1,0 +1,67 @@
+id: GITVIEW-SPEC-0002
+title: GitView - Repository identity across rename and transfer
+kind: spec
+created_at: '2026-11-15T18:25:00Z'
+updated_at: '2026-11-15T18:25:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on: []
+relates_to: []
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0002.yaml
+  predecessor_revision: 523f1057d5114f800350015721bdf1805fe5e550
+  owner_decision: ontology/review/repository-identity.md
+  owner_source_identity_decision: conversation:gitview/excerpt-60-reply
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Preserve the identity and context of a GitHub Repository as its name or owner changes.
+  authority_boundary: The owner selected continuity when GitHub confirms the same object and the recorded
+    same-instance numeric REST ID examples. This node does not establish an integration, a storage mechanism
+    or proof of a source event. The draft ontology and the predecessor's detailed contracts require their
+    own review.
+  requirements:
+    continuity: When GitHub confirms that a renamed or transferred repository is the same source object,
+      GitView keeps one Repository with its existing history and all Project memberships. A change of
+      owner does not itself rename a Project or create another Repository.
+    address: A repository name, owner or address may change and alone does not establish identity. When
+      a changed address is confirmed to be current, GitView updates the supported current source address;
+      conflicting or insufficiently ordered observations do not establish which address is current.
+    selected_id_examples: For valid numeric REST repository IDs observed on the same GitHub instance,
+      the owner selected the same ID as the same Repository and a different ID as a different Repository.
+      The precise evidence, scope and handling of identifier changes require refinement and source verification;
+      an ID match alone does not establish the current ordering of conflicting addresses.
+    distinct_objects: If GitHub confirms that an object at a previously used address is a different repository,
+      it does not inherit the earlier Repository's history or Project memberships merely through that
+      address.
+    uncertainty: An unavailable, incomplete or ambiguous observation does not establish identity, deletion
+      or loss of Project membership. Keep last supported information and represent uncertainty until evidence
+      permits reconciliation; the access policy governs whether retained data can be shown.
+    history_scope: Preserving existing history does not promise that GitView possesses a complete source
+      history or can recover information that was never available.
+  open_questions:
+  - Valid source identity evidence and instance scope, including identifier changes and conflicting observations.
+  - Retention and presentation of prior addresses, alias resolution, and handling source access changes.
+  - Storage, reconciliation and explicit deletion or removal behavior.
+  ontology_status: Repository, GitHubRepository and Project use the selected draft vocabulary; identity
+    continuity does not establish an actor action, a motive or an uninterrupted management interval.
+  scenarios:
+    confirmed_change: A repository in Projects P and Q is renamed and then transferred; GitHub confirms
+      the same object and the current address. GitView retains one Repository, its existing history and
+      both memberships, and updates the current address to the confirmed address.
+    reused_address: GitHub confirms that a different repository now occupies the old address. Its record
+      does not acquire the earlier repository's history or memberships by address alone.
+    unavailable: A lookup yields no reliable current object, for example because access is lost. GitView
+      retains last supported information and does not represent the repository as confirmed deleted or
+      new.
+    not_found: A lookup at the last known address returns HTTP 404. GitView retains the last supported
+      record, history and memberships and treats the current state as unknown; display remains subject
+      to access policy.
+acceptance:
+- Source-confirmed rename or transfer preserves one Repository, its existing history and every Project
+  membership.
+- Reuse of an address by a source-confirmed different repository does not transfer history or memberships.
+- An unavailable or ambiguous observation remains uncertain and does not alone establish deletion or identity.
+- The current address is not asserted from conflicting observations without sufficient ordering evidence.
+- The selected same-instance numeric REST ID examples and the 404 outcome are retained, without treating
+  unverified source behavior, complete history or unrestricted disclosure as established.
