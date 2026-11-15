@@ -77,6 +77,32 @@ limitation remains recoverable after restart only if its own attributable
 evidence was retained and can be read; otherwise report the supported unknown,
 not a reconstructed error reason.
 
+## Compatibility of shared source work
+
+An agent-authored admission rule for 0048/0102: two consumers may share a
+source attempt only when its actual operation and context can serve both
+requests without weakening either request's stated predicate or access policy.
+Sharing is optional. Compare the supported semantics, not only a Repository
+name or a hash of a URL. A later consumer retains its own request identity and
+does not acquire an observation time later than the actual shared observation.
+
+| Dimension | Compatible use | Limitation |
+| --- | --- | --- |
+| Source, account and Repository | The same confirmed source instance, applicable active account/generation and confirmed Repository identity, with current admission for both consumers. | Equal display names or a previously permitted account are insufficient; a new denial or changed generation must be applied before use. |
+| Object kind and purpose | The requested typed kind and discovery purpose match, or the actual operation independently supports each requested portion with attributable results. | An open-PR portion does not satisfy Issues or the recent/closed-work purpose; co-location in one response does not merge their coverage. |
+| Effective source predicates | States, source filters, ordering, time bounds and inclusivity match, or a separately justified containment rule proves the returned portion sufficient for a narrower consumer. | Merely comparing day labels or timestamp strings is insufficient; mutable pagination and event-time semantics still constrain any derived claim. |
+| Fields and provenance | Each reused fact was actually selected, successfully interpreted for the same subject and is applicable to that consumer's requested meaning. | A superset query with an error in one field does not satisfy that field; another returned field or equal count cannot repair the omission. |
+| Cursor and traversal | Continue only with a token supported for the same operation, effective parameters and source context under 0102; each consumer tracks its own completed and missing work. | A cursor is not interchangeable across a changed day, scope or query merely because the same Repository is involved; a terminal page is not a snapshot guarantee. |
+| Observation and lifecycle | The consumer accepts the actual observation reference and still-valid request and disclosure context. | An earlier attempt cannot be relabeled as newly observed on the later consumer's tap, or revive an invalidated route. Unresolved compatibility means separate work or an explicit limitation. |
+
+Deriving an individually supported narrower fact is different from claiming a
+complete narrower population. Even a source-supported containment relation
+does not prove coverage if necessary pages, identities, field results or access
+evidence are missing. Project-level completeness is evaluated independently
+for each actual membership basis. Cancelling one consumer cannot manufacture a
+result for another; the underlying attempt follows its own execution outcome
+and the currently permitted consumers under 0048.
+
 The [worked example](today-source-union-worked-example-20261115.md) and
 [assembly state](today-assembly-state-contract-20261115.md) specify expected
 observable behavior. TDD should exercise the exchanges using separately
