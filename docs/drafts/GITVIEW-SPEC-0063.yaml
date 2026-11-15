@@ -42,6 +42,10 @@ specification:
       given: GitHub supplies a positive totalBlockedBy for an open affected Issue, but no applicable observations establish whether any blocker is currently open.
       when: The blocked-Issue signal is evaluated.
       then: The source total remains distinct from the open-blocker condition, which is uncertain rather than a confirmed match or non-match.
+    incomparable_positive_inputs:
+      given: A permitted affected Issue is observed open at T1 and has a supported direct blocked-by link to B at T1. B was observed open only at a different time T0, with no evidence establishing whether that state applies at T1 or now.
+      when: A current blocked-Issue signal is evaluated.
+      then: The link and B's older state retain their own contexts, but their conjunction is not reported as a confirmed current positive or a confirmed negative. Applicable uncertainty and coverage remain discoverable without inventing a new blocker observation.
     two_blockers:
       given: One open Issue in the Project has two distinct direct blockers, both confirmed open under sufficient coverage.
       when: The blocked-Issue Project signal is calculated and opened.

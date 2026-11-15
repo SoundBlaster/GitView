@@ -36,7 +36,7 @@ specification:
   review_scenarios:
   - Given an Issue closed with a non-completion reason, show its closure and reason without calling it
     completed.
-  - Given a mentioned PR without an explicit closing link, do not display it as a closing PR.
+  - Given a confirmed PR mention, incomplete closing-link coverage and no independently established closing link for that PR, show the supported mention without labeling it a closing link or claiming no closing link exists.
   unresolved:
   - API support and display priorities for individual fields.
   evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
@@ -45,7 +45,7 @@ specification:
   - An Issue overview retains its confirmed object and Repository context and presents the selected fields and state reason when supported and permitted. Unavailable fields and source links remain unavailable or last known with their context; do not substitute another object.
   - Expose selected labels, type, author, assignees, milestone, related Issues and PRs, discussion and
     direct-sub-issue counts when available.
-  - Differentiate an explicit closing PR reference from a mention; do not infer motive or actor from the
+  - Differentiate independently supported closing PR references from mentions; one object may have both meanings. Unknown or incomplete link coverage is not confirmed absence; do not infer motive or actor from the
     link.
   - A closed Issue with unknown or non-completion reason is not labeled completed; unknown counts are
     not zero.
@@ -64,7 +64,7 @@ acceptance:
 - An Issue overview retains its confirmed object and Repository context and presents the selected fields and state reason when supported and permitted. Unavailable fields and source links remain unavailable or last known with their context; do not substitute another object.
 - Expose selected labels, type, author, assignees, milestone, related Issues and PRs, discussion and direct-sub-issue
   counts when available.
-- Differentiate an explicit closing PR reference from a mention; do not infer motive or actor from the
+- Differentiate independently supported closing PR references from mentions; one object may have both meanings. Unknown or incomplete link coverage is not confirmed absence; do not infer motive or actor from the
   link.
 - A closed Issue with unknown or non-completion reason is not labeled completed; unknown counts are not
   zero.
