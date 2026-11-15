@@ -32,6 +32,7 @@ sources:
     pointer: /spec/policies/PartialObservationBoundary
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
+  authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Open the overview using observations GitView already holds and refresh from GitHub when needed,
     so reading an existing view does not require downloading its data again.
   working_assumption: GitView keeps previously fetched observations in an app-owned database across launches.
@@ -135,8 +136,6 @@ specification:
       given: A list spans several pages.
       when: The budget expires before all pages are read.
       then: Supported permitted fetched information remains usable within its actual transient or durable context and the list is marked incomplete, not empty. A source response alone does not prove it was saved.
-  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
-    are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - When recoverable and eligible observations exist, make them available without waiting for a new source request; record source scope, supported successful observation time, completeness
   and refresh outcome separately.

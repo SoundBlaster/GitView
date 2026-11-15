@@ -19,6 +19,7 @@ sources:
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
+  authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Inspect a card quickly without losing the bird's-eye overview.
   ontology_refs:
   - gitview:Project
@@ -41,8 +42,6 @@ specification:
   unresolved:
   - Later sliding activation, edge behavior, long-press/pan coordination and release behavior need native
     prototyping.
-  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
-    selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
   - 'First version: a recognized long press on an eligible Project, Repository, PR or Issue presents that same object as a static preview, with an
     explicit way to open it and a way to dismiss without navigation; access and changed-origin limitations remain applicable.'
@@ -65,8 +64,6 @@ specification:
       then: One preview changes object without navigating into any of them.
   future_acceptance_candidates:
   - The later sliding rich preview changes one preview as the user inspects neighboring cells without automatically opening them; long press is a proposed activation, not settled gesture arbitration.
-  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
-    are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - 'First version: a recognized long press on an eligible Project, Repository, PR or Issue presents that same object as a static preview, with an
   explicit way to open it and a way to dismiss without navigation; access and changed-origin limitations remain applicable.'

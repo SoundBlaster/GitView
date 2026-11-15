@@ -19,6 +19,7 @@ sources:
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
+  authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Use the agreed structured descriptions and preserve the original authored content.
   ontology_refs:
   - gitview:Issue
@@ -38,8 +39,6 @@ specification:
   - Given a PR Validation statement, show it separately from observed CI.
   unresolved:
   - Template installation targets, enforcement, parsing and versioning remain outside this reading contract.
-  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
-    selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
   - Issue sections are Problem, Motivation, Expected outcome and References; PR adds Changes and Validation.
   - In participating repositories the agreed format is required for newly created Issue and PR descriptions;
@@ -58,8 +57,6 @@ specification:
       given: A PR description says validation passed but the observed CI failed.
       when: Both are available.
       then: The description and failed CI remain separate and the CI failure is visible.
-  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
-    are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - Issue sections are Problem, Motivation, Expected outcome and References; PR adds Changes and Validation.
 - In participating repositories the agreed format is required for newly created Issue and PR descriptions;

@@ -275,9 +275,11 @@ specification:
     technical_boundary: The selected package and optional composition remain draft. User and GitHubRepository
       are not silently inserted into them. This update does not select sgcore as a domain vocabulary or
       activate the proposed external specification-artifact meta-check.
-  authority_boundary: This is a source-attributed product specification candidate for human review. Its
-    ID is provisional, examples are not executed tests, and neither a structural check nor a local commit
-    accepts the specification, ontology, behavior, implementation or associated causal claims.
+  authority_boundary: This source-attributed candidate and its refining drafts share the following boundary.
+    The owner authorized autonomous specification in excerpt-72; agent working details are not all separately
+    owner-approved. IDs are provisional, scenarios describe expected future verification rather than executed
+    tests, and neither a structural check nor a local commit accepts a specification, ontology, behavior,
+    implementation or associated causal claims. The application is not claimed to exist.
   repository_identity:
     status: user_selected_scoped_rule_not_whole_spec_approval
     source_refs:

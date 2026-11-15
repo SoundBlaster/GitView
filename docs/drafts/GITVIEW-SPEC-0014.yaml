@@ -18,6 +18,7 @@ sources:
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
+  authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Support a Photos-inspired overview that scales density within a stable scope.
   ontology_refs:
   - gitview:Project
@@ -41,8 +42,6 @@ specification:
   unresolved:
   - Native collection behavior, zoom anchoring, gesture arbitration and measured performance need device
     validation.
-  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
-    selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
   - The grid supports several density levels within the same selected scope; an in-scope pinch changes scale and visible
     detail without itself changing selected objects or filters. Independent observations or membership changes may change the selection under 0035.
@@ -67,8 +66,6 @@ specification:
       given: The user enables a large text size.
       when: The grid cannot fit eight legible columns.
       then: The layout adapts rather than shrinking required content to preserve eight columns.
-  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
-    are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - The grid supports several density levels within the same selected scope; an in-scope pinch changes scale and visible
   detail without itself changing selected objects or filters. Independent observations or membership changes may change the selection under 0035.

@@ -20,6 +20,7 @@ sources:
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
+  authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Make the main overview and object access usable with iOS accessibility features.
   ontology_refs:
   - gitview:User
@@ -39,8 +40,6 @@ specification:
   unresolved:
   - Exact native accessibility actions, focus fallback and supported platform versions require device
     checks.
-  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
-    selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
   - Every essential operation can be reached without relying exclusively on pinch, long press, hover or
     color.
@@ -58,8 +57,6 @@ specification:
       given: Reduce Motion and a large text size are enabled.
       when: The user changes scope and returns.
       then: Navigation and content remain understandable and available without a fixed density requirement.
-  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
-    are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - Every essential operation can be reached without relying exclusively on pinch, long press, hover or
   color.

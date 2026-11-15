@@ -19,6 +19,7 @@ sources:
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
+  authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Present the selected PR properties for rapid review and source navigation.
   ontology_refs:
   - gitview:PullRequest
@@ -40,8 +41,6 @@ specification:
   - Given unavailable thread count, do not present it as zero.
   unresolved:
   - Exact field layout and truncation; source mapping and availability.
-  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
-    selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
   - A PR overview retains its confirmed object and Repository context and exposes the agreed field set when supported and permitted. Unavailable fields and source links remain unavailable or last known with their context; do not substitute another object.
   - Separate open/closed/merged from draft, review decision, thread counts and check counts; missing values
@@ -58,8 +57,6 @@ specification:
       given: A PR has unknown review status and known failed CI.
       when: Its overview opens.
       then: Review remains unknown and the failed CI remains independently visible.
-  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
-    are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - A PR overview retains its confirmed object and Repository context and exposes the agreed field set when supported and permitted. Unavailable fields and source links remain unavailable or last known with their context; do not substitute another object.
 - Separate open/closed/merged from draft, review decision, thread counts and check counts; missing values

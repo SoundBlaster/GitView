@@ -35,6 +35,7 @@ acceptance_evidence:
 - criterion: Navigation continuity and incomplete observations
   evidence: return_to_origin and incomplete_project specify expected outcomes, not executed tests.
 specification:
+  authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Navigate from project overview to its repositories and work without losing context.
   ontology_refs:
   - gitview:Project
@@ -92,5 +93,3 @@ specification:
       then: Both members remain represented and missing work is not presented as an observed empty repository.
   unresolved:
   - Exact transition remains open; restoration after data changes and initial work ordering are proposed in 0024 and 0042, with their unresolved cases retained.
-  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
-    selection and specification remain drafts; implementation is not claimed.

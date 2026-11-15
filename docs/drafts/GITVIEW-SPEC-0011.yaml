@@ -18,6 +18,7 @@ sources:
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
+  authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Keep check results, review assessment and review-thread counts independently interpretable.
   ontology_refs:
   - gitview:PullRequest
@@ -38,8 +39,6 @@ specification:
     of the thread count.
   unresolved:
   - Exact GitHub status mappings, check identity, head revision and retry equivalence require API verification.
-  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
-    selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
   - Count current individual PR checks only when the applicable set and revision are supported, not workflow runs or every historical attempt; retain total as
     a separate count from red/yellow/green and expose incomplete or unknown coverage.
@@ -58,8 +57,6 @@ specification:
       given: A source review assessment reports a change request and sufficiently covered thread evidence independently establishes zero unresolved threads.
       when: The review summary is displayed.
       then: The change request and zero known unresolved threads remain separate.
-  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
-    are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - Count current individual PR checks only when the applicable set and revision are supported, not workflow runs or every historical attempt; retain total as a
   separate count from red/yellow/green and expose incomplete or unknown coverage.

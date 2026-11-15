@@ -18,6 +18,7 @@ sources:
   working_ontology_context: ontology/candidates/domain-v0.2.0-draft.12/composition-context.yaml
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
+  authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Maintain a named GitView project containing one or more GitHub-managed repositories.
   ontology_refs:
   - gitview:Project
@@ -42,8 +43,6 @@ specification:
   unresolved:
   - 0025 proposes rejecting a saved Project with an empty name or no members and preserving the last saved state; creation drafts, edit interaction and acceptance of this proposal remain open.
   - Automatic synchronization between default Project names and later repository rename is not assumed.
-  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
-    selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
   - Project has a stable local ID, name, optional description and a membership set of source-identified
     GitHub repositories; membership does not copy repository data.
@@ -63,8 +62,6 @@ specification:
       given: R1 and R2 belong to different organizations.
       when: The user selects both for one Project.
       then: Both remain members with their original repository identities.
-  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
-    are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - Project has a stable local ID, name, optional description and a membership set of source-identified
   GitHub repositories; membership does not copy repository data.

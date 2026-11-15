@@ -19,6 +19,7 @@ sources:
   ontology_selection: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
   pilot_autonomy: conversation:gitview/excerpt-72
 specification:
+  authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Record the discussed farther-out time view and deeper PR exploration without making them
     first-version prerequisites.
   ontology_refs:
@@ -39,8 +40,6 @@ specification:
   - Given a PR overview, offer the source without implying an in-app diff viewer exists.
   unresolved:
   - Calendar metric, data source, navigation and future PR depth remain undefined.
-  evidence_boundary: Scenarios are expectations for future verification, not executed tests. The ontology
-    selection and specification remain drafts; implementation is not claimed.
   pilot_contract:
   - The calendar is a possible later time-oriented view; day cells have time semantics and are not Project
     or Repository identity cells.
@@ -52,8 +51,6 @@ specification:
       given: Historical activity for a day is unavailable.
       when: A later calendar is displayed.
       then: The day is not represented as an observed zero.
-  pilot_provenance: The owner authorized autonomous pilot specification in excerpt-72. Working details
-    are specification choices, not claims that the app exists or that every detail was separately discussed.
 acceptance:
 - The calendar is a possible later time-oriented view; day cells have time semantics and are not Project
   or Repository identity cells.
