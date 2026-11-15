@@ -12,8 +12,8 @@ depends_on:
 - GITVIEW-SPEC-0044
 - GITVIEW-SPEC-0053
 sources:
-  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.11/composition-context.yaml
-  ontology_context_scope: The draft.5 ontology_context records an earlier source context; draft.11 is the current working composition. Neither is semantically approved by this reference.
+  working_ontology_context: ontology/candidates/domain-v0.2.0-draft.12/composition-context.yaml
+  ontology_context_scope: The draft.5 ontology_context records an earlier source context; draft.12 is the current working composition. Neither is semantically approved by this reference.
   parent: docs/drafts/GITVIEW-SPEC-0038.yaml
   identity_decision: conversation:gitview/excerpt-60-reply
   ontology_context: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
