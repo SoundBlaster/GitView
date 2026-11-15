@@ -24,6 +24,7 @@ sources:
   parent: docs/drafts/GITVIEW-SPEC-0088.yaml
   selected_fields: docs/drafts/pr-issue-selected-fields-coverage-20261114.md
   permission_matrix: docs/drafts/github-app-permission-coverage-20261114.md
+  today_operation_matrix: docs/drafts/today-operation-field-permission-matrix-20261115.md
   source_fields: docs/drafts/github-field-access-research-20261114.md
   github_permissions: https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/choosing-permissions-for-a-github-app
   github_permission_updates: https://docs.github.com/en/apps/using-github-apps/approving-updated-permissions-for-a-github-app
