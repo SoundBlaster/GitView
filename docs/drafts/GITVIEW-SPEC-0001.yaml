@@ -60,7 +60,7 @@ specification:
       or a replacement for GitHub.
     User: The operator of GitView, as explicitly selected by the owner. GitHub identities and source authors,
       reviewers and assignees are separate roles or references; identity details remain open.
-    Project: A GitView project; the membership rules below are distinct from the meaning of the term itself.
+    Project: Working term for a project in GitView; a more general definition remains open.
     Repository: Code in which a version control system acts, in the owner's working formulation.
     Code: Code is essentially a folder with files in the owner's working formulation; its precise boundary
       remains open.
@@ -72,13 +72,17 @@ specification:
     PullRequest: A source-recorded proposal of code changes for consideration and possible inclusion.
     ReviewThread: A discussion relevant to review. Duration and resolution are separate; thresholds and
       data availability remain open.
-    CIStatus: Working term for the observed source-reported state of one status-check entry. The owner
-      selected counters of current individual PR checks following GitHub's behavior, not counts of workflow
-      runs or accumulated attempts. Exact
-      source mapping, special states, freshness and readiness interpretation remain open.
-    Metric: A measured result interpreted according to a rule and applicable subject, scope, time and
-      evidence. Its population, period and units need a separate definition for each metric.
+    CIStatus: Working term for the observed source-reported state of one status-check entry.
+    Metric: A result of a measurement according to a defined rule for an identified subject and scope.
   terminology_usage:
+    project_membership: The selected composition and default are recorded in project_membership and 0005;
+      they do not establish that an operator performed a particular membership action.
+    ci_status_and_counts: The owner selected counters of current individual PR checks following GitHub's
+      behavior, not counts of workflow runs or accumulated attempts. Exact source mapping, special states,
+      freshness and readiness interpretation remain open. An individual CIStatus and a count are distinct.
+    metric_interpretation: A metric's measured quantity, unit, population, period, applicable source and
+      evidential coverage must be identified where needed to interpret that result. Each metric's predicate
+      and available evidence are specified separately; a missing result is not a measured zero.
     repository_identity: For the same GitHub object confirmed by the source, rename or transfer preserves
       one Repository, history and Project membership. Compare the numeric GitHub REST repository ID within
       one GitHub instance; detailed evidence and unresolved identity follow 0002 and 0038.
