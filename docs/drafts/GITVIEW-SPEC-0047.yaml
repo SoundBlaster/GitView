@@ -4,6 +4,8 @@ kind: spec
 created_at: '2026-11-14T14:03:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0047.yaml
+successor_scope: The successor records the selected Project summary and bounded overview outcomes. Detailed metric, navigation, access and default-layout contracts remain noncanonical candidates.
 refines:
 - GITVIEW-SPEC-0004
 depends_on:

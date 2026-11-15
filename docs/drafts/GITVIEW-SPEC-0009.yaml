@@ -5,6 +5,8 @@ created_at: '2026-11-10T00:00:00Z'
 updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0009.yaml
+successor_scope: The successor records the selected Issue overview categories and boundaries. Detailed source, relationship and display contracts remain noncanonical candidates.
 refines:
 - GITVIEW-SPEC-0001
 depends_on:

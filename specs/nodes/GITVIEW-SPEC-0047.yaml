@@ -1,0 +1,90 @@
+id: GITVIEW-SPEC-0047
+title: GitView - Project overview and summary
+kind: spec
+created_at: '2026-11-15T21:06:00Z'
+updated_at: '2026-11-15T21:06:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0006
+relates_to:
+- GITVIEW-SPEC-0007
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0047.yaml
+  predecessor_revision: 05c27259cd47f1967ec871802579414dac47301e
+  owner_selection: docs/drafts/project-summary-proposal.md
+  metric_candidate: docs/drafts/GITVIEW-SPEC-0057.yaml
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Let the operator survey Projects, understand their work and attention, and enter an applicable
+    selection.
+  authority_boundary: The Project summary and its broad categories are selected. Exact source mappings,
+    metric predicates, visual arrangement, disclosure policy and the full predecessor draft require separate
+    refinement. This node does not establish a running app, ontology approval or implementation readiness.
+  requirements:
+    projects: The overview represents saved GitView Projects and identifies them where permitted. A GitHub
+      organization is source metadata, not a GitView Project boundary. A Repository may contribute to
+      each Project containing it.
+    summary: A Project summary makes available its member Repository count and observation coverage, open
+      PRs with draft as a subset, open Issues, and attention signals for failed CI, waiting for review,
+      changes requested, unresolved thread count and affected PR count, and blocked Issues. It distinguishes
+      merged PR outcomes and Issue closures by reason for a selected period. Show charts of these measurements
+      when sufficient history is available; exact predicates, time ranges and placement remain to be specified.
+    units: Preserve the meaning and unit of each value. Counts of checks, affected PRs, review threads,
+      Issues and affected Repositories are different measurements; do not add linked PRs and Issues as
+      independent tasks. Affected object and Repository counts may be separately available for the same
+      signal.
+    conditional_ready: Provide the preliminary checks-and-review-passed selection if the corresponding
+      Repository rule is separately defined, accepted and applicable; it is not automatically a guarantee
+      of merge eligibility or an established count before that rule exists.
+    comparability: Parts of the summary presented as comparable use the same applicable period and filters;
+      explicitly distinguish their actual observation contexts and avoid suggesting incompatible values
+      are directly comparable.
+    coverage: A missing or inaccessible observation is not a confirmed zero or healthy result. A Project
+      remains represented when one of its members is unobserved; supported partial information retains
+      its limitations, observation context and applicable access restrictions. Do not infer one category's
+      freshness from another category's refresh.
+    history: Distinguish current observations from outcomes over a selected period. A graph needs sufficient
+      evidence for its own metric and time scope; unavailable history is not a fabricated zero or a copy
+      of the current value.
+    navigation: An actionable Project signal opens its corresponding selection across the applicable Project
+      member scope as described by 0006, retaining the condition and permitted source context. A selection
+      and its earlier summary need not have equal counts after facts change; preserve their respective
+      observation context and coverage.
+    portfolio: A Repository shared by two Projects contributes to each applicable Project summary. Any
+      combined portfolio total of unique Repositories or source objects counts each supported identity
+      once rather than simply summing Project totals.
+    presentation: The overview uses a zoomable Project grid and makes summary information inspectable
+      without requiring all details to fit a compact cell. Exact density, accessible controls and arrangement
+      remain open.
+  scenarios:
+    shared_repository: Projects P and Q share Repository R. R's permitted work contributes to each Project
+      summary, while a supported unique portfolio total does not count R or the same source object twice.
+    partial_coverage: A Project contains two members; Issue observations are available for one and unavailable
+      for the other. The observed information retains its incomplete scope; the second member is not reported
+      as zero or the Project as complete.
+    actionable_signal: A failed-CI signal concerns PRs in two Project members. Opening it retains the
+      Project and condition, distinguishes permitted source repositories and conveys any limitations of
+      the resulting selection.
+    missing_history: A current open-PR count is available but an earlier graph point has insufficient
+      evidence. The historical point is shown as unavailable or incomplete, not as zero or as the current
+      count.
+  open_questions:
+  - Exact definitions, source mappings, freshness and coverage requirements for each metric and attention
+    signal.
+  - Period selection, event versus object units, membership basis and evidence for historical values.
+  - Disclosure of restricted identities and aggregates, compact layout and accessible signal controls.
+  - Predicate and applicability of the conditional checks-and-review-passed selection.
+  ontology_status: Project, Repository, PullRequest, Issue and Metric use working draft vocabulary. A
+    summary is a presentation, not a new domain entity or evidence that an actor performed an action.
+acceptance:
+- A permitted Project summary distinguishes membership and coverage, current work, attention and period
+  outcomes by their meanings.
+- Draft PRs are a subset of open PRs, and unlike units are not presented as the same count or as independent
+  tasks.
+- Missing observations and missing historical evidence remain distinguishable from confirmed zeros.
+- Shared Repository contributions are correct in each Project and any claimed unique portfolio total.
+- An actionable signal reaches its corresponding scoped selection without assuming unchanged observations
+  or full coverage.

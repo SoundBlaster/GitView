@@ -1,0 +1,67 @@
+id: GITVIEW-SPEC-0009
+title: GitView - Issue overview
+kind: spec
+created_at: '2026-11-15T21:07:00Z'
+updated_at: '2026-11-15T21:07:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0002
+relates_to:
+- GITVIEW-SPEC-0007
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0009.yaml
+  predecessor_revision: 05c27259cd47f1967ec871802579414dac47301e
+  owner_selection: docs/drafts/issue-ontology-options.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Provide a compact, source-linked overview of a selected Issue and its supported relationships.
+  authority_boundary: The owner selected the field categories; exact mappings, display and availability
+    require refinement. This node does not establish an implementation, an actor's motive or ontology
+    approval.
+  requirements:
+    identity: Show supported permitted source identity, repository-local number, title, description and
+      GitHub link while retaining the correct Repository context. Do not substitute another object for
+      an unavailable link.
+    state: Distinguish open and closed, source-provided state or closure reason, labels and type. Closed
+      does not automatically mean completed, and an unavailable reason remains unknown.
+    context: Show supported source Repository, author, assignees and milestone without inferring that
+      an assignee has begun work.
+    relationships: Show supported linked PRs, parent and direct sub-issues, and dependencies in each direction.
+      Distinguish a supported closing reference from a mention; the same PR can have both meanings. A
+      link alone does not establish a completed outcome or an actor's motive, and incomplete relationship
+      evidence is not a confirmed absence.
+    dual_link: When the same source-confirmed PR has both supported link meanings, identify it once in
+      its Repository context while retaining both the mention and the closing-reference meanings.
+    counters: Show supported comment and participant counts, and total and closed direct-sub-issue counts
+      separately. These do not establish percent complete; individual comments are outside the selected
+      overview. Unknown counts are not zero.
+    times: Distinguish creation, update, closure, observation and last-comment times, and observation
+      source when available.
+    descriptions: Preserve permitted authored text and the selected Problem, Motivation, Expected outcome
+      and References format where present; source text and separately supported relationships retain their
+      meanings.
+    source: Provide a route to the original GitHub object and lightweight sharing when an eligible link
+      is available.
+    uncertainty: Unavailable or stale facts retain their limitations and access context; do not infer
+      successful completion or absence.
+  scenarios:
+    closure_reason: A closed Issue has an unknown or non-completion reason. Present its supported state
+      without calling it completed.
+    linked_pr: An Issue mentions PR A and has an explicit closing reference to PR B. Preserve both meanings
+      without inferring motive.
+    dependencies: An Issue is blocked by A and blocks B. Show the supported direction without calling
+      incomplete coverage complete.
+  open_questions:
+  - Source mappings, relationship and count evidence, API availability and freshness.
+  - Field priority, truncation, access, sharing payload and exact display.
+  ontology_status: Issue and related terms use working draft vocabulary; source links do not prove actor
+    actions or semantic approval.
+acceptance:
+- The selected Issue retains its identity and Repository context with supported permitted identifying
+  fields and state reason.
+- A closing reference and mention remain distinct supported meanings; a link does not establish motive.
+- Relationship directions and selected count units remain distinct, and unknowns are not presented as
+  zeros or completion.
+- The overview offers the source route and retains the selected description as authored where available.

@@ -1,0 +1,69 @@
+id: GITVIEW-SPEC-0008
+title: GitView - Pull request overview
+kind: spec
+created_at: '2026-11-15T21:07:00Z'
+updated_at: '2026-11-15T21:07:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0002
+relates_to:
+- GITVIEW-SPEC-0007
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0008.yaml
+  predecessor_revision: 05c27259cd47f1967ec871802579414dac47301e
+  owner_selection: docs/drafts/pull-request-ontology-options.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Provide a compact, source-linked overview of a selected PR and its independently meaningful
+    signals.
+  authority_boundary: The owner selected these categories and the GitHub-oriented checks direction. Exact
+    mappings, presentation and data availability require refinement; this node does not establish an implementation
+    or ontology approval.
+  requirements:
+    identity: Show supported permitted source identity, repository-local number, title, description and
+      GitHub link, retaining the correct Repository context. An unavailable source link must not be replaced
+      with another object.
+    lifecycle: Distinguish open, closed without merge and merged from the draft flag, labels, review and
+      CI. Show supported labels when available and permitted.
+    context: Show supported target Repository, source and target branches, observed revision, author,
+      requested reviewers and related Issues. A related Issue does not itself prove an actor's motive.
+    review: Show supported source review assessment and separate counts of total and unresolved review
+      threads. Individual thread content is outside the selected overview; unavailable counts or assessment
+      are not zero or approval. Where supported, distinguish unavailable assessment, absence of reviews,
+      and a source-reported requirement for review; do not infer one from another.
+    checks: Show supported counts for red, yellow, green and total current individual PR checks, following
+      GitHub's general behavior. Do not count prior retries as additional current checks; precise mappings,
+      revision selection and special outcomes require validation. The three color counts are not presumed
+      to sum to total.
+    change_counts: Show supported additions and deletions separately, changed-file count and commit count;
+      these are counts, not an in-app diff, file, commit or run browser.
+    times: Distinguish source creation, update, closure or merge times from observation time and source
+      when available.
+    descriptions: Preserve permitted authored text and the selected Problem, Motivation, Expected outcome,
+      Changes, Validation and References format where present. Authored Validation is not proof of current
+      CI status.
+    source: Provide a route to the original GitHub object and lightweight sharing when an eligible link
+      is available.
+    uncertainty: Unavailable or stale facts retain their limitations and access context; do not infer
+      success, zero or identity.
+  scenarios:
+    same_number: Two Repositories each have PR 42. Opening the second preserves its own identity, facts
+      and link.
+    independent_signals: An open draft PR has a failed check and unknown review. Show these independently;
+      unknown is not approval.
+    retry: A failed check is retried and its current applicable outcome changes. Do not count the old
+      attempt as a second current check.
+  open_questions:
+  - Source mappings, evidence and current-check revision and special-outcome rules.
+  - Field priority, truncation, freshness, access, sharing payload and exact display.
+  ontology_status: PullRequest and related terms use working draft vocabulary; links do not prove actor
+    actions or semantic approval.
+acceptance:
+- The selected PR retains its identity and source Repository context, with supported permitted identifying
+  fields.
+- Lifecycle, draft, review assessment, thread counts, check counts and change counts remain distinct and
+  unknown values are not zero.
+- The overview offers the source route and preserves authored description separately from observed CI.
+- The selected scope does not require in-app diff, individual thread, file, commit or run details.
