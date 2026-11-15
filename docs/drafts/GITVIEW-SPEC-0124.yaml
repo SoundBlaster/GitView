@@ -1,0 +1,69 @@
+id: GITVIEW-SPEC-0124
+title: GitView - Durable work identity association and recovery
+kind: spec
+created_at: '2026-11-15T01:38:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0123
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0079
+- GITVIEW-SPEC-0101
+- GITVIEW-SPEC-0103
+- GITVIEW-SPEC-0113
+- GITVIEW-SPEC-0122
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0123.yaml
+  identity_normalization: docs/drafts/GITVIEW-SPEC-0101.yaml
+  local_operations: docs/drafts/GITVIEW-SPEC-0103.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- A retained association connects one source representation to one confirmed typed work identity only when its scoped evidence is recoverable.
+- Identity association, its necessary evidence and the local operation outcome have a coordinated durable effect or remain explicitly indeterminate.
+- Concurrent or repeated deliveries cannot silently create contradictory confirmed bindings or turn a retry into a new source observation.
+- Recovery distinguishes a historical operation receipt from an independently readable current association, and does not invent a rollback or latest snapshot after backup restoration.
+- Source facts, conflicts, observation times, Project membership and current access remain separately attributable when identity is resolved.
+specification:
+  objective: Define a bounded persistence contract for associating an unresolved retained work representation with a source-confirmed PR or Issue and recovering that association after interruption.
+  ontology_refs:
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  contract:
+    scope: This agent-authored candidate refines 0123 for a single continuing local store lineage. It covers an association between one retained representation and an independently confirmed work object, not source fetching, Project membership edits, GitHub mutation, or attribution of actor motives. SQLite is the working persistence direction in 0113; these logical constraints are not a complete schema or a promise about an unverified provider.
+    inputs: The caller supplies a stable local representation reference, a confirmed typed source-object identity with its source instance and applicable identity-kind scope, a supported Repository association where required, the independently obtained evidence linking this specific representation and target, the evidence's own source and observation context, and a local operation identity with immutable intent. A local token, owner and name, title, URL or repository-local number alone is not proof of target identity. Missing or conflicting required evidence prevents confirmed association and remains a limited or conflicted result.
+    identity_key: A confirmed target identity is scoped by source instance, source object kind, identifier kind and any additional scope required by that identifier's source contract, plus its exact value. Preserve opaque identifiers without lossy numeric conversion or inappropriate case normalization. Different identifier kinds are not equal merely because their values look alike; aliasing requires its own supporting evidence. A Repository-local number is not promoted to a globally scoped object identity. Validate every mandatory identity component before attempting a confirmed association.
+    durable_effect: In one local consistency boundary, validate the operation binding and current source and access admission rules, retain or reference the necessary immutable association evidence, establish or reuse the confirmed target identity, bind this representation to that target, and record the terminal operation outcome. An implementation may use a single transaction or an independently verified recoverable staged protocol under 0113. Confirm durable success only when the association, required evidence and matching receipt are independently recoverable together. Source requests, Keychain operations and UI interaction do not run inside a database write transaction.
+    uniqueness_and_conflict: For one interpretation of a retained representation within its source and identity scope, prevent simultaneous incompatible confirmed target bindings. Coordinate competing writers at the durable boundary rather than relying only on a prior read. A repeat to the same target is reusable only when its required evidence, scope and operation binding are valid; a conflicting target is not accepted by replacing the earlier binding based on completion order or matching names. Preserve the evidence necessary to review the conflict under 0053, subject to access and retention rules. Multiple representations may legitimately identify the same object; the association alone does not make their field values equal or ordered.
+    operation_results: Report applied with its committed association identity, previously applied for a compatible replay, confirmed rejection or conflict when supported, and indeterminate when the durable effect or the absence of a late writer cannot be established. A distinct local operation may discover that the desired binding already exists, but its own receipt must truthfully distinguish reuse from creation. An incompatible reuse of an operation identity is a conflict under 0103. Missing acknowledgement, cancellation or inability to read the store does not prove rollback, source denial or absence of a binding.
+    recovery: After interruption, read the operation receipt and the actual association with its required evidence under one consistent recovery context. A receipt can support the historical outcome of its operation but is not proof that the association remains readable, current or permitted. If outcome or required evidence is unavailable, return indeterminate or a local limitation and do not apply a replacement that could conflict with a still-possible earlier write. Safe redelivery of the same bound operation requires the 0103 guarantees. A confirmed later retraction or conflict follows its own evidence rather than being overwritten by a stale retry. The restored older-snapshot boundary in 0122 remains applicable; equality of old local keys does not prove that later state survived.
+    fact_and_access_preservation: Resolving identity may make earlier facts eligible for reevaluation but does not refresh their observation or event times, order incompatible values, prove a complete population, establish current source access or add a Repository to a Project. Preserve their distinct contexts and evaluate current disclosure under 0036 before exposing identities, facts, aggregates or recovery diagnostics. A source or access change observed after preparation is evaluated at local admission under the applicable coordinator; an unobserved remote change cannot be ordered by local storage alone.
+    verification: Before implementation readiness, choose a concrete provider and describe exact identity and association keys, constraints, evidence encoding, admission coordination, transaction boundaries, result mapping and crash recovery for this scope. Plan TDD using injected storage and evidence for identical concurrent retries, incompatible target bindings, a distinct reuse operation, lost acknowledgement, failed or unavailable evidence, access restriction and older restored snapshot. Verify real provider transaction and restart behavior separately from doubles; no implementation or device test is claimed.
+    provenance: Local retained data and DI, TDD and test doubles follow owner direction. This association representation and local operation protocol are agent-authored proposals; selected source mappings and actual provider semantics remain prerequisites.
+  scenarios:
+    two_representations_one_pr:
+      given: Two retained representations have separately supported association evidence for the same confirmed PR and retain distinct original observation contexts.
+      when: Their separate valid local association operations commit.
+      then: Both bindings can identify the same PR without creating two confirmed work objects, merging conflicting field observations, or changing the original observation times.
+    conflicting_target_race:
+      given: Two operations concurrently attempt to bind the same retained representation to different confirmed PR identities in the same source scope.
+      when: Their effects reach the local coordinated boundary.
+      then: The store does not expose both as confirmed bindings or silently let completion order overwrite one with the other; each operation returns its supported outcome and unresolved incompatible evidence remains a conflict.
+    lost_acknowledgement:
+      given: One association, its supporting evidence and its operation receipt committed together but the caller did not receive acknowledgement.
+      when: The same operation and immutable intent are redelivered after restart.
+      then: Recovery returns the same historical association outcome without creating a second source observation, and current readability and access are assessed independently.
+    missing_required_evidence:
+      given: A stored target reference and operation receipt can be read after restart, but the evidence needed to link the original representation to that target is unavailable.
+      when: A caller requests a confirmed current association.
+      then: The affected association is limited or unavailable rather than reconstructed from the receipt or matching title, and unrelated recoverable facts remain available under their own access context.
+    restored_older_backup:
+      given: Independent evidence establishes that a restored store predates a confirmed later association change, while the restored copy lacks enough evidence to reconcile the later state or pending writer.
+      when: Recovery inspects a saved pending association operation.
+      then: It does not replay that operation as proven safe or claim its snapshot is globally latest; the affected outcome remains uncertain until a supported recovery or separately reviewed action is possible.
+  unresolved:
+  - Choose and verify physical key encoding, constraint strategy, evidence retention, local admission coordinator and provider-specific failure mapping before implementation readiness.
+  - Confirm source semantics and the required scope of each selected work-object identifier and alias; a generic identity tuple is not proof of GitHub correspondence.
+  - Actual SQLite crash, backup restoration, access and native UI behavior have not been tested.
