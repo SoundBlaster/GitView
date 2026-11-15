@@ -34,3 +34,43 @@ scenarios:
   scenario: secure_write_before_commit
   level: technical
   rationale: Describes interruption recovery for one optional credential-storage protocol.
+- spec: GITVIEW-SPEC-0048
+  scenario: manual_offline
+  level: product
+  rationale: Explains saved data and a visible refresh failure when the operator is offline.
+- spec: GITVIEW-SPEC-0048
+  scenario: source_success_local_storage_full
+  level: mixed
+  rationale: Connects a local retention failure to the user's view of successful source data and recovery.
+- spec: GITVIEW-SPEC-0048
+  scenario: secondary_limit_without_retry_header
+  level: technical
+  rationale: Specifies retry policy for a particular GitHub rate-limit response.
+- spec: GITVIEW-SPEC-0093
+  scenario: same_number
+  level: product
+  rationale: Shows how the operator inspects the intended PR when repository-local numbers coincide.
+- spec: GITVIEW-SPEC-0093
+  scenario: late_different_object
+  level: mixed
+  rationale: Connects a late response to preventing wrong-object display and access violations.
+- spec: GITVIEW-SPEC-0092
+  scenario: checks_and_objects
+  level: product
+  rationale: Explains why five failing checks can open two PR cards without inventing missing cards.
+- spec: GITVIEW-SPEC-0064
+  scenario: different_membership_not_one_trend
+  level: product
+  rationale: Distinguishes a scope change from a decrease in work on a historical chart.
+- spec: GITVIEW-SPEC-0025
+  scenario: edit_acknowledgement_lost
+  level: mixed
+  rationale: Connects a lost save acknowledgement to the Project state shown after restart.
+- spec: GITVIEW-SPEC-0061
+  scenario: success_and_skipped_compact
+  level: product
+  rationale: Explains how successful and skipped checks remain distinguishable to the operator.
+- spec: GITVIEW-SPEC-0061
+  scenario: graphql_context_and_run_are_distinct
+  level: technical
+  rationale: Classifies distinct GitHub source entry types for a check counter.
