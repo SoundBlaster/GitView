@@ -57,6 +57,7 @@ specification:
     interrupted_edit: After interruption, read and reconcile the durable Project configuration before claiming which membership is saved. If a complete valid new configuration is confirmed, use it; if the prior configuration is confirmed and no indeterminate write can still commit, retain it. If the local read is unavailable, inconsistent or cannot resolve a pending write, report the Project configuration as uncertain and offer recovery; do not invent a complete old or new aggregate. The policy for preserving an unsaved editing draft across process termination remains open and does not make that draft saved.
     scope: Saved Projects contain only GitHub-managed Repositories in the current product scope. Temporary offline discovery or source rename is not a command to change membership. Access restrictions follow 0019.
     provenance: These detailed lifecycle and default-association rules are agent-authored proposals under autonomous refinement, not independently approved owner decisions.
+  scenario_scope: Scenarios that assert a persistent default association or its reuse, removal or recreation apply only if that proposed mechanism is selected. General Project membership, preservation and safe recovery from an indeterminate operation remain applicable under alternative mechanisms.
   scenarios:
     replace_sole_default_member:
       given: A confirmed Project P has exactly one member A and is A's default; a different eligible Repository B also belongs to Project Q.
@@ -143,7 +144,7 @@ specification:
       when: P is durably removed and the operator leaves the object overview.
       then: Q and R remain unchanged and the navigation result follows the removed-origin policy in 0024 rather than treating Q as the same Project.
     repeat_setup:
-      given: An existing default association for R points to Project P and R also belongs to custom Project Q.
+      given: The proposed persistent default-association mechanism is selected; an existing valid association for R points to Project P and R also belongs to custom Project Q.
       when: The operator reconfirms R in setup.
       then: P is reused and Q is unchanged.
     edit_acknowledgement_lost:
