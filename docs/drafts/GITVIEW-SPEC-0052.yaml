@@ -16,7 +16,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - A completed default Project save is recoverable as a Project and its matching default association together.
-- A retry after an interrupted save reuses a confirmed saved association and does not create a duplicate default Project for the same Repository.
+- Recovery reconciles the interrupted operation's own outcome and independently respects a confirmed current association without creating a duplicate default Project for the same Repository.
 - Concurrent or late save attempts for the same Repository cannot both establish distinct active default associations for it.
 - An unavailable or inconsistent local record is reported as unresolved rather than assumed absent or overwritten.
 - Recovery of one Repository's setup outcome does not delete or alter unrelated Projects, source objects or other Repository memberships.
@@ -31,7 +31,7 @@ specification:
     atomic_visibility: For one newly created default Project, observers of durable local configuration must see either the previous state or a saved Project with its matching default association and Repository membership. The implementation may use any storage mechanism satisfying this observable invariant; this does not impose all-or-nothing behavior across the whole multi-selection.
     concurrent_uniqueness: The local configuration enforces at most one active default association for a confirmed source Repository even if two create or retry attempts overlap or an earlier attempt commits late. At most one distinct Project can win that association. A losing or conflicting attempt must resolve to the confirmed existing Project or report a recoverable conflict; it must not overwrite an unrelated Project, erase memberships or report a second successful default association. The choice of locking, transactions, compare-and-swap or another mechanism is not prescribed.
     losing_operation_result: Candidate 0104 specifies that a losing operation may report durable reuse only when the currently valid winning association, membership and its own operation result are coordinated. An earlier observed winner that is removed before this boundary does not alone support reuse. An unresolved earlier attempt cannot be bypassed with a distinct new operation while its late effect could violate uniqueness.
-    recover_saved: After interruption or restart, if durable local configuration confirms an association to a valid saved Project containing that same Repository, report or reuse that Project. Do not create another default Project merely because the earlier completion acknowledgement was lost.
+    recover_saved: After interruption or restart, if a consistent current read confirms an association to a valid saved Project containing the same Repository, that read can establish the current default and prevent a duplicate. It does not by itself establish whether the interrupted operation created it, reused it, failed or remains indeterminate. Recover that operation's own bound result under 0103 and 0104. A distinct later explicit setup can reuse the current default only through its own coordinated operation and applicable admission. Do not create another default merely because an earlier completion acknowledgement was lost.
     recover_absent: If durable local configuration is successfully read and establishes that no matching default association or pending indeterminate save exists, a later explicit retry may create the Project. An old custom Project with the same name or Repository is not silently relabeled as the default.
     recover_unknown: If configuration is unavailable, inconsistent, or cannot establish whether the previous save completed, the result remains unknown and the operator can see a recovery or retry path. Do not claim the Project was not created and do not create another default under an unverified identity merely to clear the error. Recovery must not infer identity solely from a display name.
     batch_context: The containing confirmed selection's durable context and cancellation status follow 0045. Project configuration establishes the saved association, while the operation record identifies the intended entry and what must be reconciled; neither an old acknowledgement nor a missing entry result by itself establishes the current saved association. If either required record is unreadable or conflicts, preserve uncertainty and avoid automatic duplicate creation.
@@ -40,9 +40,13 @@ specification:
     provenance: The owner chose default one Project per Repository and autonomous specification. Atomic visibility and conservative unknown-outcome recovery are agent-authored proposals.
   scenarios:
     acknowledgement_lost:
-      given: A default Project and association for R were durably saved but the process stopped before reporting success.
+      given: Operation O durably saved a default Project and association for R together with its recoverable bound result, but the process stopped before reporting success.
       when: The application restarts and the operator retries R.
-      then: The saved association is found and the same Project is reused without a duplicate.
+      then: Reconciliation of O identifies its historical created result, and an independent current read can find the same valid default without a duplicate; a later distinct setup operation may report its own coordinated reuse.
+    current_default_without_receipt:
+      given: An earlier setup operation O has an indeterminate outcome and a later current read establishes a valid default Project for R, but cannot recover O's bound result or exclude a still-possible effect.
+      when: Recovery presents the current configuration and O's result.
+      then: The current default may be reported as such where permitted, while O remains indeterminate and is not labeled created, reused or failed solely from that association; no incompatible replacement operation bypasses O's unresolved effect.
     save_not_committed:
       given: The process stopped before a default Project or association for R was durably saved.
       when: Local configuration is successfully read and no pending indeterminate save remains, then the operator retries.

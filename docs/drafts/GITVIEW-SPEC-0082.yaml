@@ -61,7 +61,15 @@ specification:
     setup_races_with_removal:
       given: Default Project P contains R and S, an edit removes R while an explicit setup confirmation for R overlaps, and both operations refer to the same confirmed source identity.
       when: Their durable outcomes are reconciled.
-      then: Any active default association points to a saved Project containing R, at most one is active for R, P retains its valid remaining membership, and an indeterminate ordering is not reported as two confirmed successes.
+      then: Any active default association points to a saved Project containing R, at most one is active for R and P retains its valid remaining membership. Both operations may have confirmed successful historical outcomes if their actual serialized effects support them; an indeterminate ordering is not replaced with an invented sequence or current default.
+    removal_before_new_default:
+      given: P contains R and S and is R's default; a valid edit removes R and its association before a separately confirmed setup for R reaches its coordinated boundary.
+      when: Setup establishes a new default Project Q containing R and both operations commit.
+      then: The removal and creation can both be reported as successful under their own operation identities; P retains S, Q is R's current default, and no simultaneous second default existed.
+    reuse_before_removal:
+      given: P contains R and S and is R's default; a separately confirmed setup durably records reuse of P before a valid edit removes R and its association.
+      when: Both outcomes and the current default are later read.
+      then: Setup's historical reuse and the edit's later successful removal can both be true, while the current read reports no default for R if sufficient evidence establishes it; the old reuse receipt does not recreate P's former association.
     restricted_conflict:
       given: An edit conflict concerns a Project name or Repository details derived from a private source whose access has been explicitly denied.
       when: The conflict is presented and the operator requests recovery.
