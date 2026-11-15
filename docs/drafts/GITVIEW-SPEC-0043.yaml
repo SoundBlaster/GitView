@@ -103,6 +103,7 @@ specification:
     identity: PR and Issue identity is resolved in source Repository context; Project identity is local and multiple Projects may share a Repository.
     evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
     provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
+    optional_history_clear_boundary: The all-local-history clear in 0067 and its protocol in 0117 are agent-authored optional candidates with undecided first-release inclusion. Scenarios involving this clear apply only if it is included; chart history and local observations remain independently required. Other deletion and access rules are unaffected.
     optional_review_stage_boundary: The agent-proposed open non-draft filter in 0125 is conditional, not a prerequisite for the core Today journey. Its acceptance scenario applies only if it is included; the owner's broader ready-work need remains unresolved.
     optional_cohort_boundary: The dynamic Today journey and its acceptance do not require capturing a fixed PR cohort. Candidate 0055 describes a separate proposed view whose first-release scope is unresolved; its conditional scenarios apply if that capability is included, without making it a prerequisite for the core journey.
   scenarios:

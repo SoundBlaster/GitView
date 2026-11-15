@@ -29,13 +29,14 @@ acceptance:
 - Current cache, local Projects, credentials, GitHub data and external backups retain their separately stated boundaries.
 - Deterministic verification distinguishes interruption, transaction ordering, source observation time and later historical retrieval; no real storage behavior is claimed.
 specification:
-  objective: Refine the proposed local history-clear boundary so that concurrent source work and retries cannot silently recreate cleared history; SQLite-specific details apply only if that option is selected.
+  objective: If the optional local history-clear candidate is included, refine its boundary so that concurrent source work and retries cannot silently recreate cleared history; SQLite-specific details apply only if that option is selected.
   ontology_refs:
   - gitview:User
   - gitview:Project
   - gitview:Repository
   - gitview:Metric
   contract:
+    feature_scope: The acceptance criteria, protocol and scenarios in this specification apply only if the agent-authored all-local-history clear of 0067 is included. A history-clear generation and this particular protocol are candidate mechanisms, not prerequisites for charts or retained observations when the feature is absent. Independent privacy, deletion, retention and access obligations still apply.
     scope: Apply the agent-authored all-local-metric-history option of 0067, including retained historical samples, supported outcome evidence and derived history in the disclosed scope. Do not clear Project configuration, current observation cache, credentials or source data. The generation below is a technical coordination value, not an ontology entity or a GitHub revision.
     capture: Before a source operation or a local Project-membership observation that may later contribute historical evidence is initiated, capture the currently confirmed durable history generation and bind it to the operation identity and intended history scope. The source request and its network completion never execute inside the database transaction. If the generation cannot be established, the operation may still serve another permitted purpose, but it cannot publish historical evidence using a guessed or subsequently substituted generation. Reading a cached fact or confirmed old Project configuration after clear is not itself a new source or membership observation.
     clear_transaction: For one explicit confirmed logical clear, use the 0113 local consistency boundary or a verified equivalent to atomically validate the operation identity and scope, advance the current history generation, remove the affected locally retained historical evidence and derived historical values, and record the clear result. Apply 0103 to retries and incompatible reuse of the same operation identity. No source or secure-store effect is included in this boundary. The exact schema, provider configuration and physical deletion mechanics are not selected here.
