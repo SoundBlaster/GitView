@@ -180,6 +180,6 @@ specification:
       when: The route is recovered after interruption.
       then: Neither T1 nor T2 is claimed durably recovered solely from earlier acknowledgements; the affected title is unavailable or unknown and local recovery remains separate from source emptiness.
   unresolved:
-  - Select concrete Swift interface shapes and source-to-domain mappings for the chosen GitHub operations, including source-specific errors, identity association and coverage evidence.
+  - The initial discovery mapping and error, identity and coverage responsibilities follow 0101, 0102 and the exchange contracts above; source facts not established by those mappings remain limited. Choose concrete Swift interface shapes and verify field-specific response semantics and permissions during implementation.
   - Preserve the logical atomicity and recovery outcomes of 0113 and 0126; specify and validate their physical realization, access, timestamps and conflict handling with the provider chosen during implementation.
   - No adapter, live GitHub interaction, persistence, product TDD cycle or native presentation has been implemented or verified.

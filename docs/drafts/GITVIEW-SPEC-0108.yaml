@@ -147,6 +147,6 @@ specification:
       when: The custom save is durably confirmed.
       then: One distinct Project with both members becomes available; the existing default associations remain unchanged and no extra source grant is inferred.
   unresolved:
-  - Specify concrete startup and setup presentation, accessibility focus, callback handling and storage recovery interfaces after upstream contracts and native constraints are reviewed.
+  - The startup and setup outcomes and ownership are defined above; choose concrete native presentation, accessibility focus APIs, callback handling and storage recovery interfaces during implementation and verify them against these contracts.
   - Verify source-specific eligibility, account-change coordination and the selected GitHub App flow against actual operations and permissions.
   - No FSD modules, source or persistence adapter, controlled product tests or native behavior have been implemented or verified.
