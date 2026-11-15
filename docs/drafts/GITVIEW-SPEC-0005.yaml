@@ -5,6 +5,8 @@ created_at: '2026-11-10T00:00:00Z'
 updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0005.yaml
+successor_scope: The successor records selected Project composition and outcomes. This draft remains noncanonical source material; its technical mechanisms and ontology bindings are not automatically accepted.
 refines:
 - GITVIEW-SPEC-0001
 depends_on:
