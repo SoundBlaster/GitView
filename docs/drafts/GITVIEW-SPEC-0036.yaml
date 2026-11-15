@@ -15,7 +15,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Temporary connectivity failure, explicit authorization denial and deliberate local disconnection have distinguishable effects on access to prior observations.
-- An applicable denial or disconnection known to the current process or recoverable from durable evidence prevents affected private cached content from being displayed while retaining the local records until an explicit clear operation. The candidate offline policy cannot guarantee detection of a restriction lost before it became durable or missing from an older restored snapshot.
+- Under the agent-proposed offline policy, an applicable denial or disconnection known to the current process or recoverable from durable evidence prevents affected private cached content from being displayed while retaining local records until an explicit clear operation. This candidate cannot guarantee detection of a restriction lost before it became durable or missing from an older restored snapshot; the privacy and availability tradeoff remains a product decision.
 - A source 404 or an incomplete discovery result alone is not treated as a confirmed deletion or revocation.
 - Reconnection does not silently change the identity of existing Projects or treat a different source identity as proof of restored access.
 specification:
