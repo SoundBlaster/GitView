@@ -1,0 +1,49 @@
+id: GITVIEW-SPEC-0018
+title: GitView - Possible calendar view and later depth
+kind: spec
+created_at: '2026-11-15T22:11:00Z'
+updated_at: '2026-11-15T22:11:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0013
+- GITVIEW-SPEC-0014
+relates_to:
+- GITVIEW-SPEC-0015
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0018.yaml
+  predecessor_revision: 70feca6
+  root_intent: .specgraph/root_intent.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Preserve the discussed contribution-style calendar and deeper PR exploration as possible
+    later product directions.
+  authority_boundary: Neither calendar nor deeper in-app PR exploration is a first-version prerequisite.
+    This node does not select a calendar metric, navigation, data source or implementation and does not
+    assert that either feature exists.
+  directions:
+    calendar: A contribution-style calendar may provide a farthest overview over time. Its cells represent
+      time periods, not Project, Repository, PR or Issue identities. A potential future measurement must
+      identify its period, scope, source and coverage.
+    semantics: Do not equate contribution activity with completed work, successful CI or review approval.
+      Missing history is not a confirmed zero; evidence and access limitations remain visible.
+    later_pr_depth: Exploration within a PR can be considered later. The selected present overview and
+      source handoff do not imply an in-app diff, individual thread or check-run detail browser.
+    independence: First-version zoomable work grid, long-press preview and object overview do not depend
+      on adopting a calendar or deeper PR exploration. Sliding preview is a separate later direction under
+      0015.
+  open_questions:
+  - Whether and when to select a calendar, its metric, scope, navigation, representation and source evidence.
+  - Whether and when to select deeper in-app PR exploration and its boundaries.
+  ontology_status: Metric, Project, Repository, PullRequest and Issue use working draft vocabulary; a
+    calendar cell does not establish a new entity.
+  scenario_candidate: If a future calendar displays a day for which history is unavailable, it must not
+    describe that day as an observed zero.
+acceptance:
+- Calendar cells in this proposed time view are not confused with Project, Repository or work-object identity
+  cells.
+- An unavailable historical value is not described as a confirmed zero.
+- Contribution activity is not equated with completed work, successful CI or approved review.
+- Neither calendar nor deeper PR browsing is represented as a prerequisite for the first-version grid
+  and preview.
