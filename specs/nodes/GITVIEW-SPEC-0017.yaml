@@ -38,6 +38,10 @@ specification:
   scenarios:
     voiceover: With VoiceOver active on a dense grid, the operator can identify and open an eligible PR
       without interpreting color; its supported permitted context and known state are available.
+    voiceover_preview: With VoiceOver active, the operator invokes preview of an eligible PR without long
+      press, reads its available permitted detail, and dismisses it. The original grid remains when still
+      valid and focus returns to that PR when available; otherwise an accessible permitted fallback is
+      provided without silently substituting a different object.
     adaptive_layout: With large text and Reduce Motion enabled, the grid can become more spacious while
       content and navigation remain understandable.
   open_questions:
