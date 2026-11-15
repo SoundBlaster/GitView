@@ -41,16 +41,16 @@ specification:
   pilot_contract:
   - Offer an original GitHub source link for a Repository, PR or Issue when an eligible source URL is available;
     do not manufacture an unverified URL or present a known misdirected address as that object.
-  - Use the native share flow for an available source link; sharing a link does not grant recipient access.
+  - Use the native share flow for an eligible source link after applicable handoff admission; sharing a link does not grant recipient access or establish delivery.
   - For the pilot, default to sharing the source link and avoid automatically exporting private descriptions,
     repository contents or screenshots. Additional share payload is a later decision.
-  - If a URL is absent, indicate that source opening or link sharing is unavailable, rather than opening
+  - If no eligible source-associated URL, including a permitted last-known link, is available, indicate that source opening or link sharing is unavailable rather than opening
     a different object.
   pilot_scenarios:
     private_link:
-      given: A PR belongs to a private repository and has a source URL.
-      when: The operator shares it.
-      then: The system share flow receives the link; access remains subject to GitHub permissions.
+      given: A PR belongs to a private Repository and has an eligible source-associated URL, with access permitted through the applicable handoff boundary.
+      when: The operator explicitly shares it and the platform receives the link.
+      then: The app-controlled default payload is the selected PR link without private body text or credentials. Recipient delivery and access remain separate and are not inferred from presenting the share flow.
     missing_url:
       given: An Issue has no known source URL.
       when: The operator invokes source navigation.
@@ -60,10 +60,10 @@ specification:
 acceptance:
 - Offer an original GitHub source link for a Repository, PR or Issue when an eligible source URL is available;
   do not manufacture an unverified URL or present a known misdirected address as that object.
-- Use the native share flow for an available source link; sharing a link does not grant recipient access.
+- Use the native share flow for an eligible source link after applicable handoff admission; sharing a link does not grant recipient access or establish delivery.
 - For the pilot, default to sharing the source link and avoid automatically exporting private descriptions,
   repository contents or screenshots. Additional share payload is a later decision.
-- If a URL is absent, indicate that source opening or link sharing is unavailable, rather than opening
+- If no eligible source-associated URL, including a permitted last-known link, is available, indicate that source opening or link sharing is unavailable rather than opening
   a different object.
 acceptance_evidence:
 - criterion: The pilot contract and its boundary scenarios are independently checkable.
