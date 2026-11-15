@@ -1,5 +1,12 @@
 # Issue links: проверка зависимостей и готовности
 
+Уточнение source mapping: [0078](GITVIEW-SPEC-0078.yaml) отдельно связывает
+GraphQL `blockedBy` и `blocking` с направлением относительно исходной Issue.
+Для `closedByPullRequestsReferences` сохраняются фактические `includeClosedPrs`,
+`excludeUserLinked` и `userLinkedOnly`: расширение по lifecycle не отменяет
+ограничения по способу связывания. [GitHub Issue schema](https://docs.github.com/en/graphql/reference/issues#issue)
+описывает эти поля и аргументы; доступ, полнота и реальный query не проверены.
+
 Исторический снимок до исправления topology: см. [разбор типов рёбер и
 текущий пересчёт](dependency-semantics-review-20261114.md). Объединённый
 closure ниже не является числом `depends_on` prerequisites или блокеров.
