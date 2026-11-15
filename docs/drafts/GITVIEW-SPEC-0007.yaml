@@ -26,9 +26,8 @@ sources:
     package: local.gitview.domain@0.2.0-draft-composition.5
 acceptance:
 - The unfiltered Today view includes unfinished PRs and Issues, including those created before today.
-- A confirmed same-day PR merge or closure or Issue closure supports inclusion in unfiltered Today within applicable scope and access. Show current source state only when supported and permitted; otherwise preserve its actual observation context or mark it unknown.
-- All lifecycle states in the current scope and time group are included by default; the user can explicitly
-  exclude states.
+- Today represents current work. Inclusion and retention of completed cards remain open; historic aggregate metrics do not require a past-state viewer.
+- Explicit filters may narrow the applicable current-work selection; the default treatment of completed lifecycle states remains open.
 - Each source-confirmed PR or Issue occurs once in a selection, retains its repository identity and is not
   conflated with a linked object; unresolved identity is not represented as confirmed uniqueness.
 - Filters, scope and selected time group remain identifiable and survive density changes and return navigation.
@@ -44,6 +43,7 @@ acceptance_evidence:
   evidence: cross_repository_identity, reopened_item and incomplete_observation are expectations for future
     verification.
 specification:
+  current_intent_boundary: The owner clarified Today as the current work picture in conversation_memory/sketches/gitview revision a748240310ba46aca7e16424b35f2b3c, node grid-today-current-work. Calendar-day inclusion, automatic same-day retention and a historical work viewer in selection_contract, filters, scenarios and acceptance_evidence below are superseded candidates, not first-version obligations. Preserve the general identity, filters, uncertainty and access outcomes; the completed-card rule remains open.
   objective: Let the user see work and its completion in the selected Project or Repository and time group,
     with explicit filters.
   ontology_refs:

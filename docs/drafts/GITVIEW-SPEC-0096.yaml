@@ -42,6 +42,7 @@ acceptance:
 - The named cross-entity selection policy, replaceable effects and their callers have planned TDD and boundary-specific verification under 0040 and 0079.
 - This responsibility proposal does not claim that the entire product graph or this route is ready for implementation.
 specification:
+  current_intent_boundary: The calendar-based Today population and source-route examples below are historical candidates requiring re-evaluation after the owner current-work clarification. Keep route identity, access, refresh and coverage boundaries independently of the eventual selection policy.
   objective: Make one proposed FSD-compatible composition concrete enough to evaluate responsibilities and gaps for the Project to Today work journey.
   ontology_refs:
   - gitview:User

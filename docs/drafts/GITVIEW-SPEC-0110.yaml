@@ -36,6 +36,7 @@ acceptance:
 - The output retains enough input and time context to avoid relabeling stale or mixed-time facts as a simultaneous current source snapshot.
 - The decision is specified for deterministic TDD with injected facts and time, while real source, storage and native interaction evidence remain separate.
 specification:
+  current_intent_boundary: The O OR C OR E rule and its calendar-event inputs and scenarios below are a superseded candidate, not an accepted current-work selection rule. Retain independent identity, applicable evidence, three-valued uncertainty, filter, access and coverage requirements; select the completed-card inclusion policy before specifying or implementing the final decision.
   objective: Define an implementation-facing pure decision boundary for Today selection over already interpreted evidence without selecting source requests or UI components.
   ontology_refs:
   - gitview:Project

@@ -19,11 +19,12 @@ sources:
   apple_date_interval: https://developer.apple.com/documentation/foundation/dateinterval
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Under the agent-proposed local-day interpretation, Today tracks the device current local calendar day without changing stored source timestamps; the product time-zone interpretation remains a candidate.
-- A day or time-zone change does not silently change the Project, Repository scope or explicit filters.
+- Today means the current work picture; calendar-based retention is not selected and its historical design below is not a first-version requirement.
+- A change in evaluation context does not silently change the Project, Repository scope or explicit filters.
 - A selected object overview or preview is not replaced with another object solely because Today changes.
-- Missing coverage for the newly evaluated day remains unknown or partial rather than a confirmed empty selection.
+- Missing coverage for the newly evaluated scope remains unknown or partial rather than a confirmed empty selection.
 specification:
+  current_intent_boundary: The local-day Today boundary model, its contract and scenarios below are an unselected historical candidate, superseded as the meaning of Today by the owner current-work clarification. They do not establish first-version calendar rollover or a past-state viewer. The independent principles of preserving route identity, scope, access and honest coverage remain applicable.
   objective: Define the visible effect of a local Today boundary while the operator is navigating or inspecting work.
   ontology_refs:
   - gitview:Project

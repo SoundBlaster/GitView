@@ -43,6 +43,7 @@ acceptance:
 - Opening and dismissal preserve the actual object and valid navigation context; optional source and share actions require an eligible link.
 - Preview content and essential actions remain accessible without relying only on color, long press or a fixed density.
 specification:
+  current_intent_boundary: Earlier dense-grid examples assuming all same-day completed cards remain visible are a superseded Today population candidate. Preview identity, access, supported facts, independent signals and partial-observation requirements remain applicable.
   objective: Define the first-version static preview's content priorities, actions and evidence boundaries for each existing object type without choosing a native layout implementation.
   ontology_refs:
   - gitview:User

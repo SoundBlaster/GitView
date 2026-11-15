@@ -20,9 +20,10 @@ acceptance:
 - Today includes each source-confirmed matching object once when any inclusion rule is confirmed; unresolved identity is not represented as confirmed uniqueness.
 - An unknown input alone cannot establish a confirmed match, a confirmed non-match or an empty unobserved source; an independently true inclusion or false required condition can still determine the applicable result.
 - Explicit filter exclusions affect the selection without changing stored objects or rewriting source timestamps.
-- Under the agent-proposed local-day interpretation, time group recalculation uses the device local calendar and does not rewrite recorded source timestamps; the product time-zone interpretation remains open.
+- Today represents current work; calendar-day inclusion and completed-card retention are not selected product rules.
 - A complete Today selection requires evidence that the selected population and all applicable inclusion alternatives are adequately covered, not merely that one source list was fetched successfully.
 specification:
+  current_intent_boundary: The owner clarified Today as the current picture of work, not a calendar-day selection. The old creation and same-day event alternatives, associated formulas and scenarios below describe a superseded candidate; they must not be treated as the accepted inclusion policy. Preserve identity, uncertainty, filters, coverage and access principles. Inclusion and retention of completed cards remain open.
   objective: Define a checkable Today selection over known work and explicit filters while retaining uncertainty.
   ontology_refs:
   - gitview:Project

@@ -12,6 +12,11 @@ sources:
   sketch:
     path: conversation_memory/sketches/gitview
     revision: 7fa3afce25204e24ae8b11fc1fec618f
+  today_current_work_clarification:
+    path: conversation_memory/sketches/gitview/revisions/a748240310ba46aca7e16424b35f2b3c/notes.hc
+    sketch_revision: a748240310ba46aca7e16424b35f2b3c
+    node: grid-today-current-work
+    recorded_commit: d349635799865bb14d2bdf42950991ad05baddcf
   project_sources_commit: 5cd14e21b2fb04f0111db9b670b951af92fc66ef
   domain_model: ontology/domain-model.md
   completeness_audit: ontology/review/completeness.md
@@ -228,13 +233,11 @@ specification:
       per Project/Repository/object level. Around eight cells per row and around one hundred objects illustrate
       a dense view, not fixed layout constants or a complete performance requirement.
     selected_timeline_grid:
-      default: Show PR and Issue cards in all lifecycle states within the current scope and time group.
-      today: Include unfinished work even when the PR or Issue was created on an earlier day.
-      today_outcome_working_interpretation: When a card in Today is merged or closed today, retain it
-        there with its new state in the unfiltered view.
+      default: Today is the current picture of work in the selected scope, not a calendar-day or past-state viewer.
+      today: Include applicable unfinished work regardless of when it was created; track historical aggregate measurements and charts separately.
+      today_outcome_working_interpretation: Whether and how long a newly completed card remains in the current view is an open product decision. The owner's earlier 100-PR example motivated completion visibility; the latest clarification does not select a retention duration or default.
       filtering: Users can explicitly exclude states such as Merged and Closed to focus on open work.
-      undecided: The precise boundary of unfinished work, grouping of past outcomes, and the specific
-        filter control.
+      undecided: The inclusion and retention of completed cards, chart periods, and the specific filter control. A historical Project-state viewer is not mandatory scope.
     first_version_preview: Long-press Peek and Pop on cards, showing a preview before opening the object.
     later_preview_direction: A single sliding rich preview changes details with the object under the finger,
       allowing inspection without leaving the dense bird's-eye view. Hover is a possible pointer counterpart,
@@ -322,7 +325,7 @@ specification:
 acceptance:
 - The operator can view authorized GitHub work grouped into GitView Projects without treating GitView
   as a replacement for GitHub.
-- The overview keeps unfinished work and same-day outcomes visible by default and supports explicit filters,
+- The overview presents current work and supports explicit filters,
   density changes and object preview.
 - Project composition, source identity and distinct PR, Issue, CI and review meanings follow their linked
   specifications.

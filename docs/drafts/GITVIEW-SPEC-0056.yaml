@@ -20,12 +20,13 @@ sources:
   conditional_history_clear: docs/drafts/GITVIEW-SPEC-0067.yaml
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A historical outcome selection identifies its Project or Repository scope, event condition, period, time-zone interpretation and object type.
-- A source-confirmed PR merge or Issue closure in the selected period can select that object independently of its latest observed lifecycle state.
-- The destination distinguishes its distinct-object unit from a source event count and preserves incomplete coverage or uncertain identity.
-- Current displayed facts and their observation context do not claim to reconstruct the object's state or reason at the time of a historical event.
-- Navigation from a period outcome retains the original condition and period or explicitly reports that the destination cannot represent them.
+- If historical outcome drill-down is selected, A historical outcome selection identifies its Project or Repository scope, event condition, period, time-zone interpretation and object type.
+- If historical outcome drill-down is selected, A source-confirmed PR merge or Issue closure in the selected period can select that object independently of its latest observed lifecycle state.
+- If historical outcome drill-down is selected, The destination distinguishes its distinct-object unit from a source event count and preserves incomplete coverage or uncertain identity.
+- If historical outcome drill-down is selected, Current displayed facts and their observation context do not claim to reconstruct the object's state or reason at the time of a historical event.
+- If historical outcome drill-down is selected, Navigation from a period outcome retains the original condition and period or explicitly reports that the destination cannot represent them.
 specification:
+  current_intent_boundary: Historical outcome object selection is an optional candidate, not a mandatory past-state viewer or first-version requirement. The owner asked for historical aggregate measurements and charts. If drill-down is later selected, its evidence, scope and access conditions below apply.
   objective: Make a selected period outcome inspectable as distinct source objects without confusing past events with current lifecycle or dynamic Today.
   ontology_refs:
   - gitview:Project

@@ -38,6 +38,7 @@ acceptance:
 - Refresh, membership changes, incomplete coverage and access restrictions preserve their own scope and do not silently substitute another Project or period.
 - Return uses the actual originating surface, preserving valid context without exposing restricted source details.
 specification:
+  current_intent_boundary: Earlier examples that depend on a calendar Today or historical object-list viewer are conditional historical candidates. Signal identity, scope, units, filters, partial coverage and access remain applicable when the corresponding feature is selected.
   objective: Make signal-origin navigation and subsequent explicit filter changes understandable across updates without prescribing UI controls.
   ontology_refs:
   - gitview:User

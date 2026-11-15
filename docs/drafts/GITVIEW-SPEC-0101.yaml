@@ -41,6 +41,7 @@ acceptance:
 - Incomplete identity, missing type evidence, omitted fields, unorderable values and missing event times do not become a fabricated match, non-match, lifecycle transition or exact population count.
 - Field facts, event times, observation times, source scope and current access retain their distinct contexts through normalization and selection.
 specification:
+  current_intent_boundary: The same-day Today selection applications below reflect a superseded calendar candidate. Source normalization, field semantics, identity, partial-error handling and access remain applicable independently; actual discovery requirements depend on the selected current-work and completed-card policies.
   objective: Define a source-to-domain boundary for PR and Issue observations used by Today without selecting query sizes, API budgets or a storage schema.
   ontology_refs:
   - gitview:GitHub

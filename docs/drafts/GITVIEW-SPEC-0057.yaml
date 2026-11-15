@@ -34,6 +34,7 @@ acceptance:
 - The selected-period Issue closure summary offers a discoverable reason breakdown, with separate supported reasons and explicit uncertainty for unavailable reasons or coverage.
 - A Today lifecycle breakdown and historical outcome or fixed-cohort series are distinguishable by population, time and unit.
 specification:
+  current_intent_boundary: Historical metrics and graphs remain in scope, but the historical day-based Today population and same-day completed-card assumptions in the breakdown examples below are superseded candidates. Current counters must name their actual population; the inclusion of completed cards and chart period semantics remain open.
   objective: Define the agreed Project summary's measurements and the evidence needed to interpret their values and historical graphs.
   ontology_refs:
   - gitview:Project

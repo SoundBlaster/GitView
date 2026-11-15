@@ -40,6 +40,7 @@ acceptance:
 - Interrupted, delayed, overlapping or unorderable results cannot advance a complete-coverage boundary past an unaccounted gap.
 - Last-known results, new supported facts and request outcomes remain available under their own access, scope and time contexts when completeness cannot be established.
 specification:
+  current_intent_boundary: The selected open plus recent calendar-day union and cutoff-dependent Today completeness claims below are a historical candidate under revision after the owner current-work clarification. Do not treat that acquisition plan as selected or complete for the revised Today. Keep per-purpose identity, partial errors, ordering, coverage and access guarantees; reassess source operations once the completed-card policy is chosen.
   objective: Define the initial Today discovery operations and what an overview can claim about their population coverage without assuming a source snapshot.
   ontology_refs:
   - gitview:Project

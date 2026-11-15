@@ -38,6 +38,7 @@ acceptance:
 - Retention, replay and later reads preserve per-fact context and do not manufacture a source observation or a durable success.
 - The route receives permitted prepared facts and limitations through injectable domain-facing boundaries without receiving raw credentials or treating a transport response as a domain object.
 specification:
+  current_intent_boundary: The Today-specific prepared alternatives, captured-day exchange and examples below reflect the superseded calendar-based candidate. The separate fact, identity, observation time, error, access, retention and coverage boundaries remain applicable; a new current-work decision input must be selected.
   objective: Specify the information contract between the selected initial GitHub observations, retained local evidence and the Project work route without fixing a physical schema.
   ontology_refs:
   - gitview:GitHub

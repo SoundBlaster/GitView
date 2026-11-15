@@ -24,6 +24,7 @@ acceptance:
 - A stale, incomplete, identity-ambiguous or restricted input is not presented as an exact current total or silently treated as zero.
 - A PR cohort is not labeled a count of independent tasks and does not merge linked Issues into the PR count.
 specification:
+  current_intent_boundary: A fixed cohort remains an optional proposal. Today means the current picture of work; earlier examples assuming mandatory same-day retained cards use a superseded candidate population. Preserve independent fixed-cohort evidence rules if that feature is later selected.
   objective: Propose an interpretable optional way to follow completion of a fixed set of PRs without assuming that current states reconstruct historical events. This candidate is not a prerequisite for dynamic Today or its first-version acceptance; its release scope remains undecided.
   ontology_refs:
   - gitview:Project

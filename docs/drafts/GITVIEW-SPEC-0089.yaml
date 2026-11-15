@@ -32,6 +32,7 @@ acceptance:
 - Distinct-time observations are not presented as a confirmed simultaneous source snapshot without sufficient evidence.
 - Current access restrictions apply before displaying candidate identity, retained values or derived counts.
 specification:
+  current_intent_boundary: Calendar-day Today inclusion examples below are a superseded selection candidate. Separate event time, observation context, current state, filter applicability and access still apply regardless of selected current-work policy.
   objective: Clarify how Today inclusion and filters use observations from different times and revisions without requiring a particular source request strategy.
   ontology_refs:
   - gitview:Project

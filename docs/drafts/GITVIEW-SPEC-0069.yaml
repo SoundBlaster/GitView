@@ -26,6 +26,7 @@ acceptance:
 - Outcome buckets count distinct eligible objects for their own interval, with separate closure reasons when supported and uncertainty otherwise.
 - A history period opened from a summary retains its actual originating boundaries rather than silently converting a rolling interval into calendar days.
 specification:
+  current_intent_boundary: Aggregate metrics and graphs remain desired. The calendar presets, daily buckets and navigation from historical buckets to object lists below are candidate designs, not selected Today semantics or mandatory first-version historical object viewer. Preserve scope, evidence, unit, gaps and disclosure; graph period and drill-down remain open.
   objective: Propose an initial legible set of history series and explicit day buckets without asserting unobserved history or changing agreed metric scope.
   ontology_refs:
   - gitview:Project
