@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """Inventory declared candidate structure, not semantic implementation readiness."""
+import argparse
 import hashlib
 import json
-import sys
 from collections import Counter
 from pathlib import Path
 
 import yaml
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('output', type=Path, help='new JSON report path; an existing file is never overwritten')
+args = parser.parse_args()
 
 root = Path(__file__).resolve().parents[3]
 drafts = root / 'docs/drafts'
@@ -90,7 +94,7 @@ report = {
     'candidate_sha256': hashes,
     'leaves': items,
 }
-output = Path(sys.argv[1])
+output = args.output
 with output.open('x') as f:
     json.dump(report, f, indent=2, ensure_ascii=False)
     f.write('\n')
