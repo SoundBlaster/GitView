@@ -40,6 +40,19 @@ documents за компилируемые определения. «Не бло�
 
 ## Приоритет дальнейшей работы
 
+Уточнение для рабочего [draft.12](../candidates/domain-v0.2.0-draft.12/README.md):
+исторические пробелы таблицы не следует переносить без изменений на текущий
+пакет. `CIStatus` описан как состояние одной status-check entry, `Metric` —
+как результат измерения, а `RemoveRepository` объявлен как candidate action.
+Это не подтверждает source mapping, семантическое принятие, конкретное
+выполнение действий или жизненный цикл отношения. Граница `versionControlsCode`
+и атрибуция мотива по-прежнему требуют отдельного основания, но не мешают
+описывать наблюдаемые результаты GitView без выведения неподтверждённого актора.
+См. [CI/review](ci-review-boundaries-candidate.md),
+[Metric](metric-meaning-candidate.md),
+[удаление membership](remove-repository-action-candidate.md) и
+[действие VCS](version-control-action-boundary-20261114.md).
+
 1. Разрабатывать конкретные user-visible контракты, не требующие недоказанных
    actor relationships; явно сохранять unknown и source provenance.
 2. Отдельно уточнять формальный смысл CIStatus, Metric и снятия membership до

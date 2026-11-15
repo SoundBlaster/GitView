@@ -87,7 +87,8 @@ identity локальной Code-папки или конкретное дейс
 [текущий обзор связности](specification-alignment-20261114.md),
 [0001](../../docs/drafts/GITVIEW-SPEC-0001.yaml),
 [0002](../../docs/drafts/GITVIEW-SPEC-0002.yaml),
-[draft.10](../candidates/domain-v0.2.0-draft.10/composition/domain-ontology-package.yaml).
+[исторический draft.10](../candidates/domain-v0.2.0-draft.10/composition/domain-ontology-package.yaml),
+[текущий source package draft.12](../candidates/domain-v0.2.0-draft.12/composition/domain-ontology-package.yaml).
 
 ## Решение для текущего объёма GitView — 15 ноября
 
