@@ -114,6 +114,6 @@ specification:
       when: The caller interprets that absence.
       then: It reports an integration limitation rather than claiming the Project is valid, invalid or simply missing source evidence.
   unresolved:
-  - Review the proposed Unicode whitespace-only name rule, invisible or otherwise ambiguous text, purpose editor candidate and legacy empty-value migration, input types and SpecificationCore dependency version before declaring the decision independently implementable.
+  - The fixed Unicode whitespace-only rule and purpose behavior above are working first-version choices; ambiguous visual names require distinguishing context, and legacy empty purpose is retained rather than silently migrated. Concrete Swift input types, supported text boundaries and a compatible SpecificationCore version are selected and verified during implementation.
   - Establish source identity and access eligibility mappings for newly added Repositories; candidates 0112–0114 propose eligibility, coordinated commit and credential recovery, but their concrete interfaces and behavior remain unverified.
   - No product policy, durable storage, source integration or TDD cycle has been implemented or verified.
