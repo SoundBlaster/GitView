@@ -119,6 +119,6 @@ specification:
       when: Related PR coverage is summarized.
       then: Open PR links can remain known but the all-state relationship set is incomplete until supported evidence covers the omitted scope.
   unresolved:
-  - Trace exact selected operations and field-level GraphQL permissions, particularly review threads, comment-age proxy, relationship links, identity and historical outcomes; perform authorized source validation before declaring a complete grant set.
+  - Verify the selected GraphQL operations and field-level permissions, particularly review threads, relationship links, identity and historical outcomes, with an authorized source before declaring a complete grant set; the comment-age proxy is conditional if included.
   - Decide exact permission disclosure and installation-update experience with real GitHub and iOS; no registration, permission approval or app behavior has been executed.
   - Source pagination completeness, permission-change timing and access to related private objects remain separate evidence requirements.

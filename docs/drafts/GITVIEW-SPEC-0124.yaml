@@ -78,6 +78,6 @@ specification:
       when: Recovery inspects a saved pending association operation.
       then: It does not replay that operation as proven safe or claim its snapshot is globally latest; the affected outcome remains uncertain until a supported recovery or separately reviewed action is possible.
   unresolved:
-  - Choose and verify physical key encoding, constraint strategy, evidence retention, local admission coordinator and provider-specific failure mapping before implementation readiness.
+  - During implementation choose and verify physical key encoding, constraints, evidence retention and provider-specific failure mapping against the logical association and recovery guarantees above; an exact table layout is not required to define this boundary.
   - Confirm source semantics and the required scope of each selected work-object identifier and alias; a generic identity tuple is not proof of GitHub correspondence.
   - Actual SQLite crash, backup restoration, access and native UI behavior have not been tested.

@@ -153,6 +153,6 @@ specification:
       when: Normalized candidates are projected for display.
       then: Restricted identity, text, link and revealing count are not shown, and the late response does not itself restore access.
   unresolved:
-  - Validate the proposed typed GraphQL discovery direction and actual source representations, ID association evidence and source-event fields for the initial product slice without assuming GraphQL and REST identifiers are interchangeable.
+  - Validate actual source representations, ID association evidence and source-event fields against the selected typed GraphQL direction during integration; do not assume GraphQL and REST identifiers are interchangeable.
   - Establish or conservatively represent population and temporal coverage for the chosen requests and reconciliation method, including mutable pages and partial access.
   - No adapter, source integration, durable observation storage or native UI has been implemented or exercised.
