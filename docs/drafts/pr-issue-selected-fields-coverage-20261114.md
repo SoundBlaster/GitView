@@ -11,7 +11,7 @@
 [Issue options](issue-ontology-options.md), объединён в 0001. Это авторская
 сверка групп полей с candidate specs на 14 ноября, не source mapping и не
 подтверждение implementation readiness. Понятия Issue и PullRequest в
-рабочей композиции `local.gitview.domain@0.2.0-draft-composition.10` имеют
+рабочей композиции `local.gitview.domain@0.2.0-draft-composition.12` имеют
 draft-статус; их [исторический разбор и кандидатные значения](../../ontology/review/issue-pr-meaning-candidate.md)
 не утверждают автоматических причинных связей или действий акторов.
 
@@ -44,7 +44,7 @@ specs. Она не утверждает, что у каждого поля уж�
 
 | Группа | Путь и граница |
 | --- | --- |
-| PR A–C | 0041: identity, оригинал, state, ветки, revision, author, reviewers и связанные Issues доступны при наличии данных; 0033 отдельно определяет source action. Недоступная ветка не заменяется одноимённой. |
+| PR A–C | 0041: identity, оригинал, state, ветки, revision, author, reviewers и связанные Issues доступны при наличии данных; 0033 отдельно определяет source action. Source-associated Repository и base/head Repository сохраняют отдельные основания; недоступный target или branch не подменяется. |
 | PR D, E, F, G | 0041, 0061 и 0062: отдельные review и CI факты, счётчики изменений и даты доступны со своей областью и временем. Diff, список checks, коммиты и содержание тредов не требуются. |
 | Issue A–D | 0039 и 0078: identity, описание, state, роли, milestone и допустимые наблюдённые endpoints связей доступны с типом и покрытием. Частичный список не объявляется полным, чужой Repository не становится участником Project. |
 | Issue E–G | 0039 и 0077: счётчики комментариев, участников и прямых sub-issues и выбранные даты доступны с их ограничениями. Содержимое комментариев и список участников обсуждения не требуются. |
