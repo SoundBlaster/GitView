@@ -48,3 +48,11 @@ compiler, указанным выше. Ошибок запуска нет. Сы�
 mapping, kind и совпадения имени с ID. Это не повторное полное vocabulary
 comparison после изменения текстов ссылок, не canonical acceptance и не
 оценка поведения GitView.
+
+После переключения в отдельной копии повторно выполнен Supervisor advisory
+`domain_vocabulary` для всех 25 specs, чьи явные ссылки были изменены.
+Ошибок запуска нет; outcome, diagnostics и сводки совпали с проверкой тех
+же узлов до замены ссылок. У 0001 сохранились один gap и одно warning о
+`GitView` как имени продукта. Отчёты и SHA-256 входов лежат на TB5 в
+`GitView-a40d73ccf162f8d8/gitview-draft12-13-7elehatc/post-rebind/`.
+Сравнение не заменяет semantic approval или проверку поведения приложения.
