@@ -31,6 +31,35 @@ target dependencies must be checked against the selected FSD integration.
 | Domain-aware adapters | Mapping supported GitHub and storage representations to the domain contracts; scoped limitations and actual effect results. | Platform UI decisions or production claims about fields not actually returned. |
 | Generic shared | Reusable transport, storage and clock mechanics without importing GitView product types. | GitView-specific Project, PR, Issue, coverage or authorization policy. |
 
+## Setup and Project editing composition
+
+The setup/discovery page owns its query, pending Repository selection, account
+context and explicit default-batch or custom-Project intent under 0108. It
+composes connection, discovery and Project-save capabilities through the app
+or an appropriate higher layer. A discovery result is an observation, not an
+authorization callback, confirmed selection or saved membership. Raw tokens
+stay with the connection boundary. If these actions are separate feature slices,
+none imports another sibling feature; their common domain-facing contracts live
+at a permitted lower boundary and composition stays above them.
+
+The Project editor owns a draft against a captured Project identity and base
+version, while the 0111 decision evaluates the proposal and the 0104 boundary
+coordinates a durable effect. A valid decision is not a saved Project; a
+receipt is not a current configuration read. The work page reacts to an
+independently confirmed configuration change through the Project boundary,
+retaining its own filters, density and origin according to 0024 and 0091. It
+does not import an editor feature to interpret membership or relabel an older
+source request as the edited scope. Reusing the Repository picker is an option
+only through a valid FSD composition; shared visual controls must not become a
+home for Project-specific policy.
+
+Verification should exercise separately the pending selection, valid but
+uncommitted proposal, stale base, indeterminate save and confirmed edit while a
+refresh is active. A route test can inject the public boundaries; a domain
+decision test needs no network or UI. Review actual Swift type dependencies
+after implementation: the proposed boxes and an architecture lint alone do not
+prove that setup, authentication, editor and refresh slices are isolated.
+
 ## Policy and integration outcomes
 
 The named Today decision accepts an immutable validated candidate context and

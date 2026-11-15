@@ -30,6 +30,7 @@ depends_on:
 - GITVIEW-SPEC-0114
 - GITVIEW-SPEC-0122
 sources:
+  fsd_boundary_map: docs/drafts/today-fsd-boundary-map-20261115.md
   parent: docs/drafts/GITVIEW-SPEC-0022.yaml
   work_route: docs/drafts/GITVIEW-SPEC-0107.yaml
   selection: docs/drafts/GITVIEW-SPEC-0045.yaml
