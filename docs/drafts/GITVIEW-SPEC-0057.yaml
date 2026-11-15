@@ -110,9 +110,13 @@ specification:
       when: Its unfiltered lifecycle breakdown is shown.
       then: It identifies 100 Today PRs, 95 merged and five open in that context without claiming a historical trajectory or 100 independent tasks; a count of merges occurring today additionally needs the corresponding event evidence.
     new_pr_after_breakdown:
-      given: The preceding 100-PR Today selection is fully covered and a new distinct eligible open PR is then confirmed in the same Project and local day.
+      given: The preceding Today breakdown contains 100 PRs, 95 merged and five open, with sufficient evidence. A new distinct eligible open PR is then confirmed in the same Project and captured interval; independently sufficient evidence establishes that no other change affecting membership, eligibility, lifecycle, filters or permitted disclosure alters that breakdown before the next evaluation.
       when: A new sufficiently covered dynamic Today breakdown is evaluated.
       then: It contains 101 PRs with 95 merged and six open without requiring a fixed cohort; neither observation alone establishes intermediate trend points.
+    partial_refresh_and_independent_exact_total:
+      given: A complete eligible Today breakdown at T1 contains N merged PRs. A later refresh is partial and omits one previously observed PR, while access and selection remain applicable.
+      when: The operator inspects the T2 breakdown; separately consider a later independent source-supported complete result for the same selection and its own reference.
+      then: N can be retained as an eligible T1 value, not asserted as an exact current T2 value; permitted known facts may form an attributed incomplete subset without an invented unseen count. If independent evidence establishes an exact result for its own scope and reference, that result can be shown with its own context, without retroactively making the earlier partial traversal complete or assuming its contributors are known.
     filtered_not_all_today:
       given: A complete Today PR selection contains both open and merged PRs and the operator explicitly excludes merged PRs.
       when: A breakdown of the currently filtered selection is shown.

@@ -125,6 +125,10 @@ specification:
       given: A required nested GraphQL field fails and source schema nullability propagates null to its nearest nullable parent, leaving the parent's other requested fields absent from returned data.
       when: The route requests those fields for the affected object or collection.
       then: The omitted subtree is unavailable within its supported scope, no absent field becomes an empty value or a successful observation, and independently returned permitted siblings remain usable without a complete-population claim.
+    pr_state_error_versus_nullable_merge_time:
+      given: A selected PR query requests non-null state and nullable mergedAt for X, with permitted prior facts at T1. In one response a state execution error propagates to null the PR node or another nullable ancestor; in a separate response X remains identifiable with title and state but mergedAt is null with its field error.
+      when: Each response is prepared independently for Today.
+      then: The first response does not supply X's title, state or mergedAt from the missing subtree; independently recoverable applicable T1 evidence may still be used under current access. The second may supply its supported title and state at T2, while the failed mergedAt supplies no merge time or semantic absence; applicable T1 merge evidence retains T1 context. Neither case proves full population coverage or a new access grant.
     nullable_pr_node_in_terminal_page:
       given: A scoped GraphQL PR connection returns a supported terminal pageInfo and two node positions. One typed, source-associated permitted PR returns open state and isDraft false; the other position is null with an execution-error path identifying its isDraft field, consistent with the selected schema's null propagation. No independent evidence establishes the affected PR's identity or the missing population.
       when: The source boundary prepares its facts and the caller evaluates Today and the optional open non-draft selection.
