@@ -66,7 +66,7 @@ GitHub поддерживает обязательные поля в Issue Forms
 Issue и PR. См. [GitHub Issue Forms](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms)
 и [GitHub form schema](https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema).
 
-Формат и начальный процесс согласованы на уровне рабочего контракта; привязка к будущему remote и фактическое обеспечение ещё предстоят. Работа с репозиториями без нашего шаблона и чтение старых описаний
+Формат согласован владельцем; начальный процесс и его checkpoint — рабочее предложение агента. Привязка к будущему remote и фактическое обеспечение ещё предстоят. Работа с репозиториями без нашего шаблона и чтение старых описаний
 остаются отдельным вопросом. Требование к созданию описаний не означает,
 что GitView отказывается отображать объекты другого формата.
 
