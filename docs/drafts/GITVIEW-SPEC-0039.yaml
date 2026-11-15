@@ -75,14 +75,6 @@ specification:
       given: A source Issue collection returns an entry explicitly identified as a pull request, with an issue-representation ID distinct from the ID in a PR response.
       when: GitView normalizes the source observations for PR and Issue summaries.
       then: It does not count the PR as a separate ordinary Issue or assume the two IDs are directly interchangeable; correspondence requires sufficient source identity evidence.
-    reason_unknown:
-      given: An Issue is known closed and the closure reason is unavailable.
-      when: Its overview is shown.
-      then: Closure is shown and successful completion is not asserted.
-    distinct_links:
-      given: An Issue mentions PR A and has an explicit closing reference to PR B.
-      when: Related work is presented.
-      then: A and B retain their different link meanings and no actor motive is inferred.
     relationships_in_context:
       given: An Issue has a permitted closing connection and a separate permitted mention to PR A in another Repository, plus a partially observed blocked-by collection containing Issue B.
       when: The operator inspects related work visually or using accessibility services.
