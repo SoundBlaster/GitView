@@ -48,12 +48,20 @@ specification:
   - gitview:Issue
   - gitview:Metric
   contract:
-    product_boundary: Preserve the user's compact GitHub overview, Project and Repository relationships, Today and lifecycle visibility, zoom and preview, selected work fields, attention, metrics, sharing, local last-known data and Apple-style accessibility as product outcomes. Explain what connects them and what a person observes.
+    product_boundary: Preserve the user's compact GitHub overview, Project creation and Repository membership, Today and lifecycle visibility, zoom and preview, selected work fields, agreed PR and Issue description formats, attention, metrics, sharing, local last-known data and Apple-style accessibility as product outcomes. Explain what connects them and what a person observes.
     interpretation: Separate approved selections from agent-authored choices, conditional ideas and unresolved semantics. A useful working proposal can make a product consequence concrete without asserting that the owner selected its exact threshold, source representation or interface.
     later_engineering: Existing detailed technical contracts remain available for the subsequent implementation-ready refinement under 0020 and 0021. Their existence, concrete technology choices, speculative recovery mechanisms or verified external runtime are not prerequisites for understanding or evaluating this first product clarification. Explicit owner-requested architecture and testing qualities are retained, not treated as product features.
     stop: The first pass is reviewable when the agreed product routes and important outcomes are connected and understandable, known consequential ambiguity is visible, and no further detail is needed solely to explain the user's idea. This is a product-level assessment, not proof that code can be implemented without further specification, that the whole draft has been owner-approved or that an application exists.
     verification: Review product coverage against the owner's recorded selections and the product projection; review ontology terminology in its declared draft context. Structural graph checks and readable examples support the review but do not independently establish semantic completeness.
   scenarios:
+    project_membership_is_local:
+      given: A Repository belongs to two GitView Projects.
+      when: The user removes it from the first Project.
+      then: The first Project changes its membership, while the other Project and the source Repository remain intact.
+    authored_format_and_external_objects:
+      given: New work in a participating process uses the agreed description sections, while an existing external Issue has a different format.
+      when: The user reviews both objects.
+      then: The agreed sections help explain the new work, while the external Issue and its original text remain accessible without invented content.
     completed_today:
       given: The user is examining today's PR collection and some visible PRs merge.
       when: The source-supported state updates.
