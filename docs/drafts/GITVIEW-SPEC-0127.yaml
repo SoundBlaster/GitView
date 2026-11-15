@@ -106,6 +106,10 @@ specification:
       given: A source-supported count describes GitHub participating Users for an Issue, while the population of all comment authors and other actors is not established.
       when: The product description explains the selected discussion-participant count.
       then: It preserves the source-defined population and does not present that count as the confirmed number of all human and agent participants or as an identical count of comment authors.
+    discussion_event_and_observation_time:
+      given: An Issue title is changed today, and a comment created yesterday is observed today while discussion coverage is incomplete.
+      when: The product description explains Issue and discussion timestamps.
+      then: It distinguishes the title update, comment creation and GitView observation, without presenting the observed comment as the exact latest comment in the full scope or an update as a new comment.
     changed_project_membership:
       given: A Repository was added to a Project after a historical period being inspected.
       when: The product description explains a graph for the current membership over that period.
