@@ -9,9 +9,10 @@ refines:
 depends_on:
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0038
-- GITVIEW-SPEC-0052
 - GITVIEW-SPEC-0082
 - GITVIEW-SPEC-0083
+relates_to:
+- GITVIEW-SPEC-0052
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0025.yaml
   working_ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
@@ -40,9 +41,10 @@ specification:
     observation: A comparison may identify a membership difference only between compatible confirmed configurations for the same Project and Repository identity. It does not alone establish actor, cause, exact time or a complete sequence; intermediate removal and re-addition may be invisible. Keep the scope and time of any actual observation when available and do not invent evidence.
     replacement_and_actions: A single reviewed Project edit may replace sole member A with eligible B as specified in 0025. The two confirmed membership configurations describe their own states; they do not establish an observed empty intermediate Project, the order of AddRepository and RemoveRepository, or evidence that either individual action was executed. If an implementation records action evidence, interpret each action only within its actual supported actor, target, reference and execution context. The one-or-more saved-members invariant applies to the valid committed Project configuration and is not evidence of a particular internal transaction sequence.
     readdition: A later explicit valid edit may add the same identified Repository back to the same surviving Project. The resulting present membership describes the new current state; a supported past removal remains past evidence. Other Projects, source Repository and source data are unaffected by the membership operation. Deleting a Project and later creating another does not preserve the deleted Project identity.
-    default_association: Membership and the default association are separate. When removal of the associated Repository durably removes the association under 0025, later adding that Repository back to the surviving Project does not by itself prove the association has been restored. Explicit setup and its association rules remain governed by 0025 and 0052; do not infer an association from membership alone.
+    default_association: If the proposed default-association mechanism is selected, membership and the default association are separate. When removal of the associated Repository durably removes the association under 0025, later adding that Repository back to the surviving Project does not by itself prove the association has been restored. Explicit setup and its association rules remain governed by 0025 and 0052; do not infer an association from membership alone.
     evidence_boundary: The working package declares projectIncludesRepository with domain and range in its relations section; here it describes the membership link. This schema category does not by itself establish an actor-action-derived relation in the owner's narrower sense. Candidate action and relation names provide vocabulary, not proof that a User executed an action or that a handler or persistent event exists. Actual action evidence, if available, must be attributed only to its supported scope. No event journal, mandatory retention of membership history or historical user interface is imposed by this specification.
     provenance: Shared membership is an owner decision. The evidence and re-addition rules are agent-authored proposals derived from that decision and the existing lifecycle draft, pending semantic review.
+  scenario_scope: Assertions concerning persistent default associations in removal_and_readdition, setup_after_readdition and existing_default_after_readdition apply if the proposed association mechanism is selected. Identity, membership and evidence distinctions remain applicable without selecting that mechanism.
   scenarios:
     removal_and_readdition:
       given: Confirmed Project P contains R and S, Q contains R, and R is P's associated default Repository.
