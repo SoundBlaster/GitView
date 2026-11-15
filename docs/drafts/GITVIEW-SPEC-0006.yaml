@@ -5,6 +5,8 @@ created_at: '2026-11-10T00:00:00Z'
 updated_at: '2026-11-10T06:09:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0006.yaml
+successor_scope: The successor records selected Project navigation outcomes and a bounded continuity refinement. This draft remains noncanonical source material; the direct Project-wide entry default and detailed navigation, access and source contracts require separate review.
 refines:
 - GITVIEW-SPEC-0004
 depends_on:

@@ -1,0 +1,76 @@
+id: GITVIEW-SPEC-0006
+title: GitView - Project contents and navigation
+kind: spec
+created_at: '2026-11-15T20:53:00Z'
+updated_at: '2026-11-15T20:53:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0005
+relates_to:
+- GITVIEW-SPEC-0007
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0006.yaml
+  predecessor_revision: eed15c6dc028565c5ade0bc0283d6480b2102cd3
+  owner_selection: docs/drafts/project-summary-proposal.md
+  ux_candidate: docs/drafts/ux-zoom-levels-proposal.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Let the operator navigate from a Project overview to its repositories and their work while
+    retaining context.
+  authority_boundary: This node records selected navigation outcomes and bounded refinement, not the complete
+    predecessor draft, a selected default for every multi-repository entry, an accepted ontology or implementation
+    readiness.
+  requirements:
+    context: Project and Repository remain distinct and identifiable in the permitted context. Repository
+      membership follows its identity rather than its current organization, owner or name. One Repository
+      in two Projects retains the context of the Project from which it was opened.
+    composition_route: For a Project with several Repositories, the operator can inspect its permitted
+      member repositories and reach the permitted PR and Issue collection of each. Members of different
+      GitHub organizations remain within the same Project. Restricted information follows the applicable
+      access policy.
+    single_repository: For a Project containing one Repository, reach its work without a redundant intermediate
+      Repository screen. Preserve the distinction and permitted source context of both Project and Repository.
+    signal_route: A selectable Project summary signal offers direct access to its corresponding work selection
+      across the applicable member scope without first traversing individual Repositories. Show each object's
+      source Repository where permitted, and retain the origin signal or filter and its scope. Selection
+      semantics, metric computation and evidence require separate refinement.
+    continuity: Density changes within the same scope do not silently change Project, Repository scope,
+      applicable time period or filters. When returning from an object, preserve the valid originating
+      context, applicable period, filter and scale, and restore position where possible; if the origin
+      is no longer valid or cannot be verified, do not silently present a different scope as the original.
+    observations: Incomplete or unavailable observations do not establish an empty Repository, remove
+      a Project member, or prove that a signal selection is exhaustive. Convey applicable coverage limitations
+      without disclosing restricted data.
+    project_wide_entry_candidate: Direct ordinary entry to a Project-wide collection of all member work
+      is a working proposal, not an independently selected default. It must coexist with the agreed composition
+      and signal paths if later adopted.
+  scenarios:
+    single_member: A Project has one Repository. The operator reaches its PR and Issue work without an
+      equivalent second Repository screen, while the Project and source Repository remain distinguishable
+      where permitted.
+    multiple_members: A Project includes two Repositories in different organizations. The operator can
+      inspect its permitted members and reach each member's permitted work without treating organizations
+      as Project boundaries.
+    signal: A Project's failed-CI signal is selected. The corresponding PR selection spans its applicable
+      member scope, identifies permitted source Repositories and reflects incomplete coverage where applicable.
+    return: After opening a PR from a filtered Project selection, returning retains the valid Project,
+      applicable period, filter and density, restoring the prior location when possible rather than silently
+      switching Project.
+  open_questions:
+  - Default ordinary entry for multi-repository Projects, including the direct Project-wide collection
+    proposal.
+  - Exact navigation controls and transitions, context restoration when data or membership changes, and
+    gesture behavior.
+  - Signal predicates, freshness and coverage, selection details, and disclosure after access changes.
+  ontology_status: Project, Repository, PullRequest and Issue use the selected draft vocabulary; navigation
+    does not itself establish a domain action, motive or semantic approval of the ontology.
+acceptance:
+- A single-Repository Project reaches its work without a redundant intermediate Repository screen and
+  retains both identities.
+- A multi-Repository Project provides permitted member inspection and routes to each member's work.
+- A selectable Project signal reaches its corresponding work across the applicable Project scope without
+  a Repository-by-Repository detour.
+- Density and return navigation preserve supported context without silently switching scope.
+- Incomplete source observations are not represented as a confirmed empty member or exhaustive selection.
