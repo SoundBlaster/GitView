@@ -169,6 +169,10 @@ specification:
       given: A signal and one target PR were permitted when the operator activated the signal.
       when: Explicit source denial restricts the PR's identity and revealing counts before the destination is presented.
       then: Restricted facts do not appear in visual or app-controlled accessible output, and an allowed general limitation or recovery path remains.
+    mixed_signal_restricted_before_destination:
+      given: A Project signal previously combined supported matching PRs from Repositories A and B, and an independently supported A-only subset exists. After activation, B's contribution becomes restricted while A remains permitted.
+      when: The signal destination and its origin context are presented or announced.
+      then: A's independently permitted PRs may remain inspectable with their actual incomplete scope, but the app does not disclose the old mixed total or equivalent origin values that would reveal B's restricted contribution by subtraction. The condition and a safe limitation remain identifiable where permitted; previously seen or externally shared values cannot be retracted.
     aged_comment_reevaluated:
       given: At T1 a Project signal counts two qualifying threads on one PR; at T2 one thread is confirmed resolved and the other remains applicable and unresolved with its qualifying comment.
       when: The operator opens the current signal and the destination is evaluated at T2.
