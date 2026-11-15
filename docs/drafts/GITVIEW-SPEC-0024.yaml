@@ -4,6 +4,8 @@ kind: spec
 created_at: '2026-11-14T12:46:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0024.yaml
+successor_scope: The successor records bounded context, return and filter outcomes; cold-launch, anchor algorithm, access and detailed route lifetime remain candidates.
 refines:
 - GITVIEW-SPEC-0006
 depends_on:

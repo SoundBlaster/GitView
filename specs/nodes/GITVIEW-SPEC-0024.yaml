@@ -1,0 +1,69 @@
+id: GITVIEW-SPEC-0024
+title: GitView - Navigation context and restoration
+kind: spec
+created_at: '2026-11-15T22:00:00Z'
+updated_at: '2026-11-15T22:00:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0006
+depends_on:
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0014
+relates_to:
+- GITVIEW-SPEC-0015
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0024.yaml
+  predecessor_revision: c40ba68
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Preserve understandable navigation context while moving among Projects, work collections
+    and object overviews.
+  authority_boundary: This node refines context and return outcomes without selecting a cold-launch destination,
+    specific default-association model, retention mechanism, anchor algorithm or private-data policy.
+    It does not claim implementation readiness.
+  requirements:
+    context: Applicable navigation context includes Project identity, Repository scope, period, filters,
+      density and position or focused object when available. These are presentation state, not new domain
+      entities.
+    return: Returning from a PR or Issue retains valid originating Project, scope, applicable period,
+      filters and density and restores a permitted position or focused object by identity where possible.
+      A saved index or matching display name alone does not establish the same object.
+    changed_origin: If the original object, Repository or Project is unavailable, removed, restricted
+      or unverifiable, do not silently substitute another object or scope as the original. Distinguish
+      a confirmed change from an unobserved or incomplete result; provide an available access-safe fallback
+      or recovery path appropriate to the supported facts.
+    density: Changing density within a scope does not itself change the selected Project, Repository scope,
+      period or filters. Independent updates may change the supported collection and retain their own
+      observation context.
+    filters: Explicitly selected lifecycle filters persist and restore when applicable under 0007. The
+      selected historical merged counter exception under 0047 is a temporary transition override and does
+      not itself rewrite the saved preference.
+    access: Revalidate current applicability and access before disclosing retained content; a saved navigation
+      context is not an access grant. The actual private-data policy remains open.
+  scenarios:
+    return_same: The operator opens PR B from a filtered Project selection. On return, if the Project,
+      scope and B remain valid and permitted, the context and prior location can be restored without substituting
+      an unrelated item.
+    partial_anchor: On return the anchor is absent from a partial response. Its omission alone does not
+      prove deletion or that it no longer matches; retain uncertainty and an access-safe fallback where
+      available.
+    removed_project: An opened object's original Project was confirmed removed while another Project contains
+      the same Repository. Do not silently relabel the original context as the other Project; offer an
+      available route to another scope.
+  open_questions:
+  - Cold-launch and retained-session behavior, position and focus fallback, and time-zone-change interaction.
+  - Persistence scope and reset of filters, and non-merged historical counter overrides.
+  - Access and disclosure policy after revocation, disconnect or account changes; behavior of an open
+    overview remains to be decided.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; navigation
+    context is not a domain entity.
+acceptance:
+- Returning from an object retains its valid permitted originating scope, applicable period, filter and
+  density when available.
+- Missing or inaccessible context is not silently replaced with a different object or treated as a confirmed
+  empty collection.
+- Pinch density changes alone do not change scope, period or filters; independent source changes remain
+  distinguishable.
+- Saved filters and the limited historical merged-counter override follow 0007 and 0047 without silently
+  rewriting preferences.
