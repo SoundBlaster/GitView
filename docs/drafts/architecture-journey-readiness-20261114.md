@@ -1,5 +1,14 @@
 # Готовность архитектуры маршрута Project → Today
 
+Дополнение: локальный tag SpecificationCore `2.1.0` указывает на commit
+`9b5fc40c16677e868856d0b24b70019cd5ea4687`; три проверенных пути —
+`DecisionSpec.swift`, `FirstMatchSpec.swift` и `Package.swift` — совпадают
+с текущим локальным checkout на `483214469828c42f7b615654aa70d0acbecc4dbf`.
+В исходнике tag `DecisionSpec.decide` возвращает optional typed result,
+что позволяет выразить предлагаемые отдельные domain outcomes и no-match.
+Это локальная проверка исходников, не выбор самой свежей версии, SwiftPM
+resolution, сборка или проверка поведения GitView. См. 0110 и 0111.
+
 ## Данные, эффекты и DI
 
 [0107](GITVIEW-SPEC-0107.yaml) и [0115](GITVIEW-SPEC-0115.yaml) теперь
