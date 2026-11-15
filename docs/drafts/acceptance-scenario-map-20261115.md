@@ -219,6 +219,17 @@ baseline или rollback, а `local_recovery_without_assumed_baseline` пров�
 
 ## Доступ и передача
 
+Сверка с [0033](GITVIEW-SPEC-0033.yaml), [0036](GITVIEW-SPEC-0036.yaml),
+[0098](GITVIEW-SPEC-0098.yaml), [0114](GITVIEW-SPEC-0114.yaml) и
+[0121](GITVIEW-SPEC-0121.yaml): `stale_source_link_and_later_denial` и
+`preview_late_response_after_denial` различают устаревшую ссылку и поздний
+ответ preview; `share_boundary_then_denial` относится к данным, уже переданным
+за пределы приложения. `github_token_rotation_response_lost` касается
+неизвестного исхода удалённой rotation, а `disconnect_during_credential_replacement`
+— локальной отмены и поздней записи. `credential_expiry_then_denial` отдельно
+различает локальное истечение срока и последующий подтверждённый отказ.
+Достаточного основания считать их взаимозаменяемыми не найдено.
+
 - `stale_source_link_and_later_denial`
 - `github_token_rotation_response_lost`
 - `share_boundary_then_denial`
@@ -228,11 +239,38 @@ baseline или rollback, а `local_recovery_without_assumed_baseline` пров�
 
 ## Процесс и evidence
 
+Сверка с [0054](GITVIEW-SPEC-0054.yaml), [0076](GITVIEW-SPEC-0076.yaml),
+[0079](GITVIEW-SPEC-0079.yaml) и [0090](GITVIEW-SPEC-0090.yaml):
+`required_format_unverified_path` проверяет непокрытый путь создания,
+`description_edit_after_assessment` — неприменимость старой оценки к новому
+тексту, `format_and_external_objects` — одновременное чтение внешнего Issue и
+внешний процесс для PR. `cross_cutting_evidence` относится к границе самих
+результатов проверки, а не к формату тела. Эти различия сохраняются.
+
 - `required_format_unverified_path`
 - `cross_cutting_evidence`
 - `description_edit_after_assessment`
 - `format_and_external_objects`
 
-Следующий проход: проверить пары внутри каждой группы с исходными
-родителями, а затем выделить минимальный сквозной набор и сохранить
-отдельно уникальные negative cases и их идентификаторы.
+## Начальный набор для содержательного ревью
+
+Это удобный порядок обсуждения, **не минимальное доказанное покрытие** и не
+разрешение пропустить другие сценарии или их дочерние условия:
+
+1. Первый вход и Project: `first_overview`, `first_setup_partial_github_installation`,
+   `create_custom_project_from_shared_repositories`.
+2. Обзор работы: `complete_multi_repository_today_journey`, `work_completes`,
+   `dense_grid_zoom_preview_round_trip`, `accessible_dense_grid_equivalent`.
+3. Изменение состава и восстановление: `sole_member_replacement_preserves_route_and_scope`,
+   `project_delete_after_configuration_change`, `retention_recovery_after_restart`.
+4. Данные и доступ: `partially_approved_github_data_categories`, `offline_and_denial`,
+   `preview_late_response_after_denial`.
+5. Метрики и история: `check_count_to_changed_project_selection`,
+   `closure_chart_distinct_period_and_navigation`, `clear_then_late_response_and_backfill`.
+6. Переход к источнику и формат: `preview_and_source`, `share_boundary_then_denial`,
+   `required_format_unverified_path`.
+
+Каждый маршрут нужно сверять с применимыми родителями, всеми существенными
+ограничениями и отдельными уровнями evidence по 0079. Этот список не заменяет
+source integration, persistent restart, native accessibility или TDD evidence;
+исторические и отложенные ветви сохраняют собственные решения о применимости.
