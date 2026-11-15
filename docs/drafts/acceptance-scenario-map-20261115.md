@@ -129,6 +129,23 @@ baseline или rollback, а `local_recovery_without_assumed_baseline` пров�
 
 ## История и время
 
+Содержательная сверка с [0056](GITVIEW-SPEC-0056.yaml),
+[0064](GITVIEW-SPEC-0064.yaml), [0065](GITVIEW-SPEC-0065.yaml),
+[0067](GITVIEW-SPEC-0067.yaml) и [0069](GITVIEW-SPEC-0069.yaml):
+
+| Обязательство | Сценарии 0043 | Сохраняемое различие |
+| --- | --- | --- |
+| Исторический scope | `late_history_for_former_members`, `historical_point_access_and_return` | Поздний ответ на старый состав не заменяет новый; отдельно проверяется ограничение доступа при возврате к точке истории. |
+| Долгий review как ограниченный proxy | `aged_comment_signal_navigation_at_new_time`, `aged_comment_with_incomplete_thread_history`, `attention_history_units` | Новый reference time, частичное свидетельство возраста и разные единицы threads/PR — разные условия; возраст комментария не доказывает непрерывную длительность треда. |
+| События и календарные периоды | `closure_chart_distinct_period_and_navigation`, `captured_chart_period_after_zone_change` | Повторные закрытия одного Issue не равны разным Issues; сохранённые границы календарных buckets не меняются от смены часового пояса. |
+| Повтор и очистка | `history_retry_across_restart`, `clear_then_late_response_and_backfill`, `shared_history_clear_is_explicit` | Lost acknowledgement, запоздавшая работа после clear и раскрытие общего для Projects scope проверяют разные гарантии. |
+| Пропущенные данные | `current_refresh_with_missing_history` | Успешное текущее наблюдение и отсутствие сохранённой исторической точки не превращаются в ноль или непрерывный ряд. |
+| Закрытие и reopening | `issue_reopens_across_day`, `issue_reopens_missing_closure_time`, `historical_outcome_reopened` | Известное время у границы дня, неизвестное время и самостоятельный недельный исторический фильтр нельзя отождествлять. |
+
+Дословно совпадающих или полностью взаимозаменяемых случаев в этой группе при
+данной ручной сверке не установлено. Источник может не предоставить достаточно
+истории; наличие формулировок не доказывает source coverage или исполнение.
+
 - `late_history_for_former_members`
 - `aged_comment_signal_navigation_at_new_time`
 - `aged_comment_with_incomplete_thread_history`
