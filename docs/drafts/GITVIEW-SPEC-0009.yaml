@@ -30,9 +30,9 @@ specification:
     reason, labels and source type when available.
   - Retain repository, author, assignees, milestone and linked PRs, distinguishing a closing link from
     a mention when the source permits.
-  - Show parent and direct sub-issues, blocking links, comment and participant counts, direct and closed
+  - Show parent and direct sub-issues, both what blocks this Issue and what it blocks, comment and participant counts, direct and closed
     sub-issue counts.
-  - Keep creation, update, closure, observation and last-comment times distinct where available.
+  - Keep creation, update, closure, observation and last-comment times distinct and identify the observation source where available.
   - A closed issue is not automatically completed; linked objects do not prove actor motivation.
   review_scenarios:
   - Given an Issue closed with a non-completion reason, show its closure and reason without calling it
@@ -49,6 +49,10 @@ specification:
       given: An Issue is closed but its reason is unavailable.
       when: Its summary is shown.
       then: The state is closed, and completion remains unknown.
+    directional_dependencies:
+      given: Supported source data identifies Issue A as blocking this Issue and this Issue as blocking Issue B, while other dependency coverage is incomplete.
+      when: The operator inspects its relationships.
+      then: A and B are distinguishable by direction, and incomplete coverage is not described as a complete dependency list.
 acceptance:
 - An Issue overview retains its confirmed object and Repository context and presents the selected fields and state reason when supported and permitted. Unavailable fields and source links remain unavailable or last known with their context; do not substitute another object.
 - Expose selected labels, type, author, assignees, milestone, related Issues and PRs, discussion and direct-sub-issue

@@ -54,6 +54,14 @@ specification:
     stop: The first pass is reviewable when the agreed product routes and important outcomes are connected and understandable, known consequential ambiguity is visible, and no further detail is needed solely to explain the user's idea. This is a product-level assessment, not proof that code can be implemented without further specification, that the whole draft has been owner-approved or that an application exists.
     verification: Review product coverage against the owner's recorded selections and the product projection; review ontology terminology in its declared draft context. Structural graph checks and readable examples support the review but do not independently establish semantic completeness.
   scenarios:
+    first_setup_and_incomplete_discovery:
+      given: The operator connects GitHub and searches for Repositories, but discovery is incomplete or the search matches none in its available scope.
+      when: The product description explains setup.
+      then: It distinguishes incomplete discovery from a supported empty search, does not assert that the whole GitHub account has no Repositories, and describes an available recovery or access-review route.
+    local_configuration_unreadable:
+      given: Previously saved local Project configuration cannot be read at launch.
+      when: The product description explains the opening state.
+      then: It identifies a recoverable local-data problem instead of claiming a first launch, a confirmed empty portfolio or an automatic reset.
     project_membership_is_local:
       given: A Repository belongs to two GitView Projects.
       when: The user removes it from the first Project.
@@ -66,10 +74,18 @@ specification:
       given: The user is examining today's PR collection and some visible PRs merge.
       when: The source-supported state updates.
       then: The product description makes clear that the merged work stays visible by default and that the user can explicitly filter it out.
+    today_rollover:
+      given: A PR was merged yesterday and another PR from yesterday remains open.
+      when: The product description explains the agent-proposed local-day Today selection on the following day.
+      then: It distinguishes the unfinished PR that remains eligible from the previous-day result that no longer qualifies solely on that outcome, and does not imply that historical work was deleted.
     shared_repository:
       given: One Repository is included in two GitView Projects.
       when: Each Project and a unique portfolio summary are considered.
       then: The product distinguishes membership in each Project from deduplication in the portfolio; organization is not a Project boundary.
+    summary_units:
+      given: Two PRs in separate Repositories have five failed checks in total and one also has an unresolved review thread.
+      when: The product description explains the Project summary and its associated PR selection.
+      then: It distinguishes checks, affected PRs and Repositories, without adding overlapping attention signals as separate tasks or promising that five checks produce five PR cards.
     technology_not_predetermined:
       given: Two storage approaches can preserve the same agreed last-known-data and failure behavior.
       when: The owner reviews the first product pass.
@@ -78,7 +94,20 @@ specification:
       given: A candidate uses a 24-hour interval to highlight an inactive review discussion.
       when: The product description presents that candidate.
       then: It labels the threshold as agent-proposed and does not assert that a particular person owes an answer.
+    changed_project_membership:
+      given: A Repository was added to a Project after a historical period being inspected.
+      when: The product description explains a graph for the current membership over that period.
+      then: It distinguishes that proposed retrospective basis from evidence of which Repositories actually belonged to the Project in the past, and identifies missing history rather than treating it as zero.
+    offline_restriction_limit:
+      given: The product description explains last-known private data after an interruption or restoration of an older local copy.
+      when: It describes the agent-authored offline access policy.
+      then: It exposes that a restriction absent from recovered evidence may be unknown, without promising that all revoked access is detected or presenting the privacy and availability tradeoff as an owner decision.
+    scope_changing_zoom:
+      given: The user inspects work at different grid densities and can open a Project or object.
+      when: The product description explains pinch and navigation.
+      then: It distinguishes in-scope density changes from the still-open candidate to cross navigation scopes using pinch itself.
   unresolved:
   - Whether the working product projection sufficiently communicates all intended nuances requires product review; clarify any missing behavior without demanding implementation detail merely for its own sake.
   - Meaning of ready for an open PR, broad discussion participation and true responsibility for a reply remain distinguishable from narrower observable indicators.
+  - The historical membership basis, broader past-period grid, cross-scope pinch, and private-cache and backup tradeoffs require explicit product evaluation; existing proposals do not establish owner selections.
   - No implementation, device behavior, source availability or executed acceptance is claimed by this first-pass specification.

@@ -193,6 +193,14 @@ specification:
       given: The device's local calendar day changes while the app is open.
       when: The Today selection is next updated.
       then: The selected day is re-evaluated without rewriting the stored event timestamps.
+    next_day_completion_and_unfinished:
+      given: A permitted PR was merged during the previous local day and another permitted PR remains open from that day; sufficient applicable evidence supports both states and times.
+      when: The working local-day Today selection is evaluated on the following day without lifecycle exclusions.
+      then: The open PR remains eligible as unfinished work, while the earlier merge alone no longer qualifies the merged PR for the new Today. This does not delete it or prove that historical outcome access is complete; a supported explicit past-period outcome route remains separate.
+    partial_open_only_refresh:
+      given: Today includes a previously observed PR and an open-only refresh does not return it; no sufficiently supported newer lifecycle or same-day outcome is available.
+      when: The Today view incorporates the refresh.
+      then: The missing result alone does not establish merge, closure or deletion. The retained eligible observation and its time may be shown with applicable uncertainty and incomplete coverage rather than claiming a current state or a complete list.
   unresolved:
   - Precise grouping and inclusion rules for older completed outcomes and historical reopening sequences.
   - Whether other non-open states should count as unfinished beyond the working first-selection rule.

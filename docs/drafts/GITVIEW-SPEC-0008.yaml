@@ -32,7 +32,7 @@ specification:
     observed revision, author, requested reviewers and linked Issues.
   - Show the source review assessment and counts of total and unresolved review threads separately.
   - 'Show CI counts and change counts: additions, deletions, changed files and commits; preserve creation,
-    update, closure or merge and observation times when available.'
+    update, closure or merge and observation times and observation source when available.'
   - Do not include diff, thread content, logs or commit-by-commit browsing in this scope; open the source
     for detail.
   review_scenarios:

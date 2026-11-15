@@ -29,14 +29,14 @@ sources:
   apple_ios26: https://www.apple.com/newsroom/2025/06/apple-introduces-a-delightful-and-elegant-new-software-design/
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- The first-version platform baseline is iPhone on iOS 26 or later, with a compatible iOS SDK and an explicit availability review for any newer APIs.
+- The proposed first-version platform baseline is iPhone on iOS 26 or later; it remains an agent-authored candidate pending platform-scope selection, with a compatible iOS SDK and explicit availability review for any newer APIs if adopted.
 - System controls, typography, colors, symbols and navigation provide the default Apple appearance; custom glass styling is not applied as decoration to every grid cell.
 - Density change, preview, object opening, filtering, refresh and source handoff remain usable without relying solely on pinch, long press or color.
 - A native context-menu preview is a candidate for the selected static long-press behavior, not proof that all required interaction and accessibility behavior is available.
 - Dynamic Type, Reduce Motion, contrast and reduced transparency are respected without hiding essential information or claiming a fixed eight-column accessibility layout.
 - Platform evidence distinguishes documentation and locally available tool versions from a built app, simulator or physical-device observation.
 specification:
-  objective: Select an initial iOS and native-design baseline that makes subsequent UX specifications concrete while preserving accessibility and source-data semantics.
+  objective: Describe a candidate iOS and native-design baseline that makes subsequent UX specifications concrete while preserving accessibility and source-data semantics, without treating the candidate deployment target as an owner decision.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -45,7 +45,7 @@ specification:
   - gitview:Issue
   - gitview:Metric
   contract:
-    deployment: As an agent-authored initial product decision, target iPhone with minimum iOS 26 for the first version. This supports the owner's requested native Liquid Glass direction without requiring an earlier-OS appearance fallback. Later iOS versions remain supported subject to actual availability and compatibility checks. This does not select an exact device list, guarantee iPad-specific adaptation, promise App Store distribution or assert installation on the owner's device.
+    deployment: As an agent-authored candidate, target iPhone with minimum iOS 26 for the first version. If selected, this supports the owner's requested native Liquid Glass direction without requiring an earlier-OS appearance fallback. Later iOS versions remain subject to actual availability and compatibility checks rather than automatically guaranteed. This candidate does not select an exact device list, guarantee iPad-specific adaptation, promise App Store distribution or assert installation on the owner's device.
     build_baseline: Build the eventual app with an iOS SDK and Xcode version capable of the selected iOS 26 design; select and pin actual tools when implementation begins, then verify their deployment support. On the local host inspected during this draft, xcodebuild reported Xcode 27.1 build 27A9275 and the selected iphoneos SDK reported 27.1; this is an environment observation, not a build, deployment-target validation or proof that future APIs are available on iOS 26. Any adopted API newer than the baseline needs an availability-safe alternative or an explicit revision of the supported range.
     system_appearance: Prefer standard SwiftUI and system navigation, controls, typography, semantic colors and SF Symbols. Apple's Liquid Glass guidance says system controls and navigation adopt the platform appearance with the appropriate SDK; do not assume every custom view gains glass automatically. Use material effects where they improve hierarchy and respect platform preferences, keeping the dense work grid legible and content-led. Avoid an independently drawn glass surface on every cell simply to signal compliance. Exact layout and effects remain subject to native evaluation.
     density: Pinch changes density within the current scope under 0035 and 0075. Provide an accessible system-control route to increase or decrease density and inspect the current setting without requiring pinch or a continuously tracked gesture; a standard control or menu is a candidate, not a fixed control choice. Preserve selection, filter and identity-based position, and allow fewer columns for large text or limited space. Eight columns and 100 objects remain examples, not fixed constants or measured performance.
@@ -82,6 +82,6 @@ specification:
       when: The operator requests a refresh through the available alternative.
       then: The same scoped refresh rules and failure reporting apply without needing the gesture or silently changing filters.
   unresolved:
-  - Verify actual Xcode SDK deployment support, availability of selected APIs, target devices and any iPad-specific support before an implementation or release claim.
+  - Select the supported platform range; the iPhone and iOS 26 baseline is a candidate, not an owner-selected minimum. Verify actual Xcode SDK deployment support, availability of selected APIs, target devices and any iPad-specific support before an implementation or release claim.
   - Choose and validate the native collection, preview, refresh and accessible controls against real interactions and the current system behavior.
   - No app build, simulator run, physical-device observation or accessibility test has been performed.

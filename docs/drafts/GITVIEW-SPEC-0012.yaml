@@ -59,6 +59,10 @@ specification:
       when: Its summary is shown.
       then: The available counts are labeled incomplete and the fifth repository is not silently counted
         as zero.
+    signal_unit_and_selection:
+      given: Two permitted PRs in different member Repositories have five failed checks in total, with supported coverage for the selected scope.
+      when: The operator inspects the failed-check signal and opens its associated PR selection.
+      then: The summary distinguishes five checks, two affected PRs and two affected Repositories; the selection contains the two corresponding PRs rather than five cards, subject to supported current observations and access at opening.
 acceptance:
 - Compute each Repository summary from applicable supported observations and distinct confirmed identities; count open PRs, draft subset and open
   Issues separately. An observed subset is not automatically a complete or current total.
