@@ -17,7 +17,7 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - Selecting repositories does not create saved Projects until the operator confirms a nonempty selection.
-- Each confirmed repository is associated with a saved or existing default Project containing that same Repository, or is individually reported as unresolved or failed.
+- Each confirmed selection entry has an individually attributable result: saved or reused when supported, pending or unresolved when the outcome is not established, or failed when non-application is confirmed. A saved or reused default Project contains that same confirmed Repository.
 - A partial save followed by retry does not duplicate already saved default associations or roll back unrelated saved Projects.
 - Cancelling an unconfirmed selection preserves saved Projects; cancellation after partial saving does not imply that already completed saves were undone.
 - A confirmed multi-selection retains enough durable context to identify its entries and recover their outcomes after process termination, subject to local storage availability and access policy.
@@ -84,13 +84,13 @@ specification:
       when: The operator reviews or retries the unresolved entry.
       then: It remains unresolved with a permitted recovery path, is not automatically submitted or substituted by a similarly named Repository, and the independently confirmed entry remains subject to its own current configuration and access.
     retry_after_partial:
-      given: R1 was saved successfully and R2 failed during one confirmation.
-      when: The operator retries both entries.
-      then: R1's existing default is reused and R2 may be saved, without duplicating R1 or changing unrelated Projects.
+      given: R1 was saved successfully and its default association remains valid; R2 is confirmed not applied, has no earlier indeterminate effect and remains eligible.
+      when: The operator explicitly retries the entries under their applicable reviewed intent.
+      then: R1 may be reused and R2 may be saved under the current confirmation and admission rules, without duplicating R1 or changing unrelated Projects. A changed reviewed outcome requires renewed review rather than silent substitution.
     cancel_during_unknown:
       given: A Project save for R is in flight and its completion has not been observed.
       when: The operator cancels the batch.
-      then: The outcome for R is not asserted failed or rolled back until the actual saved association is resolved; a later retry does not create a duplicate.
+      then: The outcome for R is not asserted failed or rolled back until the original operation is reconciled. A durably cancelled batch does not resume admissions; a later intentional attempt needs a separately reviewed and confirmed batch and must not duplicate an effect that can still commit.
     access_lost:
       given: R was selectable but its access is explicitly denied before its entry is processed.
       when: The confirmation continues.
