@@ -1,5 +1,12 @@
 # Сверка выбранных полей PR и Issue
 
+Для счётчиков PR 0041 теперь фиксирует документированные кандидаты GraphQL
+`additions`, `deletions`, `changedFiles` и `commits.totalCount`, отдельно от
+`headRefOid` и `baseRefOid`. Base может измениться при прежнем head, поэтому
+один head не подтверждает применимость прежнего head-versus-base commit count.
+Это mapping отдельных полей по [GitHub PullRequest](https://docs.github.com/en/graphql/reference/pulls#pullrequest),
+а не доказательство атомарного snapshot, доступности query или реального UI.
+
 Выбор владельца сохранён в [PR options](pull-request-ontology-options.md) и
 [Issue options](issue-ontology-options.md), объединён в 0001. Это авторская
 сверка групп полей с candidate specs на 14 ноября, не source mapping и не
