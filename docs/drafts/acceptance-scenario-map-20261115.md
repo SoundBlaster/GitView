@@ -50,6 +50,26 @@ merged, а `complete_multi_repository_today_journey` — переход и во�
 
 ## Project и membership
 
+Содержательная сверка с [0025](GITVIEW-SPEC-0025.yaml),
+[0082](GITVIEW-SPEC-0082.yaml), [0084](GITVIEW-SPEC-0084.yaml) и
+[0091](GITVIEW-SPEC-0091.yaml):
+
+| Обязательство | Сценарии 0043 | Почему случаи различаются |
+| --- | --- | --- |
+| Меняется состав при открытом маршруте | `sole_member_replacement_preserves_route_and_scope`, `single_project_expands_while_open` | Замена A на B снимает прежнюю default association и исключает A из текущего scope; добавление B сохраняет A. Оба сохраняют identity открытого объекта, но имеют разный итог membership. |
+| Сохранение иных свойств | `project_purpose_across_edit` | Проверяет, что edit состава не изменяет локальное описание назначения или описание GitHub Repository. |
+| Membership и default | `membership_readded_after_removal` | Повторное включение R не восстанавливает ранее снятую default association без отдельного действия. |
+| Удаление и конкурирующая правка | `project_deletion_review_and_shared_repository`, `project_delete_after_configuration_change` | Первый случай — подтверждённое удаление рассмотренной версии, второй — запрет применить устаревшее подтверждение к новой версии. |
+| Конфликт редактирования | `conflicting_project_edits`, `review_conflicting_project_edit` | Сначала stale edit не должен затереть новое состояние; затем отдельное рассмотренное повторное намерение может применить удаление без потери уже добавленного C. |
+| Совместное использование | `shared_repository` | Один PR учитывается в каждом Project и один раз в уникальном portfolio; это отдельное правило от изменения состава или удаления. |
+| Изменение во время наблюдения и после остановки | `membership_changes_during_refresh`, `restart_after_membership_edit` | Первый случай имеет подтверждённый новый состав и старый in-flight refresh; во втором сам сохранённый состав ещё неизвестен после прерывания. |
+
+В 0082 также есть отдельный случай, когда подтверждённое удаление опережает
+старую правку: старый edit не должен восстановить удалённый Project. Его
+наличие в дочернем контракте не означает, что он уже выполнен как сквозной
+тест 0043. Прямых содержательных дублей среди рассмотренных случаев не
+установлено; это не доказывает полноту остальных сочетаний.
+
 - `sole_member_replacement_preserves_route_and_scope`
 - `project_purpose_across_edit`
 - `single_project_expands_while_open`
