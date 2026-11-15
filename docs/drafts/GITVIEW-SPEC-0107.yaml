@@ -20,6 +20,7 @@ depends_on:
 - GITVIEW-SPEC-0105
 - GITVIEW-SPEC-0106
 sources:
+  today_boundary_map: docs/drafts/today-fsd-boundary-map-20261115.md
   parent: docs/drafts/GITVIEW-SPEC-0096.yaml
   fsd_layers: /Users/egor/Development/GitHub/FSD_iOS/FSDDemoApp/docs/rules/fsd-layers.md
   fsd_imports: /Users/egor/Development/GitHub/FSD_iOS/FSDDemoApp/docs/rules/fsd-imports.md

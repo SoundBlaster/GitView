@@ -1,0 +1,65 @@
+# Project → Today: FSD boundary map
+
+Agent-authored architecture candidate for 0095, 0107, 0110, 0115–0116, 0119
+and 0126. This is a responsibility and dependency contract, not a Swift package
+layout, implemented architecture or independent review. The product remains
+pre-canonical; parent and cross-cutting requirements apply before implementation.
+
+```text
+app composition
+  -> Project work page -> project-work domain contract
+                       -> bounded refresh feature -> project-work domain contract
+  -> domain-aware source and storage adapters -> project-work domain contract
+                                               -> generic shared facilities
+  -> platform clock, access and system capabilities
+
+project-work domain contract -> generic shared facilities, where needed
+```
+
+The arrows describe allowed dependency direction, not runtime call order or a
+mandate for one package per box. Composition may inject capability interfaces
+defined by the owning domain boundary into the page or feature; adapters do not
+import their consuming page or sibling feature. Actual adapter placement and
+target dependencies must be checked against the selected FSD integration.
+
+| Responsibility | Owns | Does not own |
+| --- | --- | --- |
+| App composition | Concrete capability construction, lifetimes and permitted wiring. | Project policy, source truth or a global service locator by requirement. |
+| Work page | Actual Project/Repository route, selected day and filters, density, anchor, permitted presentation and user actions. | Credentials, raw GitHub payloads, database transactions or domain evaluation hidden in view rendering. |
+| Refresh feature, if extracted | Bounded user-initiated request coordination via public capabilities. | Sibling edit/authentication feature internals, independently rewriting membership or declaring source coverage. |
+| `project-work` entity slice | Cohesive product facts, source and membership identities, named Today and summary decisions, and public domain-facing capability contracts. | UI navigation, network requests inside pure decisions, or an ontology class named after this code slice. |
+| Domain-aware adapters | Mapping supported GitHub and storage representations to the domain contracts; scoped limitations and actual effect results. | Platform UI decisions or production claims about fields not actually returned. |
+| Generic shared | Reusable transport, storage and clock mechanics without importing GitView product types. | GitView-specific Project, PR, Issue, coverage or authorization policy. |
+
+## Policy and integration outcomes
+
+The named Today decision accepts an immutable validated candidate context and
+prepared three-valued inputs described in 0110. Its typed domain output is
+`match`, `non-match` or `unknown`; evaluating it performs no source, storage,
+clock or UI effects. An invalid required context is rejected before evaluation.
+At the top-level validated candidate, an unexpected `DecisionSpec` no-result
+is an integration limitation, not `unknown` or an implicit exclusion. The
+caller independently assembles population coverage and rechecks disclosure.
+
+The inspected local SpecificationCore `DecisionSpec` returns an optional
+typed result; its `FirstMatchSpec` consumes ordered Boolean predicates. This
+supports exploring a typed three-valued outcome but does not make Boolean
+negation safe for an unknown input. A fallback must not conceal a missing rule
+or invalid integration. The local checkout at
+`483214469828c42f7b615654aa70d0acbecc4dbf` is reference evidence, not a
+resolved GitView dependency. No concrete API or dependency version is selected
+by this document.
+
+## Verification boundaries
+
+Before implementation, finalize actual public value and error shapes and
+ownership against the parent graph. For a future TDD slice, test the pure truth
+table and no-result mapping independently from route tests that inject source,
+storage, clock and access. Test adapters, real durable restart, authorized
+GitHub and native accessibility separately. An architecture linter can detect
+some forbidden references but does not by itself prove semantic ownership or
+runtime behavior. These are planned checks; no product code or tests exist here.
+
+FSD reference observed locally at `21731b9dd7d5008b832af5caca6d19f7a36fe54f`;
+the local checkouts do not establish a resolved version for GitView or the
+latest upstream state.
