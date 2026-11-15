@@ -12,8 +12,9 @@ depends_on:
 - GITVIEW-SPEC-0045
 - GITVIEW-SPEC-0059
 - GITVIEW-SPEC-0085
-- GITVIEW-SPEC-0098
 - GITVIEW-SPEC-0111
+relates_to:
+- GITVIEW-SPEC-0098
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0036.yaml
   setup: docs/drafts/GITVIEW-SPEC-0045.yaml
