@@ -1,0 +1,27 @@
+# Project и Repository: сверка ontology и спецификаций
+
+Авторская выборочная сверка `local.gitview.domain@0.2.0-draft-composition.12`
+с 0002, 0005, 0025, 0038, 0052, 0104, 0111 и 0122. Source package SHA-256
+`cce3b65f5b2309f73957368aa3ba6cfeebd7276b2b2c13b2668a89ec525fb04b`.
+Пакет остаётся draft; это не независимое принятие онтологии или аудит всего
+графа. В таблице различаются выбор владельца и последующие решения агента.
+
+| Смысл | Онтология и спецификация | Ограничение |
+| --- | --- | --- |
+| Project | `Project` — отдельная сущность с кандидатными `name` и `description`; 0025 и 0111 определяют допустимую сохранённую конфигурацию. | Поле `name` в package необязательно для частичной проекции; это не разрешение сохранить Project без валидного имени. Неполный ввод не является готовым Project. |
+| Membership | `projectIncludesRepository` задаёт link Project → Repository с одним или более участниками; спецификация допускает один Repository в нескольких Projects. | Cardinality не доказывает полноту частичного чтения, конкретного оператора или исторический акт добавления. |
+| Добавление и удаление | `User → AddRepository/RemoveRepository → Project` используют обязательный typed reference на Repository. | Один результат или изменение набора не доказывает исход конкретной операции, автора и мотив. Разрешение ссылки, условия валидности и надёжная запись принадлежат приложению и 0084/0104. |
+| GitHubRepository | `GitHub → RegisterRepository → Repository` и contextual protocol описывают один Repository под управлением GitHub. | Название protocol не устанавливает подтверждённую регистрацию, доступ или новый объект; другие платформы вне текущей области продукта. |
+| Rename и transfer | Владелец выбрал сохранение identity и memberships, когда источник подтверждает тот же Repository. В draft.12 и 0123 numeric REST ID в области source instance — рабочий кандидат identity; Node ID остаётся отдельной ассоциацией. | Это не доказательство конкретного transfer, cross-instance эквивалентности, прав или миграции alias. Совпадение имени или адреса недостаточно. |
+| Default Project | Один Project на Repository по умолчанию — продуктовая договорённость; 0052/0104 предлагают единичную active default association и отдельные исходы записи. | Default association — локальная конфигурация, а не источник identity Repository и не запрет других Projects с тем же участником. |
+| Recovery | 0104 и 0122 сохраняют идентичности, связи и контекст операций или показывают ограничение при недоступности evidence. | Read, receipt, batch и migration — контракты хранения, а не новые domain entities. Восстановленное состояние само не подтверждает конкретное действие или текущие GitHub permissions. |
+
+Проверенный ранее [пример membership](membership-draft12-check-20261115.md)
+использовал авторский in-memory consumer и не доказывает поведение GitView,
+storage или конкурентность. 15 ноября `ontology-doctor` с закреплённым compiler
+вернул для выбранной композиции `verified`, при этом semantic approval —
+`not_established`, provenance compiler — `not_verified`. Структурный результат
+не подтверждает реальные actor/action occurrences или достаточность всех
+спецификаций для реализации. Отдельный прогон восьми указанных candidate specs
+в выбранной композиции вернул `checked` без ошибок запуска; это не исполнение
+их сценариев и не semantic approval.

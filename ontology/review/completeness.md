@@ -2,6 +2,8 @@
 
 Сверка конкретно Issue, PR и их связей с текущими спецификациями:
 [issue-pr-spec-alignment-20261115.md](issue-pr-spec-alignment-20261115.md).
+Сверка Project, Repository и membership:
+[project-repository-spec-alignment-20261115.md](project-repository-spec-alignment-20261115.md).
 
 **Текущий контекст, 15 ноября:** `specgraph.project.yaml` выбирает
 [составной draft.12](../candidates/domain-v0.2.0-draft.12/README.md), а не
