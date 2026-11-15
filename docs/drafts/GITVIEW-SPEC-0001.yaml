@@ -60,7 +60,7 @@ specification:
       or a replacement for GitHub.
     User: The operator of GitView, as explicitly selected by the owner. GitHub identities and source authors,
       reviewers and assignees are separate roles or references; identity details remain open.
-    Project: Working term for a project in GitView; a more general definition remains open.
+    Project: As an agent-authored candidate, a unit for organizing work for its overview in GitView; a more general definition remains open. Identity, properties and repository membership are specified separately.
     Repository: Code in which a version control system acts, in the owner's working formulation.
     Code: Code is essentially a folder with files in the owner's working formulation; its precise boundary
       remains open.
