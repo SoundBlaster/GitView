@@ -391,3 +391,28 @@ preview к обзору в 0039/0041; permission и наблюдаемая по�
 `46f1d455d72ab784c6cb2b86e9b023df195dcfd2ed92099108b0faa5faa5d1fc`;
 это не проверка permissions, live response, доступности Bot identity или
 полноты обхода. Добавлен сценарий User + Bot; он не исполнялся в приложении.
+
+### Сверка выбранных полей PR и Issue A–G
+
+Сопоставлены утверждённые списки [PR](pull-request-ontology-options.md) и
+[Issue](issue-ontology-options.md) с `inspect_selected` в 0041 и 0039,
+отдельными предметными контрактами и исходными примерами запросов. Preview
+0050 может содержать подмножество; разрешённые наблюдённые поля должны быть
+доступны в обзоре того же объекта. Это предметная сверка записанных
+обязательств, не проверка реального аккаунта или интерфейса.
+
+| Выбранные блоки | Спецификации и граница |
+| --- | --- |
+| PR A–C: ID, текст, ссылка, lifecycle/draft/labels, Repository, ветки, revision, автор, reviewers, Issue | 0041, 0033–0034, 0062, 0078. Одинаковые номера в разных Repository не совпадают; текст или ссылка не доказывают мотив. Identity и visibility отдельных ссылок сохраняют собственные ограничения. |
+| PR D–G: review и thread counts, четыре CI-счётчика, размеры изменения и commits, event/observation times | 0041, 0061–0062, 0044. Состояния и счётчики раздельны; отдельные треды, checks, commits и diff не добавлены. Применимость к ревизии и актуальной попытке проверяется в интеграции. |
+| Issue A–C: ID, текст, ссылка, состояние/reason, labels/type, Repository, автор, assignees | 0039, 0033–0034, 0044, 0077. Закрытие и причина различаются; актуальная причина не подменяет причину прошлого события. |
+| Issue D–F: связанные PR и их смысл, parent/children, blockers, milestone, discussion и direct-child counters | 0039, 0063, 0077–0078. Частичная связь не объявляется полной; User participants и comment authors имеют разные подписи и охват; дочерний closed count не приравнивается к completed. |
+| Issue G и переход к источнику | 0039, 0077, 0033, 0121. Создание, update, закрытие, последний комментарий и время наблюдения различаются; Open/Share привязываются к объекту и допустимому source link. Реальный handoff и permissions требуют проверки реализации. |
+
+Для выбранных source-направлений подготовлены schema-checked примеры
+`object-overview-graphql-operation-candidates`, `participants-discussion-graphql-candidates`,
+`issue-relationship-graphql-candidates`, `labels-ref-repositories-graphql-candidates`
+и `pr-review-ci-graphql-candidates`. Их форма и отдельные проверенные поля
+не доказывают, что каждый запрос доступен конкретному пользователю, полон,
+атомарен или соответствует настоящему экрану. Недостаток данных является
+результатом с ограничением, а не основанием выдумывать значение.
