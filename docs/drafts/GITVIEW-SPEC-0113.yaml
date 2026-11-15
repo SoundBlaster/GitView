@@ -102,5 +102,5 @@ specification:
       then: The operation remains indeterminate, its previous identity is retained, and no unrelated new operation is reported as a safe retry.
   unresolved:
   - Select the actual iOS SQLite provider, version and wrapper, validate relevant security and WAL fixes, and select and verify journal, synchronization and backup behavior.
-  - Define physical schema, migration and concrete coordinator; verify the selected offline tradeoff and transactional recovery semantics across the unrecorded-denial crash gap before treating this boundary as implementation-ready.
+  - Define physical schema, the actual migration path and concrete coordinator; 0122 proposes observable migration and recovery obligations but does not establish provider behavior. Verify the selected offline tradeoff and transactional recovery semantics across the unrecorded-denial crash gap before treating this boundary as implementation-ready.
   - Choose and test iOS file protection, background availability, credentials/database reconciliation and actual interruption behavior on supported devices.

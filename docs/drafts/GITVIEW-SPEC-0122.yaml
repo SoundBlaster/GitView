@@ -1,0 +1,75 @@
+id: GITVIEW-SPEC-0122
+title: GitView - Local store schema evolution and recovery
+kind: spec
+created_at: '2026-11-14T23:59:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0113
+depends_on:
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0071
+- GITVIEW-SPEC-0103
+- GITVIEW-SPEC-0104
+- GITVIEW-SPEC-0105
+- GITVIEW-SPEC-0114
+- GITVIEW-SPEC-0117
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0113.yaml
+  logical_data: docs/drafts/GITVIEW-SPEC-0106.yaml
+  connection_binding: docs/drafts/GITVIEW-SPEC-0114.yaml
+  history_clear: docs/drafts/GITVIEW-SPEC-0117.yaml
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- Opening a previously created store distinguishes supported migration, a newer unsupported schema, unavailable storage and verified first use.
+- An upgrade preserves the meaning and associations of retained Project configuration, permitted observations, history and recovery evidence or reports an explicit limitation.
+- A schema version is not reported as installed before its required transformations and integrity checks are durably established.
+- Interrupted or failed migration does not silently reset an existing store or make incomplete data appear to be a fresh empty portfolio.
+- Older application versions do not write to a newer incompatible schema under an assumed downgrade.
+- Database migration cannot itself establish Keychain availability, current GitHub access, or the outcome of a previously uncertain operation.
+- Observable recovery cases can be verified independently of a network; actual provider, device and restart behavior require separate evidence.
+specification:
+  objective: Define a recoverable schema-evolution contract for the proposed local data boundary without choosing a physical schema or implementing the app.
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:Metric
+  contract:
+    applicability: This agent-authored proposal applies to the first iPhone app's local database direction in 0113. A schema version identifies a storage contract, not a GitHub revision, Project configuration revision, history generation or ontology version. A version marker alone is not evidence that required data and invariants are valid.
+    open_classification: Before exposing or mutating stored data, distinguish a confirmed new installation with no existing store from a supported existing schema, a schema newer than the reader understands, an unrecognized or malformed marker, an inaccessible protected file and an unreadable or corrupt store. Missing, inaccessible or corrupt evidence must not be converted to first use by deleting or replacing the store. Recovery and accessible messaging follow 0023 and 0113.
+    upgrade_path: A release that changes the schema must declare its supported starting versions and a deterministic sequence of steps or a separately verified equivalent migration. Each step states preconditions, transformations, preserved invariants, data-loss or unsupported cases and evidence needed for validation. An unsupported starting version is not silently coerced into a supported version; retain the existing store and provide an appropriate update or recovery route without promising a particular export mechanism.
+    commit_boundary: As a working SQLite direction, a migration step's data transformation, its integrity checks and the durable marker for that completed step share one transaction when the chosen provider and operations support it. Do not advance the marker on an uncommitted or failed transformation. If any necessary operation cannot participate in that boundary, specify a separate durable staged protocol with a recoverable marker and prove its crash ordering before relying on it. A completed intermediate version is not the final version; resume only along a supported path after validating its evidence.
+    preserved_meaning: Maintain source and object identifier kind and scope, Project identities and membership, default-association uniqueness, configuration revisions, fact and coverage contexts, history and clear generation, operation intent and outcomes, and active connection references to the extent those data existed and remain eligible. Re-encoding cannot invent source identity, freshness, access or completeness. A transformation that cannot establish a required association must expose that portion as unavailable or uncertain rather than attach another object's evidence, silently drop the affected Project or fabricate a zero.
+    in_flight_and_admission: Coordinate store opening and migration with Project writes, observation retention, history clear and background work so no producer writes through an incompatible schema or assumes a half-migrated view. Pending operation identities and admission fences remain distinguishable after recovery; a pre-migration request does not become a new observation merely because its storage is resumed. Account or access restrictions continue to apply while migration is pending, and a local migration cannot authorize a source fetch.
+    interrupted: A failed or interrupted migration reports a local recovery limitation. On restart inspect durable schema and operation evidence before retrying the same supported step; do not infer success from an earlier attempted statement or assume rollback when the provider cannot establish it. A transaction outcome and its marker may be uncertain until reconciled under 0071 and 0113. Do not automatically recreate, overwrite or discard the only existing data in order to resume; a separately designed user-authorized destructive recovery is outside this contract.
+    newer_reader: If the durable schema is newer than the installed application can safely interpret, do not perform older-schema writes or migrate it backward by assumption. Preserve the store and identify an update or compatible-reader route when available. Any read-only compatibility requires an explicitly supported mapping and current access checks; otherwise report the local data as unavailable, not empty. This proposal does not promise that every app downgrade or device restore is supported.
+    independent_stores: Database migration, Keychain item accessibility and GitHub authorization have independent outcomes. After an eligible schema upgrade, a missing or inaccessible credential follows 0114 and does not erase Projects or prove no source data exists. Conversely, a readable credential does not justify opening an incompatible database or disclosing cached private data without the applicable access policy.
+    verification: Specify deterministic tests for every supported prior schema and representative data, interrupted steps, failed validation, full or inaccessible storage, concurrent write admission, unknown commit result, newer schema and missing secure item. Separately test actual provider transactions, restart, file protection and supported device upgrades after implementation. Migration fixture success alone is not proof of all historical stores or product readiness.
+    provenance: Retained local data and testability follow owner direction. Schema versions, staged recovery and SQLite transaction boundaries are agent-authored working proposals; no migration, database or device test exists yet.
+  scenarios:
+    supported_upgrade:
+      given: A readable supported old store contains two Projects sharing a Repository, a bound operation result and eligible observation contexts.
+      when: The declared upgrade steps commit and their invariants are validated.
+      then: Both Projects retain their identities and shared membership, the operation result remains attributable, observations retain their context, and the final version is reported only after its durable completion.
+    interruption_before_marker:
+      given: A transactional migration has begun but the process stops before its data changes and version marker commit.
+      when: A later process opens the store and establishes the durable state.
+      then: It resumes from the established supported version or reports uncertainty if the outcome cannot be reconciled; it does not display a fabricated empty portfolio or claim the new version succeeded.
+    incompatible_downgrade:
+      given: A previous application version opens a store upgraded by a later version with an unsupported schema.
+      when: The older version prepares its normal Project writes.
+      then: Those writes are not admitted, the existing store is preserved, and an update or compatible recovery route is offered if available.
+    credential_missing_after_upgrade:
+      given: A supported store upgrade is confirmed but the credential slot referenced by the saved connection is inaccessible after a device restore.
+      when: The operator opens the application.
+      then: Connection availability follows its own recovery policy, Projects are not deleted, and neither GitHub access nor an empty portfolio is inferred from the missing slot.
+    preserved_history_fence:
+      given: The old store contains a confirmed history clear generation and an operation that began before that clear.
+      when: Schema migration completes and the old operation is replayed.
+      then: The clear boundary and original operation context remain applicable; the replay cannot silently repopulate cleared history as a post-clear observation.
+  unresolved:
+  - Define concrete physical schemas, actual supported upgrade paths, provider operations and integrity checks once the data representation is chosen.
+  - Specify any nontransactional migration stages, backup and protected-file behavior and user-authorized destructive recovery before relying on them.
+  - Verify real SQLite, Keychain, process interruption, app downgrade and device-restore behavior on supported iOS environments.
