@@ -62,7 +62,7 @@ acceptance:
 - 'First version: a recognized long press on an eligible Project, Repository, PR or Issue presents that same object as a static preview, with an
   explicit way to open it and a way to dismiss without navigation; access and changed-origin limitations remain applicable.'
 - On dismissal or return retain the originating scope, filter and density and restore position where valid and available; if the origin no longer exists, provide a meaningful available fallback.
-- An accessible non-long-press path to inspect or open the object is required.
+- Accessible non-long-press paths can invoke and dismiss the eligible preview and can also open the object directly; opening directly does not replace preview access.
 acceptance_evidence:
 - criterion: The pilot contract and its boundary scenarios are independently checkable.
   evidence: same_object and dismiss describe expected first-version results for future verification; future_slide is explicitly later. No app test has run.
