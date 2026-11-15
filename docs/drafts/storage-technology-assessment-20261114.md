@@ -1,5 +1,13 @@
 # GitView: выбор направления для локального хранилища
 
+В 0123 добавлены условия для schema, использующей SQLite constraints: проверка
+foreign-key enforcement на каждом connection до транзакции, обязательные
+ненулевые компоненты подтверждённых ключей и явная проверка tagged values.
+SQLite документирует, что `NULL` может обходить ожидаемую проверку UNIQUE,
+composite foreign key или CHECK. См. [foreign keys](https://www.sqlite.org/foreignkeys.html)
+и [CREATE TABLE](https://www.sqlite.org/lang_createtable.html). Это условия
+будущего provider, не проверка конкретной iOS SQLite-сборки или схемы GitView.
+
 Это оценка кандидатов по опубликованной документации и требованиям GitView;
 она не является испытанием на iOS и не заменяет спецификацию recovery. Оценка
 сделана до реализации приложения, по указанию владельца сначала построить
