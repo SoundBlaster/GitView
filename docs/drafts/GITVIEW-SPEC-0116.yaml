@@ -181,5 +181,5 @@ specification:
       then: Neither T1 nor T2 is claimed durably recovered solely from earlier acknowledgements; the affected title is unavailable or unknown and local recovery remains separate from source emptiness.
   unresolved:
   - Select concrete Swift interface shapes and source-to-domain mappings for the chosen GitHub operations, including source-specific errors, identity association and coverage evidence.
-  - Define the physical atomic retention and recovery boundaries and validate access, timestamps and conflict handling with the eventually selected persistence and secure-store design.
+  - Preserve the logical atomicity and recovery outcomes of 0113 and 0126; specify and validate their physical realization, access, timestamps and conflict handling with the provider chosen during implementation.
   - No adapter, live GitHub interaction, persistence, product TDD cycle or native presentation has been implemented or verified.

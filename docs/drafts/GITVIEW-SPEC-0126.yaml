@@ -94,6 +94,6 @@ specification:
       when: The route constructs its work selection from the read.
       then: The known PR may be evaluated with its supported context while coverage remains incomplete or unproven; the boundary does not return a fabricated exact Project count or empty source.
   unresolved:
-  - Choose concrete domain-facing Swift signatures, error categories, cancellation and concurrency ownership after the parent graph and FSD assembly are reviewed.
-  - Specify physical encoding, provider constraints, transaction or staged recovery protocol, access coordinator and migration before declaring this interface independently implementable.
+  - During implementation agree concrete Swift signatures, error categories and cancellation ownership at the domain-facing boundary; preserve the outcomes and responsibilities specified above.
+  - The implementation must specify and verify physical encoding, provider constraints, recovery coordination and migration against 0113 and 0122; exact table layout or provider choice is not required to define this domain-facing contract.
   - Validate actual source mapping, durable restart, protected storage and Keychain behavior separately; no product implementation or executed tests exist.
