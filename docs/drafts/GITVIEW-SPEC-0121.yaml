@@ -16,12 +16,13 @@ depends_on:
 - GITVIEW-SPEC-0081
 - GITVIEW-SPEC-0112
 - GITVIEW-SPEC-0113
-- GITVIEW-SPEC-0114
+- GITVIEW-SPEC-0086
 - GITVIEW-SPEC-0115
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0033.yaml
   local_access_order: docs/drafts/GITVIEW-SPEC-0113.yaml
-  connection_binding: docs/drafts/GITVIEW-SPEC-0114.yaml
+  connection_binding: docs/drafts/GITVIEW-SPEC-0086.yaml
+  optional_binding_protocol: docs/drafts/GITVIEW-SPEC-0114.yaml
   project_route: docs/drafts/GITVIEW-SPEC-0115.yaml
   apple_share_link: https://developer.apple.com/documentation/swiftui/sharelink
   apple_activity_source: https://developer.apple.com/documentation/uikit/uiactivityitemsource

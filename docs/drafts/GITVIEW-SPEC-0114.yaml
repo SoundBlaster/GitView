@@ -19,21 +19,21 @@ sources:
   apple_first_unlock: https://developer.apple.com/documentation/security/ksecattraccessibleafterfirstunlockthisdeviceonly
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A prepared credential candidate is isolated from the active account binding and cannot activate itself by completing a Keychain write.
-- A confirmed active binding ties one verified source identity, current connection generation and recoverable matching credential to the same still-eligible attempt.
-- An interrupted write or uncertain commit is reconciled from both stores, or remains explicitly uncertain without inventing rollback or source authorization.
-- A confirmed disconnect or superseding account generation prevents a late old candidate from becoming active in the continuing store lineage, even if its credential write later completes; an older restored snapshot follows 0122.
-- Known pending access changes restrict affected private data while an ordinary offline restart with a consistent prior context follows 0036.
-- Old or orphan credential cleanup is separately evidenced and cannot invalidate the active binding or claim remote revocation.
+- If this candidate protocol is selected, A prepared credential candidate is isolated from the active account binding and cannot activate itself by completing a Keychain write.
+- If this candidate protocol is selected, A confirmed active binding ties one verified source identity, current connection generation and recoverable matching credential to the same still-eligible attempt.
+- If this candidate protocol is selected, An interrupted write or uncertain commit is reconciled from both stores, or remains explicitly uncertain without inventing rollback or source authorization.
+- If this candidate protocol is selected, A confirmed disconnect or superseding account generation prevents a late old candidate from becoming active in the continuing store lineage, even if its credential write later completes; an older restored snapshot follows 0122.
+- If this candidate protocol is selected, Known pending access changes restrict affected private data while an ordinary offline restart with a consistent prior context follows 0036.
+- If this candidate protocol is selected, Old or orphan credential cleanup is separately evidenced and cannot invalidate the active binding or claim remote revocation.
 specification:
-  objective: Propose a recoverable, non-atomic protocol for binding a validated GitHub credential to local account and admission state.
+  objective: Propose one optional recoverable, non-atomic protocol for binding a validated GitHub credential to local account and admission state.
   ontology_refs:
   - gitview:User
   - gitview:GitHub
   - gitview:Repository
   - gitview:Project
   contract:
-    scope: Apply to the initial one-active-account GitHub App user-credential binding and its token renewal. This working protocol is an agent-authored refinement of 0086 and the SQLite direction in 0113; its phases are persistence responsibilities, not new product ontology entities or evidence of implemented Keychain behavior. Source OAuth, callback validation and token rotation remain governed by 0098.
+    scope: This agent-authored protocol is one possible implementation of the one-active-account credential-binding and renewal invariants in 0086 and the applicable admission guarantees in 0113. Its isolated slots, prepare record and activation phases are conditional on choosing this protocol, not mandatory product behavior. Another design is permitted if it demonstrably satisfies the same applicable security, recovery, disclosure and concurrency requirements; a design must be selected and specified before its implementation. Source OAuth, callback validation and token rotation remain governed by 0098.
     verified_candidate: After a still-valid authorization or renewal has produced a credential and the applicable identity is established, assign a distinct opaque candidate identifier and connection-attempt identity. Establish the credential and identity association from the actual source response and request context before marking the candidate verified. For a renewed token, keep the identity and original generation subject to 0098; a successful remote rotation may already have invalidated the prior pair. Do not persist authorization codes, state, PKCE verifiers, token values or refresh tokens in SQLite, logs or UI.
     durable_prepare: Before a candidate may affect the active binding, durably record its non-secret attempt identifier, captured active generation, confirmed source identity, intended credential slot reference and verified-candidate status in the protected local database. If this prepare cannot be confirmed, the candidate cannot activate. The marker supports recovery; it is not an authentication credential, does not prove current GitHub access, and is itself subject to private-data policy. A pre-exchange callback or lost verifier is not transformed into a verified candidate by restart.
     isolated_secure_slot: Write the candidate credential into a separate per-attempt secure-store slot, never by blindly overwriting the active credential slot. Store the token pair and its candidate-binding metadata together within that protected item, with no secret in the database or ordinary diagnostics. A slot belongs to one candidate and is not repurposed for a different attempt. Reconcile a lost acknowledgement only through a supported secure-store read and binding check; a missing, inaccessible, mismatched or indeterminate item is not success. Exact Keychain item class, attributes, access group and write semantics require target verification.
@@ -48,6 +48,7 @@ specification:
     restored_binding: A database restored from an earlier backup may reference a secure item that is absent, unavailable, mismatched or no longer valid remotely. Preserve the database and distinguish these conditions according to actual Keychain evidence; do not auto-activate a pending candidate or fabricate matching credentials. When a restore or rollback predating an access-changing event is independently established, apply the affected restrictions in 0036 and reconcile or restart authorization before allowing affected work. Do not treat a missing slot alone as proof of the time, origin or occurrence of a restore. No local check guarantees detection of every older snapshot.
     verification: Define deterministic injected tests for interruption before prepare, after prepare, after secure write, after activation commit but before acknowledgement, mismatched or unreadable slots, concurrent disconnect, superseding attempt, late write, cleanup race and remote token rotation. Separately verify actual Keychain semantics, permissions, accessibility, storage restart and GitHub flow on supported devices. A checked candidate or mock test does not establish those behaviors.
     provenance: The owner requested local cached data, background refresh where supported, DI, TDD and autonomous specification. Isolated slots, the local prepare and binding protocol are agent-authored working choices and do not claim a deployed authentication service, secure-store item or application.
+  scenario_scope: The following scenarios apply to this protocol if selected. Equivalent product-relevant security and recovery outcomes remain required under 0086 and applicable parent contracts for any alternative.
   scenarios:
     old_attempt_after_new_binding:
       given: Attempt A's activation acknowledgement is lost, and independently consistent durable evidence later establishes B as the current active binding and prevents A from superseding B, while A's own historical outcome is unreadable.
@@ -82,6 +83,7 @@ specification:
       when: The application recovers the prior local binding.
       then: The prior pair is not assumed valid, no successful renewal or new observation is claimed, and a new user-mediated authorization is offered if source evidence cannot resolve the outcome.
   unresolved:
+  - Compare this protocol with simpler designs that meet 0086 and applicable 0113 guarantees; select and specify one design before treating the relevant implementation leaf as ready.
   - Specify and validate secure-store item uniqueness, generation comparison, writer quiescence and exact recovery evidence on supported iOS versions.
   - Choose Keychain and database protection, backup and migration policy; verify background behavior before and after first unlock.
   - Establish the selected GitHub flow, registration and token rotation on real source and device separately from deterministic tests.
