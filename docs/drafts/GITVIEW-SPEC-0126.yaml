@@ -1,0 +1,79 @@
+id: GITVIEW-SPEC-0126
+title: GitView - Observation retention and recovery interface contract
+kind: spec
+created_at: '2026-11-15T05:07:00Z'
+status: idea
+draft_status: pre_canonical
+refines:
+- GITVIEW-SPEC-0105
+depends_on:
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0102
+- GITVIEW-SPEC-0103
+- GITVIEW-SPEC-0113
+- GITVIEW-SPEC-0116
+- GITVIEW-SPEC-0122
+- GITVIEW-SPEC-0123
+- GITVIEW-SPEC-0124
+sources:
+  parent: docs/drafts/GITVIEW-SPEC-0105.yaml
+  logical_evidence: docs/drafts/GITVIEW-SPEC-0123.yaml
+  source_exchange: docs/drafts/GITVIEW-SPEC-0116.yaml
+  storage_review: docs/drafts/observation-storage-integrity-review-20261115.md
+  autonomy: conversation:gitview/excerpt-77
+acceptance:
+- One fact retention request binds its operation identity, immutable intent, normalized fact and required source and interpretation evidence without exposing credentials.
+- Applied, known non-application, conflict and indeterminate outcomes remain distinguishable for an individual logical operation.
+- A scoped read returns independently recoverable claims and limitations with internally compatible local context; it does not infer a complete source population or current grant.
+- A caller can reconcile a prior operation without confusing its historical result with the fact's current readability or issuing a source request.
+- The boundary supports replacement by controlled network-free and storage-free test doubles while preserving access, ordering and history-clear responsibilities.
+specification:
+  objective: Define the information and outcome contract for retaining, recovering and reconciling normalized observation facts.
+  ontology_refs:
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  contract:
+    boundary_scope: This agent-authored candidate describes one domain-facing observation-store capability; its three operations below are logical responsibilities and do not mandate method names, Swift types, one table per type or a particular asynchronous mechanism. Generic SQLite facilities do not import domain objects. Caller and adapter must not perform GitHub requests, receive user input or hold a database transaction across network or Keychain operations. The credential owner never supplies raw tokens, codes or authorization responses through this interface.
+    retain_input: For one logical fact retention operation, the caller supplies an opaque operation identity, immutable intent binding, normalized subject identity and independently supported Repository association, one field or event meaning and interpretation version, a tagged value or supported semantic absence, its actual source and observation context, applicable event time or revision evidence when available, and the relevant access and retention-admission context. Optional information can be explicitly unknown; missing information required to identify or interpret the particular fact prevents a confirmed accepted fact. A failed or unrequested field is an attempt outcome and cannot be submitted as a known empty field. An unknown source identity or unresolved association follows 0101 and 0124 rather than being relabeled as a confirmed fact. Do not place source credentials or unnecessary raw responses in the request or diagnostics.
+    retention_modes: The operation explicitly identifies whether it retains current-cache evidence, historical evidence, or separately requested effects for each. A history effect additionally carries the applicable history generation captured for the initiating work under 0117. A successful current-cache effect does not itself establish a history sample. A multi-fact source response can be split into individual bound operations; do not imply batch-wide atomicity when outcomes are independently committed. A separately requested coverage claim uses its own 0102 evidence and bound operation, not merely the fact-retention receipt.
+    retention_admission: The caller supplies the supported initiating context, while the storage and access coordinator revalidate locally applicable account, restriction, clear-generation and operation-binding conditions at the actual admission or commit boundary under 0036, 0113 and 0123. A caller's earlier access observation alone is not a permanent grant. If the necessary local ordering cannot be established, do not admit the affected durable effect; unobserved remote access changes remain outside any local atomicity guarantee.
+    retain_result: Return the operation identity and one supported result for the requested effect; applied with its recoverable binding; confirmed terminal non-application or rejection with a safe reason category where established; conflict when binding or comparable evidence cannot validly be reconciled; or indeterminate when application or safe non-application cannot be established. An applied receipt is historical operation evidence and does not prove a future read, current source state or permission. Report a replay of the same compatible identity and immutable intent as its prior result; an incompatible use of that identity is a conflict. Source success, coverage and history effects remain independently attributed. Never return a confirmed rejection solely from a lost acknowledgement if an effect may still commit.
+    read_input: A caller requests the facts required for a captured source, Project or Repository scope and work subject or category, with the actual requested field meanings and any relevant fixed period or reference. The request supplies current disclosure context through an authorized boundary, not a stored old grant; the route owns current membership, filters and calendar context. A storage read does not discover GitHub work, initiate source refresh, compute a complete Project population or interpret an old route as the current one. Exact query pagination and concrete type encodings remain open.
+    read_result: Return each independently interpretable claim with its subject, tagged value or supported absence, original source and observation context, applicable field or event meaning and any supported revision or event time. Return scoped unknown, unavailable, conflict or incomplete portions alongside eligible claims rather than converting an unreadable record into a confirmed empty source. Coverage, source-attempt outcome and retention result are separate attributable results; an exact aggregate alone does not provide object identities. Each returned claim and its required associations come from a consistent local read context or an independently checked compatible version under 0105 and 0123. A result can be internally consistent without being a simultaneous GitHub snapshot.
+    read_disclosure: Recheck the current applicable disclosure before any source-derived identity, fact, reason or revealing count crosses into presentation or sharing under 0036 and 0112. An independently authorized internal recovery operation may inspect the minimum necessary protected metadata to reconcile its own operation under the same policy; it must not leak that metadata to the route or diagnostics. A previously permitted observation, a readable credential binding or a successful local read does not itself renew access. If disclosure context is unavailable or changes, return only a safe limitation where permitted; do not turn restriction into a false field value.
+    reconcile_input_and_result: Given a prior operation identity and its compatible immutable intent binding, recover its durable outcome and associated effect evidence in a consistent local recovery context. Return a supported historical applied or terminal result, a binding conflict, or indeterminate if the outcome or a possible late effect cannot be safely established. A caller seeking the current fact must separately perform an eligible read; reconciliation does not open a route, fetch the source, create a new observation or silently dispatch a retry. If safe compatible redelivery is supported under 0103, it keeps the same logical identity; a deliberately new observation has a distinct source attempt and operation identity even if its value or timestamp matches.
+    division_of_responsibility: Source adapters establish source-specific interpretation and object association under 0101; the caller prepares the immutable bound intent and decides which observation or scope is required. The storage boundary validates the local binding, recoverable associations, ordering and admissible effects and reports their actual results under 0053, 0113 and 0123. A higher composition coordinates access, source, storage and route relevance and applies current disclosure; the Today policy receives only prepared facts and coverage separately. No boundary can manufacture evidence its caller or source did not supply. Physical constraints, cross-process coordination and concrete provider APIs remain subject to their own prerequisites.
+    verification: Define deterministic TDD tests for a successful retain and independent read, compatible retry, conflicting identity reuse, lost acknowledgement, missing interpretation context, competing unordered facts, restricted disclosure and separate coverage or history outcomes. Also test caller behavior when the boundary returns indeterminate or partial data. Verify selected persistent provider, restart and native data protection separately from a fake; no concrete implementation or executed product test is claimed.
+    provenance: The owner selected local observations, visible refresh limitations, DI and TDD. This interface is a working agent proposal and does not select a library, authorize app implementation before the graph is ready, or introduce ontology entities for operation results.
+  scenarios:
+    retained_fact_then_read:
+      given: A permitted typed PR title with source identity, supported Repository association and observation time T1 is bound to operation O, and its cache effect commits with the required evidence and receipt.
+      when: The caller later performs an eligible scoped read.
+      then: The title can be returned with its original context if the fact and required associations remain independently readable; the receipt alone does not prove current GitHub access or population completeness.
+    replay_and_incompatible_intent:
+      given: Operation O durably retained a permitted PR title with an immutable binding.
+      when: The caller redelivers O with the same binding and later attempts to use O for another subject.
+      then: Compatible replay returns O's original outcome without a new observation; incompatible identity reuse reports a conflict rather than creating or replacing the other subject's fact.
+    acknowledgement_lost:
+      given: A fact retention operation may have committed but its acknowledgement and the relevant durable state are temporarily unreadable.
+      when: The caller requests reconciliation.
+      then: Its outcome is indeterminate, no rollback or applied fact is asserted, and a new conflicting operation is not assumed safe merely because the acknowledgement is missing.
+    wrong_context_and_restricted_read:
+      given: A retained PR title references an independently readable but semantically incompatible source context, and another previously retained private fact becomes restricted.
+      when: An app route requests an eligible read after restart.
+      then: The title is limited rather than attributed to the wrong source observation, the restricted value is withheld, and unrelated independently supported permitted claims may remain available with their own contexts.
+    cache_and_history_separate:
+      given: A permitted observation's cache effect commits while its separately requested history effect has an indeterminate outcome after a clear.
+      when: The caller reads the cache and reconciles the history operation.
+      then: The cache fact may be returned under its own evidence and current access, while the history effect remains indeterminate and cannot be inferred from the cache receipt or relabeled with a new generation.
+    coverage_not_implied_by_fact:
+      given: One PR fact and its receipt are recoverable, but the applicable Project coverage evidence is missing.
+      when: The route constructs its work selection from the read.
+      then: The known PR may be evaluated with its supported context while coverage remains incomplete or unproven; the boundary does not return a fabricated exact Project count or empty source.
+  unresolved:
+  - Choose concrete domain-facing Swift signatures, error categories, cancellation and concurrency ownership after the parent graph and FSD assembly are reviewed.
+  - Specify physical encoding, provider constraints, transaction or staged recovery protocol, access coordinator and migration before declaring this interface independently implementable.
+  - Validate actual source mapping, durable restart, protected storage and Keychain behavior separately; no product implementation or executed tests exist.
