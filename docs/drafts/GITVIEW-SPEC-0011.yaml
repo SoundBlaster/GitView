@@ -48,6 +48,10 @@ specification:
       given: A source review assessment reports a change request and sufficiently covered thread evidence independently establishes zero unresolved threads.
       when: The review summary is displayed.
       then: The change request and zero known unresolved threads remain separate.
+    review_ci_different_observations:
+      given: A PR has an earlier permitted approval and successful CI observation for a prior revision. A later observation establishes a new revision and zero unresolved threads but supplies no applicable current approval or CI result.
+      when: The operator inspects the PR's compact review and CI signals.
+      then: The zero-thread fact retains its own supported context; the old approval and CI remain last known for their earlier context or unavailable rather than becoming current approved-and-clear, current green CI or a merge verdict. No particular dismissal or failure is invented.
 acceptance:
 - Count current individual PR checks only when the applicable set and revision are supported, not workflow runs or every historical attempt; retain total as a
   separate count from red/yellow/green and expose incomplete or unknown coverage.

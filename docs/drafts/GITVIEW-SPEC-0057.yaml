@@ -19,6 +19,7 @@ depends_on:
 - GITVIEW-SPEC-0063
 - GITVIEW-SPEC-0064
 - GITVIEW-SPEC-0065
+- GITVIEW-SPEC-0089
 sources:
   parent: docs/drafts/GITVIEW-SPEC-0013.yaml
   agreed_summary: docs/drafts/project-summary-proposal.md
