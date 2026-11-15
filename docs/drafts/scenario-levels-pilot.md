@@ -19,6 +19,21 @@
 сценариев в текущих черновиках GitView. Без отдельной проверки не следует
 считать метки автоматически учитываемыми в метриках или экспорте.
 
+Проба установленного SpecGraph runtime `3593bd75` на синтетическом native
+`bdd_scenarios_v1`: сценарий с `id`, `scenario` и `steps` принят без findings;
+тот же сценарий с дополнительным `level: product` даёт `unsupported_field`
+на `specification.bdd_scenarios[0].level`. Это проверка именно native BDD, а
+не используемых GitView именованных `specification.scenarios`. Она не
+доказывает наличие или отсутствие фильтра в SpecSpace либо HyperPrompt.
+
+В локальном checkout SpecSpace, ветка `experiment/ontology-type-layers`,
+commit `73fb3ff1d844656015c21b3ce2d7ac084230bda5`, прочитан путь
+`viewer/spec_compile.py`: его options управляют objective, acceptance,
+dependencies, prompt и дочерними узлами; этот конкретный renderer не выводит
+`specification.scenarios` и не предлагает фильтр их меток. Это статическая
+сверка указанного пути и версии, не проверка всех вариантов экспорта SpecSpace
+или HyperPrompt. Проектная карта пока не подставляется в экспорт автоматически.
+
 Метки можно менять после содержательного review, а условность функции хранить
 отдельно: технический сценарий необязательной функции не превращает её в
 требование первой версии. Следующий шаг — оценить пример и выяснить, каким
