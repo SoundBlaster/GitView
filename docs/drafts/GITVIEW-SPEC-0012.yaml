@@ -5,6 +5,8 @@ created_at: '2026-11-10T00:00:00Z'
 updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
+canonical_successor: specs/nodes/GITVIEW-SPEC-0012.yaml
+successor_scope: The successor records bounded summary semantics and explicitly leaves Repository-field selection, metric predicates, access and source contracts for further review.
 refines:
 - GITVIEW-SPEC-0001
 depends_on:

@@ -1,0 +1,75 @@
+id: GITVIEW-SPEC-0012
+title: GitView - Repository and Project summaries
+kind: spec
+created_at: '2026-11-15T21:37:00Z'
+updated_at: '2026-11-15T21:37:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0001
+depends_on:
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+- GITVIEW-SPEC-0011
+relates_to:
+- GITVIEW-SPEC-0047
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0012.yaml
+  predecessor_revision: 33887d5
+  project_summary: docs/drafts/project-summary-proposal.md
+  repository_proposal: docs/drafts/repository-summary-proposal.md
+  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+specification:
+  objective: Make current work, attention and outcomes interpretable at Repository and Project scopes.
+  authority_boundary: The Project summary categories are owner-selected; the Repository summary and precise
+    predicates remain working refinements. The selected Project overview categories are owned by 0047;
+    this node records shared counting boundaries and the Repository candidate. It does not select a merge-readiness
+    rule, source implementation or ontology approval.
+  requirements:
+    repository: A Repository work summary makes supported permitted open PR counts, draft subset and open
+      Issue counts distinguishable, with applicable CI, review, unresolved-thread and blocked-Issue attention.
+      Its current facts retain source scope, coverage and freshness; each supported distinct source-confirmed
+      identity is counted once within each applicable identity-based Repository measurement, even when
+      observed on multiple pages; one PR may still contribute to different overlapping signals.
+    project: A Project summary covers its applicable member Repositories under 0047, including a Repository
+      also present in another Project. Restrictions and incomplete member observations affect what can
+      be disclosed or asserted as complete.
+    units: Distinguish affected PRs from individual failed checks and affected Repositories. Attention
+      categories may overlap; do not add them as independent problems. A linked PR and Issue are separate
+      source objects, not automatically separate tasks.
+    outcomes: Distinguish merged PRs and closed Issues by supported reason for a selected period from
+      current-state counts. Keep scope, observation context and incomplete evidence visible; closure alone
+      does not establish completion.
+    navigation: An actionable signal retains its actual condition and scope when opening the corresponding
+      permitted object selection. A count of checks, threads or events is not automatically the number
+      of resulting object cards.
+    uniqueness: When a unique portfolio-wide count is asserted, count confirmed Repository and object
+      identities once, even if a Repository belongs to multiple Projects. This does not remove its contribution
+      from each applicable Project summary.
+    candidate_ready: A checks-and-review-passed selection is conditional on a separately accepted applicable
+      predicate and is not a guarantee of merge readiness. Do not fabricate it from missing observations.
+  scenarios:
+    overlap: A single PR has failed CI, requested changes and an unresolved thread. It contributes to
+      each supported signal but is not described as three separate PRs or independent tasks.
+    units: Two permitted PRs in different Repositories have five supported failed checks. The summary
+      distinguishes five checks, two PRs and two Repositories; the corresponding selection contains the
+      matching PRs rather than five implied cards. If facts change or coverage is incomplete at opening,
+      preserve that context and limitation instead of forcing the earlier count or claiming a complete
+      match.
+    partial: A Project includes five Repositories but one lacks the relevant observation. Available values
+      retain their incomplete scope rather than counting the unobserved Repository as zero.
+  open_questions:
+  - Exact Repository summary field selection, metric predicates, applicable source evidence and time periods.
+  - Partial-coverage presentation, privacy policy and signal-selection behavior when observations change.
+  - Definition and applicability of a checks-and-review-passed predicate.
+  ontology_status: Repository, Project, PullRequest, Issue and Metric use draft vocabulary; summaries
+    do not add a new domain entity.
+acceptance:
+- Supported current work and attention retain their Repository or Project scope, units, coverage and freshness.
+- Project membership overlap and any claimed unique portfolio count follow confirmed identities without
+  double counting.
+- Overlapping attention signals and different units are not added as independent tasks or substituted
+  for object-card counts.
+- Period outcomes remain distinct from current-state counts and unavailable coverage is not presented
+  as confirmed zero.
