@@ -36,7 +36,7 @@ sources:
 acceptance:
 - An authorized operator can discover repositories, form Projects, open a Project and inspect its PR and
   Issue work.
-- Today presents current work while explicit filters and zoom preserve the intended scope; confirmed merged PRs leave unfinished work and contribute to supported metrics; treatment of other closed objects remains open.
+- Today presents current work while explicit filters and zoom preserve the intended scope; confirmed merged PRs leave unfinished work and contribute to supported metrics; unfiltered Today includes all lifecycle states and explicitly selected filters persist.
 - The operator can inspect an eligible card through a first-version preview and open its overview; an eligible associated GitHub link can be opened or shared under the source-handoff policy.
 - Current CI, review and thread counts remain distinct; incomplete, stale, failed and unauthorized data
   are not represented as successful empty data.
@@ -47,7 +47,7 @@ acceptance_evidence:
 - criterion: Acceptance scenarios and their verification obligations are reviewable.
   evidence: The scenarios below and linked nodes describe expected outcomes. Executable procedures, fixtures and applicable integration or device evidence remain to be specified; no app build, UI run or source integration has been observed.
 specification:
-  current_intent_boundary: The owner clarified Today means current work, with history in aggregate metrics and charts. Prior same-day-retention and historical-view scenarios below are superseded candidates; the owner selected the merged-PR metric outcome; the policy for other closed objects remains open. Other pilot outcomes remain applicable.
+  current_intent_boundary: The owner clarified Today means current work, with history in aggregate metrics and charts. Prior same-day-retention and historical-view scenarios below are superseded candidates; the owner selected the merged-PR metric outcome; the later owner clarification selects an all-states unfiltered Today grid and persistent filters. Source range and persistence scope remain open. Other pilot outcomes remain applicable.
   objective: Define the coherent first useful GitView pilot and its observable end-to-end outcomes.
   ontology_refs:
   - gitview:User

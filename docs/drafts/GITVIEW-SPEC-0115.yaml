@@ -48,7 +48,7 @@ acceptance:
 - The assembly has observable acceptance scenarios and injected boundaries, but this specification does not claim a product, completed TDD cycle or device behavior.
 - A current summary signal carries its own aggregation context into an independently evaluated work selection without making either pure decision own navigation or effects.
 specification:
-  current_intent_boundary: The Today-day inclusion and calendar-change examples below describe a superseded selection candidate; they do not require a past-state viewer or retention of completed cards. Confirmed merged PRs leave current unfinished work and contribute to supported metrics; other closed-state treatment remains open. The route must still preserve selected Project, object identity, access, independent coverage, partial errors and navigation context.
+  current_intent_boundary: The Today-day inclusion and calendar-change examples below describe a superseded selection candidate; they do not require a past-state viewer or retention of completed cards. Confirmed merged PRs leave current unfinished work and contribute to supported metrics; unfiltered Today includes all applicable states and saved filters may narrow it; source range and persistence scope remain open. The route must still preserve selected Project, object identity, access, independent coverage, partial errors and navigation context.
   objective: Assemble the Project to Today to preview to original-source journey from the selected policy, data, navigation and platform contracts.
   ontology_refs:
   - gitview:User

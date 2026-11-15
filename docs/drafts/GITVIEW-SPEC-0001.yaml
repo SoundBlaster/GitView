@@ -241,9 +241,9 @@ specification:
     selected_timeline_grid:
       default: Today is the current picture of work in the selected scope, not a calendar-day or past-state viewer.
       today: Include applicable unfinished work regardless of when it was created; track historical aggregate measurements and charts separately.
-      today_outcome_working_interpretation: An applicable confirmed merged PR leaves the current unfinished-work selection; its confirmed outcome is reflected in the appropriate metric when sufficient evidence supports it. This does not decide treatment of unmerged closures or closed Issues, metric period, or how to present uncertain source facts.
+      today_outcome_working_interpretation: An applicable confirmed merged PR leaves the current unfinished-work selection; its confirmed outcome is reflected in the appropriate metric when sufficient evidence supports it. The later owner clarification includes merged PRs, unmerged closures and closed Issues in unfiltered Today; metric period, source range and uncertain source presentation remain open.
       filtering: Users can explicitly exclude states such as Merged and Closed to focus on open work.
-      undecided: Treatment of other closed objects, chart periods, and the specific filter control. A historical Project-state viewer is not mandatory scope.
+      undecided: Source range, saved-filter scope, chart periods, and the specific filter control. A historical Project-state viewer is not mandatory scope.
     first_version_preview: Long-press Peek and Pop on cards, showing a preview before opening the object.
     later_preview_direction: A single sliding rich preview changes details with the object under the finger,
       allowing inspection without leaving the dense bird's-eye view. Hover is a possible pointer counterpart,
