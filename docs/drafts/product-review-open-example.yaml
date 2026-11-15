@@ -1,0 +1,34 @@
+artifact_kind: gitview_review_example
+authority: author_assessment_only
+profile: product_clarification_draft
+snapshot: a4261efd34027a911ecba2cb43f5def3f104bc09
+criterion:
+  id: ready-open-pr-meaning
+  question: Has the owner-selected meaning of ready for an open PR been established?
+result: open
+evidence:
+- kind: specification_text
+  path: docs/drafts/GITVIEW-SPEC-0125.yaml
+  sha256: 7d4e22db3b544eef14ff23408e4f471d2153e5a45c058a1544a641aa253730f3
+  locator: specification.contract.distinction
+  text: The owner asked what is ready without separately defining review readiness,
+    completion or merge eligibility. As an agent-authored candidate, first expose
+    established lifecycle outcomes and a narrowly named PR review-stage selection;
+    this supports useful inspection without declaring that it fully resolves the owner's
+    broader ready-work need. These are properties or selection predicates over existing
+    objects, not new ontology entities or actor actions.
+- kind: specification_text
+  path: docs/drafts/GITVIEW-SPEC-0125.yaml
+  sha256: 7d4e22db3b544eef14ff23408e4f471d2153e5a45c058a1544a641aa253730f3
+  locator: specification.unresolved[0]
+  text: Decide whether to include this optional filter and evaluate its discoverability
+    and usefulness; whether it addresses the owner's broader intended ready-work view
+    remains unconfirmed.
+limitations:
+- Text records a candidate review-stage selection and an unresolved question; it does
+  not prove that no relevant decision exists outside the inspected sources.
+- This is a manual attribution and not an automated verification of the entire conversation.
+not_established:
+- owner_approval
+- implementation_readiness
+- production_readiness
