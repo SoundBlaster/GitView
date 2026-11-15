@@ -39,7 +39,7 @@ Project, а тот же Repository и его membership в других Projects
 
 Подробные хеши и первоначальный ограниченный результат — в [verification.json](verification.json);
 поле `candidate_status` отражает момент до выбора рабочего контекста. Текущая
-project selection указывает на draft.6, draft.5 сохранён для сравнения.
+project selection теперь указывает на draft.12; draft.5 и draft.6 сохранены для сравнения.
 Основание выбора и границы — в [working-context decision](../../review/draft6-working-context-decision.md).
 Отдельный [pilot привязки](../../pilots/membership-removal-binding/README.md)
 сравнивает ссылки на новый action в draft.5 и draft.6 без изменения исходной spec.

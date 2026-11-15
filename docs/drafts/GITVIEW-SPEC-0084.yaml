@@ -56,6 +56,10 @@ specification:
       given: R was re-added to P after its association was removed, and another valid Project Q is now R's default.
       when: Default setup for R is confirmed.
       then: Q remains the default or a recoverable conflict is reported under 0052; P is not silently assigned as the default and no second default is established.
+    same_result_different_cause:
+      given: A confirmed configuration of P contains R and S, and Q contains R. One removal of R is submitted with an indeterminate acknowledgement; a separate authorized edit may also remove R.
+      when: A later confirmed configuration of the same P contains S but not R, without operation-specific commit evidence.
+      then: The supported observations establish the membership difference, but neither the submitted operation nor its actor is credited with the removal solely from that difference. Reconcile the operation under 0082 and 0083; Q and the source Repository are not changed by that inference.
     indistinguishable_intermediate_changes:
       given: Two comparable confirmed observations both contain R in P, with no evidence of intervening changes.
       when: The observations are compared.
