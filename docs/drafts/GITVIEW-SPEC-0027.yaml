@@ -20,10 +20,10 @@ acceptance:
 - Today includes each source-confirmed matching object once when any inclusion rule is confirmed; unresolved identity is not represented as confirmed uniqueness.
 - An unknown input alone cannot establish a confirmed match, a confirmed non-match or an empty unobserved source; an independently true inclusion or false required condition can still determine the applicable result.
 - Explicit filter exclusions affect the selection without changing stored objects or rewriting source timestamps.
-- Today represents current work; calendar-day inclusion and completed-card retention are not selected product rules.
+- Today represents current work: a PR with applicable confirmed merged lifecycle is excluded from current unfinished work and its supported outcome is reflected in the relevant metric. Calendar-day inclusion and the treatment of other closed objects remain open.
 - A complete Today selection requires evidence that the selected population and all applicable inclusion alternatives are adequately covered, not merely that one source list was fetched successfully.
 specification:
-  current_intent_boundary: The owner clarified Today as the current picture of work, not a calendar-day selection. The old creation and same-day event alternatives, associated formulas and scenarios below describe a superseded candidate; they must not be treated as the accepted inclusion policy. Preserve identity, uncertainty, filters, coverage and access principles. Inclusion and retention of completed cards remain open.
+  current_intent_boundary: The owner clarified Today as the current picture of work and approved removing a confirmed merged PR from current unfinished work while reflecting its supported outcome in metrics. The old creation and same-day event alternatives, associated formulas and scenarios below describe a superseded candidate, not the accepted inclusion policy. Preserve identity, uncertainty, filters, coverage and access principles. Treatment of other closed objects remains open.
   objective: Define a checkable Today selection over known work and explicit filters while retaining uncertainty.
   ontology_refs:
   - gitview:Project
@@ -31,6 +31,7 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
+    current_merged_pr_decision: For a confirmed PR identity within the selected scope, an applicable source-supported merged lifecycle is a confirmed non-match for the current unfinished-work selection; the confirmed merge outcome may contribute to its separately scoped metric when its applicable time, access and coverage support that measurement. This does not decide other closed states or turn a merge event into a metric without applicable metric evidence. Missing from a partial response, an unavailable field, an old observation or a failed refresh alone do not establish a current merge or an exclusion. Retain permitted last-known facts with their actual context or classify the current result as uncertain, and keep population coverage independent.
     identity: Distinguish each source-confirmed PR or Issue by source object identity within its repository; source numbers are not globally unique. A linked PR and Issue are distinct objects and repeated inclusion rules do not duplicate a confirmed object's card. If identity cannot establish whether two observations refer to the same object, preserve that uncertainty rather than claiming two confirmed distinct objects or silently merging by title.
     source_representation: Candidate 0101 distinguishes a GitHub REST Issues representation marked as a PR from an independently identified Issue. Different source ID kinds retain their meaning; an untyped or unassociated record cannot silently become a confirmed second work object or a confirmed exclusion.
     today: Under the agent-proposed local-day interpretation, the day is the interval from the start of the device local calendar day to the start of the following local day, inclusive at the start and exclusive at the end. Re-evaluate on local day or time-zone change without rewriting stored timestamps. The product time-zone interpretation remains open under 0049; the examples using local days illustrate this candidate rather than establish an owner decision.
@@ -48,6 +49,14 @@ specification:
     boundary: This defines the Today selection only. Older completed history, ordering and how unknown candidates are visually arranged require separate refinement. Source fetch, exact fields and pagination are not selected here.
     provenance: The inclusion of unfinished and same-day work and explicit filtering follow the owner discussion; the three-valued evaluation rules are agent-authored proposals.
   scenarios:
+    confirmed_merge_leaves_current_work:
+      given: A permitted confirmed PR in the selected Project was previously observed open; a later applicable source observation establishes its merged lifecycle and a merge outcome supported for the relevant metric scope.
+      when: Current unfinished work and the merge metric are reevaluated for their respective contexts.
+      then: The PR no longer matches current unfinished work, its source object is not deleted, and the outcome contributes to the metric only when its own scope, time, access and evidence support that claim. Neither the open-work count nor a complete metric total is inferred without independent coverage.
+    missing_pr_after_partial_refresh_does_not_prove_merge:
+      given: A previously observed open permitted PR is absent from a later partial response and no applicable confirmed merge or current lifecycle is available.
+      when: Current work is reevaluated.
+      then: The absence does not establish merge, deletion or a metric increment; the permitted previous observation remains attributable to its original time and the current selection or coverage remains uncertain as appropriate.
     open_only_refresh_after_completion:
       given: One Repository has 100 previously observed open PRs and a later source-supported observation covers only the current open-PR list containing five of them; no merge or closure events for the other 95 are established.
       when: Unfiltered Today is evaluated after that refresh.

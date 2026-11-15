@@ -17,6 +17,10 @@ sources:
     sketch_revision: a748240310ba46aca7e16424b35f2b3c
     node: grid-today-current-work
     recorded_commit: d349635799865bb14d2bdf42950991ad05baddcf
+  merged_pr_current_work_decision:
+    path: conversation_memory/sketches/gitview/revisions/a939a7dabd094fe29fa89305b56695d6/notes.hc
+    sketch_revision: a939a7dabd094fe29fa89305b56695d6
+    node: current-work-merge-metrics-decision
   project_sources_commit: 5cd14e21b2fb04f0111db9b670b951af92fc66ef
   domain_model: ontology/domain-model.md
   completeness_audit: ontology/review/completeness.md
@@ -235,9 +239,9 @@ specification:
     selected_timeline_grid:
       default: Today is the current picture of work in the selected scope, not a calendar-day or past-state viewer.
       today: Include applicable unfinished work regardless of when it was created; track historical aggregate measurements and charts separately.
-      today_outcome_working_interpretation: Whether and how long a newly completed card remains in the current view is an open product decision. The owner's earlier 100-PR example motivated completion visibility; the latest clarification does not select a retention duration or default.
+      today_outcome_working_interpretation: An applicable confirmed merged PR leaves the current unfinished-work selection; its confirmed outcome is reflected in the appropriate metric when sufficient evidence supports it. This does not decide treatment of unmerged closures or closed Issues, metric period, or how to present uncertain source facts.
       filtering: Users can explicitly exclude states such as Merged and Closed to focus on open work.
-      undecided: The inclusion and retention of completed cards, chart periods, and the specific filter control. A historical Project-state viewer is not mandatory scope.
+      undecided: Treatment of other closed objects, chart periods, and the specific filter control. A historical Project-state viewer is not mandatory scope.
     first_version_preview: Long-press Peek and Pop on cards, showing a preview before opening the object.
     later_preview_direction: A single sliding rich preview changes details with the object under the finger,
       allowing inspection without leaving the dense bird's-eye view. Hover is a possible pointer counterpart,

@@ -85,13 +85,13 @@ sources:
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - The end-to-end path preserves source identity, Project membership and explicit scope from setup to overview, preview and source navigation.
-- Current work and explicit filters preserve source records; the treatment and retention of completed cards remain open.
+- Current work and explicit filters preserve source records; confirmed merged PRs leave unfinished work and contribute to supported metrics; treatment of other closed states remains open.
 - Partial, stale, failed and explicitly denied data remain distinguishable throughout the overview and recovery paths.
 - Shared Repositories are included in each relevant Project and deduplicated in portfolio-wide unique totals.
 - If the optional open non-draft PR filter is selected for release, it remains distinct from unrestricted Today, review assignment and merge eligibility throughout preview and return.
 - Evidence distinguishes a planned scenario, a deterministic test with doubles, a real source integration observation and a native device observation.
 specification:
-  current_intent_boundary: Cross-branch examples asserting automatic same-day retention, historical object viewing or the old calendar Today rule describe a superseded candidate, not accepted first-version outcomes. Preserve independently applicable identity, scope, access, incomplete observation and safe recovery requirements; completed-card treatment remains open.
+  current_intent_boundary: Cross-branch examples asserting automatic same-day retention, historical object viewing or the old calendar Today rule describe a superseded candidate, not accepted first-version outcomes. Preserve independently applicable identity, scope, access, incomplete observation and safe recovery requirements; confirmed merged PRs leave unfinished work and contribute to supported metrics; treatment of other closed states remains open.
   objective: Combine selected user journeys into verifiable expectations across the refined specification branches.
   ontology_refs:
   - gitview:User

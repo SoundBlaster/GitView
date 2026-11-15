@@ -39,7 +39,7 @@ acceptance:
 - The first product pass does not require choosing a unique storage scheme, API query, protocol, UI control or module arrangement where alternatives can satisfy the product outcomes.
 - Explicit owner-requested qualities including testability, dependency injection, TDD and suitable mocks remain visible as cross-cutting expectations for later development.
 specification:
-  current_intent_boundary: The owner clarified Today as the current picture of work and historical aggregate metrics and graphs, without a required past-state viewer. Calendar-day Today and mandatory same-day retention examples below are historical candidates; completed-card treatment remains open.
+  current_intent_boundary: The owner clarified Today as the current picture of work and historical aggregate metrics and graphs, without a required past-state viewer. Calendar-day Today and mandatory same-day retention examples below are historical candidates; confirmed merged PRs leave unfinished work and appear in supported metrics; treatment of other closed objects remains open.
   objective: Clarify the owner's product intent enough to discuss user-visible consequences and relationships before implementation-specific refinement.
   ontology_refs:
   - gitview:User

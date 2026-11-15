@@ -26,8 +26,8 @@ sources:
     package: local.gitview.domain@0.2.0-draft-composition.5
 acceptance:
 - The unfiltered Today view includes unfinished PRs and Issues, including those created before today.
-- Today represents current work. Inclusion and retention of completed cards remain open; historic aggregate metrics do not require a past-state viewer.
-- Explicit filters may narrow the applicable current-work selection; the default treatment of completed lifecycle states remains open.
+- An applicable confirmed merged PR leaves the current unfinished-work selection; its confirmed outcome is reflected in the appropriate metric when supported. Other completed-card rules remain open; historic aggregate metrics do not require a past-state viewer.
+- Explicit filters may narrow the applicable current-work selection; the default treatment of other closed lifecycle states remains open.
 - Each source-confirmed PR or Issue occurs once in a selection, retains its repository identity and is not
   conflated with a linked object; unresolved identity is not represented as confirmed uniqueness.
 - Filters, scope and selected time group remain identifiable and survive density changes and return navigation.
@@ -43,7 +43,7 @@ acceptance_evidence:
   evidence: cross_repository_identity, reopened_item and incomplete_observation are expectations for future
     verification.
 specification:
-  current_intent_boundary: The owner clarified Today as the current work picture in conversation_memory/sketches/gitview revision a748240310ba46aca7e16424b35f2b3c, node grid-today-current-work. Calendar-day inclusion, automatic same-day retention and a historical work viewer in selection_contract, filters, scenarios and acceptance_evidence below are superseded candidates, not first-version obligations. Preserve the general identity, filters, uncertainty and access outcomes; the completed-card rule remains open.
+  current_intent_boundary: The owner clarified Today as the current work picture and approved removing confirmed merged PRs from current unfinished work while reflecting their outcomes in supported metrics, in sketch revision a939a7dabd094fe29fa89305b56695d6. Calendar-day inclusion, automatic same-day retention and a historical work viewer in selection_contract, filters, scenarios and acceptance_evidence below are superseded candidates, not first-version obligations. Preserve identity, filters, uncertainty and access; rules for other closed objects remain open.
   objective: Let the user see work and its completion in the selected Project or Repository and time group,
     with explicit filters.
   ontology_refs:
@@ -52,6 +52,7 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   selection_contract:
+    owner_merged_pr_rule: For an identified PR in the selected Project or Repository, a source-supported applicable confirmed merged lifecycle removes that PR from the current unfinished-work selection without deleting the source object. Reflect a supported merge outcome in the applicable metric only when its identity, scope, time, access and coverage permit the stated claim. A partial response or omission alone does not establish merge or disappearance. An unavailable or stale lifecycle does not become a confirmed current merge; retain any permitted last-known observation with its time or represent the selection as uncertain. This rule does not decide closed-without-merge PRs or closed Issues.
     scope: 'The input is the selected Project''s member repositories or a selected Repository. Show each
       object in its source Repository context. A PR and a linked Issue are different objects; equal numbers
       in different repositories do not identify the same object.
