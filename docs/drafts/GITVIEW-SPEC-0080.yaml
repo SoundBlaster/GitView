@@ -84,6 +84,10 @@ specification:
       given: An older Repository observation has Node ID N1 and a later observation has a different Node ID N2, with no valid source association, numeric ID evidence or supported migration lookup connecting them.
       when: GitView reconciles their identities.
       then: The strings alone do not prove either a match or distinct source Repositories for the migration scenario; no membership or history is transferred by guess.
+    locator_bridge_with_unassociated_graphql_parent:
+      given: A source-confirmed REST lookup associates Repository R with numeric ID 42 and Node ID N1. A later GraphQL response returns a Repository parent N2, but no source-supported alias or association relates N2 to N1.
+      when: A caller attempts to assign the GraphQL parent's work facts to R.
+      then: It does not use a matching address or the response's arrival to assume an identity match or distinction; the work association remains unresolved until sufficient source evidence is available. The earlier R membership and REST observation retain their own context.
     generic_update_time:
       given: Two observations of the same Repository have different addresses and different generic update timestamps, but no documented source rule establishes those timestamps as ordering the address changes.
       when: GitView reconciles the observations.
