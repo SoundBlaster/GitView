@@ -250,10 +250,6 @@ specification:
       given: Project P has two confirmed Repositories with 100 distinct permitted open PRs in total, and relevant Today, lifecycle and identity coverage is sufficient.
       when: The operator enters P's all-members Today work collection, 95 PRs merge today, then the operator previews and opens one of those PRs and returns without applying a lifecycle exclusion.
       then: The selection still contains the same 100 PRs subject to the stated observations, the 95 merged PRs retain their distinct identities and current source states, the opened PR retains its Repository and Project context, and return preserves the collection's valid scope, filters, density and identity-based position.
-    selected_fields_after_compact_preview:
-      given: A permitted PR preview omits its available requested reviewers and an Issue preview omits its available assignees, milestone and related-work facts because of space.
-      when: The operator opens each same object through an accessible route.
-      then: The corresponding selected available facts and their independent coverage can be inspected in GitView, while individual review threads, checks and Issue comments are not required and no relationship is presented as an actor's motive.
     project_summary_at_dense_scale:
       given: A two-Repository Project is represented at dense scale; one Repository has known open PRs and the other's CI scope is unobserved.
       when: The operator opens the same Project's summary and then requests its open-PR history without a pinch or long press.
@@ -381,11 +377,11 @@ specification:
     pr_selected_facts_after_compact_preview:
       given: A permitted identified PR appears in a dense Project grid. Its static preview shows its title and a CI signal; independently supported author, requested reviewers, branch names, change counters and original body are available for the same PR, while the review assessment is unavailable.
       when: The operator opens that PR's overview through an accessible route and inspects its selected facts.
-      then: The available selected context, counters and original body are reachable in GitView with their own source and observation contexts. The missing review assessment is distinguishable from approval or no reviews, the preview does not substitute another PR, and an eligible source link can be opened separately rather than being the only path to already available selected facts.
+      then: The available selected context, counters and original body are reachable in GitView with their own source and observation contexts. The missing review assessment is distinguishable from approval or no reviews, the preview does not substitute another PR, and an eligible source link can be opened separately rather than being the only path to already available selected facts. Individual review threads and check details are not required.
     issue_selected_facts_after_compact_preview:
-      given: A permitted Issue appears in a Project grid with a compact preview. Its author, assignees and one related PR are supported; its relationship population and direct-child closed count remain incomplete, and an available original body contains no recognized structured sections.
+      given: A permitted Issue appears in a Project grid with a compact preview. Its author, assignees, milestone and one related PR are supported; its relationship population and direct-child closed count remain incomplete, and an available original body contains no recognized structured sections.
       when: The operator opens the same Issue's overview and inspects its selected details.
-      then: The supported roles and related PR are accessible with their actual scope, incomplete relationships and unknown child count are not presented as empty or zero, and the original body remains available without invented sections. A related Repository outside the Project is not added to its membership, and individual discussion contents are not required.
+      then: The supported roles, milestone and related PR are accessible with their actual scope, incomplete relationships and unknown child count are not presented as empty or zero, and the original body remains available without invented sections. A related Repository outside the Project is not added to its membership, the relationship is not presented as an actor's motive, and individual discussion contents are not required.
     description_edit_after_assessment:
       given: A participating PR had a structurally conforming description and GitView displayed its original permitted body.
       when: The PR description changes but the new body has not yet received an applicable external assessment.
