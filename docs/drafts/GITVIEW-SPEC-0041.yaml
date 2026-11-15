@@ -19,6 +19,7 @@ sources:
   github_graphql_pull_request: https://docs.github.com/en/graphql/reference/pulls
   overview_query_candidates: docs/drafts/object-overview-graphql-operation-candidates-20261115.md
   overview_query_schema_validation: docs/drafts/evidence/github-public-schema-overview-validation-20261115.json
+  selected_field_source_readiness: docs/drafts/selected-field-source-readiness-20261115.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - A PR overview retains the exact source Repository context and selected available source facts.

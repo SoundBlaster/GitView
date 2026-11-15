@@ -18,6 +18,7 @@ sources:
   selected_fields: docs/drafts/issue-ontology-options.md
   overview_query_candidates: docs/drafts/object-overview-graphql-operation-candidates-20261115.md
   overview_query_schema_validation: docs/drafts/evidence/github-public-schema-overview-validation-20261115.json
+  selected_field_source_readiness: docs/drafts/selected-field-source-readiness-20261115.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
 - An Issue is identified in its source Repository and presents selected available identity, state, description and participant fields without inventing missing values.

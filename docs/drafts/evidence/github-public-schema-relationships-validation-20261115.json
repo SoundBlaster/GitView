@@ -40,5 +40,6 @@
     "no GitHub request or permission check",
     "schema snapshot is not a live endpoint",
     "schema loaded with assume_valid"
-  ]
+  ],
+  "operation_hash_input": "UTF-8 fenced GraphQL body including its final newline"
 }
