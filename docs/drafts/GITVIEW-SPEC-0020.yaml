@@ -85,8 +85,9 @@ specification:
     offline_resume:
       given: The app has previously stored observations and the network is unavailable.
       when: The operator reopens a Project and requests refresh.
-      then: Known data and its last-success time remain visible with a refresh failure and without claiming
-        unavailable data is current.
+      then: Previously observed data remains visible only where current local access policy permits it, with
+        its last-success time and the applicable refresh limitation. Restricted or unverifiable private data
+        is not exposed, and unavailable data is not claimed current.
     overlap:
       given: One repository belongs to two Projects.
       when: Each Project and the portfolio summary are shown.

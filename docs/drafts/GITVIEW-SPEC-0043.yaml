@@ -314,6 +314,18 @@ specification:
       given: P contains R and S with R associated as default, and Q also contains R.
       when: R is durably removed from P and later explicitly re-added to the same P.
       then: R is present in both P and Q, the old removal remains historical if supported by evidence, and P's removed default association is not inferred merely from current membership.
+    project_deletion_review_and_shared_repository:
+      given: Projects P and Q both contain confirmed Repository R, P is R's default, and the operator reviews deletion of P at a supported configuration version. Independently retained R observations remain permitted for Q.
+      when: The operator confirms deletion and the matching local operation is durably applied without an intervening P edit.
+      then: The overview removes P and its default association, Q retains its identity and membership of R, and permitted R observations remain available in Q with their own context. GitHub R is not deleted, a global history clear is not claimed, and the actual route follows 0024. A separate explicit setup is needed to establish a later default for R.
+    project_delete_after_configuration_change:
+      given: The operator reviews deletion of P at V1 while Q independently shares a Repository with P; another confirmed edit changes P to V2 before the deletion reaches its effect boundary.
+      when: The V1 deletion is evaluated and the operator returns to the overview.
+      then: P at V2 is not deleted by the stale confirmation, a conflict and permitted route to review its current configuration are discoverable, and Q and the shared source Repository remain unchanged. A new deletion requires a new reviewed intent; an indeterminate original operation is reconciled first.
+    default_setup_review_changes_in_flight:
+      given: Setup for R is reviewed as creating a new default Project, but before that entry's effect another operation establishes a valid default Project Q for R.
+      when: The original entry reaches its coordinated boundary and the operator inspects its result.
+      then: It does not create a second default or silently substitute Q for the reviewed creation; the changed outcome is available for review where permitted. A later reuse requires an explicit new intent after any unresolved earlier effect is reconciled, and unrelated completed batch entries remain saved.
     review_conflicting_project_edit:
       given: The operator drafted removal of Repository B from Project P while another confirmed edit added Repository C.
       when: The operator reviews the newer saved configuration and explicitly retries removal of B against it.
