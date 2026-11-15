@@ -20,6 +20,7 @@ sources:
 specification:
   authority_boundary: Common provenance and evidence boundary follows GITVIEW-SPEC-0001.
   objective: Maintain a named GitView project containing one or more GitHub-managed repositories.
+  default_design_boundary: The one-Project-per-Repository default is owner-selected. The persistent association, reuse and recovery semantics in 0025, 0045 and 0052 are an agent-authored working design, not an independently selected owner requirement; see project-default-association-review-20261115.md. Any alternative must preserve agreed membership and safe operation outcomes.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
