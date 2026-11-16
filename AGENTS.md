@@ -98,11 +98,10 @@ Use `.codex/skills/specgraph-project-ontology/SKILL.md` when discussing,
 drafting or reviewing domain terminology and relationships. Its installed
 version is supplied by the runtime above. Project terminology in notes and
 drafts is not automatically an accepted ontology; preserve gaps and sources.
-Read [the draft.13 package guide](ontology/candidates/domain-v0.2.0-draft.13/README.md)
+Read [the approved 0.2.0 package guide](ontology/packages/gitview/versions/0.2.0/README.md)
 for the working ontology context. `specgraph.project.yaml` selects its
 `composition-context.yaml` for preparing the specification graph. The owner accepted the selected local package content as a project baseline;
-see `ontology/review/owner-acceptance-20261116.md`. Its technical metadata
-remains draft. Structural checks do not establish actor, motive or causal
+see `ontology/review/owner-acceptance-20261116.md`. Its local package metadata is approved; imported packages retain their own status. Structural checks do not establish actor, motive or causal
 facts. Draft.9, draft.8, draft.7, draft.6, draft.5 and draft.4 remain available as controls. The former selection at `ontology/context.yaml` and the original
 `ontology/pilots/motivation-composition/` are available as controls.
 

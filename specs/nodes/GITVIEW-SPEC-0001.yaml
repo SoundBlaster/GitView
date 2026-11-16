@@ -35,14 +35,14 @@ sources:
   revoked_private_data_decision:
     path: conversation_memory/sketches/gitview/revisions/b0795ae580e94ba0be8c59cefcbd3a97/notes.hc
     node: revoked-private-display-decision
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
   objective: Give a person managing many GitHub repositories a compact native iOS overview of current
     PR and Issue work, including work produced by coding agents, attention and outcomes, with a path to
     the original GitHub objects.
-  authority_boundary: This root records the owner's selected product direction. Linked drafts and the
-    selected ontology package remain drafts; this node does not accept their full contents, assert that
-    the application exists, or declare any branch ready for implementation. Refinements must distinguish
+  authority_boundary: This root records the owner's selected product direction. Linked drafts remain drafts;
+    the owner accepted the selected local ontology separately. This node does not accept the drafts, assert
+    that the application exists, or declare any branch ready for implementation. Refinements must distinguish
     owner decisions, proposals and open questions.
   product_scope:
     organization: GitView Projects each contain one or more GitHub repositories. A repository may belong
@@ -114,9 +114,9 @@ specification:
   - Sharing payload, historical metric periods and handling uncertain current membership, supported devices
     and exact native interactions.
   - Detailed GitHub source mappings, authorization, storage guarantees and implementation-ready leaf contracts.
-  ontology_status: The project selects local.gitview.domain at 0.2.0-draft-composition.13 as a working
-    terminology context. This specification does not grant semantic approval to the ontology or assert
-    a particular action, motivation or source event.
+  ontology_status: The project selects local.gitview.domain at 0.2.0, approved by the owner as the project
+    terminology baseline. Imported packages retain their own status. This specification does not itself
+    grant ontology approval or assert a particular action, motivation or source event.
 acceptance:
 - The specification identifies the intended operator outcome and GitHub boundary without claiming implementation.
 - The selected Project and repository composition, current-work direction and merged-PR outcome are distinguishable
