@@ -16,6 +16,7 @@ sources:
   predecessor_revision: 70feca6
   root_intent: .specgraph/root_intent.md
   ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
+  calendar_farthest_zoom_direction: conversation_memory/sketches/gitview/revisions/a854ef50dc2a4548b9003227f731e31e/metadata.json
 specification:
   ontology_refs:
   - gitview:Metric
@@ -23,33 +24,48 @@ specification:
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
-  objective: Preserve the discussed contribution-style calendar and deeper PR exploration as possible
-    later product directions.
-  authority_boundary: Neither calendar nor deeper in-app PR exploration is a first-version prerequisite.
-    This node does not select a calendar metric, navigation, data source or implementation and does not
-    assert that either feature exists.
+  objective: Describe the owner-envisaged farthest calendar view over work intensity and preserve deeper
+    PR exploration as a possible later direction.
+  authority_boundary: The owner envisages a contribution-style daily calendar at the farthest zoom and
+    a further pinch out from Today to reach it. Its inclusion in the first version, precise interaction,
+    activity definition, data source, colours and implementation remain open. Deeper in-app PR exploration
+    remains a separate later direction; this node does not assert either feature exists.
   directions:
-    calendar: A contribution-style calendar may provide a farthest overview over time. Its cells represent
-      time periods, not Project, Repository, PR or Issue identities. A potential future measurement must
-      identify its period, scope, source and coverage.
-    semantics: Do not equate contribution activity with completed work, successful CI or review approval.
-      Missing history is not a confirmed zero; evidence and access limitations remain visible.
+    calendar: At the envisaged farthest overview, each calendar cell represents a day and its visual intensity
+      communicates how much work occurred in that day for the applicable selected Project scope. The scope
+      can be all Projects or selected Projects, including a filter such as active Projects. Cells represent
+      time, not Project, Repository, PR or Issue identities. Specific activity units, event types, aggregation
+      and evidence remain open.
+    semantics: The cell conveys work intensity, not individual red CI or other health indicators. Do not
+      equate contribution activity with completed work, successful CI or review approval. Missing history
+      is not a confirmed zero; evidence and access limitations remain visible. Green, light or neutral
+      appearance are examples rather than a selected palette.
     later_pr_depth: Exploration within a PR can be considered later. The selected present overview and
       source handoff do not imply an in-app diff, individual thread or check-run detail browser.
-    independence: First-version zoomable work grid, long-press preview and object overview do not depend
-      on adopting a calendar or deeper PR exploration. Sliding preview is a separate later direction under
-      0015.
+    independence: The selected first-version work grid, long-press preview and object overview do not
+      depend on completing calendar, deeper PR exploration or sliding preview; whether to include the
+      calendar in that version is not selected.
+    navigation: The owner expects an additional pinch-out from the Today view to enter the calendar. Exact
+      thresholds, return behavior and accessible alternatives require refinement; no availability guarantee
+      or first-version commitment follows from this direction.
   open_questions:
-  - Whether and when to select a calendar, its metric, scope, navigation, representation and source evidence.
+  - Which work events and aggregation determine daily intensity, what evidence and access are required,
+    and how active Project filtering is defined.
+  - Whether to include the calendar in the first version; exact pinch-out threshold, return and accessible
+    navigation.
+  - Whether week, month or year views are useful, and their presentation and period semantics.
   - Whether and when to select deeper in-app PR exploration and its boundaries.
   ontology_status: Metric, Project, Repository, PullRequest and Issue use selected ontology vocabulary;
     a calendar cell does not establish a new entity.
-  scenario_candidate: If a future calendar displays a day for which history is unavailable, it must not
-    describe that day as an observed zero.
+  scenario_candidate: In the envisaged calendar, further pinch out from Today leads to a day-cell view
+    whose intensity reflects work in the applicable selected Project scope. If history for a day is unavailable,
+    it is not described as an observed zero.
 acceptance:
-- Calendar cells in this proposed time view are not confused with Project, Repository or work-object identity
-  cells.
+- Calendar day cells in this envisaged time view are not confused with Project, Repository or work-object
+  identity cells.
 - An unavailable historical value is not described as a confirmed zero.
 - Contribution activity is not equated with completed work, successful CI or approved review.
-- Neither calendar nor deeper PR browsing is represented as a prerequisite for the first-version grid
-  and preview.
+- Calendar and deeper PR browsing are not prerequisites for the first-version grid and preview; whether
+  the calendar itself is included in that version remains open.
+- The envisaged calendar uses daily work intensity for its applicable selected Project scope; cells do
+  not show individual CI or health indicators, and the exact intensity definition remains open.

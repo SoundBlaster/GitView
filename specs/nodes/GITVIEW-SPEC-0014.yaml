@@ -15,6 +15,7 @@ sources:
   dense_prototype: docs/drafts/dense-overview-prototype.md
   ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
   pinch_scope_decision: conversation_memory/sketches/gitview/revisions/408e46cab5da424d829e0ce07503fd28/metadata.json
+  calendar_farthest_zoom_direction: conversation_memory/sketches/gitview/revisions/a854ef50dc2a4548b9003227f731e31e/metadata.json
 specification:
   ontology_refs:
   - gitview:Project
@@ -54,6 +55,10 @@ specification:
     appearance: Prefer iOS system appearance, colors, typography and SF Symbols with restrained Liquid
       Glass in keeping with the selected Apple Look; exact components remain subject to design and platform
       validation.
+    calendar_direction: The owner envisages a further pinch out from Today to a farthest calendar of daily
+      work intensity in the applicable Project scope under 0018. This proposed outward transition is distinct
+      from the selected expanding-cell maximum; precise threshold, gesture details and first-version scope
+      remain open.
   scenarios:
     pinch: A filtered selection contains 100 confirmed objects and no independent data change occurs.
       Pinch increases detail through discrete steps while preserving the selection until the maximum cell-size
