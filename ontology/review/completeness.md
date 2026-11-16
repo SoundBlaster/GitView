@@ -5,6 +5,8 @@
 Сверка Project, Repository и membership:
 [project-repository-spec-alignment-20261115.md](project-repository-spec-alignment-20261115.md).
 
+**Решение владельца, 16 ноября:** выбранное содержимое локального пакета draft.13 принято как предметная основа GitView; точные hashes, область и техническое состояние описаны в [решении](owner-acceptance-20261116.md). Неопределённости остаются открытыми. Исторические формулировки об отсутствии утверждения ниже относятся к моменту их записи.
+
 **Текущий контекст, 15 ноября:** `specgraph.project.yaml` выбирает
 [составной draft.13](../candidates/domain-v0.2.0-draft.13/README.md); draft.12,
 draft.5 и draft.6 — исторические контексты. Пакет остаётся `draft`; последующие
