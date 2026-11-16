@@ -1,0 +1,7 @@
+# Historical point accessibility: draft correction
+
+Baseline `0b703ad`. The pre-canonical draft 0118 had unqualified restrictions that could hide previously saved local chart values and accessibility output after GitHub-confirmed private Repository revocation, contrary to owner-selected behavior under 0019. The correction retains supported local values as last known and keeps unknown lineage explicit; source actions and external sharing remain separate.
+
+Independent read-only correction review examined first corrected SHA `d6bd54c0b11da537ec3e57830efef41053da585cf87f04f357b3fb18d68a18ef`. It requested direct 0019 provenance, a revocation exception for fallback, unknown-lineage and visual/assistive coverage, and rechecking delayed focus or announcements after a clear or route change. The author corrected these. Focused review of intermediate SHA `55781519ff7d629eefb2122f3ca74f602f20a88729a46d5a109810899794b3b2` suggested separating local display from source actions/sharing and avoiding unsupported attribution of a point to a revoked Repository. The author clarified these; focused rereview confirmed final SHA `c109c305c282c72cb39a45ed0b02a6ffd158718ed1dc252eaf34600029982a49` without further findings in scope.
+
+Candidate check returned `checked`, `canonical: false`. The draft retains its baseline missing `updated_at` and noncanonical formatting lint findings. This is a draft correction and semantic review, not native accessibility verification, ontology acceptance or a promoted specification.
