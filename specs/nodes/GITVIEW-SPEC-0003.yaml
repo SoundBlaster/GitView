@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0003
 title: GitView - Stored observations and refresh
 kind: spec
 created_at: '2026-11-15T21:19:00Z'
-updated_at: '2026-11-15T21:19:00Z'
-status: outlined
+updated_at: '2026-11-16T19:45:17Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0001
 depends_on:
@@ -43,9 +43,10 @@ specification:
       without presenting it as newly refreshed. No successful observation is distinct from a confirmed
       empty result; do not invent a success time.
     explicit_revocation: For a private Repository with source-confirmed access revocation, follow 0019
-      and retain and show already saved local observations with the revocation indication and supported
-      last update time when known, and stop synchronization while revocation applies. Do not treat a transient
-      failure or a 404 alone as proof of revocation or as proof of successful refresh.
+      and retain already saved local observations. While its account remains active, show them with the
+      revocation indication and supported last update time when known; stop synchronization while revocation
+      applies. Do not treat a transient failure or a 404 alone as proof of revocation or as proof of successful
+      refresh.
     partial: A partial response or interrupted retrieval retains actual observation context and incomplete
       coverage. A partial observation has its own time and does not advance the last complete successful
       observation time of the requested scope or establish complete coverage. Failure alone does not erase
@@ -89,3 +90,5 @@ acceptance:
 - Partial, failed or never-observed data is not silently represented as a complete empty result.
 - Manual and stale-on-open refresh and system-granted background opportunities respect applicable source
   limits.
+- Previously accepted observations are stored locally for subsequent use across launches, subject to applicable
+  access policy; failed storage or uncertain recovery is not presented as successful preservation.

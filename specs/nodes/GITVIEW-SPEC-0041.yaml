@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0041
 title: GitView - PR overview facts and change counters
 kind: spec
 created_at: '2026-11-16T08:33:00Z'
-updated_at: '2026-11-16T08:33:00Z'
-status: outlined
+updated_at: '2026-11-16T19:45:25Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0008
 depends_on:

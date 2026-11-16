@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0014
 title: GitView - Zoomable grid
 kind: spec
 created_at: '2026-11-15T21:21:00Z'
-updated_at: '2026-11-15T21:21:00Z'
-status: outlined
+updated_at: '2026-11-16T19:45:17Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0006
 depends_on:

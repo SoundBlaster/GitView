@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0038
 title: GitView - Repository identity under incomplete observations
 kind: spec
 created_at: '2026-11-16T08:27:00Z'
-updated_at: '2026-11-16T08:27:00Z'
-status: outlined
+updated_at: '2026-11-16T19:42:49Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0002
 depends_on:
@@ -48,7 +48,8 @@ specification:
       merely because of that address.
     unavailable: A 404, failed request or incomplete discovery alone does not establish deletion or access
       revocation. Keep supported last-known identity and membership information; confirmed private Repository
-      revocation does not hide already saved local information under 0019.
+      revocation alone does not hide already saved local information; visibility follows the active-account
+      boundary under 0019.
     continuity_limit: Retaining existing history does not imply that GitView has a complete source history
       or can reconstruct information it never observed.
   scenarios:
@@ -77,6 +78,7 @@ acceptance:
   and memberships.
 - Insufficient evidence remains uncertain and does not itself prove deletion or a current address.
 - A 404 or incomplete discovery alone is not treated as confirmed deletion or revocation.
-- Confirmed private Repository revocation does not hide already saved local information under 0019.
+- Confirmed private Repository revocation alone does not hide already saved local information; visibility
+  follows the active-account boundary under 0019.
 - Same-instance numeric REST repository ID comparison follows the selected ontology policy without inferring
   an unobserved transfer or current access.

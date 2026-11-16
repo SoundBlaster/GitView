@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0035
 title: GitView - Density changes within an overview
 kind: spec
 created_at: '2026-11-16T08:17:00Z'
-updated_at: '2026-11-16T08:17:00Z'
-status: outlined
+updated_at: '2026-11-16T19:45:17Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0014
 depends_on:
@@ -57,7 +57,8 @@ specification:
       inspection is a later direction and its activation is not selected here.
   scenarios:
     stable_selection: A Project grid contains 100 identified objects and no independent data change occurs.
-      Changing density retains the same selected objects, Project, period and filters.
+      Before the maximum-size boundary is reached, changing density retains the same selected objects,
+      Project, period and filters.
     focused_object: A PR remains in the selection while the number of visible columns changes. Preserve
       its supported identity and a meaningful position where possible rather than selecting the object
       now occupying its former cell.

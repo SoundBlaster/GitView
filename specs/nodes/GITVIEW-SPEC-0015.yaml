@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0015
 title: GitView - Preview and future sliding inspection
 kind: spec
 created_at: '2026-11-15T21:23:00Z'
-updated_at: '2026-11-15T21:23:00Z'
-status: outlined
+updated_at: '2026-11-16T19:45:17Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0014
 depends_on:

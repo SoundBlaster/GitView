@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0036
 title: GitView - Connection state and stored observations
 kind: spec
 created_at: '2026-11-16T07:13:00Z'
-updated_at: '2026-11-16T07:13:00Z'
-status: outlined
+updated_at: '2026-11-16T19:45:17Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0019
 depends_on:
@@ -42,7 +42,7 @@ specification:
       for that Repository while revocation applies. Do not accept an earlier in-flight response as a fresh
       successful update merely because it arrives later.
     operator_control: Retain a discoverable route to understand the connection problem, pursue recovery
-      or intentionally delete local data under 0019, subject to its account-change visibility boundary.
+      and intentionally delete local data under 0019, subject to its account-change visibility boundary.
       Recovery does not guarantee the source grants access, and local deletion does not assert deletion
       of GitHub objects.
     disconnect: An intentional local disconnect stops new refresh for the affected connection and does
@@ -85,8 +85,8 @@ acceptance:
   with time when known and a discoverable connection limitation; confirmed private Repository revocation
   follows the selected visibility rule. Local visibility does not establish live GitHub access.
 - Confirmed private Repository revocation preserves saved local data and stops synchronization; while
-  its account remains active, show its indication and supported time when known and retain recovery or
-  explicit local deletion access under 0019.
+  its account remains active, show its indication and supported time when known and retain access both
+  to recovery and to explicit local deletion under 0019.
 - An intentional disconnect stops new refresh without silently deleting saved local information or claiming
   that GitHub objects were deleted.
 - Connection problems and applicable recovery paths are available without relying solely on color or transient

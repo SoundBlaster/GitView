@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0027
 title: GitView - Today selection and uncertain observations
 kind: spec
 created_at: '2026-11-16T07:16:00Z'
-updated_at: '2026-11-16T07:16:00Z'
-status: outlined
+updated_at: '2026-11-16T19:43:05Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0007
 depends_on:
@@ -37,8 +37,8 @@ specification:
       day; earlier unfinished work remains eligible and work completed today remains eligible. Completion
       yesterday alone does not qualify an object today; other applicable conditions may do so.
     all_states: Without an applicable saved exclusion, show eligible PRs and Issues across their lifecycle
-      states, including merged and closed. A PR merged today remains the same object and may stay visible
-      in unfiltered Today; it leaves an explicitly selected unfinished-only view.
+      states, including merged and closed. A PR merged today remains the same object and stays visible
+      in unfiltered Today while eligible; it leaves an explicitly selected unfinished-only view.
     saved_filters: Explicit lifecycle filters can hide applicable states and persist between launches
       when saved. Restore a valid saved selection in the ordinary view; an unavailable or uncertain save
       is not reported as confirmed. The limited historical merged-counter override follows 0047 and does
