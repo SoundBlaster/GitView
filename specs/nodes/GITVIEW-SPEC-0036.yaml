@@ -29,9 +29,11 @@ specification:
       confirmed Repository access revocation and an intentional disconnect when supported by evidence.
       A 404 or generic network failure alone does not prove deletion or revocation, and an uncertain cause
       is not presented as confirmed.
-    last_known: Keep available previously saved local observations accessible with their supported scope
-      and observation time when known, and make the relevant connection limitation discoverable. Locally
-      readable data is not itself evidence of a current GitHub grant or a successful new refresh.
+    last_known: Keep available previously saved local observations accessible where their applicable disclosure
+      is supported, with their supported scope and observation time when known, and make the relevant
+      connection limitation discoverable. For confirmed private Repository revocation the owner-selected
+      visibility rule below applies. Locally readable data is not itself evidence of a current GitHub
+      grant or a successful new refresh.
     revoked: On confirmed GitHub access revocation for a private Repository, retain and show its saved
       local data with the revocation indication and supported last update time when known under 0019;
       stop synchronization for that Repository while revocation applies. Do not accept an earlier in-flight
@@ -39,9 +41,10 @@ specification:
     operator_control: Retain a discoverable route to understand the connection problem, pursue recovery
       or intentionally delete local data under 0019. Recovery does not guarantee the source grants access,
       and local deletion does not assert deletion of GitHub objects.
-    disconnect: An intentional local disconnect stops new refresh for the affected connection and preserves
-      access to already saved local information. Indicate an unresolved credential-removal outcome when
-      known; do not equate a local disconnect with source deletion or provider-side revocation.
+    disconnect: An intentional local disconnect stops new refresh for the affected connection and does
+      not by itself delete saved local information. Handling and disclosure of retained private data after
+      disconnect remain separately open under 0019. Indicate an unresolved credential-removal outcome
+      when known; do not equate a local disconnect with source deletion or provider-side revocation.
     isolation: Keep observation and operation context attributable to the account and Repository that
       produced it. A changed identity or later connection does not automatically establish access to previous
       source data; detailed account isolation and disclosure remain open. Confirmed GitHub revocation
@@ -50,13 +53,14 @@ specification:
       without relying only on color or a transient notice.
   scenarios:
     offline: A Repository has saved observations and a refresh fails because the network is unavailable.
-      Show available last-known information with its supported time and an applicable failure; do not
-      assert a new source denial or empty Repository.
+      Show eligible available last-known information with its supported time when known and an applicable
+      failure; do not assert a new source denial or empty Repository.
     revoked: GitHub explicitly confirms revocation for a private Repository with saved observations. Keep
       those observations visible with the revoked indication and supported time when known; stop synchronization
       and keep the local recovery or deletion entry point available.
-    disconnect: The operator intentionally disconnects an account. Stop new refresh for that connection,
-      retain access to already saved local information and do not report uncertain credential removal
+    disconnect: The operator intentionally disconnects an account. Stop new refresh for that connection
+      and do not treat disconnect itself as local or source deletion. Retained private-data disclosure
+      remains subject to its separately unresolved policy; do not report uncertain credential removal
       as completed.
     unknown_time: Saved local data remains available after revocation but its update time is not reliably
       known. Do not invent a time or hide the data solely for that reason.
@@ -70,8 +74,9 @@ specification:
 acceptance:
 - A temporary failure is not presented as a confirmed Repository deletion, revocation, empty result or
   successful refresh without supporting evidence.
-- Previously saved local observations remain accessible with supported time when known and a discoverable
-  connection limitation; local visibility does not establish live GitHub access.
+- Available previously saved observations remain accessible where their applicable disclosure is supported,
+  with time when known and a discoverable connection limitation; confirmed private Repository revocation
+  follows the selected visibility rule. Local visibility does not establish live GitHub access.
 - Confirmed private Repository revocation preserves saved local data with its indication and supported
   time when known, stops synchronization and retains recovery or explicit local deletion access under
   0019.
