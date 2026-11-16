@@ -1,0 +1,74 @@
+id: GITVIEW-SPEC-0026
+title: GitView - Scoped observations and incomplete refresh
+kind: spec
+created_at: '2026-11-16T07:15:00Z'
+updated_at: '2026-11-16T07:15:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0003
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0026.yaml
+  predecessor_revision: 33fb739
+  root_intent: .specgraph/root_intent.md
+specification:
+  objective: Preserve the meaning and scope of observed information when GitHub refresh succeeds, partially
+    succeeds or fails.
+  authority_boundary: This node specifies user-visible data and freshness outcomes. It does not choose
+    GitHub endpoints, pagination size, a local schema, background timing, exact retry policy or implementation
+    readiness.
+  requirements:
+    scope: Associate each supported observation with its actual Repository or Project scope, category
+      and observation time where known. A successful observation in one scope or category does not make
+      another current or complete.
+    complete: Present a collection as fully observed or a supported zero only when the available evidence
+      establishes that result for its actual scope. A successful request or one successful category alone
+      does not prove complete Project or account coverage.
+    partial: When only part of the requested information is supported, preserve independently known results
+      and make incomplete coverage discoverable. A partial response does not turn missing items into zero,
+      silently erase earlier observations or claim a complete refreshed collection.
+    failure: After a failed refresh, retain available previously saved data with its supported observation
+      time when known and a discoverable scoped failure. Do not invent an unknown time. A failed attempt
+      does not advance the last successful observation time or establish source deletion, denial or emptiness
+      by itself.
+    ordering: When overlapping observations concern the same fact and scope, a source-confirmed older
+      observation must not silently replace a source-confirmed newer one solely because it completed later.
+      If the evidence does not establish an order, retain the applicable uncertainty instead of inventing
+      a current result.
+    revoked_private: Confirmed GitHub revocation of a private Repository retains the saved local data
+      and shows its revocation indication and supported time when known under 0019. Stop synchronization
+      for the affected Repository while revocation applies; a late in-flight response is not presented
+      as a fresh accepted update merely because it arrives afterward.
+    accessibility: The operator can discover a refresh failure or incomplete coverage and understand the
+      available time and scope without relying solely on color or a transient notice.
+  scenarios:
+    partial_repository: A Project contains two Repositories and only one refresh completes. Keep supported
+      results for each actual scope and identify incomplete Project coverage; do not turn the other Repository
+      into an empty collection.
+    failed_refresh: A Repository has a supported prior observation and a later refresh fails. Show the
+      prior data with its supported time when known and identify the failure without presenting it as
+      a new successful observation.
+    older_response: Two observations of the same fact overlap and the source establishes that the response
+      arriving last is older. Do not silently replace the newer supported value with it.
+    revoked_during_refresh: A private Repository has saved data when revocation is confirmed while a refresh
+      is in flight. Keep the saved data visible with its indication and supported time when known; the
+      late response does not become a new successful update.
+  open_questions:
+  - Evidence sufficient to establish completeness, ordering and scope for each selected GitHub operation.
+  - Exact refresh prioritization, retry behavior, source budgets and native presentation of coverage.
+  - Recovery, account isolation and treatment of source data when access evidence is incomplete.
+  ontology_status: Project and Repository use working draft vocabulary; observation scope and refresh
+    outcome are specification concepts rather than newly asserted domain entities.
+acceptance:
+- Observation scope, supported time, coverage and latest refresh outcome remain distinguishable.
+- A failed refresh alone does not advance a successful observation time. A partial refresh does not prove
+  a complete or empty collection, erase earlier saved data or advance the last complete observation time
+  for the wider scope; an independently supported successful part retains its own actual scope and time.
+- A supported newer fact is not silently replaced by a source-confirmed older observation solely because
+  the latter completed later; an unorderable conflict remains uncertain.
+- Confirmed private Repository revocation preserves available saved local data with its indication and
+  supported time when known, while synchronization stops under 0019.
+- Failure and incomplete coverage are discoverable without relying solely on color or transient feedback.
