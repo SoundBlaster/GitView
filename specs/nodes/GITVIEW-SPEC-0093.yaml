@@ -33,9 +33,9 @@ specification:
     revocation are selected. Optional refresh timing, platform presentation and account-change disclosure
     remain open; the later sliding preview is not established here.
   requirements:
-    local_availability: Open a preview of already available supported local data without waiting for a
-      network response. Identify the same selected object and preserve its origin; unavailable data is
-      not invented or treated as confirmed zero.
+    local_availability: Open a preview of already available supported local data where eligible for local
+      display under 0019 without waiting for a network response. Identify the same selected object and
+      preserve its origin; unavailable data is not invented or treated as confirmed zero.
     observation_scope: Each fact keeps its supported object, source, time, revision where relevant and
       limitations. A new title does not make an older review or CI observation current for a newer PR
       revision. A partial refresh updates only fields the observation actually supports.
@@ -59,8 +59,9 @@ specification:
       long press. Available identity, state, limitations and actions are accessible without relying on
       color; direct object open is distinct from access to preview under 0032.
   scenarios:
-    offline: A saved Issue has title and lifecycle, its discussion count is unknown, and the network is
-      unavailable. Preview the saved facts without waiting for network; the unknown count is not zero.
+    offline: A saved Issue eligible for local display has title and lifecycle, its discussion count is
+      unknown, and the network is unavailable. Preview the saved facts without waiting for network; the
+      unknown count is not zero.
     late_other_object: Preview A is dismissed and preview B opens before A's response arrives. A's facts
       do not appear as B's; any independent retention respects A's source and access context.
     accessible_preview: The operator cannot use long press. An accessible route opens and dismisses the
@@ -80,8 +81,8 @@ specification:
   ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; preview
     lifetime and presentation are interaction concepts, not new domain entities.
 acceptance:
-- Supported local preview information is available without waiting for a network response and remains
-  attributed to the selected object.
+- Supported local preview information eligible for display is available without waiting for a network
+  response and remains attributed to the selected object.
 - Late or partial observations do not silently retarget a preview, reopen a dismissed preview or make
   unsupported fields current.
 - Confirmed private Repository revocation leaves saved details visible with indication and supported update

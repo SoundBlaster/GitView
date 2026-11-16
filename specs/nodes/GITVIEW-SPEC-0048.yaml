@@ -35,9 +35,10 @@ specification:
       is younger than an eventual staleness threshold; applicable access, source-directed waits and execution
       constraints still apply. Requesting refresh does not itself establish that it started, completed
       or succeeded.
-    foreground: Make recoverable saved data available without waiting for a GitHub response. When a relevant
-      scope is opened with stale data, request a bounded update when the applicable access and source
-      constraints permit. Exact staleness, prioritization and scheduling remain open.
+    foreground: Make recoverable saved data available where eligible for local display under 0019 without
+      waiting for a GitHub response. When a relevant scope is opened with stale data, request a bounded
+      update when the applicable access and source constraints permit. Exact staleness, prioritization
+      and scheduling remain open.
     background: The app can request or use a system-granted background opportunity for bounded refresh.
       iOS controls whether and when the opportunity is granted; no fixed frequency or successful refresh
       is implied by requesting it.
@@ -50,9 +51,10 @@ specification:
       reason discoverable with the scope and last supported successful time when known; do not invent
       a source cause or describe a local failure as a GitHub error. Observation and attempt retain their
       own supported times and scope.
-    saved_data: During refresh or failure, previously saved supported data remains available with its
-      own observation time when known and applicable limitation under 0003. An unobserved collection does
-      not become a confirmed empty result or an invented success time.
+    saved_data: During refresh or failure, previously saved supported data remains available where eligible
+      for local display, with its own observation time when known and applicable limitation under 0003
+      and 0019. An unobserved collection does not become a confirmed empty result or an invented success
+      time.
     source_limits: Account for shared applicable GitHub rate limits and request cost across manual, foreground
       and background work; apply supported source retry constraints and avoid unbounded retry loops. An
       explicit manual request does not bypass an applicable source-directed wait. Exact cost, pagination,
