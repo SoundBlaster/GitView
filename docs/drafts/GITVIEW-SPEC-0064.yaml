@@ -128,9 +128,9 @@ specification:
       those aggregates; a locally stored total is not a new independent permission witness. Local configuration
       facts and source-derived names or observations keep their distinct origins. This is an information
       contract, not a requirement to persist a full calculation tree, duplicate raw private payloads or
-      add ontology entities. If the necessary lineage cannot be recovered or its completeness cannot be
-      established, the exact affected value remains unavailable until independently supportable permitted
-      evidence is obtained.
+      add ontology entities. If necessary lineage cannot be recovered, do not claim unsupported scope
+      or completeness. Confirmed private Repository revocation does not hide an already saved supported
+      local value under 0019; show its available context and the lineage limitation.
     recomputation_after_restriction: On confirmed private Repository revocation retain previously saved
       supported points, totals and accessible equivalents as last known under 0019 with their original
       context and indication. A separately recalculated value must identify its actual input scope, coverage
@@ -171,18 +171,19 @@ specification:
         0019. A separately supported A-only point keeps its own context. Newly observed metadata or a
         title does not refresh prior CI or prove completeness.
     delayed_chart_result_after_restriction:
-      given: A chart calculation for A and B captured permitted evidence and starts before B becomes restricted;
-        a newly selected A-only evaluation is in progress.
-      when: The older A-and-B calculation finishes after the restriction.
-      then: Its restricted-input point, value, accessible text and share payload are not published from
-        the stale result, and it does not replace the A-only evaluation. The app does not claim it can
-        retract any earlier external disclosure.
+      given: A chart calculation for A and B captured evidence and starts before GitHub confirms private
+        access revocation for B; a newly selected A-only evaluation is in progress.
+      when: The older A-and-B calculation finishes after revocation.
+      then: It does not replace the A-only evaluation or become a fresh source observation. Previously
+        saved supported values remain locally visible as last known with the applicable indication under
+        0019; any new derived result and external sharing retain their own unresolved policy and evidence.
     lost_aggregate_lineage:
       given: A retained numerical point remains readable after restart but a required dependency record
-        cannot establish whether it includes a now-restricted Repository's CI input.
+        cannot establish whether it includes a private Repository's CI input after confirmed revocation.
       when: The chart requests the exact point.
-      then: The exact value stays unavailable rather than being treated as independently public, zero
-        or a safe A-only point; independently evidenced permitted data can be evaluated with its own scope.
+      then: The saved supported value remains locally visible as last known under 0019, with its available
+        context and the lineage limitation. It is not attributed to A alone or treated as zero; separately
+        evidenced data can be evaluated within its own scope.
     remove_member_without_contribution:
       given: A retained permitted historical point counts ten distinct PRs for A and B together, but the
         historical B-only contribution and contributing identities are unavailable.
@@ -216,11 +217,12 @@ specification:
         applicable indication under 0019. Do not fabricate a missing contribution or claim newly current
         data; cross-account and external handoff decisions remain separate.
     unknown_lineage:
-      given: A saved aggregate predates the current access restriction but its retained evidence cannot
-        establish whether it depends on the restricted input.
+      given: A saved aggregate predates confirmed private Repository revocation but its retained evidence
+        cannot establish whether it depends on the affected input.
       when: The metric history is opened.
-      then: The exact aggregate remains unavailable until independently supported permitted inputs establish
-        its scope; the app does not assert zero or use the stored value as an access witness.
+      then: The saved supported aggregate remains locally visible as last known under 0019 with its known
+        context and lineage limitation. The app does not fabricate scope, assert zero or use the stored
+        value as an access witness.
     limitation_already_seen:
       given: The operator saw an aggregate before a later source restriction and may remember it.
       when: The app applies the restriction.
@@ -257,8 +259,8 @@ specification:
         and supported observation times; unknown coverage remains incomplete rather than zero, and synchronization
         stops.
   unresolved:
-  - Specify a practical provenance representation and evidence for whether a computed point depends on
-    currently restricted inputs; validate any broader safe-aggregate policy before relaxing suppression.
+  - Specify practical provenance representation and evidence for computed points; cross-account and external-sharing
+    disclosure remain open rather than restricting the selected local revocation behavior.
   - Define native presentation and evaluation behavior when membership changes while a current-member
     historical graph is visible; the current-member basis for Project graphs is owner-selected.
   - Source-specific history completeness, event reason, CI/review reconstruction and membership retention
