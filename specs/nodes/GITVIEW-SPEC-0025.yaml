@@ -1,0 +1,91 @@
+id: GITVIEW-SPEC-0025
+title: GitView - Project lifecycle and membership
+kind: spec
+created_at: '2026-11-16T08:22:00Z'
+updated_at: '2026-11-16T08:22:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0005
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+relates_to:
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0047
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0025.yaml
+  predecessor_revision: 9bbf79f
+  owner_selection: docs/drafts/project-summary-proposal.md
+  default_mechanism_review: docs/drafts/project-default-association-review-20261115.md
+specification:
+  objective: Let the operator create and manage local Projects without confusing their identities or changing
+    the source Repositories.
+  authority_boundary: The owner selected Project composition, shared Repository membership and one-Repository
+    default. Persistent default association, its reuse and exact setup or deletion interactions remain
+    agent-authored candidates; this node does not choose a storage mechanism or establish implementation
+    readiness.
+  requirements:
+    identity: A saved Project has a stable local identity, name, optional description and one or more
+      source-identified GitHub Repositories. Project identity is distinct from its name, a Repository
+      address and GitHub organization metadata.
+    shared_membership: A Repository can belong to several Projects, and a Project can contain Repositories
+      from different GitHub organizations. A membership change in one Project does not itself alter another
+      Project or mutate the GitHub Repository.
+    default: By default one Project corresponds to one Repository under 0005. How an existing default
+      is identified, reused or recovered remains open; do not assume an arbitrary Project containing that
+      Repository is its default.
+    edit: The operator can create, rename and edit a Project and select its members. A valid saved Project
+      contains at least one Repository; an invalid attempt to remove the final member does not become
+      a confirmed empty Project. Exact controls, name validation and intermediate editing behavior remain
+      open.
+    description: The optional local Project description can be inspected and explicitly changed or cleared
+      without changing the Project identity or the GitHub Repository description. An unavailable description
+      is not automatically a confirmed absent one.
+    deletion: An intentional local Project removal affects the selected local Project. It does not imply
+      deletion of the GitHub Repository or remove another Project's membership. Details of confirmation,
+      retained observations and recovery require refinement.
+    continuity: When GitHub confirms the same Repository after rename or transfer, preserve the Repository
+      identity, prior history and its Project memberships under 0002. A name or address alone is not identity
+      evidence.
+    uncertainty: An unavailable configuration read or indeterminate save does not prove a Project or membership
+      absent, a save successful or a duplicate safe. Preserve and reconcile supported local information
+      where possible, and make unresolved outcomes discoverable without inventing an old or new complete
+      state.
+    revoked_private: Confirmed GitHub revocation alone does not hide an already saved local Project or
+      its saved Repository information under 0019; show the applicable indication and supported time when
+      known. Local visibility does not grant source access or authorize a new Project admission.
+  scenarios:
+    shared_repository: Repository R belongs to Projects A and B. Removing R from A leaves R in B and does
+      not delete R from GitHub; A must remain valid under the one-or-more rule.
+    invalid_last_member: The operator attempts to remove the only Repository from an existing Project.
+      Do not claim the Project was saved with no members; keep the last supported saved configuration
+      unless an independent change occurred.
+    repository_renamed: GitHub confirms R is the same Repository after transfer. Preserve its existing
+      Project memberships and history rather than creating another identity from the changed address.
+    uncertain_save: A Project edit's outcome cannot be determined. Do not claim the new composition saved
+      or blindly repeat an operation whose previous effect may still have succeeded; make the limitation
+      discoverable.
+  open_questions:
+  - Default association or alternative reuse behavior, including recovery when a Repository belongs to
+    several Projects.
+  - Exact creation, editing, name validation, deletion confirmation and local observation-retention behavior.
+  - Account and access evidence required for admitting a new Repository and handling an indeterminate
+    operation.
+  ontology_status: Project, Repository and membership use working draft vocabulary; the existence of a
+    membership does not prove a particular action, actor or motive.
+acceptance:
+- A saved Project has a stable local identity, name and at least one Repository, and is distinct from
+  its members and GitHub organizations.
+- A Repository may belong to multiple Projects; a valid edit to one does not change another Project or
+  the GitHub Repository.
+- The default one-Repository direction does not by itself select a persistent default-association mechanism.
+- Rename or transfer with confirmed same Repository identity preserves history and Project memberships.
+- Unavailable configuration or an indeterminate save is not treated as confirmed absence, success or a
+  safe duplicate.
+- Confirmed GitHub revocation alone does not hide already saved local Project information under 0019.
+- The optional local Project description can be explicitly changed or cleared without changing Project
+  identity or the GitHub Repository description.
+- Intentional local Project removal does not delete the GitHub Repository or alter membership in other
+  Projects.

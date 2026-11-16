@@ -1,0 +1,74 @@
+id: GITVIEW-SPEC-0034
+title: GitView - Authored description sections and source text
+kind: spec
+created_at: '2026-11-16T08:22:00Z'
+updated_at: '2026-11-16T08:22:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0010
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0026
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0034.yaml
+  predecessor_revision: 9c598dd
+  owner_selection: docs/drafts/github-templates/README.md
+specification:
+  objective: Preserve what an Issue or PR author wrote while making reliably identified sections understandable
+    as authored statements.
+  authority_boundary: The owner selected description formats for the participating process. Exact parsing
+    syntax, rendering, deployment and enforcement require further refinement; this node does not claim
+    that a template is installed or that an authored statement is true.
+  requirements:
+    formats: The selected Issue format contains Problem, Motivation, Expected outcome and References.
+      The selected PR format contains those sections plus Changes and Validation under 0010.
+    original: Keep the available original source description accessible with its source context, including
+      unstructured or external text. A confirmed empty body is distinct from an unavailable or unobserved
+      body.
+    extraction: Present a section as extracted only when its authored text can be reliably identified
+      in the source. Preserve the original wording and attribution when available; do not infer missing
+      content from a title, link, review or label.
+    ambiguous: Missing, empty, duplicated or unsupported headings are not automatically equivalent. When
+      evidence is sufficient to establish a selected section is missing, indicate that absence. If extraction
+      is ambiguous, do not assert confirmed absence; retain the available original body and communicate
+      its limitation rather than inventing sections or hiding the object. Exact extraction and ambiguity
+      rules remain open.
+    authored_claim: Motivation, expected outcome and validation are statements in an authored description.
+      They do not independently establish an actor's actual motive, achievement of an outcome, successful
+      CI or independent test evidence. Present independently observed source facts according to their
+      own evidence.
+    freshness: A refreshed or newly observed body and an extracted section retain their actual observation
+      context. A section from an earlier body is not presented as though reliably extracted from a later
+      body when source or extraction evidence is unavailable.
+    saved_data: After confirmed GitHub revocation of a private Repository, previously saved local description
+      text remains accessible with the revocation indication and supported observation time when known
+      under 0019; do not imply the source is currently reachable.
+  scenarios:
+    legacy: An existing PR contains an unstructured body without the selected headings. Keep the available
+      authored body accessible and do not fabricate missing sections or suppress the PR.
+    conflicting_validation: An author writes that validation passed, while supported CI evidence reports
+      failure. Preserve the authored statement and the independently observed CI status without silently
+      converting either into the other.
+    unavailable_body: The source body cannot be observed. Represent it as unavailable or unknown rather
+      than asserting the author wrote an empty description.
+    source_link_and_motivation: A PR has an authored Motivation section and a supported link to an Issue.
+      Preserve the attributed statement and the independently supported link in their respective contexts;
+      neither alone proves a particular actor motive or causal history.
+  open_questions:
+  - Supported heading formats, extraction boundaries, duplicate headings and display of ambiguous sections.
+  - Source coverage, attribution and exact handling of unavailable or differently formatted descriptions.
+  - Which repositories and authoring paths participate in the selected mandatory format and how conformance
+    is checked.
+  ontology_status: PullRequest and Issue use working draft vocabulary; description fields are authored
+    content, not proof of an actor's motive or new ontology entities.
+acceptance:
+- Available original Issue and PR descriptions remain accessible even when structured extraction is absent
+  or unreliable.
+- Reliably extracted sections retain their authored text and are distinguished from independently observed
+  state and evidence.
+- Empty, unavailable, missing and ambiguous content are not silently conflated or fabricated.
+- A differently formatted legacy or external description is not sufficient reason to hide its PR or Issue.
+- Previously saved local text remains accessible after confirmed private Repository revocation under 0019
+  with its applicable indication and supported time when known.

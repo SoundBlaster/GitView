@@ -1,0 +1,72 @@
+id: GITVIEW-SPEC-0054
+title: GitView - Required Issue and PR description workflow
+kind: spec
+created_at: '2026-11-16T08:23:00Z'
+updated_at: '2026-11-16T08:23:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0010
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0009
+- GITVIEW-SPEC-0034
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0054.yaml
+  predecessor_revision: 9c598dd
+  owner_selection: docs/drafts/github-templates/README.md
+specification:
+  objective: Make the selected Issue and PR description structure a requirement of the participating repository
+    authoring process while keeping GitView usable for other source material.
+  authority_boundary: The owner chose the mandatory section sets. Which repositories and authoring paths
+    participate, how conformance is enforced, how exceptions are handled and who configures each path
+    remain open. This node does not assert that templates, checks or creation-path enforcement are already
+    installed or implemented.
+  requirements:
+    issue_format: A new Issue description in the participating process requires Problem, Motivation, Expected
+      outcome and References.
+    pr_format: A new PR description in the participating process requires Problem, Motivation, Expected
+      outcome, Changes, Validation and References.
+    templates: Provide the agreed templates as inputs to the participating authoring process. The presence
+      of a prefilled template or an agent instruction alone does not prove that the required sections
+      were supplied, are meaningful or have been checked.
+    creation_paths: The participating process accounts for its supported creation paths, including person
+      or agent paths that do not show the repository's web template. Exact coverage and the mechanism
+      for detecting or correcting incomplete descriptions remain to be specified.
+    conformance: The process distinguishes a supported conforming new description from an incomplete or
+      unverified one using an agreed rule. Structural conformance does not establish the truth of an authored
+      motivation, outcome or validation claim. A source mechanism is not claimed to prevent or correct
+      nonconformance until separately established.
+    existing_content: GitView continues to show available existing, externally authored or differently
+      structured Issues and PRs under 0034. Preserve original text where available; inspection or compliance
+      display does not rewrite the source description or fill sections automatically. Do not fabricate
+      missing sections or hide an object solely because process compliance is missing or unknown. This
+      does not decide a separately specified future editing flow.
+    source_facts: An authored claim is distinct from independently observed source facts, review and CI.
+      A linked Issue or a stated motivation does not prove the motive of a particular actor or the causal
+      history of a change.
+  scenarios:
+    agent_path: A participating agent creates a PR through a path without a web template. The process
+      still needs to account for the selected required sections; an agent instruction alone is not proof
+      that they were supplied or checked.
+    legacy: A previously created external PR has an unstructured description. GitView preserves its available
+      original text and does not hide the PR merely because the selected process cannot be verified for
+      it.
+    validation_claim: A conforming PR description states validation succeeded while independently observed
+      CI reports failure. Preserve the authored statement and source CI as separate claims; a section's
+      presence does not prove validation.
+  open_questions:
+  - Participating repositories, authoring paths, ownership and rollout of the required format.
+  - The conformance rule, enforcement or correction point, handling of exceptions and evidence of creation-path
+    coverage.
+  - Template versions, section syntax and exact semantics of incomplete or ambiguous authored content.
+  ontology_status: Issue and PullRequest use working draft vocabulary; authored statements and process
+    conformance do not establish an actor's actual motive or a new domain entity.
+acceptance:
+- The participating process requires the selected Issue and PR section sets for new descriptions across
+  its supported authoring paths.
+- A template or agent instruction alone is not treated as proof that sections were supplied or that every
+  path is enforced.
+- Existing or external objects with missing or differently structured descriptions remain visible with
+  their available original text.
+- Structural conformance does not by itself establish an actor's motive, an achieved outcome, successful
+  CI or independent validation.
