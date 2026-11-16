@@ -1,0 +1,72 @@
+id: GITVIEW-SPEC-0023
+title: GitView - Project overview observation states
+kind: spec
+created_at: '2026-11-16T07:08:00Z'
+updated_at: '2026-11-16T07:08:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0004
+depends_on:
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0012
+- GITVIEW-SPEC-0017
+- GITVIEW-SPEC-0019
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0023.yaml
+  predecessor_revision: 9bbf79f
+  root_intent: .specgraph/root_intent.md
+  visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
+specification:
+  objective: Help the operator understand what the Project overview knows, what remains unknown and when
+    previously observed information was updated.
+  authority_boundary: This node records product-visible distinctions and the selected local visibility
+    behavior. It does not select a storage implementation, authorization method, exact native controls,
+    backup design or source refresh schedule, and does not establish implementation readiness.
+  requirements:
+    configuration: Distinguish a confirmed absence of locally configured Projects from an unreadable or
+      not-yet-observed configuration. Neither alone establishes that GitHub has no repositories or work.
+      Preserve saved configuration when its read fails and provide an appropriate recovery route.
+    observations: Distinguish unobserved, incomplete, failed and last-known observations from confirmed
+      empty results and supported zero values. Values retain their actual scope, supported observation
+      time and coverage; do not promote one successful category to a complete Project observation.
+    failure: When a source refresh fails, continue presenting available saved data with its supported
+      observation time when known and a discoverable scoped failure or limitation. Do not claim successful
+      refresh, a source denial or an empty collection solely because of a network failure.
+    revoked_private: If GitHub explicitly confirms access revocation for a private Repository, previously
+      saved local information remains visible with the revocation indication and supported last update
+      time when known under 0019. Synchronization of that Repository stops while revocation applies. Keep
+      a discoverable entry point to understand the limitation, pursue access recovery or explicitly delete
+      local data; do not imply a restored GitHub grant.
+    accessibility: Make meaningful values and loading, coverage, failure and access distinctions available
+      to assistive technologies and without relying on color alone, including accessible paths to the
+      applicable recovery or local action.
+    source_boundary: A 404 or temporary network failure alone does not establish revocation or deletion.
+      Other account and disclosure cases retain their separate open questions under 0019 and 0024.
+  scenarios:
+    no_projects: A successful local configuration read establishes no Projects. Offer a way to begin setup
+      without claiming GitHub contains no repositories.
+    refresh_failed: A Project has saved observations and refresh fails. Keep the supported last-known
+      data visible with its observation time when known and a discoverable failure; the failed attempt
+      does not advance the successful-update time.
+    revoked_with_saved_data: A private Repository has previously saved data and its access revocation
+      is confirmed. Keep the saved data and Project visible with the revoked indication and supported
+      time when known; stop synchronization and offer an accessible route to recovery or explicit local
+      deletion.
+    unknown_time: Saved data remains readable after confirmed revocation but no reliable update time is
+      available. Show the data and revocation indication without inventing a time; exact wording is open.
+  open_questions:
+  - Native presentation, wording and persistence of overview status and recovery actions.
+  - Source evidence sufficient to establish revocation and the supported recovery flow.
+  - Account isolation, incomplete local recovery and exact behavior for other access cases.
+  ontology_status: Project and Repository use the working draft vocabulary; observation and presentation
+    status do not introduce a new domain entity.
+acceptance:
+- A confirmed empty local Project collection is distinguishable from unreadable configuration, unobserved
+  work and incomplete or failed source observation.
+- Available saved observations remain visible with their supported scope and time when known, and a refresh
+  failure does not silently turn them into a confirmed empty result or a fresh observation.
+- Confirmed private Repository revocation keeps saved local data visible with its indication and supported
+  update time when known, stops synchronization and preserves an accessible recovery or explicit local
+  deletion entry point under 0019.
+- Meaningful observation and access distinctions and the applicable actions are available without relying
+  on color alone.

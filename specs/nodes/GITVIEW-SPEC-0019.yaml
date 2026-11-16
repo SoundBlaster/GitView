@@ -16,6 +16,7 @@ sources:
   predecessor_revision: 32f79fa
   root_intent: .specgraph/root_intent.md
   revoked_private_data_decision: conversation_memory/sketches/gitview/revisions/b0795ae580e94ba0be8c59cefcbd3a97/notes.hc
+  visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Provide the operator a path to connect GitHub and find eligible repositories for a GitView
@@ -45,6 +46,10 @@ specification:
       temporary network failure or a 404 alone as proof of revocation, or claim that retained local visibility
       restores GitHub access. Exact evidence, presentation, recovery and account-change behavior require
       refinement.
+    retained_data_actions: Preserve a discoverable local entry point for understanding a confirmed revocation,
+      pursuing access recovery or explicitly deleting locally retained data. The available local view
+      and user control do not establish a restored GitHub grant, guarantee successful recovery, or delete
+      source objects. Exact native controls and recovery mechanics remain open.
     account_change: Provide an intentional way to disconnect or reconnect. Disconnection must not be presented
       as deletion of a GitHub Repository; handling of retained private data and outcomes of credential
       removal require separate refinement.
@@ -62,6 +67,9 @@ specification:
       with the revocation indicator and supported time, and stop synchronizing that Repository while the
       revocation applies. A previously in-flight response is not presented as a fresh successful update
       merely because it arrives after revocation.
+    local_control_after_revocation: After confirmed revocation, the operator can still find the already
+      saved Repository and its available data, understand the access limitation, and reach recovery or
+      intentional local deletion. No successful source access, restored data or source deletion is implied.
     revoked_without_known_time: A private Repository has saved local data but no reliable update time,
       and access revocation is explicitly confirmed. Continue showing the saved data with the revocation
       indication; do not invent a time. Exact missing-time presentation remains open.
@@ -84,3 +92,5 @@ acceptance:
 - Local disconnection does not by itself delete GitHub Repositories.
 - Explicitly revoked private Repository data remains local and visible with a revocation indication and
   supported update time when known; synchronization stops while revocation applies.
+- After confirmed revocation, the saved Repository remains a discoverable entry point for understanding
+  the limitation, access recovery and explicit local deletion.
