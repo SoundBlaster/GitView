@@ -15,14 +15,15 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0019.yaml
   predecessor_revision: 32f79fa
   root_intent: .specgraph/root_intent.md
+  revoked_private_data_decision: conversation_memory/sketches/gitview/revisions/b0795ae580e94ba0be8c59cefcbd3a97/notes.hc
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Provide the operator a path to connect GitHub and find eligible repositories for a GitView
     Project.
   authority_boundary: GitHub access is necessary to the selected product direction. Initial account count,
-    authorization method, permission mapping, offline disclosure policy and setup flow are not selected
-    by this node; predecessor details remain candidates. This specification does not establish a live
-    connection, source grant, ontology approval or implementation readiness.
+    authorization method, permission mapping, the other offline disclosure cases and setup flow are not
+    selected by this node; predecessor details remain candidates. This specification does not establish
+    a live connection, source grant, ontology approval or implementation readiness.
   requirements:
     connect: Offer a way for the operator to authorize access and identify the connected GitHub source
       account. GitView User is the operator and need not be the author or assignee of any source object.
@@ -34,7 +35,16 @@ specification:
       source-specific refinement.
     failure: Distinguish an explicit authentication or permission denial from a temporary network failure
       and a successful empty result. Failure alone does not erase accepted observations or prove deletion;
-      display of retained private data is governed by a separately defined access policy.
+      the owner's specific explicit-revocation behavior below applies only when supported for the affected
+      Repository.
+    revoked_private: When GitHub explicitly confirms that access to a private Repository is revoked for
+      the relevant account, keep the already saved local data and continue showing it as last known with
+      an explicit access-revoked indication and supported last update time when known. Stop synchronization
+      of that Repository while the revocation applies; a late response must not silently restart synchronization
+      or present itself as a new accepted update after revocation. Do not fabricate an update time, treat
+      temporary network failure or a 404 alone as proof of revocation, or claim that retained local visibility
+      restores GitHub access. Exact evidence, presentation, recovery and account-change behavior require
+      refinement.
     account_change: Provide an intentional way to disconnect or reconnect. Disconnection must not be presented
       as deletion of a GitHub Repository; handling of retained private data and outcomes of credential
       removal require separate refinement.
@@ -47,9 +57,19 @@ specification:
       repositories do not exist.
     temporary_failure: A refresh fails without a new access decision. A network failure alone does not
       become a confirmed denial or deletion; display remains subject to actual applicable access policy.
+    explicit_revocation: A private Repository has locally saved observations with a supported last update
+      time; GitHub explicitly confirms access revocation for its account. Keep and show the saved data
+      with the revocation indicator and supported time, and stop synchronizing that Repository while the
+      revocation applies. A previously in-flight response is not presented as a fresh successful update
+      merely because it arrives after revocation.
+    revoked_without_known_time: A private Repository has saved local data but no reliable update time,
+      and access revocation is explicitly confirmed. Continue showing the saved data with the revocation
+      indication; do not invent a time. Exact missing-time presentation remains open.
   open_questions:
   - Account count, GitHub host scope, authorization and required permission set.
-  - Retained private-data disclosure under offline, revoked, disconnected and account-changed conditions.
+  - Evidence of explicit revocation, restoration of access, in-flight response handling and exact presentation
+    of missing times.
+  - Retained private-data disclosure under ordinary offline, disconnected and account-changed conditions.
   - Repository selection, onboarding, stopping refresh on disconnect, credential removal and uncertain-removal
     recovery, and exact UI behavior.
   ontology_status: User, GitHub, Repository and Project use working draft vocabulary; authorization does
@@ -62,3 +82,5 @@ acceptance:
 - Credentials are protected and are not included in shared content or ordinary diagnostics.
 - A network error is not represented as a confirmed source denial, deletion or successful empty result.
 - Local disconnection does not by itself delete GitHub Repositories.
+- Explicitly revoked private Repository data remains local and visible with a revocation indication and
+  supported update time when known; synchronization stops while revocation applies.

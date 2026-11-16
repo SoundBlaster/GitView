@@ -12,14 +12,15 @@ relates_to: []
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0003.yaml
   predecessor_revision: 852649f
+  revoked_private_data_decision: conversation_memory/sketches/gitview/revisions/b0795ae580e94ba0be8c59cefcbd3a97/notes.hc
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Reuse previously received data while keeping refresh outcomes, freshness and incomplete coverage
     understandable.
   authority_boundary: The owner proposed app-owned persisted data and requested visible refresh failure,
     opportunistic background updates, stale-on-open and manual refresh. This node does not select a database,
-    exact API limits or a background schedule, establish permission to display retained private data,
-    or claim implementation readiness.
+    exact API limits or a background schedule, select private-data display policy beyond the explicit
+    revocation decision in 0019, or claim implementation readiness.
   requirements:
     stored: Store accepted observations for reuse across launches; storage failure and actual recoverability
       do not imply unconditional preservation. When stored observations are recoverable and eligible for
@@ -33,6 +34,10 @@ specification:
       supported successful observation time when known and permitted. Retain eligible last-known data
       without presenting it as newly refreshed. No successful observation is distinct from a confirmed
       empty result; do not invent a success time.
+    explicit_revocation: For a private Repository with source-confirmed access revocation, follow 0019
+      and retain and show already saved local observations with the revocation indication and supported
+      last update time when known, and stop synchronization while revocation applies. Do not treat a transient
+      failure or a 404 alone as proof of revocation or as proof of successful refresh.
     partial: A partial response or interrupted retrieval retains actual observation context and incomplete
       coverage. A partial observation has its own time and does not advance the last complete successful
       observation time of the requested scope or establish complete coverage. Failure alone does not erase
@@ -60,7 +65,8 @@ specification:
     first_load: The first Issue-list refresh fails with no prior accepted observation. Show the failure
       and unobserved state, not a zero count or a fabricated last-success time.
   open_questions:
-  - Access and disclosure policy for retained private observations, including revocation and account changes.
+  - Access and disclosure policy for retained private observations, including disconnect and account changes;
+    evidence, recovery and missing-time presentation for explicit revocation remain open.
   - Storage schema and durability, staleness, prioritization, pagination, retries and exact source budget.
   - Presentation of partial data and exact refresh controls in each interaction context.
   ontology_status: GitHub, Repository, PullRequest and Issue use the working draft vocabulary; an observation

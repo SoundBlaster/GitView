@@ -14,6 +14,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0015.yaml
   predecessor_revision: 852649f
   owner_direction: docs/drafts/ux-preview-interactions.md
+  revoked_private_data_decision: conversation_memory/sketches/gitview/revisions/b0795ae580e94ba0be8c59cefcbd3a97/notes.hc
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Let the operator inspect an object without losing the surrounding bird's-eye overview.
@@ -39,6 +40,13 @@ specification:
       remains a hypothesis; pointer hover is optional and is not available on every device.
     observation: Unknown or stale displayed details keep their limitations; a preview must not establish
       success or identity from missing data or bypass applicable restrictions.
+    revoked_private: For a private Repository whose access revocation is explicitly established under
+      0019, continue to show already saved local details in the applicable preview, including one open
+      when the revocation is established, with an access-revoked indication and supported last update
+      time when known. Stop synchronization of the affected Repository; retained local visibility is not
+      GitHub access, and a missing time is not invented. Independently applicable disclosure restrictions
+      still apply; freshness is attributed to the supported observations. Other access and account cases
+      remain open.
   scenarios:
     same_object: Long-pressing PR 42 in Repository R previews that PR; explicit opening reaches the same
       PR in R when eligible.
@@ -48,6 +56,9 @@ specification:
       three screens.
     later_delayed_result: In the later mode the finger moves from A to B while a result for A is delayed;
       A's late details are not shown as B's, and the bubble remains associated with the current object.
+    revoked_while_open: A private PR preview is open when revocation is explicitly confirmed. Keep its
+      already saved permitted details visible with the revocation indication and supported update time
+      when known, without a source fetch or invented time; follow 0019 for late responses.
   open_questions:
   - Native preview and context-menu behavior, gesture coordination, cancellation and changed-origin fallback.
   - Sliding activation, release and edge behavior; applicability of pointer hover.
@@ -60,3 +71,5 @@ acceptance:
 - Accessible non-long-press paths support preview, dismissal and direct opening.
 - Valid origin context is retained on dismissal or return; an invalid origin is not silently substituted.
 - Sliding rich inspection remains a later direction with activation and gesture details open.
+- An already open preview of saved permitted private data remains visible on confirmed revocation with
+  its indication and supported update time when known, without implying source access.

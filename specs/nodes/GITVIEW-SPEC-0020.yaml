@@ -29,14 +29,15 @@ sources:
   predecessor_revision: 5bae442
   root_intent: .specgraph/root_intent.md
   historical_membership_decision: conversation_memory/sketches/gitview/revisions/a55f271ca16f4283bfaf67095616ee7a/notes.hc
+  revoked_private_data_decision: conversation_memory/sketches/gitview/revisions/b0795ae580e94ba0be8c59cefcbd3a97/notes.hc
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Describe a coherent product journey and observable outcomes without declaring the specification
     graph or implementation complete.
   authority_boundary: These outcomes combine selected directions and conditional scenarios from child
-    nodes. They do not select an account count, private-data policy, cold-launch layout, technical implementation
-    or timing of a pilot. All dependent contracts and unresolved product decisions need review before
-    any implementation readiness assessment.
+    nodes. They do not select an account count, private-data policies beyond the explicit revocation decision
+    in 0019, cold-launch layout, technical implementation or timing of a pilot. All dependent contracts
+    and unresolved product decisions need review before any implementation readiness assessment.
   journey:
     setup: An operator can connect GitHub, select eligible Repositories and establish Projects. One Project
       per Repository is the default; Projects may contain multiple Repositories and share them. Selection
@@ -78,8 +79,8 @@ specification:
       refresh. The permitted last-known facts retain their own time and the affected failure is visible
       without claiming complete current data.
   open_questions:
-  - Private-data access after revocation, disconnect, offline and account change, and exact disconnect
-    outcome.
+  - Exact revocation evidence, in-flight and recovery handling; private-data access after disconnect,
+    ordinary offline use and account change, and exact disconnect outcome.
   - Historical metric measurement units; treatment of other signal-filter conflicts and exact return behavior.
   - Actual first-launch interaction, source coverage and selected account/authorization model.
   - Each product branch needs further refinement and evidence appropriate to its eventual transition;

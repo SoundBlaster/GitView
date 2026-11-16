@@ -20,8 +20,8 @@ specification:
   objective: Preserve understandable navigation context while moving among Projects, work collections
     and object overviews.
   authority_boundary: This node refines context and return outcomes without selecting a cold-launch destination,
-    specific default-association model, retention mechanism, anchor algorithm or private-data policy.
-    It does not claim implementation readiness.
+    specific default-association model, retention mechanism, anchor algorithm or private-data policy beyond
+    the explicit revocation decision in 0019. It does not claim implementation readiness.
   requirements:
     context: Applicable navigation context includes Project identity, Repository scope, period, filters,
       density and position or focused object when available. These are presentation state, not new domain
@@ -39,8 +39,11 @@ specification:
     filters: Explicitly selected lifecycle filters persist and restore when applicable under 0007. The
       selected historical merged counter exception under 0047 is a temporary transition override and does
       not itself rewrite the saved preference.
-    access: Revalidate current applicability and access before disclosing retained content; a saved navigation
-      context is not an access grant. The actual private-data policy remains open.
+    access: Revalidate current applicability and independently applicable disclosure restrictions before
+      showing retained content; a saved navigation context is not a GitHub access grant. For confirmed
+      revocation of a private Repository, saved data remains visible under 0019 with revocation and last-update
+      context when known; source access is not required for that local display. Other private-data policies
+      remain open.
   scenarios:
     return_same: The operator opens PR B from a filtered Project selection. On return, if the Project,
       scope and B remain valid and permitted, the context and prior location can be restored without substituting
@@ -54,8 +57,8 @@ specification:
   open_questions:
   - Cold-launch and retained-session behavior, position and focus fallback, and time-zone-change interaction.
   - Persistence scope and reset of filters, and non-merged historical counter overrides.
-  - Access and disclosure policy after revocation, disconnect or account changes; behavior of an open
-    overview remains to be decided.
+  - Access and disclosure policy after disconnect or account changes, exact revocation evidence and recovery,
+    and behavior of an open overview in other access cases remain to be decided.
   ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; navigation
     context is not a domain entity.
 acceptance:

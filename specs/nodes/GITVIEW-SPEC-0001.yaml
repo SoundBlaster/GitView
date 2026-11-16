@@ -32,6 +32,9 @@ sources:
   historical_membership_decision:
     path: conversation_memory/sketches/gitview/revisions/a55f271ca16f4283bfaf67095616ee7a/notes.hc
     node: historical-project-membership-decision
+  revoked_private_data_decision:
+    path: conversation_memory/sketches/gitview/revisions/b0795ae580e94ba0be8c59cefcbd3a97/notes.hc
+    node: revoked-private-display-decision
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Give a person managing many GitHub repositories a compact native iOS overview of current
@@ -89,8 +92,11 @@ specification:
       and return behavior require refinement.
     data: Previously received data may be stored locally. A failed GitHub refresh must be clearly indicated,
       with the last successful update time for its supported scope when known; incomplete or failed refresh
-      is not a confirmed empty result. Observation times and limitations retain their actual scopes. Private
-      offline disclosure is an open product decision.
+      is not a confirmed empty result. Observation times and limitations retain their actual scopes. After
+      explicit GitHub access revocation for a private Repository, keep already saved local data and show
+      it with a revocation indicator and the supported last update time when known; stop synchronizing
+      that Repository while revocation applies. Do not invent a time or treat network failure alone as
+      proof of revocation. Other private-data cases remain open.
     platform: Prefer Apple system appearance and components, SF Symbols, system colors and Liquid Glass
       with minimal decoration, while providing accessibility and alternatives to gesture- or color-only
       operation.
@@ -103,7 +109,8 @@ specification:
     represented by the unfiltered Today grid.
   - Scope, reset behavior and cross-device synchronization, if any, for persistent filters.
   - Exact meaning of ready or attention and the evidence for any derived signal.
-  - Privacy and availability policy for previously permitted private data offline or after restoration.
+  - Private-data availability for ordinary offline use, disconnect, account change and restoration; exact
+    confirmation and recovery behavior for explicit revocation and presentation of missing update times.
   - Sharing payload, historical metric periods and handling uncertain current membership, supported devices
     and exact native interactions.
   - Detailed GitHub source mappings, authorization, storage guarantees and implementation-ready leaf contracts.
