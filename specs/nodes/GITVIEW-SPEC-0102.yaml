@@ -13,7 +13,7 @@ depends_on:
 - GITVIEW-SPEC-0042
 - GITVIEW-SPEC-0046
 - GITVIEW-SPEC-0049
-- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0026
 - GITVIEW-SPEC-0089
 - GITVIEW-SPEC-0092
 sources:
@@ -48,7 +48,7 @@ specification:
       empty list, a known number of missing cards, a denied Repository or a source deletion.
     separate_outcomes: A later failed or incomplete refresh does not erase an earlier supported observation
       or advance its complete-coverage claim to the later time. Newly observed facts, old observations
-      and each request outcome retain their own contexts under 0044 and 0053.
+      and each request outcome retain their own contexts under 0044 and 0026.
     changed_scope: Membership, day, filters or applicable access can change the selection. Reevaluate
       coverage for the actual scope without relabeling an earlier result as exhaustive for the new one;
       a late result does not replace a different selected context solely due to arrival order.

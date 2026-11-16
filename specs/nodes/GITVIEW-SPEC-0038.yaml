@@ -25,7 +25,7 @@ specification:
   - gitview:Project
   - gitview:projectIncludesRepository
   objective: Preserve Repository identity, history and Project memberships without guessing when source
-    observations are incomplete or conflicting.
+    observations are incomplete.
   authority_boundary: The owner selected continuity for a source-confirmed same object and accepted numeric
     ID examples; the later owner-approved GitView ontology 0.2.0 selects the numeric REST repository ID
     as a same-instance comparison key. This is not evidence that a particular transfer, source response,
@@ -35,8 +35,7 @@ specification:
     selected_identity: 'Under the owner-approved ontology policy and 0002, compare confirmed numeric REST
       repository IDs within one GitHub instance: the same ID identifies the same Repository and a different
       ID a different Repository. The earlier numeric examples and later ontology approval are distinct
-      decision evidence. An ID match does not by itself prove a transfer, current source access or the
-      ordering of conflicting observations.'
+      decision evidence. An ID match does not by itself prove a transfer or current source access.'
     attributes: Repository owner, name and address are observed attributes, not identity by themselves.
       When sufficiently supported evidence establishes a current changed address for the same Repository,
       retain its identity, history and all Project memberships.
@@ -47,9 +46,6 @@ specification:
     address_reuse: If supported source evidence establishes that an old address now identifies a different
       Repository, do not transfer the earlier Repository's history or Project memberships to the new identity
       merely because of that address.
-    conflict: If comparable observations for the same Repository disagree about its current address and
-      cannot be reliably ordered, retain the applicable prior information and uncertainty under 0037.
-      Arrival order alone does not prove which address is current.
     unavailable: A 404, failed request or incomplete discovery alone does not establish deletion or access
       revocation. Keep supported last-known identity and membership information; confirmed private Repository
       revocation does not hide already saved local information under 0019.
@@ -67,12 +63,9 @@ specification:
       identity.
     missing_id: A new observation has a familiar name but lacks sufficient identity evidence. Keep the
       possible association unresolved; do not silently merge records or move memberships.
-    conflicting_addresses: Two observations for the same Repository contain different addresses and source
-      evidence does not order them. Keep the current address uncertain rather than selecting the last
-      response by arrival time.
   open_questions:
   - Availability and reliability of identity evidence for each selected source operation, including transfer
-    observations, conflicting data and identifier representation changes.
+    observations and identifier representation changes.
   - Cross-instance identity, address and alias retention, and exact reconciliation presentation.
   - Source deletion and access recovery rules beyond the selected 404 and revocation behavior.
   ontology_status: Repository, GitHubRepository and Project use selected ontology vocabulary; identity
@@ -82,8 +75,7 @@ acceptance:
   memberships.
 - A changed or reused address alone does not merge identities or transfer an earlier Repository's history
   and memberships.
-- Insufficient or conflicting evidence remains uncertain and does not itself prove deletion or a current
-  address.
+- Insufficient evidence remains uncertain and does not itself prove deletion or a current address.
 - A 404 or incomplete discovery alone is not treated as confirmed deletion or revocation.
 - Confirmed private Repository revocation does not hide already saved local information under 0019.
 - Same-instance numeric REST repository ID comparison follows the selected ontology policy without inferring

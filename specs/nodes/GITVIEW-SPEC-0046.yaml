@@ -14,7 +14,6 @@ depends_on:
 - GITVIEW-SPEC-0030
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0044
-- GITVIEW-SPEC-0053
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0046.yaml
   revoked_private_visibility: specs/nodes/GITVIEW-SPEC-0019.yaml
@@ -47,8 +46,7 @@ specification:
     stale: A previous observation is not proof of the current population. A stale count of open PRs is
       not automatically a current lower bound; the earlier value may remain last known with its own context.
     changes: A partial later observation does not advance an earlier complete count to a new complete
-      reference or establish an exact later difference without sufficient compatible evidence. A late
-      calculation does not supersede a newer supported result merely by finishing later under 0053.
+      reference or establish an exact later difference without sufficient compatible evidence.
     attention: A confirmed positive signal on an identified PR may contribute once to an observed subset
       with its actual context, even if coverage is incomplete. Absence of a known positive is not proof
       of a negative when the relevant input is unknown.

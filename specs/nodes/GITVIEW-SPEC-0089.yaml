@@ -14,7 +14,7 @@ depends_on:
 - GITVIEW-SPEC-0042
 - GITVIEW-SPEC-0044
 - GITVIEW-SPEC-0049
-- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0026
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0089.yaml
   owner_local_day: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc

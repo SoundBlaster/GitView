@@ -13,7 +13,7 @@ depends_on:
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0038
 - GITVIEW-SPEC-0044
-- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0026
 - GITVIEW-SPEC-0063
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0078.yaml

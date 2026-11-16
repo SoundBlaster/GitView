@@ -38,10 +38,8 @@ specification:
       time when known and a discoverable scoped failure. Do not invent an unknown time. A failed attempt
       does not advance the last successful observation time or establish source deletion, denial or emptiness
       by itself.
-    ordering: When overlapping observations concern the same fact and scope, a source-confirmed older
-      observation must not silently replace a source-confirmed newer one solely because it completed later.
-      If the evidence does not establish an order, retain the applicable uncertainty instead of inventing
-      a current result.
+    freshness: Refresh the displayed information from GitHub; do not present older saved information as
+      a successful new update when the latest refresh could not establish it.
     revoked_private: Confirmed GitHub revocation of a private Repository retains the saved local data
       and shows its revocation indication and supported time when known under 0019. Stop synchronization
       for the affected Repository while revocation applies; a late in-flight response is not presented
@@ -55,8 +53,6 @@ specification:
     failed_refresh: A Repository has a supported prior observation and a later refresh fails. Show the
       prior data with its supported time when known and identify the failure without presenting it as
       a new successful observation.
-    older_response: Two observations of the same fact overlap and the source establishes that the response
-      arriving last is older. Do not silently replace the newer supported value with it.
     revoked_during_refresh: A private Repository has saved data when revocation is confirmed while a refresh
       is in flight. Keep the saved data visible with its indication and supported time when known; the
       late response does not become a new successful update.
@@ -71,8 +67,7 @@ acceptance:
 - A failed refresh alone does not advance a successful observation time. A partial refresh does not prove
   a complete or empty collection, erase earlier saved data or advance the last complete observation time
   for the wider scope; an independently supported successful part retains its own actual scope and time.
-- A supported newer fact is not silently replaced by a source-confirmed older observation solely because
-  the latter completed later; an unorderable conflict remains uncertain.
+- The operator can distinguish a successful update from last-known data after a failed refresh.
 - Confirmed private Repository revocation preserves available saved local data with its indication and
   supported time when known, while synchronization stops under 0019.
 - Failure and incomplete coverage are discoverable without relying solely on color or transient feedback.

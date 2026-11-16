@@ -1,5 +1,5 @@
 id: GITVIEW-SPEC-0037
-title: GitView - Refresh ordering and access changes
+title: GitView - Overview refresh and access changes
 kind: spec
 created_at: '2026-11-16T08:26:00Z'
 updated_at: '2026-11-16T08:26:00Z'
@@ -20,59 +20,38 @@ specification:
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
-  objective: Preserve truthful scope and freshness when source observations overlap or access changes
-    during refresh.
-  authority_boundary: This node describes observable ordering and access outcomes. It does not select
-    a synchronization architecture, source comparison algorithm, authentication mechanism or retry schedule,
-    and it does not establish implementation readiness.
+  objective: Keep the operator oriented when an overview refreshes or access changes while it is open.
+  authority_boundary: This node specifies the experience of refresh and access changes. Synchronization
+    ordering, API mapping, account isolation and native controls remain technical or product questions
+    for later refinement.
   requirements:
-    comparable: Compare observations only when their source identity, object or collection scope and fact
-      are sufficiently established as comparable. A result for one Repository or category does not establish
-      another's freshness or coverage.
-    ordered: If source evidence establishes that an incoming observation is older than an accepted observation
-      for the same fact and scope, do not silently replace the newer value with it merely because the
-      older response arrived later. Request start and completion order alone do not establish source freshness.
-    unordered: If observations for the same fact cannot be reliably ordered, preserve available previously
-      accepted observations and the applicable conflict or uncertainty rather than claiming that either
-      is the confirmed current value. Do not advance a complete-observation time without sufficient evidence;
-      exact conflict resolution remains open.
-    partial: A supported result can update its actual observed subset and retain that subset's time without
-      proving a whole collection complete. Absence from a partial or failed result does not by itself
-      delete another record or prove it absent from the source.
-    revocation: On confirmed GitHub revocation of a private Repository, stop synchronization and retain
-      previously saved local data with the revocation indication and supported time when known under 0019.
-      A response from an earlier in-flight request does not itself become a fresh accepted update or establish
-      restored source access merely by arriving later.
-    identity_change: Keep a response attributable to the source identity and context of the request that
-      produced it. A response initiated under one account is not silently presented as a new account's
-      observation or proof of its access. Detailed cross-account disclosure and recovery remain open.
-    failure: A failed, cancelled or interrupted request does not manufacture a successful observation
-      time or erase independently saved observations. Keep its actual supported outcome and scope distinguishable
-      from separately supported successes; user cancellation is not automatically reported as a failure.
+    refresh: Update the available overview from GitHub while keeping its Project and Repository context.
+      Make the supported update time and any failed or incomplete update discoverable. Preserve available
+      last-known data rather than presenting an unsuccessful update as current.
+    partial: If only part of a Project refreshes, show available information with its actual scope and
+      indicate the limitation; an unavailable part is not presented as an empty repository.
+    revocation: When GitHub confirms private Repository access revocation, retain saved data visibly with
+      the access-revoked indication and supported last update time when known under 0019; stop synchronization
+      for the affected Repository. Provide the recovery or explicit local deletion entry point under 0019.
+    account_change: Do not present one GitHub account's observations as proof of another account's access.
+      Disclosure and recovery after account changes remain open.
+    cancellation: Do not present an intentionally cancelled update as a successful refresh or automatically
+      label the user's cancellation as a failure.
   scenarios:
-    older_arrives_later: Source evidence establishes observation A is older than accepted B for the same
-      PR fact. A arrives later; it does not silently replace B as the current supported value.
-    unorderable: Two observations of a PR fact conflict and available evidence cannot order them. Preserve
-      the affected uncertainty rather than presenting either as a confirmed newer complete state.
-    revoked_during_refresh: A private Repository has saved data and a request in flight when access revocation
-      is confirmed. Saved data remains locally visible with the indication and supported time when known;
-      the late response does not restore GitHub access or become a fresh accepted update.
-    account_changes: A request starts under account A and finishes after a different identity B becomes
-      active. It is not relabeled as B's observation or proof of B's source access.
+    partial_refresh: One Repository updates while another cannot be refreshed. Keep the available overview
+      and make the partial result understandable.
+    revoked_during_refresh: GitHub confirms private Repository revocation while the overview is open.
+      Saved information remains visible as last known with its indication and supported time when known;
+      synchronization stops and the operator can reach recovery or explicit local deletion under 0019.
   open_questions:
-  - Source evidence and comparison rules sufficient to order each kind of observation.
-  - Conflict resolution, reconnect evidence and handling of in-flight or interrupted local writes.
-  - Account isolation and exact native presentation of uncertain or incomplete observations.
-  ontology_status: Repository, Project, PullRequest and Issue use selected ontology vocabulary; request
-    ordering and observation states are specification concepts rather than new domain entities.
+  - Source coverage, account-change disclosure, recovery and exact native presentation.
+  - Synchronization ordering, in-flight updates and source comparison belong to later technical refinement.
+  ontology_status: Repository, Project, PullRequest and Issue use selected ontology vocabulary; refresh
+    is a user operation, not a new domain entity.
 acceptance:
-- Source-confirmed older data does not silently replace a newer accepted observation for the same fact
-  and scope solely because it arrived later.
-- Unorderable conflicting evidence does not become a confirmed newer complete state or an invented successful
-  observation time.
-- Partial or failed refresh does not by itself establish deletion, source emptiness or complete coverage.
-- Confirmed private Repository revocation preserves saved local data with its indication and supported
-  time when known; a late earlier response does not itself restore source access or become a new accepted
-  update.
-- A response initiated under one source identity is not silently attributed as a new identity's observation
-  or grant.
+- The overview retains its Project and Repository context and shows supported update information.
+- Failure or partial refresh does not silently erase saved information or present unavailable work as
+  empty.
+- Confirmed private Repository revocation keeps saved data visible with its indication and supported time
+  when known, stops synchronization and retains access to recovery or explicit local deletion under 0019.
+- Observations are not attributed as proof of a different account's GitHub access.

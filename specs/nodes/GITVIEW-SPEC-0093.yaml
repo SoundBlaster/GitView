@@ -16,7 +16,6 @@ depends_on:
 - GITVIEW-SPEC-0033
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0044
-- GITVIEW-SPEC-0053
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0093.yaml
   preview_proposal: docs/drafts/ux-preview-interactions.md

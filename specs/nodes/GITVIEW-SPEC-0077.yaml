@@ -13,7 +13,6 @@ depends_on:
 - GITVIEW-SPEC-0036
 - GITVIEW-SPEC-0038
 - GITVIEW-SPEC-0044
-- GITVIEW-SPEC-0053
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0077.yaml
   selected_fields: docs/drafts/issue-ontology-options.md
@@ -48,7 +47,7 @@ specification:
       an older comment was edited. A maximum observed in an incomplete subset is not automatically the
       latest in the whole Issue and retains its subset limitation.
     freshness: A new title or unrelated Issue update does not refresh an earlier discussion count or latest-comment
-      time. Retain each supported value's own time and context under 0044 and 0053.
+      time. Retain each supported value's own time and context under 0044 and 0026.
     saved_data: When GitHub explicitly confirms private Repository access revocation for the relevant
       account, previously saved discussion values remain locally visible as last known with revocation
       indication and supported update time when known; synchronization stops under 0019. No live source

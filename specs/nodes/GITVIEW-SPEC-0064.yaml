@@ -11,7 +11,7 @@ depends_on:
 - GITVIEW-SPEC-0025
 - GITVIEW-SPEC-0044
 - GITVIEW-SPEC-0046
-- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0026
 - GITVIEW-SPEC-0068
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0064.yaml
@@ -39,7 +39,7 @@ specification:
       coverage; missing history is incomplete or a gap, not zero.
     selected_result: A late result for an earlier membership basis cannot replace or be labeled as a separately
       selected new-basis result merely because it finished later. Retain each supported result's own metric,
-      scope, period and observation context under 0053 and 0068.
+      scope, period and observation context under 0026 and 0068.
     basis_comparison: A combined A-and-B value does not establish the A-only contribution without compatible
       per-member evidence. Values for A-and-B and A-and-C do not alone establish a same-scope trend or
       a change caused by source activity; keep the changed membership basis explicit.

@@ -30,9 +30,8 @@ specification:
     not establish implementation readiness.
   requirements:
     separate: Preserve the distinction among available observed facts, supported scope and time, coverage,
-      in-flight attempts and the latest reliably established terminal refresh outcome. If terminal outcomes
-      cannot be ordered, retain uncertainty rather than claiming one is latest. A later failure does not
-      erase prior accepted observations or turn their success time into the failed attempt time.
+      update attempts and the latest supported refresh outcome. A failed update does not erase prior saved
+      information or turn its observation time into the failed attempt time.
     field_scope: An observed field retains its supported object, Repository, source and time context.
       An omitted, unrequested, errored or ambiguously null field is not automatically a confirmed empty
       value or absence; interpret it only as source evidence permits. A later response that observes a
@@ -54,8 +53,6 @@ specification:
     summary: A Project or portfolio summary preserves the scope, time and coverage of its inputs under
       0012 and 0029. Success for one Repository or category does not make all inputs current, complete
       or healthy.
-    ordering: Apply supported source ordering under 0037. Request completion time alone is not proof that
-      its source facts are newer than another observation.
     accessibility: The operator can discover the meaningful difference between stale, incomplete, unobserved
       and failed data without relying solely on color or a transient message.
   scenarios:
