@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0034
 title: GitView - Authored description sections and source text
 kind: spec
 created_at: '2026-11-16T08:22:00Z'
-updated_at: '2026-11-16T08:22:00Z'
-status: outlined
+updated_at: '2026-11-16T19:49:26Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0010
 depends_on:

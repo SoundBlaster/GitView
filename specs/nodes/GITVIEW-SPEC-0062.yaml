@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0062
 title: GitView - Independent review attention conditions
 kind: spec
 created_at: '2026-11-16T08:49:00Z'
-updated_at: '2026-11-16T08:49:00Z'
-status: outlined
+updated_at: '2026-11-16T19:49:26Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0028
 depends_on:

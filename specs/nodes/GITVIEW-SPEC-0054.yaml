@@ -2,14 +2,15 @@ id: GITVIEW-SPEC-0054
 title: GitView - Required Issue and PR description workflow
 kind: spec
 created_at: '2026-11-16T08:23:00Z'
-updated_at: '2026-11-16T08:23:00Z'
-status: outlined
+updated_at: '2026-11-16T19:49:26Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0010
 depends_on:
 - GITVIEW-SPEC-0008
 - GITVIEW-SPEC-0009
 - GITVIEW-SPEC-0034
+- GITVIEW-SPEC-0019
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0054.yaml
   predecessor_revision: 9c598dd
@@ -40,10 +41,10 @@ specification:
       motivation, outcome or validation claim. A source mechanism is not claimed to prevent or correct
       nonconformance until separately established.
     existing_content: GitView continues to show available existing, externally authored or differently
-      structured Issues and PRs under 0034. Preserve original text where available; inspection or compliance
-      display does not rewrite the source description or fill sections automatically. Do not fabricate
-      missing sections or hide an object solely because process compliance is missing or unknown. This
-      does not decide a separately specified future editing flow.
+      structured Issues and PRs when eligible for display under 0019 and 0034. Preserve original text
+      where available; inspection or compliance display does not rewrite the source description or fill
+      sections automatically. Do not fabricate missing sections or hide an object solely because process
+      compliance is missing or unknown. This does not decide a separately specified future editing flow.
     source_facts: An authored claim is distinct from independently observed source facts, review and CI.
       A linked Issue or a stated motivation does not prove the motive of a particular actor or the causal
       history of a change.
@@ -70,6 +71,6 @@ acceptance:
 - A template or agent instruction alone is not treated as proof that sections were supplied or that every
   path is enforced.
 - Existing or external objects with missing or differently structured descriptions remain visible with
-  their available original text.
+  their available original text when eligible under 0019; format alone does not hide them.
 - Structural conformance does not by itself establish an actor's motive, an achieved outcome, successful
   CI or independent validation.

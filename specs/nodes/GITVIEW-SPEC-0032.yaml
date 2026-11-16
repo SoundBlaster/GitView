@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0032
 title: GitView - Accessible grid and navigation
 kind: spec
 created_at: '2026-11-16T07:10:00Z'
-updated_at: '2026-11-16T07:10:00Z'
-status: outlined
+updated_at: '2026-11-16T19:49:26Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0017
 depends_on:

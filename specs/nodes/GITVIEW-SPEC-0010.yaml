@@ -2,13 +2,14 @@ id: GITVIEW-SPEC-0010
 title: GitView - Issue and PR description formats
 kind: spec
 created_at: '2026-11-15T21:32:00Z'
-updated_at: '2026-11-15T21:32:00Z'
-status: outlined
+updated_at: '2026-11-16T19:49:26Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0001
 depends_on:
 - GITVIEW-SPEC-0008
 - GITVIEW-SPEC-0009
+- GITVIEW-SPEC-0019
 relates_to: []
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0010.yaml
@@ -29,7 +30,8 @@ specification:
     participating_process: Require the agreed sections in new Issue and PR descriptions through the participating
       repository process and cover its supported creation paths. Provide the agreed templates for that
       process; templates and agent instructions alone are not evidence of enforcement.
-    external: Existing or external objects with another format or missing sections remain visible. Preserve
+    external: Existing or external objects with another format or missing sections remain visible when
+      eligible for display under the access policy in 0019; format alone does not hide them. Preserve
       their authored text, indicate a confirmed missing section and do not invent material or silently
       discard nonconforming objects.
     meaning: Motivation, Expected outcome and Validation are authored statements. A linked Issue is not
@@ -54,7 +56,7 @@ acceptance:
 - The selected Issue and PR formats retain their distinct named sections and apply to new descriptions
   through all supported creation paths of the participating process; the templates support but do not
   prove enforcement.
-- External or legacy descriptions remain visible without fabricated sections or silently discarded original
-  text.
+- Eligible external or legacy descriptions remain visible under the access policy in 0019; format alone
+  does not hide them, fabricate sections or silently discard original text.
 - Authored motivation, outcomes and validation are distinguishable from independently established facts
   and CI.
