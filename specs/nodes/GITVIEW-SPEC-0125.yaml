@@ -20,6 +20,7 @@ depends_on:
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0125.yaml
   owner_intent_review: docs/drafts/owner-intent-coverage-review-20261115.md
+  ready_meaning_decision: conversation_memory/sketches/gitview/revisions/23fe1cc490924a219f38c4bee721511f/metadata.json
 specification:
   ontology_refs:
   - gitview:User
@@ -38,9 +39,10 @@ specification:
     while account B is active, the account-switch boundary in 0019 applies. Behavior after returning to
     A is not selected.
   requirements:
-    product_need: Keep the question of what is ready as an explicit product need even while the definition
-      and evidence of a combined ready state remain unresolved. Do not use a single convenient source
-      field as a complete answer without a separately established meaning.
+    product_need: For PRs, the primary «Done» indicator means PRs already merged. Show readiness to merge
+      separately; its product predicate, source evidence and applicability remain to be defined. A merged
+      outcome is not the same as a PR awaiting merge, and one source field does not by itself establish
+      the separate readiness signal.
     completed: Present a supported merged PR as merged and a PR closed without merge accordingly. Present
       an Issue as closed with its supported reason when available; an unknown or non-completion reason
       does not automatically establish a successfully completed task. Current lifecycle and an event during
@@ -79,8 +81,11 @@ specification:
       requested. Preserve both rather than describing the PR as approved or ready to merge.
     unknown_merge_rules: A PR has supported green CI, approval and zero unresolved threads, but branch
       rules and permissions are unknown. Do not claim merge eligibility from that combination alone.
+    done_and_ready: A PR merged in the selected period contributes to the primary PR «Done» outcome when
+      supported by sufficient data. An open PR may be represented by a separate readiness-to-merge indicator
+      only when its predicate and evidence are established; the two states are not conflated.
   open_questions:
-  - What product-visible meaning of ready should be selected, for whom and with which evidence.
+  - The predicate, applicable operator and evidence for the separate readiness-to-merge indicator.
   - Whether an optional open non-draft PR filter is useful and how its source inputs are established.
   - Any merge eligibility scope, source policy and action require separate refinement.
   ontology_status: PullRequest, Issue and Project use selected ontology vocabulary; a stage or readiness
@@ -95,3 +100,5 @@ acceptance:
 - Saved supported facts remain visible after confirmed private Repository revocation with indication and
   supported time when known. Visibility and local access follow the active-account and A-to-B boundary
   in 0019.
+- For PRs the primary «Done» indicator means merged; readiness to merge is presented separately under
+  a separately defined predicate and supported evidence.

@@ -21,6 +21,7 @@ sources:
   metric_candidate: docs/drafts/GITVIEW-SPEC-0057.yaml
   ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
   signal_filter_context_decision: conversation_memory/sketches/gitview/revisions/9544eaa87e5b4afcb48910299d60c520/metadata.json
+  ready_meaning_decision: conversation_memory/sketches/gitview/revisions/23fe1cc490924a219f38c4bee721511f/metadata.json
 specification:
   ontology_refs:
   - gitview:pullRequestRepository
@@ -53,6 +54,8 @@ specification:
       changes requested, unresolved thread count and affected PR count, and blocked Issues. It distinguishes
       merged PR outcomes and Issue closures by reason for a selected period. Show charts of these measurements
       when sufficient history is available; exact predicates, time ranges and placement remain to be specified.
+      The primary PR «Done» indicator means merged PRs; readiness to merge is a separate desired indicator
+      whose applicable predicate and evidence remain to be defined.
     units: Preserve the meaning and unit of each value. Counts of checks, affected PRs, review threads,
       Issues and affected Repositories are different measurements; do not add linked PRs and Issues as
       independent tasks. Affected object and Repository counts may be separately available for the same

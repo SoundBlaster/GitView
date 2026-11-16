@@ -19,6 +19,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0062.yaml
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/pull-request-ontology-options.md
+  review_wait_meaning_decision: conversation_memory/sketches/gitview/revisions/8cefadc82b764a64b09fd8c3123f2f28/metadata.json
 specification:
   ontology_refs:
   - gitview:Metric
@@ -58,9 +59,10 @@ specification:
     uncertainty: Missing, partial, conflicting or stale evidence remains distinguishable from a confirmed
       healthy or zero result. A source-reported review requirement or assignment to the operator is not
       automatically the chosen definition of awaiting review.
-    long_discussion: Keep the requested problem of lengthy review discussions visible as an open product
-      question. Do not silently select a duration threshold, comment-count formula or responsible person
-      without separate support.
+    long_discussion: Help the operator notice a review thread that has waited a long time for a reply
+      to its latest message. The threshold, how to establish that a reply is awaited, applicable actor
+      and evidence remain open; do not treat an old thread, a comment count or missing information alone
+      as proof.
     navigation: An actionable review or thread signal opens the corresponding supported work selection
       with its actual Project or Repository scope, condition, lifecycle population and applicable time
       or period under 0047. A count of threads is not automatically the count of resulting PR cards; incomplete
@@ -82,10 +84,14 @@ specification:
       are not established.
     newer_revision: A previous review approval is supported for an older PR revision, while its applicability
       to the newer revision is unknown. Do not silently present the earlier approval as current.
+    waiting_meaning: A review thread has waited a long time for a reply to its latest message. The intended
+      attention signal identifies that wait when the required predicate and evidence are established;
+      its threshold and responsible actor are not selected here.
   open_questions:
   - Source evidence and exact predicates for awaiting review, review assessment applicability and requested-review
     scope.
-  - What user-meaningful signal identifies a long or inactive review discussion and what evidence it requires.
+  - Threshold and source evidence for establishing a long wait for a reply to the latest review-thread
+    message, including applicable actor.
   - Native badges, summaries and incomplete-coverage presentation at each density.
   ontology_status: PullRequest and ReviewThread use selected ontology vocabulary; source review facts
     and presentation signals do not prove an actor's motive or add new domain entities.
@@ -100,3 +106,5 @@ acceptance:
   scope and condition.
 - Confirmed private Repository revocation does not hide previously saved supported review facts under
   0019.
+- The intended long-wait signal concerns an awaited reply to the latest review-thread message; threshold
+  and evidence are not silently invented.

@@ -22,6 +22,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0057.yaml
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/project-summary-proposal.md
+  ready_meaning_decision: conversation_memory/sketches/gitview/revisions/23fe1cc490924a219f38c4bee721511f/metadata.json
 specification:
   ontology_refs:
   - gitview:Project
@@ -63,7 +64,8 @@ specification:
       and incomplete coverage where applicable. A closure does not automatically establish a completed
       task; a current reason is not assigned to an earlier event without evidence. Distinguish event counts
       from distinct affected object counts, and do not assume reason groups sum to distinct Issues when
-      one Issue can have multiple events.
+      one Issue can have multiple events. For PRs, the primary «Done» indicator denotes merged PRs; readiness
+      to merge is a separate desired signal and must not be inferred from a merged count.
     current_vs_history: A confirmed merged PR can leave an unfinished-only current-work selection while
       remaining visible in unfiltered Today for the applicable local day under 0007. Its supported merge
       outcome can contribute to the applicable metric when subject, scope, period and evidence support
@@ -96,8 +98,8 @@ specification:
   open_questions:
   - Exact metric predicates, source-specific mapping, history availability and aggregation units for each
     supported signal.
-  - How to define any higher-level ready or long-discussion signal and its evidence without conflating
-    independent facts.
+  - Predicates and evidence for the separate readiness-to-merge indicator and the selected long wait for
+    a reply to the latest review-thread message, without conflating independent facts.
   - Native presentation, chart periods, partial coverage and any formal burn-down definition.
   ontology_status: Project, Repository, PullRequest, Issue, ReviewThread, CIStatus and Metric use the
     selected ontology vocabulary; a chart or counter does not establish an actor action or a new domain

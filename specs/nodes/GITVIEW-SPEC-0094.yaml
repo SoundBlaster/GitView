@@ -18,6 +18,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0094.yaml
   project_summary: docs/drafts/project-summary-proposal.md
   owner_intent: conversation:gitview/excerpt-02
+  review_wait_meaning_decision: conversation_memory/sketches/gitview/revisions/8cefadc82b764a64b09fd8c3123f2f28/metadata.json
 specification:
   ontology_refs:
   - gitview:pullRequestRepository
@@ -28,18 +29,17 @@ specification:
   - gitview:Metric
   objective: Help the operator notice review discussions that may need attention, including threads waiting
     a long time for a response, without leaving the work overview.
-  authority_boundary: The owner requested visibility of long or problematic review threads and selected
-    counters rather than individual thread content. What makes a discussion long or problematic, its threshold,
-    source mapping and native presentation remain open; no specific signal or threshold is selected. When
-    GitHub externally revokes access to a private Repository, the retained-data visibility and local access
-    described here apply while the relevant account remains active. Independently of revocation, while
-    account B is active, the account-switch boundary in 0019 applies. Behavior after returning to A is
-    not selected.
+  authority_boundary: 'The owner requested visibility of long or problematic review threads and selected
+    counters rather than individual thread content. The owner selected the meaning of one signal: a long
+    wait for a reply to the latest message. Its predicate, threshold, source mapping and native presentation
+    remain open; other problematic-discussion signals are not selected here. When GitHub externally revokes
+    access to a private Repository, the retained-data visibility and local access described here apply
+    while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.'
   requirements:
-    attention: Make it possible to notice a lengthy or problematic review discussion, including a thread
-      that has waited a long time for a response, when its meaning has been defined and the necessary
-      information is available. Until then, keep the product need open rather than presenting a guessed
-      signal as an established fact.
+    attention: Help the operator notice a review thread that has waited a long time for a reply to its
+      latest message. Show such a signal when its predicate and the necessary evidence are established;
+      the duration threshold, applicable actor and how waiting for a reply is established remain open.
     interpretation: Describe the actual meaning and scope of an available signal so the operator can understand
       why it needs attention. Unknown or incomplete information is not presented as proof that no discussion
       needs attention.
@@ -62,15 +62,17 @@ specification:
       has saved review information when GitHub confirms access revocation. Keep the saved information
       visible with the revocation indication and supported update time when known under 0019; synchronization
       stops.
+    wait_for_last_message: A review thread has waited a long time for a reply to its latest message. The
+      desired signal highlights that wait when supported by the selected predicate and available evidence;
+      an old thread or a count of comments alone does not establish it.
   open_questions:
-  - What makes a long or problematic review discussion useful to notice, including how to identify a long
-    wait for a response and any threshold.
+  - How to establish an awaited reply to the latest message, the applicable actor and a long-wait threshold.
   - Available GitHub information, coverage and exact native presentation for a selected meaning.
   ontology_status: PullRequest and ReviewThread use selected ontology vocabulary; an attention signal
     is a presentation and measurement, not a new domain entity or proof of actor motive.
 acceptance:
-- The need to notice lengthy or problematic review discussions, including a long wait for a response,
-  remains explicit; its definition is not invented.
+- The selected attention need concerns a long wait for a reply to the latest review-thread message; its
+  predicate, threshold and evidence are not invented.
 - An available signal has an understandable meaning and scope, and unknown information is not presented
   as a confirmed absence.
 - Thread counts and affected PR counts remain distinguishable, and actionable navigation keeps the applicable
@@ -79,3 +81,5 @@ acceptance:
   and supported update time when known under 0019. Visibility and local access follow the active-account
   and A-to-B boundary in 0019.
 - Signal meaning and available actions do not rely solely on color or transient feedback.
+- The long-wait signal concerns a reply awaited to the latest review-thread message; its threshold and
+  evidence remain to be specified.

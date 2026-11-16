@@ -20,6 +20,7 @@ sources:
   project_summary: docs/drafts/project-summary-proposal.md
   repository_proposal: docs/drafts/repository-summary-proposal.md
   ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
+  ready_meaning_decision: conversation_memory/sketches/gitview/revisions/23fe1cc490924a219f38c4bee721511f/metadata.json
 specification:
   ontology_refs:
   - gitview:CIStatus
@@ -52,7 +53,8 @@ specification:
       source objects, not automatically separate tasks.
     outcomes: Distinguish merged PRs and closed Issues by supported reason for a selected period from
       current-state counts. Keep scope, observation context and incomplete evidence visible; closure alone
-      does not establish completion.
+      does not establish completion. For PRs, the primary «Done» indicator refers to merged PRs; readiness
+      to merge is a separate desired signal whose applicable predicate and evidence remain open.
     navigation: An actionable signal retains its actual condition and scope when opening the corresponding
       permitted object selection. A count of checks, threads or events is not automatically the number
       of resulting object cards.
