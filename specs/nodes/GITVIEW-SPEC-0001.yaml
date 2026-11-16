@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0001
 title: GitView - product intent and scope
 kind: spec
 created_at: '2026-11-15T17:42:00Z'
-updated_at: '2026-11-15T18:03:00Z'
-status: outlined
+updated_at: '2026-11-16T19:20:35Z'
+status: specified
 depends_on: []
 relates_to: []
 sources:
@@ -40,6 +40,8 @@ sources:
   ready_meaning_decision: conversation_memory/sketches/gitview/revisions/23fe1cc490924a219f38c4bee721511f/metadata.json
   review_wait_meaning_decision: conversation_memory/sketches/gitview/revisions/8cefadc82b764a64b09fd8c3123f2f28/metadata.json
   calendar_farthest_zoom_direction: conversation_memory/sketches/gitview/revisions/a854ef50dc2a4548b9003227f731e31e/metadata.json
+  product_narrative_feedback: conversation_memory/sketches/gitview/revisions/7f506a455c2d448985358f5f5a2a977e/metadata.json
+  root_finalization_request: conversation_memory/sketches/gitview/revisions/23cd347571cb4cd69879ff82a46c18f9/metadata.json
 specification:
   ontology_refs:
   - gitview:User
@@ -56,10 +58,11 @@ specification:
   objective: Give a person managing many GitHub repositories a compact native iOS overview of current
     PR and Issue work, including work produced by coding agents, attention and outcomes, with a path to
     the original GitHub objects.
-  authority_boundary: This root records the owner's selected product direction. Linked drafts remain drafts;
-    the owner accepted the selected local ontology separately. This node does not accept the drafts, assert
-    that the application exists, or declare any branch ready for implementation. Refinements must distinguish
-    owner decisions, proposals and open questions.
+  authority_boundary: This node specifies the selected product intent and scope at the root level in response
+    to the owner’s finalization request. Open items below are delegated refinements, not silently chosen
+    answers. Linked drafts remain drafts and child specifications retain their own statuses; the selected
+    local ontology was accepted separately. This status does not claim a working application, full-graph
+    approval, or readiness to implement or release.
   product_scope:
     organization: GitView Projects each contain one or more GitHub repositories. A repository may belong
       to more than one Project; by default there is one Project per repository. A Project can include
@@ -84,11 +87,15 @@ specification:
       latest message; threshold and evidence remain open. For PRs, the primary «Done» indicator means
       merged; show readiness to merge separately, with its predicate and evidence still to be defined.
     interaction: A Photos-inspired zoomable grid supports inspecting work at different densities using
-      pinch, and navigation from Projects to their work and object overviews. First-version long-press
-      preview, opening an object, returning to context and accessible alternatives to gestures are part
-      of the selected direction. Exact transitions and gesture arbitration require refinement; sliding
-      preview and deeper in-app PR exploration are later ideas.
-    source: GitView offers a path to the original GitHub object and lightweight sharing; it is an overview,
+      pinch, and navigation from Projects to their work and object overviews. Density changes occur in
+      discrete levels; when a cell reaches its maximum size, pinch enters the corresponding next level
+      when the intended target is unambiguous. Ordinary entry to a multi-Repository Project opens its
+      shared work grid; its Repository list is in Project settings. First-version long-press preview,
+      explicit opening, returning to context and accessible alternatives to gestures are part of the selected
+      direction. Exact transition details and gesture arbitration require refinement; sliding preview
+      and deeper in-app PR exploration are later ideas.
+    source: GitView offers a path to the original GitHub object and lightweight sharing of supported source
+      objects; sharing the local Project itself is not required for the first version; it is an overview,
       not a replacement for GitHub.
     history: 'Historical measurements and charts are in scope. A viewer reconstructing the Project at
       an earlier date is not required. The owner envisages a contribution-style calendar as the farthest
@@ -115,9 +122,12 @@ specification:
       open. The previously selected historical merged-counter case concerns a counter whose originating
       scope includes merged PRs; a saved exclusion outside that origin does not narrow its destination.
       A counter defined inside a merged-excluding scope instead retains that origin scope.
-    data: Previously received data may be stored locally. A failed GitHub refresh must be clearly indicated,
-      with the last successful update time for its supported scope when known; incomplete or failed refresh
-      is not a confirmed empty result. Observation times and limitations retain their actual scopes. After
+    data: GitView stores previously received data locally so supported available information can be revisited
+      without repeatedly fetching it. Offer manual refresh, using pull-to-refresh or an appropriate equivalent.
+      Request a refresh of stale information on opening when applicable, and use iOS background opportunities
+      without promising a fixed frequency. A failed GitHub refresh must be clearly indicated, with the
+      last successful update time for its supported scope when known; incomplete or failed refresh is
+      not a confirmed empty result. Observation times and limitations retain their actual scopes. After
       external GitHub access revocation for a private Repository, keep already saved local data; while
       its account remains active, show it with a revocation indicator and the supported last update time
       when known. Stop synchronizing that Repository while revocation applies. While account B is active,
@@ -146,11 +156,27 @@ specification:
   ontology_status: The project selects local.gitview.domain at 0.2.0, approved by the owner as the project
     terminology baseline. Imported packages retain their own status. This specification does not itself
     grant ontology approval or assert a particular action, motivation or source event.
+  refinement_boundary: This root establishes product outcomes and the owner-selected scope, not technical
+    design or implementation-ready leaf contracts. Its open questions identify work delegated to the applicable
+    descendant specifications and future product decisions; they do not automatically choose a solution
+    or certify the descendants. Calendar first-version inclusion, reverse pinch details, ready-to-merge
+    predicate and long-wait threshold remain unselected.
 acceptance:
-- The specification identifies the intended operator outcome and GitHub boundary without claiming implementation.
-- The selected Project and repository composition, current-work direction and merged-PR outcome are distinguishable
-  from open product decisions.
-- Core interaction, accessibility, historical-metric and observation-failure expectations are recorded
-  without selecting a storage or API implementation.
-- Child specifications and evidence are refined and reviewed separately before implementation readiness
-  is claimed.
+- The operator can survey Projects and their GitHub repository work, identify attention and supported
+  outcomes, and reach the original GitHub objects.
+- Projects contain one or more repositories and can share a repository; repository identity and Project
+  membership survive a source-confirmed rename or transfer.
+- Today presents older unfinished work and work completed in the current local calendar day, including
+  merged or closed objects unless applicable persistent filters hide them; an object remains one object
+  when its state changes.
+- The overview supports discrete zoom and accessible inspection, including first-version long-press preview
+  and explicit opening, while retaining valid Project and selection context.
+- PR review, CI, discussion and lifecycle remain distinct, with merged PRs represented as the primary
+  Done outcome and readiness to merge a separate signal whose predicate remains to be defined.
+- Historical Project graphs use current repository membership, disclose missing evidence, and do not portray
+  unknown history as zero; the envisaged calendar shows daily work intensity rather than CI health.
+- Locally stored supported observations remain distinguishable from current source facts; refresh failure
+  is visible and confirmed private Repository revocation follows the selected retained-data and account-switch
+  boundaries.
+- The product scope preserves system appearance, accessibility, lightweight source sharing and the selected
+  engineering directions without declaring an implementation or implementation-ready descendants.
