@@ -62,10 +62,12 @@ specification:
     uncertainty: An unavailable configuration read or indeterminate save does not prove a Project or membership
       absent, a save successful or a duplicate safe. Preserve and reconcile supported local information
       where possible, and make unresolved outcomes discoverable without inventing an old or new complete
-      state.
+      state. If a saved configuration is inconsistent and its validity cannot be established, do not present
+      its membership as confirmed.
     revoked_private: Confirmed GitHub revocation alone does not hide an already saved local Project or
       its saved Repository information under 0019; show the applicable indication and supported time when
-      known. Local visibility does not grant source access or authorize a new Project admission.
+      known. Local visibility does not grant source access or authorize a new Project admission. Revocation
+      alone does not remove saved Project membership.
   scenarios:
     shared_repository: Repository R belongs to Projects A and B. Removing R from A leaves R in B and does
       not delete R from GitHub; A must remain valid under the one-or-more rule.
