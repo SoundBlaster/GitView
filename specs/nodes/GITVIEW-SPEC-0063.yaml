@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0063
 title: GitView - Blocked Issue attention
 kind: spec
 created_at: '2026-11-16T08:49:00Z'
-updated_at: '2026-11-16T08:49:00Z'
-status: outlined
+updated_at: '2026-11-16T20:19:22Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0039
 depends_on:
@@ -19,6 +19,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0063.yaml
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/project-summary-proposal.md
+  owner_resolution: conversation_memory/sketches/gitview/revisions/6cd4b65fca2645afae721fafe3faba09/metadata.json
 specification:
   ontology_refs:
   - gitview:Project
@@ -32,7 +33,9 @@ specification:
   authority_boundary: The selected Project summary includes attention for Issues with open blockers. The
     direct-link interpretation is an agent-authored refinement; exact source mapping, current-state evidence,
     accessible presentation and incomplete-evidence treatment require further refinement. This node does
-    not infer actor motives or establish implementation readiness.
+    not infer actor motives or establish implementation readiness. The owner clarified that a closed affected
+    Issue is not included in this blocked-work signal even if its blocker remains open; the blocker is
+    considered separately on its own merits. Closure alone does not establish successful completion.
   requirements:
     direction: Distinguish an Issue blocked by another Issue from an Issue that blocks another. A mention,
       parent-child relationship or ordinary link alone does not prove a blocking relationship.
@@ -69,6 +72,9 @@ specification:
       Do not claim that the Issue has no open blocker or that the Project has zero blocked Issues.
     reverse_direction: An Issue is known to block another Issue. Do not label the first Issue itself as
       blocked solely from that outward relationship.
+    closed_affected_issue: Issue A is closed while its linked blocker B remains open. Do not include A
+      in the blocked-work attention count. Consider B separately according to its own state and the applicable
+      scope and filters; do not assume it is itself blocked merely because it blocked A.
   open_questions:
   - GitHub source evidence, current-state timing and coverage sufficient for the selected direct-blocker
     predicate.
@@ -86,3 +92,5 @@ acceptance:
 - An actionable signal preserves the originating scope and supported condition when opening its selection.
 - Confirmed private Repository revocation does not hide previously saved supported local information under
   0019.
+- A closed affected Issue does not contribute to the blocked-work attention count even when its blocker
+  is open; the blocker is assessed separately.
