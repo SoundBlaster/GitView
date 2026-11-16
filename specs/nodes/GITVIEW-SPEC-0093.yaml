@@ -1,0 +1,84 @@
+id: GITVIEW-SPEC-0093
+title: GitView - Preview availability and changing observations
+kind: spec
+created_at: '2026-11-16T11:12:00Z'
+updated_at: '2026-11-16T11:12:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0050
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0053
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0093.yaml
+  preview_proposal: docs/drafts/ux-preview-interactions.md
+specification:
+  objective: Keep the selected object's preview useful and correctly attributed as data availability and
+    source observations change.
+  authority_boundary: The first-version static preview and local retention after confirmed private Repository
+    revocation are selected. Optional refresh timing, platform presentation and account-change disclosure
+    remain open; the later sliding preview is not established here.
+  requirements:
+    local_availability: Open a preview of already available supported local data without waiting for a
+      network response. Identify the same selected object and preserve its origin; unavailable data is
+      not invented or treated as confirmed zero.
+    observation_scope: Each fact keeps its supported object, source, time, revision where relevant and
+      limitations. A new title does not make an older review or CI observation current for a newer PR
+      revision. A partial refresh updates only fields the observation actually supports.
+    changed_preview: A late observation for an earlier preview must not be rendered as belonging to a
+      different selected object. Reopening an object does not alone prove the earlier observation is current
+      or eligible for the new view; apply its original context and applicable access and ordering rules
+      before showing it.
+    dismissal: Dismissing a preview does not implicitly open it again when an observation arrives or prove
+      that an underlying request was cancelled. Return and explicit opening follow 0031 and 0024.
+    cancelled_open: An explicitly cancelled or invalidated pending local open does not later navigate
+      into an object or disrupt a newer context. Closing the preview as part of a successfully accepted
+      open is not itself evidence of cancellation.
+    revoked_private: If private Repository revocation is confirmed before or while preview is open, keep
+      previously saved local details visible with revocation indication and supported time when known;
+      stop synchronization under 0019. An earlier in-flight response does not silently restore source
+      access or become a newly accepted update. Recovery or explicit local deletion remains reachable.
+    source_actions: Opening locally, opening the source and sharing are distinct actions. A supported
+      source link identifies the intended object and does not by itself establish current access or create
+      a GitHub URL for a local Project under 0033.
+    accessible: Provide discoverable ways to invoke and dismiss the preview of the same object without
+      long press. Available identity, state, limitations and actions are accessible without relying on
+      color; direct object open is distinct from access to preview under 0032.
+  scenarios:
+    offline: A saved Issue has title and lifecycle, its discussion count is unknown, and the network is
+      unavailable. Preview the saved facts without waiting for network; the unknown count is not zero.
+    late_other_object: Preview A is dismissed and preview B opens before A's response arrives. A's facts
+      do not appear as B's; any independent retention respects A's source and access context.
+    accessible_preview: The operator cannot use long press. An accessible route opens and dismisses the
+      same object's preview and makes its supported details and limitations available without color alone.
+    cancelled_navigation: An in-progress local open is explicitly cancelled, then its delayed result arrives.
+      It does not later navigate or interrupt the operator's current context.
+    revoked_during_preview: A saved private PR is previewed while a request is in flight and access is
+      explicitly revoked before the response arrives. Keep saved details visible with indication and supported
+      time when known; do not present the old response as fresh access or update.
+    partial_refresh: A refresh supports a new title but fails to establish CI. Show the title with its
+      own context and keep supported earlier CI as last known with its own context; do not report it as
+      newly observed or successful.
+  open_questions:
+  - Whether and when preview initiates a separate refresh and its platform cancellation behavior.
+  - Native presentation, precise field priorities and accessibility announcements.
+  - Handling retained data in account-change contexts other than confirmed private Repository revocation.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; preview lifetime
+    and presentation are interaction concepts, not new domain entities.
+acceptance:
+- Supported local preview information is available without waiting for a network response and remains
+  attributed to the selected object.
+- Late or partial observations do not silently retarget a preview, reopen a dismissed preview or make
+  unsupported fields current.
+- Confirmed private Repository revocation leaves saved details visible with indication and supported update
+  time when known; synchronization stops.
+- Local open, source handoff and sharing remain distinct. Preview invocation, dismissal, identity and
+  limitations have accessible paths without long press or color alone.
