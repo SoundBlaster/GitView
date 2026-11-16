@@ -1,0 +1,95 @@
+id: GITVIEW-SPEC-0091
+title: GitView - Work scope as Project membership changes
+kind: spec
+created_at: '2026-11-16T12:28:00Z'
+updated_at: '2026-11-16T12:28:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0074
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0049
+- GITVIEW-SPEC-0073
+- GITVIEW-SPEC-0089
+- GITVIEW-SPEC-0102
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0091.yaml
+  project_model: docs/drafts/project-summary-proposal.md
+specification:
+  objective: Preserve the operator's actual Project or Repository work scope as Project membership changes.
+  authority_boundary: A Project contains one or more Repositories, and a Repository may belong to several
+    Projects. Ordinary entry behavior for a multi-Repository Project remains open; this node applies to
+    whichever Project-wide or explicit Repository route the operator actually uses.
+  requirements:
+    scope_intent: Distinguish a Project-wide work selection from an explicitly selected Repository within
+      a Project, even if the Project currently has only one member. Density or source refresh does not
+      silently change the chosen scope.
+    confirmed_expansion: When a saved membership edit adds Repository B to Project P, an existing P-wide
+      selection reevaluates against P's confirmed new member set while retaining the valid Project, period,
+      filters and density. Prior complete observations for A alone do not establish B's work or complete
+      coverage for A and B under 0102.
+    explicit_repository: When the operator is viewing explicitly selected Repository A within P, adding
+      B does not silently widen the selection to B. If A is removed from P, do not silently substitute
+      B or another Project; identify the changed origin and offer a supported route under 0024.
+    confirmed_contraction: A saved membership removal changes the Project-wide scope without proving source
+      deletion or erasing independently retained data. Another Project containing the same Repository
+      retains its own membership and observation context.
+    uncertain_edit: A pending, cancelled before submission, failed or indeterminate edit is not itself
+      proof of a new saved membership. An independently confirmed edit can nevertheless change the actual
+      Project; if the current configuration cannot be reconciled, keep it uncertain rather than claiming
+      complete coverage for either presumed member set under 0025.
+    open_object: An already open preview or object that remains available under the applicable context
+      stays available with its supported identity through a membership edit; it does not silently become
+      a different object. On dismissal or return restore the actual valid in-session origin or explain
+      its limitation under 0024 and 0031, without inventing a new intermediate route. This does not select
+      the default for a later fresh entry.
+    access: Confirmed GitHub revocation of private Repository access for the relevant account does not
+      hide already saved local Project or Repository information under 0019. Keep its indication and supported
+      update time when known, stop syncing the affected Repository and do not claim renewed access.
+    accessibility: Make scope changes, incomplete coverage and applicable recovery routes discoverable
+      without relying only on color or transient feedback.
+  scenarios:
+    expanded_project: A Project-wide Today selection for P contains Repository A; a saved edit adds B,
+      whose work is unobserved. Preserve P and active period and filters, include B in the scope and mark
+      B's work coverage incomplete rather than zero.
+    explicit_narrow_scope: The operator explicitly views A within P; a saved edit adds B. The work selection
+      remains A until the operator explicitly changes scope.
+    removed_origin: P contains A and B, and the operator views B explicitly. A saved edit removes B while
+      P remains valid. Explain the changed origin rather than silently opening A or another Project.
+    preview_member_replaced: P contains A and an A PR preview is open from P-wide Today. A valid saved
+      edit replaces A with B while the preview remains available. Keep the same preview until dismissal;
+      then return to the valid P scope for B with its actual coverage or explain a limitation, without
+      substituting a B object for the previewed PR or claiming A was deleted from the source.
+    direct_route_return: The operator entered P-wide work directly from the portfolio when P had one member;
+      P later gains another member. Return to the actual valid portfolio origin rather than inventing
+      an intermediate member-overview step; later fresh Project entry remains a separate open question.
+    signal_member_change: A failed-CI signal was observed for P members A and B; P changes to A and C,
+      whose work is unobserved. Preserve the old signal's A-and-B context and do not label it a complete
+      current A-and-C result; any new supported selection retains incomplete coverage for C.
+    shared_repository: A Repository is a member of P and Q. Removing it from P does not change Q, delete
+      source work or erase observations needed by Q.
+    uncertain_outcome: An edit from A to A and B may have committed but the durable result cannot be established.
+      Do not assert that either set is confirmed current or its work coverage complete.
+  open_questions:
+  - Default entry and presentation for multi-Repository Projects.
+  - Native presentation of changed or uncertain origin, focus and recovery.
+  - Storage and coordination mechanisms for membership edits and their evidence.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; work scope
+    and navigation are interaction concepts rather than new domain entities.
+acceptance:
+- Project-wide and explicitly Repository-scoped selections preserve their distinct intent as membership
+  changes.
+- A confirmed membership change does not silently clear the valid Project, period or filters or reuse
+  prior coverage for an unobserved member.
+- Removed or uncertain origin does not silently substitute another Repository or Project or imply source
+  deletion.
+- An open object's identity is retained through membership changes; saved private data remains visible
+  after confirmed revocation under 0019.
+- Scope limitations and recovery are understandable without color or transient feedback alone.
