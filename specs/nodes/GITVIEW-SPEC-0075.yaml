@@ -1,0 +1,80 @@
+id: GITVIEW-SPEC-0075
+title: GitView - Grid interaction and interruption
+kind: spec
+created_at: '2026-11-16T11:42:00Z'
+updated_at: '2026-11-16T11:42:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0035
+depends_on:
+- GITVIEW-SPEC-0015
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0049
+- GITVIEW-SPEC-0073
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0075.yaml
+  preview_proposal: docs/drafts/ux-preview-interactions.md
+specification:
+  objective: Keep scrolling, density changes, static preview and explicit navigation understandable and
+    bound to the intended object.
+  authority_boundary: Pinch-to-change density and first-version static long-press preview are selected.
+    Gesture arbitration, anchoring and interruption are refinements; exact native gestures, timings, thresholds
+    and animation remain open. Sliding preview is a later direction, not required here.
+  requirements:
+    scroll: An ordinary recognized scroll moves the collection without also opening an object or activating
+      its preview solely from that interaction.
+    density: An in-scope density pinch changes the presentation of the current overview without changing
+      its Project, Repository scope, selected period or filters, or silently opening an object. A pinch
+      recognized while a press is pending does not also activate that pending preview from the same sequence.
+      A distinct navigation gesture across scopes is not selected by this rule.
+    anchor: Preserve a meaningful position or supported object identity through density reflow where feasible;
+      an old cell coordinate or another object with the same local number is not identity. If no unambiguous
+      object is available, do not invent a selection; use a supported fallback under 0024.
+    preview: A recognized long press on an eligible object presents that same object's static preview
+      under 0031. Movement over another cell does not alone retarget it or imply the future sliding mode.
+      Explicit opening and dismissal retain the established object identity.
+    interruption: Cancellation of an unfinished interaction leaves a coherent current overview without
+      claiming that an object was opened or another action committed. An independently completed action
+      is not retroactively undone solely by a later interruption.
+    concurrent_changes: Refresh, day boundary or Project edit may independently alter the selection while
+      an interaction is in progress. Do not attribute that change to pinch alone or silently retarget
+      a pending action to a different object at the old coordinate. A touch begun without an eligible
+      object does not select a newly appearing cell merely because reflow places it under that touch.
+      On confirmed private Repository revocation, retain supported saved cells with indication and time
+      when known and stop synchronization under 0019 without waiting for gesture completion.
+    accessibility: Provide accessible paths to change density, invoke and dismiss preview, and open an
+      object without requiring pinch, long press, a timed gesture or color alone under 0032 and 0073.
+  scenarios:
+    scroll_not_preview: Touching a cell and moving as ordinary scroll before preview activation scrolls
+      the collection without opening the cell or presenting its preview.
+    pinch_in_scope: A recognized density pinch in a filtered Project overview changes density while retaining
+      the scope and filters; it does not open an object.
+    competing_press: A press is pending when the same touch sequence is recognized as a density pinch.
+      The pinch changes density without activating the pending preview or opening an object.
+    empty_touch: A touch begins over empty space and a PR appears under it due to reflow. That existing
+      touch does not select or preview the newly appearing PR.
+    reordered_cell: A press begins on PR A and a refresh places PR B at A's earlier coordinate. The pending
+      interaction may continue for A when valid or cancel; it does not preview B by position.
+    interrupted: A density interaction is cancelled before an object-open action. The collection remains
+      usable in its valid scope and no object is opened by cancellation.
+    revoked_during_gesture: A saved private PR is visible while a density interaction is active. On confirmed
+      GitHub revocation for the relevant account, retain the saved cell with indication and supported
+      time when known, stop synchronization and retain a local route to recovery or deletion.
+  open_questions:
+  - Platform gesture competition, cancellation, timing and anchor geometry.
+  - Exact density levels, native animation and feasible accessible alternatives.
+  - Whether and how a deliberate zoom across scopes and later sliding preview should work.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; gesture and
+    focus are interaction concepts, not new domain entities.
+acceptance:
+- Scroll, density change, static preview and explicit object opening have distinguishable outcomes without
+  substituting another object.
+- An in-scope pinch preserves the applicable Project, Repository scope, period and filters.
+- Cancellation or independent collection changes do not silently open or retarget a different object.
+- Saved cells remain visible after confirmed private Repository revocation with indication and supported
+  time when known; synchronization stops.
+- Density changes, preview and object opening have accessible alternatives to pinch, long press and color
+  alone.
