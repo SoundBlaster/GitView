@@ -13,7 +13,8 @@ depends_on:
 - GITVIEW-SPEC-0053
 sources:
   working_ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
-  ontology_context_scope: The draft.5 ontology_context records an earlier source context; draft.13 is the current working composition. Neither is semantically approved by this reference.
+  ontology_context_scope: The draft.5 ontology_context records an earlier source context; draft.13 is
+    the current working composition. Neither is semantically approved by this reference.
   parent: docs/drafts/GITVIEW-SPEC-0038.yaml
   identity_decision: conversation:gitview/excerpt-60-reply
   ontology_context: ontology/candidates/domain-v0.2.0-draft.5/composition-context.yaml
@@ -22,77 +23,170 @@ sources:
   github_global_id_migration: https://docs.github.com/en/graphql/guides/migrating-graphql-global-node-ids
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Valid source-confirmed GitHub REST Repository numeric IDs are compared exactly within a confirmed GitHub instance without reducing their precision.
-- Missing, malformed, unverified or incompatible identifiers do not create a confirmed match or a confirmed distinct Repository solely from a name, address or differently typed ID.
-- Same Repository identity and current source address are separate claims; unordered conflicting addresses remain uncertain.
-- A confirmed rename or transfer preserves the Repository's Project memberships and historical observation context, subject to current access policy.
-- Address reuse by a different confirmed numeric ID does not transfer the original Repository's history or memberships.
+- Valid source-confirmed GitHub REST Repository numeric IDs are compared exactly within a confirmed GitHub
+  instance without reducing their precision.
+- Missing, malformed, unverified or incompatible identifiers do not create a confirmed match or a confirmed
+  distinct Repository solely from a name, address or differently typed ID.
+- Same Repository identity and current source address are separate claims; unordered conflicting addresses
+  remain uncertain.
+- A confirmed rename or transfer preserves the Repository's Project memberships and historical observation
+  context, subject to current access policy.
+- Address reuse by a different confirmed numeric ID does not transfer the original Repository's history
+  or memberships.
 specification:
-  objective: Make the owner's same-instance Repository identity rule safe under partial values, mismatched identifier kinds and overlapping observations without choosing a storage key or API implementation.
+  objective: Make the owner's same-instance Repository identity rule safe under partial values, mismatched
+    identifier kinds and overlapping observations without choosing a storage key or API implementation.
   ontology_refs:
   - gitview:GitHub
   - gitview:Repository
   - gitview:Project
   contract:
-    identity_scope: Apply the owner-selected comparison only to valid source-confirmed GitHub REST Repository numeric IDs in the same confirmed GitHub instance. Matching IDs establish the same Repository for this rule; different IDs establish different Repositories within that scope. The initial product targets one connected GitHub identity, but a source-instance context is still necessary to interpret evidence and future imports without treating unrelated instances as identical.
-    exactness: Preserve the full exact integer value supplied as a valid source ID throughout observation, persistence, comparison and recovery. Do not round, truncate, reinterpret a display value, or collapse different integers through a lower-precision representation. This is an information-preservation requirement, not a choice of integer type, database schema, numeric limit or serialization format.
-    validity: Apply equality or inequality only after the adapter has established that a value is the applicable Repository numeric ID for the stated source and response. An absent, malformed, unverified, ambiguous or out-of-contract value is not coerced into a usable ID. A valid old observation can remain last known within its own scope; an invalid new observation cannot overwrite it or create a confirmed identity match.
-    id_kinds: REST Repository numeric ID, GraphQL Node ID, Issue-representation ID, repository-local PR or Issue number, owner/name and URL are different kinds of source identifier or address. Do not compare across kinds as if the values were interchangeable or infer a match from textual similarity. A documented or observed cross-kind association is usable only with its own evidence and scope; its implementation and ID migration are outside the selected numeric-ID rule.
-    documented_node_bridge: GitHub documents that a REST resource's `node_id` is a global Node ID usable in GraphQL and recommends looking up its type with `node(id:)`. A usable source-confirmed Repository REST representation that contains both a valid numeric Repository ID and a usable `node_id` can therefore establish an association between those two typed identifiers for that resource and instance; retain the actual response context and both values rather than parsing or numerically converting the opaque Node ID. If a GraphQL lookup is used, require a supported Repository type and independently applicable source context before incorporating its facts. Missing, error-affected, inconsistent or unrecognized type or ID information remains unresolved, and matching or associating identity does not establish present access, current address or collection coverage.
-    node_format_migration: GitHub documents legacy and newer global Node ID formats and an optional GraphQL response header to request the newer format. Treat IDs as opaque and preserve the format and source context; do not decode prefixes to infer type or assume two different Node ID strings necessarily represent distinct objects during a supported migration. A successful documented lookup that maps a previously held ID to a returned ID and expected Repository type may support an explicit same-object alias within its actual instance and access context; an unavailable lookup, arbitrary resemblance or a header alone does not establish an alias. Reconcile aliases with the numeric Repository ID rule and retain conflicting evidence rather than migrating memberships by guess. Verify the selected provider behavior and migration before relying on it.
-    incomplete_instance: When source-instance identity is unknown or unconfirmed, neither equality nor inequality of numeric representations alone proves the same or a different Repository across instances. Do not merge histories or memberships on that basis. The rules for comparing or importing distinct instances remain open; no additional hosting provider is introduced.
-    address_and_order: Address is an observed attribute, not the identity. Two different addresses attached to the same confirmed ID establish observations about one Repository but do not by themselves order those observations. Promote a new current address only with evidence whose semantics cover that change; otherwise retain the last permitted accepted address as last known with uncertainty under 0053. Transport completion or retrieval time alone is not a source revision.
-    source_limitations: GitHub documents Repository address fields and a general updatedAt, but the reviewed documentation does not establish updatedAt as a monotonic revision of every address change. A redirect is not itself sufficient to bind the destination to a previously observed Repository. A successful conditional response without a usable matching baseline supplies no new body or Repository ID; its validator cannot be treated as an ordered version across unrelated resources or fields. Any revalidation applies only to the matching representation and its source, request and access context.
-    change_and_reuse: A source-confirmed current rename or transfer for the same ID retains the same Repository, history and membership in every affected Project; prior observations retain their original recorded address. A different confirmed ID at a former address is a different Repository and cannot inherit the first one's history or membership. No automatic Project rename, source mutation or proof of current access follows from identity alone.
-    access: Matching IDs or reading a cached identity does not re-establish access to private source content after explicit denial or disconnect. Restrict private observations and addresses under 0036 while retaining permitted identity and membership state; a 404 or unavailable ID does not prove deletion or permission revocation.
-    verification: Pure comparison can be exercised deterministically with explicitly supplied source instance, identifier kind and exact values, including values that a lower-precision intermediary would conflate. Actual adapter decoding, durable round-trip and authorized real-source behavior are separate verification levels under 0079; synthetic IDs or a mock do not prove GitHub's transfer behavior.
-    provenance: Same-instance numeric identity, continuity and handling of reused addresses follow the owner's accepted rule. Exactness, validation and conflicting-address treatment are agent-authored refinements, not a claim that a GitHub integration or storage format exists.
+    identity_scope: Apply the owner-selected comparison only to valid source-confirmed GitHub REST Repository
+      numeric IDs in the same confirmed GitHub instance. Matching IDs establish the same Repository for
+      this rule; different IDs establish different Repositories within that scope. The initial product
+      targets one connected GitHub identity, but a source-instance context is still necessary to interpret
+      evidence and future imports without treating unrelated instances as identical.
+    exactness: Preserve the full exact integer value supplied as a valid source ID throughout observation,
+      persistence, comparison and recovery. Do not round, truncate, reinterpret a display value, or collapse
+      different integers through a lower-precision representation. This is an information-preservation
+      requirement, not a choice of integer type, database schema, numeric limit or serialization format.
+    validity: Apply equality or inequality only after the adapter has established that a value is the
+      applicable Repository numeric ID for the stated source and response. An absent, malformed, unverified,
+      ambiguous or out-of-contract value is not coerced into a usable ID. A valid old observation can
+      remain last known within its own scope; an invalid new observation cannot overwrite it or create
+      a confirmed identity match.
+    id_kinds: REST Repository numeric ID, GraphQL Node ID, Issue-representation ID, repository-local PR
+      or Issue number, owner/name and URL are different kinds of source identifier or address. Do not
+      compare across kinds as if the values were interchangeable or infer a match from textual similarity.
+      A documented or observed cross-kind association is usable only with its own evidence and scope;
+      its implementation and ID migration are outside the selected numeric-ID rule.
+    documented_node_bridge: GitHub documents that a REST resource's `node_id` is a global Node ID usable
+      in GraphQL and recommends looking up its type with `node(id:)`. A usable source-confirmed Repository
+      REST representation that contains both a valid numeric Repository ID and a usable `node_id` can
+      therefore establish an association between those two typed identifiers for that resource and instance;
+      retain the actual response context and both values rather than parsing or numerically converting
+      the opaque Node ID. If a GraphQL lookup is used, require a supported Repository type and independently
+      applicable source context before incorporating its facts. Missing, error-affected, inconsistent
+      or unrecognized type or ID information remains unresolved, and matching or associating identity
+      does not establish present access, current address or collection coverage.
+    node_format_migration: GitHub documents legacy and newer global Node ID formats and an optional GraphQL
+      response header to request the newer format. Treat IDs as opaque and preserve the format and source
+      context; do not decode prefixes to infer type or assume two different Node ID strings necessarily
+      represent distinct objects during a supported migration. A successful documented lookup that maps
+      a previously held ID to a returned ID and expected Repository type may support an explicit same-object
+      alias within its actual instance and access context; an unavailable lookup, arbitrary resemblance
+      or a header alone does not establish an alias. Reconcile aliases with the numeric Repository ID
+      rule and retain conflicting evidence rather than migrating memberships by guess. Verify the selected
+      provider behavior and migration before relying on it.
+    incomplete_instance: When source-instance identity is unknown or unconfirmed, neither equality nor
+      inequality of numeric representations alone proves the same or a different Repository across instances.
+      Do not merge histories or memberships on that basis. The rules for comparing or importing distinct
+      instances remain open; no additional hosting provider is introduced.
+    address_and_order: Address is an observed attribute, not the identity. Two different addresses attached
+      to the same confirmed ID establish observations about one Repository but do not by themselves order
+      those observations. Promote a new current address only with evidence whose semantics cover that
+      change; otherwise retain the last permitted accepted address as last known with uncertainty under
+      0053. Transport completion or retrieval time alone is not a source revision.
+    source_limitations: GitHub documents Repository address fields and a general updatedAt, but the reviewed
+      documentation does not establish updatedAt as a monotonic revision of every address change. A redirect
+      is not itself sufficient to bind the destination to a previously observed Repository. A successful
+      conditional response without a usable matching baseline supplies no new body or Repository ID; its
+      validator cannot be treated as an ordered version across unrelated resources or fields. Any revalidation
+      applies only to the matching representation and its source, request and access context.
+    change_and_reuse: A source-confirmed current rename or transfer for the same ID retains the same Repository,
+      history and membership in every affected Project; prior observations retain their original recorded
+      address. A different confirmed ID at a former address is a different Repository and cannot inherit
+      the first one's history or membership. No automatic Project rename, source mutation or proof of
+      current access follows from identity alone.
+    access: Matching IDs and cached identity do not re-establish GitHub access after revocation or disconnect.
+      Previously saved local observations and supported addresses remain accessible under 0019 with their
+      actual time and access limitation; a 404 or unavailable ID alone proves neither deletion nor revocation.
+      Other account and external handoff rules remain separate.
+    verification: Pure comparison can be exercised deterministically with explicitly supplied source instance,
+      identifier kind and exact values, including values that a lower-precision intermediary would conflate.
+      Actual adapter decoding, durable round-trip and authorized real-source behavior are separate verification
+      levels under 0079; synthetic IDs or a mock do not prove GitHub's transfer behavior.
+    provenance: Same-instance numeric identity, continuity and handling of reused addresses follow the
+      owner's accepted rule. Exactness, validation and conflicting-address treatment are agent-authored
+      refinements, not a claim that a GitHub integration or storage format exists.
   scenarios:
     exact_values:
-      given: Two source-confirmed Repository observations from the same instance contain distinct valid integer IDs whose exact values would collide if rounded by an inadequate intermediary.
+      given: Two source-confirmed Repository observations from the same instance contain distinct valid
+        integer IDs whose exact values would collide if rounded by an inadequate intermediary.
       when: Their identities are compared.
-      then: They remain distinct; the comparison does not round them into the same value or transfer either Repository's memberships.
+      then: They remain distinct; the comparison does not round them into the same value or transfer either
+        Repository's memberships.
     wrong_kind:
-      given: A Repository has confirmed REST numeric ID 42 and another observation supplies only a GraphQL Node ID or a PR-local number resembling 42.
+      given: A Repository has confirmed REST numeric ID 42 and another observation supplies only a GraphQL
+        Node ID or a PR-local number resembling 42.
       when: The observation is reconciled.
-      then: The differently typed value is not treated as the numeric Repository ID and no confirmed match or distinct Repository is inferred from that resemblance.
+      then: The differently typed value is not treated as the numeric Repository ID and no confirmed match
+        or distinct Repository is inferred from that resemblance.
     same_id_unordered_addresses:
-      given: Two observations in the same GitHub instance have confirmed ID 42 and incompatible addresses but no evidence ordering those address states.
+      given: Two observations in the same GitHub instance have confirmed ID 42 and incompatible addresses
+        but no evidence ordering those address states.
       when: The later-arriving response is processed.
-      then: Both observations refer to the same Repository, but the latest address remains uncertain; arrival order does not decide which address is current.
+      then: Both observations refer to the same Repository, but the latest address remains uncertain;
+        arrival order does not decide which address is current.
     distinct_id_old_address:
-      given: Repository A with confirmed ID 42 belongs to Projects P and Q and previously used address X.
+      given: Repository A with confirmed ID 42 belongs to Projects P and Q and previously used address
+        X.
       when: The same instance confirms Repository B with ID 99 at X.
-      then: B is separate and does not inherit A's history or P and Q memberships; A's current address remains subject to its own evidence.
+      then: B is separate and does not inherit A's history or P and Q memberships; A's current address
+        remains subject to its own evidence.
     unknown_instance:
-      given: Two observations contain the same numeric representation but one observation's GitHub instance cannot be established.
+      given: Two observations contain the same numeric representation but one observation's GitHub instance
+        cannot be established.
       when: A reconciliation is attempted.
       then: They are not merged based solely on the matching number and their source scope remains uncertain.
     denied_after_transfer:
-      given: The same confirmed Repository changes address and explicit access denial is established for private content.
-      when: GitView restores its Project membership and observations.
-      then: Membership remains associated with the same Repository while restricted private information is not disclosed or unlocked merely by the ID match.
+      given: The same confirmed Repository changes address and explicit access denial is established for
+        private content.
+      when: GitHub revocation of the private Repository is confirmed and GitView restores its saved Project
+        membership and observations.
+      then: Membership stays associated with the same Repository and actually saved local data remains
+        accessible with the revocation indication and supported time when known under 0019. An ID match
+        does not restore GitHub access.
     conditional_without_baseline:
-      given: A conditional request returns an unchanged response but the matching saved representation and its identity context are unavailable.
+      given: A conditional request returns an unchanged response but the matching saved representation
+        and its identity context are unavailable.
       when: GitView attempts to establish the Repository's current address.
-      then: It does not invent an ID or address from that response, and the identity or address remains unverified pending sufficient source evidence.
+      then: It does not invent an ID or address from that response, and the identity or address remains
+        unverified pending sufficient source evidence.
     node_alias_after_migration:
-      given: A permitted source-confirmed Repository REST representation associates numeric ID R with Node ID N1, and a supported GitHub lookup of N1 returns the expected Repository with Node ID N2 under the documented new-ID response mode.
+      given: A permitted source-confirmed Repository REST representation associates numeric ID R with
+        Node ID N1, and a supported GitHub lookup of N1 returns the expected Repository with Node ID N2
+        under the documented new-ID response mode.
       when: A later GraphQL observation uses N2.
-      then: The source-supported N1-to-N2 alias may associate it with R without decoding either string or creating another Repository; membership and history are preserved while address, access and observation ordering remain independently assessed.
+      then: The source-supported N1-to-N2 alias may associate it with R without decoding either string
+        or creating another Repository; membership and history are preserved while address, access and
+        observation ordering remain independently assessed.
     node_migration_without_bridge:
-      given: An older Repository observation has Node ID N1 and a later observation has a different Node ID N2, with no valid source association, numeric ID evidence or supported migration lookup connecting them.
+      given: An older Repository observation has Node ID N1 and a later observation has a different Node
+        ID N2, with no valid source association, numeric ID evidence or supported migration lookup connecting
+        them.
       when: GitView reconciles their identities.
-      then: The strings alone do not prove either a match or distinct source Repositories for the migration scenario; no membership or history is transferred by guess.
+      then: The strings alone do not prove either a match or distinct source Repositories for the migration
+        scenario; no membership or history is transferred by guess.
     locator_bridge_with_unassociated_graphql_parent:
-      given: A source-confirmed REST lookup associates Repository R with numeric ID 42 and Node ID N1. A later GraphQL response returns a Repository parent N2, but no source-supported alias or association relates N2 to N1.
+      given: A source-confirmed REST lookup associates Repository R with numeric ID 42 and Node ID N1.
+        A later GraphQL response returns a Repository parent N2, but no source-supported alias or association
+        relates N2 to N1.
       when: A caller attempts to assign the GraphQL parent's work facts to R.
-      then: It does not use a matching address or the response's arrival to assume an identity match or distinction; the work association remains unresolved until sufficient source evidence is available. The earlier R membership and REST observation retain their own context.
+      then: It does not use a matching address or the response's arrival to assume an identity match or
+        distinction; the work association remains unresolved until sufficient source evidence is available.
+        The earlier R membership and REST observation retain their own context.
     generic_update_time:
-      given: Two observations of the same Repository have different addresses and different generic update timestamps, but no documented source rule establishes those timestamps as ordering the address changes.
+      given: Two observations of the same Repository have different addresses and different generic update
+        timestamps, but no documented source rule establishes those timestamps as ordering the address
+        changes.
       when: GitView reconciles the observations.
-      then: The timestamps alone do not establish which address is current, and the address remains uncertain under 0053.
+      then: The timestamps alone do not establish which address is current, and the address remains uncertain
+        under 0053.
   unresolved:
-  - Exact source ID validity rules, source-instance identification and adapter evidence for change ordering require documented source mapping and authorized integration checks.
-  - Persistence representation, precision-safe round-trip, alias handling and cross-ID migration require design and implementation evidence.
-  - UI and accessibility for uncertain address or access require native validation; no product tests have been run.
+  - Exact source ID validity rules, source-instance identification and adapter evidence for change ordering
+    require documented source mapping and authorized integration checks.
+  - Persistence representation, precision-safe round-trip, alias handling and cross-ID migration require
+    design and implementation evidence.
+  - UI and accessibility for uncertain address or access require native validation; no product tests have
+    been run.

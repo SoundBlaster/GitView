@@ -19,14 +19,19 @@ sources:
   refresh_intent: conversation:gitview/excerpt-63
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Retained metric observations preserve their metric meaning, source scope, relevant observation time, coverage and access context needed to interpret a future graph.
+- Retained metric observations preserve their metric meaning, source scope, relevant observation time,
+  coverage and access context needed to interpret a future graph.
 - A failed, deferred or ungranted refresh does not create a historical sample or zero for unobserved work.
-- A partial observation can be retained as partial without being promoted to a complete historical Project point.
-- A local persistence failure or uncertain write does not report the observation as durably retained without confirmation.
+- A partial observation can be retained as partial without being promoted to a complete historical Project
+  point.
+- A local persistence failure or uncertain write does not report the observation as durably retained without
+  confirmation.
 - Retained values and derived historical results obey current private-data access and explicit clear policies.
-- The initial open-state and outcome series retain the distinct evidence needed for their own units, time and scope; a count alone does not claim an inspectable object selection.
+- The initial open-state and outcome series retain the distinct evidence needed for their own units, time
+  and scope; a count alone does not claim an inspectable object selection.
 specification:
-  objective: Describe the product semantics of accumulating historical observations without prescribing a database, retention duration or background schedule.
+  objective: Describe the product semantics of accumulating historical observations without prescribing
+    a database, retention duration or background schedule.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
@@ -34,72 +39,190 @@ specification:
   - gitview:Issue
   - gitview:Metric
   contract:
-    collection_proposal: As an agent-authored working proposal, after a refresh accepts facts relevant to a supported history metric, the app attempts to retain an observation suitable for that metric when local storage and access permit. The trigger is an accepted observation, not merely launching a request or receiving a background opportunity. This does not promise that every metric, Repository or time bucket is sampled, or prescribe a new background task.
-    sample_admission: A newly retained state sample must be supported by an accepted observation of the facts and coverage needed for its own metric at the reference it claims. Recalculating the same cached facts, opening a graph, retrying their local write, or observing an unrelated field does not establish a new source observation or move the sample time. A separately initiated and accepted observation can support another sample even if its value equals an earlier sample; preserve both contexts where retained. For a compound metric, retain each component's actual context and report the resulting limitation when simultaneity or current applicability is unproven. Reobserving an already identified event is a new retrieval context, not a second occurrence. Apply 0071 and 0117 to replay and clear.
-    meaning: Retain enough non-secret context to distinguish the metric and version of its predicate, unit, object type, source instance and Repository identity or covered set, observation time and any applicable source time or revision. The representation may retain facts or derived samples; it must not retain more private source detail than the selected product policy requires. The complete list of metrics and data minimization rules remain open.
-    initial_metric_coverage: As the agent-authored first-version working choice, attempt retention for the four initial history series under 0069 when their relevant permitted observations are accepted, covering open-PR state, open-Issue state, distinct PRs merged in a period and distinct Issues closed in a period. This establishes which information is worth retaining when supported evidence arrives; it does not assert that GitHub supplies complete history, that refresh fetches all four categories, or that any particular background opportunity occurs. Candidate 0097 extends the capture to the other owner-agreed summary metrics and separately observed local Project membership counts; the four initially displayed series are not an exhaustive catalog.
-    open_state_evidence: For each supported open-PR or open-Issue state sample, retain a metric and predicate version, distinct-object count or sufficient facts to reproduce it, source and Repository scope, actual sample or component observation times, and relevant identity, access and coverage evidence. A saved aggregate is a historical observation for its stated set and time, not automatically the current-member aggregate after a Project edit. A zero requires sufficient population and state evidence; an observed subset or mixed-time Project input remains partial or separately timed. Do not require retaining object titles or bodies merely to retain a count.
-    outcome_evidence: For confirmed PR merge or Issue closure outcomes retain, when permitted and available, the source object identity and Repository context, event kind, event time, observation context and any supported Issue closure reason, plus enough source or reconciliation coverage evidence for the interval and distinct-object unit. A single latest lifecycle state, later current reason or retrieval time cannot substitute for the event or prove complete history. Repeated observations of the same event must not be counted twice; distinct closures can be separate events but the same Issue contributes once to a distinct-object bucket. Event identity or other source-supported equivalence is necessary for event-count claims; it must not be invented from matching times or labels.
-    retained_aggregate_boundary: A permitted aggregate bucket may be retained when its own unit, period, scope and coverage are established, but a numeric aggregate alone does not identify its contributing PRs or Issues or support deduplication across arbitrary overlapping buckets. Offer object navigation only when sufficient independently eligible object and event evidence is available or can be obtained; otherwise retain the aggregate's justified status and explain the destination limitation under 0056 and 0068. A refresh or history request that learns a historical event later attributes it to event time and keeps retrieval time distinct.
-    storage_boundaries: These contracts define observable information and evidence, not a required schema, database, unbounded event archive or mandatory source query. Store only what current privacy policy permits. Shared Repository history retains source identity and scope; it is not automatically duplicated for each Project or assumed safe to sum across overlapping Projects. Project historical evaluation follows its explicitly captured membership basis under 0064.
-    coverage: Associate the retained sample or inputs with the actual included scope, missing or restricted portions and whether the metric was sufficiently observed for the stated claim. A success for one category, field or Repository does not confer freshness on another. Known zero requires sufficient evidence under 0044 and 0065; a missing category is unknown, not a zero sample.
-    non_simultaneous: Inputs observed at different times can be retained with their individual contexts. Do not stamp them as a single exact simultaneous Project snapshot unless the source evidence supports that claim. A derived value can describe separately timed observations with their timing visible or remain incomplete as appropriate.
-    partial_and_conflict: Retain permitted accepted facts from partial work with their own coverage where useful; the enclosing Project sample is not called complete until its evidence supports completeness. Unordered conflicting values follow 0053 and cannot be collapsed into a confirmed historical point merely because a later refresh finished.
-    write_outcomes: A historical observation is reported as durably retained only when local storage confirms it. If storage fails or its result is indeterminate, do not invent a durable new point; surface the relevant local limitation and use independently recoverable retained history with its actual context. An independent confirmed clear may have removed previously confirmed history, and a failed write does not restore it or prove it remains readable. A source refresh may succeed while history retention fails; these outcomes are distinguishable. Recovery and exact atomicity are separate implementation questions.
-    retention_replay: A storage retry for one accepted observation is not another sample, source request or source event under 0071. An independently initiated observation retains its own context even if it has the same value or recorded time; neither equal numbers nor equal times prove event identity. Unknown retention or clear outcomes remain uncertain instead of inflating a series or asserting full restoration.
-    gaps: No accepted observation from a missing, cancelled, deferred, failed or ungranted background opportunity creates no new observed value for that scope. Graphs expose gaps or incomplete periods according to 0065; they do not backfill, interpolate as observed, or use the current value as a historical zero. A successfully observed partial subset remains distinct from a missing entire scope.
-    access_and_clear: Retention and subsequent presentation obey 0036 and 0064. An explicit denial or disconnect restricts private observations and revealing derived values regardless of when they were stored. Candidate 0067 refines explicit local history clearing, including old queued work and legitimate new observations; exact clear scope, synchronization and recovery remain unresolved.
-    retention_policy: As an agent-authored first-version proposal, GitView does not expire confirmed retained metric history solely because it has reached a fixed age. Keep eligible retained evidence under the selected retention policy; it can become unavailable because of a separately reported local storage, system or application-lifecycle event. If the optional history-clear action under 0067 is included and confirmed, apply its disclosed scope and recovery boundaries. This is not a promise of unlimited storage, a backup, survival of app removal, or future access to GitHub. Do not silently relabel expired, missing, corrupt or cleared evidence as a source zero or a confirmed complete series.
-    storage_pressure: When storage capacity or persistence prevents a new historical observation from being saved, distinguish the source result from the local retention failure under 0071 and preserve independently confirmed retained history where possible. Do not silently evict older samples merely to report a new one as retained. If retention cannot proceed, expose an accessible local-storage limitation and an applicable separately specified recovery route; offer the explicitly described history clear only if that optional action is included; do not demand a new GitHub login as a substitute. This proposal chooses neither a numerical storage budget nor an automatic eviction algorithm.
-    project_lifecycle: Removing or editing a Project does not itself request a global history clear. A Repository shared by another Project keeps its separately retained eligible history under its own source identity and access context. Historical evidence no longer referenced by any saved Project follows the same retention and access policy unless an explicitly scoped clear or a separately specified retention action applies; this does not authorize fetching unselected source work solely to keep orphaned data current.
-    history_sampling: The application must not claim a daily historical series merely because iOS background tasks exist. No accepted observation in a bucket remains a gap even when the no-age-expiry policy preserved all earlier confirmed samples; missing source evidence and local retention failure remain distinguishable where supported.
-    provenance: The owner requested local retained observations, metrics and opportunistic background refresh. Attempting historical capture after accepted refresh is an agent-authored proposal; the owner has not selected its timing, retention or storage design.
+    collection_proposal: As an agent-authored working proposal, after a refresh accepts facts relevant
+      to a supported history metric, the app attempts to retain an observation suitable for that metric
+      when local storage and access permit. The trigger is an accepted observation, not merely launching
+      a request or receiving a background opportunity. This does not promise that every metric, Repository
+      or time bucket is sampled, or prescribe a new background task.
+    sample_admission: A newly retained state sample must be supported by an accepted observation of the
+      facts and coverage needed for its own metric at the reference it claims. Recalculating the same
+      cached facts, opening a graph, retrying their local write, or observing an unrelated field does
+      not establish a new source observation or move the sample time. A separately initiated and accepted
+      observation can support another sample even if its value equals an earlier sample; preserve both
+      contexts where retained. For a compound metric, retain each component's actual context and report
+      the resulting limitation when simultaneity or current applicability is unproven. Reobserving an
+      already identified event is a new retrieval context, not a second occurrence. Apply 0071 and 0117
+      to replay and clear.
+    meaning: Retain enough non-secret context to distinguish the metric and version of its predicate,
+      unit, object type, source instance and Repository identity or covered set, observation time and
+      any applicable source time or revision. The representation may retain facts or derived samples;
+      it must not retain more private source detail than the selected product policy requires. The complete
+      list of metrics and data minimization rules remain open.
+    initial_metric_coverage: As the agent-authored first-version working choice, attempt retention for
+      the four initial history series under 0069 when their relevant permitted observations are accepted,
+      covering open-PR state, open-Issue state, distinct PRs merged in a period and distinct Issues closed
+      in a period. This establishes which information is worth retaining when supported evidence arrives;
+      it does not assert that GitHub supplies complete history, that refresh fetches all four categories,
+      or that any particular background opportunity occurs. Candidate 0097 extends the capture to the
+      other owner-agreed summary metrics and separately observed local Project membership counts; the
+      four initially displayed series are not an exhaustive catalog.
+    open_state_evidence: For each supported open-PR or open-Issue state sample, retain a metric and predicate
+      version, distinct-object count or sufficient facts to reproduce it, source and Repository scope,
+      actual sample or component observation times, and relevant identity, access and coverage evidence.
+      A saved aggregate is a historical observation for its stated set and time, not automatically the
+      current-member aggregate after a Project edit. A zero requires sufficient population and state evidence;
+      an observed subset or mixed-time Project input remains partial or separately timed. Do not require
+      retaining object titles or bodies merely to retain a count.
+    outcome_evidence: For confirmed PR merge or Issue closure outcomes retain, when permitted and available,
+      the source object identity and Repository context, event kind, event time, observation context and
+      any supported Issue closure reason, plus enough source or reconciliation coverage evidence for the
+      interval and distinct-object unit. A single latest lifecycle state, later current reason or retrieval
+      time cannot substitute for the event or prove complete history. Repeated observations of the same
+      event must not be counted twice; distinct closures can be separate events but the same Issue contributes
+      once to a distinct-object bucket. Event identity or other source-supported equivalence is necessary
+      for event-count claims; it must not be invented from matching times or labels.
+    retained_aggregate_boundary: A permitted aggregate bucket may be retained when its own unit, period,
+      scope and coverage are established, but a numeric aggregate alone does not identify its contributing
+      PRs or Issues or support deduplication across arbitrary overlapping buckets. Offer object navigation
+      only when sufficient independently eligible object and event evidence is available or can be obtained;
+      otherwise retain the aggregate's justified status and explain the destination limitation under 0056
+      and 0068. A refresh or history request that learns a historical event later attributes it to event
+      time and keeps retrieval time distinct.
+    storage_boundaries: These contracts define observable information and evidence, not a required schema,
+      database, unbounded event archive or mandatory source query. Store only what current privacy policy
+      permits. Shared Repository history retains source identity and scope; it is not automatically duplicated
+      for each Project or assumed safe to sum across overlapping Projects. Project historical evaluation
+      follows its explicitly captured membership basis under 0064.
+    coverage: Associate the retained sample or inputs with the actual included scope, missing or restricted
+      portions and whether the metric was sufficiently observed for the stated claim. A success for one
+      category, field or Repository does not confer freshness on another. Known zero requires sufficient
+      evidence under 0044 and 0065; a missing category is unknown, not a zero sample.
+    non_simultaneous: Inputs observed at different times can be retained with their individual contexts.
+      Do not stamp them as a single exact simultaneous Project snapshot unless the source evidence supports
+      that claim. A derived value can describe separately timed observations with their timing visible
+      or remain incomplete as appropriate.
+    partial_and_conflict: Retain permitted accepted facts from partial work with their own coverage where
+      useful; the enclosing Project sample is not called complete until its evidence supports completeness.
+      Unordered conflicting values follow 0053 and cannot be collapsed into a confirmed historical point
+      merely because a later refresh finished.
+    write_outcomes: A historical observation is reported as durably retained only when local storage confirms
+      it. If storage fails or its result is indeterminate, do not invent a durable new point; surface
+      the relevant local limitation and use independently recoverable retained history with its actual
+      context. An independent confirmed clear may have removed previously confirmed history, and a failed
+      write does not restore it or prove it remains readable. A source refresh may succeed while history
+      retention fails; these outcomes are distinguishable. Recovery and exact atomicity are separate implementation
+      questions.
+    retention_replay: A storage retry for one accepted observation is not another sample, source request
+      or source event under 0071. An independently initiated observation retains its own context even
+      if it has the same value or recorded time; neither equal numbers nor equal times prove event identity.
+      Unknown retention or clear outcomes remain uncertain instead of inflating a series or asserting
+      full restoration.
+    gaps: No accepted observation from a missing, cancelled, deferred, failed or ungranted background
+      opportunity creates no new observed value for that scope. Graphs expose gaps or incomplete periods
+      according to 0065; they do not backfill, interpolate as observed, or use the current value as a
+      historical zero. A successfully observed partial subset remains distinct from a missing entire scope.
+    access_and_clear: After confirmed GitHub revocation or local disconnect, already saved local observations
+      and supported historical values remain accessible with their supported times and applicable limitation
+      under 0019. Stop normal source synchronization as applicable. Explicit local history clearing and
+      the treatment of old queued work remain separate under 0067.
+    retention_policy: As an agent-authored first-version proposal, GitView does not expire confirmed retained
+      metric history solely because it has reached a fixed age. Keep eligible retained evidence under
+      the selected retention policy; it can become unavailable because of a separately reported local
+      storage, system or application-lifecycle event. If the optional history-clear action under 0067
+      is included and confirmed, apply its disclosed scope and recovery boundaries. This is not a promise
+      of unlimited storage, a backup, survival of app removal, or future access to GitHub. Do not silently
+      relabel expired, missing, corrupt or cleared evidence as a source zero or a confirmed complete series.
+    storage_pressure: When storage capacity or persistence prevents a new historical observation from
+      being saved, distinguish the source result from the local retention failure under 0071 and preserve
+      independently confirmed retained history where possible. Do not silently evict older samples merely
+      to report a new one as retained. If retention cannot proceed, expose an accessible local-storage
+      limitation and an applicable separately specified recovery route; offer the explicitly described
+      history clear only if that optional action is included; do not demand a new GitHub login as a substitute.
+      This proposal chooses neither a numerical storage budget nor an automatic eviction algorithm.
+    project_lifecycle: Removing or editing a Project does not itself request a global history clear. A
+      Repository shared by another Project keeps its separately retained eligible history under its own
+      source identity and access context. Historical evidence no longer referenced by any saved Project
+      follows the same retention and access policy unless an explicitly scoped clear or a separately specified
+      retention action applies; this does not authorize fetching unselected source work solely to keep
+      orphaned data current.
+    history_sampling: The application must not claim a daily historical series merely because iOS background
+      tasks exist. No accepted observation in a bucket remains a gap even when the no-age-expiry policy
+      preserved all earlier confirmed samples; missing source evidence and local retention failure remain
+      distinguishable where supported.
+    provenance: The owner requested local retained observations, metrics and opportunistic background
+      refresh. Attempting historical capture after accepted refresh is an agent-authored proposal; the
+      owner has not selected its timing, retention or storage design.
   scenarios:
     repeated_equal_state_observation:
-      given: A complete permitted open-PR count of three was accepted at T1, and a separately initiated source observation independently establishes the same count with sufficient scope and coverage at T2.
+      given: A complete permitted open-PR count of three was accepted at T1, and a separately initiated
+        source observation independently establishes the same count with sufficient scope and coverage
+        at T2.
       when: Both observations are submitted for history retention and both writes are confirmed.
-      then: The same numeric value may support two separately contextualized samples at T1 and T2; equal values do not collapse the observations or establish an unobserved intermediate state.
+      then: The same numeric value may support two separately contextualized samples at T1 and T2; equal
+        values do not collapse the observations or establish an unobserved intermediate state.
     recompute_without_new_observation:
-      given: The only supported review-request observation is at T1, while at T2 the operator reopens its graph and the app refreshes only an unrelated PR title.
+      given: The only supported review-request observation is at T1, while at T2 the operator reopens
+        its graph and the app refreshes only an unrelated PR title.
       when: The review-waiting history is recalculated.
-      then: The review evidence remains attributed to T1; reopening, recalculation and the title update do not create a T2 review sample or demonstrate a current zero.
+      then: The review evidence remains attributed to T1; reopening, recalculation and the title update
+        do not create a T2 review sample or demonstrate a current zero.
     same_day_repeated_closure:
-      given: An Issue has two source-confirmed closure events in one day with one reopening between, and permitted event identity, time and coverage evidence are accepted.
+      given: An Issue has two source-confirmed closure events in one day with one reopening between, and
+        permitted event identity, time and coverage evidence are accepted.
       when: The initial distinct closed-Issue history for that day is retained and later evaluated.
-      then: Both supported events may remain individually attributable, the daily distinct-Issue count is one, and a count of two events is not mislabeled as two Issues or two completed tasks.
+      then: Both supported events may remain individually attributable, the daily distinct-Issue count
+        is one, and a count of two events is not mislabeled as two Issues or two completed tasks.
     aggregate_without_object_selection:
-      given: A permitted period aggregate is sufficiently supported but no accessible object identities or eligible source selection are retained or otherwise available.
+      given: A permitted period aggregate is sufficiently supported but no accessible object identities
+        or eligible source selection are retained or otherwise available.
       when: The operator opens the corresponding history value.
-      then: The supported aggregate keeps its own unit and coverage, while navigation to contributing objects is unavailable or limited rather than populated with guessed objects.
+      then: The supported aggregate keeps its own unit and coverage, while navigation to contributing
+        objects is unavailable or limited rather than populated with guessed objects.
     source_succeeds_history_fails:
-      given: An accepted source observation establishes current open PRs at 09:00, but persisting its proposed history sample fails; an older confirmed sample exists.
+      given: An accepted source observation establishes current open PRs at 09:00, but persisting its
+        proposed history sample fails; an older confirmed sample exists.
       when: The Project overview and history are inspected.
-      then: The source observation can be current in the overview with its own time, the local history failure is discoverable, and the failed sample is not claimed durably retained or substituted for the older point.
+      then: The source observation can be current in the overview with its own time, the local history
+        failure is discoverable, and the failed sample is not claimed durably retained or substituted
+        for the older point.
     no_background_grant:
       given: A Repository was last observed on Monday and iOS grants no background opportunity on Tuesday.
       when: A daily history graph is opened on Wednesday without other Tuesday evidence.
-      then: Tuesday has no invented sample or zero, and Monday remains attributed to its actual observation context.
+      then: Tuesday has no invented sample or zero, and Monday remains attributed to its actual observation
+        context.
     successful_source_failed_storage:
       given: A source refresh observes a metric successfully but local historical retention fails.
       when: The result and later historical graph are displayed.
-      then: Source success is distinguishable from local retention failure, and no new durable point is asserted without confirmation.
+      then: Source success is distinguishable from local retention failure, and no new durable point is
+        asserted without confirmation.
     partial_repository:
       given: A Project refresh accepts complete PR observations for A but B remains unobserved.
       when: History is retained for the Project's PR metric.
-      then: A's observation may be retained with its own time and scope, but no complete A-and-B Project sample is invented.
+      then: A's observation may be retained with its own time and scope, but no complete A-and-B Project
+        sample is invented.
     unequal_times:
-      given: Repository A and B observations were accepted at different times with no simultaneous source guarantee.
+      given: Repository A and B observations were accepted at different times with no simultaneous source
+        guarantee.
       when: A Project metric is retained and later shown.
-      then: Their separate times remain attributable and the aggregate is not described as a single exact simultaneous snapshot.
+      then: Their separate times remain attributable and the aggregate is not described as a single exact
+        simultaneous snapshot.
     disconnect_then_old_write:
-      given: A private observation retention write was started before an explicit disconnect and arrives afterward.
+      given: A private observation retention write was started before an explicit disconnect and arrives
+        afterward.
       when: The historical view is presented while access remains restricted.
-      then: The result does not unlock or disclose private content or revealing derived counts; its eventual storage outcome is handled separately.
+      then: Previously saved history remains locally accessible with its supported time and connection
+        limitation. The late write is reconciled under its original operation and does not restore source
+        access or by itself establish a fresh accepted source observation.
     retry_is_not_new_history:
-      given: One open-PR observation is submitted for retention and the write may have succeeded before its acknowledgement was lost.
+      given: One open-PR observation is submitted for retention and the write may have succeeded before
+        its acknowledgement was lost.
       when: Recovery reconciles and retries that same storage attempt.
-      then: The chart does not gain an additional independent source sample merely because the storage operation was replayed; an unreadable outcome remains uncertain.
+      then: The chart does not gain an additional independent source sample merely because the storage
+        operation was replayed; an unreadable outcome remains uncertain.
   unresolved:
-  - Candidate 0097 extends retention to the other agreed metrics; exact source eligibility, observation triggers, storage budgeting and recovery remain open. No-age-expiry is an agent-authored proposal.
-  - Candidates 0105, 0113 and 0117 propose fact retention and clear coordination; physical schema, actual atomicity, interruption handling and recovery remain to be designed and verified.
-  - iOS background scheduling, persistence and graph behavior require actual implementation and device evidence.
+  - Candidate 0097 extends retention to the other agreed metrics; exact source eligibility, observation
+    triggers, storage budgeting and recovery remain open. No-age-expiry is an agent-authored proposal.
+  - Candidates 0105, 0113 and 0117 propose fact retention and clear coordination; physical schema, actual
+    atomicity, interruption handling and recovery remain to be designed and verified.
+  - iOS background scheduling, persistence and graph behavior require actual implementation and device
+    evidence.

@@ -26,106 +26,287 @@ sources:
   github_public_permissions: https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/choosing-permissions-for-a-github-app
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Under the proposed GitHub App direction, a confirmed GitHub identity, an observable app installation, an accessible Repository and a successful work-data observation are separate claims in first setup and recovery.
-- The operator has an accessible user-initiated route to review installation or repository access when a relevant scope cannot be used, without interpreting missing evidence as a specific confirmed cause.
-- A complete empty installation or Repository result describes only the exact source scope observed and does not assert that the GitHub account or organization has no Repositories.
-- Eligible discoveries from available scopes remain selectable when other installation or category observations are incomplete, subject to current access and identity evidence.
-- GitHub installation or grant changes do not by themselves create Projects, confirm observations, mutate saved Project membership or invalidate unrelated scopes.
-- Setup applies the selected default-per-Repository or custom-Project intent only after explicit confirmation and per-entry identity and access checks.
+- Under the proposed GitHub App direction, a confirmed GitHub identity, an observable app installation,
+  an accessible Repository and a successful work-data observation are separate claims in first setup and
+  recovery.
+- The operator has an accessible user-initiated route to review installation or repository access when
+  a relevant scope cannot be used, without interpreting missing evidence as a specific confirmed cause.
+- A complete empty installation or Repository result describes only the exact source scope observed and
+  does not assert that the GitHub account or organization has no Repositories.
+- Eligible discoveries from available scopes remain selectable when other installation or category observations
+  are incomplete, subject to current access and identity evidence.
+- GitHub installation or grant changes do not by themselves create Projects, confirm observations, mutate
+  saved Project membership or invalidate unrelated scopes.
+- Setup applies the selected default-per-Repository or custom-Project intent only after explicit confirmation
+  and per-entry identity and access checks.
 specification:
-  objective: Make first setup usable with the proposed GitHub App user flow when account authorization, installation and Repository grants have different outcomes.
+  objective: Make first setup usable with the proposed GitHub App user flow when account authorization,
+    installation and Repository grants have different outcomes.
   ontology_refs:
   - gitview:User
   - gitview:GitHub
   - gitview:Project
   - gitview:Repository
   contract:
-    distinction: A GitHub user access token and verified account identity under 0098 do not establish an installation, organization approval, Repository grant, complete discovery or a current PR or Issue observation. Preserve each fact's source, identity, relevant scope, observation context and uncertainty. These are access and setup conditions, not new GitView Project or organization ontology entities.
-    documented_discovery: GitHub documents listing installations accessible to a GitHub App user access token and separately listing Repositories accessible to that user token for an installation. These are source-scoped ways to discover candidates, not a requirement to use particular endpoints or proof that all personal or public GitHub Repositories have been enumerated. An installation-list result and each installation's Repository result have separate coverage, failures and access context; a complete page traversal alone is not automatically proof of a simultaneous exhaustive inventory under 0026.
-    discovery_candidate: As an agent-authored initial source mapping, after 0098 establishes the candidate GitHub.com user identity, use the documented GitHub App user-token operations GET /user/installations and GET /user/installations/{installation_id}/repositories to observe accessible installations and their available Repository candidates. Bind both attempts to the same applicable source instance, credential binding and account context; the second operation is scoped to one source-confirmed installation, not an arbitrary setup-redirect hint. Preserve the returned installation ID as an installation identifier and the returned Repository numeric ID as a distinct Repository identifier under 0038 and 0080; an installation owner or target account is not necessarily the authorized user and is not a GitView Project. The docs list no additional fine-grained permission for the installation list and Metadata read for the Repository-list operation, not a full GitView permission profile. A returned Repository supports only the identity and access facts actually established by the applicable response and policy; it does not establish successful PR, Issue, CI or history reads. Treat page traversal, errors, 304 without a usable matching baseline, partial results and subsequent access changes under 0026, 0059 and 0088. Other GitHub access paths and exact search, paging and performance choices remain open; this candidate does not claim an exhaustive account-wide inventory or verified live operation.
-    explicit_public_lookup_candidate: Installation discovery is not an exhaustive list of public Repositories. GitHub documents public-resource reads for an authorized GitHub App user token and its REST Get a repository operation also documents public-resource access without authentication. As an agent-authored first-version direction, allow the operator to enter an explicit GitHub.com Repository locator and request a separate lookup using the active connection context; treat the locator as a mutable address, not identity. A usable response can support its actual Repository identity, public visibility and permitted metadata in that captured source and observation context. The public lookup does not prove installation, user ownership, access to another field or a complete PR or Issue population. A private or ambiguous response follows applicable authenticated grant and disclosure rules; a 404 or failed lookup alone does not establish deletion, privacy or a missing installation. This candidate does not select unauthenticated fallback, broad public search, cross-instance routing or automatic Project creation; evaluate the exact operation and token with actual source evidence before implementation.
-    lookup_to_work_handoff: When the usable lookup body supplies valid Repository numeric `id` and `node_id`, retain their typed association and its source, access and observation context under 0080 for the selected identity; the address is not that association. The downstream Today capability uses the independently checked typed GraphQL parent under 0102. A missing Node ID limits this specific handoff rather than invalidating separately supported Repository identity or authorizing a fabricated identifier. No installation, GraphQL permission or work result follows merely from a successful REST lookup.
-    explicit_lookup_reconciliation: A separately located Repository and an installation-discovered entry can be associated only by supported same-instance identity or alias evidence under 0080, never by name alone. Preserve each lookup's attempt and access context; source rename or address reuse cannot transfer an older Project or facts to a different identity. If supported identity and applicable current public access make an explicitly selected entry eligible under 0036 and 0111, it can join normal review and explicit Project confirmation without asserting an installation grant. A formerly public observation does not prove current public visibility after a later restriction; do not disclose retained private information merely because some metadata was once public. Source grant changes and locally known restrictions follow 0036 and 0113.
-    discovery_exchange: The source capability returns independently attributable results rather than a single account-wide success flag. An installation-list result identifies its attempt, GitHub instance, confirmed or unresolved active user context, requested selection and source reference where supported, discovered installation identities, traversal outcome and coverage limitation. Each Repository-list result additionally identifies its own confirmed installation, query and actual attempt context, supported Repository identities and access facts, and independently scoped outcome and coverage. Distinguish not observed, in progress, incomplete or unproven, and sufficiently supported coverage for the stated claim; distinguish an actual source error or cancellation from the coverage claim. Unknown time, identity or error cause remains unknown. Do not include tokens, authorization codes or unnecessary private payloads in page-facing state, and apply current disclosure policy before exposing an installation or Repository. These are logical information responsibilities, not a mandatory type hierarchy or one request per UI element.
-    pagination_evidence: Keep continuation and page facts bound to the same source, account, installation, query and attempt or explicitly supported continuation context. A final page or total_count is evidence only of what that response and traversal support, not a proof of a simultaneous or exhaustive inventory under concurrent changes. If that guarantee cannot be established, known returned identities may remain selectable under applicable admission and access evidence while full population coverage remains incomplete or unproven. A missing page, unavailable continuation, failed installation-list scope or invalid conditional baseline must not become a confirmed empty list or a fabricated missing count. Do not infer another installation's success, a different account's access or any PR and Issue observation from one successful Repository page.
-    entry_and_no_installations: After a valid connection, make repository discovery and an explicitly initiated route to review or arrange GitHub App access discoverable. If the permitted installation observation is sufficiently covered and returns none, explain only that no accessible installations were observed for this app and identity in that scope. Do not say that the GitHub account, all organizations or GitHub itself has no Repositories, or claim a particular organization denied approval without evidence. Where no installation status can be established, present uncertainty and retry or a general access-review route instead of a confirmed zero. GitHub controls the installation and approval experience; GitView does not silently perform a grant change.
-    installation_selection_and_approval: An operator may follow an appropriate user-mediated GitHub route to install the app for an account, request organization approval, review an existing installation or adjust allowed Repositories when the source permits it. Show a specific approval or grant explanation only when supported by applicable source evidence; otherwise offer general access review without inventing an administrator decision or revealing inaccessible organization details. A request for approval is not itself an approved installation, successful Repository observation or confirmed membership.
-    return_and_reconcile: Returning from GitHub, receiving a callback or dismissing its browser does not itself prove an installation, approval, selected Repository or source grant. Recheck the current connection identity and obtain relevant source evidence before offering newly eligible Repositories. A cancelled, failed, abandoned, late or unverified result does not change saved Projects or unlock restricted observations. Account changes and stale responses follow 0059, 0036 and 0098. The exact GitHub return mechanism and callback shape remain implementation-specific and cannot serve as sole authorization evidence.
-    untrusted_setup_redirect: GitHub documents an optional installation setup URL that can carry an installation_id and warns that this parameter can be spoofed. Treat any such identifier only as an untrusted hint for a user-initiated or resumed access review, never as proof of installation ownership, account identity, approval, Repository grant or authority to create a Project. Re-establish the currently confirmed user identity and independently check the installation association and applicable Repository access using source-supported evidence before any change in eligibility; stale, mismatched, inaccessible or unverifiable hints do not unlock content. Do not forward an installation redirect to the 0098 authorization-code exchange as if it were a validated authorization callback.
-    manual_return: An installation or approval flow need not return via an app callback. If the operator returns to GitView manually or resumes it, preserve the pending setup intent and permitted selections where available and provide an accessible recheck of applicable access. A recheck can reuse current connection context only under its current identity and access rules; account changes require 0059 and 0045. A returned or foregrounded app is not evidence that GitHub applied a grant, and neither foregrounding nor a successful recheck automatically confirms a pending Project selection.
-    partial_installations: When an eligible Repository in one accessible scope is discovered while another installation or Repository list is missing, failed or incomplete, allow the permitted Repository to be selected and preserve the other scope's uncertainty. Report coverage at the applicable installation and source scope without saying the unobserved portion is empty or that the visible list is complete for the person's entire account. Restriction of one scope must not automatically suppress an independently permitted scope, and an observed scope is not proof that every work-data category in it is available.
-    select_and_recheck: Retain pending selections by confirmed Repository identity and original connection context under 0059. Immediately before a local Project change, establish the required current source identity and access for each selected entry under 0045 and 0088. A grant change or disappeared selection may leave one entry unresolved without substituting another Repository of the same name or discarding independent confirmed outcomes. A Repository appearing through more than one permitted discovery route is the same only if its source identity is confirmed; do not duplicate the default Project merely because discovery paths differ.
-    explicit_local_project: Default setup creates or reuses one local Project per explicitly confirmed eligible Repository under 0022 and 0045. A multi-Repository Project follows a distinct explicit custom-creation intent under 0025; GitHub organizations and installations may cross its membership and do not become Projects automatically. Installing an app for all Repositories is an access decision at GitHub, not consent to create a local Project for all of them or silently broaden an existing Project.
-    existing_data_and_grant_change: Existing Projects and saved observation evidence survive a failed installation, incomplete discovery, new grant or account change, subject to current privacy and retention policy. An explicit denial or disconnect restricts affected cached private data under 0036; an unknown error is not automatically classified as denial. A newly granted Repository can be rediscovered and explicitly selected, but the grant itself neither fills its PR and Issue data nor advances any last successful source observation. An installation no longer visible in a partial list is not by itself proof of removal.
-    privacy_and_accessibility: Provide setup, retry, access review, pending-selection review and exit without depending on color, long press or a timed interaction. Do not expose token values, restricted Repository identities, organization details or revealing counts to explain a missing grant. Preserve an allowed general recovery path when a more specific explanation would require inaccessible facts.
-    verification: Use injected source, identity, authorization, storage and clock boundaries under 0040 and 0079 for no accessible installations, partial per-installation results, explicit pending approval, cancellation, changed grants, repeated discovery identity and account replacement. Later real GitHub authorization, organization approval, permissions, pagination semantics, secure-store recovery and native accessibility require separate evidence. No installed App, actual token, live account or numeric request budget is assumed by this candidate.
-    provenance: The owner selected a Project as one or more Repositories with default one Project per Repository, potentially across organizations. The GitHub App setup order, inspection and recovery behavior are agent-authored working refinements; no complete source discovery is claimed.
+    distinction: A GitHub user access token and verified account identity under 0098 do not establish
+      an installation, organization approval, Repository grant, complete discovery or a current PR or
+      Issue observation. Preserve each fact's source, identity, relevant scope, observation context and
+      uncertainty. These are access and setup conditions, not new GitView Project or organization ontology
+      entities.
+    documented_discovery: GitHub documents listing installations accessible to a GitHub App user access
+      token and separately listing Repositories accessible to that user token for an installation. These
+      are source-scoped ways to discover candidates, not a requirement to use particular endpoints or
+      proof that all personal or public GitHub Repositories have been enumerated. An installation-list
+      result and each installation's Repository result have separate coverage, failures and access context;
+      a complete page traversal alone is not automatically proof of a simultaneous exhaustive inventory
+      under 0026.
+    discovery_candidate: As an agent-authored initial source mapping, after 0098 establishes the candidate
+      GitHub.com user identity, use the documented GitHub App user-token operations GET /user/installations
+      and GET /user/installations/{installation_id}/repositories to observe accessible installations and
+      their available Repository candidates. Bind both attempts to the same applicable source instance,
+      credential binding and account context; the second operation is scoped to one source-confirmed installation,
+      not an arbitrary setup-redirect hint. Preserve the returned installation ID as an installation identifier
+      and the returned Repository numeric ID as a distinct Repository identifier under 0038 and 0080;
+      an installation owner or target account is not necessarily the authorized user and is not a GitView
+      Project. The docs list no additional fine-grained permission for the installation list and Metadata
+      read for the Repository-list operation, not a full GitView permission profile. A returned Repository
+      supports only the identity and access facts actually established by the applicable response and
+      policy; it does not establish successful PR, Issue, CI or history reads. Treat page traversal, errors,
+      304 without a usable matching baseline, partial results and subsequent access changes under 0026,
+      0059 and 0088. Other GitHub access paths and exact search, paging and performance choices remain
+      open; this candidate does not claim an exhaustive account-wide inventory or verified live operation.
+    explicit_public_lookup_candidate: Installation discovery is not an exhaustive list of public Repositories.
+      GitHub documents public-resource reads for an authorized GitHub App user token and its REST Get
+      a repository operation also documents public-resource access without authentication. As an agent-authored
+      first-version direction, allow the operator to enter an explicit GitHub.com Repository locator and
+      request a separate lookup using the active connection context; treat the locator as a mutable address,
+      not identity. A usable response can support its actual Repository identity, public visibility and
+      permitted metadata in that captured source and observation context. The public lookup does not prove
+      installation, user ownership, access to another field or a complete PR or Issue population. A private
+      or ambiguous response follows applicable authenticated grant and disclosure rules; a 404 or failed
+      lookup alone does not establish deletion, privacy or a missing installation. This candidate does
+      not select unauthenticated fallback, broad public search, cross-instance routing or automatic Project
+      creation; evaluate the exact operation and token with actual source evidence before implementation.
+    lookup_to_work_handoff: When the usable lookup body supplies valid Repository numeric `id` and `node_id`,
+      retain their typed association and its source, access and observation context under 0080 for the
+      selected identity; the address is not that association. The downstream Today capability uses the
+      independently checked typed GraphQL parent under 0102. A missing Node ID limits this specific handoff
+      rather than invalidating separately supported Repository identity or authorizing a fabricated identifier.
+      No installation, GraphQL permission or work result follows merely from a successful REST lookup.
+    explicit_lookup_reconciliation: Associate discovered and separately located Repositories only using
+      supported same-instance identity or alias evidence under 0080, not name alone. Preserve each lookup
+      source and account context. Previously saved local observations remain available on confirmed revocation
+      under 0019 with their supported times and indication. Source-supported current public visibility
+      and identity can inform a separately checked and explicitly confirmed admission, but a lookup does
+      not itself create a Project, refresh old private facts or prove their grant. Cross-account and external
+      disclosure remain separate.
+    discovery_exchange: The source capability returns independently attributable results rather than a
+      single account-wide success flag. An installation-list result identifies its attempt, GitHub instance,
+      confirmed or unresolved active user context, requested selection and source reference where supported,
+      discovered installation identities, traversal outcome and coverage limitation. Each Repository-list
+      result additionally identifies its own confirmed installation, query and actual attempt context,
+      supported Repository identities and access facts, and independently scoped outcome and coverage.
+      Distinguish not observed, in progress, incomplete or unproven, and sufficiently supported coverage
+      for the stated claim; distinguish an actual source error or cancellation from the coverage claim.
+      Unknown time, identity or error cause remains unknown. Do not include tokens, authorization codes
+      or unnecessary private payloads in page-facing state, and apply current disclosure policy before
+      exposing an installation or Repository. These are logical information responsibilities, not a mandatory
+      type hierarchy or one request per UI element.
+    pagination_evidence: Keep continuation and page facts bound to the same source, account, installation,
+      query and attempt or explicitly supported continuation context. A final page or total_count is evidence
+      only of what that response and traversal support, not a proof of a simultaneous or exhaustive inventory
+      under concurrent changes. If that guarantee cannot be established, known returned identities may
+      remain selectable under applicable admission and access evidence while full population coverage
+      remains incomplete or unproven. A missing page, unavailable continuation, failed installation-list
+      scope or invalid conditional baseline must not become a confirmed empty list or a fabricated missing
+      count. Do not infer another installation's success, a different account's access or any PR and Issue
+      observation from one successful Repository page.
+    entry_and_no_installations: After a valid connection, make repository discovery and an explicitly
+      initiated route to review or arrange GitHub App access discoverable. If the permitted installation
+      observation is sufficiently covered and returns none, explain only that no accessible installations
+      were observed for this app and identity in that scope. Do not say that the GitHub account, all organizations
+      or GitHub itself has no Repositories, or claim a particular organization denied approval without
+      evidence. Where no installation status can be established, present uncertainty and retry or a general
+      access-review route instead of a confirmed zero. GitHub controls the installation and approval experience;
+      GitView does not silently perform a grant change.
+    installation_selection_and_approval: An operator may follow an appropriate user-mediated GitHub route
+      to install the app for an account, request organization approval, review an existing installation
+      or adjust allowed Repositories when the source permits it. Show a specific approval or grant explanation
+      only when supported by applicable source evidence; otherwise offer general access review without
+      inventing an administrator decision or revealing inaccessible organization details. A request for
+      approval is not itself an approved installation, successful Repository observation or confirmed
+      membership.
+    return_and_reconcile: Returning from GitHub or receiving a callback does not prove installation, approval,
+      selection or source access. Verify applicable identity and source evidence before new Repository
+      admission. Saved local observations remain accessible after confirmed revocation under 0019; a late
+      or unverified result does not refresh them or establish a new source grant. Account and external
+      sharing boundaries remain separate.
+    untrusted_setup_redirect: GitHub documents an optional installation setup URL that can carry an installation_id
+      and warns that this parameter can be spoofed. Treat any such identifier only as an untrusted hint
+      for a user-initiated or resumed access review, never as proof of installation ownership, account
+      identity, approval, Repository grant or authority to create a Project. Re-establish the currently
+      confirmed user identity and independently check the installation association and applicable Repository
+      access using source-supported evidence before any change in eligibility; stale, mismatched, inaccessible
+      or unverifiable hints do not unlock content. Do not forward an installation redirect to the 0098
+      authorization-code exchange as if it were a validated authorization callback.
+    manual_return: An installation or approval flow need not return via an app callback. If the operator
+      returns to GitView manually or resumes it, preserve the pending setup intent and permitted selections
+      where available and provide an accessible recheck of applicable access. A recheck can reuse current
+      connection context only under its current identity and access rules; account changes require 0059
+      and 0045. A returned or foregrounded app is not evidence that GitHub applied a grant, and neither
+      foregrounding nor a successful recheck automatically confirms a pending Project selection.
+    partial_installations: When an eligible Repository in one accessible scope is discovered while another
+      installation or Repository list is missing, failed or incomplete, allow the permitted Repository
+      to be selected and preserve the other scope's uncertainty. Report coverage at the applicable installation
+      and source scope without saying the unobserved portion is empty or that the visible list is complete
+      for the person's entire account. Restriction of one scope must not automatically suppress an independently
+      permitted scope, and an observed scope is not proof that every work-data category in it is available.
+    select_and_recheck: Retain pending selections by confirmed Repository identity and original connection
+      context under 0059. Immediately before a local Project change, establish the required current source
+      identity and access for each selected entry under 0045 and 0088. A grant change or disappeared selection
+      may leave one entry unresolved without substituting another Repository of the same name or discarding
+      independent confirmed outcomes. A Repository appearing through more than one permitted discovery
+      route is the same only if its source identity is confirmed; do not duplicate the default Project
+      merely because discovery paths differ.
+    explicit_local_project: Default setup creates or reuses one local Project per explicitly confirmed
+      eligible Repository under 0022 and 0045. A multi-Repository Project follows a distinct explicit
+      custom-creation intent under 0025; GitHub organizations and installations may cross its membership
+      and do not become Projects automatically. Installing an app for all Repositories is an access decision
+      at GitHub, not consent to create a local Project for all of them or silently broaden an existing
+      Project.
+    existing_data_and_grant_change: Existing Projects and saved observations survive failed installation,
+      incomplete discovery, new grant or account change. Confirmed GitHub revocation or disconnect does
+      not by itself hide already saved local data under 0019; show the applicable limitation and supported
+      time when known. Unknown errors do not establish denial. A new grant or partial discovery neither
+      fills PR and Issue data nor advances a successful observation time; cross-account and external handoff
+      questions remain separate.
+    privacy_and_accessibility: Provide setup, retry, access review, pending-selection review and exit
+      without depending on color, long press or a timed interaction. Do not expose token values, restricted
+      Repository identities, organization details or revealing counts to explain a missing grant. Preserve
+      an allowed general recovery path when a more specific explanation would require inaccessible facts.
+    verification: Use injected source, identity, authorization, storage and clock boundaries under 0040
+      and 0079 for no accessible installations, partial per-installation results, explicit pending approval,
+      cancellation, changed grants, repeated discovery identity and account replacement. Later real GitHub
+      authorization, organization approval, permissions, pagination semantics, secure-store recovery and
+      native accessibility require separate evidence. No installed App, actual token, live account or
+      numeric request budget is assumed by this candidate.
+    provenance: The owner selected a Project as one or more Repositories with default one Project per
+      Repository, potentially across organizations. The GitHub App setup order, inspection and recovery
+      behavior are agent-authored working refinements; no complete source discovery is claimed.
   scenarios:
     account_authorized_no_installation:
-      given: A GitHub identity and token are confirmed, and a sufficiently covered observation finds no installations accessible to that user token for the app.
+      given: A GitHub identity and token are confirmed, and a sufficiently covered observation finds no
+        installations accessible to that user token for the app.
       when: The operator opens first setup.
-      then: GitView explains the observed app-installation scope and offers an appropriate user-initiated GitHub access route without claiming that the person's GitHub account contains no Repositories or creating a Project.
+      then: GitView explains the observed app-installation scope and offers an appropriate user-initiated
+        GitHub access route without claiming that the person's GitHub account contains no Repositories
+        or creating a Project.
     accessible_and_pending_organizations:
-      given: Repository R in an accessible installation is source-confirmed eligible, while source-supported evidence identifies that another organization's app-installation approval remains pending.
+      given: Repository R in an accessible installation is source-confirmed eligible, while source-supported
+        evidence identifies that another organization's app-installation approval remains pending.
       when: The operator selects R for default setup.
-      then: R may be confirmed and saved under the normal per-entry rules; the pending organization is not treated as empty or approved and does not block independently permitted R.
+      then: R may be confirmed and saved under the normal per-entry rules; the pending organization is
+        not treated as empty or approved and does not block independently permitted R.
     spoofed_installation_hint:
-      given: An installation return supplies an installation_id that cannot be associated with the currently confirmed GitHub user and app through supported source evidence.
+      given: An installation return supplies an installation_id that cannot be associated with the currently
+        confirmed GitHub user and app through supported source evidence.
       when: The setup route processes the return or the operator requests access review.
-      then: The hint does not establish an installation, grant, authorization or Project; restricted details remain hidden and an allowed general recovery or fresh discovery route remains.
+      then: The hint does not establish an installation, grant, authorization or Project; restricted details
+        remain hidden and an allowed general recovery or fresh discovery route remains.
     manual_return_after_install:
-      given: The operator opens GitHub's installation or approval flow from setup and later manually returns to GitView without a validated app callback.
+      given: The operator opens GitHub's installation or approval flow from setup and later manually returns
+        to GitView without a validated app callback.
       when: The setup route resumes and the operator requests an access recheck.
-      then: The original permitted pending intent remains reviewable where recoverable, discovery uses current identity and source evidence, and neither a grant nor a saved Project is inferred from the return alone.
+      then: The original permitted pending intent remains reviewable where recoverable, discovery uses
+        current identity and source evidence, and neither a grant nor a saved Project is inferred from
+        the return alone.
     cancelled_installation:
-      given: The operator has a pending Repository selection and follows a user-initiated GitHub app access route.
+      given: The operator has a pending Repository selection and follows a user-initiated GitHub app access
+        route.
       when: The operator cancels or returns without evidence that the grant changed.
-      then: No new access, source observation or Project is fabricated; pending eligible selections and existing saved Projects remain subject to their original context.
+      then: No new access, source observation or Project is fabricated; pending eligible selections and
+        existing saved Projects remain subject to their original context.
     grant_before_observation:
-      given: GitHub confirms a newly applicable Repository grant but no PR or Issue data has yet been observed for that Repository.
+      given: GitHub confirms a newly applicable Repository grant but no PR or Issue data has yet been
+        observed for that Repository.
       when: A default Project is explicitly selected and saved for it.
-      then: The Project can be identified while work data remains unobserved; the grant alone does not report empty work or a successful work-data refresh.
+      then: The Project can be identified while work data remains unobserved; the grant alone does not
+        report empty work or a successful work-data refresh.
     complete_traversal_without_consistency:
-      given: An installation's Repository list reports a total_count and the client reaches its last returned page, but Repository access or membership may have changed between pages and no source guarantee establishes a consistent enumeration.
+      given: An installation's Repository list reports a total_count and the client reaches its last returned
+        page, but Repository access or membership may have changed between pages and no source guarantee
+        establishes a consistent enumeration.
       when: The route reports discovery coverage.
-      then: Supported returned candidates retain their identity and account context, but matching the reported count or reaching the last page does not by itself establish a complete simultaneous inventory or the number of unseen Repositories.
+      then: Supported returned candidates retain their identity and account context, but matching the
+        reported count or reaching the last page does not by itself establish a complete simultaneous
+        inventory or the number of unseen Repositories.
     independent_installation_failures:
-      given: Installation discovery identifies I1 and I2 for the current account; I1's Repository page is usable while I2's list fails with an unclassified error.
+      given: Installation discovery identifies I1 and I2 for the current account; I1's Repository page
+        is usable while I2's list fails with an unclassified error.
       when: The results reach setup.
-      then: Permitted I1 candidates remain independently available with their own context, I2 is incomplete or unavailable without an invented denial reason, and the whole account is not described as empty or completely discovered.
+      then: Permitted I1 candidates remain independently available with their own context, I2 is incomplete
+        or unavailable without an invented denial reason, and the whole account is not described as empty
+        or completely discovered.
     partial_discovery_after_installation:
-      given: One installation returns two selectable Repositories while a second installation's Repository discovery fails.
+      given: One installation returns two selectable Repositories while a second installation's Repository
+        discovery fails.
       when: The setup list is shown.
-      then: The two permitted Repositories can remain selectable with their scope, and the second scope is incomplete rather than a confirmed zero or a complete all-account inventory.
+      then: The two permitted Repositories can remain selectable with their scope, and the second scope
+        is incomplete rather than a confirmed zero or a complete all-account inventory.
     selection_access_changes:
-      given: A Repository was selected under identity A but its installation access cannot be re-established before confirmation; another selected Repository is independently confirmed eligible.
+      given: A Repository was selected under identity A but its installation access cannot be re-established
+        before confirmation; another selected Repository is independently confirmed eligible.
       when: The operator submits default setup.
-      then: The first entry remains unresolved or fails with an allowed recovery path, while the other may be processed under 0045; the first is not replaced by a similarly named Repository or asserted deleted.
+      then: The first entry remains unresolved or fails with an allowed recovery path, while the other
+        may be processed under 0045; the first is not replaced by a similarly named Repository or asserted
+        deleted.
     installation_owner_is_not_connected_user:
-      given: A confirmed GitHub user U lists an accessible installation I whose target account is an organization O; its Repository result includes source-confirmed Repository R.
+      given: A confirmed GitHub user U lists an accessible installation I whose target account is an organization
+        O; its Repository result includes source-confirmed Repository R.
       when: GitView presents the candidate for explicit setup.
-      then: U remains the connection identity, I is the installation scope, O is source metadata and R retains its own Repository identity; no one is silently converted into another and no Project is created until explicit confirmation.
+      then: U remains the connection identity, I is the installation scope, O is source metadata and R
+        retains its own Repository identity; no one is silently converted into another and no Project
+        is created until explicit confirmation.
     discovery_304_without_baseline:
-      given: A user-scoped installation or Repository discovery request receives a conditional unchanged response, but the matching validated representation and its identity and access context are unavailable.
+      given: A user-scoped installation or Repository discovery request receives a conditional unchanged
+        response, but the matching validated representation and its identity and access context are unavailable.
       when: The setup route prepares selectable Repository entries.
-      then: The response alone does not supply an installation, Repository identity, grant or empty list; that scope remains unresolved until supported evidence is obtained.
+      then: The response alone does not supply an installation, Repository identity, grant or empty list;
+        that scope remains unresolved until supported evidence is obtained.
     duplicate_source_identity:
-      given: Two permitted discovery paths return the same source-confirmed Repository identity and no default Project currently exists for it.
+      given: Two permitted discovery paths return the same source-confirmed Repository identity and no
+        default Project currently exists for it.
       when: The operator confirms it once in default setup.
-      then: At most one corresponding default Project is created, not one per discovery path; unrelated custom memberships remain unchanged.
+      then: At most one corresponding default Project is created, not one per discovery path; unrelated
+        custom memberships remain unchanged.
     old_installation_result_after_switch:
-      given: Installation discovery started under identity A, and identity B later becomes the active confirmed connection.
+      given: Installation discovery started under identity A, and identity B later becomes the active
+        confirmed connection.
       when: The late discovery result for A arrives.
-      then: It is not relabeled as B's or used to unlock A's private content or create B's Projects; any retained permitted context keeps its original identity.
+      then: It is not relabeled as B's or used to unlock A's private content or create B's Projects; any
+        retained permitted context keeps its original identity.
     explicit_public_lookup_without_installation:
-      given: A confirmed user connection has no installation listing for an explicitly entered GitHub.com Repository; a separately scoped successful lookup identifies that Repository and supports its current public visibility and metadata.
+      given: A confirmed user connection has no installation listing for an explicitly entered GitHub.com
+        Repository; a separately scoped successful lookup identifies that Repository and supports its
+        current public visibility and metadata.
       when: The operator reviews it for an explicit Project selection.
-      then: The supported public observation may make this identity eligible under the applicable selection and admission policy without inventing an installation or account-wide discovery. A Project is created only after its normal explicit confirmation and successful local effect; PR, Issue and history access remain separately unobserved.
+      then: The supported public observation may make this identity eligible under the applicable selection
+        and admission policy without inventing an installation or account-wide discovery. A Project is
+        created only after its normal explicit confirmation and successful local effect; PR, Issue and
+        history access remain separately unobserved.
     public_lookup_does_not_unlock_private_history:
-      given: A saved Repository was formerly public and its cached details later became subject to a known applicable restriction; a new lookup returns only permitted metadata without establishing access to the old restricted details.
+      given: A saved Repository was formerly public and confirmed GitHub revocation applies to its previously
+        saved private details; a later independently admissible lookup returns public metadata without
+        establishing access to old private facts.
       when: The Repository is considered for setup or display.
-      then: Current permitted metadata can be used in its own context while restricted earlier facts and revealing counts stay withheld, and the response does not establish a grant for those facts or a complete source observation.
+      then: Current supported metadata may be used in its actual source context. Previously saved local
+        facts remain accessible as last known after confirmed revocation under 0019 with supported time
+        and indication; the metadata response does not establish a grant, refresh old facts or prove complete
+        source coverage. Other account and sharing rules remain separate.
   unresolved:
-  - Verify the candidate user-token installation and Repository-list operations against the selected registration, organization approval, public data and actual grants; these choices do not assume complete enumeration.
-  - Specify the exact native access-review route, callback and accessible explanation after the product flow is further designed; no app or device interaction has run.
-  - Source pagination consistency, per-entry access evidence, installation changes and interrupted local Project saves need independently scoped adapter and storage validation.
+  - Verify the candidate user-token installation and Repository-list operations against the selected registration,
+    organization approval, public data and actual grants; these choices do not assume complete enumeration.
+  - Specify the exact native access-review route, callback and accessible explanation after the product
+    flow is further designed; no app or device interaction has run.
+  - Source pagination consistency, per-entry access evidence, installation changes and interrupted local
+    Project saves need independently scoped adapter and storage validation.

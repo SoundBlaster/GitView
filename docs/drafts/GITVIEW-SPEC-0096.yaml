@@ -35,16 +35,32 @@ sources:
   fsd_observed_revision: 21731b9dd7d5008b832af5caca6d19f7a36fe54f
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A Project work route has an identifiable owner for its navigation context and composes selection and refresh without sibling-feature dependencies.
-- Selection accepts scoped, access-eligible facts and explicit time and filter context and returns distinguishable per-object outcomes plus separate population coverage.
-- Refresh captures its requested scope and reports source and persistence outcomes independently; a policy decision does not perform I-O or claim durable success.
-- A change to membership, access, source data or local day cannot make the page relabel an old result as a complete current selection.
-- The named cross-entity selection policy, replaceable effects and their callers have planned TDD and boundary-specific verification under 0040 and 0079.
-- This responsibility proposal does not claim that the entire product graph or this route is ready for implementation.
+- A Project work route has an identifiable owner for its navigation context and composes selection and
+  refresh without sibling-feature dependencies.
+- Selection accepts scoped, access-eligible facts and explicit time and filter context and returns distinguishable
+  per-object outcomes plus separate population coverage.
+- Refresh captures its requested scope and reports source and persistence outcomes independently; a policy
+  decision does not perform I-O or claim durable success.
+- A change to membership, access, source data or local day cannot make the page relabel an old result
+  as a complete current selection.
+- The named cross-entity selection policy, replaceable effects and their callers have planned TDD and
+  boundary-specific verification under 0040 and 0079.
+- This responsibility proposal does not claim that the entire product graph or this route is ready for
+  implementation.
 specification:
-  current_intent_boundary: The owner selected Today to include older unfinished work and work completed during the current calendar day in the user local time zone; a previous day completion alone does not qualify an object for the new Today. Applicable states remain visible without saved exclusions and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical object viewing and the technical contracts below remain candidates. The following historical boundary predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
-  historical_intent_boundary_before_local_day_approval: The calendar-based Today population and source-route examples below are historical candidates requiring re-evaluation after the owner current-work clarification. Keep route identity, access, refresh and coverage boundaries independently of the eventual selection policy.
-  objective: Make one proposed FSD-compatible composition concrete enough to evaluate responsibilities and gaps for the Project to Today work journey.
+  current_intent_boundary: The owner selected Today to include older unfinished work and work completed
+    during the current calendar day in the user local time zone; a previous day completion alone does
+    not qualify an object for the new Today. Applicable states remain visible without saved exclusions
+    and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical
+    object viewing and the technical contracts below remain candidates. The following historical boundary
+    predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch
+    revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
+  historical_intent_boundary_before_local_day_approval: The calendar-based Today population and source-route
+    examples below are historical candidates requiring re-evaluation after the owner current-work clarification.
+    Keep route identity, access, refresh and coverage boundaries independently of the eventual selection
+    policy.
+  objective: Make one proposed FSD-compatible composition concrete enough to evaluate responsibilities
+    and gaps for the Project to Today work journey.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -53,53 +69,145 @@ specification:
   - gitview:Issue
   - gitview:Metric
   contract:
-    proposed_partition: As an agent-authored first-route proposal, an app composition boundary supplies dependencies; a route-level Project work page owns its presentation and navigation context and composes a work-selection responsibility and a refresh-observations responsibility; domain-owned facts describe Project membership, Repository identities, PR or Issue observations and coverage; generic transport, persistence and time mechanisms remain domain-neutral shared infrastructure. Names describe responsibilities, not mandatory Swift modules, packages, types or Ontology entities. A responsibility may stay inside its page until extraction is justified, provided shared decisions and effects retain the contract below.
-    ownership: For each active Project work route, retain its Project identity, Project-wide versus explicit Repository intent, period, filters, density, current eligible anchor and origin under 0024, 0074 and 0091. The route owns presentation state and delegates saved Project membership and retained source observations to their respective authoritative boundaries; a rendered cell or stored index is not their owner. Separate active route instances do not silently overwrite each other's filters or navigation context. Cross-scene support and exact SwiftUI state mechanics are not assumed.
-    facts_boundary: Build a decision input from the confirmed or uncertain saved membership, source and object identities, permitted per-field observations, their relevant scope, timestamps, revision, coverage and active access context, together with the route's explicitly selected period and filters and supplied calendar or clock. The input may contain partial and unknown facts; the absence of a record does not create a confirmed empty source. Generic shared infrastructure does not import Project, Repository, PR or Issue types; the domain-aware adapter or composition supplies mapped facts.
-    source_normalization: Under 0101, distinguish a PR represented by GitHub's Issues interface from a separately identified Issue; preserve source ID kinds and require supported association before merging observations. Unresolved classification or identity cannot establish an exact count or a confirmed exclusion. Under 0102, the supplied population coverage retains its source-supported scope and reference, separately from request completion and individual facts.
-    decision_boundary: A named Today selection policy under 0027 and 0089 evaluates these supplied facts without fetching, saving or navigating. For each eligible identified candidate, expose confirmed match, confirmed non-match or unknown in its actual observation context, with unresolved identity or restricted presentation handled separately. A higher collection assembler exposes separately established coverage for the requested population and scope alongside those per-candidate outcomes under 0110; the per-candidate decision neither returns nor establishes that coverage, and a list of individually known candidates cannot prove that no unseen candidates exist. Do not interpret a missing rule match as the domain's unknown outcome without an explicit semantics-preserving mapping.
-    composition_rule: A feature-level selection responsibility may consume the required public domain facts from lower entity boundaries, or a cohesive domain boundary may own related concepts as permitted by 0095. A separate refresh feature does not import a sibling selection feature. The page or another valid higher composition supplies facts and routes the selection result to presentation. Reuse a decision result only where Project, Repository set, period, filters, source context, revision and access actually match; a summary with a different predicate or population is separately evaluated and not derived from a filtered grid by accident.
-    refresh_effect: A refresh responsibility receives the immutable requested source identity, Repository set, object categories, time scope and applicable access context at initiation under 0048. It uses injected source and data capabilities to obtain and reconcile results under 0044 and 0053, preserving source success, accepted fact context, partial coverage, local durable outcome and error as distinct facts. A successful title update does not update CI or full-population time. Navigation or a membership edit does not relabel the in-flight request; the current route recomputes against valid current context when suitable observations arrive. Triggering a policy does not itself request refresh.
-    connection_and_capabilities: Compose the proposed GitHub App user-authorization boundary under 0098 and category permission and access outcomes under 0100 into the source and refresh capabilities. A valid account, an installed scope, a repository grant and successful observations remain distinct; source mapping supplies category-specific availability rather than passing a single global connected Boolean as proof of all facts. The page and pure selection policy consume only the access decisions and source facts they require, not raw token values or client registration credentials. Credential rotation, callback validation and secure storage remain owned by the connection boundary, with their failure or uncertainty represented separately from a source-data refresh.
-    offline_and_identity: The route can render eligible retained facts through the current access policy while the source or a renewal attempt is unavailable; its selection decision does not call GitHub to determine whether cached facts exist. When a connection identity or grant changes while a refresh is in flight, keep the response tied to its initiating identity and scope under 0037 and 0098, apply current restrictions before output, and do not let it establish access or coverage for a different account. Account recovery and local Project membership are independent of whether the current data is complete.
-    presentation: Present permitted selection results and their limitations using the same source identity and context through density change, preview, object entry and return under 0032, 0042, 0074 and 0075. A known positive with incomplete population coverage may remain visible; an unobserved or restricted portion is not a zero or exhaustive list. Current access is applied before visual or app-controlled accessible output and sharing. A displayed last-known result keeps its own time and is not relabeled as a simultaneous current source snapshot.
-    externally_supplied: The composition supplies only the dependencies each responsibility uses, including source, storage, clock and calendar, applicable access or credential state, and platform scheduling or opening capabilities as needed. Test doubles can control source results, data outcomes, identity, clock and ordering; no live GitHub account, system scheduling or persistent personal data is needed for pure selection tests. Actual source mapping, durable storage and native gestures are verified separately.
-    verification_plan: Before implementation, require the applicable parent and prerequisite decisions to be sufficiently specified and record the proposed component contract and source versions. Under 0040, start each implemented behavioral slice with a failing externally meaningful test, then implement and refactor. Controlled cases cover same-day completion retention, partial or missing population, stale or unknown CI, shared Repository identity, scope change during refresh and denial before a late result. Adapter, durable-restart, actual source and native accessibility evidence remain separate from deterministic doubles. These are planned checks, not executed tests.
-    provenance: Owner choices include Project membership, dense work review, retained completed work, FSD iOS, SpecificationCore, DI, TDD and network/data doubles. This page and responsibility partition is an agent-authored proposal; it selects neither package versions, source queries, native controls nor a database.
+    proposed_partition: As an agent-authored first-route proposal, an app composition boundary supplies
+      dependencies; a route-level Project work page owns its presentation and navigation context and composes
+      a work-selection responsibility and a refresh-observations responsibility; domain-owned facts describe
+      Project membership, Repository identities, PR or Issue observations and coverage; generic transport,
+      persistence and time mechanisms remain domain-neutral shared infrastructure. Names describe responsibilities,
+      not mandatory Swift modules, packages, types or Ontology entities. A responsibility may stay inside
+      its page until extraction is justified, provided shared decisions and effects retain the contract
+      below.
+    ownership: For each active Project work route, retain its Project identity, Project-wide versus explicit
+      Repository intent, period, filters, density, current eligible anchor and origin under 0024, 0074
+      and 0091. The route owns presentation state and delegates saved Project membership and retained
+      source observations to their respective authoritative boundaries; a rendered cell or stored index
+      is not their owner. Separate active route instances do not silently overwrite each other's filters
+      or navigation context. Cross-scene support and exact SwiftUI state mechanics are not assumed.
+    facts_boundary: Build a decision input from the confirmed or uncertain saved membership, source and
+      object identities, permitted per-field observations, their relevant scope, timestamps, revision,
+      coverage and active access context, together with the route's explicitly selected period and filters
+      and supplied calendar or clock. The input may contain partial and unknown facts; the absence of
+      a record does not create a confirmed empty source. Generic shared infrastructure does not import
+      Project, Repository, PR or Issue types; the domain-aware adapter or composition supplies mapped
+      facts.
+    source_normalization: Under 0101, distinguish a PR represented by GitHub's Issues interface from a
+      separately identified Issue; preserve source ID kinds and require supported association before merging
+      observations. Unresolved classification or identity cannot establish an exact count or a confirmed
+      exclusion. Under 0102, the supplied population coverage retains its source-supported scope and reference,
+      separately from request completion and individual facts.
+    decision_boundary: A named Today selection policy under 0027 and 0089 evaluates these supplied facts
+      without fetching, saving or navigating. For each eligible identified candidate, expose confirmed
+      match, confirmed non-match or unknown in its actual observation context, with unresolved identity
+      or restricted presentation handled separately. A higher collection assembler exposes separately
+      established coverage for the requested population and scope alongside those per-candidate outcomes
+      under 0110; the per-candidate decision neither returns nor establishes that coverage, and a list
+      of individually known candidates cannot prove that no unseen candidates exist. Do not interpret
+      a missing rule match as the domain's unknown outcome without an explicit semantics-preserving mapping.
+    composition_rule: A feature-level selection responsibility may consume the required public domain
+      facts from lower entity boundaries, or a cohesive domain boundary may own related concepts as permitted
+      by 0095. A separate refresh feature does not import a sibling selection feature. The page or another
+      valid higher composition supplies facts and routes the selection result to presentation. Reuse a
+      decision result only where Project, Repository set, period, filters, source context, revision and
+      access actually match; a summary with a different predicate or population is separately evaluated
+      and not derived from a filtered grid by accident.
+    refresh_effect: A refresh responsibility receives the immutable requested source identity, Repository
+      set, object categories, time scope and applicable access context at initiation under 0048. It uses
+      injected source and data capabilities to obtain and reconcile results under 0044 and 0053, preserving
+      source success, accepted fact context, partial coverage, local durable outcome and error as distinct
+      facts. A successful title update does not update CI or full-population time. Navigation or a membership
+      edit does not relabel the in-flight request; the current route recomputes against valid current
+      context when suitable observations arrive. Triggering a policy does not itself request refresh.
+    connection_and_capabilities: Compose the proposed GitHub App user-authorization boundary under 0098
+      and category permission and access outcomes under 0100 into the source and refresh capabilities.
+      A valid account, an installed scope, a repository grant and successful observations remain distinct;
+      source mapping supplies category-specific availability rather than passing a single global connected
+      Boolean as proof of all facts. The page and pure selection policy consume only the access decisions
+      and source facts they require, not raw token values or client registration credentials. Credential
+      rotation, callback validation and secure storage remain owned by the connection boundary, with their
+      failure or uncertainty represented separately from a source-data refresh.
+    offline_and_identity: Render available saved facts without a GitHub request, including after confirmed
+      revocation under 0019, with their supported times and limitations. A response from a changed connection
+      remains tied to its initiating identity and cannot establish access or coverage for another account.
+      Recovery and Project membership remain distinct from source completeness.
+    presentation: Present supported selection results and limitations through density change, preview,
+      entry and return using the same source identity. Confirmed GitHub revocation alone does not hide
+      already saved local results under 0019; keep their supported times and indication. Unobserved or
+      uncertain values are not zero or a complete source snapshot. Account and external handoff rules
+      remain separate.
+    externally_supplied: The composition supplies only the dependencies each responsibility uses, including
+      source, storage, clock and calendar, applicable access or credential state, and platform scheduling
+      or opening capabilities as needed. Test doubles can control source results, data outcomes, identity,
+      clock and ordering; no live GitHub account, system scheduling or persistent personal data is needed
+      for pure selection tests. Actual source mapping, durable storage and native gestures are verified
+      separately.
+    verification_plan: Before implementation, require the applicable parent and prerequisite decisions
+      to be sufficiently specified and record the proposed component contract and source versions. Under
+      0040, start each implemented behavioral slice with a failing externally meaningful test, then implement
+      and refactor. Controlled cases cover same-day completion retention, partial or missing population,
+      stale or unknown CI, shared Repository identity, scope change during refresh and denial before a
+      late result. Adapter, durable-restart, actual source and native accessibility evidence remain separate
+      from deterministic doubles. These are planned checks, not executed tests.
+    provenance: Owner choices include Project membership, dense work review, retained completed work,
+      FSD iOS, SpecificationCore, DI, TDD and network/data doubles. This page and responsibility partition
+      is an agent-authored proposal; it selects neither package versions, source queries, native controls
+      nor a database.
   scenarios:
     source_representation_and_linked_issue:
-      given: The same confirmed PR has a PR representation and a PR-marked Issues representation, while a distinct confirmed Issue is linked to it.
+      given: The same confirmed PR has a PR representation and a PR-marked Issues representation, while
+        a distinct confirmed Issue is linked to it.
       when: The route maps the source observations into its Today population.
-      then: The confirmed PR has one work-object identity and the independent Issue remains a separate object; neither record's source ID kind is substituted for another.
+      then: The confirmed PR has one work-object identity and the independent Issue remains a separate
+        object; neither record's source ID kind is substituted for another.
     partial_project_today:
-      given: Project P has confirmed members A and B, permitted observations for A and no work observation for B; the route is Project-wide Today with no lifecycle exclusion.
+      given: Project P has confirmed members A and B, permitted observations for A and no work observation
+        for B; the route is Project-wide Today with no lifecycle exclusion.
       when: The page supplies those facts and the local calendar context to the selection policy.
-      then: Eligible known A objects can be presented, population coverage remains incomplete for B, and no exact complete P total or empty B is produced by the decision.
+      then: Eligible known A objects can be presented, population coverage remains incomplete for B, and
+        no exact complete P total or empty B is produced by the decision.
     refresh_scope_changes:
-      given: A Project work route requests refresh for A and B, then a saved edit replaces B with unobserved C before that refresh completes.
+      given: A Project work route requests refresh for A and B, then a saved edit replaces B with unobserved
+        C before that refresh completes.
       when: The earlier refresh result reaches the composition.
-      then: Its facts and outcome remain scoped to A and B; the current Project-wide route evaluates A and C with C incomplete and unchanged explicit filters, without the refresh feature importing the selection feature.
+      then: Its facts and outcome remain scoped to A and B; the current Project-wide route evaluates A
+        and C with C incomplete and unchanged explicit filters, without the refresh feature importing
+        the selection feature.
     source_success_local_failure:
-      given: An injected source returns permitted new PR facts but the injected storage reports that their durable save failed.
+      given: An injected source returns permitted new PR facts but the injected storage reports that their
+        durable save failed.
       when: The page receives the separate outcomes and the process later restarts.
-      then: The current session can distinguish source success from local failure, while a post-restart durable claim uses only independently confirmed persisted facts.
+      then: The current session can distinguish source success from local failure, while a post-restart
+        durable claim uses only independently confirmed persisted facts.
     account_connected_checks_unavailable:
-      given: A Project route has permitted Issue and PR facts and a confirmed GitHub App connection, but its applicable check category is unobserved or unavailable.
+      given: A Project route has permitted Issue and PR facts and a confirmed GitHub App connection, but
+        its applicable check category is unobserved or unavailable.
       when: The page evaluates Today and a failed-CI filter using injected source and access outcomes.
-      then: Permitted independent facts retain their observation context, the CI condition is unknown rather than a confirmed negative, and neither the connection nor another category's success manufactures a complete CI result.
+      then: Permitted independent facts retain their observation context, the CI condition is unknown
+        rather than a confirmed negative, and neither the connection nor another category's success manufactures
+        a complete CI result.
     renewal_lost_during_route:
-      given: The route shows permitted retained work while a GitHub user-token renewal may have succeeded remotely but its replacement pair is not recoverable.
+      given: The route shows permitted retained work while a GitHub user-token renewal may have succeeded
+        remotely but its replacement pair is not recoverable.
       when: An automatic refresh cannot establish a usable current credential.
-      then: The route retains eligible last-known data under the current access policy, identifies the refresh or connection limitation, does not advance the source observation time, and offers the connection recovery path without handing token material to the selection policy.
+      then: The route retains eligible last-known data under the current access policy, identifies the
+        refresh or connection limitation, does not advance the source observation time, and offers the
+        connection recovery path without handing token material to the selection policy.
     inaccessible_candidate:
-      given: A previously visible private PR becomes an uncertain failed-CI candidate and explicit access denial restricts its identity and existence.
+      given: A previously saved private PR becomes an uncertain failed-CI candidate and Repository revocation
+        is confirmed.
       when: Its selection output is projected for visual and assistive presentation.
-      then: Restricted identity and revealing counts are not exposed; any permitted general coverage limitation remains discoverable and the data is not reclassified as a confirmed non-match.
+      then: The saved candidate remains visually and accessibly inspectable with the revocation indication
+        and supported time when known under 0019. Uncertain current CI is not presented as a confirmed
+        match or non-match and missing counts are not invented.
     same_day_completion:
-      given: An open PR is in a fully supported unfiltered Today selection and an accepted source observation establishes its merge during the same local day.
+      given: An open PR is in a fully supported unfiltered Today selection and an accepted source observation
+        establishes its merge during the same local day.
       when: The route reevaluates the same selection after receiving that observation.
-      then: The same PR identity remains included as merged, the scope and filters remain and no historical trend is invented from the new state alone.
+      then: The same PR identity remains included as merged, the scope and filters remain and no historical
+        trend is invented from the new state alone.
   unresolved:
-  - Parent and dependency graph readiness, supported source identity and coverage guarantees, and retention and access semantics must be resolved for any implementation-ready leaf.
-  - Exact FSD slice grouping, dependency interface types, concurrency isolation and adapter ownership require a concrete design review against actual production dependencies.
-  - Actual SpecificationCore dependency version, platform navigation, device accessibility, real persistence and source behavior remain unverified; no product code or TDD cycle exists.
+  - Parent and dependency graph readiness, supported source identity and coverage guarantees, and retention
+    and access semantics must be resolved for any implementation-ready leaf.
+  - Exact FSD slice grouping, dependency interface types, concurrency isolation and adapter ownership
+    require a concrete design review against actual production dependencies.
+  - Actual SpecificationCore dependency version, platform navigation, device accessibility, real persistence
+    and source behavior remain unverified; no product code or TDD cycle exists.

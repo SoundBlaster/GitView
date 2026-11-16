@@ -19,61 +19,140 @@ sources:
   branch_review: docs/drafts/connection-recovery-branch-review-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A replacement connection is presented as confirmed only when its validated source identity and durably usable local credential are bound to the same active attempt.
-- An interrupted, unreadable or indeterminate secure-storage operation does not imply either a successful replacement or a rollback to the former credential.
-- A confirmed disconnect or newer connection cannot be undone by a late earlier credential write, callback or recovery.
-- Recovery does not silently replay authorization, use a credential for another source identity or unlock private data without applicable access evidence.
-- A failure or unknown outcome preserves saved Projects and observations and is exposed through an accessible recovery path without revealing secrets.
+- A replacement connection is presented as confirmed only when its validated source identity and durably
+  usable local credential are bound to the same active attempt.
+- An interrupted, unreadable or indeterminate secure-storage operation does not imply either a successful
+  replacement or a rollback to the former credential.
+- A confirmed disconnect or newer connection cannot be undone by a late earlier credential write, callback
+  or recovery.
+- Recovery does not silently replay authorization, use a credential for another source identity or unlock
+  private data without applicable access evidence.
+- A failure or unknown outcome preserves saved Projects and observations and is exposed through an accessible
+  recovery path without revealing secrets.
 - Local credential preservation and provider-side credential validity are reported as separate facts.
-- Verification distinguishes deterministic controlled failure tests from actual secure-store, process-restart and provider observations.
+- Verification distinguishes deterministic controlled failure tests from actual secure-store, process-restart
+  and provider observations.
 specification:
-  objective: Define observable safety and recovery boundaries for replacing a source credential and its connection context without prescribing a secure-store transaction or authorization protocol.
+  objective: Define observable safety and recovery boundaries for replacing a source credential and its
+    connection context without prescribing a secure-store transaction or authorization protocol.
   ontology_refs:
   - gitview:User
   - gitview:GitHub
   - gitview:Project
   - gitview:Repository
   contract:
-    previous_context: Before replacement, record the prior confirmed connection identity as historical local context, separate from proof that its stored credential remains readable or valid at GitHub. When a new authorization attempt begins, do not deliberately delete a usable previous local credential merely to start it. A provider may independently expire, revoke or rotate credentials; local retention does not prove remote validity.
-    candidate_and_commit: A pending authorization result is not an active connection. Confirm the replacement only after validating the relevant authorization result, establishing the corresponding source identity, securely and durably storing the applicable credential, and establishing a consistent binding between that identity, credential and still-active attempt. A secret is not stored in ordinary configuration or operation logs. Exact secure-store layout, transaction mechanism and provider protocol remain open.
-    single_active: Within the initial one-active-identity product scope, an observer must not receive a confirmed connection assembled from one attempt's credential and another attempt's identity. Overlapping attempts are ordered or rejected at the commit boundary so an invalidated or superseded attempt cannot become active after a later confirmed replacement. This observable requirement does not assume the secure store and other local storage support a shared transaction.
-    interruption: If the process stops, an acknowledgement is lost or secure storage is temporarily unreadable, recover the applicable identity-to-credential binding and the operation outcome from sufficient durable evidence before presenting a replacement as confirmed. If that evidence is incomplete, inconsistent or a prior write may still commit, report the connection outcome as uncertain and offer a recovery route; do not infer that the old binding was restored or that the new binding failed merely from a missing acknowledgement.
-    confirmed_new: If recovery establishes that the same still-authorized attempt durably committed a valid consistent new binding and no later disconnect or replacement invalidated it, the app may report that confirmed binding. This local outcome does not prove present Repository access or current source data. If the provider might have invalidated its credential, usability and required reauthentication are evaluated separately under 0085.
-    confirmed_previous: Reuse the previous binding only when durable evidence establishes it still exists consistently, no indeterminate earlier write can later replace it, and no disconnect or later replacement invalidated it. Its credential may nevertheless be expired or provider-revoked; do not claim successful current authorization until separately established. A new attempt or retry must follow 0058, not replay an unverified callback or authorization result.
-    disconnect_fence: On explicit disconnect, apply private-content restrictions and stop new refresh under 0036 and 0058 immediately. A previously started credential operation cannot later restore an active connection or unlock content without a new valid attempt. Local credential removal may be failed or uncertain and must remain a visible recoverable security problem; do not report confirmed erasure solely from a cancelled task or unavailable store. No claim of provider-side revocation follows from local disconnect.
-    identity_evidence: Candidate 0098 proposes the authenticated-user REST response as the source identity witness for the exact candidate user token and active attempt. Bind the source instance and validated user identifier kind and exact value to that credential; a login, Repository identifier, node ID of a different kind or a prior account alone cannot replace this evidence. An unavailable or malformed identity lookup leaves replacement unresolved. The successful identity witness does not establish current Repository access and its own source semantics and migration remain to be verified.
-    identity_and_privacy: Associate a credential only with the source identity established for that authorization context. A different identity with the same display name is not the previous identity. Re-establish applicable private Repository access before lifting any denial or disconnect restriction, and apply current access policy before presenting retained data. Saved Projects, observations and source objects are not silently deleted by replacement failure or account change.
-    user_action: Show whether recovery is pending, failed or uncertain in understandable accessible language without displaying credential values, authorization responses or restricted data. A retry or separate reconnect is an explicit permitted user action unless a future authorized mechanism specifies a safe noninteractive renewal; an indeterminate earlier write cannot be treated as absent simply to permit a retry.
-    provider_rotation: Candidate 0098 proposes coordinated noninteractive renewal for GitHub App expiring user tokens. GitHub may invalidate the prior token pair upon successful remote rotation before the replacement is durably stored locally; loss of the response or a failed local write cannot be represented as a guaranteed rollback. Applicable uncertainty and user-mediated recovery are specified in 0098.
-    operation_boundaries: These are externally observable invariants, not a mandate for a particular lock, two-phase protocol, persistent secret duplicate or background execution scheme. Any selected design must demonstrate its guarantees at actual secure-storage, identity-binding, restart and concurrency boundaries. Provider revocation and source permission selection are outside this candidate.
-    verification: Apply the cross-cutting TDD and dependency-injection requirements of 0040 and 0079. Controlled tests must exercise both outcomes of an interrupted write, a lost acknowledgement, overlapping attempts, device-store unavailability and disconnect with a late write. Separately verify the selected real secure-store implementation across process restart and its coordination with binding state; a fake-store result does not prove that platform guarantee. A provider check, when authorized, is separate evidence and uses no credential or private data in reports.
-    provenance: The owner requested testability, DI and mocks and authorized autonomous graph refinement. The replacement, uncertainty and safety rules are agent-authored proposals; no secure-store or provider behavior has been observed.
+    previous_context: Before replacement, record the prior confirmed connection identity as historical
+      local context, separate from proof that its stored credential remains readable or valid at GitHub.
+      When a new authorization attempt begins, do not deliberately delete a usable previous local credential
+      merely to start it. A provider may independently expire, revoke or rotate credentials; local retention
+      does not prove remote validity.
+    candidate_and_commit: A pending authorization result is not an active connection. Confirm the replacement
+      only after validating the relevant authorization result, establishing the corresponding source identity,
+      securely and durably storing the applicable credential, and establishing a consistent binding between
+      that identity, credential and still-active attempt. A secret is not stored in ordinary configuration
+      or operation logs. Exact secure-store layout, transaction mechanism and provider protocol remain
+      open.
+    single_active: Within the initial one-active-identity product scope, an observer must not receive
+      a confirmed connection assembled from one attempt's credential and another attempt's identity. Overlapping
+      attempts are ordered or rejected at the commit boundary so an invalidated or superseded attempt
+      cannot become active after a later confirmed replacement. This observable requirement does not assume
+      the secure store and other local storage support a shared transaction.
+    interruption: If the process stops, an acknowledgement is lost or secure storage is temporarily unreadable,
+      recover the applicable identity-to-credential binding and the operation outcome from sufficient
+      durable evidence before presenting a replacement as confirmed. If that evidence is incomplete, inconsistent
+      or a prior write may still commit, report the connection outcome as uncertain and offer a recovery
+      route; do not infer that the old binding was restored or that the new binding failed merely from
+      a missing acknowledgement.
+    confirmed_new: If recovery establishes that the same still-authorized attempt durably committed a
+      valid consistent new binding and no later disconnect or replacement invalidated it, the app may
+      report that confirmed binding. This local outcome does not prove present Repository access or current
+      source data. If the provider might have invalidated its credential, usability and required reauthentication
+      are evaluated separately under 0085.
+    confirmed_previous: Reuse the previous binding only when durable evidence establishes it still exists
+      consistently, no indeterminate earlier write can later replace it, and no disconnect or later replacement
+      invalidated it. Its credential may nevertheless be expired or provider-revoked; do not claim successful
+      current authorization until separately established. A new attempt or retry must follow 0058, not
+      replay an unverified callback or authorization result.
+    disconnect_fence: On explicit disconnect stop new refresh and affected admission under 0036 and 0058
+      immediately. Previously saved local data remains accessible with its supported time and connection
+      limitation. A previously started credential operation cannot reactivate the connection or authorize
+      new work without a valid new attempt. Credential removal failure or uncertainty remains a visible
+      recoverable problem; disconnect does not by itself prove provider revocation.
+    identity_evidence: Candidate 0098 proposes the authenticated-user REST response as the source identity
+      witness for the exact candidate user token and active attempt. Bind the source instance and validated
+      user identifier kind and exact value to that credential; a login, Repository identifier, node ID
+      of a different kind or a prior account alone cannot replace this evidence. An unavailable or malformed
+      identity lookup leaves replacement unresolved. The successful identity witness does not establish
+      current Repository access and its own source semantics and migration remain to be verified.
+    identity_and_privacy: Associate a credential only with its established source identity; a matching
+      display name does not establish identical accounts. Previously saved local Projects and observations
+      remain accessible under 0019 without implying a current GitHub grant. Re-establish applicable source
+      access before new authenticated work, and keep cross-account disclosure and external sharing as
+      separate questions.
+    user_action: Show whether recovery is pending, failed or uncertain in understandable accessible language
+      without displaying credential values, authorization responses or restricted data. A retry or separate
+      reconnect is an explicit permitted user action unless a future authorized mechanism specifies a
+      safe noninteractive renewal; an indeterminate earlier write cannot be treated as absent simply to
+      permit a retry.
+    provider_rotation: Candidate 0098 proposes coordinated noninteractive renewal for GitHub App expiring
+      user tokens. GitHub may invalidate the prior token pair upon successful remote rotation before the
+      replacement is durably stored locally; loss of the response or a failed local write cannot be represented
+      as a guaranteed rollback. Applicable uncertainty and user-mediated recovery are specified in 0098.
+    operation_boundaries: These are externally observable invariants, not a mandate for a particular lock,
+      two-phase protocol, persistent secret duplicate or background execution scheme. Any selected design
+      must demonstrate its guarantees at actual secure-storage, identity-binding, restart and concurrency
+      boundaries. Provider revocation and source permission selection are outside this candidate.
+    verification: Apply the cross-cutting TDD and dependency-injection requirements of 0040 and 0079.
+      Controlled tests must exercise both outcomes of an interrupted write, a lost acknowledgement, overlapping
+      attempts, device-store unavailability and disconnect with a late write. Separately verify the selected
+      real secure-store implementation across process restart and its coordination with binding state;
+      a fake-store result does not prove that platform guarantee. A provider check, when authorized, is
+      separate evidence and uses no credential or private data in reports.
+    provenance: The owner requested testability, DI and mocks and authorized autonomous graph refinement.
+      The replacement, uncertainty and safety rules are agent-authored proposals; no secure-store or provider
+      behavior has been observed.
   scenarios:
     acknowledgement_lost_after_commit:
-      given: A validated attempt for account A durably establishes a consistent new local binding, but its completion acknowledgement is lost before the process stops.
-      when: Recovery confirms that binding and establishes that no later disconnect or replacement invalidated it.
-      then: The new local connection may be reported as confirmed without issuing a duplicate authorization, while provider validity and Repository access retain their separate evidence requirements.
+      given: A validated attempt for account A durably establishes a consistent new local binding, but
+        its completion acknowledgement is lost before the process stops.
+      when: Recovery confirms that binding and establishes that no later disconnect or replacement invalidated
+        it.
+      then: The new local connection may be reported as confirmed without issuing a duplicate authorization,
+        while provider validity and Repository access retain their separate evidence requirements.
     unknown_old_or_new:
-      given: A replacement may have committed and the secure store or binding metadata cannot currently be read consistently.
+      given: A replacement may have committed and the secure store or binding metadata cannot currently
+        be read consistently.
       when: The application restarts.
-      then: The connection outcome is uncertain, the app does not claim either successful replacement or rollback, and existing Projects are retained with access restrictions applied.
+      then: The connection outcome remains uncertain and the app does not claim successful replacement,
+        rollback or a usable GitHub binding. Existing locally saved Projects remain discoverable with
+        supported time and the connection limitation; cross-account isolation remains separate.
     late_write_after_disconnect:
       given: A credential replacement write is in flight when the operator disconnects the account.
       when: The old write or callback completes after the disconnect.
-      then: It cannot restore an active connection or unlock private data; the local removal outcome remains explicit and recoverable if it cannot be established.
+      then: The late operation cannot reactivate the connection or authorize new work. Previously saved
+        data remains locally accessible with supported time and connection limitation; unresolved credential
+        removal remains explicit and recoverable.
     overlapping_account_attempts:
-      given: An earlier authorization attempt for A is pending and a later attempt for B is validated and durably confirmed.
+      given: An earlier authorization attempt for A is pending and a later attempt for B is validated
+        and durably confirmed.
       when: The earlier A attempt subsequently completes.
-      then: It cannot replace B or combine A's credential with B's identity, and A's restricted private observations are not unlocked.
+      then: It cannot replace B or combine A's credential with B's identity, and A's restricted private
+        observations are not unlocked.
     prior_credential_revoked:
-      given: A previous local binding is durably preserved but the provider independently revoked or invalidated its credential during replacement.
+      given: A previous local binding is durably preserved but the provider independently revoked or invalidated
+        its credential during replacement.
       when: The replacement fails and the app recovers the previous local binding.
-      then: Local retention is not reported as proof of current source authorization; applicable denial or expiry behavior follows 0036 and 0085.
+      then: Local retention is not reported as proof of current source authorization; applicable denial
+        or expiry behavior follows 0036 and 0085.
     store_locked:
       given: A saved connection may exist but the secure store is unavailable while the device is locked.
       when: Background work requests a refresh.
-      then: The result is deferred or failed with its scope and prior observation time preserved; no credential deletion, empty account or interactive background authorization is inferred.
+      then: The result is deferred or failed with its scope and prior observation time preserved; no credential
+        deletion, empty account or interactive background authorization is inferred.
   unresolved:
-  - Candidate 0098 records the proposed flow and documented GitHub rotation semantics; actual provider behavior, secure-store access controls and recovery mechanisms require separate evidence.
-  - An implementation must demonstrate the commit and disconnect invariants under process interruption, late writes and overlapping attempts; no atomicity is assumed from the platform.
-  - Specific recovery UI, persistence representation and access to the secure store when a device is locked need native design and tests.
+  - Candidate 0098 records the proposed flow and documented GitHub rotation semantics; actual provider
+    behavior, secure-store access controls and recovery mechanisms require separate evidence.
+  - An implementation must demonstrate the commit and disconnect invariants under process interruption,
+    late writes and overlapping attempts; no atomicity is assumed from the platform.
+  - Specific recovery UI, persistence representation and access to the secure store when a device is locked
+    need native design and tests.

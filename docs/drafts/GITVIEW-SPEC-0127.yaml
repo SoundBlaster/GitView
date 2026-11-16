@@ -32,16 +32,33 @@ sources:
   product_projection: docs/drafts/product-first-pass-20261115.md
   working_ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 acceptance:
-- The first autonomous pass makes the owner's idea and its meaningful product consequences understandable through connected concepts, user journeys and outcomes.
-- The product description distinguishes owner-selected choices, agent-proposed refinements and still-open meanings without presenting a proposal as an owner decision.
-- First-version behavior and later ideas are distinguishable, including preview, calendar, filtering and source navigation.
-- Meaningful absence, partial or stale observations, access limitations and user-visible failure are explained as product behavior rather than hidden behind implementation details.
-- The first product pass does not require choosing a unique storage scheme, API query, protocol, UI control or module arrangement where alternatives can satisfy the product outcomes.
-- Explicit owner-requested qualities including testability, dependency injection, TDD and suitable mocks remain visible as cross-cutting expectations for later development.
+- The first autonomous pass makes the owner's idea and its meaningful product consequences understandable
+  through connected concepts, user journeys and outcomes.
+- The product description distinguishes owner-selected choices, agent-proposed refinements and still-open
+  meanings without presenting a proposal as an owner decision.
+- First-version behavior and later ideas are distinguishable, including preview, calendar, filtering and
+  source navigation.
+- Meaningful absence, partial or stale observations, access limitations and user-visible failure are explained
+  as product behavior rather than hidden behind implementation details.
+- The first product pass does not require choosing a unique storage scheme, API query, protocol, UI control
+  or module arrangement where alternatives can satisfy the product outcomes.
+- Explicit owner-requested qualities including testability, dependency injection, TDD and suitable mocks
+  remain visible as cross-cutting expectations for later development.
 specification:
-  current_intent_boundary: The owner selected Today to include older unfinished work and work completed during the current calendar day in the user local time zone; a previous day completion alone does not qualify an object for the new Today. Applicable states remain visible without saved exclusions and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical object viewing and the technical contracts below remain candidates. The following historical boundary predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
-  historical_intent_boundary_before_local_day_approval: The owner clarified Today as the current picture of work and historical aggregate metrics and graphs, without a required past-state viewer. Calendar-day Today and mandatory same-day retention examples below are historical candidates; confirmed merged PRs leave unfinished work and appear in supported metrics; unfiltered Today includes all applicable states and selected filters persist; source range and persistence scope remain open.
-  objective: Clarify the owner's product intent enough to discuss user-visible consequences and relationships before implementation-specific refinement.
+  current_intent_boundary: The owner selected Today to include older unfinished work and work completed
+    during the current calendar day in the user local time zone; a previous day completion alone does
+    not qualify an object for the new Today. Applicable states remain visible without saved exclusions
+    and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical
+    object viewing and the technical contracts below remain candidates. The following historical boundary
+    predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch
+    revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
+  historical_intent_boundary_before_local_day_approval: The owner clarified Today as the current picture
+    of work and historical aggregate metrics and graphs, without a required past-state viewer. Calendar-day
+    Today and mandatory same-day retention examples below are historical candidates; confirmed merged
+    PRs leave unfinished work and appear in supported metrics; unfiltered Today includes all applicable
+    states and selected filters persist; source range and persistence scope remain open.
+  objective: Clarify the owner's product intent enough to discuss user-visible consequences and relationships
+    before implementation-specific refinement.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -50,98 +67,161 @@ specification:
   - gitview:Issue
   - gitview:Metric
   contract:
-    product_boundary: Preserve the user's compact GitHub overview, Project creation and Repository membership, Today and lifecycle visibility, zoom and preview, selected work fields, agreed PR and Issue description formats, attention, metrics, sharing, local last-known data and Apple-style accessibility as product outcomes. Explain what connects them and what a person observes.
-    interpretation: Separate approved selections from agent-authored choices, conditional ideas and unresolved semantics. A useful working proposal can make a product consequence concrete without asserting that the owner selected its exact threshold, source representation or interface.
-    later_engineering: Existing detailed technical contracts remain available for the subsequent implementation-ready refinement under 0020 and 0021. Their existence, concrete technology choices, speculative recovery mechanisms or verified external runtime are not prerequisites for understanding or evaluating this first product clarification. Explicit owner-requested architecture and testing qualities are retained, not treated as product features.
-    stop: The first pass is reviewable when the agreed product routes and important outcomes are connected and understandable, known consequential ambiguity is visible, and no further detail is needed solely to explain the user's idea. This is a product-level assessment, not proof that code can be implemented without further specification, that the whole draft has been owner-approved or that an application exists.
-    verification: Review product coverage against the owner's recorded selections and the product projection; review ontology terminology in its declared draft context. Structural graph checks and readable examples support the review but do not independently establish semantic completeness.
+    product_boundary: Preserve the user's compact GitHub overview, Project creation and Repository membership,
+      Today and lifecycle visibility, zoom and preview, selected work fields, agreed PR and Issue description
+      formats, attention, metrics, sharing, local last-known data and Apple-style accessibility as product
+      outcomes. Explain what connects them and what a person observes.
+    interpretation: Separate approved selections from agent-authored choices, conditional ideas and unresolved
+      semantics. A useful working proposal can make a product consequence concrete without asserting that
+      the owner selected its exact threshold, source representation or interface.
+    later_engineering: Existing detailed technical contracts remain available for the subsequent implementation-ready
+      refinement under 0020 and 0021. Their existence, concrete technology choices, speculative recovery
+      mechanisms or verified external runtime are not prerequisites for understanding or evaluating this
+      first product clarification. Explicit owner-requested architecture and testing qualities are retained,
+      not treated as product features.
+    stop: The first pass is reviewable when the agreed product routes and important outcomes are connected
+      and understandable, known consequential ambiguity is visible, and no further detail is needed solely
+      to explain the user's idea. This is a product-level assessment, not proof that code can be implemented
+      without further specification, that the whole draft has been owner-approved or that an application
+      exists.
+    verification: Review product coverage against the owner's recorded selections and the product projection;
+      review ontology terminology in its declared draft context. Structural graph checks and readable
+      examples support the review but do not independently establish semantic completeness.
   scenarios:
     first_setup_and_incomplete_discovery:
-      given: The operator connects GitHub and searches for Repositories, but discovery is incomplete or the search matches none in its available scope.
+      given: The operator connects GitHub and searches for Repositories, but discovery is incomplete or
+        the search matches none in its available scope.
       when: The product description explains setup.
-      then: It distinguishes incomplete discovery from a supported empty search, does not assert that the whole GitHub account has no Repositories, and describes an available recovery or access-review route.
+      then: It distinguishes incomplete discovery from a supported empty search, does not assert that
+        the whole GitHub account has no Repositories, and describes an available recovery or access-review
+        route.
     local_configuration_unreadable:
       given: Previously saved local Project configuration cannot be read at launch.
       when: The product description explains the opening state.
-      then: It identifies a recoverable local-data problem instead of claiming a first launch, a confirmed empty portfolio or an automatic reset.
+      then: It identifies a recoverable local-data problem instead of claiming a first launch, a confirmed
+        empty portfolio or an automatic reset.
     mixed_refresh_and_local_retention:
-      given: One Project Repository refresh succeeds while another fails, and the successful source facts have an unconfirmed local retention outcome.
+      given: One Project Repository refresh succeeds while another fails, and the successful source facts
+        have an unconfirmed local retention outcome.
       when: The product description explains the update result and recovery.
-      then: It attributes each source outcome to its actual scope and observation time, distinguishes the local retention limitation from a GitHub failure, and does not promise the new facts will survive restart or that the whole Project is current.
+      then: It attributes each source outcome to its actual scope and observation time, distinguishes
+        the local retention limitation from a GitHub failure, and does not promise the new facts will
+        survive restart or that the whole Project is current.
     project_membership_is_local:
       given: A Repository belongs to two GitView Projects.
       when: The user removes it from the first Project.
-      then: The first Project changes its membership, while the other Project and the source Repository remain intact.
+      then: The first Project changes its membership, while the other Project and the source Repository
+        remain intact.
     authored_format_and_external_objects:
-      given: New work in a participating process uses the agreed description sections, while an existing external Issue has a different format.
+      given: New work in a participating process uses the agreed description sections, while an existing
+        external Issue has a different format.
       when: The user reviews both objects.
-      then: The agreed sections help explain the new work, while the external Issue and its original text remain accessible without invented content.
+      then: The agreed sections help explain the new work, while the external Issue and its original text
+        remain accessible without invented content.
     completed_today:
       given: The user is examining today's PR collection and some visible PRs merge.
       when: The source-supported state updates.
-      then: The product description makes clear that the merged work stays visible by default and that the user can explicitly filter it out.
+      then: The product description makes clear that the merged work stays visible by default and that
+        the user can explicitly filter it out.
     today_rollover:
       given: A PR was merged yesterday and another PR from yesterday remains open.
-      when: The product description explains the selected user-local-day completion boundary on the following day; exact device binding and broader inclusion formulas remain candidates.
-      then: It distinguishes the unfinished PR that remains eligible from the previous-day result that no longer qualifies solely on that outcome, and does not imply that historical work was deleted.
+      when: The product description explains the selected user-local-day completion boundary on the following
+        day; exact device binding and broader inclusion formulas remain candidates.
+      then: It distinguishes the unfinished PR that remains eligible from the previous-day result that
+        no longer qualifies solely on that outcome, and does not imply that historical work was deleted.
     shared_repository:
       given: One Repository is included in two GitView Projects.
       when: Each Project and a unique portfolio summary are considered.
-      then: The product distinguishes membership in each Project from deduplication in the portfolio; organization is not a Project boundary.
+      then: The product distinguishes membership in each Project from deduplication in the portfolio;
+        organization is not a Project boundary.
     summary_units:
-      given: Two PRs in separate Repositories have five failed checks in total and one also has an unresolved review thread.
+      given: Two PRs in separate Repositories have five failed checks in total and one also has an unresolved
+        review thread.
       when: The product description explains the Project summary and its associated PR selection.
-      then: It distinguishes checks, affected PRs and Repositories, without adding overlapping attention signals as separate tasks or promising that five checks produce five PR cards.
+      then: It distinguishes checks, affected PRs and Repositories, without adding overlapping attention
+        signals as separate tasks or promising that five checks produce five PR cards.
     summary_to_updated_selection:
-      given: A Project signal reported two PRs with failed CI at an earlier supported observation, and a later applicable observation confirms that one no longer matches.
+      given: A Project signal reported two PRs with failed CI at an earlier supported observation, and
+        a later applicable observation confirms that one no longer matches.
       when: The product description explains opening the signal's selection.
-      then: It retains the Project and condition, distinguishes the earlier count from the newer supported selection, and does not invent an explanation if the destination's coverage is incomplete.
+      then: It retains the Project and condition, distinguishes the earlier count from the newer supported
+        selection, and does not invent an explanation if the destination's coverage is incomplete.
     technology_not_predetermined:
       given: Two storage approaches can preserve the same agreed last-known-data and failure behavior.
       when: The owner reviews the first product pass.
-      then: The product outcome is understandable without declaring either storage approach to be the sole approved implementation.
+      then: The product outcome is understandable without declaring either storage approach to be the
+        sole approved implementation.
     proposed_review_threshold:
       given: A candidate uses a 24-hour interval to highlight an inactive review discussion.
       when: The product description presents that candidate.
-      then: It labels the threshold as agent-proposed and does not assert that a particular person owes an answer.
+      then: It labels the threshold as agent-proposed and does not assert that a particular person owes
+        an answer.
     readiness_meanings:
-      given: A merged PR, an open non-draft PR and an open PR with supported approval and passing observed checks are considered separately.
+      given: A merged PR, an open non-draft PR and an open PR with supported approval and passing observed
+        checks are considered separately.
       when: The product description explains what ready might mean.
-      then: It identifies merged as an established lifecycle outcome, distinguishes the optional non-draft filter and review or CI signals, and does not claim merge eligibility or completed linked Issues from those facts alone.
+      then: It identifies merged as an established lifecycle outcome, distinguishes the optional non-draft
+        filter and review or CI signals, and does not claim merge eligibility or completed linked Issues
+        from those facts alone.
     issue_participant_population:
-      given: A source-supported count describes GitHub participating Users for an Issue, while the population of all comment authors and other actors is not established.
+      given: A source-supported count describes GitHub participating Users for an Issue, while the population
+        of all comment authors and other actors is not established.
       when: The product description explains the selected discussion-participant count.
-      then: It preserves the source-defined population and does not present that count as the confirmed number of all human and agent participants or as an identical count of comment authors.
+      then: It preserves the source-defined population and does not present that count as the confirmed
+        number of all human and agent participants or as an identical count of comment authors.
     discussion_event_and_observation_time:
-      given: An Issue title is changed today, and a comment created yesterday is observed today while discussion coverage is incomplete.
+      given: An Issue title is changed today, and a comment created yesterday is observed today while
+        discussion coverage is incomplete.
       when: The product description explains Issue and discussion timestamps.
-      then: It distinguishes the title update, comment creation and GitView observation, without presenting the observed comment as the exact latest comment in the full scope or an update as a new comment.
+      then: It distinguishes the title update, comment creation and GitView observation, without presenting
+        the observed comment as the exact latest comment in the full scope or an update as a new comment.
     changed_project_membership:
       given: A Repository was added to a Project after a historical period being inspected.
       when: The product description explains a graph for the current membership over that period.
-      then: It distinguishes that proposed retrospective basis from evidence of which Repositories actually belonged to the Project in the past, and identifies missing history rather than treating it as zero.
+      then: It distinguishes that proposed retrospective basis from evidence of which Repositories actually
+        belonged to the Project in the past, and identifies missing history rather than treating it as
+        zero.
     dynamic_today_and_fixed_cohort:
-      given: An adequately observed Today selection has 100 PRs, 95 currently merged, and a new eligible open PR appears afterward.
+      given: An adequately observed Today selection has 100 PRs, 95 currently merged, and a new eligible
+        open PR appears afterward.
       when: The product description explains completion visibility and a possible fixed-cohort trend.
-      then: It can describe a new dynamic selection of 101 PRs with six open without silently adding the new PR to an earlier captured cohort or claiming that two current breakdowns establish all intermediate history; a fixed cohort remains an optional proposal.
+      then: It can describe a new dynamic selection of 101 PRs with six open without silently adding the
+        new PR to an earlier captured cohort or claiming that two current breakdowns establish all intermediate
+        history; a fixed cohort remains an optional proposal.
     offline_restriction_limit:
-      given: The product description explains last-known private data after an interruption or restoration of an older local copy.
-      when: It describes the agent-authored offline access policy.
-      then: It exposes that a restriction absent from recovered evidence may be unknown, without promising that all revoked access is detected or presenting the privacy and availability tradeoff as an owner decision.
+      given: The product description explains last-known private data after an interruption or restoration
+        of an older local copy.
+      when: It describes saved local data after a previously confirmed revocation, or an interruption
+        where later access evidence may be unavailable.
+      then: It records the owner decision to keep previously saved local data visible after confirmed
+        revocation under 0019 with its supported time and indication. If a restriction is absent from
+        recovered evidence, do not invent its occurrence or promise all remote changes are detected. Cross-account
+        isolation and exact recovery details remain open.
     scope_changing_zoom:
       given: The user inspects work at different grid densities and can open a Project or object.
       when: The product description explains pinch and navigation.
-      then: It distinguishes in-scope density changes from the still-open candidate to cross navigation scopes using pinch itself.
+      then: It distinguishes in-scope density changes from the still-open candidate to cross navigation
+        scopes using pinch itself.
     dense_preview_and_return:
-      given: A dense filtered grid contains a permitted PR whose cell changes position after a source update.
+      given: A dense filtered grid contains a permitted PR whose cell changes position after a source
+        update.
       when: The operator previews and opens that object and returns to the grid.
-      then: The description preserves the same PR identity and available source context, keeps the valid Project, filters and density on return, and does not require all selected fields to fit in the cell or reveal information whose access became restricted.
+      then: The description preserves the same PR identity and supported source context, valid Project,
+        filters and density on return. It does not require every field to fit in a cell. Confirmed GitHub
+        revocation alone does not hide already saved local preview details under 0019; indicate revocation
+        and supported time when known. Other account and external sharing questions remain separate.
     later_sliding_preview:
       given: The operator wants to inspect several dense cells without leaving the overview.
       when: The product description explains the later sliding-preview direction.
-      then: It describes one preview changing with the inspected cell while retaining the overview, identifies long-press activation as unverified, and does not present the future interaction as already implemented or required for the first version.
+      then: It describes one preview changing with the inspected cell while retaining the overview, identifies
+        long-press activation as unverified, and does not present the future interaction as already implemented
+        or required for the first version.
   unresolved:
-  - Whether the working product projection sufficiently communicates all intended nuances requires product review; clarify any missing behavior without demanding implementation detail merely for its own sake.
-  - Meaning of ready for an open PR, broad discussion participation including coding agents, and true responsibility for a reply remain distinguishable from narrower observable indicators.
-  - The historical membership basis, broader past-period grid, cross-scope pinch, and private-cache and backup tradeoffs require explicit product evaluation; existing proposals do not establish owner selections.
-  - No implementation, device behavior, source availability or executed acceptance is claimed by this first-pass specification.
+  - Whether the working product projection sufficiently communicates all intended nuances requires product
+    review; clarify any missing behavior without demanding implementation detail merely for its own sake.
+  - Meaning of ready for an open PR, broad discussion participation including coding agents, and true
+    responsibility for a reply remain distinguishable from narrower observable indicators.
+  - The historical membership basis, broader past-period grid, cross-scope pinch, and private-cache and
+    backup tradeoffs require explicit product evaluation; existing proposals do not establish owner selections.
+  - No implementation, device behavior, source availability or executed acceptance is claimed by this
+    first-pass specification.

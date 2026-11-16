@@ -28,136 +28,442 @@ sources:
   fact_transaction_candidate: docs/drafts/observation-fact-transaction-candidate-20261115.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A retained field, event or aggregate is recoverable only with the identity, scope and interpretation evidence needed for its own claim.
-- Unobserved, supported absence, a supported value and conflicting observations are distinguishable without fabricating zero, empty or current state.
-- Reusing context or retrying a local write cannot attach another object's evidence, create another source observation or advance unrelated coverage.
-- A separately retained coverage claim, request outcome and metric-history point remain independently interpretable from a current field value.
-- Access restrictions and identity ambiguity remain applicable after recovery and migration; any applicable history-clear boundary is also preserved.
-- The logical model supports controlled verification without implying that a concrete schema, source integration or restart test exists.
+- A retained field, event or aggregate is recoverable only with the identity, scope and interpretation
+  evidence needed for its own claim.
+- Unobserved, supported absence, a supported value and conflicting observations are distinguishable without
+  fabricating zero, empty or current state.
+- Reusing context or retrying a local write cannot attach another object's evidence, create another source
+  observation or advance unrelated coverage.
+- A separately retained coverage claim, request outcome and metric-history point remain independently
+  interpretable from a current field value.
+- Access restrictions and identity ambiguity remain applicable after recovery and migration; any applicable
+  history-clear boundary is also preserved.
+- The logical model supports controlled verification without implying that a concrete schema, source integration
+  or restart test exists.
 specification:
-  objective: Define the minimum recoverable associations and value states for local evidence consumed by Today and Project summary.
+  objective: Define the minimum recoverable associations and value states for local evidence consumed
+    by Today and Project summary.
   ontology_refs:
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
   - gitview:Metric
   contract:
-    scope: This agent-authored logical record contract refines 0105 independently of the persistence provider; 0113 describes SQLite as one candidate and 0122 a proposed migration and recovery approach. An alternative must independently establish applicable evidence association, access, migration and recovery guarantees; a contextual link is not proof of these guarantees. The named record responsibilities may be implemented as tables, immutable bundles or another verified representation; they are not new product ontology entities, an implemented schema or an instruction to retain all source payloads.
-    today_record_layout_candidate: >-
-      As an agent-authored initial relational direction for the Today route, keep a stable local work reference with its confirmed PR or Issue kind; separately associate each source-identity alias with its source instance, identifier kind, applicable scope, exact value and evidence. Multiple supported aliases may point to the same work reference, while a single confirmed alias in the same identity scope cannot point to two work references. A local observation-context reference identifies the actual source attempt or retrieval, account and Repository context, purpose and supported times or limitations; it is not a source-object identity. Each accepted field observation references its work subject, field meaning and interpretation version, its own observation context and a tagged supported value or supported semantic absence. A source-event observation additionally retains the event kind, applicable source-event identity or explicit identity limitation and event time or explicit time limitation. A separate portion-progress record associates the actual discovery purpose and effective source predicates with any recoverable continuation and its outcome. A separate coverage claim identifies the stated scope and its supporting evidence. A retention-operation record binds an opaque logical operation identity to its immutable intent and supported local outcome. These names describe record responsibilities and cardinality, not mandatory Swift types, table spelling, a complete physical schema or an assertion that all context is known. An unresolved representation may retain only its supported permitted evidence and is not represented as a confirmed work subject merely by acquiring a local reference.
-    today_record_constraints_candidate: >-
-      Enforce required identity and evidence references, source-kind scoping and the confirmed alias uniqueness rules at the selected local consistency boundary. Keep each accepted field or event and the context required for its supported interpretation recoverable with the retention operation outcome; a context may be shared only when every association remains exact. A not-requested or failed field is an attempt outcome rather than a new field value; a source-supported empty or absent value uses an explicit supported tag and context. Preserve differently timed observations even if their values or subjects match; the current projection applies source-supported ordering and conflict rules separately. A stored progress cursor is neither an accepted fact nor a completeness claim, and a coverage record cannot be stronger than its associated recoverable evidence. A historically applied operation receipt is not itself the readable current field. Keep secrets, raw authorization responses and unnecessary payloads out of these records. The exact field encodings, provider-specific constraints, index layout and migration remain open until independently specified and verified.
-    today_fact_recovery_candidate: >-
-      For the initial 0101 source profile, recover each eligible typed work reference together with its source instance and supported Repository association before presenting it as a confirmed PR or Issue. A retained lifecycle observation must identify its subject, source state meaning and observation context; a creation observation must retain its subject, source instant and applicable precision; a mergedAt observation must retain its PR subject and source instant; and a close event must retain its supported event kind, subject association and event instant, with any identity or time limitation. A missing component needed for a particular interpretation downgrades that fact without clearing another independently interpretable fact. Preserve available display fields and field-level limitations under their own contexts. Recover the source attempt, discovery-portion progress, population coverage and retention outcome separately: none is a substitute for another or for the readable evidence on which it depends. These are recoverable associations, not a requirement that every source field, event or attempt be stored or that all facts be read at one source time.
-    today_recovery_evaluation: >-
-      After recovery, prepare the current Project scope and disclosure using independently readable configuration and current access; capture the current local-day interval and filters and reevaluate permitted facts through 0110. A retained prior match, prior filter decision or prior local-day boundary is not automatically the present selection. A past event instant remains the same event with its original evidence; changing calendar day or time zone changes its interval comparison, not the event or its observation time. If applicable current state, event coverage, identity or access is uncertain, preserve the resulting uncertainty instead of inventing an exclusion, a fresh observation or an empty source. A restored cursor or retention receipt does not establish population completeness or source freshness. The route may reuse a prior derived decision only when its entire input and context remain independently applicable; it does not need to persist such a decision.
-    recovered_progress_without_gap_evidence: A retained continuation or terminal traversal state can remain readable when an associated source limitation or page evidence is missing. Return each independently recoverable supported fact and its original context, but assess coverage from the evidence actually recoverable for that exact portion and selection. An unreadable gap record is not evidence of a clean page, nor is it proof of a specific error or missing source object; mark the affected coverage unproven where complete population evidence is insufficient. If a safely attributable gap is recoverable, preserve its actual portion context for eligible repair under 0102 without requiring the identity of an unobserved node. Do not retain raw private error paths or fabricate a diagnostic to make recovery explainable. A later independently supported source attempt is a new observation, not proof of the original page's precise contents.
-    identity: Associate a stored claim with a confirmed source instance and typed subject identity, including the Repository where required. A PR, Issue, Repository, source event and local operation occupy distinct identifier domains; retain source ID kind and any independently supported association under 0038 and 0101. A repository-local number or mutable name alone cannot silently become a global identity. A record whose subject cannot be established cannot be relabeled as a confirmed object or used for a definite distinct count.
-    repository_reference_candidate: As an agent-authored initial SQLite representation, allocate an opaque local Repository reference only after the applicable source instance and exact REST Repository numeric identity are established under 0080. Store that typed numeric identity as a canonical exact decimal text value, with source instance and identifier kind in its uniqueness scope; never round through a floating-point value. Use a binary, case-sensitive comparison for opaque Node ID text and store each confirmed Node ID as a separately typed association to that local Repository reference with recoverable supporting evidence. An owner/name, URL, local number or display label is an observation, not this reference or a uniqueness key. A Node ID alone, an unresolved source instance, malformed numeric input or an unconfirmed alias is not enough to create a confirmed numeric-identity record; preserve the source evidence separately as unresolved where policy permits. This is a candidate representation and does not authorize accepting out-of-contract source identifiers or define a complete physical schema.
-    project_and_work_references: Store Project membership and default associations against the stable local Repository reference, not its mutable address; the same reference can be used in multiple Projects under 0104. Store an identified PR or Issue reference with its source instance, object kind and supported opaque source identity, and bind each fact or event to its actual Repository-association evidence and observation context under 0101. A later source-supported association change must not rewrite an earlier event's scope or transfer membership automatically. No Repository identity, work identity, Project membership, operation receipt or saved observation independently grants current access. A temporarily unresolved source record cannot be turned into a confirmed member or distinct PR by assigning it a local ordering token.
-    resolved_work_association: If later supported evidence resolves an earlier work representation to a confirmed object, retain the association's evidence and time separately from the original record's event, observation and retention contexts. Reconcile duplicate representations and any newly comparable conflicts under 0101 and 0053 without fabricating a fresh field observation, reassigning an unrelated Repository or advancing coverage solely from the new association. A persisted association and its required evidence must remain recoverable together or follow an independently verified staged protocol; after a failed or indeterminate save, the UI cannot claim durable resolution until recovery supports it. Apply current disclosure before using or presenting the result.
-    alias_commit_and_conflict: Publish a newly confirmed numeric-ID-to-Node-ID or old-to-new Node-ID association together with the source evidence and target reference in the same coordinated durable boundary, or use a separately verified recoverable protocol. Within an instance and identifier kind, one confirmed alias cannot simultaneously point to two distinct confirmed Repository references. If an observed alias is already bound to another numeric identity, either the binding is incomplete, association is conflicted or source evidence is incompatible, preserve the competing evidence and affected membership and report uncertainty under 0053; do not reassign the alias, merge Projects or overwrite existing facts solely to satisfy a constraint. On an indeterminate commit, recover its original operation and association before retrying; a missing acknowledgement is not a confirmed alias. Migration or compaction preserves the exact association and its interpretation or downgrades dependent claims when evidence is unavailable.
-    evidence_envelope: For each accepted fact retain or reliably reference its field or event meaning and interpretation version, supported value or semantic absence, observation context, source and subject, applicable source or event instant and precision when supported, relevant revision or ordering witness, captured scope and access context, and limitations needed to interpret it. Optional context may be explicitly unknown, but a missing required association prevents the stronger claim. Preserve event time separately from retrieval and durable-save times; a shared immutable or versioned context is allowed only while its precise association remains recoverable.
-    cross_context_semantic_integrity: A recoverable reference is necessary but not sufficient to interpret a field or event. Before accepting or restoring a claim, validate that its source instance, typed subject, field meaning and associated observation context describe the same source observation, and that the Repository association used for that particular fact is supported for its actual scope and time under 0101 and 0124. Verify the observation's initiating account as provenance of that attempt; it is not automatically the currently active account or a current disclosure grant. A shared context is valid only for facts that the context actually describes, not merely because timestamps, local IDs or display names match. A source-supported later Repository association change does not retroactively invalidate a legitimately retained earlier association; preserve each under its own evidence. If a required cross-context association cannot be established or conflicts, downgrade or withhold the affected claim and report an appropriate local or identity limitation without deleting independent facts or assigning it another context. Physical foreign keys alone prove neither semantic matching nor source authorization.
-    temporal_evidence_recovery: When supported evidence identifies a range of possible creation or event times rather than an exact instant, retain or reliably reference that range and the source interpretation needed to recover its meaning, subject and observation context. An encoding or migration that stores a representative timestamp without the supported range or equivalent precision evidence cannot later treat that value as an exact source instant. If the necessary interpretation is no longer recoverable, downgrade the affected temporal claim while preserving other independently readable facts. Today evaluates the recovered time evidence under 0110 and historical buckets under 0069; neither local save time nor the midpoint of a range supplies the missing source time. This is conditional on actual source evidence and does not assert that GitHub supplies an interval.
-    field_state: A known value, including a justified zero or empty collection, and source-supported semantic absence are accepted observations with their own evidence. Not requested, request failure and an error-affected field are attempt outcomes, not replacement values or implicit deletions. If no earlier accepted record can be independently read, the field is unknown or unavailable; if a permitted earlier record exists, it retains its own context. Incompatible observations without sufficient ordering remain a conflict or uncertainty rather than being overwritten by arrival order. Access restriction is a current disclosure decision, not an invented value or permanent proof of future denial.
-    event_and_aggregate: An event claim retains its event type, source-supported event identity where available, confirmed subject and event time or explicit time limitation; equal timestamps or text do not prove event identity. An aggregate claim retains its metric and predicate version, unit, scope, reference or period, coverage and disclosure lineage. An aggregate value alone does not identify its constituent objects, establish membership materialization or support subtraction across incompatible contexts. Source facts, derived values and local observations are not interchangeable merely because their numeric values match.
-    aggregate_disclosure_lineage: Retain or reliably reference the transitive source-derived evidence scopes needed to establish a derived point under 0064, including its actual source and account context, Repository and category, source or derived input identity and applicable restriction context where known. Link each dependency to the particular claim and derivation meaning; sharing a Project, equal value or common timestamp does not prove identical lineage. An independently source-supported aggregate retains the source semantics and scope it actually establishes rather than inventing constituent identities. Compaction may substitute an independently validated equivalent representation only while the required attribution and current-disclosure checks remain recoverable. If a required dependency is missing or cannot be assessed, downgrade or suppress the affected exact disclosure instead of marking that dependency permitted or treating it as zero. Apply current access after recovery; recorded historical permission is provenance, not present authorization.
-    independent_coverage: A coverage record or recoverable equivalent identifies the exact source, account, Repository set, object category, predicate, period, access context, supported reference and evidence for its claim under 0102. Link it only to the observations and retained evidence it actually covers. A persisted field, final page, aggregate or later timestamp does not independently prove full population or advance an unrelated coverage reference. If supporting context becomes unavailable, downgrade the affected claim rather than manufacture a complete scope.
-    attempts_and_effects: A source attempt, Project-level refresh request, accepted fact and local retention operation have separate identities and outcomes under 0103 and 0105. Bind each retention effect to its immutable logical operation and actual source observation; replay cannot become a newly initiated observation. If an effect and its required operation evidence cannot be jointly established after interruption, report the outcome as indeterminate. A historical applied receipt does not by itself prove that the fact and its interpretation are still readable.
-    sqlite_reference_integrity: If the selected SQLite schema uses foreign keys to protect mandatory evidence associations, the provider must establish that the actual SQLite build supports enforcement and enable and verify it on every participating connection before the relevant transaction begins, including reopened, pooled and migration connections. SQLite documents that changing this setting inside a multi-statement transaction has no effect. An unavailable or unverified enforcement mode cannot be treated as a successful integrity guarantee. A migration or recovery that uses another protocol must independently preserve and validate equivalent references before exposing claims; no assumption is made that enabling enforcement retroactively repairs existing rows.
-    sqlite_keys_and_null: Represent mandatory confirmed identity, operation and evidence references so that a missing component cannot satisfy an exact-identity or uniqueness claim. SQLite permits multiple NULLs in UNIQUE constraints and can allow NULL in some PRIMARY KEY definitions; nullable composite foreign keys also do not establish a parent when a component is NULL. Therefore a bare UNIQUE, PRIMARY KEY or foreign key declaration with nullable components is insufficient for these mandatory bindings. Use explicit non-null and consistency constraints or an independently verified equivalent. A source-supported absent value remains distinct from a missing required record association; SQLite NULL or an omitted row alone must not conflate those meanings. Do not infer semantic compatibility merely from two references existing.
-    sqlite_value_integrity: A tagged value or absence representation must reject an invalid combination of tag, value and required context before reporting a durable accepted fact. If SQLite is selected, its CHECK expressions that evaluate to NULL do not fail, so their design must explicitly account for NULL and that provider's type behavior. Preserve opaque identifier kind and value without lossy numeric conversion, case folding or display-name substitution; validate source-specific range and encoding before treating it as a confirmed identity. The exact types, tags and schema remain open and must be validated against the selected provider and adapters.
-    compaction_eligibility: As an agent-authored initial rule, compaction may remove or replace redundant physical evidence only when every retained claim depending on it remains recoverable with the same supported meaning, identity, time, scope, coverage and disclosure lineage, and every potentially replayable or unresolved operation retains enough binding and outcome evidence under 0103. A stored raw payload or duplicate representation is not itself required if its independently validated replacement preserves the required evidence; an original PR or Issue body selected for offline availability remains subject to its own original-text retention contract rather than being replaced by a generated summary. Equal values, timestamps or visible names alone do not establish equivalence. Do not expire an eligible metric-history point solely due to age or silently evict it for capacity under 0066. A shared context cannot be removed merely because one Project or one fact stopped using it while another retained claim still depends on it.
-    compacted_operation_evidence: A terminal operation may retain a minimized binding and result instead of a full payload only if that representation still distinguishes compatible redelivery, incompatible reuse and its historical applied or terminal non-applied outcome, and cannot expose restricted data through diagnostics. An indeterminate operation, potentially late effect or clear boundary cannot be discarded or assumed resolved merely because it is old or its originating screen closed. If safe equivalence, writer quiescence or a retention horizon cannot be established, preserve sufficient evidence or return a local limitation; do not treat a later delivery as a new operation. This does not assert that minimal evidence can always be represented without private data.
-    compaction_commit: Coordinate a replacement, all affected references and any removal in one verified local consistency boundary, or specify an equivalent recoverable staged protocol under 0113 and 0122. A crash or failed commit cannot expose a claim with a dangling or substituted context; do not declare the compaction completed until its outcome and the retained associations are independently recoverable. An unknown commit result is reconciled under its own operation identity. If retained evidence cannot be verified during recovery, downgrade the affected claim or show a storage limitation rather than inventing a value, source absence or rollback. Apply current access and any history-clear generation while evaluating and committing; compaction cannot reintroduce cleared history or override a newer restriction.
-    history_boundary: Current-cache facts and historical retention have independently recoverable outcomes even if physical storage is shared. If the optional all-history clear is included, history admission preserves its clear boundary under 0067; the generation-based protocol in 0117 is one candidate mechanism, and an old replay cannot re-create cleared history. Reconstructing an aggregate from retained inputs requires the same predicate, subject, scope, time and access evidence as a directly retained result. A current cache read is not itself a new historical sample.
-    access_and_migration: Reevaluate current disclosure before returning source-derived values, identities or revealing aggregates to any presentation or handoff. A recovered old access context describes provenance, not a fresh permission. Schema migration under 0122 must preserve each claim's identity and interpretation associations and any applicable clear fence; where a required association cannot be validated, return a limited or unavailable claim without attaching another context or deleting unrelated Projects. Do not persist credentials or raw authorization responses as evidence.
-    single_fact_transaction_candidate: If the accompanying agent-authored SQLite direction is selected, it defines one admitted cache or history fact effect with compatible subject, source context, tagged value or supported absence, required evidence references, immutable operation binding and applicable local fences. On a verified participating connection, validate these associations and commit the selected fact effect and its operation outcome in one local transaction; other facts, coverage and separately requested effects keep independent outcomes. Compatible replay returns the prior outcome without a new source observation, incompatible binding conflicts and a lost commit acknowledgement remains indeterminate until reconciled. Foreign-key existence alone does not establish semantic scope compatibility. This bounded proposal is not a complete physical schema or verified provider behavior.
-    verification: Before declaring the boundary implementation-ready, define physical encoding, constraints, atomic write and read contracts, retention and compaction rules, migration and provider-specific failure mapping. Plan deterministic TDD for same-ID replay, equal-value distinct observations, partial writes, omitted versus empty fields, unordered conflicts, access change, coverage evidence loss and clear races. Verify actual SQLite, interruption, restart, Keychain and source mappings separately; this document does not establish any of those results.
-    provenance: Offline observations, metrics and testability follow owner direction. These record associations and evidence states are agent-authored refinements and are not proof of a selected database wrapper or implementation.
+    scope: This agent-authored logical record contract refines 0105 independently of the persistence provider;
+      0113 describes SQLite as one candidate and 0122 a proposed migration and recovery approach. An alternative
+      must independently establish applicable evidence association, access, migration and recovery guarantees;
+      a contextual link is not proof of these guarantees. The named record responsibilities may be implemented
+      as tables, immutable bundles or another verified representation; they are not new product ontology
+      entities, an implemented schema or an instruction to retain all source payloads.
+    today_record_layout_candidate: As an agent-authored initial relational direction for the Today route,
+      keep a stable local work reference with its confirmed PR or Issue kind; separately associate each
+      source-identity alias with its source instance, identifier kind, applicable scope, exact value and
+      evidence. Multiple supported aliases may point to the same work reference, while a single confirmed
+      alias in the same identity scope cannot point to two work references. A local observation-context
+      reference identifies the actual source attempt or retrieval, account and Repository context, purpose
+      and supported times or limitations; it is not a source-object identity. Each accepted field observation
+      references its work subject, field meaning and interpretation version, its own observation context
+      and a tagged supported value or supported semantic absence. A source-event observation additionally
+      retains the event kind, applicable source-event identity or explicit identity limitation and event
+      time or explicit time limitation. A separate portion-progress record associates the actual discovery
+      purpose and effective source predicates with any recoverable continuation and its outcome. A separate
+      coverage claim identifies the stated scope and its supporting evidence. A retention-operation record
+      binds an opaque logical operation identity to its immutable intent and supported local outcome.
+      These names describe record responsibilities and cardinality, not mandatory Swift types, table spelling,
+      a complete physical schema or an assertion that all context is known. An unresolved representation
+      may retain only its supported permitted evidence and is not represented as a confirmed work subject
+      merely by acquiring a local reference.
+    today_record_constraints_candidate: Enforce required identity and evidence references, source-kind
+      scoping and the confirmed alias uniqueness rules at the selected local consistency boundary. Keep
+      each accepted field or event and the context required for its supported interpretation recoverable
+      with the retention operation outcome; a context may be shared only when every association remains
+      exact. A not-requested or failed field is an attempt outcome rather than a new field value; a source-supported
+      empty or absent value uses an explicit supported tag and context. Preserve differently timed observations
+      even if their values or subjects match; the current projection applies source-supported ordering
+      and conflict rules separately. A stored progress cursor is neither an accepted fact nor a completeness
+      claim, and a coverage record cannot be stronger than its associated recoverable evidence. A historically
+      applied operation receipt is not itself the readable current field. Keep secrets, raw authorization
+      responses and unnecessary payloads out of these records. The exact field encodings, provider-specific
+      constraints, index layout and migration remain open until independently specified and verified.
+    today_fact_recovery_candidate: 'For the initial 0101 source profile, recover each eligible typed work
+      reference together with its source instance and supported Repository association before presenting
+      it as a confirmed PR or Issue. A retained lifecycle observation must identify its subject, source
+      state meaning and observation context; a creation observation must retain its subject, source instant
+      and applicable precision; a mergedAt observation must retain its PR subject and source instant;
+      and a close event must retain its supported event kind, subject association and event instant, with
+      any identity or time limitation. A missing component needed for a particular interpretation downgrades
+      that fact without clearing another independently interpretable fact. Preserve available display
+      fields and field-level limitations under their own contexts. Recover the source attempt, discovery-portion
+      progress, population coverage and retention outcome separately: none is a substitute for another
+      or for the readable evidence on which it depends. These are recoverable associations, not a requirement
+      that every source field, event or attempt be stored or that all facts be read at one source time.'
+    today_recovery_evaluation: After recovery, prepare the current Project scope and disclosure using
+      independently readable configuration and current access; capture the current local-day interval
+      and filters and reevaluate permitted facts through 0110. A retained prior match, prior filter decision
+      or prior local-day boundary is not automatically the present selection. A past event instant remains
+      the same event with its original evidence; changing calendar day or time zone changes its interval
+      comparison, not the event or its observation time. If applicable current state, event coverage,
+      identity or access is uncertain, preserve the resulting uncertainty instead of inventing an exclusion,
+      a fresh observation or an empty source. A restored cursor or retention receipt does not establish
+      population completeness or source freshness. The route may reuse a prior derived decision only when
+      its entire input and context remain independently applicable; it does not need to persist such a
+      decision.
+    recovered_progress_without_gap_evidence: A retained continuation or terminal traversal state can remain
+      readable when an associated source limitation or page evidence is missing. Return each independently
+      recoverable supported fact and its original context, but assess coverage from the evidence actually
+      recoverable for that exact portion and selection. An unreadable gap record is not evidence of a
+      clean page, nor is it proof of a specific error or missing source object; mark the affected coverage
+      unproven where complete population evidence is insufficient. If a safely attributable gap is recoverable,
+      preserve its actual portion context for eligible repair under 0102 without requiring the identity
+      of an unobserved node. Do not retain raw private error paths or fabricate a diagnostic to make recovery
+      explainable. A later independently supported source attempt is a new observation, not proof of the
+      original page's precise contents.
+    identity: Associate a stored claim with a confirmed source instance and typed subject identity, including
+      the Repository where required. A PR, Issue, Repository, source event and local operation occupy
+      distinct identifier domains; retain source ID kind and any independently supported association under
+      0038 and 0101. A repository-local number or mutable name alone cannot silently become a global identity.
+      A record whose subject cannot be established cannot be relabeled as a confirmed object or used for
+      a definite distinct count.
+    repository_reference_candidate: As an agent-authored initial SQLite representation, allocate an opaque
+      local Repository reference only after the applicable source instance and exact REST Repository numeric
+      identity are established under 0080. Store that typed numeric identity as a canonical exact decimal
+      text value, with source instance and identifier kind in its uniqueness scope; never round through
+      a floating-point value. Use a binary, case-sensitive comparison for opaque Node ID text and store
+      each confirmed Node ID as a separately typed association to that local Repository reference with
+      recoverable supporting evidence. An owner/name, URL, local number or display label is an observation,
+      not this reference or a uniqueness key. A Node ID alone, an unresolved source instance, malformed
+      numeric input or an unconfirmed alias is not enough to create a confirmed numeric-identity record;
+      preserve the source evidence separately as unresolved where policy permits. This is a candidate
+      representation and does not authorize accepting out-of-contract source identifiers or define a complete
+      physical schema.
+    project_and_work_references: Store Project membership and default associations against the stable
+      local Repository reference, not its mutable address; the same reference can be used in multiple
+      Projects under 0104. Store an identified PR or Issue reference with its source instance, object
+      kind and supported opaque source identity, and bind each fact or event to its actual Repository-association
+      evidence and observation context under 0101. A later source-supported association change must not
+      rewrite an earlier event's scope or transfer membership automatically. No Repository identity, work
+      identity, Project membership, operation receipt or saved observation independently grants current
+      access. A temporarily unresolved source record cannot be turned into a confirmed member or distinct
+      PR by assigning it a local ordering token.
+    resolved_work_association: If later supported evidence resolves an earlier work representation to
+      a confirmed object, retain the association's evidence and time separately from the original record's
+      event, observation and retention contexts. Reconcile duplicate representations and any newly comparable
+      conflicts under 0101 and 0053 without fabricating a fresh field observation, reassigning an unrelated
+      Repository or advancing coverage solely from the new association. A persisted association and its
+      required evidence must remain recoverable together or follow an independently verified staged protocol;
+      after a failed or indeterminate save, the UI cannot claim durable resolution until recovery supports
+      it. Apply current disclosure before using or presenting the result.
+    alias_commit_and_conflict: Publish a newly confirmed numeric-ID-to-Node-ID or old-to-new Node-ID association
+      together with the source evidence and target reference in the same coordinated durable boundary,
+      or use a separately verified recoverable protocol. Within an instance and identifier kind, one confirmed
+      alias cannot simultaneously point to two distinct confirmed Repository references. If an observed
+      alias is already bound to another numeric identity, either the binding is incomplete, association
+      is conflicted or source evidence is incompatible, preserve the competing evidence and affected membership
+      and report uncertainty under 0053; do not reassign the alias, merge Projects or overwrite existing
+      facts solely to satisfy a constraint. On an indeterminate commit, recover its original operation
+      and association before retrying; a missing acknowledgement is not a confirmed alias. Migration or
+      compaction preserves the exact association and its interpretation or downgrades dependent claims
+      when evidence is unavailable.
+    evidence_envelope: For each accepted fact retain or reliably reference its field or event meaning
+      and interpretation version, supported value or semantic absence, observation context, source and
+      subject, applicable source or event instant and precision when supported, relevant revision or ordering
+      witness, captured scope and access context, and limitations needed to interpret it. Optional context
+      may be explicitly unknown, but a missing required association prevents the stronger claim. Preserve
+      event time separately from retrieval and durable-save times; a shared immutable or versioned context
+      is allowed only while its precise association remains recoverable.
+    cross_context_semantic_integrity: A recoverable reference is necessary but not sufficient to interpret
+      a field or event. Before accepting or restoring a claim, validate that its source instance, typed
+      subject, field meaning and associated observation context describe the same source observation,
+      and that the Repository association used for that particular fact is supported for its actual scope
+      and time under 0101 and 0124. Verify the observation's initiating account as provenance of that
+      attempt; it is not automatically the currently active account or a current disclosure grant. A shared
+      context is valid only for facts that the context actually describes, not merely because timestamps,
+      local IDs or display names match. A source-supported later Repository association change does not
+      retroactively invalidate a legitimately retained earlier association; preserve each under its own
+      evidence. If a required cross-context association cannot be established or conflicts, downgrade
+      or withhold the affected claim and report an appropriate local or identity limitation without deleting
+      independent facts or assigning it another context. Physical foreign keys alone prove neither semantic
+      matching nor source authorization.
+    temporal_evidence_recovery: When supported evidence identifies a range of possible creation or event
+      times rather than an exact instant, retain or reliably reference that range and the source interpretation
+      needed to recover its meaning, subject and observation context. An encoding or migration that stores
+      a representative timestamp without the supported range or equivalent precision evidence cannot later
+      treat that value as an exact source instant. If the necessary interpretation is no longer recoverable,
+      downgrade the affected temporal claim while preserving other independently readable facts. Today
+      evaluates the recovered time evidence under 0110 and historical buckets under 0069; neither local
+      save time nor the midpoint of a range supplies the missing source time. This is conditional on actual
+      source evidence and does not assert that GitHub supplies an interval.
+    field_state: A known value, including a justified zero or empty collection, and source-supported semantic
+      absence are accepted observations with their own evidence. Not requested, request failure and an
+      error-affected field are attempt outcomes, not replacement values or implicit deletions. If no earlier
+      accepted record can be independently read, the field is unknown or unavailable; if a permitted earlier
+      record exists, it retains its own context. Incompatible observations without sufficient ordering
+      remain a conflict or uncertainty rather than being overwritten by arrival order. Access restriction
+      is a current disclosure decision, not an invented value or permanent proof of future denial.
+    event_and_aggregate: An event claim retains its event type, source-supported event identity where
+      available, confirmed subject and event time or explicit time limitation; equal timestamps or text
+      do not prove event identity. An aggregate claim retains its metric and predicate version, unit,
+      scope, reference or period, coverage and disclosure lineage. An aggregate value alone does not identify
+      its constituent objects, establish membership materialization or support subtraction across incompatible
+      contexts. Source facts, derived values and local observations are not interchangeable merely because
+      their numeric values match.
+    aggregate_disclosure_lineage: Retain or reliably reference the transitive source-derived evidence
+      scopes needed to establish a derived point under 0064, including its actual source and account context,
+      Repository and category, source or derived input identity and applicable restriction context where
+      known. Link each dependency to the particular claim and derivation meaning; sharing a Project, equal
+      value or common timestamp does not prove identical lineage. An independently source-supported aggregate
+      retains the source semantics and scope it actually establishes rather than inventing constituent
+      identities. Compaction may substitute an independently validated equivalent representation only
+      while the required attribution and current-disclosure checks remain recoverable. If a required dependency
+      is missing or cannot be assessed, downgrade or suppress the affected exact disclosure instead of
+      marking that dependency permitted or treating it as zero. Apply current access after recovery; recorded
+      historical permission is provenance, not present authorization.
+    independent_coverage: A coverage record or recoverable equivalent identifies the exact source, account,
+      Repository set, object category, predicate, period, access context, supported reference and evidence
+      for its claim under 0102. Link it only to the observations and retained evidence it actually covers.
+      A persisted field, final page, aggregate or later timestamp does not independently prove full population
+      or advance an unrelated coverage reference. If supporting context becomes unavailable, downgrade
+      the affected claim rather than manufacture a complete scope.
+    attempts_and_effects: A source attempt, Project-level refresh request, accepted fact and local retention
+      operation have separate identities and outcomes under 0103 and 0105. Bind each retention effect
+      to its immutable logical operation and actual source observation; replay cannot become a newly initiated
+      observation. If an effect and its required operation evidence cannot be jointly established after
+      interruption, report the outcome as indeterminate. A historical applied receipt does not by itself
+      prove that the fact and its interpretation are still readable.
+    sqlite_reference_integrity: If the selected SQLite schema uses foreign keys to protect mandatory evidence
+      associations, the provider must establish that the actual SQLite build supports enforcement and
+      enable and verify it on every participating connection before the relevant transaction begins, including
+      reopened, pooled and migration connections. SQLite documents that changing this setting inside a
+      multi-statement transaction has no effect. An unavailable or unverified enforcement mode cannot
+      be treated as a successful integrity guarantee. A migration or recovery that uses another protocol
+      must independently preserve and validate equivalent references before exposing claims; no assumption
+      is made that enabling enforcement retroactively repairs existing rows.
+    sqlite_keys_and_null: Represent mandatory confirmed identity, operation and evidence references so
+      that a missing component cannot satisfy an exact-identity or uniqueness claim. SQLite permits multiple
+      NULLs in UNIQUE constraints and can allow NULL in some PRIMARY KEY definitions; nullable composite
+      foreign keys also do not establish a parent when a component is NULL. Therefore a bare UNIQUE, PRIMARY
+      KEY or foreign key declaration with nullable components is insufficient for these mandatory bindings.
+      Use explicit non-null and consistency constraints or an independently verified equivalent. A source-supported
+      absent value remains distinct from a missing required record association; SQLite NULL or an omitted
+      row alone must not conflate those meanings. Do not infer semantic compatibility merely from two
+      references existing.
+    sqlite_value_integrity: A tagged value or absence representation must reject an invalid combination
+      of tag, value and required context before reporting a durable accepted fact. If SQLite is selected,
+      its CHECK expressions that evaluate to NULL do not fail, so their design must explicitly account
+      for NULL and that provider's type behavior. Preserve opaque identifier kind and value without lossy
+      numeric conversion, case folding or display-name substitution; validate source-specific range and
+      encoding before treating it as a confirmed identity. The exact types, tags and schema remain open
+      and must be validated against the selected provider and adapters.
+    compaction_eligibility: As an agent-authored initial rule, compaction may remove or replace redundant
+      physical evidence only when every retained claim depending on it remains recoverable with the same
+      supported meaning, identity, time, scope, coverage and disclosure lineage, and every potentially
+      replayable or unresolved operation retains enough binding and outcome evidence under 0103. A stored
+      raw payload or duplicate representation is not itself required if its independently validated replacement
+      preserves the required evidence; an original PR or Issue body selected for offline availability
+      remains subject to its own original-text retention contract rather than being replaced by a generated
+      summary. Equal values, timestamps or visible names alone do not establish equivalence. Do not expire
+      an eligible metric-history point solely due to age or silently evict it for capacity under 0066.
+      A shared context cannot be removed merely because one Project or one fact stopped using it while
+      another retained claim still depends on it.
+    compacted_operation_evidence: A terminal operation may retain a minimized binding and result instead
+      of a full payload only if that representation still distinguishes compatible redelivery, incompatible
+      reuse and its historical applied or terminal non-applied outcome, and cannot expose restricted data
+      through diagnostics. An indeterminate operation, potentially late effect or clear boundary cannot
+      be discarded or assumed resolved merely because it is old or its originating screen closed. If safe
+      equivalence, writer quiescence or a retention horizon cannot be established, preserve sufficient
+      evidence or return a local limitation; do not treat a later delivery as a new operation. This does
+      not assert that minimal evidence can always be represented without private data.
+    compaction_commit: Coordinate a replacement, all affected references and any removal in one verified
+      local consistency boundary, or specify an equivalent recoverable staged protocol under 0113 and
+      0122. A crash or failed commit cannot expose a claim with a dangling or substituted context; do
+      not declare the compaction completed until its outcome and the retained associations are independently
+      recoverable. An unknown commit result is reconciled under its own operation identity. If retained
+      evidence cannot be verified during recovery, downgrade the affected claim or show a storage limitation
+      rather than inventing a value, source absence or rollback. Apply current access and any history-clear
+      generation while evaluating and committing; compaction cannot reintroduce cleared history or override
+      a newer restriction.
+    history_boundary: Current-cache facts and historical retention have independently recoverable outcomes
+      even if physical storage is shared. If the optional all-history clear is included, history admission
+      preserves its clear boundary under 0067; the generation-based protocol in 0117 is one candidate
+      mechanism, and an old replay cannot re-create cleared history. Reconstructing an aggregate from
+      retained inputs requires the same predicate, subject, scope, time and access evidence as a directly
+      retained result. A current cache read is not itself a new historical sample.
+    access_and_migration: Reevaluate current disclosure before returning source-derived values, identities
+      or revealing aggregates to any presentation or handoff. A recovered old access context describes
+      provenance, not a fresh permission. Schema migration under 0122 must preserve each claim's identity
+      and interpretation associations and any applicable clear fence; where a required association cannot
+      be validated, return a limited or unavailable claim without attaching another context or deleting
+      unrelated Projects. Do not persist credentials or raw authorization responses as evidence.
+    single_fact_transaction_candidate: If the accompanying agent-authored SQLite direction is selected,
+      it defines one admitted cache or history fact effect with compatible subject, source context, tagged
+      value or supported absence, required evidence references, immutable operation binding and applicable
+      local fences. On a verified participating connection, validate these associations and commit the
+      selected fact effect and its operation outcome in one local transaction; other facts, coverage and
+      separately requested effects keep independent outcomes. Compatible replay returns the prior outcome
+      without a new source observation, incompatible binding conflicts and a lost commit acknowledgement
+      remains indeterminate until reconciled. Foreign-key existence alone does not establish semantic
+      scope compatibility. This bounded proposal is not a complete physical schema or verified provider
+      behavior.
+    verification: Before declaring the boundary implementation-ready, define physical encoding, constraints,
+      atomic write and read contracts, retention and compaction rules, migration and provider-specific
+      failure mapping. Plan deterministic TDD for same-ID replay, equal-value distinct observations, partial
+      writes, omitted versus empty fields, unordered conflicts, access change, coverage evidence loss
+      and clear races. Verify actual SQLite, interruption, restart, Keychain and source mappings separately;
+      this document does not establish any of those results.
+    provenance: Offline observations, metrics and testability follow owner direction. These record associations
+      and evidence states are agent-authored refinements and are not proof of a selected database wrapper
+      or implementation.
   scenarios:
     recovered_event_in_new_calendar_context:
-      given: A permitted PR's same-day merge match was previously derived from an independently recoverable merge instant, subject identity and observation context, together with a captured local-day interval. After restart the current time zone or local day has changed, while the same instant and permitted evidence are still recoverable and current lifecycle evidence is unavailable.
-      when: The ordinary Project route captures its new calendar context and reevaluates the PR without an active lifecycle filter.
-      then: GitView compares the original merge instant with the new interval rather than reusing yesterday's match or rewriting the event time. If that comparison is false, the open and creation alternatives are evaluated independently and the result is unknown when their applicable truth is not established; the PR is not automatically excluded or described as a new source observation. Population coverage retains its own recoverable context.
+      given: A permitted PR's same-day merge match was previously derived from an independently recoverable
+        merge instant, subject identity and observation context, together with a captured local-day interval.
+        After restart the current time zone or local day has changed, while the same instant and permitted
+        evidence are still recoverable and current lifecycle evidence is unavailable.
+      when: The ordinary Project route captures its new calendar context and reevaluates the PR without
+        an active lifecycle filter.
+      then: GitView compares the original merge instant with the new interval rather than reusing yesterday's
+        match or rewriting the event time. If that comparison is false, the open and creation alternatives
+        are evaluated independently and the result is unknown when their applicable truth is not established;
+        the PR is not automatically excluded or described as a new source observation. Population coverage
+        retains its own recoverable context.
     two_discovery_portions_recover_one_work_subject:
-      given: Two eligible portions return separately supported representations of one confirmed PR with independently attributed title at T1 and lifecycle at T2. Both identity associations are supported, but only the title, its required context and its retention outcome commit before interruption.
+      given: Two eligible portions return separately supported representations of one confirmed PR with
+        independently attributed title at T1 and lifecycle at T2. Both identity associations are supported,
+        but only the title, its required context and its retention outcome commit before interruption.
       when: The route recovers the local records after restart.
-      then: One confirmed work subject and the T1 title may be recovered if all their required identity and context evidence is readable. The T2 lifecycle is not claimed durable without its own recoverable effect and context; missing recent-work progress and population coverage remain independently limited, and the recovered title does not acquire T2.
+      then: One confirmed work subject and the T1 title may be recovered if all their required identity
+        and context evidence is readable. The T2 lifecycle is not claimed durable without its own recoverable
+        effect and context; missing recent-work progress and population coverage remain independently
+        limited, and the recovered title does not acquire T2.
     partial_record_missing_alias_evidence:
-      given: A retained work row and source alias value can be read, but evidence needed to establish their association is missing or inconsistent.
+      given: A retained work row and source alias value can be read, but evidence needed to establish
+        their association is missing or inconsistent.
       when: The app prepares a confirmed typed candidate for Today.
-      then: The local reference and matching display number do not establish the source identity; the affected representation or association remains unresolved and cannot become an extra confirmed card or exact count. Independently supported unrelated records remain available subject to disclosure.
+      then: The local reference and matching display number do not establish the source identity; the
+        affected representation or association remains unresolved and cannot become an extra confirmed
+        card or exact count. Independently supported unrelated records remain available subject to disclosure.
     rename_and_reuse_after_restart:
-      given: Projects P and Q reference the same confirmed Repository A by its local reference and source numeric ID; a work fact is bound to A with its own observation context. A later confirmed Repository B uses A's former address with a different numeric ID.
+      given: Projects P and Q reference the same confirmed Repository A by its local reference and source
+        numeric ID; a work fact is bound to A with its own observation context. A later confirmed Repository
+        B uses A's former address with a different numeric ID.
       when: The store is recovered after restart and both source identities are read successfully.
-      then: P and Q still reference A and the historical work fact retains A and its original context; B is distinct and receives neither A's membership nor its fact merely because of the shared old address. Current address and access are separately evaluated.
+      then: P and Q still reference A and the historical work fact retains A and its original context;
+        B is distinct and receives neither A's membership nor its fact merely because of the shared old
+        address. Current address and access are separately evaluated.
     alias_conflict_during_commit:
-      given: A Node ID is already durably associated with Repository A and a new attempted association would bind that same instance, identifier kind and value to different confirmed Repository B without source evidence reconciling them.
+      given: A Node ID is already durably associated with Repository A and a new attempted association
+        would bind that same instance, identifier kind and value to different confirmed Repository B without
+        source evidence reconciling them.
       when: The alias update reaches the coordinated commit boundary.
-      then: The conflict remains explicit and neither membership nor old observations are reassigned to B; the operation is not called applied unless its supported outcome is durably established.
+      then: The conflict remains explicit and neither membership nor old observations are reassigned to
+        B; the operation is not called applied unless its supported outcome is durably established.
     unavailable_alias_evidence_after_recovery:
-      given: A stored PR fact references Repository Node ID N and a local Repository reference, but after restart the evidence required to connect N to the stored numeric identity cannot be recovered.
+      given: A stored PR fact references Repository Node ID N and a local Repository reference, but after
+        restart the evidence required to connect N to the stored numeric identity cannot be recovered.
       when: The Project work selection is reconstructed.
-      then: That association and its dependent claim are limited or unknown instead of inferred from an old owner/name, while independently recoverable membership and unrelated observations retain their own context.
+      then: That association and its dependent claim are limited or unknown instead of inferred from an
+        old owner/name, while independently recoverable membership and unrelated observations retain their
+        own context.
     existing_but_wrong_observation_context:
-      given: After restart a retained title for PR A references a readable observation context that actually belongs to a different source attempt for PR B; their display numbers and timestamps happen to match. A separate CI fact for A and its own source context are independently readable and permitted.
+      given: After restart a retained title for PR A references a readable observation context that actually
+        belongs to a different source attempt for PR B; their display numbers and timestamps happen to
+        match. A separate CI fact for A and its own source context are independently readable and permitted.
       when: The route reconstructs A's overview under current access.
-      then: The title is not accepted as A's supported observation solely because its referenced context exists or its number and time match; the affected claim remains limited until its actual association is established. A's independent CI fact retains its own source and time context, and neither fact grants present access by itself.
+      then: The title is not accepted as A's supported observation solely because its referenced context
+        exists or its number and time match; the affected claim remains limited until its actual association
+        is established. A's independent CI fact retains its own source and time context, and neither fact
+        grants present access by itself.
     shared_context_still_referenced:
-      given: Two independently retained permitted facts reference the same immutable observation context, and only one fact becomes eligible for replacement.
+      given: Two independently retained permitted facts reference the same immutable observation context,
+        and only one fact becomes eligible for replacement.
       when: A compaction pass considers removing the original context.
-      then: It preserves the exact context required by the second fact or a verified equivalent association; the second fact does not inherit the replacement's time or become unreadable merely because the first changed.
+      then: It preserves the exact context required by the second fact or a verified equivalent association;
+        the second fact does not inherit the replacement's time or become unreadable merely because the
+        first changed.
     replay_after_receipt_compaction:
-      given: A confirmed applied local operation has a minimized retained receipt that preserves its immutable intent binding and outcome, and a compatible redelivery is still possible.
+      given: A confirmed applied local operation has a minimized retained receipt that preserves its immutable
+        intent binding and outcome, and a compatible redelivery is still possible.
       when: That operation is retried after restart.
-      then: Recovery identifies the same historical outcome without applying a second effect; an incompatible reuse remains a conflict rather than becoming a new operation.
+      then: Recovery identifies the same historical outcome without applying a second effect; an incompatible
+        reuse remains a conflict rather than becoming a new operation.
     interrupted_compaction:
-      given: A compaction operation is replacing retained context and its acknowledgement is lost before the effect and references are independently recoverable.
+      given: A compaction operation is replacing retained context and its acknowledgement is lost before
+        the effect and references are independently recoverable.
       when: A route asks for a dependent summary after restart.
-      then: The original or replacement evidence is used only if independently established, otherwise the affected result remains limited or unavailable; no zero, complete coverage or successful compaction is inferred from the missing acknowledgement.
+      then: The original or replacement evidence is used only if independently established, otherwise
+        the affected result remains limited or unavailable; no zero, complete coverage or successful compaction
+        is inferred from the missing acknowledgement.
     compact_then_history_clear:
-      given: A valid compacted evidence bundle still supports a history point and work from its original generation can be redelivered.
+      given: A valid compacted evidence bundle still supports a history point and work from its original
+        generation can be redelivered.
       when: A later history clear is confirmed and the earlier work is replayed.
-      then: The clear generation prevents reintroducing the history point and the compacted operation evidence does not turn the replay into a new observation.
+      then: The clear generation prevents reintroducing the history point and the compacted operation
+        evidence does not turn the replay into a new observation.
     reference_enforcement_unavailable:
-      given: A newly opened storage connection cannot establish that the foreign-key enforcement required by the selected schema is active.
+      given: A newly opened storage connection cannot establish that the foreign-key enforcement required
+        by the selected schema is active.
       when: A retention operation attempts to commit a fact with mandatory referenced evidence.
-      then: The boundary does not claim the schema's reference guarantee or report the fact durably accepted on that basis; it reports a local limitation or uses an independently verified equivalent protocol.
+      then: The boundary does not claim the schema's reference guarantee or report the fact durably accepted
+        on that basis; it reports a local limitation or uses an independently verified equivalent protocol.
     null_in_composite_identity:
-      given: A proposed retained source-object record is missing one mandatory component of its composite identity, even though a SQLite UNIQUE or foreign-key declaration would permit NULL in that position.
+      given: A proposed retained source-object record is missing one mandatory component of its composite
+        identity, even though a SQLite UNIQUE or foreign-key declaration would permit NULL in that position.
       when: The boundary evaluates it for a confirmed object or distinct count.
-      then: The incomplete identity is not admitted as confirmed and no second or matching object is inferred solely from the partial key; its limitation remains explicit.
+      then: The incomplete identity is not admitted as confirmed and no second or matching object is inferred
+        solely from the partial key; its limitation remains explicit.
     missing_tagged_value:
-      given: A retention attempt claims a known numeric value but its value payload is absent, and a schema CHECK expression alone would evaluate to NULL.
+      given: A retention attempt claims a known numeric value but its value payload is absent, and a schema
+        CHECK expression alone would evaluate to NULL.
       when: The boundary validates and attempts to retain the observation.
-      then: It does not accept the malformed combination as zero or source-supported absence; any prior independently recoverable fact retains its own context and the new local outcome is not reported as a valid applied fact.
+      then: It does not accept the malformed combination as zero or source-supported absence; any prior
+        independently recoverable fact retains its own context and the new local outcome is not reported
+        as a valid applied fact.
     shared_context_without_relabeling:
-      given: A permitted PR title and CI result are retained with separately identified observations at T2 and T1 respectively, and both refer to the same confirmed PR.
+      given: A permitted PR title and CI result are retained with separately identified observations at
+        T2 and T1 respectively, and both refer to the same confirmed PR.
       when: The local boundary recovers them for Today and summary.
-      then: Title keeps T2 and CI keeps T1; their shared object identity does not make CI current at T2 or establish a simultaneous source snapshot.
+      then: Title keeps T2 and CI keeps T1; their shared object identity does not make CI current at T2
+        or establish a simultaneous source snapshot.
     null_page_gap_record_lost:
-      given: A terminal PR page had one supported PR and a null node under 0116. The PR fact and its necessary subject and context and the terminal progress record were durably retained, but no gap record or equivalent complete-population evidence is recoverable after restart.
+      given: A terminal PR page had one supported PR and a null node under 0116. The PR fact and its necessary
+        subject and context and the terminal progress record were durably retained, but no gap record
+        or equivalent complete-population evidence is recoverable after restart.
       when: Today is assembled from the local read without a new source response.
-      then: The eligible PR can retain its actual observation context, while terminal progress cannot prove a complete PR population or identify the missing node. The visible safe limitation does not assert a known GitHub error, empty result or number of missing matches; an independently eligible fresh repair uses a new attempt context.
+      then: The eligible PR can retain its actual observation context, while terminal progress cannot
+        prove a complete PR population or identify the missing node. The visible safe limitation does
+        not assert a known GitHub error, empty result or number of missing matches; an independently eligible
+        fresh repair uses a new attempt context.
     lost_coverage_evidence:
-      given: A numeric Project aggregate and its metric context are readable but evidence needed to establish one member's coverage is unavailable after recovery.
+      given: A numeric Project aggregate and its metric context are readable but evidence needed to establish
+        one member's coverage is unavailable after recovery.
       when: The summary requests a complete Project measurement.
-      then: The aggregate cannot be reported as complete solely because the number is readable; independently supported permitted values retain their own context and the affected coverage remains limited or unknown.
+      then: The aggregate cannot be reported as complete solely because the number is readable; independently
+        supported permitted values retain their own context and the affected coverage remains limited
+        or unknown.
     empty_versus_missing:
-      given: A complete supported observation establishes an Issue assignee collection is empty, while a later attempt does not request that field.
+      given: A complete supported observation establishes an Issue assignee collection is empty, while
+        a later attempt does not request that field.
       when: The earlier evidence and later attempt are recovered.
-      then: The earlier empty collection retains its supported time and scope, and the later omission neither deletes it nor gives it a new observation time.
+      then: The earlier empty collection retains its supported time and scope, and the later omission
+        neither deletes it nor gives it a new observation time.
     restricted_old_evidence:
-      given: A private Repository's old evidence remains readable in local storage after an applicable access denial.
-      when: The route requests a summary or candidate input.
-      then: Restricted source details and revealing values are not exposed as current presentation; the earlier record does not renew access or establish an empty Repository.
+      given: A private Repository's old evidence remains readable in local storage after an applicable
+        access denial.
+      when: Repository revocation is confirmed and the route requests a summary or candidate input.
+      then: Previously saved supported local details remain available as last known under 0019 with their
+        actual context, supported time when known and revocation indication. Do not invent an unknown
+        time or present incomplete evidence as a verified current value. The old record does not renew
+        GitHub access or prove an empty Repository.
     old_history_generation:
-      given: A source observation began under an earlier history generation and a clear was durably confirmed before its retention replay.
+      given: A source observation began under an earlier history generation and a clear was durably confirmed
+        before its retention replay.
       when: The replay reaches historical admission after restart.
-      then: It cannot be retagged as post-clear work or recreate the cleared history, while any independently permitted current-cache treatment follows its own rules.
+      then: It cannot be retagged as post-clear work or recreate the cleared history, while any independently
+        permitted current-cache treatment follows its own rules.
   unresolved:
-  - Select physical schema, identifier encoding, evidence-reference constraints, provider and migration paths without losing these associations.
-  - Define bounded retention, compaction and privacy-safe lineage for aggregate and operation evidence, including unresolved late delivery.
-  - Verify actual source fields, storage failure and restart behavior and real platform protection separately; no product implementation or TDD cycle has run.
+  - Select physical schema, identifier encoding, evidence-reference constraints, provider and migration
+    paths without losing these associations.
+  - Define bounded retention, compaction and privacy-safe lineage for aggregate and operation evidence,
+    including unresolved late delivery.
+  - Verify actual source fields, storage failure and restart behavior and real platform protection separately;
+    no product implementation or TDD cycle has run.

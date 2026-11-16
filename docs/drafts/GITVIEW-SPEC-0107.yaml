@@ -29,13 +29,18 @@ sources:
   fsd_observed_revision: 21731b9dd7d5008b832af5caca6d19f7a36fe54f
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- The Project work route, domain facts and storage or source effects have assigned initial owners with dependencies directed down the inspected FSD layers.
-- Product-specific relationships and policies do not move into generic shared infrastructure to evade sibling-slice restrictions.
-- A pure selection receives Project, observation, access and time facts without acquiring credentials, performing I-O or deciding navigation.
+- The Project work route, domain facts and storage or source effects have assigned initial owners with
+  dependencies directed down the inspected FSD layers.
+- Product-specific relationships and policies do not move into generic shared infrastructure to evade
+  sibling-slice restrictions.
+- A pure selection receives Project, observation, access and time facts without acquiring credentials,
+  performing I-O or deciding navigation.
 - Source and local retention outcomes remain independently observable through the composed route.
-- DI and TDD scenarios replace network, storage, clock and access outcomes; real adapters and platform behavior require separate verification.
+- DI and TDD scenarios replace network, storage, clock and access outcomes; real adapters and platform
+  behavior require separate verification.
 specification:
-  objective: Select an initial FSD-compatible responsibility partition for the Project to Today route and the local data model without writing product code.
+  objective: Select an initial FSD-compatible responsibility partition for the Project to Today route
+    and the local data model without writing product code.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -44,38 +49,111 @@ specification:
   - gitview:Issue
   - gitview:Metric
   contract:
-    decision: As an agent-authored initial partition, place cohesive Project-work facts and rules in one business-oriented entity slice provisionally named project-work; let a route-level Project work page compose its selection and refresh interaction; app startup supplies configured capabilities. This is a code organization boundary, not a new ontology entity, a claim that all product entities are the same thing, or a requirement for a separate Swift package. The provisional name and directory spelling can change without changing responsibilities.
-    domain_ownership: The cohesive project-work domain owns the typed meanings needed together for the route, including local Project membership and, if selected, default associations, Repository and PR or Issue identities, observation and coverage context, and appropriate named policies. Project configuration and observation retention keep separate contracts; 0104 is a configuration candidate and 0105 addresses observations. A single slice does not imply one mutable object, one storage transaction, one source query or identical access. A split into sibling domain slices is allowed only after a reviewed higher-layer composition eliminates direct sibling dependencies without relocating product policy into shared.
-    data_adapters: Domain-aware Project configuration and observation mappings live with or below the domain public boundary and can use generic storage facilities from shared. GitHub response normalization is a domain-aware mapping using injected generic transport and 0101. The concrete implementation of source, local storage and clock capabilities is supplied from the composition root; nothing in shared imports Project, Repository, PR or Issue types. Adapter placement must follow actual FSD dependency checks rather than relying only on the folder name.
-    feature_and_page: The Project work page owns its route-specific Project identity, Repository scope, Today or selected period, filters, density, anchor and origin under 0096. It composes a bounded refresh action and the selected domain decision. If refresh is extracted as a feature, it depends on the domain public contract and injected capabilities; it does not import an edit-project, authentication or selection sibling feature. An edit-project action similarly depends on the Project boundary, and the page or app composes the actions without making them depend on each other. Route-only behavior may remain in the page until extraction is justified by FSD rules.
-    auth_and_privacy: An authentication or connection responsibility supplies a usable access-scoped source capability through the higher composition, not through a direct sibling-feature import. The page and pure policies receive applicable access outcomes and facts, not raw token values. A source operation remains bound to its initiating identity and scope; a late response does not override a current denial. If the proposed GitHub App direction is selected, its secure-store and callback candidates are described under 0098; any chosen flow requires its own applicable security and recovery contract and verification.
-    data_flow: The page requests the applicable saved Project configuration through a supported local boundary and permitted source observations through 0105; 0104 proposes one configuration boundary. Whichever boundary is selected must establish current Project identity and membership and distinguish unreadable or uncertain state. For each eligible confirmed-identity candidate the page prepares scoped facts, evidence references, active filters and captured clock or calendar context for the named pure Today decision, which returns that candidate's match, non-match or unknown. The route or another higher-level collection assembler separately combines these outcomes with the applicable population coverage, intentional-filter-empty state and source or storage limitations under 0102 and 0110. A per-candidate result does not return or establish collection coverage. Opening the route may read local storage and, when the scope is stale and conditions permit, request a bounded refresh under 0048; those effects are owned by the route or its composed capabilities, not by the decision. Filtering does not mutate GitHub or cause a source mutation. A source refresh and its separately coordinated local retention may occur without changing this pure boundary.
-    refresh_and_retention: The refresh action receives a captured source, Repository and category scope and uses injected source and retention capabilities. It distinguishes source response, accepted mapped facts, durable outcome, history retention and completeness under 0102 and 0105. The page reevaluates against its current membership, access and filters when results arrive; an older request never acquires a new scope merely because navigation or membership changed. History-clear generation remains enforced by its storage boundary under 0106, not implemented by the view.
-    decisions_and_testing: Use SpecificationCore for a suitable stable named Today or coverage policy where its eventual supported API preserves all required outcomes; domain unknown is not silently mapped to a library no-match. Under 0040, write failing externally meaningful tests first, then implement and refactor. Inject deterministic source, storage, clock and authorization outcomes; test the route's composition separately from pure policy tests and actual GitHub, persistent restart and native accessibility. No library version or actual API compatibility is asserted here.
-    extraction_and_change: Start with the smallest organization that honors these ownership and dependency rules. Extract individual slices or packages only for a concrete responsibility or reuse, and recheck types, public interfaces and dependency direction; do not introduce empty widgets, generic service locators or ontology classes to satisfy a diagram. The cohesive first partition is revisable if it proves too broad, but a replacement must retain the same source, access, uncertainty and transaction boundaries.
-    provenance: FSD iOS, SpecificationCore, DI and TDD are owner choices. This concrete first partition is an agent-authored proposal based on the locally inspected FSD rules at the recorded revision; no actual module, adapter, linter result or application exists as a result of this document.
+    decision: As an agent-authored initial partition, place cohesive Project-work facts and rules in one
+      business-oriented entity slice provisionally named project-work; let a route-level Project work
+      page compose its selection and refresh interaction; app startup supplies configured capabilities.
+      This is a code organization boundary, not a new ontology entity, a claim that all product entities
+      are the same thing, or a requirement for a separate Swift package. The provisional name and directory
+      spelling can change without changing responsibilities.
+    domain_ownership: The cohesive project-work domain owns the typed meanings needed together for the
+      route, including local Project membership and, if selected, default associations, Repository and
+      PR or Issue identities, observation and coverage context, and appropriate named policies. Project
+      configuration and observation retention keep separate contracts; 0104 is a configuration candidate
+      and 0105 addresses observations. A single slice does not imply one mutable object, one storage transaction,
+      one source query or identical access. A split into sibling domain slices is allowed only after a
+      reviewed higher-layer composition eliminates direct sibling dependencies without relocating product
+      policy into shared.
+    data_adapters: Domain-aware Project configuration and observation mappings live with or below the
+      domain public boundary and can use generic storage facilities from shared. GitHub response normalization
+      is a domain-aware mapping using injected generic transport and 0101. The concrete implementation
+      of source, local storage and clock capabilities is supplied from the composition root; nothing in
+      shared imports Project, Repository, PR or Issue types. Adapter placement must follow actual FSD
+      dependency checks rather than relying only on the folder name.
+    feature_and_page: The Project work page owns its route-specific Project identity, Repository scope,
+      Today or selected period, filters, density, anchor and origin under 0096. It composes a bounded
+      refresh action and the selected domain decision. If refresh is extracted as a feature, it depends
+      on the domain public contract and injected capabilities; it does not import an edit-project, authentication
+      or selection sibling feature. An edit-project action similarly depends on the Project boundary,
+      and the page or app composes the actions without making them depend on each other. Route-only behavior
+      may remain in the page until extraction is justified by FSD rules.
+    auth_and_privacy: An authentication or connection responsibility supplies a usable access-scoped source
+      capability through the higher composition, not through a direct sibling-feature import. The page
+      and pure policies receive applicable access outcomes and facts, not raw token values. A source operation
+      remains bound to its initiating identity and scope; a late response does not override a current
+      denial. If the proposed GitHub App direction is selected, its secure-store and callback candidates
+      are described under 0098; any chosen flow requires its own applicable security and recovery contract
+      and verification.
+    data_flow: The page requests the applicable saved Project configuration through a supported local
+      boundary and permitted source observations through 0105; 0104 proposes one configuration boundary.
+      Whichever boundary is selected must establish current Project identity and membership and distinguish
+      unreadable or uncertain state. For each eligible confirmed-identity candidate the page prepares
+      scoped facts, evidence references, active filters and captured clock or calendar context for the
+      named pure Today decision, which returns that candidate's match, non-match or unknown. The route
+      or another higher-level collection assembler separately combines these outcomes with the applicable
+      population coverage, intentional-filter-empty state and source or storage limitations under 0102
+      and 0110. A per-candidate result does not return or establish collection coverage. Opening the route
+      may read local storage and, when the scope is stale and conditions permit, request a bounded refresh
+      under 0048; those effects are owned by the route or its composed capabilities, not by the decision.
+      Filtering does not mutate GitHub or cause a source mutation. A source refresh and its separately
+      coordinated local retention may occur without changing this pure boundary.
+    refresh_and_retention: The refresh action receives a captured source, Repository and category scope
+      and uses injected source and retention capabilities. It distinguishes source response, accepted
+      mapped facts, durable outcome, history retention and completeness under 0102 and 0105. The page
+      reevaluates against its current membership, access and filters when results arrive; an older request
+      never acquires a new scope merely because navigation or membership changed. History-clear generation
+      remains enforced by its storage boundary under 0106, not implemented by the view.
+    decisions_and_testing: Use SpecificationCore for a suitable stable named Today or coverage policy
+      where its eventual supported API preserves all required outcomes; domain unknown is not silently
+      mapped to a library no-match. Under 0040, write failing externally meaningful tests first, then
+      implement and refactor. Inject deterministic source, storage, clock and authorization outcomes;
+      test the route's composition separately from pure policy tests and actual GitHub, persistent restart
+      and native accessibility. No library version or actual API compatibility is asserted here.
+    extraction_and_change: Start with the smallest organization that honors these ownership and dependency
+      rules. Extract individual slices or packages only for a concrete responsibility or reuse, and recheck
+      types, public interfaces and dependency direction; do not introduce empty widgets, generic service
+      locators or ontology classes to satisfy a diagram. The cohesive first partition is revisable if
+      it proves too broad, but a replacement must retain the same source, access, uncertainty and transaction
+      boundaries.
+    provenance: FSD iOS, SpecificationCore, DI and TDD are owner choices. This concrete first partition
+      is an agent-authored proposal based on the locally inspected FSD rules at the recorded revision;
+      no actual module, adapter, linter result or application exists as a result of this document.
   scenarios:
     two_actions_without_sibling_import:
-      given: A Project work page offers a membership edit and a source refresh, both requiring Project facts.
+      given: A Project work page offers a membership edit and a source refresh, both requiring Project
+        facts.
       when: The actions are separated for reuse.
-      then: Each uses the applicable domain boundary and injected capabilities, while the page composes them without either feature directly importing its sibling.
+      then: Each uses the applicable domain boundary and injected capabilities, while the page composes
+        them without either feature directly importing its sibling.
     partial_refresh_and_edit:
-      given: A refresh starts for Project members A and B, then an independently confirmed edit replaces B with C before the response returns.
+      given: A refresh starts for Project members A and B, then an independently confirmed edit replaces
+        B with C before the response returns.
       when: The page recomputes its selection using the completed refresh and current Project boundary.
-      then: The earlier result stays scoped to A and B; the current A and C selection retains its filters and reports C's unsupported coverage without the refresh feature importing the edit feature.
+      then: The earlier result stays scoped to A and B; the current A and C selection retains its filters
+        and reports C's unsupported coverage without the refresh feature importing the edit feature.
     source_success_local_failure:
-      given: Injected source mapping yields a permitted PR update but the observation boundary cannot confirm durable retention.
+      given: Injected source mapping yields a permitted PR update but the observation boundary cannot
+        confirm durable retention.
       when: The route receives both outcomes.
-      then: The permitted update may be shown with its source context while local retention remains separately limited; a pure selection policy does not claim or perform the write.
+      then: The permitted update may be shown with its source context while local retention remains separately
+        limited; a pure selection policy does not claim or perform the write.
     stale_open_with_saved_content:
-      given: A permitted Project has saved observations whose scope is considered stale, and injected local read and refresh capabilities are available.
+      given: A permitted Project has saved observations whose scope is considered stale, and injected
+        local read and refresh capabilities are available.
       when: Its work route opens under conditions that permit a bounded refresh.
-      then: The route may read and display the saved content and request refresh while preserving the observations' original context; the pure selection receives prepared inputs and performs neither I-O nor GitHub mutation.
+      then: The route may read and display the saved content and request refresh while preserving the
+        observations' original context; the pure selection receives prepared inputs and performs neither
+        I-O nor GitHub mutation.
     denied_after_request:
-      given: A source request begins while a private PR is permitted, and explicit denial is established before its response arrives.
-      when: The composed route processes the response.
-      then: The initiating scope and current denial remain distinct, restricted identity and revealing counts are not exposed, and the late response does not restore access.
+      given: A source request begins while a private PR is permitted, and explicit denial is established
+        before its response arrives.
+      when: Private Repository revocation is confirmed before the earlier response arrives and the route
+        processes it.
+      then: Any already saved PR identity and supported local counts remain available with the revocation
+        indication and supported time when known under 0019. Do not invent a PR, count or timestamp that
+        was not saved. The late response is not accepted as fresh or proof of restored access.
   unresolved:
-  - Evaluate the cohesion of the proposed project-work slice against the completed graph and real source, storage and policy implementations; the proposed partition is not proof of a complete app module design.
-  - Select actual Swift dependency interfaces, concurrency and lifecycle ownership after confirming supported versions of FSD references and SpecificationCore.
+  - Evaluate the cohesion of the proposed project-work slice against the completed graph and real source,
+    storage and policy implementations; the proposed partition is not proof of a complete app module design.
+  - Select actual Swift dependency interfaces, concurrency and lifecycle ownership after confirming supported
+    versions of FSD references and SpecificationCore.
   - No product code, architecture lint, TDD cycle, GitHub integration or native behavior has been executed.
