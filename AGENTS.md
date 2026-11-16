@@ -10,7 +10,8 @@ for governed specification artifacts.
 Use the project-local skill
 `.codex/skills/specgraph-conversation-notes/SKILL.md` when discussing product
 or design ideas. The local runtime installed for this pilot is
-`/Users/egor/.local/share/specgraph/runtime-3593bd75/specgraph-runtime`.
+`/Users/egor/.local/share/specgraph/runtime-3a7f176a/specgraph-runtime`
+(SpecGraph v0.2.0, commit `3a7f176a5524569f46a048a3fa673a1663304142`).
 For its standalone `specgraph` CLI, use the executable in the same installation
 at `venv/bin/specgraph`, or invoke the runtime's `draft` subcommand. If that
 installation is unavailable, report it and choose or install a compatible
@@ -36,10 +37,22 @@ Other sketches and local `runs/` remain excluded from this repository.
 
 For a single YAML proposal under `docs/drafts/`, use the read-only candidate
 check directly in this workspace:
-`/Users/egor/.local/share/specgraph/runtime-3593bd75/specgraph-runtime --workspace "$PWD" next-move -- --candidate-file docs/drafts/GITVIEW-SPEC-0004.yaml`.
+`/Users/egor/.local/share/specgraph/runtime-3a7f176a/specgraph-runtime --workspace "$PWD" next-move -- --candidate-file docs/drafts/GITVIEW-SPEC-0004.yaml`.
 The report checks YAML mapping, spec kind and filename/ID consistency; it does
 not validate ontology, dependencies, acceptance or maturity and does not
 materialize the draft into `specs/nodes/`.
+
+Lint specification YAML with the installed runtime, passing explicit
+workspace-relative paths. For all current canonical nodes from the project root:
+
+```sh
+/Users/egor/.local/share/specgraph/runtime-3a7f176a/specgraph-runtime \
+  --workspace "$PWD" lint -- specs/nodes/*.yaml
+```
+
+For an individual draft, pass its `docs/drafts/...yaml` path instead. Inspect
+the JSON `status` and per-file `issues`; lint checks YAML and canonical
+formatting, not semantic review, ontology approval or implementation readiness.
 
 ## Independent specification review
 
