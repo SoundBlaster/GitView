@@ -1,0 +1,80 @@
+id: GITVIEW-SPEC-0072
+title: GitView - Project overview order and position
+kind: spec
+created_at: '2026-11-16T11:18:00Z'
+updated_at: '2026-11-16T11:18:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0047
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0073
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0072.yaml
+  ux_direction: docs/drafts/ux-zoom-levels-proposal.md
+specification:
+  objective: Keep Projects identifiable and the overview position understandable across updates and navigation.
+  authority_boundary: Project overview and identity-preserving navigation are selected. Stable relative
+    order across ordinary refresh and density changes is an agent-authored refinement; initial sort, insertion
+    order, manual ordering and cross-device synchronization are not selected.
+  requirements:
+    identity: Represent each supported saved Project by its identity, not a Repository name or cell position.
+      A source refresh, Repository rename or membership edit does not by itself create a different Project.
+      An unknown setup result does not itself prove that a Project was saved.
+    continuity: Ordinary source refresh or density changes do not themselves reorder existing Projects;
+      changing counts is not automatically an urgency sort. Adding or removing a Project does not duplicate
+      or reidentify others. This does not establish an initial sort rule.
+    return_position: On return from a Project, maintain its identity as a position or focus anchor when
+      present and available under 0024 and 0073. The same Project may occupy a different cell or viewport
+      coordinate after reflow.
+    missing_anchor: If an anchor is unavailable, preserve the actual context and use a supported fallback
+      without presenting a different Project as the original. An incomplete collection read does not prove
+      the missing Project was deleted or that a proposed fallback is its definitive successor.
+    ordering_unavailable: If Projects are readable but ordering information is unavailable or inconsistent,
+      preserve access to supported Projects and make the ordering limitation discoverable. Do not claim
+      the earlier order was restored or infer an empty collection solely from missing order information.
+      The fallback ordering rule remains open.
+    interaction: Preserve a coherent active gesture or accessible interaction where feasible as the collection
+      changes. The exact native transition and timing remain open under 0073.
+    revoked_private: On GitHub-confirmed access revocation for a private Repository for the relevant account,
+      previously saved Project name and supported Repository data remain visible and accessible as last
+      known with indication and supported update time when known under 0019; do not defer that indication
+      until a gesture or reordering finishes. Synchronization of the affected Repository stops while revocation
+      applies; a late response cannot silently restore access or become a newly accepted update. Other
+      independently eligible Repositories may continue synchronizing.
+  scenarios:
+    refresh_on_return: Projects P, Q and R are in an overview; Q is opened. R's attention count changes
+      on refresh. Returning retains Q as anchor where available and does not reorder Projects merely because
+      R's count changed.
+    partial_read: Q was opened from the overview, but only P is readable when returning and the collection
+      read is incomplete. P may be navigable, while Q is not declared deleted or replaced by P; the limitation
+      and recovery remain discoverable.
+    revoked_during_gesture: A saved Project name derived from a private Repository is visible during a
+      gesture when revocation is confirmed. Keep the name available with indication and supported time
+      when known without claiming restored source access.
+    shared_repository: Projects P and Q share private Repository R. A valid edit of P's membership does
+      not reidentify or delete Q; if GitHub confirms revocation of access to R for the relevant account,
+      the affected saved R data stays visible as last known and both Projects retain their own identities,
+      while other eligible Repositories may continue synchronizing.
+  open_questions:
+  - Initial order, deterministic fallback policy, user-controlled sorting and cross-device ordering.
+  - Platform-specific layout, focus and transition behavior.
+  - Account-change disclosure outside confirmed private Repository revocation.
+  ontology_status: Project and Repository use working draft vocabulary; position and ordering are interface
+    concepts, not new domain entities.
+acceptance:
+- Existing Projects retain supported identity and stable relative order through ordinary refresh or density
+  changes.
+- Returning to a present Project restores a meaningful identity anchor without treating its old position
+  as identity.
+- A missing anchor or unavailable order is communicated without fabricating deletion or substituting another
+  Project.
+- Saved Project and affected Repository details remain visible as last known after GitHub-confirmed private
+  Repository revocation for the relevant account with indication and supported update time when known;
+  synchronization stops while revocation applies.
+- Overview navigation and its limitations remain accessible without depending only on gesture or color.
