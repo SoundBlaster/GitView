@@ -14,6 +14,6 @@
 
 ## Полный снимок и история
 
-Полный текст 71 исходного YAML с manifest доступен в `graph.md` на TB5: `/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/whole-product-graph-f36727a9/graph.md`. SHA-256: `6b824d183ff6551ffaeb1147bf9eb6dc8fc2faf12d4023f49547ef315ea38b95`. Все 71 блока сверены с Git blobs. Это YAML в Markdown, а не экспорт SpecSpace/HyperPrompt.
+[Полный снимок графа](../released/full.md) содержит текст 71 исходного YAML на ревизии `f36727a`. SHA-256: `6b824d183ff6551ffaeb1147bf9eb6dc8fc2faf12d4023f49547ef315ea38b95`. Все 71 блока сверены с Git blobs. Это YAML в Markdown, а не экспорт SpecSpace/HyperPrompt; снимок не обновляется автоматически при изменении графа.
 
 Дословные цитаты разговора сохранены в Git-tracked SpecDraft; revision `4b8c72a2b9c7445dacaad8d4ae7e0388`, полная история 167 ревизий проверена и в рабочем каталоге, и в свежей локальной Git-копии. Заметки остаются `canonical: false` и не являются утверждением владельцем всей спецификации.
