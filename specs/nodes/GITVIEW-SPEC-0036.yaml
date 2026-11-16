@@ -1,0 +1,77 @@
+id: GITVIEW-SPEC-0036
+title: GitView - Connection state and stored observations
+kind: spec
+created_at: '2026-11-16T07:13:00Z'
+updated_at: '2026-11-16T07:13:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0019
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0003
+- GITVIEW-SPEC-0023
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0036.yaml
+  predecessor_revision: fef38bd
+  visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
+specification:
+  objective: Help the operator understand connection problems while retaining access to information already
+    saved locally.
+  authority_boundary: This node describes product outcomes and does not choose an authorization mechanism,
+    account model, credential storage, source error mapping, exact native presentation or cross-account
+    disclosure policy. It does not claim source access or implementation readiness.
+  requirements:
+    distinguish: Distinguish a temporary network failure, a connection or credential problem, an explicitly
+      confirmed Repository access revocation and an intentional disconnect when supported by evidence.
+      A 404 or generic network failure alone does not prove deletion or revocation, and an uncertain cause
+      is not presented as confirmed.
+    last_known: Keep available previously saved local observations accessible with their supported scope
+      and observation time when known, and make the relevant connection limitation discoverable. Locally
+      readable data is not itself evidence of a current GitHub grant or a successful new refresh.
+    revoked: On confirmed GitHub access revocation for a private Repository, retain and show its saved
+      local data with the revocation indication and supported last update time when known under 0019;
+      stop synchronization for that Repository while revocation applies. Do not accept an earlier in-flight
+      response as a fresh successful update merely because it arrives later.
+    operator_control: Retain a discoverable route to understand the connection problem, pursue recovery
+      or intentionally delete local data under 0019. Recovery does not guarantee the source grants access,
+      and local deletion does not assert deletion of GitHub objects.
+    disconnect: An intentional local disconnect stops new refresh for the affected connection and preserves
+      access to already saved local information. Indicate an unresolved credential-removal outcome when
+      known; do not equate a local disconnect with source deletion or provider-side revocation.
+    isolation: Keep observation and operation context attributable to the account and Repository that
+      produced it. A changed identity or later connection does not automatically establish access to previous
+      source data; detailed account isolation and disclosure remain open. Confirmed GitHub revocation
+      alone does not hide an available saved local card from the operator under 0019.
+    accessibility: Make the applicable connection limitation and available recovery or local action discoverable
+      without relying only on color or a transient notice.
+  scenarios:
+    offline: A Repository has saved observations and a refresh fails because the network is unavailable.
+      Show available last-known information with its supported time and an applicable failure; do not
+      assert a new source denial or empty Repository.
+    revoked: GitHub explicitly confirms revocation for a private Repository with saved observations. Keep
+      those observations visible with the revoked indication and supported time when known; stop synchronization
+      and keep the local recovery or deletion entry point available.
+    disconnect: The operator intentionally disconnects an account. Stop new refresh for that connection,
+      retain access to already saved local information and do not report uncertain credential removal
+      as completed.
+    unknown_time: Saved local data remains available after revocation but its update time is not reliably
+      known. Do not invent a time or hide the data solely for that reason.
+  open_questions:
+  - Source evidence sufficient to establish Repository revocation and restore access; behavior when evidence
+    is unavailable after interruption.
+  - Account identity, cross-account isolation, credential lifecycle and exact disconnect recovery flow.
+  - Native presentation and supported recovery controls for each connection state.
+  ontology_status: Repository and User use working draft vocabulary; connection and observation states
+    are product behavior rather than newly asserted domain entities.
+acceptance:
+- A temporary failure is not presented as a confirmed Repository deletion, revocation, empty result or
+  successful refresh without supporting evidence.
+- Previously saved local observations remain accessible with supported time when known and a discoverable
+  connection limitation; local visibility does not establish live GitHub access.
+- Confirmed private Repository revocation preserves saved local data with its indication and supported
+  time when known, stops synchronization and retains recovery or explicit local deletion access under
+  0019.
+- An intentional disconnect stops new refresh without silently deleting saved local information or claiming
+  that GitHub objects were deleted.
+- Connection problems and applicable recovery paths are available without relying solely on color or transient
+  feedback.
