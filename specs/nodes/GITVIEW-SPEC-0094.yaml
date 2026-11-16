@@ -26,67 +26,50 @@ specification:
   - gitview:PullRequest
   - gitview:ReviewThread
   - gitview:Metric
-  objective: Preserve the product need to find lengthy review discussions while keeping the signal's exact
-    meaning and evidence open for refinement.
-  authority_boundary: The owner requested visibility of problematic long threads and counters rather than
-    individual thread content. The meaning of long, threshold, source mapping, placement and whether the
-    24-hour comment-age candidate in the predecessor is useful are not selected. This node does not claim
-    that the need is satisfied or that a source or native implementation has been verified.
+  objective: Help the operator notice review discussions that may need attention, including threads waiting
+    a long time for a response, without leaving the work overview.
+  authority_boundary: The owner requested visibility of long or problematic review threads and selected
+    counters rather than individual thread content. What makes a discussion long or problematic, its threshold,
+    source mapping and native presentation remain open; no specific signal or threshold is selected.
   requirements:
-    product_need: Provide an interpretable way to notice lengthy review discussions when a separately
-      defined signal and sufficient source evidence are available. Lack of a chosen definition remains
-      a product gap, not evidence that no lengthy discussion exists.
-    meaning: A selected signal must identify the actual measured condition, reference time when relevant,
-      scope, unit and applicable coverage. Comment age, time since last activity, thread creation age,
-      duration continuously unresolved and discussion size are distinct possible meanings; do not present
-      one as another without evidence. No particular one or numeric threshold is selected here.
-    state: Preserve the supported PR and thread state and their observation context separately from any
-      age or size observation. Time passing alone does not prove that a thread remained unresolved or
-      a PR remained open since its last observation.
-    evidence: A supported positive observation can remain meaningful with explicitly incomplete coverage,
-      while absence from a partial or unavailable collection does not establish a negative, zero or exact
-      total. A comment timestamp alone does not establish a thread creation time or continuous unresolved
-      duration. Current applicability and conflicting observations follow 0044 and 0089.
-    units: If counts are presented, distinguish qualifying threads from distinct affected PRs under 0062
-      and 0057. Multiple threads for one PR do not create multiple PRs or independent tasks.
-    navigation: An actionable signal opens the corresponding supported PR selection with its actual Project
-      or Repository scope, condition, reference time where applicable and coverage under 0047 and 0092.
-      A later selection keeps its own observation context and is not asserted identical to an earlier
-      signal merely because their counts match.
-    interpretation: Age or discussion size alone does not establish who should act, a requested change,
-      review approval, CI outcome, source merge eligibility or actor motive. Individual thread text or
-      a full thread reader is not required by the selected counter-oriented direction.
-    saved_data: Confirmed GitHub revocation of private Repository access for the relevant account does
-      not hide supported saved local review information under 0019. Show it as last known with indication
-      and supported update time when known, stop synchronization and do not present it as fresh evidence.
-      Other account-change and external-sharing policies remain open.
-    accessibility: A supported signal's meaning, limitations and available navigation are discoverable
-      without relying only on color or transient feedback.
+    attention: Make it possible to notice a lengthy or problematic review discussion, including a thread
+      that has waited a long time for a response, when its meaning has been defined and the necessary
+      information is available. Until then, keep the product need open rather than presenting a guessed
+      signal as an established fact.
+    interpretation: Describe the actual meaning and scope of an available signal so the operator can understand
+      why it needs attention. Unknown or incomplete information is not presented as proof that no discussion
+      needs attention.
+    counts: If counts are shown, distinguish the number of qualifying review threads from the number of
+      affected PRs; several threads on one PR do not make several PRs. Individual thread content is not
+      required in GitView.
+    navigation: An actionable signal leads to the corresponding work in its Project or Repository context,
+      with any applicable limitation. The operator can reach the original GitHub object.
+    saved_data: After GitHub confirms private Repository access revocation, keep saved review information
+      visible as last known with its revocation indication and supported update time when known; stop
+      synchronization and preserve access recovery or explicit local deletion under 0019.
+    accessibility: Make the signal meaning, applicable limitations and available navigation understandable
+      without relying solely on color or transient feedback.
   scenarios:
-    reopened_thread: A thread is reopened recently but contains an older comment. The old comment does
-      not by itself establish that the thread has been continuously unresolved since that comment or that
-      someone has waited that long for a response.
-    partial_coverage: One confirmed thread meets a separately defined signal, but other thread coverage
-      is incomplete. The supported positive can be shown with its limitation; no exact total or absence
-      of other matches is inferred solely from the partial collection.
-    different_units: Two qualifying threads belong to one confirmed PR. A supported thread count can be
-      two and an affected-PR count one; the two are not added as three work items.
-    stale_state: A comment becomes older as time passes while the latest supported thread state remains
-      an earlier observation. Age alone does not confirm that the thread is currently unresolved.
+    multiple_threads: Two qualifying threads belong to one PR. If both counts are available, the overview
+      can show two threads and one affected PR without presenting them as three work items.
+    unavailable_evidence: Some review information is unavailable. Keep supported information and its applicable
+      limitation rather than reporting a confirmed zero or asserting that no discussion needs attention.
+    revoked_private: A private Repository has saved review information when GitHub confirms access revocation.
+      Keep the saved information visible with the revocation indication and supported update time when
+      known under 0019; synchronization stops.
   open_questions:
-  - What observable meaning of a long or problematic discussion is useful, and whether the proposed comment-age
-    proxy is appropriate.
-  - Any duration, activity or size threshold and its treatment across changes in source state.
-  - GitHub source evidence, coverage and permissions for the selected meaning, and native presentation.
+  - What makes a long or problematic review discussion useful to notice, including how to identify a long
+    wait for a response and any threshold.
+  - Available GitHub information, coverage and exact native presentation for a selected meaning.
   ontology_status: PullRequest and ReviewThread use selected ontology vocabulary; an attention signal
-    is a measurement and presentation concept, not a new domain entity or proof of actor motive.
+    is a presentation and measurement, not a new domain entity or proof of actor motive.
 acceptance:
-- The requested ability to notice lengthy review discussions remains an explicit product need with its
-  definition unresolved.
-- Any eventual signal distinguishes the condition actually measured, its scope, unit, supported context
-  and coverage.
-- Thread counts are not silently equated with counts of affected PRs or independent tasks.
-- Incomplete, stale or unavailable evidence is not silently reported as confirmed absence, zero or a current
-  unresolved state.
-- Saved supported private review data remains visible after confirmed revocation with indication and supported
-  time when known.
+- The need to notice lengthy or problematic review discussions, including a long wait for a response,
+  remains explicit; its definition is not invented.
+- An available signal has an understandable meaning and scope, and unknown information is not presented
+  as a confirmed absence.
+- Thread counts and affected PR counts remain distinguishable, and actionable navigation keeps the applicable
+  scope.
+- Saved private review information remains visible after confirmed access revocation with its indication
+  and supported update time when known under 0019.
+- Signal meaning and available actions do not rely solely on color or transient feedback.
