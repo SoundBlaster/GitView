@@ -40,17 +40,36 @@ sources:
   source_union_example: docs/drafts/today-source-union-worked-example-20261115.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- One route instance composes a confirmed Project and its selected scope, applicable observations, Today policy and independent population coverage without conflating them.
-- Density change, preview, object overview and source handoff preserve the actual source object and originating Project context subject to current access.
-- Confirmed and uncertain known candidates, missing population, stale facts and refresh or storage failure remain separately observable throughout the route.
-- A late response, old preview callback, day or membership change cannot silently replace the currently selected route context or restore restricted data.
-- Opening GitHub is a platform handoff for an eligible observed object link, not proof that the destination loaded or the recipient has access.
-- The assembly has observable acceptance scenarios and injected boundaries, but this specification does not claim a product, completed TDD cycle or device behavior.
-- A current summary signal carries its own aggregation context into an independently evaluated work selection without making either pure decision own navigation or effects.
+- One route instance composes a confirmed Project and its selected scope, applicable observations, Today
+  policy and independent population coverage without conflating them.
+- Density change, preview, object overview and source handoff preserve the actual source object and originating
+  Project context subject to current access.
+- Confirmed and uncertain known candidates, missing population, stale facts and refresh or storage failure
+  remain separately observable throughout the route.
+- A late response, old preview callback, day or membership change cannot silently replace the currently
+  selected route context or restore restricted data.
+- Opening GitHub is a platform handoff for an eligible observed object link, not proof that the destination
+  loaded or the recipient has access.
+- The assembly has observable acceptance scenarios and injected boundaries, but this specification does
+  not claim a product, completed TDD cycle or device behavior.
+- A current summary signal carries its own aggregation context into an independently evaluated work selection
+  without making either pure decision own navigation or effects.
 specification:
-  current_intent_boundary: The owner selected Today to include older unfinished work and work completed during the current calendar day in the user local time zone; a previous day completion alone does not qualify an object for the new Today. Applicable states remain visible without saved exclusions and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical object viewing and the technical contracts below remain candidates. The following historical boundary predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
-  historical_intent_boundary_before_local_day_approval: The Today-day inclusion and calendar-change examples below describe a superseded selection candidate; they do not require a past-state viewer or retention of completed cards. Confirmed merged PRs leave current unfinished work and contribute to supported metrics; unfiltered Today includes all applicable states and saved filters may narrow it; source range and persistence scope remain open. The route must still preserve selected Project, object identity, access, independent coverage, partial errors and navigation context.
-  objective: Assemble the Project to Today to preview to original-source journey from the selected policy, data, navigation and platform contracts.
+  current_intent_boundary: The owner selected Today to include older unfinished work and work completed
+    during the current calendar day in the user local time zone; a previous day completion alone does
+    not qualify an object for the new Today. Applicable states remain visible without saved exclusions
+    and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical
+    object viewing and the technical contracts below remain candidates. The following historical boundary
+    predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch
+    revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
+  historical_intent_boundary_before_local_day_approval: The Today-day inclusion and calendar-change examples
+    below describe a superseded selection candidate; they do not require a past-state viewer or retention
+    of completed cards. Confirmed merged PRs leave current unfinished work and contribute to supported
+    metrics; unfiltered Today includes all applicable states and saved filters may narrow it; source range
+    and persistence scope remain open. The route must still preserve selected Project, object identity,
+    access, independent coverage, partial errors and navigation context.
+  objective: Assemble the Project to Today to preview to original-source journey from the selected policy,
+    data, navigation and platform contracts.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -58,115 +77,403 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    setup_and_storage_boundary: This work route starts from a confirmed Project and supported current membership; it does not require the particular default-association setup in 0108. Candidate 0113 proposes one storage direction. Whichever setup and persistence design is selected must independently supply applicable identity, membership, observation, access and recovery evidence to this route and satisfy the observable outcomes below; these contextual references do not enforce conditional prerequisites or prove those guarantees.
-    route_ownership: The Project work page or an equivalent route-level owner under 0096 and 0107 retains its Project identity, Project-wide or explicit Repository intent, dynamic Today context, explicit filters, origin and permitted navigation anchor. Under the agent-authored direct-entry candidate, a Project enters its work directly for one or several member Repositories while keeping Project and Repository identities separate under 0074; the multi-member entry choice remains open. Whichever navigation is selected, retain the density and actual origin of an entered work route and provide the agreed accessible work and member routes. Selection, source refresh, credential handling and source opening remain replaceable capabilities supplied by valid higher-level composition, not sibling-feature imports or presentation-owned source truth.
-    input_and_policy: Read current confirmed saved membership through an applicable local boundary; 0104 is one technical candidate. Supply accepted, identity-normalized and permitted PR or Issue observations, applicable access facts, captured Today boundaries and explicit filter state to the pure 0110 Today decision through the scoped exchange in 0116. Device-local calendar boundaries are an agent-proposed interpretation under 0049, not a settled product choice. Pass population coverage independently under 0102. The policy neither performs I-O nor establishes that every source object was observed. A restricted candidate is not included in visible or accessible output merely to explain an uncertain result.
-    recovered_evidence_inputs: When a route is prepared from local storage, obtain each usable fact, semantic absence or aggregate with the recoverable subject, field meaning, scope, actual time and applicable evidence associations under 0123. Supply per-candidate facts to 0110 and metric-specific evidence to 0119 without making the two results interchangeable; supply coverage separately. If a needed association cannot be recovered, classify only that affected input or scope as unknown, conflicted or unavailable as supported, and keep independently recoverable permitted facts with their original contexts. A locally readable aggregate does not materialize objects, a readable title does not refresh CI, and a prior operation receipt is not a current readable value. Recheck current access before projection and do not expose restricted evidence to explain missing coverage.
-    observation_store_composition: At the higher composition boundary, pass 0126 retention the normalized fact, its immutable operation binding, source and interpretation context and applicable admission information prepared by the source and access owners; use its scoped read and reconciliation capabilities without passing credentials or raw responses to the route or pure decisions. An applied result describes that operation's bound effect but is not a future read, source freshness or coverage. A known non-application, conflict and indeterminate result remain separate local outcomes; reconcile an indeterminate operation by the same binding before a potentially competing effect, and do not create a new source attempt merely to replay storage. An independently accepted, currently permitted in-memory fact can remain transiently useful according to 0116 even when its retention is rejected or indeterminate; a conflict may require a limited presentation under 0053 rather than choosing the newest callback. After restart, prepare the current route only from independently recoverable and applicable claims, coverage and access context; a historic applied receipt is not a replacement for a scoped read. A local retention result neither cancels a separate successful GitHub observation nor creates a historical point or source-wide success. The route can independently request an eligible refresh through its source capability outside the storage operation and its local transaction.
-    summary_and_signal_composition: At a valid higher composition boundary, prepare the inputs for the pure 0119 summary decision from applicable Project and observation evidence and retain each measurement's unit, membership, reference and coverage. When an actionable current signal opens work, apply 0092 to carry its permitted origin context and explicit condition into an independently evaluated 0110 Today selection. A number does not supply the contributing object identities; the route must obtain or reuse separately supported eligible facts. An observed partial signal can lead to supported matches and a separate limitation without manufacturing missing cards or requiring the destination to equal an earlier count. Historical outcome routes retain their own period and 0056 semantics rather than being forced through dynamic Today.
-    specification_and_code_dependencies: A `depends_on` or `refines` edge in this specification graph identifies a prerequisite or refinement of requirements, not a Swift import or a concrete runtime call. In the candidate FSD partition of 0107, domain decisions receive domain-facing immutable values; they do not import the page, navigation feature, GitHub transport, SQLite or credential implementation. Composition and adapters supply those values and injected effects through reviewed boundaries. A specification depending on an architecture or observation contract does not by itself prove that a corresponding source module depends on the latter's concrete adapter, and graph acyclicity does not prove FSD conformance.
-    injected_inputs_and_ownership: App composition supplies replaceable capabilities with explicit ownership and lifetime. The route owns its selected Project, scope, filters, density and navigation origin; it obtains a confirmed or unavailable Project configuration and permitted observation-read result from domain-facing boundaries. The source and retention owners exchange their independently attributed outcomes under 0116. A supplied clock and calendar let the route capture one evaluation context for applicable policies; the policies receive values rather than fetching time or services. Connection ownership supplies scoped source capability and applicable access outcomes without passing credentials to the route or a policy. These responsibilities may share a cohesive domain slice where allowed by 0107; they do not mandate a protocol or module per row.
-    effect_lifetimes: A refresh capability accepts the captured request scope and returns or reports source outcome, accepted fact context, coverage and local retention outcome separately. A platform scheduler can offer background opportunity but does not promise execution; a user or stale-open trigger follows 0048. The route supplies current disclosure and relevance context before presentation, and an injected source-opening or sharing capability reports only the platform handoff outcome under 0033. Cancellation or route disappearance does not prove an already admitted source or storage effect rolled back; late results retain their original scope and cannot bypass current access. No long-lived credential, database handle, raw source payload or platform view is passed as a domain-decision input.
-    verification_seams: Independent deterministic doubles can supply Project reads, source responses, retention outcomes, time and access changes, scheduling opportunities and source-handoff outcomes when those dependencies are relevant. A route test can assert the externally observable result and required effect interaction without using the real network or user data; a pure decision test supplies values and does not call the doubles. Adapter, actual durable restart, authorized GitHub and native accessibility remain distinct evidence levels. The particular Swift signatures, actor isolation, DI mechanism and source-specific error mapping remain open.
-    presented_result: Project the policy result with an accessible distinction between confirmed matches and uncertain candidates under 0042, plus a persistent safe collection limitation where coverage, storage or refresh is incomplete. The two-portion layout is one option, not a requirement. A known permitted positive can remain visible without implying a complete Project total. Per-field observation and revision context remain distinct; a source refresh of one field is not a whole-object or whole-Project timestamp. Selected CI and review signals follow their own 0061 and 0062 contracts.
-    practical_observation_reference: The ordinary overview is an evidence-qualified view of the latest applicable accepted observations, not a promise that GitHub has not changed since each response. For a permitted identified candidate, an applicable source-supported open observation at T can support an observed open selection at T; a recovered T observation can support the same qualified result when its context survives and no applicable conflicting or later invalidating evidence is known. Make relevant observation time, coverage and failed or deferred refresh discoverable under 0042 and 0044, without requiring a network request on every render. A later known transition, incompatible evidence, changed revision or current access restriction is evaluated under 0053, 0089 and 0112; older values cannot override it. If a condition genuinely requested for a later reference is unsupported, its result is unknown and the candidate follows the permitted uncertainty path rather than receiving the earlier answer as a current fact. Different per-candidate or per-field references do not form one simultaneous snapshot. This working-view interpretation does not turn 0048's age threshold into a validity guarantee or assign the time of a local read to a source observation.
-    partial_restoration_projection: After a previously restricted member receives a successful applicable post-restriction observation for some work objects or fields, feed only the newly supported permitted facts into the existing Project-wide selection under 0112, 0116 and 0042. Evaluate each against the active Today context and filters; a known applicable match may appear, an identifiable permitted object with insufficient filter evidence follows the uncertainty path, and still-restricted identities remain hidden. Scope coverage, source outcome and each observation time remain separate; a returned PR does not prove the rest of that Repository's PRs or its Issues were observed. Do not turn restored metadata, a successful page or an individual positive into a complete Project total, fabricate missing-card counts, clear filters, or change the Project. Preserve focus and interaction under 0073 and current access before presentation.
-    density_and_preview: A pinch or accessible density alternative changes layout without changing scope, selected filters or source identity under 0074 and 0075. A first-version static long press may request a preview of one eligible identified object under 0093; a discoverable accessible non-long-press route can invoke and dismiss that same eligible preview. Directly opening the object is a distinct action and does not substitute for preview access. The preview has a distinct presentation lifetime, uses current allowed facts and offers Open for the same object or dismissal. It does not open GitHub automatically or expose individual diff, check, comment or review-thread contents.
-    preview_open_admission: Coordinate a pending in-app Open with its preview presentation and originating route under 0031. Before the route commits, check that this attempt remains active, identity and origin are valid, and current access allows the actual destination. An explicitly cancelled or superseded attempt cannot later commit into a different presentation; system dismissal caused by accepting Open is not by itself cancellation. Multiple activations of one pending intent do not produce duplicate destinations. Once committed, preserve that route's actual origin and apply subsequent scope or access changes rather than attempting to undo an independently completed effect. Source or storage results from an invalidated attempt may be reconciled only under their own evidence and current policy.
-    detail_and_source: Opening the preview or cell enters the same permitted PR or Issue overview; available selected facts remain reachable under 0041 or 0039. The separately invoked Open on GitHub or Share action uses the source-observed eligible object link and current access under 0033. A Project itself is local and cannot acquire a fabricated source link from one member. A last-known link can be offered with its limitation where allowed; handler acceptance does not prove the intended source object loaded. Return follows the actual route and stable identity or a valid fallback under 0024.
-    result_relevance: Capture the route instance, Project identity, member basis, source account, selected object identity when relevant, day or fixed period, filters and applicable access context for every asynchronous result. A result can be retained as evidence only under its own scope and storage policy; it updates the current presentation only after its context, ordering, object and current permissions are independently applicable. A previously dismissed preview's callback cannot directly update a newly opened preview, even of the same object. Refreshing another field cannot confer a new observation time on CI, review or coverage.
-    filter_evaluation_relevance: Associate each evaluation with its originating route and captured selection context, including an ordering or equivalent relevance mechanism that distinguishes intervening accepted filter edits. An older calculation cannot replace a later explicit choice or its displayed selection, even if the final filter values happen to equal the old values. Equal filter values do not prove equal membership, local day, current access, fact revisions or population coverage. An independently accepted source fact from earlier work may be reused only after reevaluation in the current context and current disclosure policy; its original observation and coverage remain attributable. Cancellation of an evaluation does not prove a source or retention effect was undone.
-    transitions: Membership edits, explicit filter edits, changes to the applicable Today period and account or access changes trigger reevaluation with the new context; old results are not relabeled as new. Under the local-day candidate, relevant day or device time-zone changes trigger that reevaluation. Ordinary reordering may be deferred during an active gesture under 0073 and 0075, but access restriction is applied immediately to app-controlled content. If a previewed object stops matching the collection, keep that preview bound to the object while it remains permitted; on dismissal use an identity-preserving anchor or a supported collection fallback. If access is denied, withhold the restricted preview and handoff content rather than keeping it for navigation continuity.
-    selected_source_limitations: Assemble independently usable results from the 0102 open and recent Issue and PR portions and, when needed, closure evidence. If one portion fails or is unavailable, keep unaffected permitted matches and eligible last-known facts visible, retain their actual supported successful observation times, and make the affected category and incomplete Project coverage discoverable with an accessible retry or recovery route. For a category never successfully observed do not invent a successful-update time. Explain a GitHub error or access problem only to the extent supported; source failure does not mean empty work and generic failure does not identify a missing permission. Restricted content remains withheld under 0036. This is an observable outcome; the native indication may be a system-styled banner, control or other accessible presentation.
-    source_and_storage_outcomes: An accepted source observation and its local retention result are distinct under 0105. Current-session presentation may use supported permitted data while clearly reporting a failed durable save; after restart, only independently confirmed readable retained data may be claimed. A source, access or storage failure preserves saved Projects and prior eligible observations as specified by their own contracts, and cannot be reported as an empty repository or successful refresh. A recovered account binding under 0086 does not make category-specific source data current.
-    discovery_progress_presentation: For the 0102 open-work and recent-work acquisition purposes, the route may show permitted known matches and known uncertain candidates before all Repository and category portions are covered. Make incomplete or unobserved coverage, applicable last observation and available retry or recovery discoverable under 0042 without relying only on color, long press or a temporary loading animation. A saved or resumed cursor is not a count of missing objects or proof that the visible cards are complete; show a numerical total or progress percentage only when its unit, denominator, scope and reference are independently supported and permitted. Progress for an old day or member set is not labeled as coverage of the newly selected context. Exact control and layout remain open.
-    saved_discovery_gap: If a resumed discovery portion has an earlier page whose needed evidence was not recovered, retain an access-safe incomplete or local recovery indication even when later pages succeed. A permitted repair can be requested or scheduled as a bounded new source attempt under 0102 and 0105; the screen need not identify hidden objects or infer a missing-card count. Separately supported visible facts retain their own observation and durability context. A completed repair attempt does not clear the limitation unless its applicable evidence actually resolves that particular gap and any broader coverage claim is independently supported.
-    typed_discovery_composition: Consume each scoped GraphQL discovery result and its independently accepted fact, retention and traversal outcomes under 0116. Reconcile a confirmed PR or Issue identity returned by more than one purpose as one candidate without collapsing the observations' individual timestamps, source semantics or limitations. A failed or unobserved portion remains discoverable even when another portion returns a valid card; the route must not reinterpret the other portion as complete or present its transient facts as durably retained. Supply the separately prepared candidates and selection context to 0110 and combine their results with independent population coverage as described there. Other selected PR and Issue details can have different acquisition and access outcomes.
-    assembly_state_candidate: The accompanying candidate state contract distinguishes captured route, saved configuration, usable observations, per-candidate decisions, separately assessed coverage, independently attributed effects and access-safe presentation. Its transition matrix preserves the initiating scope and original evidence through partial source success, uncertain retention, restart, membership or day change, denial and intentional filter emptiness. This is a semantic state and test boundary rather than a selected memory representation, Swift API, execution order or completed implementation.
-    verification_plan: Before declaring implementation readiness, resolve the upstream behavior decisions and define logical responsibilities, exchanged facts, identity and coverage semantics at the selected FSD boundaries. Concrete Swift interface shapes, platform controls and handoff mechanisms are selected and verified during implementation against these contracts. Under 0040 and 0079 plan TDD with injected time, source, storage, access and opener for scoped selection, partial coverage, type and lifecycle filters, missing URL, denial during preview, stale callbacks and return after membership change. Record controlled tests separately from later real GitHub, durable restart, physical-device and accessibility evidence. No numeric GitHub request budget is selected here.
-    provenance: The owner selected a dense Project overview, Today retaining same-day completed work, native first-version preview, source navigation, FSD, DI, TDD and mocks. This assembly and its FSD responsibility assignment are agent-authored working refinements rather than an approved technical implementation.
+    setup_and_storage_boundary: This work route starts from a confirmed Project and supported current
+      membership; it does not require the particular default-association setup in 0108. Candidate 0113
+      proposes one storage direction. Whichever setup and persistence design is selected must independently
+      supply applicable identity, membership, observation, access and recovery evidence to this route
+      and satisfy the observable outcomes below; these contextual references do not enforce conditional
+      prerequisites or prove those guarantees.
+    route_ownership: The Project work page or an equivalent route-level owner under 0096 and 0107 retains
+      its Project identity, Project-wide or explicit Repository intent, dynamic Today context, explicit
+      filters, origin and permitted navigation anchor. Under the agent-authored direct-entry candidate,
+      a Project enters its work directly for one or several member Repositories while keeping Project
+      and Repository identities separate under 0074; the multi-member entry choice remains open. Whichever
+      navigation is selected, retain the density and actual origin of an entered work route and provide
+      the agreed accessible work and member routes. Selection, source refresh, credential handling and
+      source opening remain replaceable capabilities supplied by valid higher-level composition, not sibling-feature
+      imports or presentation-owned source truth.
+    input_and_policy: Read confirmed saved Project membership and feed supported local PR and Issue observations,
+      source context, actual local-day Today boundaries, explicit filters and separate coverage to the
+      Today decision. Confirmed GitHub revocation alone does not exclude saved local facts under 0019;
+      preserve their observation times and revocation indication. Do not invent unobserved objects, apply
+      facts to another account or claim complete source coverage.
+    recovered_evidence_inputs: Recover each usable saved fact or aggregate with its supported subject,
+      scope, time and evidence context. Missing associations leave only affected inputs uncertain; they
+      do not erase independently supported facts. Confirmed GitHub revocation alone does not exclude locally
+      saved facts from projection under 0019. A readable aggregate does not materialize objects, and a
+      readable title does not refresh CI. Other account and handoff boundaries remain separate.
+    observation_store_composition: At the higher composition boundary, pass 0126 retention the normalized
+      fact, its immutable operation binding, source and interpretation context and applicable admission
+      information prepared by the source and access owners; use its scoped read and reconciliation capabilities
+      without passing credentials or raw responses to the route or pure decisions. An applied result describes
+      that operation's bound effect but is not a future read, source freshness or coverage. A known non-application,
+      conflict and indeterminate result remain separate local outcomes; reconcile an indeterminate operation
+      by the same binding before a potentially competing effect, and do not create a new source attempt
+      merely to replay storage. An independently accepted, currently permitted in-memory fact can remain
+      transiently useful according to 0116 even when its retention is rejected or indeterminate; a conflict
+      may require a limited presentation under 0053 rather than choosing the newest callback. After restart,
+      prepare the current route only from independently recoverable and applicable claims, coverage and
+      access context; a historic applied receipt is not a replacement for a scoped read. A local retention
+      result neither cancels a separate successful GitHub observation nor creates a historical point or
+      source-wide success. The route can independently request an eligible refresh through its source
+      capability outside the storage operation and its local transaction.
+    summary_and_signal_composition: At a valid higher composition boundary, prepare the inputs for the
+      pure 0119 summary decision from applicable Project and observation evidence and retain each measurement's
+      unit, membership, reference and coverage. When an actionable current signal opens work, apply 0092
+      to carry its permitted origin context and explicit condition into an independently evaluated 0110
+      Today selection. A number does not supply the contributing object identities; the route must obtain
+      or reuse separately supported eligible facts. An observed partial signal can lead to supported matches
+      and a separate limitation without manufacturing missing cards or requiring the destination to equal
+      an earlier count. Historical outcome routes retain their own period and 0056 semantics rather than
+      being forced through dynamic Today.
+    specification_and_code_dependencies: A `depends_on` or `refines` edge in this specification graph
+      identifies a prerequisite or refinement of requirements, not a Swift import or a concrete runtime
+      call. In the candidate FSD partition of 0107, domain decisions receive domain-facing immutable values;
+      they do not import the page, navigation feature, GitHub transport, SQLite or credential implementation.
+      Composition and adapters supply those values and injected effects through reviewed boundaries. A
+      specification depending on an architecture or observation contract does not by itself prove that
+      a corresponding source module depends on the latter's concrete adapter, and graph acyclicity does
+      not prove FSD conformance.
+    injected_inputs_and_ownership: App composition supplies replaceable capabilities with explicit ownership
+      and lifetime. The route owns its selected Project, scope, filters, density and navigation origin;
+      it obtains a confirmed or unavailable Project configuration and permitted observation-read result
+      from domain-facing boundaries. The source and retention owners exchange their independently attributed
+      outcomes under 0116. A supplied clock and calendar let the route capture one evaluation context
+      for applicable policies; the policies receive values rather than fetching time or services. Connection
+      ownership supplies scoped source capability and applicable access outcomes without passing credentials
+      to the route or a policy. These responsibilities may share a cohesive domain slice where allowed
+      by 0107; they do not mandate a protocol or module per row.
+    effect_lifetimes: A refresh capability accepts the captured request scope and returns or reports source
+      outcome, accepted fact context, coverage and local retention outcome separately. A platform scheduler
+      can offer background opportunity but does not promise execution; a user or stale-open trigger follows
+      0048. The route supplies current disclosure and relevance context before presentation, and an injected
+      source-opening or sharing capability reports only the platform handoff outcome under 0033. Cancellation
+      or route disappearance does not prove an already admitted source or storage effect rolled back;
+      late results retain their original scope and cannot bypass current access. No long-lived credential,
+      database handle, raw source payload or platform view is passed as a domain-decision input.
+    verification_seams: Independent deterministic doubles can supply Project reads, source responses,
+      retention outcomes, time and access changes, scheduling opportunities and source-handoff outcomes
+      when those dependencies are relevant. A route test can assert the externally observable result and
+      required effect interaction without using the real network or user data; a pure decision test supplies
+      values and does not call the doubles. Adapter, actual durable restart, authorized GitHub and native
+      accessibility remain distinct evidence levels. The particular Swift signatures, actor isolation,
+      DI mechanism and source-specific error mapping remain open.
+    presented_result: Project the policy result with an accessible distinction between confirmed matches
+      and uncertain candidates under 0042, plus a persistent safe collection limitation where coverage,
+      storage or refresh is incomplete. The two-portion layout is one option, not a requirement. A known
+      permitted positive can remain visible without implying a complete Project total. Per-field observation
+      and revision context remain distinct; a source refresh of one field is not a whole-object or whole-Project
+      timestamp. Selected CI and review signals follow their own 0061 and 0062 contracts.
+    practical_observation_reference: The ordinary overview is an evidence-qualified view of the latest
+      applicable accepted observations, not a promise that GitHub has not changed since each response.
+      For a permitted identified candidate, an applicable source-supported open observation at T can support
+      an observed open selection at T; a recovered T observation can support the same qualified result
+      when its context survives and no applicable conflicting or later invalidating evidence is known.
+      Make relevant observation time, coverage and failed or deferred refresh discoverable under 0042
+      and 0044, without requiring a network request on every render. A later known transition, incompatible
+      evidence, changed revision or current access restriction is evaluated under 0053, 0089 and 0112;
+      older values cannot override it. If a condition genuinely requested for a later reference is unsupported,
+      its result is unknown and the candidate follows the permitted uncertainty path rather than receiving
+      the earlier answer as a current fact. Different per-candidate or per-field references do not form
+      one simultaneous snapshot. This working-view interpretation does not turn 0048's age threshold into
+      a validity guarantee or assign the time of a local read to a source observation.
+    partial_restoration_projection: Apply supported saved local facts and newly admitted source facts
+      separately to the existing Project-wide Today selection under 0019, 0112 and 0042. Previously saved
+      facts after confirmed revocation remain available as last known with their own times and revocation
+      indication; a new partial response does not refresh or prove unreturned facts. Evaluate supported
+      matches and uncertain candidates against the actual filters and Today context. Preserve incomplete
+      coverage, identity and focus; do not invent missing counts or claim a complete Project total.
+    density_and_preview: A pinch or accessible density alternative changes layout without changing scope,
+      selected filters or source identity under 0074 and 0075. A first-version static long press may request
+      a preview of one eligible identified object under 0093; a discoverable accessible non-long-press
+      route can invoke and dismiss that same eligible preview. Directly opening the object is a distinct
+      action and does not substitute for preview access. The preview has a distinct presentation lifetime,
+      uses current allowed facts and offers Open for the same object or dismissal. It does not open GitHub
+      automatically or expose individual diff, check, comment or review-thread contents.
+    preview_open_admission: Before a pending in-app Open commits, check that the attempt, local identity
+      and originating route remain valid. Confirmed GitHub revocation alone does not prevent opening the
+      same saved local object under 0019; local open is not a source grant. A cancelled or superseded
+      attempt cannot commit another object and duplicate activations do not create duplicate destinations.
+      External source actions and account isolation retain their own boundaries.
+    detail_and_source: Opening the preview or cell enters the same permitted PR or Issue overview; available
+      selected facts remain reachable under 0041 or 0039. The separately invoked Open on GitHub or Share
+      action uses the source-observed eligible object link and current access under 0033. A Project itself
+      is local and cannot acquire a fabricated source link from one member. A last-known link can be offered
+      with its limitation where allowed; handler acceptance does not prove the intended source object
+      loaded. Return follows the actual route and stable identity or a valid fallback under 0024.
+    result_relevance: Capture the route instance, Project identity, member basis, source account, selected
+      object identity when relevant, day or fixed period, filters and applicable access context for every
+      asynchronous result. A result can be retained as evidence only under its own scope and storage policy;
+      it updates the current presentation only after its context, ordering, object and current permissions
+      are independently applicable. A previously dismissed preview's callback cannot directly update a
+      newly opened preview, even of the same object. Refreshing another field cannot confer a new observation
+      time on CI, review or coverage.
+    filter_evaluation_relevance: Associate each evaluation with its originating route and captured selection
+      context, including an ordering or equivalent relevance mechanism that distinguishes intervening
+      accepted filter edits. An older calculation cannot replace a later explicit choice or its displayed
+      selection, even if the final filter values happen to equal the old values. Equal filter values do
+      not prove equal membership, local day, current access, fact revisions or population coverage. An
+      independently accepted source fact from earlier work may be reused only after reevaluation in the
+      current context and current disclosure policy; its original observation and coverage remain attributable.
+      Cancellation of an evaluation does not prove a source or retention effect was undone.
+    transitions: Membership, filter, day, account and access changes require reevaluation without relabeling
+      old results as new. On confirmed revocation preserve locally saved cards and an open preview under
+      0019 with the access indication and supported update time when known; stop synchronization and do
+      not claim a successful source action. Membership and filter rules, local identity, other accounts
+      and external handoff retain their own boundaries. Reordering and focus follow 0073 and 0075.
+    selected_source_limitations: Assemble independently usable open and recent Issue and PR results and
+      applicable closure evidence. Preserve already saved local facts and supported observation times
+      on confirmed revocation under 0019, with the revocation indication and recovery route; do not dispatch
+      ordinary sync for the affected Repository. Explain incomplete coverage or GitHub errors only as
+      supported, and do not invent a successful update time or treat a failure as an empty list. Other
+      account and external sharing rules remain separate.
+    source_and_storage_outcomes: An accepted source observation and its local retention result are distinct
+      under 0105. Current-session presentation may use supported permitted data while clearly reporting
+      a failed durable save; after restart, only independently confirmed readable retained data may be
+      claimed. A source, access or storage failure preserves saved Projects and prior eligible observations
+      as specified by their own contracts, and cannot be reported as an empty repository or successful
+      refresh. A recovered account binding under 0086 does not make category-specific source data current.
+    discovery_progress_presentation: For the 0102 open-work and recent-work acquisition purposes, the
+      route may show permitted known matches and known uncertain candidates before all Repository and
+      category portions are covered. Make incomplete or unobserved coverage, applicable last observation
+      and available retry or recovery discoverable under 0042 without relying only on color, long press
+      or a temporary loading animation. A saved or resumed cursor is not a count of missing objects or
+      proof that the visible cards are complete; show a numerical total or progress percentage only when
+      its unit, denominator, scope and reference are independently supported and permitted. Progress for
+      an old day or member set is not labeled as coverage of the newly selected context. Exact control
+      and layout remain open.
+    saved_discovery_gap: If a resumed discovery portion has an earlier page whose needed evidence was
+      not recovered, retain an access-safe incomplete or local recovery indication even when later pages
+      succeed. A permitted repair can be requested or scheduled as a bounded new source attempt under
+      0102 and 0105; the screen need not identify hidden objects or infer a missing-card count. Separately
+      supported visible facts retain their own observation and durability context. A completed repair
+      attempt does not clear the limitation unless its applicable evidence actually resolves that particular
+      gap and any broader coverage claim is independently supported.
+    typed_discovery_composition: Consume each scoped GraphQL discovery result and its independently accepted
+      fact, retention and traversal outcomes under 0116. Reconcile a confirmed PR or Issue identity returned
+      by more than one purpose as one candidate without collapsing the observations' individual timestamps,
+      source semantics or limitations. A failed or unobserved portion remains discoverable even when another
+      portion returns a valid card; the route must not reinterpret the other portion as complete or present
+      its transient facts as durably retained. Supply the separately prepared candidates and selection
+      context to 0110 and combine their results with independent population coverage as described there.
+      Other selected PR and Issue details can have different acquisition and access outcomes.
+    assembly_state_candidate: The accompanying candidate state contract distinguishes captured route,
+      saved configuration, usable observations, per-candidate decisions, separately assessed coverage,
+      independently attributed effects and access-safe presentation. Its transition matrix preserves the
+      initiating scope and original evidence through partial source success, uncertain retention, restart,
+      membership or day change, denial and intentional filter emptiness. This is a semantic state and
+      test boundary rather than a selected memory representation, Swift API, execution order or completed
+      implementation.
+    verification_plan: Before declaring implementation readiness, resolve the upstream behavior decisions
+      and define logical responsibilities, exchanged facts, identity and coverage semantics at the selected
+      FSD boundaries. Concrete Swift interface shapes, platform controls and handoff mechanisms are selected
+      and verified during implementation against these contracts. Under 0040 and 0079 plan TDD with injected
+      time, source, storage, access and opener for scoped selection, partial coverage, type and lifecycle
+      filters, missing URL, denial during preview, stale callbacks and return after membership change.
+      Record controlled tests separately from later real GitHub, durable restart, physical-device and
+      accessibility evidence. No numeric GitHub request budget is selected here.
+    provenance: The owner selected a dense Project overview, Today retaining same-day completed work,
+      native first-version preview, source navigation, FSD, DI, TDD and mocks. This assembly and its FSD
+      responsibility assignment are agent-authored working refinements rather than an approved technical
+      implementation.
   scenarios:
     removed_member_with_lifecycle_filter_during_partial_refresh:
-      given: Project P contains R and an identified permitted PR X in R has a confirmed merge event within the captured Today interval, but its applicable current lifecycle is unknown. The operator selects a merged lifecycle restriction; while a partial refresh is in flight, a confirmed edit removes R from P.
+      given: Project P contains R and an identified permitted PR X in R has a confirmed merge event within
+        the captured Today interval, but its applicable current lifecycle is unknown. The operator selects
+        a merged lifecycle restriction; while a partial refresh is in flight, a confirmed edit removes
+        R from P.
       when: The route evaluates the result after the membership change.
-      then: Before removal the event supports base Today inclusion but the current-state filter remains uncertain; after the confirmed removal X is outside the current P membership scope rather than silently counted or substituted. The old response and previous Project coverage are not relabeled for the new membership, and no source deletion or restriction is inferred from removal.
+      then: Before removal the event supports base Today inclusion but the current-state filter remains
+        uncertain; after the confirmed removal X is outside the current P membership scope rather than
+        silently counted or substituted. The old response and previous Project coverage are not relabeled
+        for the new membership, and no source deletion or restriction is inferred from removal.
     observed_grid_after_restart_without_present_time_claim:
-      given: A permitted identified old PR was last observed open at T1, its applicable subject and observation context are recovered, and no later conflicting evidence is established. The relevant scope is not due for an age-only foreground refresh under 0048; source-wide Today coverage is not proven.
+      given: A permitted identified old PR was last observed open at T1, its applicable subject and observation
+        context are recovered, and no later conflicting evidence is established. The relevant scope is
+        not due for an age-only foreground refresh under 0048; source-wide Today coverage is not proven.
       when: The operator opens the ordinary Project work view after restart.
-      then: The PR may remain visible as open as last observed at T1, with the time and incomplete coverage discoverable and manual refresh available. The local read is not a new GitHub observation, no exact present-time or complete population claim follows, and a separately requested later-time assertion without applicable evidence remains uncertain. Independently supported same-day events and current disclosure still apply.
+      then: The PR may remain visible as open as last observed at T1, with the time and incomplete coverage
+        discoverable and manual refresh available. The local read is not a new GitHub observation, no
+        exact present-time or complete population claim follows, and a separately requested later-time
+        assertion without applicable evidence remains uncertain. Independently supported same-day events
+        and current disclosure still apply.
     independent_ci_review_and_thread_routes:
-      given: A permitted Project's sufficiently covered unfiltered Today selection has one open PR A and one PR B merged today. At one applicable supported context, A has a complete three-entry CI set with two failure entries and one success, a changes-requested review assessment and a complete zero-unresolved-thread result. B has four confirmed unresolved review threads, and the separately supported Project open-PR population contains only A.
-      when: The operator inspects both cards and A's preview, then opens the Project's failed-CI, changes-requested and unresolved-thread signals without changing the evidence context.
-      then: A's own CI counts identify two failure entries out of three while the Project failed-CI result identifies one affected open PR. A independently matches changes requested despite zero unresolved threads; it does not match an unresolved-thread selection. The open-PR thread result is zero for that supported context, while B remains visible as merged Today work and its four threads remain B's own facts rather than entering the open-PR thread count. The three signal routes retain their respective predicates and units, and no result claims merge readiness or converts a CI failure into a failed test without source evidence.
+      given: A permitted Project's sufficiently covered unfiltered Today selection has one open PR A and
+        one PR B merged today. At one applicable supported context, A has a complete three-entry CI set
+        with two failure entries and one success, a changes-requested review assessment and a complete
+        zero-unresolved-thread result. B has four confirmed unresolved review threads, and the separately
+        supported Project open-PR population contains only A.
+      when: The operator inspects both cards and A's preview, then opens the Project's failed-CI, changes-requested
+        and unresolved-thread signals without changing the evidence context.
+      then: A's own CI counts identify two failure entries out of three while the Project failed-CI result
+        identifies one affected open PR. A independently matches changes requested despite zero unresolved
+        threads; it does not match an unresolved-thread selection. The open-PR thread result is zero for
+        that supported context, while B remains visible as merged Today work and its four threads remain
+        B's own facts rather than entering the open-PR thread count. The three signal routes retain their
+        respective predicates and units, and no result claims merge readiness or converts a CI failure
+        into a failed test without source evidence.
     ordinary_route_review_stage_and_return:
-      given: The optional open non-draft filter is included. A saved single-Repository Project P has a permitted ordinary Today selection containing one open non-draft PR, one open draft PR and one same-day merged PR; another Repository's work scope is not part of P. The operator has chosen a dense layout, and source evidence independently supports the three identities and their required current facts.
-      when: The operator explicitly enables the open non-draft PR filter, invokes an accessible preview of the matching PR, opens its overview, returns to the grid and clears only that condition.
-      then: The filter's name and active condition remain identifiable, the preview and overview refer to that same PR and Repository, and return preserves P, Today and its chosen density. Clearing the condition restores the three otherwise eligible cards without implying any review request, approval or merge eligibility and without modifying GitHub. The route makes any independently unsupported coverage or stale facts discoverable; it does not use another Repository's observations to certify P.
+      given: The optional open non-draft filter is included. A saved single-Repository Project P has a
+        permitted ordinary Today selection containing one open non-draft PR, one open draft PR and one
+        same-day merged PR; another Repository's work scope is not part of P. The operator has chosen
+        a dense layout, and source evidence independently supports the three identities and their required
+        current facts.
+      when: The operator explicitly enables the open non-draft PR filter, invokes an accessible preview
+        of the matching PR, opens its overview, returns to the grid and clears only that condition.
+      then: The filter's name and active condition remain identifiable, the preview and overview refer
+        to that same PR and Repository, and return preserves P, Today and its chosen density. Clearing
+        the condition restores the three otherwise eligible cards without implying any review request,
+        approval or merge eligibility and without modifying GitHub. The route makes any independently
+        unsupported coverage or stale facts discoverable; it does not use another Repository's observations
+        to certify P.
     source_to_recovered_grid:
-      given: Project P has confirmed members A and B. For the captured Today interval, the open-PR discovery for A returns permitted PR X with confirmed identity, title and open state; the recent-PR discovery independently returns the same confirmed X and a merged PR Y with an applicable same-day merge time. X's supported observations are durably retained; Y's retention outcome is indeterminate. B's Issue discovery fails, and no evidence establishes complete Today coverage. All three attempted portions have their own source and request contexts.
-      when: GitView assembles the unrestricted Today collection, the process ends, and a new session later reopens P after successful recovery of X's retained records while Y's retention outcome is still unresolved.
-      then: Before restart X appears once and Y may appear as a permitted transient same-day match, each with applicable source context; the B Issue failure, incomplete coverage and Y's local-save uncertainty remain separately discoverable without a missing-object count. After restart X is reevaluated from its independently recovered evidence under the new session's current day and access, not presented as a fresh source observation. Y is shown only if independently recoverable permitted evidence and the new evaluation support it; an indeterminate receipt alone proves neither recovery nor loss. P's saved membership is unchanged, B is not described as empty, and the grid does not claim complete coverage or a Project-wide successful refresh.
+      given: Project P has confirmed members A and B. For the captured Today interval, the open-PR discovery
+        for A returns permitted PR X with confirmed identity, title and open state; the recent-PR discovery
+        independently returns the same confirmed X and a merged PR Y with an applicable same-day merge
+        time. X's supported observations are durably retained; Y's retention outcome is indeterminate.
+        B's Issue discovery fails, and no evidence establishes complete Today coverage. All three attempted
+        portions have their own source and request contexts.
+      when: GitView assembles the unrestricted Today collection, the process ends, and a new session later
+        reopens P after successful recovery of X's retained records while Y's retention outcome is still
+        unresolved.
+      then: Before restart X appears once and Y may appear as a permitted transient same-day match, each
+        with applicable source context; the B Issue failure, incomplete coverage and Y's local-save uncertainty
+        remain separately discoverable without a missing-object count. After restart X is reevaluated
+        from its independently recovered evidence under the new session's current day and access, not
+        presented as a fresh source observation. Y is shown only if independently recoverable permitted
+        evidence and the new evaluation support it; an indeterminate receipt alone proves neither recovery
+        nor loss. P's saved membership is unchanged, B is not described as empty, and the grid does not
+        claim complete coverage or a Project-wide successful refresh.
     recovered_fact_missing_coverage:
-      given: After restart Project P still contains A and B. A's permitted PR title and old CI observation are independently recoverable with their original contexts, while B's saved coverage record cannot be associated with sufficient source evidence.
+      given: After restart Project P still contains A and B. A's permitted PR title and old CI observation
+        are independently recoverable with their original contexts, while B's saved coverage record cannot
+        be associated with sufficient source evidence.
       when: The route prepares Today and a Project failed-CI summary without a new source response.
-      then: A's supported facts can be evaluated only within their actual times and revisions; B's coverage is incomplete or unavailable rather than zero, and neither the readable title nor a prior receipt establishes a complete current Project count or new CI observation.
+      then: A's supported facts can be evaluated only within their actual times and revisions; B's coverage
+        is incomplete or unavailable rather than zero, and neither the readable title nor a prior receipt
+        establishes a complete current Project count or new CI observation.
     resume_partial_today:
-      given: A Project has a permitted last-known old-open Issue from Repository A and an independently retained recently merged PR from B; the prior recent-work traversal for B ended early and no complete Project coverage is established.
-      when: The operator explicitly opens a new ordinary Today route for that Project and the source continuation is unavailable.
-      then: The two supported candidates remain inspectable under their own times and current access, incomplete coverage and an available refresh route are discoverable, and no missing-card count or exact percentage is invented. A new attempt does not claim that the earlier traversal was complete.
+      given: A Project has a permitted last-known old-open Issue from Repository A and an independently
+        retained recently merged PR from B; the prior recent-work traversal for B ended early and no complete
+        Project coverage is established.
+      when: The operator explicitly opens a new ordinary Today route for that Project and the source continuation
+        is unavailable.
+      then: The two supported candidates remain inspectable under their own times and current access,
+        incomplete coverage and an available refresh route are discoverable, and no missing-card count
+        or exact percentage is invented. A new attempt does not claim that the earlier traversal was complete.
     cold_start_after_filtered_route:
-      given: A previous session ended on Project P's failed-CI-filtered grid. Its saved Project configuration and some source observations are independently recoverable after restart, but the saved object population is incomplete.
-      when: A cold session opens the portfolio and the operator explicitly enters P's ordinary Project-wide work route without choosing a signal.
-      then: The new route uses the ordinary Today and filter defaults under 0024 and 0074 rather than silently restoring the old failed-CI filter or scroll anchor. Recoverable permitted observations are reevaluated under their own times, revisions and current access; the collection makes incomplete coverage discoverable and does not claim a new complete refresh merely because the route was opened. A preserved in-memory session instead follows its retained route context.
+      given: A previous session ended on Project P's failed-CI-filtered grid. Its saved Project configuration
+        and some source observations are independently recoverable after restart, but the saved object
+        population is incomplete.
+      when: A cold session opens the portfolio and the operator explicitly enters P's ordinary Project-wide
+        work route without choosing a signal.
+      then: The ordinary Project-wide route applies any applicable persisted user filter under 0007 and
+        0024. A temporary failed-CI signal condition from a previous navigation does not rewrite saved
+        filters or silently persist as a user preference. Recoverable observations keep their own times
+        and incomplete coverage remains visible; reopening does not claim a complete refresh. A retained
+        in-memory session follows its valid route context.
     member_change_then_denial_during_progress:
-      given: The proposed private-cache restriction policy is in effect; P changes from A and B to A and C while Q still contains B. A B-scoped page and an already admitted progress write are pending, then the running app observes an applicable denial for B. C has no source observation.
+      given: P changes from members A and B to A and C while Q still contains B. A B-scoped page and an
+        admitted progress write are pending; then revocation for private B is confirmed and C has no source
+        observation.
       when: The older B page and progress result arrive while P's new route is visible.
-      then: P remains scoped to A and C, C stays unobserved rather than inheriting B coverage, and no restricted B identity or revealing count is shown. The B operation remains independently reconcilable in its original context without reauthorizing presentation or new repair; Q's saved membership is not deleted and does not bypass the same denial. Any restored session uses actual durable fence evidence and the known crash limitation rather than assuming an unrecorded denial survived.
+      then: P remains scoped to A and C and C does not inherit B coverage. Q retains B membership and
+        can present its previously saved local B data with revocation and supported observation time under
+        0019; no B data is copied into P. A late B response is not admitted as fresh or evidence of restored
+        source access.
     partial_member_access_restored:
-      given: Under the proposed private-cache restriction policy, Project P contains A and B; A has permitted Today observations, B was restricted, and an applicable post-restriction response independently supports one identified B PR matching Today and the active filters while B's remaining PR population and Issues remain unobserved.
+      given: Project P contains A and B. A has Today observations, B has saved local observations after
+        a confirmed revocation, and a separately admissible later source observation supports one B PR
+        while remaining source coverage is incomplete.
       when: The current Project-wide Today route is reevaluated with its existing filters and density.
-      then: The permitted B PR may appear as its supported match, A retains its own context, B's unobserved or still-restricted work is not exposed or counted as zero, and Project coverage remains incomplete without a fabricated number of missing objects. Existing navigation and focus follow their applicable identity and accessibility rules.
+      then: Evaluate the newly supported B PR and saved B facts against the current Today scope and filters.
+        Show available saved data with its own time and applicable revocation indication, A with its own
+        context and incomplete coverage without inventing missing counts or treating unobserved work as
+        zero.
     known_and_unknown_to_preview:
-      given: Project P contains Repositories A and B; A has a permitted PR with confirmed failed CI, another permitted PR has unknown CI, and B's applicable work scope is unobserved.
+      given: Project P contains Repositories A and B; A has a permitted PR with confirmed failed CI, another
+        permitted PR has unknown CI, and B's applicable work scope is unobserved.
       when: The operator opens P's failed-CI selection and previews the uncertain PR at compact density.
-      then: The first PR is a confirmed match, the second remains identifiable and inspectable as uncertain with its identity and context, B contributes a separate coverage limitation rather than fabricated cells, and previewing does not change P or the filter.
+      then: The first PR is a confirmed match, the second remains identifiable and inspectable as uncertain
+        with its identity and context, B contributes a separate coverage limitation rather than fabricated
+        cells, and previewing does not change P or the filter.
     partial_signal_refreshes_during_entry:
-      given: An 0119 failed-CI signal records one permitted observed PR under partial A-and-B Project coverage at T1, and independently accepted T2 evidence changes the destination while B remains unobserved.
-      when: The operator opens the signal and the Project work route composes the 0092 origin and the separately evaluated 0110 selection.
-      then: The origin remains a T1 partial signal, supported T2 PRs and their own coverage are shown where permitted, and the destination neither fabricates B cards nor claims that its count or membership must equal the earlier signal.
+      given: An 0119 failed-CI signal records one permitted observed PR under partial A-and-B Project
+        coverage at T1, and independently accepted T2 evidence changes the destination while B remains
+        unobserved.
+      when: The operator opens the signal and the Project work route composes the 0092 origin and the
+        separately evaluated 0110 selection.
+      then: The origin remains a T1 partial signal, supported T2 PRs and their own coverage are shown
+        where permitted, and the destination neither fabricates B cards nor claims that its count or membership
+        must equal the earlier signal.
     partial_count_and_unknown_candidate:
-      given: For the same captured Project and Today context, independently applicable evidence supports one permitted open PR matching failed CI, another permitted open PR with unknown applicable CI and an unobserved member Repository; both known PRs satisfy the Today base selection. The summary decision supports only an observed subset of one, not an exact Project total.
-      when: The operator opens that signal and the work route independently evaluates the same active failed-CI condition without new evidence.
-      then: The origin remains visibly qualified as an observed subset of one; the destination distinguishes the known match from the identified uncertain candidate accessibly, with an access-safe coverage limitation. It does not count the uncertain candidate as failed, infer how many objects are missing or present one as an exact Project total. A later independent observation may change the selection without rewriting the original signal's context.
+      given: For the same captured Project and Today context, independently applicable evidence supports
+        one permitted open PR matching failed CI, another permitted open PR with unknown applicable CI
+        and an unobserved member Repository; both known PRs satisfy the Today base selection. The summary
+        decision supports only an observed subset of one, not an exact Project total.
+      when: The operator opens that signal and the work route independently evaluates the same active
+        failed-CI condition without new evidence.
+      then: The origin remains visibly qualified as an observed subset of one; the destination distinguishes
+        the known match from the identified uncertain candidate accessibly, with an access-safe coverage
+        limitation. It does not count the uncertain candidate as failed, infer how many objects are missing
+        or present one as an exact Project total. A later independent observation may change the selection
+        without rewriting the original signal's context.
     retained_fact_outcomes_and_recovery:
-      given: A Project refresh returns two independently permitted PR observations; cache operation A is applied, cache operation B has lost its acknowledgement, and a separate history effect is confirmed rejected. The current session still holds supported facts for both; Project coverage remains incomplete.
-      when: The route presents the current selection, the process restarts, and reconciliation later confirms B's historical operation outcome while only A's fact and its required context are independently readable.
-      then: Before restart each eligible fact may be shown with its actual source context and B's indeterminate local outcome and the separate history rejection remain discoverable. After restart A may be evaluated from its own recoverable evidence, while B is not presented solely from its applied receipt; no new observation, successful history point or complete Project coverage is inferred. Any later eligible source refresh is a separate attempt, and a same-operation storage replay retains its original binding.
+      given: A Project refresh returns two independently permitted PR observations; cache operation A
+        is applied, cache operation B has lost its acknowledgement, and a separate history effect is confirmed
+        rejected. The current session still holds supported facts for both; Project coverage remains incomplete.
+      when: The route presents the current selection, the process restarts, and reconciliation later confirms
+        B's historical operation outcome while only A's fact and its required context are independently
+        readable.
+      then: Before restart each eligible fact may be shown with its actual source context and B's indeterminate
+        local outcome and the separate history rejection remain discoverable. After restart A may be evaluated
+        from its own recoverable evidence, while B is not presented solely from its applied receipt; no
+        new observation, successful history point or complete Project coverage is inferred. Any later
+        eligible source refresh is a separate attempt, and a same-operation storage replay retains its
+        original binding.
     source_link_after_preview:
-      given: A permitted PR preview opened from P has an observed link associated with that PR and no known conflicting address evidence.
+      given: A permitted PR preview opened from P has an observed link associated with that PR and no
+        known conflicting address evidence.
       when: The operator opens the same PR overview and explicitly requests its source.
-      then: GitView offers or hands off only the eligible observed PR link with any last-known limitation; the platform request does not prove the page loaded or imply a source mutation.
+      then: GitView offers or hands off only the eligible observed PR link with any last-known limitation;
+        the platform request does not prove the page loaded or imply a source mutation.
     deny_before_source_action:
-      given: Under the proposed private-cache restriction policy, a private PR preview is open while a source refresh is in flight and its source action was previously eligible.
-      when: An explicit applicable denial is established before the operator requests the source.
-      then: Restricted preview facts and link are withheld, the older refresh cannot restore access by arrival order, and a permitted recovery route replaces neither the object nor the Project.
+      given: A saved private PR preview is open while an earlier source refresh is in flight.
+      when: Revocation of that Repository is confirmed before the operator requests a source action.
+      then: Keep the locally saved preview visible with revocation indication and supported time when
+        known and provide recovery or explicit local deletion. The late refresh does not establish restored
+        access; do not represent a source action as successful without evidence. External handoff follows
+        its separate policy.
     scope_changes_while_preview_open:
-      given: A PR preview was opened from Project P while its Repository was a member, and a confirmed Project edit removes that Repository while access to the PR remains permitted.
+      given: A PR preview was opened from Project P while its Repository was a member, and a confirmed
+        Project edit removes that Repository while access to the PR remains permitted.
       when: The preview is dismissed after an old Project-wide refresh finishes.
-      then: The preview was not retargeted, the old refresh keeps its former member basis, and the current collection uses P's new membership and a valid anchor fallback without including the removed Repository as a current member.
+      then: The preview was not retargeted, the old refresh keeps its former member basis, and the current
+        collection uses P's new membership and a valid anchor fallback without including the removed Repository
+        as a current member.
     refresh_succeeds_save_unknown:
-      given: A source returns an applicable new title for a PR but the local retention outcome is indeterminate and older retained data was previously observed.
+      given: A source returns an applicable new title for a PR but the local retention outcome is indeterminate
+        and older retained data was previously observed.
       when: The current route presents the supported title and the process subsequently restarts.
-      then: The source observation and uncertain save remain distinct; after restart the app does not claim the new title is durably recovered unless independent storage evidence supports it.
+      then: The source observation and uncertain save remain distinct; after restart the app does not
+        claim the new title is durably recovered unless independent storage evidence supports it.
     injected_stale_open_refresh:
-      given: Injected Project and observation readers return a permitted saved Project and stale PR observation, an injected source returns a supported update, and injected retention reports failure.
+      given: Injected Project and observation readers return a permitted saved Project and stale PR observation,
+        an injected source returns a supported update, and injected retention reports failure.
       when: The route opens and a bounded stale-scope refresh is permitted.
-      then: Saved content can be presented with its original context, the refresh has its captured scope, the source result and retention failure remain distinct, and the Today and summary decisions make no network or storage calls.
+      then: Saved content can be presented with its original context, the refresh has its captured scope,
+        the source result and retention failure remain distinct, and the Today and summary decisions make
+        no network or storage calls.
     day_change_in_preview:
-      given: The proposed device-local Today policy is selected, and a merged PR qualifies for Today with its permitted preview open when the device crosses into a new local day.
+      given: The proposed device-local Today policy is selected, and a merged PR qualifies for Today with
+        its permitted preview open when the device crosses into a new local day.
       when: The operator dismisses the preview after Today is reevaluated.
-      then: The preview remained bound to that PR, the new day and its coverage are represented honestly, and a valid collection fallback is used if the PR no longer matches.
+      then: The preview remained bound to that PR, the new day and its coverage are represented honestly,
+        and a valid collection fallback is used if the PR no longer matches.
   unresolved:
-  - Review the selected source-to-domain identity and coverage mappings against the logical boundary responsibilities before readiness; choose concrete Swift interface shapes and provider ownership during implementation.
-  - Verify native density, static preview, focus, source handoff and their interaction on supported devices without assuming a particular system API satisfies the contract.
-  - The assembled route is pre-canonical and no product implementation, TDD cycle, real source integration or native behavior has been executed.
+  - Review the selected source-to-domain identity and coverage mappings against the logical boundary responsibilities
+    before readiness; choose concrete Swift interface shapes and provider ownership during implementation.
+  - Verify native density, static preview, focus, source handoff and their interaction on supported devices
+    without assuming a particular system API satisfies the contract.
+  - The assembled route is pre-canonical and no product implementation, TDD cycle, real source integration
+    or native behavior has been executed.

@@ -19,14 +19,22 @@ sources:
   refresh_intent: conversation:gitview/excerpt-63
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A recovered observation and its claimed identity, scope, coverage and observation time are supported by the same confirmed durable evidence.
-- Source refresh success and durable local retention are independently identifiable; an unconfirmed write is not reported as durable.
-- Interrupted or unreadable local data is not represented as a confirmed empty source or as a complete current observation.
-- Recovery does not silently resolve an unordered conflict, disclose restricted private data or undo a confirmed history clear.
-- An affected scope does not advance the successful observation time or damage independently recoverable scopes without evidence.
-- Replaying a storage operation for one accepted observation does not manufacture another independently observed historical sample or source event.
+- A recovered observation and its claimed identity, scope, coverage and observation time are supported
+  by the same confirmed durable evidence.
+- Source refresh success and durable local retention are independently identifiable; an unconfirmed write
+  is not reported as durable.
+- Interrupted or unreadable local data is not represented as a confirmed empty source or as a complete
+  current observation.
+- Recovery does not silently resolve an unordered conflict or undo a confirmed history clear. Previously
+  saved local data remains visible after confirmed revocation under 0019; separate account and sharing
+  boundaries apply.
+- An affected scope does not advance the successful observation time or damage independently recoverable
+  scopes without evidence.
+- Replaying a storage operation for one accepted observation does not manufacture another independently
+  observed historical sample or source event.
 specification:
-  objective: Define observable consistency and recovery requirements for retained current and historical observations without selecting a database or storage schema.
+  objective: Define observable consistency and recovery requirements for retained current and historical
+    observations without selecting a database or storage schema.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
@@ -34,65 +42,140 @@ specification:
   - gitview:Issue
   - gitview:Metric
   contract:
-    durable_claim: A durable observation claim requires confirmed persistence of the fact or result and the context necessary to interpret its identity, scope, time, coverage, access and unresolved conflicts. After restart, a claim must not combine a recovered value with unrelated or unconfirmed metadata to assert a more complete or newer observation. This is an observable invariant, not a requirement for one database transaction across an entire Project.
-    independent_outcomes: A source response can succeed while its local write fails or has an unknown outcome. A permitted in-memory result may be displayed with its real source context while the process lives, provided the local retention limitation is identifiable; it is not described as durably saved. Once restarted, only independently confirmed recoverable evidence supports a durable claim.
-    interruption: If interruption leaves a write unconfirmed, recover the previously confirmed compatible evidence, establish the new evidence and its context, or indicate uncertainty. Never manufacture a complete result, a successful durable timestamp, or a rollback from the absence of an acknowledgement alone. The recovery method and granularity remain open.
-    recoverability_is_evidence: A past confirmation that T1 was saved does not by itself prove that the same evidence is still readable and intact after a later interrupted or failed write. After restart, report T1 as the recovered baseline only if the necessary value and context are independently recovered and validated; if neither T1 nor T2 can be established, the affected durable state remains unknown or unavailable. Retain the distinction between a historical acknowledgement and present recovery evidence, without assuming the storage operation preserved or destroyed the previous value.
-    corruption_and_repair: If local observation data or its interpretation context cannot be read or validated, expose an affected-scope recovery or refresh path where available. Do not silently replace unreadable data with an empty cache, advance an observation time or delete Project configuration to make the screen load. An explicit repair or reset with destructive consequences requires its actual scope and effect to be understandable before confirmation; no repair control or broad reset policy is selected here. If impact cannot be isolated, communicate that limitation rather than asserting unaffected scopes are intact.
-    replay_and_reconciliation: Associate a local retention attempt with enough durable or recoverable evidence to identify a retry of the same accepted observation within its original source, scope, observation context and applicable history-clear boundary. Replaying that attempt, including after an acknowledgement is lost or the process restarts, must not manufacture a second independent historical sample, a second source event or a later source observation time. If recovery cannot determine whether the attempt was retained, do not claim that it definitely was or was not, and do not count an unverified retry as another independent observation. A newly initiated source observation is separately contextualized even if its value or timestamp happens to match; local retry identity does not prove two source events are the same. This is an observable requirement, not a mandate for a particular transaction, database key or stored private payload.
-    operation_contract: Candidate 0103 refines the distinction between a logical local operation, its delivery attempts, a reviewed new submission and separate source observations; its identity and outcome evidence support recovery without becoming ontology entities.
-    history_clear_replay: If the optional history-clear feature is included, reconciliation must apply the durable or uncertain clear boundary under 0067 before admitting any replay. A pre-clear attempt cannot be retagged as a post-clear observation because recovery or a write retry occurred later. If the clear's result is indeterminate, keep the affected history outcome uncertain and do not assert that replay is permitted or that a clear definitely succeeded.
-    scope_isolation: An unreadable or incomplete observation affects the scope whose evidence is unavailable. It does not itself delete Project configuration or independent observations, prove absence at GitHub, or authorize resetting storage. When impact cannot be bounded, report the uncertainty rather than asserting unrelated scopes are sound.
-    conflicts_and_access: Preserve enough confirmed context to apply 0053 after recovery. Missing evidence required to resolve conflicting values leaves the affected fact uncertain. Apply current private-data access restrictions under 0036 before exposing values or revealing aggregates; reading a record is not renewed authorization.
-    history_and_clear: Current facts and historical evidence may have different retention outcomes. A current refresh does not prove a history point was saved, and a retained history point does not by itself refresh current state. Recovered writes obey the clear boundary and shared-scope rules in 0067, including older queued work.
-    provenance: This durable observation boundary is an agent-authored refinement of the owner's local-cache and refresh-failure requirements; no storage implementation or transaction mechanism has been selected.
+    durable_claim: A durable observation claim requires confirmed persistence of the fact or result and
+      the context necessary to interpret its identity, scope, time, coverage, access and unresolved conflicts.
+      After restart, a claim must not combine a recovered value with unrelated or unconfirmed metadata
+      to assert a more complete or newer observation. This is an observable invariant, not a requirement
+      for one database transaction across an entire Project.
+    independent_outcomes: A source response can succeed while its local write fails or has an unknown
+      outcome. A permitted in-memory result may be displayed with its real source context while the process
+      lives, provided the local retention limitation is identifiable; it is not described as durably saved.
+      Once restarted, only independently confirmed recoverable evidence supports a durable claim.
+    interruption: If interruption leaves a write unconfirmed, recover the previously confirmed compatible
+      evidence, establish the new evidence and its context, or indicate uncertainty. Never manufacture
+      a complete result, a successful durable timestamp, or a rollback from the absence of an acknowledgement
+      alone. The recovery method and granularity remain open.
+    recoverability_is_evidence: A past confirmation that T1 was saved does not by itself prove that the
+      same evidence is still readable and intact after a later interrupted or failed write. After restart,
+      report T1 as the recovered baseline only if the necessary value and context are independently recovered
+      and validated; if neither T1 nor T2 can be established, the affected durable state remains unknown
+      or unavailable. Retain the distinction between a historical acknowledgement and present recovery
+      evidence, without assuming the storage operation preserved or destroyed the previous value.
+    corruption_and_repair: If local observation data or its interpretation context cannot be read or validated,
+      expose an affected-scope recovery or refresh path where available. Do not silently replace unreadable
+      data with an empty cache, advance an observation time or delete Project configuration to make the
+      screen load. An explicit repair or reset with destructive consequences requires its actual scope
+      and effect to be understandable before confirmation; no repair control or broad reset policy is
+      selected here. If impact cannot be isolated, communicate that limitation rather than asserting unaffected
+      scopes are intact.
+    replay_and_reconciliation: Associate a local retention attempt with enough durable or recoverable
+      evidence to identify a retry of the same accepted observation within its original source, scope,
+      observation context and applicable history-clear boundary. Replaying that attempt, including after
+      an acknowledgement is lost or the process restarts, must not manufacture a second independent historical
+      sample, a second source event or a later source observation time. If recovery cannot determine whether
+      the attempt was retained, do not claim that it definitely was or was not, and do not count an unverified
+      retry as another independent observation. A newly initiated source observation is separately contextualized
+      even if its value or timestamp happens to match; local retry identity does not prove two source
+      events are the same. This is an observable requirement, not a mandate for a particular transaction,
+      database key or stored private payload.
+    operation_contract: Candidate 0103 refines the distinction between a logical local operation, its
+      delivery attempts, a reviewed new submission and separate source observations; its identity and
+      outcome evidence support recovery without becoming ontology entities.
+    history_clear_replay: If the optional history-clear feature is included, reconciliation must apply
+      the durable or uncertain clear boundary under 0067 before admitting any replay. A pre-clear attempt
+      cannot be retagged as a post-clear observation because recovery or a write retry occurred later.
+      If the clear's result is indeterminate, keep the affected history outcome uncertain and do not assert
+      that replay is permitted or that a clear definitely succeeded.
+    scope_isolation: An unreadable or incomplete observation affects the scope whose evidence is unavailable.
+      It does not itself delete Project configuration or independent observations, prove absence at GitHub,
+      or authorize resetting storage. When impact cannot be bounded, report the uncertainty rather than
+      asserting unrelated scopes are sound.
+    conflicts_and_access: Preserve sufficient confirmed context to apply 0053; missing ordering evidence
+      leaves the affected fact uncertain. After confirmed private Repository revocation, locally available
+      saved values remain visible under 0019 with applicable indication and supported times; reading a
+      record is not a renewed GitHub grant. Account isolation and external sharing remain separate.
+    history_and_clear: Current facts and historical evidence may have different retention outcomes. A
+      current refresh does not prove a history point was saved, and a retained history point does not
+      by itself refresh current state. Recovered writes obey the clear boundary and shared-scope rules
+      in 0067, including older queued work.
+    provenance: This durable observation boundary is an agent-authored refinement of the owner's local-cache
+      and refresh-failure requirements; no storage implementation or transaction mechanism has been selected.
   scenarios:
     refresh_saved_only_in_memory:
-      given: A permitted PR observation at T1 was durably retained, a later source refresh accepts new facts at T2 but the local write fails, and restart independently recovers the intact T1 evidence.
+      given: A permitted PR observation at T1 was durably retained, a later source refresh accepts new
+        facts at T2 but the local write fails, and restart independently recovers the intact T1 evidence.
       when: The result is viewed and then the application restarts.
-      then: Source success at T2 and the local failure are distinguishable; T2 may be shown transiently with its context but is not promised durable. After restart the independently recovered T1 evidence supports its original baseline, without asserting a T2 durable claim.
+      then: Source success at T2 and the local failure are distinguishable; T2 may be shown transiently
+        with its context but is not promised durable. After restart the independently recovered T1 evidence
+        supports its original baseline, without asserting a T2 durable claim.
     neither_baseline_recoverable:
-      given: T1 was once confirmed saved, a T2 write was interrupted, and after restart neither T1 nor T2 and its necessary context can be independently recovered.
+      given: T1 was once confirmed saved, a T2 write was interrupted, and after restart neither T1 nor
+        T2 and its necessary context can be independently recovered.
       when: The affected observation scope is restored.
-      then: Its durable result is unknown or unavailable with an appropriate recovery path; neither the historical T1 acknowledgement nor the missing T2 acknowledgement proves what currently remains stored, and independently recoverable scopes retain their own context.
+      then: Its durable result is unknown or unavailable with an appropriate recovery path; neither the
+        historical T1 acknowledgement nor the missing T2 acknowledgement proves what currently remains
+        stored, and independently recoverable scopes retain their own context.
     interrupted_write:
-      given: A PR value and its coverage context were last confirmed together at T1 and a new write may have been interrupted before acknowledgement.
+      given: A PR value and its coverage context were last confirmed together at T1 and a new write may
+        have been interrupted before acknowledgement.
       when: Recovery finds a new timestamp but cannot establish its association with the value and coverage.
-      then: The new timestamp is not attached to the old value as a confirmed T2 observation; the applicable known evidence or uncertainty is shown.
+      then: The new timestamp is not attached to the old value as a confirmed T2 observation; the applicable
+        known evidence or uncertainty is shown.
     unreadable_scope:
-      given: Saved PR observations for Repository A cannot be read while the membership configuration and Repository B observation are independently readable.
+      given: Saved PR observations for Repository A cannot be read while the membership configuration
+        and Repository B observation are independently readable.
       when: The overview is restored.
-      then: A is unavailable or uncertain rather than confirmed empty; membership remains and B retains only its own confirmed context.
+      then: A is unavailable or uncertain rather than confirmed empty; membership remains and B retains
+        only its own confirmed context.
     access_denied_on_recovery:
-      given: A previously retained private observation is readable locally but current access has been explicitly denied.
+      given: A previously retained private observation is readable locally and revocation of Repository
+        access has been confirmed.
       when: The application restores the overview.
-      then: Restricted private details remain hidden and the access problem is distinguishable from an empty repository.
+      then: The locally saved details remain visible with the revocation indication and supported time
+        when known under 0019; recovery or explicit local deletion remains accessible and no empty Repository
+        is asserted.
     current_and_history_differ:
       given: A current observation is durably saved but the separate history retention attempt is unconfirmed.
       when: The application restarts and opens a historical chart.
-      then: The recovered current value does not alone establish a durable historical point; the chart follows the independently confirmed history evidence.
+      then: The recovered current value does not alone establish a durable historical point; the chart
+        follows the independently confirmed history evidence.
     clear_then_recovery:
       given: A scoped history clear was confirmed before an older queued retention operation completed.
       when: The application restarts and reconciles local work.
-      then: That old operation cannot silently restore the cleared history, and independently retained current data follows its own scope and access policy.
+      then: That old operation cannot silently restore the cleared history, and independently retained
+        current data follows its own scope and access policy.
     retention_acknowledgement_lost:
-      given: One accepted permitted observation is submitted for history retention; the write may have committed, but the acknowledgement is lost before restart.
+      given: One accepted permitted observation is submitted for history retention; the write may have
+        committed, but the acknowledgement is lost before restart.
       when: Recovery finds enough durable evidence that the same attempt committed and its retry is processed.
-      then: The result represents that one observation with its original source and time, without an extra sample or event; a later separately initiated source observation remains distinguishable.
+      then: The result represents that one observation with its original source and time, without an extra
+        sample or event; a later separately initiated source observation remains distinguishable.
     later_independent_observation_during_recovery:
-      given: The retention outcome of one accepted observation is indeterminate and a separately initiated permitted source observation later reports the same numeric value.
-      when: The new observation is retained under its own operation and the earlier operation is subsequently reconciled.
-      then: Each supported observation keeps its own source and retention context, the uncertain first write is not counted twice on replay, and equality of values does not silently suppress the new observation.
+      given: The retention outcome of one accepted observation is indeterminate and a separately initiated
+        permitted source observation later reports the same numeric value.
+      when: The new observation is retained under its own operation and the earlier operation is subsequently
+        reconciled.
+      then: Each supported observation keeps its own source and retention context, the uncertain first
+        write is not counted twice on replay, and equality of values does not silently suppress the new
+        observation.
     retention_outcome_unreadable:
-      given: One history-retention attempt may have committed, but recovery cannot read enough evidence to determine its outcome.
+      given: One history-retention attempt may have committed, but recovery cannot read enough evidence
+        to determine its outcome.
       when: The application restarts or retries the operation.
-      then: The affected durable result remains uncertain and a retry is not counted as an independent source observation; previously confirmed unrelated history retains its own context.
+      then: The affected durable result remains uncertain and a retry is not counted as an independent
+        source observation; previously confirmed unrelated history retains its own context.
     clear_result_unknown_during_replay:
-      given: A pre-clear history-retention attempt and an all-history clear both have indeterminate durable outcomes after interruption.
+      given: A pre-clear history-retention attempt and an all-history clear both have indeterminate durable
+        outcomes after interruption.
       when: Recovery considers replaying the retention attempt.
-      then: It does not assume the clear failed or relabel the earlier attempt as post-clear; the affected result remains uncertain until the boundary can be reconciled.
+      then: It does not assume the clear failed or relabel the earlier attempt as post-clear; the affected
+        result remains uncertain until the boundary can be reconciled.
   unresolved:
-  - Candidates 0105 and 0113 propose field/context and coverage commit boundaries; the provider, physical representation, interruption detection and recovery interface require design and validation.
-  - Retention and classification of ephemeral observations, local failure presentation and scope of any repair remain to be specified.
-  - Candidates 0103 and 0113 propose operation binding and reconciliation; the implementation must specify and verify their representation and crash behavior without treating equal values or timestamps as identity. No restart test has run.
+  - Candidates 0105 and 0113 propose field/context and coverage commit boundaries; the provider, physical
+    representation, interruption detection and recovery interface require design and validation.
+  - Retention and classification of ephemeral observations, local failure presentation and scope of any
+    repair remain to be specified.
+  - Candidates 0103 and 0113 propose operation binding and reconciliation; the implementation must specify
+    and verify their representation and crash behavior without treating equal values or timestamps as
+    identity. No restart test has run.
   - Source-specific evidence, durable storage behavior and native application recovery have not been tested.

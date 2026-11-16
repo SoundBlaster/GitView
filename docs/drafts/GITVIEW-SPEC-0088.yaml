@@ -20,14 +20,22 @@ sources:
   source_comparison: docs/drafts/github-app-permission-coverage-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- The overview distinguishes source identity, Repository membership, applicable access, per-category coverage and actual data observations.
-- An unavailable category does not silently become an empty collection, successful check, or complete aggregate.
-- A missing permission or unavailable source scope for one category does not by itself invalidate independently permitted observations in another.
-- Restricted private facts and revealing derived values remain protected while safe recovery is discoverable.
-- An access change or newly granted capability does not retroactively prove previously unobserved fields or update their last-success times.
-- Authorization explanations describe established limitations without claiming an unknown source cause is confirmed.
+- The overview distinguishes source identity, Repository membership, applicable access, per-category coverage
+  and actual data observations.
+- An unavailable category does not silently become an empty collection, successful check, or complete
+  aggregate.
+- A missing permission or unavailable source scope for one category does not by itself invalidate independently
+  permitted observations in another.
+- Confirmed GitHub revocation alone does not hide previously saved local facts or supported derived values
+  under 0019; indicate the revocation and supported time when known. Other account and external sharing
+  boundaries remain separate.
+- An access change or newly granted capability does not retroactively prove previously unobserved fields
+  or update their last-success times.
+- Authorization explanations describe established limitations without claiming an unknown source cause
+  is confirmed.
 specification:
-  objective: Preserve meaningful GitView overview behavior when the selected source grants only part of the access needed for the chosen data.
+  objective: Preserve meaningful GitView overview behavior when the selected source grants only part of
+    the access needed for the chosen data.
   ontology_refs:
   - gitview:User
   - gitview:GitHub
@@ -38,45 +46,112 @@ specification:
   - gitview:CIStatus
   - gitview:Metric
   contract:
-    category_scope: Track the relevant source, identity, Repository or permitted selection, work category and observation context for every supported source capability and result. Being connected or having a saved Project does not establish that all selected fields, linked objects, status-check families or historical records are accessible. Category names here describe scope of evidence, not new ontology entities or a prescribed storage schema.
-    grant_vs_result: A documented permission can be a prerequisite for an applicable source operation, not proof that the operation succeeded, the underlying user and installation have access, the field semantics match, or the result is complete. A successful read of PR metadata does not establish successful checks, review threads, Issues or history. An unobserved category is unknown or incomplete rather than zero.
-    independently_available: Where current access policy permits it, retain and present independently supported facts and their own times while marking affected unsupported categories unavailable or incomplete. A missing checks grant need not suppress an independently accessible Issue title, but the app must not infer CI success, a complete count, merge readiness or a complete Project aggregate from the available subset.
-    explicit_denial: Apply 0036 separately to affected private facts when an actual authorization denial or disconnect is established. Do not disclose restricted links, derived counts or sensitive details through labels, accessibility output, previews or sharing. A known missing application grant is not by itself proof that the person lacks GitHub access or that an unrelated Repository or data category is denied.
-    unknown_cause: A generic failed request, partial response or unclassified status does not automatically prove which permission, installation, Repository or user action is missing. Offer a safe retry or general recovery route under 0036 and 0059 without inventing a grant diagnosis. A specific grant or installation explanation requires source-supported evidence for that scope.
-    feedback_and_recovery: Make the affected scope and the fact of incomplete or unavailable data discoverable in a non-color, accessible manner. If source evidence supports a specific remedy, offer an appropriate user-mediated path to review access or installation; do not change GitHub permissions or select a broader grant silently. Successful access recovery permits a subsequent observation; it does not itself mark any previously unseen result as observed or current.
-    initial_category_explanation: As an agent-authored first-version presentation proposal, expose a discoverable access or collection-status action from the relevant Project or work context, including when there are no visible work cards. Its system-styled detail identifies permitted affected categories such as PR, Issues, review or CI separately where their scope can safely be described, and distinguishes a supported last observation and its time from an unobserved, incomplete, failed or restricted result. Independently permitted content stays reachable from that same context; the status does not require closing the overview or replacing it with a sign-in screen. Offer an explicit refresh or appropriate user-mediated access review when eligible, and otherwise identify a supported deferral or general recovery path without claiming a request started. Do not report a particular permission or organization as the cause without evidence, or reveal restricted object existence, names or derived counts. Returning preserves the actual scope and filters. The status may share the 0042 or 0047 presentation rather than introducing another mandatory component; exact controls and wording remain open.
-    initial_setup: Candidate 0099 applies this distinction when a newly authorized GitHub identity has zero, partial or multiple observable app-installation scopes. Returning from GitHub or obtaining an applicable Repository grant does not establish a work-data observation; independently eligible setup entries and saved Projects remain governed by their own contexts.
-    aggregate: Summary and navigation apply 0028, 0046 and 0057 to the same source, identity, membership, predicate and coverage context. A confirmed failed check may be shown as an observed positive with limitations; absence of observed failures under missing relevant coverage is not evidence of no failures. Missing review and check data are independent, and unavailable data is not called healthy or ready.
-    concurrency: If capability, account or access changes while a request is in flight, apply current restrictions before presentation under 0036 and 0037. An older response cannot by itself override a later explicit denial or unlock a different account. Preserve unrelated valid observations and their own timestamps.
-    recovery_precision: Candidate 0112 sets the conservative initial recovery policy for independently returned object fields, prior cached facts and partial responses. Successful transport, connection or a different category is not an authorization and observation witness for all restricted facts. Apply coverage and privacy to derived values, including summaries and accessibility output, before exposing them.
-    no_premature_mapping: Candidate 0098 proposes a GitHub App user token and 0100 proposes an initial read-permission profile. The documented examples do not establish a complete minimum permission set, select REST versus GraphQL, or prove field availability, query design or request schedule. Exact source error classification, field permissions and availability require documented and real-source evidence.
-    provenance: Compact work and problem review, preserved last observations and explicit failures follow the owner's product direction. The category-level access and recovery policy is an agent-authored refinement pending source and native validation.
+    category_scope: Track the relevant source, identity, Repository or permitted selection, work category
+      and observation context for every supported source capability and result. Being connected or having
+      a saved Project does not establish that all selected fields, linked objects, status-check families
+      or historical records are accessible. Category names here describe scope of evidence, not new ontology
+      entities or a prescribed storage schema.
+    grant_vs_result: A documented permission can be a prerequisite for an applicable source operation,
+      not proof that the operation succeeded, the underlying user and installation have access, the field
+      semantics match, or the result is complete. A successful read of PR metadata does not establish
+      successful checks, review threads, Issues or history. An unobserved category is unknown or incomplete
+      rather than zero.
+    independently_available: Previously saved locally available observations remain visible on confirmed
+      GitHub revocation under 0019 with their supported time and applicable limitation. Independently
+      supported categories retain their own time; missing checks evidence does not erase an Issue title
+      or imply CI success, a complete count, merge readiness or complete Project aggregate. Cross-account
+      and external sharing rules remain separate.
+    explicit_denial: Do not infer a particular Repository denial or person access from a generic missing
+      application grant. Confirmed private Repository revocation stops ordinary synchronization while
+      previously saved local facts remain visible with revocation indication and supported times under
+      0019. Links sent outside the app and other account disclosure retain separate policies.
+    unknown_cause: A generic failed request, partial response or unclassified status does not automatically
+      prove which permission, installation, Repository or user action is missing. Offer a safe retry or
+      general recovery route under 0036 and 0059 without inventing a grant diagnosis. A specific grant
+      or installation explanation requires source-supported evidence for that scope.
+    feedback_and_recovery: Make the affected scope and the fact of incomplete or unavailable data discoverable
+      in a non-color, accessible manner. If source evidence supports a specific remedy, offer an appropriate
+      user-mediated path to review access or installation; do not change GitHub permissions or select
+      a broader grant silently. Successful access recovery permits a subsequent observation; it does not
+      itself mark any previously unseen result as observed or current.
+    initial_category_explanation: Provide a discoverable access or collection-status action from the relevant
+      Project or work context, including when no cards are visible. Distinguish supported last observations
+      and times from unobserved, incomplete and failed categories. On confirmed GitHub revocation, previously
+      saved local names and supported values remain reachable under 0019 with the revocation indication.
+      Offer an eligible access-recovery action without claiming a request started. Do not invent a particular
+      permission, organization, unseen object or unsupported count. Other independently applicable account
+      and external disclosure restrictions remain separate. Returning preserves the actual scope and filters;
+      exact native presentation remains open.
+    initial_setup: Candidate 0099 applies this distinction when a newly authorized GitHub identity has
+      zero, partial or multiple observable app-installation scopes. Returning from GitHub or obtaining
+      an applicable Repository grant does not establish a work-data observation; independently eligible
+      setup entries and saved Projects remain governed by their own contexts.
+    aggregate: Summary and navigation apply 0028, 0046 and 0057 to the same source, identity, membership,
+      predicate and coverage context. A confirmed failed check may be shown as an observed positive with
+      limitations; absence of observed failures under missing relevant coverage is not evidence of no
+      failures. Missing review and check data are independent, and unavailable data is not called healthy
+      or ready.
+    concurrency: Attribute in-flight requests to their original account and access context. A response
+      begun before confirmed revocation cannot become a new accepted update or restore source access merely
+      by arriving later; already saved local content remains available under 0019. A response for another
+      account is not silently substituted.
+    recovery_precision: Confirmed GitHub revocation alone does not hide previously saved locally available
+      facts or supported values under 0019, with actual time and limitation. Candidate 0112 sets the conservative
+      initial recovery policy for independently returned object fields, prior cached facts and partial
+      responses. Successful transport, connection or a different category is not an authorization and
+      observation witness for all restricted facts. Apply coverage and privacy to derived values, including
+      summaries and accessibility output, before exposing them.
+    no_premature_mapping: Candidate 0098 proposes a GitHub App user token and 0100 proposes an initial
+      read-permission profile. The documented examples do not establish a complete minimum permission
+      set, select REST versus GraphQL, or prove field availability, query design or request schedule.
+      Exact source error classification, field permissions and availability require documented and real-source
+      evidence.
+    provenance: Compact work and problem review, preserved last observations and explicit failures follow
+      the owner's product direction. The category-level access and recovery policy is an agent-authored
+      refinement pending source and native validation.
   scenarios:
     visible_work_with_independent_category_limitations:
-      given: A Project has a permitted Issue observed at T1, a permitted PR observed at T2, and unavailable CI for that PR after an unclassified request failure; no evidence identifies a missing grant.
+      given: A Project has a permitted Issue observed at T1, a permitted PR observed at T2, and unavailable
+        CI for that PR after an unclassified request failure; no evidence identifies a missing grant.
       when: The operator opens the overview and its access or collection status, then returns.
-      then: The Issue and PR remain inspectable with their respective contexts, CI is described as unavailable or incomplete rather than healthy, and the failed request and any applicable retry are discoverable without naming an unproven permission. Returning preserves the Project and selection; neither T2 nor opening the status is described as a successful CI observation or complete Project refresh.
+      then: The Issue and PR remain inspectable with their respective contexts, CI is described as unavailable
+        or incomplete rather than healthy, and the failed request and any applicable retry are discoverable
+        without naming an unproven permission. Returning preserves the Project and selection; neither
+        T2 nor opening the status is described as a successful CI observation or complete Project refresh.
     pr_without_checks:
-      given: A permitted PR title and lifecycle are observed for a Project while source evidence establishes the check category is unavailable.
+      given: A permitted PR title and lifecycle are observed for a Project while source evidence establishes
+        the check category is unavailable.
       when: The PR and its Project summary are shown.
-      then: The available PR facts retain their own context, CI is unavailable or incomplete rather than green or zero, and no complete healthy or merge-ready claim is made.
+      then: The available PR facts retain their own context, CI is unavailable or incomplete rather than
+        green or zero, and no complete healthy or merge-ready claim is made.
     issue_independent_of_review:
-      given: Review-thread retrieval is denied for a PR but an Issue in the same Project is independently accessible.
+      given: Review-thread retrieval is denied for a PR but an Issue in the same Project is independently
+        accessible.
       when: The overview refresh completes.
-      then: Restricted review information is not disclosed, the accessible Issue may remain visible with its own time and the Project is not described as an empty source.
+      then: Restricted review information is not disclosed, the accessible Issue may remain visible with
+        its own time and the Project is not described as an empty source.
     unknown_failure:
-      given: A PR status request fails without enough evidence to distinguish an absent grant from a network failure.
+      given: A PR status request fails without enough evidence to distinguish an absent grant from a network
+        failure.
       when: The operator opens the status indicator.
-      then: The affected status and refresh failure are identifiable, but a specific missing permission or organization denial is not asserted without evidence.
+      then: The affected status and refresh failure are identifiable, but a specific missing permission
+        or organization denial is not asserted without evidence.
     permission_granted_without_fetch:
-      given: A check permission was missing and the operator later grants the applicable access, but GitView has not obtained a new check observation.
+      given: A check permission was missing and the operator later grants the applicable access, but GitView
+        has not obtained a new check observation.
       when: The Project overview is displayed.
-      then: The former gap remains unknown or stale and the check last-success time is not advanced merely by the grant.
+      then: The former gap remains unknown or stale and the check last-success time is not advanced merely
+        by the grant.
     denied_derived_signal:
-      given: An earlier visible failure count was derived from a private check collection that becomes explicitly restricted.
-      when: The operator views the portfolio and invokes a related share action.
-      then: Restricted facts and revealing derived values are not exposed, accessible unrelated content remains governed by its own evidence and the source Project is not silently deleted.
+      given: A supported saved CI failure count was derived from a private Repository whose GitHub revocation
+        is confirmed.
+      when: The operator views the portfolio and considers a related share action.
+      then: The supported saved count remains locally visible as last known with its actual time, coverage
+        and revocation indication under 0019; it is not asserted to be a current CI result. External sharing
+        is governed separately.
   unresolved:
-  - Exact Github App grants, REST and GraphQL field permissions, source error mapping and coverage for all selected product fields are not established.
-  - Native category-level explanation, accessible recovery and permission-change interaction require device evaluation.
+  - Exact Github App grants, REST and GraphQL field permissions, source error mapping and coverage for
+    all selected product fields are not established.
+  - Native category-level explanation, accessible recovery and permission-change interaction require device
+    evaluation.
   - Provider, secure-store and local-cache implementations and their security behavior have not been tested.

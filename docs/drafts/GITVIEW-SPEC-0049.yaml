@@ -19,94 +19,215 @@ sources:
   apple_date_interval: https://developer.apple.com/documentation/foundation/dateinterval
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Today includes older unfinished work and work completed during the current calendar day in the user local time zone; a prior day completion alone does not establish eligibility. Exact boundary mechanics remain candidates.
+- Today includes older unfinished work and work completed during the current calendar day in the user
+  local time zone; a prior day completion alone does not establish eligibility. Exact boundary mechanics
+  remain candidates.
 - A change in evaluation context does not silently change the Project, Repository scope or explicit filters.
 - A selected object overview or preview is not replaced with another object solely because Today changes.
-- Missing coverage for the newly evaluated scope remains unknown or partial rather than a confirmed empty selection.
+- Missing coverage for the newly evaluated scope remains unknown or partial rather than a confirmed empty
+  selection.
 specification:
-  current_intent_boundary: The owner selected Today to include older unfinished work and work completed during the current calendar day in the user local time zone; a previous day completion alone does not qualify an object for the new Today. Applicable states remain visible without saved exclusions and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical object viewing and the technical contracts below remain candidates. The following historical boundary predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
-  historical_intent_boundary_before_local_day_approval: The local-day Today boundary model, its contract and scenarios below are an unselected historical candidate, superseded as the meaning of Today by the owner current-work clarification. They do not establish first-version calendar rollover or a past-state viewer. The independent principles of preserving route identity, scope, access and honest coverage remain applicable.
-  objective: Define the visible effect of a local Today boundary while the operator is navigating or inspecting work.
+  current_intent_boundary: The owner selected Today to include older unfinished work and work completed
+    during the current calendar day in the user local time zone; a previous day completion alone does
+    not qualify an object for the new Today. Applicable states remain visible without saved exclusions
+    and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical
+    object viewing and the technical contracts below remain candidates. The following historical boundary
+    predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch
+    revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
+  historical_intent_boundary_before_local_day_approval: The owner selected the user local calendar day
+    for the Today boundary. Older candidate wording that treated the local day as unselected is superseded.
+    Exact rollover implementation, time-zone change and daylight-saving mechanics remain to be refined;
+    a complete past-state viewer is not implied.
+  objective: Define the visible effect of a local Today boundary while the operator is navigating or inspecting
+    work.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    today: As an agent-authored working interpretation, Today is the device's current local calendar day, with an inclusive start and exclusive next-day boundary. Re-evaluate it when the current day or device time zone changes; use local calendar boundaries rather than assuming every day has the same duration.
-    evaluation_context: For each calculation capture one consistent evaluation instant, system calendar and time-zone context, and derive the containing local day and its next boundary from that context. A changed system calendar, time zone or wall clock can require reevaluation even if a previously rendered date label looks the same. Compare event instants against the captured half-open boundaries; do not use a fixed 24-hour duration or mix a start calculated in one time zone with an end calculated in another. A calendar calculation that cannot establish boundaries yields an unavailable period rather than a fabricated UTC day.
-    foundation_boundary: Apple's DateInterval is documented as closed. If a Foundation calendar API supplies a DateInterval for its day boundaries, the product selection still uses start inclusive and end exclusive, including for filters and historical buckets; do not rely on closed-interval containment for this policy. An event exactly at the next start belongs to the new local day, not both days. This is an implementation-facing constraint derived from the product period contract, not a claim that any platform code has been executed.
-    resume_and_ordering: On returning to an active view or receiving a supported calendar or clock change, obtain a fresh context and re-evaluate dynamic Today; do not depend on the application being scheduled precisely at midnight in the background. Bind asynchronous results to their captured period, membership and filters. A late evaluation for the old day, time zone or prior wall-clock context cannot replace a selected newer context merely because it finishes last. Retained source instants and observation times remain unchanged.
-    context: Re-evaluation changes the interval represented by the dynamic Today selection but preserves the selected Project, Repository scope, object type and explicit filters. Source event and observation timestamps are not rewritten.
-    active_gesture: If the boundary changes while a density or scroll gesture is active, mark the Today interval as changed and calculate the new selection, but defer disruptive grid reordering until the current gesture ends or is cancelled. During that interval the previous grid is not presented as a fully current view of the new day. A preview or detail already open remains bound to its object under open_object. The app does not indefinitely defer updating after the interaction ends.
-    open_filter_menu: If the local day or time-zone context changes while the filter menu is open, retain the operator's existing explicit selections and reevaluate dynamic Today under the new context. Dismissing the menu without an action does not revert the recalculated day or edit filters. An explicit choice made after the boundary applies to the current route and new day, not the interval visible when the menu opened; results or coverage captured before the boundary retain their own context. Access restrictions take effect without waiting for menu dismissal. A fixed historical period continues to follow explicit_period instead.
-    access_overrides_deferral: Deferring ordinary reordering does not defer an applicable restriction of private content. If access is explicitly denied while a day change or gesture update is pending, remove restricted content from app-controlled visual and accessible representations and pending announcements under 0036, 0073 and 0075 without waiting for the gesture to finish. Retain the permitted scope and filters where valid, do not disclose restricted candidates or revealing counts, and provide an access-safe recovery route. Platform speech already delivered or content already handed to another app cannot be recalled.
-    unfinished: A known currently open PR or Issue remains eligible as unfinished across a day boundary even if created earlier; same-day merged or closed outcomes are evaluated against the newly current day without treating every closure as successful completion. Additional historical grouping and reopen history follow 0007 and 0027.
-    coverage: To claim a complete Today selection, establish sufficient source evidence for the union of relevant currently open work and applicable selected-day completion alternatives; creation-only inclusion and broader closure alternatives are conditional candidates under 0027 for the selected Repository set and PR/Issue categories, together with any active filter inputs required by that claim. A sufficient direct-union source method is not required to fetch each alternative separately. A retrieved subset that covers only newly created items cannot establish that older open work is absent. If required scope or inputs are not sufficiently observed, represent the affected scope as unknown or incomplete under 0044; do not declare a confirmed empty day merely because the currently loaded list has no matches.
-    coverage_basis: Assess coverage against the actual Project membership, selected categories, captured Today interval and its boundary interpretation, and active filter at the time of the claim. The device-local calendar day is one proposed interpretation. For each included Repository and category, source evidence must cover every inclusion alternative that can still affect the result, including older open work and applicable selected completion outcomes; creation coverage is required only if that separate alternative is selected. An alternative or filter need not be observed where another known condition logically makes it irrelevant for the stated selection, but unknown candidates or wholly unobserved portions still prevent an exhaustive claim. Results covering different scopes or observation times do not by themselves establish one simultaneous snapshot.
-    membership_or_day_change: When a Repository is added, the day or time zone changes, or a filter gains an additional required input, reassess coverage for the new scope before asserting completeness. Existing observations may be reused only where their recorded scope and times support the new claim; they do not establish coverage for the newly added part. Removing a Repository changes the selected scope rather than proving anything about that Repository's source data.
-    membership_edit_and_filter: A pending or unsubmitted cancelled membership edit does not itself change the saved Project selection. An independent confirmed edit or deletion may still change the actual current Project scope and must be reconciled under 0025 and 0091; do not freeze the earlier scope or undo the independent operation. Once the edit is saved, reevaluate the active selection and its required filter inputs against the new membership while preserving the operator's period and explicit filter choices. A previously calculated result for the old member set cannot be relabeled as exhaustive for the new set; any affected unknown inputs remain visible through the applicable uncertainty treatment. An explicitly selected Repository removed from the Project follows 0024 rather than being silently replaced.
-    open_object: If a PR or Issue overview or preview is open when Today changes, keep it associated with the same source object; do not navigate to a different object or dismiss it solely because its prior card no longer belongs to Today. On return, update the collection and use 0024's anchor fallback if the object no longer matches.
-    explicit_period: A user-selected explicit historical period is not silently relabeled as the new dynamic Today. The working 0069 rule preserves its captured absolute boundaries and original time-zone interpretation through a device time-zone change until the operator explicitly changes or reevaluates it. The interface keeps that context distinguishable from dynamic Today; the rule remains subject to native UX validation.
-    provenance: The owner selected unfinished work, current-day completed work and the user local time zone; device binding and detailed boundary-change behavior remain agent-authored proposals.
+    today: As an agent-authored working interpretation, Today is the device's current local calendar day,
+      with an inclusive start and exclusive next-day boundary. Re-evaluate it when the current day or
+      device time zone changes; use local calendar boundaries rather than assuming every day has the same
+      duration.
+    evaluation_context: For each calculation capture one consistent evaluation instant, system calendar
+      and time-zone context, and derive the containing local day and its next boundary from that context.
+      A changed system calendar, time zone or wall clock can require reevaluation even if a previously
+      rendered date label looks the same. Compare event instants against the captured half-open boundaries;
+      do not use a fixed 24-hour duration or mix a start calculated in one time zone with an end calculated
+      in another. A calendar calculation that cannot establish boundaries yields an unavailable period
+      rather than a fabricated UTC day.
+    foundation_boundary: Apple's DateInterval is documented as closed. If a Foundation calendar API supplies
+      a DateInterval for its day boundaries, the product selection still uses start inclusive and end
+      exclusive, including for filters and historical buckets; do not rely on closed-interval containment
+      for this policy. An event exactly at the next start belongs to the new local day, not both days.
+      This is an implementation-facing constraint derived from the product period contract, not a claim
+      that any platform code has been executed.
+    resume_and_ordering: On returning to an active view or receiving a supported calendar or clock change,
+      obtain a fresh context and re-evaluate dynamic Today; do not depend on the application being scheduled
+      precisely at midnight in the background. Bind asynchronous results to their captured period, membership
+      and filters. A late evaluation for the old day, time zone or prior wall-clock context cannot replace
+      a selected newer context merely because it finishes last. Retained source instants and observation
+      times remain unchanged.
+    context: Re-evaluation changes the interval represented by the dynamic Today selection but preserves
+      the selected Project, Repository scope, object type and explicit filters. Source event and observation
+      timestamps are not rewritten.
+    active_gesture: If the boundary changes while a density or scroll gesture is active, mark the Today
+      interval as changed and calculate the new selection, but defer disruptive grid reordering until
+      the current gesture ends or is cancelled. During that interval the previous grid is not presented
+      as a fully current view of the new day. A preview or detail already open remains bound to its object
+      under open_object. The app does not indefinitely defer updating after the interaction ends.
+    open_filter_menu: If the local day or time-zone context changes while the filter menu is open, retain
+      the operator's existing explicit selections and reevaluate dynamic Today under the new context.
+      Dismissing the menu without an action does not revert the recalculated day or edit filters. An explicit
+      choice made after the boundary applies to the current route and new day, not the interval visible
+      when the menu opened; results or coverage captured before the boundary retain their own context.
+      Access restrictions take effect without waiting for menu dismissal. A fixed historical period continues
+      to follow explicit_period instead.
+    access_overrides_deferral: Do not defer indication of confirmed private Repository revocation until
+      a day change or gesture finishes. Previously saved local content stays visible and accessible under
+      0019 with supported time when known; ordinary synchronization stops. Preserve applicable scope and
+      filters without inferring unobserved candidates or source access. Other account and external handoff
+      boundaries remain separate.
+    unfinished: A known currently open PR or Issue remains eligible as unfinished across a day boundary
+      even if created earlier; same-day merged or closed outcomes are evaluated against the newly current
+      day without treating every closure as successful completion. Additional historical grouping and
+      reopen history follow 0007 and 0027.
+    coverage: To claim a complete Today selection, establish sufficient source evidence for the union
+      of relevant currently open work and applicable selected-day completion alternatives; creation-only
+      inclusion and broader closure alternatives are conditional candidates under 0027 for the selected
+      Repository set and PR/Issue categories, together with any active filter inputs required by that
+      claim. A sufficient direct-union source method is not required to fetch each alternative separately.
+      A retrieved subset that covers only newly created items cannot establish that older open work is
+      absent. If required scope or inputs are not sufficiently observed, represent the affected scope
+      as unknown or incomplete under 0044; do not declare a confirmed empty day merely because the currently
+      loaded list has no matches.
+    coverage_basis: Assess coverage against the actual Project membership, selected categories, captured
+      Today interval and its boundary interpretation, and active filter at the time of the claim. The
+      device-local calendar day is one proposed interpretation. For each included Repository and category,
+      source evidence must cover every inclusion alternative that can still affect the result, including
+      older open work and applicable selected completion outcomes; creation coverage is required only
+      if that separate alternative is selected. An alternative or filter need not be observed where another
+      known condition logically makes it irrelevant for the stated selection, but unknown candidates or
+      wholly unobserved portions still prevent an exhaustive claim. Results covering different scopes
+      or observation times do not by themselves establish one simultaneous snapshot.
+    membership_or_day_change: When a Repository is added, the day or time zone changes, or a filter gains
+      an additional required input, reassess coverage for the new scope before asserting completeness.
+      Existing observations may be reused only where their recorded scope and times support the new claim;
+      they do not establish coverage for the newly added part. Removing a Repository changes the selected
+      scope rather than proving anything about that Repository's source data.
+    membership_edit_and_filter: A pending or unsubmitted cancelled membership edit does not itself change
+      the saved Project selection. An independent confirmed edit or deletion may still change the actual
+      current Project scope and must be reconciled under 0025 and 0091; do not freeze the earlier scope
+      or undo the independent operation. Once the edit is saved, reevaluate the active selection and its
+      required filter inputs against the new membership while preserving the operator's period and explicit
+      filter choices. A previously calculated result for the old member set cannot be relabeled as exhaustive
+      for the new set; any affected unknown inputs remain visible through the applicable uncertainty treatment.
+      An explicitly selected Repository removed from the Project follows 0024 rather than being silently
+      replaced.
+    open_object: If a PR or Issue overview or preview is open when Today changes, keep it associated with
+      the same source object; do not navigate to a different object or dismiss it solely because its prior
+      card no longer belongs to Today. On return, update the collection and use 0024's anchor fallback
+      if the object no longer matches.
+    explicit_period: A user-selected explicit historical period is not silently relabeled as the new dynamic
+      Today. The working 0069 rule preserves its captured absolute boundaries and original time-zone interpretation
+      through a device time-zone change until the operator explicitly changes or reevaluates it. The interface
+      keeps that context distinguishable from dynamic Today; the rule remains subject to native UX validation.
+    provenance: The owner selected unfinished work, current-day completed work and the user local time
+      zone; device binding and detailed boundary-change behavior remain agent-authored proposals.
   scenarios:
     filter_menu_spans_day_change:
-      given: A dynamic Today grid has merged PRs selected and its filter menu remains open as the device crosses a local-day boundary.
+      given: A dynamic Today grid has merged PRs selected and its filter menu remains open as the device
+        crosses a local-day boundary.
       when: The operator explicitly excludes merged PRs after the boundary and dismisses the menu.
-      then: The same Project and new local day remain active with merged PRs excluded, the previous day is not restored by dismissal, and any incomplete coverage for the new selection remains discoverable.
+      then: The same Project and new local day remain active with merged PRs excluded, the previous day
+        is not restored by dismissal, and any incomplete coverage for the new selection remains discoverable.
     midnight:
-      given: The active Today view contains an open Issue created yesterday and a PR merged earlier in the current local day.
+      given: The active Today view contains an open Issue created yesterday and a PR merged earlier in
+        the current local day.
       when: The device moves to the next local day and the selection is recalculated.
-      then: The open Issue remains eligible, while the prior-day merged PR is not kept in the new Today solely because of that earlier merge.
+      then: The open Issue remains eligible, while the prior-day merged PR is not kept in the new Today
+        solely because of that earlier merge.
     preview_at_boundary:
       given: A PR preview is open from Today and the PR will not match the next local day.
       when: The local day changes.
-      then: The preview remains associated with the same PR; after dismissal the refreshed collection and fallback position follow 0024.
+      then: The preview remains associated with the same PR; after dismissal the refreshed collection
+        and fallback position follow 0024.
     new_day_unobserved:
-      given: The local day changes but current observations do not establish complete coverage for the new day.
+      given: The local day changes but current observations do not establish complete coverage for the
+        new day.
       when: Today is shown.
       then: Known eligible work can be shown with incomplete coverage and no confirmed empty day is asserted.
     created_only:
-      given: A source response has fully retrieved items created today but did not establish the set of currently open older PRs and Issues.
+      given: A source response has fully retrieved items created today but did not establish the set of
+        currently open older PRs and Issues.
       when: The app evaluates whether Today has complete coverage.
-      then: The created-today subset is insufficient to claim that the Today selection is complete or empty.
+      then: The created-today subset is insufficient to claim that the Today selection is complete or
+        empty.
     added_member:
-      given: Today was completely observed for a Project containing Repository A, and Repository B is then added without a Today observation for B.
+      given: Today was completely observed for a Project containing Repository A, and Repository B is
+        then added without a Today observation for B.
       when: The Project's Today selection is displayed.
-      then: A's observations retain their original context, while the expanded Project selection is incomplete or unknown until B's required scope is sufficiently observed; the previous complete time is not represented as complete for A and B.
+      then: A's observations retain their original context, while the expanded Project selection is incomplete
+        or unknown until B's required scope is sufficiently observed; the previous complete time is not
+        represented as complete for A and B.
     saved_edit_during_filtered_selection:
       given: Today is filtered to failed CI for saved Project members A and B, and C has no CI observation.
-      when: The operator saves an edit replacing B with C while an earlier calculation for A and B is still finishing.
-      then: The failed-CI filter and period remain selected, B is not included as a current Project member, C's unknown CI does not become a confirmed non-match, and the former calculation is not presented as an exhaustive A and C result.
+      when: The operator saves an edit replacing B with C while an earlier calculation for A and B is
+        still finishing.
+      then: The failed-CI filter and period remain selected, B is not included as a current Project member,
+        C's unknown CI does not become a confirmed non-match, and the former calculation is not presented
+        as an exhaustive A and C result.
     time_zone:
       given: A source timestamp lies on different local dates in the old and new device time zones.
       when: The device time zone changes while Today is active.
-      then: Today is evaluated using the new local boundaries and the stored source timestamp remains unchanged.
+      then: Today is evaluated using the new local boundaries and the stored source timestamp remains
+        unchanged.
     exact_boundary:
-      given: A source-confirmed merge occurs exactly at the next local day start for a captured calendar and time-zone context.
+      given: A source-confirmed merge occurs exactly at the next local day start for a captured calendar
+        and time-zone context.
       when: The earlier and later dynamic day selections are independently evaluated.
-      then: The event is excluded from the earlier half-open day and included in the later day on its event time; it is not duplicated by a closed interval containment helper.
+      then: The event is excluded from the earlier half-open day and included in the later day on its
+        event time; it is not duplicated by a closed interval containment helper.
     dst_calendar_day:
-      given: In a time zone whose local calendar advances clocks during one day and reverses them during another, each day is evaluated with its own captured calendar context.
+      given: In a time zone whose local calendar advances clocks during one day and reverses them during
+        another, each day is evaluated with its own captured calendar context.
       when: Day boundaries are calculated around those transitions.
-      then: The actual local calendar boundaries are used even when the elapsed day is shorter or longer than 24 hours, with no duplicated or missing boundary instant caused by fixed-duration arithmetic.
+      then: The actual local calendar boundaries are used even when the elapsed day is shorter or longer
+        than 24 hours, with no duplicated or missing boundary instant caused by fixed-duration arithmetic.
     old_day_result_arrives_late:
-      given: A Today calculation was started before the local day changed and another calculation for the new day has become active.
+      given: A Today calculation was started before the local day changed and another calculation for
+        the new day has become active.
       when: The older calculation returns after the newer context was selected.
-      then: Its result retains its earlier interval and cannot be presented as the new day's selection or overwrite it solely due to arrival order.
+      then: Its result retains its earlier interval and cannot be presented as the new day's selection
+        or overwrite it solely due to arrival order.
     day_change_filter_edit_and_late_result:
-      given: A failed-CI Today selection starts calculating before the local day changes. After the change, the operator explicitly clears that filter and the new unfiltered Today context becomes active while a partial refresh is still in flight.
-      when: The old filtered calculation finishes after the filter edit and the refresh returns facts for only some Repositories.
-      then: The old calculation cannot reapply the cleared filter or be relabeled as the new day's selection. Applicable permitted source facts retain their own scopes and observation times; the new unfiltered selection is recomputed under its actual membership and day, with missing coverage visible rather than treated as an empty complete result. Returning from an open object preserves the explicit edit and follows the current dynamic Today context under 0024.
+      given: A failed-CI Today selection starts calculating before the local day changes. After the change,
+        the operator explicitly clears that filter and the new unfiltered Today context becomes active
+        while a partial refresh is still in flight.
+      when: The old filtered calculation finishes after the filter edit and the refresh returns facts
+        for only some Repositories.
+      then: The old calculation cannot reapply the cleared filter or be relabeled as the new day's selection.
+        Applicable permitted source facts retain their own scopes and observation times; the new unfiltered
+        selection is recomputed under its actual membership and day, with missing coverage visible rather
+        than treated as an empty complete result. Returning from an open object preserves the explicit
+        edit and follows the current dynamic Today context under 0024.
     active_pinch:
       given: The operator is pinching a Today grid when the local calendar day changes.
       when: The new day's selection is calculated while the pinch remains active.
-      then: The old arrangement is not silently claimed as the current day and disruptive reordering is deferred until the gesture ends or is cancelled; Project, filter and selected identity remain intact where valid.
+      then: The old arrangement is not silently claimed as the current day and disruptive reordering is
+        deferred until the gesture ends or is cancelled; Project, filter and selected identity remain
+        intact where valid.
     day_change_and_denial:
-      given: A private PR is visible during a pinch as the local day changes and ordinary grid reordering is deferred.
-      when: Explicit access denial for that PR's private facts is established before the gesture ends.
-      then: Restricted visual and app-controlled accessible content is removed without waiting for the gesture, the old arrangement is not presented as the complete new Today, and permitted content and an access-safe recovery route remain available.
+      given: A private PR is visible during a pinch as the local day changes and ordinary grid reordering
+        is deferred.
+      when: Revocation of the PR private Repository is confirmed before the gesture ends.
+      then: Saved local content remains visible and accessible with the revocation indication and supported
+        time when known under 0019 without waiting for the gesture. The old arrangement is not presented
+        as complete new Today; ordinary sync stops and recovery remains available.
   unresolved:
-  - Validate the 0069 fixed historical period proposal across time-zone changes and long-running navigation on the native interface.
+  - Validate the 0069 fixed historical period proposal across time-zone changes and long-running navigation
+    on the native interface.
   - Exact accessible indication and native implementation of a deferred visual update require device evaluation.
-  - Source-specific evidence and query boundaries sufficient to prove each required scope remain to be established without assuming a fixed API budget.
+  - Source-specific evidence and query boundaries sufficient to prove each required scope remain to be
+    established without assuming a fixed API budget.

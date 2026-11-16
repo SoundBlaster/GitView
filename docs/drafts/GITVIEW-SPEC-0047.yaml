@@ -5,7 +5,8 @@ created_at: '2026-11-14T14:03:00Z'
 status: idea
 draft_status: pre_canonical
 canonical_successor: specs/nodes/GITVIEW-SPEC-0047.yaml
-successor_scope: The successor records the selected Project summary and bounded overview outcomes. Detailed metric, navigation, access and default-layout contracts remain noncanonical candidates.
+successor_scope: The successor records the selected Project summary and bounded overview outcomes. Detailed
+  metric, navigation, access and default-layout contracts remain noncanonical candidates.
 refines:
 - GITVIEW-SPEC-0004
 depends_on:
@@ -34,15 +35,24 @@ sources:
   project_summary: docs/drafts/project-summary-proposal.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- The main overview represents each saved GitView Project and identifies it where its identifying information is permitted to be shown, without treating a GitHub organization as a Project.
+- The main overview represents each saved GitView Project and identifies it where its identifying information
+  is permitted to be shown, without treating a GitHub organization as a Project.
 - Available work counts, attention signals and period outcomes retain their meaning, scope and coverage.
 - Opening a Project or one of its actionable signals preserves Project and source Repository context.
-- A Project with incomplete observations remains represented and cannot be mistaken for confirmed empty or healthy work.
-- The operator can reach Repository discovery for default setup and edit an identifiable saved Project without losing unrelated saved Projects; a separately identified custom-Project creation route is an agent-authored candidate.
-- The agreed Project summary and eligible metric history remain inspectable from the Project context even when a compact cell cannot display them all.
+- A Project with incomplete observations remains represented and cannot be mistaken for confirmed empty
+  or healthy work.
+- The operator can reach Repository discovery for default setup and edit an identifiable saved Project
+  without losing unrelated saved Projects; a separately identified custom-Project creation route is an
+  agent-authored candidate.
+- The agreed Project summary and eligible metric history remain inspectable from the Project context even
+  when a compact cell cannot display them all.
 specification:
-  current_intent_boundary: Today means current work. References below to a calendar-day Today population or historical outcome object navigation are earlier or optional candidates, not mandatory first-version scope. Historical aggregate metrics and applicable disclosure, coverage and source identity remain in scope.
-  objective: Help the operator survey Projects, notice relevant work and enter the selected scope without losing identity or data limitations.
+  current_intent_boundary: Today means current work. References below to a calendar-day Today population
+    or historical outcome object navigation are earlier or optional candidates, not mandatory first-version
+    scope. Historical aggregate metrics and applicable disclosure, coverage and source identity remain
+    in scope.
+  objective: Help the operator survey Projects, notice relevant work and enter the selected scope without
+    losing identity or data limitations.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -50,92 +60,299 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    downstream_refinements: References below to 0072, 0074, 0092, 0094 and 0112 identify later refinements or collaborating contracts, not prerequisites that this parent must depend on. Those candidates themselves reach this specification through refinement or dependencies, so adding reciprocal prerequisite edges would create cycles. The local-read product requirements are stated here and in 0023; 0104 is one composed technical candidate that can satisfy them if its default-association design is selected. A review of an assembled overview must assess applicable downstream contracts and whichever local-read and setup contracts are selected; this parent's prerequisite closure alone is not the complete user journey.
-    collection: The main overview concerns locally saved GitView Projects. It does not equate a Project with a GitHub organization or GitHub Projects feature. A local Project can include repositories from different organizations and a Repository can occur in multiple Projects.
-    portfolio_read_composition: Assemble the overview from a supported local portfolio read, Project ordering under 0072, independently scoped summary observations under 0046 and current disclosure under 0036. Complete local identity enumeration is not proof that each Project configuration, source observation or displayed metric is complete; an unreadable Project configuration does not turn its established identity into an empty Project or make it disappear from the underlying saved collection. Show independently supported entries and a safe, discoverable local limitation when applicable. An empty setup state requires a supported complete local identity enumeration with no saved identities; source failure, an incomplete enumeration or a restricted representation is not sufficient. A later applicable read updates the retained overview under 0024 and 0072 without a late earlier result replacing it, resetting the operator's explicit position or presenting inaccessible details. Candidate 0104 proposes one technical read contract; an alternative must independently establish these outcomes, and ordering remains a downstream refinement.
-    manage_projects: The overview offers an accessible route to add default Projects from Repository discovery under 0022 and manage saved Project composition. If the proposed default-association setup is selected, its specific confirmation and recovery follow 0045. Under the agent-authored custom-creation candidate, it also offers a distinguishable route to explicitly create a custom Project under 0025. Applicable routes remain reachable when Projects already exist; a confirmed empty collection offers a route into setup under 0022. Beginning a route does not itself create a Project or alter the existing portfolio. The custom route, exact control, placement and whether routes share intermediate screens remain open.
-    edit_project_route: As an agent-authored first-version navigation choice, an identifiable saved Project offers an accessible route from its portfolio representation to the Project editor under 0025, even at compact density via an associated accessible action or a more detailed representation. Identify the captured local Project and confirmed base rather than selecting by displayed name. The editor changes only the explicitly saved local Project configuration; shared Repositories and other Projects are not edited as a side effect. Cancel and return follow 0025 and 0072; an uncertain or changed saved state is handled through the applicable recovery or conflict path rather than described as a successful edit. Apply current disclosure before showing identity or membership; do not make long press or color the only path. Exact control and placement remain open.
-    delete_project_route: An identifiable permitted Project provides an accessible route to the separate local deletion review in 0025. The action and confirmation must identify the actual Project rather than relying on its possibly nonunique name, and explain the local scope without exposing restricted membership. Cancellation preserves the saved Project; a confirmed or indeterminate deletion follows 0025 and 0024. Removing a Project is not a GitHub Repository deletion or a global history-clear action.
-    entry: Each Project representation exposes its name and member Repository count where known and permitted, and makes available selected work counts, attention signals and period outcomes according to space, coverage and access. When a Project name or another identifying detail derives from restricted private source data, do not expose that detail solely to identify the entry; provide a non-sensitive representation and a route to understand or resolve the access problem. Exact visual arrangement and default density remain subject to product and native design refinement.
-    compact_project_identity: At compact density, preserve a perceivable way to identify and open each permitted Project, including its name and member count when those values are available and can be meaningfully presented. When they do not fit, a clearly associated inspection or less-dense route exposes them without relying exclusively on long press, color or precise tiny text. Equal or truncated names do not establish identity; distinguish permitted Projects through their local identity and enough allowed context before acting. Restricted details are not exposed to force visual distinction, and no private count is inferred from a neutral representation.
-    initial_portfolio_presentation: As an agent-authored starting proposal for a new portfolio context, use a compact Project grid targeting two entries across on a representative iPhone when names, controls and accessible text remain usable. Adapt the number of columns and cell height to available width, localization and text settings; two columns are not a fixed requirement or a reason to truncate the only usable identification. Use the Project order from 0072. This is the Projects level, distinct from the roughly eight-across work-grid target in 0074. The operator can change density without entering a Project, and the selected density remains associated with the retained overview route under 0074. Exact dimensions, animation, visual style and platform component require native validation.
-    initial_cell_priority: In the starting portfolio presentation, make each permitted Project identifiable and openable first. Where supported and allowed, next expose its member Repository count and separately labeled open-PR and open-Issue counts, followed by a failed-CI attention signal counting affected open PRs under 0057. These are independent values, not a single Project health score or a count of independent tasks. Each number keeps its unit, observation context and completeness available under summary_presentation_candidate. A count may be a safe complete zero, a qualified observed subset or unavailable according to its own evidence; unavailable data must not be omitted in a way that represents it as zero or healthy. Where all these details cannot fit, preserve a clearly associated accessible summary route and its limitations rather than shrinking text below usable size or disclosing restricted information. Other supported review and outcome signals remain reachable through the Project summary and do not become absent merely because the initial cell omits them.
-    restricted_member_entry: When saved membership is known but disclosure of some member identities or counts is restricted, apply 0074 and 0064 before projecting the Project cell, its navigation or summary. An independently supported permitted subset may be offered with a safe limitation, without exposing a restricted member through cardinality, a per-member placeholder or subtraction from a retained total. Keep the internal Project and its membership intact and do not present the visible subset as the entire Project. A Project-level limitation is used only where it is itself permitted and non-revealing; avoid claiming that all source work is available or that a hidden category is zero.
-    partial_access_restoration: When access to a previously restricted member is re-established only for selected facts or categories, reevaluate the Project representation and each summary input independently under 0112. Newly supported permitted Repository metadata may identify that member where safe, while older unvalidated PR, Issue, CI, review and historical facts remain restricted or unknown. Preserve the actual observation times and coverage of all inputs; do not advance a Project-wide last-success time, expose a previously restricted aggregate or call the Project fully current merely because connection, installation or metadata succeeded. A newly observed current zero remains scoped to the category and evidence that support it, not to the whole Project or its history.
-    summary_reachability: From an identifiable Project, the operator can reach the agreed Project-wide summary even when the cell, accessible label or static preview shows only a subset. Where supported and permitted, it makes separately inspectable the member count and coverage, open PRs and draft subset, open Issues, failed CI, source review required, outstanding review requests, changes requested, unresolved threads and affected PRs, blocked Issues, and merged PR and Issue closure outcomes for a stated period under 0057. Unknown, partial, stale and restricted inputs retain their own limits. The optional checks-and-review-passed selection remains conditional on its own chosen predicate; omission of a signal from a compact cell does not mean zero, healthy or absent.
-    summary_presentation_candidate: As an agent-authored first-version presentation contract, present each reachable metric with its named condition and unit. A supported complete numeric result may show its number including zero, with an accessible route to its actual observation context. A safe observed subset may show its observed count only with an associated qualifier identifying it as observed and incomplete; it must not be labeled as the complete Project total or automatically as a lower bound on the current value. When no permitted numeric result is supported, show a nonnumeric unavailable or unknown state, not zero or a success mark. A visually displayed subset needs a visible, non-color-only indication associated with that value and a reachable explanation; an accessibility-only label does not qualify an otherwise ambiguous number for sighted users. If the compact cell cannot carry a usable indication, omit the numeric subset there and make the qualified value reachable in the summary instead. The accessibility representation conveys the same unit and limitation without requiring vision. Exact localized wording, indicator and native control choice remain open.
-    summary_refresh_candidate: A refresh in progress is an operation state, not an observed metric value. Continue showing eligible last-known values with their actual context where safe and distinguish the pending refresh; if no eligible prior value exists, show a loading or unavailable state without inventing zero. After partial success or failure, keep each metric's supported value and relevant observation time separate from the attempt outcome. The summary provides an accessible limitation and refresh or recovery route where applicable; a successful refresh of one member or category does not give every other metric a new observation time. A common visual timestamp may describe the attempt only when labeled as such, not as the last successful observation of all contents.
-    summary_accessible_equivalence: The visible metric, VoiceOver or other accessibility representation, preview and supported share output must carry equivalent unit, scope and uncertainty when each is permitted. Do not encode a known zero, partial coverage or failure solely through color or an icon; focusable inspection offers the meaning and applicable recovery without requiring a gesture unavailable to the operator. A restricted value or member count stays absent from every surface, and a generic limitation must not disclose a hidden Repository through subtraction or a one-to-one placeholder. Presentation adapts to available space and Dynamic Type rather than removing the only path to the meaning.
-    today_progress: From the Project context make the applicable dynamic Today lifecycle breakdown under 0057 inspectable alongside its scope, filters and evidence. A compact cell need not fit every category. It is separate from period outcome counts, historical series and a fixed PR cohort; it is not labeled a burn-down trend from a single current observation.
-    metric_history_route: From an identifiable permitted Project context, the operator can reach its history surface and selected summary metric catalog even when usable history has not yet been established, subject to safe disclosure under 0036. Supported permitted history can be inspected; otherwise identify the affected series or history as unavailable or incomplete without inventing a zero, connecting unsupported points or claiming that a chart exists for an unsupported series. Opening the surface does not itself prove that a history sample was recorded or that a source refresh succeeded. A series retains its metric, subject, unit, period, membership basis, time and access context under 0057, 0064 and 0065. Summary and history navigation remain accessible without long press, pinch or color alone; exact chart choice and placement remain open.
-    layout_and_refresh: A density change may alter how much of the same Project summary is immediately visible but does not alter the Project, period, predicates, observations or coverage. A newly observed signal may change a displayed value under the update rules; neither a hidden signal nor a separate successful category makes other categories current. Avoid a generic all-clear based only on visible fields. Preserve the original Project and actual route when opening a summary, metric history or signal selection and returning under 0024 and 0092.
-    units: Open PRs, open Issues, failed checks, affected PRs, review attention and period outcomes remain distinct units under 0029. A single indicator must not imply that one PR is multiple independent work items or that a Project is merge-ready.
-    selection: Opening a Project enters that same Project. If its complete valid saved membership is established as exactly one Repository under 0074, work is reachable without a duplicate Project/Repository screen while both identities remain distinct. A multi-repository Project exposes its members and an appropriate path to each member's work under 0006.
-    signal: An actionable signal can open a filtered work collection in the originating Project. The active condition, any applicable period, and Project remain identifiable; when work comes from several Repositories, its source is distinguishable. Today describes current work without requiring a calendar-day interval. If historical outcome drill-down is selected, its signal retains its captured period under 0092 and 0056. Unknown inputs and partial coverage follow 0027 and 0046 rather than being presented as a complete filtered list. Candidate 0092 refines what happens when the operator explicitly changes that initial condition.
-    signal_unit: The destination is a work-object collection, not necessarily a list of the metric's counted units. Where the source counts individual checks, threads or events, identify the distinct PR or Issue unit in the destination and retain the originating condition and period under 0029. Do not imply that the number of cards must equal a count expressed in another unit.
-    failed_ci_signal: The Project's failure-category count and its destination use the same working status-check classification under 0061 and preserve the originating Project scope and open-PR condition unless the operator explicitly changes the selection. The origin retains its actual observation context; a destination evaluated after refresh uses its own current applicable evidence and may differ in value, coverage or time under 0092. A timeout or status error is not relabeled as a failed test; a special outcome outside the failure count is not thereby represented as healthy.
-    review_signal: Source review-required, requested-review, changes-requested and unresolved-thread signals preserve their independently named condition and open-PR scope under 0062. The origin retains its observation context; a later destination evaluation retains its own context under 0092 rather than being forced to reproduce an earlier count. A thread-count signal can lead to fewer distinct PR cards than threads; absence or uncertainty in one review fact does not decide another.
-    older_comment_signal: If the optional candidate 0094 is selected, its age-based attention proxy has a label or accessible explanation that identifies an unresolved thread with a submitted comment at least 24 elapsed hours old. Opening it retains the originating Project, open-PR scope, distinct thread or affected-PR unit, threshold and reference-time context; 0092 describes reevaluation in the destination. A qualifying older comment is not described as proof of continuous unresolved time, inactivity or an outstanding reply. If the compact representation cannot fit this meaning, make it accessible through its associated summary or signal inspection without requiring color or long press. Unknown or restricted inputs do not become a zero or a disclosed private count.
-    blocked_issue_signal: A blocked-Issue signal counts affected open Issues and opens those Issues, not their blockers, under 0063. A direct blocker outside Project membership does not expand that membership; inaccessible dependency information stays restricted or uncertain.
-    historical_signal: A historical outcome signal that opens distinct work objects retains the event condition, scope and period under 0056; a currently reopened Issue may still qualify for an earlier closure. If the destination cannot support the original condition or its evidence is incomplete, expose that limitation.
-    signal_update: A refreshed or partially loaded destination may differ from the observation underlying the originating signal. Its coverage and relevant observation context remain identifiable; unknown or restricted data is not displayed as an empty or healthy result.
-    observations: An unobserved category remains unknown, partial and failed scopes remain identifiable, and stale data retains its observation context. Explicit denial follows 0036; no restricted private content or derived count is exposed as a healthy zero.
-    restricted_aggregation: Apply the conservative input-provenance and differential-disclosure policy of 0064 to current summary values as well as history. A persisted total containing a now-restricted input is not exposed alongside a permitted subset; an independently supported permitted subset may remain available under its safe scope and coverage. Do not reveal restricted membership counts, source names or exact contributions through labels, accessibility, navigation or sharing.
-    scale_and_access: Density can change without altering the selected Project set or its accounting. Essential identification, navigation and refresh do not depend only on pinch, long press or color; accessible behavior follows 0032 and 0035.
-    provenance: Multiple Projects, summary signals and a compact Apple-style overview follow the owner's product direction. Exact distribution of fields across densities and control placement remain agent-independent design questions.
+    downstream_refinements: References below to 0072, 0074, 0092, 0094 and 0112 identify later refinements
+      or collaborating contracts, not prerequisites that this parent must depend on. Those candidates
+      themselves reach this specification through refinement or dependencies, so adding reciprocal prerequisite
+      edges would create cycles. The local-read product requirements are stated here and in 0023; 0104
+      is one composed technical candidate that can satisfy them if its default-association design is selected.
+      A review of an assembled overview must assess applicable downstream contracts and whichever local-read
+      and setup contracts are selected; this parent's prerequisite closure alone is not the complete user
+      journey.
+    collection: The main overview concerns locally saved GitView Projects. It does not equate a Project
+      with a GitHub organization or GitHub Projects feature. A local Project can include repositories
+      from different organizations and a Repository can occur in multiple Projects.
+    portfolio_read_composition: Assemble the overview from a supported local portfolio read, Project ordering
+      under 0072, independently scoped summary observations under 0046 and current disclosure under 0036.
+      Complete local identity enumeration is not proof that each Project configuration, source observation
+      or displayed metric is complete; an unreadable Project configuration does not turn its established
+      identity into an empty Project or make it disappear from the underlying saved collection. Show independently
+      supported entries and a safe, discoverable local limitation when applicable. An empty setup state
+      requires a supported complete local identity enumeration with no saved identities; source failure,
+      an incomplete enumeration or a restricted representation is not sufficient. A later applicable read
+      updates the retained overview under 0024 and 0072 without a late earlier result replacing it, resetting
+      the operator's explicit position or presenting inaccessible details. Candidate 0104 proposes one
+      technical read contract; an alternative must independently establish these outcomes, and ordering
+      remains a downstream refinement.
+    manage_projects: The overview offers an accessible route to add default Projects from Repository discovery
+      under 0022 and manage saved Project composition. If the proposed default-association setup is selected,
+      its specific confirmation and recovery follow 0045. Under the agent-authored custom-creation candidate,
+      it also offers a distinguishable route to explicitly create a custom Project under 0025. Applicable
+      routes remain reachable when Projects already exist; a confirmed empty collection offers a route
+      into setup under 0022. Beginning a route does not itself create a Project or alter the existing
+      portfolio. The custom route, exact control, placement and whether routes share intermediate screens
+      remain open.
+    edit_project_route: As an agent-authored first-version navigation choice, an identifiable saved Project
+      offers an accessible route from its portfolio representation to the Project editor under 0025, even
+      at compact density via an associated accessible action or a more detailed representation. Identify
+      the captured local Project and confirmed base rather than selecting by displayed name. The editor
+      changes only the explicitly saved local Project configuration; shared Repositories and other Projects
+      are not edited as a side effect. Cancel and return follow 0025 and 0072; an uncertain or changed
+      saved state is handled through the applicable recovery or conflict path rather than described as
+      a successful edit. Apply current disclosure before showing identity or membership; do not make long
+      press or color the only path. Exact control and placement remain open.
+    delete_project_route: An identifiable permitted Project provides an accessible route to the separate
+      local deletion review in 0025. The action and confirmation must identify the actual Project rather
+      than relying on its possibly nonunique name, and explain the local scope without exposing restricted
+      membership. Cancellation preserves the saved Project; a confirmed or indeterminate deletion follows
+      0025 and 0024. Removing a Project is not a GitHub Repository deletion or a global history-clear
+      action.
+    entry: Each Project representation exposes its saved name, known member count and supported summaries
+      with scope, coverage and access context. Confirmed GitHub revocation alone does not hide an already
+      saved Project name or member under 0019; show a revocation indication and supported time when known
+      and keep recovery or explicit local deletion accessible. Unknown source data is not invented. Other
+      account and external sharing questions remain separate.
+    compact_project_identity: At compact density, preserve a perceivable way to identify and open each
+      permitted Project, including its name and member count when those values are available and can be
+      meaningfully presented. When they do not fit, a clearly associated inspection or less-dense route
+      exposes them without relying exclusively on long press, color or precise tiny text. Equal or truncated
+      names do not establish identity; distinguish permitted Projects through their local identity and
+      enough allowed context before acting. Restricted details are not exposed to force visual distinction,
+      and no private count is inferred from a neutral representation.
+    initial_portfolio_presentation: As an agent-authored starting proposal for a new portfolio context,
+      use a compact Project grid targeting two entries across on a representative iPhone when names, controls
+      and accessible text remain usable. Adapt the number of columns and cell height to available width,
+      localization and text settings; two columns are not a fixed requirement or a reason to truncate
+      the only usable identification. Use the Project order from 0072. This is the Projects level, distinct
+      from the roughly eight-across work-grid target in 0074. The operator can change density without
+      entering a Project, and the selected density remains associated with the retained overview route
+      under 0074. Exact dimensions, animation, visual style and platform component require native validation.
+    initial_cell_priority: In the starting portfolio presentation, make each permitted Project identifiable
+      and openable first. Where supported and allowed, next expose its member Repository count and separately
+      labeled open-PR and open-Issue counts, followed by a failed-CI attention signal counting affected
+      open PRs under 0057. These are independent values, not a single Project health score or a count
+      of independent tasks. Each number keeps its unit, observation context and completeness available
+      under summary_presentation_candidate. A count may be a safe complete zero, a qualified observed
+      subset or unavailable according to its own evidence; unavailable data must not be omitted in a way
+      that represents it as zero or healthy. Where all these details cannot fit, preserve a clearly associated
+      accessible summary route and its limitations rather than shrinking text below usable size or disclosing
+      restricted information. Other supported review and outcome signals remain reachable through the
+      Project summary and do not become absent merely because the initial cell omits them.
+    restricted_member_entry: A valid saved Project keeps its saved membership and local inspection route.
+      Confirmed GitHub revocation alone does not hide a previously saved member identity or work under
+      0019; indicate the revocation and supported update time when known. Do not invent unobserved member
+      data or claim complete source coverage. Other independently applicable account and disclosure questions
+      remain separate.
+    partial_access_restoration: When access is re-established only for selected facts, reevaluate each
+      summary input under 0112. On confirmed revocation previously saved PR, Issue, CI, review and historical
+      facts remain locally visible as last known under 0019 with their own supported times, coverage and
+      applicable revocation indication. A successful metadata read does not make unreturned facts newly
+      current, advance the Project-wide success time or prove complete source coverage. Other account
+      and sharing boundaries remain separate.
+    summary_reachability: From an identifiable Project, the operator can reach the agreed Project-wide
+      summary even when the cell, accessible label or static preview shows only a subset. Where supported
+      and permitted, it makes separately inspectable the member count and coverage, open PRs and draft
+      subset, open Issues, failed CI, source review required, outstanding review requests, changes requested,
+      unresolved threads and affected PRs, blocked Issues, and merged PR and Issue closure outcomes for
+      a stated period under 0057. Unknown, partial, stale and restricted inputs retain their own limits.
+      The optional checks-and-review-passed selection remains conditional on its own chosen predicate;
+      omission of a signal from a compact cell does not mean zero, healthy or absent.
+    summary_presentation_candidate: As an agent-authored first-version presentation contract, present
+      each reachable metric with its named condition and unit. A supported complete numeric result may
+      show its number including zero, with an accessible route to its actual observation context. A safe
+      observed subset may show its observed count only with an associated qualifier identifying it as
+      observed and incomplete; it must not be labeled as the complete Project total or automatically as
+      a lower bound on the current value. When no permitted numeric result is supported, show a nonnumeric
+      unavailable or unknown state, not zero or a success mark. A visually displayed subset needs a visible,
+      non-color-only indication associated with that value and a reachable explanation; an accessibility-only
+      label does not qualify an otherwise ambiguous number for sighted users. If the compact cell cannot
+      carry a usable indication, omit the numeric subset there and make the qualified value reachable
+      in the summary instead. The accessibility representation conveys the same unit and limitation without
+      requiring vision. Exact localized wording, indicator and native control choice remain open.
+    summary_refresh_candidate: A refresh in progress is an operation state, not an observed metric value.
+      Continue showing eligible last-known values with their actual context where safe and distinguish
+      the pending refresh; if no eligible prior value exists, show a loading or unavailable state without
+      inventing zero. After partial success or failure, keep each metric's supported value and relevant
+      observation time separate from the attempt outcome. The summary provides an accessible limitation
+      and refresh or recovery route where applicable; a successful refresh of one member or category does
+      not give every other metric a new observation time. A common visual timestamp may describe the attempt
+      only when labeled as such, not as the last successful observation of all contents.
+    summary_accessible_equivalence: Visual metrics, VoiceOver, preview and other applicable surfaces preserve
+      equivalent supported unit, scope, time and uncertainty. Confirmed GitHub revocation alone does not
+      hide saved local values or counts under 0019; provide accessible revocation indication and recovery.
+      Do not convey zero, coverage or errors solely by color. External sharing and independently applicable
+      account boundaries remain separate.
+    today_progress: From the Project context make the applicable dynamic Today lifecycle breakdown under
+      0057 inspectable alongside its scope, filters and evidence. A compact cell need not fit every category.
+      It is separate from period outcome counts, historical series and a fixed PR cohort; it is not labeled
+      a burn-down trend from a single current observation.
+    metric_history_route: From an identifiable permitted Project context, the operator can reach its history
+      surface and selected summary metric catalog even when usable history has not yet been established,
+      subject to safe disclosure under 0036. Supported permitted history can be inspected; otherwise identify
+      the affected series or history as unavailable or incomplete without inventing a zero, connecting
+      unsupported points or claiming that a chart exists for an unsupported series. Opening the surface
+      does not itself prove that a history sample was recorded or that a source refresh succeeded. A series
+      retains its metric, subject, unit, period, membership basis, time and access context under 0057,
+      0064 and 0065. Summary and history navigation remain accessible without long press, pinch or color
+      alone; exact chart choice and placement remain open.
+    layout_and_refresh: A density change may alter how much of the same Project summary is immediately
+      visible but does not alter the Project, period, predicates, observations or coverage. A newly observed
+      signal may change a displayed value under the update rules; neither a hidden signal nor a separate
+      successful category makes other categories current. Avoid a generic all-clear based only on visible
+      fields. Preserve the original Project and actual route when opening a summary, metric history or
+      signal selection and returning under 0024 and 0092.
+    units: Open PRs, open Issues, failed checks, affected PRs, review attention and period outcomes remain
+      distinct units under 0029. A single indicator must not imply that one PR is multiple independent
+      work items or that a Project is merge-ready.
+    selection: Opening a Project enters that same Project. If its complete valid saved membership is established
+      as exactly one Repository under 0074, work is reachable without a duplicate Project/Repository screen
+      while both identities remain distinct. A multi-repository Project exposes its members and an appropriate
+      path to each member's work under 0006.
+    signal: An actionable signal can open a filtered work collection in the originating Project. The active
+      condition, any applicable period, and Project remain identifiable; when work comes from several
+      Repositories, its source is distinguishable. Today describes current work without requiring a calendar-day
+      interval. If historical outcome drill-down is selected, its signal retains its captured period under
+      0092 and 0056. Unknown inputs and partial coverage follow 0027 and 0046 rather than being presented
+      as a complete filtered list. Candidate 0092 refines what happens when the operator explicitly changes
+      that initial condition.
+    signal_unit: The destination is a work-object collection, not necessarily a list of the metric's counted
+      units. Where the source counts individual checks, threads or events, identify the distinct PR or
+      Issue unit in the destination and retain the originating condition and period under 0029. Do not
+      imply that the number of cards must equal a count expressed in another unit.
+    failed_ci_signal: The Project's failure-category count and its destination use the same working status-check
+      classification under 0061 and preserve the originating Project scope and open-PR condition unless
+      the operator explicitly changes the selection. The origin retains its actual observation context;
+      a destination evaluated after refresh uses its own current applicable evidence and may differ in
+      value, coverage or time under 0092. A timeout or status error is not relabeled as a failed test;
+      a special outcome outside the failure count is not thereby represented as healthy.
+    review_signal: Source review-required, requested-review, changes-requested and unresolved-thread signals
+      preserve their independently named condition and open-PR scope under 0062. The origin retains its
+      observation context; a later destination evaluation retains its own context under 0092 rather than
+      being forced to reproduce an earlier count. A thread-count signal can lead to fewer distinct PR
+      cards than threads; absence or uncertainty in one review fact does not decide another.
+    older_comment_signal: If the optional candidate 0094 is selected, its age-based attention proxy has
+      a label or accessible explanation that identifies an unresolved thread with a submitted comment
+      at least 24 elapsed hours old. Opening it retains the originating Project, open-PR scope, distinct
+      thread or affected-PR unit, threshold and reference-time context; 0092 describes reevaluation in
+      the destination. A qualifying older comment is not described as proof of continuous unresolved time,
+      inactivity or an outstanding reply. If the compact representation cannot fit this meaning, make
+      it accessible through its associated summary or signal inspection without requiring color or long
+      press. Unknown or restricted inputs do not become a zero or a disclosed private count.
+    blocked_issue_signal: A blocked-Issue signal counts affected open Issues and opens those Issues, not
+      their blockers, under 0063. A direct blocker outside Project membership does not expand that membership;
+      inaccessible dependency information stays restricted or uncertain.
+    historical_signal: A historical outcome signal that opens distinct work objects retains the event
+      condition, scope and period under 0056; a currently reopened Issue may still qualify for an earlier
+      closure. If the destination cannot support the original condition or its evidence is incomplete,
+      expose that limitation.
+    signal_update: A refreshed or partially loaded destination may differ from the observation underlying
+      the originating signal. Its coverage and relevant observation context remain identifiable; unknown
+      or restricted data is not displayed as an empty or healthy result.
+    observations: An unobserved category remains unknown, partial and failed scopes remain identifiable,
+      and stale data retains its observation context. Explicit denial follows 0036; no restricted private
+      content or derived count is exposed as a healthy zero.
+    restricted_aggregation: Previously saved supported local summaries remain visible as last known after
+      confirmed private Repository revocation under 0019 with their own time, scope, coverage and applicable
+      indication. A later partial refresh does not make them newly current. Do not infer a missing contribution
+      or treat unknown inputs as zero. Account isolation and external sharing remain separate.
+    scale_and_access: Density can change without altering the selected Project set or its accounting.
+      Essential identification, navigation and refresh do not depend only on pinch, long press or color;
+      accessible behavior follows 0032 and 0035.
+    provenance: Multiple Projects, summary signals and a compact Apple-style overview follow the owner's
+      product direction. Exact distribution of fields across densities and control placement remain agent-independent
+      design questions.
   scenarios:
     partial_configuration_then_operator_moves:
-      given: Local identity enumeration establishes Projects P and Q; P's configuration is readable while Q's is temporarily unreadable. The operator opens P, returns to the overview and deliberately moves focus or position to P while an older portfolio read remains in flight.
+      given: Local identity enumeration establishes Projects P and Q; P's configuration is readable while
+        Q's is temporarily unreadable. The operator opens P, returns to the overview and deliberately
+        moves focus or position to P while an older portfolio read remains in flight.
       when: A newer applicable read establishes Q's configuration and is shown, then the older read completes.
-      then: Q may become available under its own current access and configuration, P remains the operator's chosen position where valid, and the old result cannot hide Q again or describe the portfolio as empty. Neither local read proves either Project's GitHub work or metrics are current.
+      then: Q may become available under its own current access and configuration, P remains the operator's
+        chosen position where valid, and the old result cannot hide Q again or describe the portfolio
+        as empty. Neither local read proves either Project's GitHub work or metrics are current.
     initial_portfolio_density_and_summary:
-      given: A new portfolio context contains two permitted Projects with known names and independently supported Repository, open-PR, open-Issue and failed-CI values.
-      when: The overview opens on a representative iPhone at a text size that permits the proposed compact grid.
-      then: The Projects are distinguishable and openable in stable order, and the selected summary values carry their separate units and limitations; the layout targets two entries across rather than the work-grid density. An accessible summary remains available if a value cannot fit.
+      given: A new portfolio context contains two permitted Projects with known names and independently
+        supported Repository, open-PR, open-Issue and failed-CI values.
+      when: The overview opens on a representative iPhone at a text size that permits the proposed compact
+        grid.
+      then: The Projects are distinguishable and openable in stable order, and the selected summary values
+        carry their separate units and limitations; the layout targets two entries across rather than
+        the work-grid density. An accessible summary remains available if a value cannot fit.
     enlarged_text_and_incomplete_signal:
-      given: The operator uses enlarged text, a Project's open-PR count is supported, and its failed-CI scope is incomplete without an exact value.
+      given: The operator uses enlarged text, a Project's open-PR count is supported, and its failed-CI
+        scope is incomplete without an exact value.
       when: The starting overview adapts to the available space.
-      then: The layout may use fewer columns or taller cells; the Project remains identifiable and openable, the supported PR value remains distinguishable from the incomplete CI condition, and an accessible summary explains the limitation without claiming healthy CI.
+      then: The layout may use fewer columns or taller cells; the Project remains identifiable and openable,
+        the supported PR value remains distinguishable from the incomplete CI condition, and an accessible
+        summary explains the limitation without claiming healthy CI.
     portfolio_density_return:
-      given: The operator changes the portfolio density, opens Project P and changes the density of P's work collection.
+      given: The operator changes the portfolio density, opens Project P and changes the density of P's
+        work collection.
       when: The operator returns to the still-retained portfolio route.
-      then: The portfolio uses its own last valid density and identifies P as the available anchor under 0024; the work collection's density is not substituted for the portfolio density.
+      then: The portfolio uses its own last valid density and identifies P as the available anchor under
+        0024; the work collection's density is not substituted for the portfolio density.
     safe_partial_and_unknown:
-      given: A Project has confirmed members A and B; the permitted available observations support three open Issues in A, while B's Issue population is unobserved and no Project-wide exact count is established.
+      given: A Project has confirmed members A and B; the permitted available observations support three
+        open Issues in A, while B's Issue population is unobserved and no Project-wide exact count is
+        established.
       when: The operator inspects the summary visually and with an accessibility service.
-      then: The three may appear only as a safely disclosed observed subset with its incomplete meaning, B is not assigned zero, and both presentations retain the Issue unit and limitation without claiming a current lower bound or complete Project total.
+      then: The three may appear only as a safely disclosed observed subset with its incomplete meaning,
+        B is not assigned zero, and both presentations retain the Issue unit and limitation without claiming
+        a current lower bound or complete Project total.
     compact_partial_visibility:
-      given: A safe observed Issue subset can be reported but the current Project cell has space for an unlabeled number and no usable visible limitation indicator.
+      given: A safe observed Issue subset can be reported but the current Project cell has space for an
+        unlabeled number and no usable visible limitation indicator.
       when: The overview prepares the cell and its accessibility representation.
-      then: The cell does not show that bare number as the Project total; the operator can reach the qualified value and its incomplete scope through the summary, and the accessibility representation does not rely on color or vision to convey the limitation.
+      then: The cell does not show that bare number as the Project total; the operator can reach the qualified
+        value and its incomplete scope through the summary, and the accessibility representation does
+        not rely on color or vision to convey the limitation.
     mixed_refresh_with_prior_data:
-      given: An open-PR metric has an eligible last-known complete result at T1, an Issue category has never been observed, and a Project refresh at T2 is in progress or fails for Issues while another category succeeds.
+      given: An open-PR metric has an eligible last-known complete result at T1, an Issue category has
+        never been observed, and a Project refresh at T2 is in progress or fails for Issues while another
+        category succeeds.
       when: The Project summary is presented.
-      then: The PR result retains its T1 context, Issues remain loading or unavailable rather than zero, and the T2 attempt outcome is distinguishable from the PR observation time; another category's success does not certify Issues or refresh the PR fact.
+      then: The PR result retains its T1 context, Issues remain loading or unavailable rather than zero,
+        and the T2 attempt outcome is distinguishable from the PR observation time; another category's
+        success does not certify Issues or refresh the PR fact.
     hidden_member_no_arithmetic_leak:
-      given: A previously visible Project-wide value included a member that is now restricted, and a permitted subset remains independently supported.
+      given: A previously visible Project-wide value included a member that is now restricted, and a permitted
+        subset remains independently supported.
       when: The summary, accessible label, preview and share are generated after the restriction.
-      then: None exposes the earlier total or a hidden-member count that would reveal the restricted contribution; a safely permitted subset can remain explicitly incomplete without providing a subtractable restricted value.
+      then: For confirmed GitHub revocation, the previously supported saved total and locally saved member
+        information remain accessible as last known under 0019, with their supported scope, time and revocation
+        indication. Do not present an independently supported subset as the complete current Project;
+        account isolation and external sharing remain separate.
     compact_summary_with_missing_checks:
-      given: A Project has two confirmed members, available open-PR counts and incomplete CI coverage; at the current density its cell cannot fit every signal.
+      given: A Project has two confirmed members, available open-PR counts and incomplete CI coverage;
+        at the current density its cell cannot fit every signal.
       when: The operator identifies the Project and opens its summary without long press.
-      then: The same Project's permitted counts and incomplete CI state are discoverable with their scope, no missing CI is described as healthy, and no other Project is substituted by similar name.
+      then: The same Project's permitted counts and incomplete CI state are discoverable with their scope,
+        no missing CI is described as healthy, and no other Project is substituted by similar name.
     graph_with_history_gap:
-      given: A Project summary has a current open-PR count but lacks sufficient history for an earlier day.
+      given: A Project summary has a current open-PR count but lacks sufficient history for an earlier
+        day.
       when: The operator opens the corresponding history from the Project context.
-      then: The series identifies its scope and metric and shows the earlier point as a gap or incomplete rather than using the current value or zero.
+      then: The series identifies its scope and metric and shows the earlier point as a gap or incomplete
+        rather than using the current value or zero.
     edit_shared_project_from_portfolio:
-      given: Projects P and Q share Repository A, P also contains B, and both permitted Projects are identifiable in a compact portfolio.
-      when: The operator opens Edit for P by an accessible route, removes A, saves a valid P containing B, and returns to the portfolio.
-      then: The saved change applies to P's membership only; Q retains A, GitHub is not modified, and P remains the return anchor where available under 0072. A lost or uncertain save acknowledgement is not presented as a confirmed result.
+      given: Projects P and Q share Repository A, P also contains B, and both permitted Projects are identifiable
+        in a compact portfolio.
+      when: The operator opens Edit for P by an accessible route, removes A, saves a valid P containing
+        B, and returns to the portfolio.
+      then: The saved change applies to P's membership only; Q retains A, GitHub is not modified, and
+        P remains the return anchor where available under 0072. A lost or uncertain save acknowledgement
+        is not presented as a confirmed result.
     existing_portfolio_add_project:
-      given: The proposed custom-creation route is selected, the overview contains saved Projects and the operator wants a custom Project using one or more eligible Repositories already represented there.
+      given: The proposed custom-creation route is selected, the overview contains saved Projects and
+        the operator wants a custom Project using one or more eligible Repositories already represented
+        there.
       when: The operator enters the custom-creation route and confirms a valid Project.
-      then: The new Project can appear with its own identity while existing Projects, memberships and default associations remain unchanged under 0025; the overview is not reset to first launch.
+      then: The new Project can appear with its own identity while existing Projects, memberships and
+        default associations remain unchanged under 0025; the overview is not reset to first launch.
     two_organizations:
       given: One Project contains two Repositories from different GitHub organizations.
       when: The operator opens that Project.
-      then: Both remain in the same GitView Project and neither organization is silently substituted for the Project.
+      then: Both remain in the same GitView Project and neither organization is silently substituted for
+        the Project.
     shared_repository:
       given: Repository R belongs to Projects P and Q and has one observed open PR under complete coverage.
       when: Both Project summaries are visible.
@@ -143,32 +360,53 @@ specification:
     missing_category:
       given: A Project's PR scope is observed and its Issue scope has never been obtained.
       when: Its summary is shown.
-      then: The observed PR value remains available and the Issue count is unknown or loading rather than zero.
+      then: The observed PR value remains available and the Issue count is unknown or loading rather than
+        zero.
     follow_signal:
       given: An actionable failed-CI signal belongs to Project P containing Repositories R1 and R2.
       when: The operator opens that signal.
-      then: The resulting work collection retains Project P and failed-CI condition and distinguishes source Repositories; partial coverage remains visible.
+      then: The resulting work collection retains Project P and failed-CI condition and distinguishes
+        source Repositories; partial coverage remains visible.
     signal_changes_before_open:
-      given: Project P shows a failed-CI count of two open PRs from a supported observation at T1, and a later applicable observation at T2 establishes that one of them no longer satisfies the condition.
-      when: The operator opens the signal and the destination evaluates the same condition at T2 with sufficient coverage.
-      then: The earlier count remains attributable to T1 while the destination can show one matching PR at T2; both keep Project P and the failed-CI and open-PR meaning without forcing the old count or inventing a missing card.
+      given: Project P shows a failed-CI count of two open PRs from a supported observation at T1, and
+        a later applicable observation at T2 establishes that one of them no longer satisfies the condition.
+      when: The operator opens the signal and the destination evaluates the same condition at T2 with
+        sufficient coverage.
+      then: The earlier count remains attributable to T1 while the destination can show one matching PR
+        at T2; both keep Project P and the failed-CI and open-PR meaning without forcing the old count
+        or inventing a missing card.
     checks_to_prs:
-      given: An actionable Project signal describes five failed checks belonging to two PRs and no source data changes.
+      given: An actionable Project signal describes five failed checks belonging to two PRs and no source
+        data changes.
       when: The operator opens that signal.
-      then: The destination describes the failed-check condition and two affected PRs, without implying five PR cards or losing Project context.
+      then: The destination describes the failed-check condition and two affected PRs, without implying
+        five PR cards or losing Project context.
     restricted_default_name:
       given: A default Project was named from a private Repository and source access is explicitly denied.
-      when: The Projects overview is displayed.
-      then: The Project remains represented without exposing its restricted source-derived name or private counts, and the access problem is discoverable.
+      when: Repository access revocation is confirmed and the Projects overview is displayed.
+      then: The saved Project and its saved name remain visible locally with the revocation indication
+        and supported update time when known; source access is not implied.
     metadata_restored_work_still_restricted:
-      given: A saved Project contains A and B; B's private data was restricted, and a later applicable same-account observation restores only B's permitted Repository name while A's earlier work remains independently permitted.
+      given: A saved Project contains A and B; B's private data was restricted, and a later applicable
+        same-account observation restores only B's permitted Repository name while A's earlier work remains
+        independently permitted.
       when: The operator enters the Project and inspects its summary.
-      then: B's newly supported name may be shown where permitted, A retains its own observations and times, but B's old PR, Issue, CI and historical values are not unlocked by the metadata alone. The Project remains incomplete or limited for those categories without fabricating zeros or a new complete refresh time.
+      then: A retains its own saved observations and times. Previously saved B work and supported values
+        remain locally accessible as last known under 0019; newly observed B metadata does not refresh
+        their times or establish complete coverage. Indicate applicable access limitation without inventing
+        zeros.
     restricted_total_and_permitted_subset:
-      given: A previously displayed Project total of 10 includes seven PRs from permitted Repository A and three from Repository B, whose private PR data is now explicitly restricted.
+      given: A previously displayed Project total of 10 includes seven PRs from permitted Repository A
+        and three from Repository B, whose private PR data is now explicitly restricted.
       when: The operator opens the summary and an A-only view.
-      then: The A-only seven may be shown where its scope is permitted, while the prior total and other app-controlled equivalents that expose B's contribution are suppressed; the Project is not reported as having only seven total PRs.
+      then: For confirmed GitHub revocation, the previously saved supported Project total of 10 and A-only
+        result of 7 can remain locally available as last known with their actual scopes and observation
+        times under 0019. Neither is presented as a newly refreshed current total; unknown inputs are
+        not fabricated and external sharing is a separate question.
   unresolved:
-  - Default layout and exact subset of signals shown at each density; candidate 0072 proposes stable local order with a retained-insertion preference and deterministic fallback; user-selected alternatives remain open.
+  - Default layout and exact subset of signals shown at each density; candidate 0072 proposes stable local
+    order with a retained-insertion preference and deterministic fallback; user-selected alternatives
+    remain open.
   - Exact visual and accessible controls for signal navigation and cross-Repository scope selection.
-  - Classification of local Project names that were independently supplied by the operator versus derived from a private source requires privacy and storage refinement.
+  - Classification of local Project names that were independently supplied by the operator versus derived
+    from a private source requires privacy and storage refinement.

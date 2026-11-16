@@ -28,92 +28,229 @@ sources:
   unicode_whitespace: https://www.unicode.org/Public/17.0.0/ucd/PropList.txt
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A pure Project configuration decision distinguishes supported validity, known invalidity and insufficient evidence without performing source or storage effects.
-- A confirmed no-member proposal is invalid even when another input is unknown; under the agent-proposed name policy a confirmed empty name is also invalid, but that name policy remains a product decision. Missing identity or access evidence alone does not become confirmed invalidity or absence.
-- Confirmed Repository identities are compared within source context and may belong to more than one Project; unknown equivalence is not silently merged by name.
-- If the proposed default-association mechanism is selected, a valid proposal describes its applicable association effects; a valid result does not claim that a save occurred or that a stale base can commit.
-- The storage boundary atomically or equivalently revalidates applicable preconditions and invariants at the actual effect boundary.
-- Results, permitted explanations and verification preserve current access restrictions and distinguish policy, concurrency and durable outcomes.
+- A pure Project configuration decision distinguishes supported validity, known invalidity and insufficient
+  evidence without performing source or storage effects.
+- A confirmed no-member proposal is invalid even when another input is unknown; under the agent-proposed
+  name policy a confirmed empty name is also invalid, but that name policy remains a product decision.
+  Missing identity or access evidence alone does not become confirmed invalidity or absence.
+- Confirmed Repository identities are compared within source context and may belong to more than one Project;
+  unknown equivalence is not silently merged by name.
+- If the proposed default-association mechanism is selected, a valid proposal describes its applicable
+  association effects; a valid result does not claim that a save occurred or that a stale base can commit.
+- The storage boundary atomically or equivalently revalidates applicable preconditions and invariants
+  at the actual effect boundary.
+- Results, permitted explanations and verification preserve current access restrictions and distinguish
+  policy, concurrency and durable outcomes.
 specification:
-  objective: Define an implementation-facing pure validity decision for proposed Project configuration and membership, separate from coordination and persistence.
+  objective: Define an implementation-facing pure validity decision for proposed Project configuration
+    and membership, separate from coordination and persistence.
   ontology_refs:
   - gitview:User
   - gitview:Project
   - gitview:Repository
   - gitview:projectIncludesRepository
   contract:
-    boundary: Evaluate one explicit proposed creation or edit against supplied confirmed or uncertain source identities, eligible access facts and the relevant saved Project and default-association context. Do not read GitHub, mutate storage, navigate, invent an ontology actor or assert that the operator performed an action. The same input context yields the same policy result; changes in source access or configuration require new evidence and reevaluation.
-    inputs: Supply the operation kind and identity, target Project identity and confirmed base evidence for an edit, proposed name and optional purpose, proposed member references, any affected default association, and the source identity and applicable access evidence needed for each newly added member. Input also identifies unresolved, unavailable or restricted facts rather than replacing them with empty collections. An unavailable name is not a confirmed empty name; the caller supplies the actual available text or an explicit unavailable state.
-    name_policy: As an agent-authored first-version proposal, a supplied name is invalid when empty or when every Unicode scalar has the `White_Space` property in the Unicode 17.0.0 property data identified in sources. Otherwise this name rule is satisfied. Evaluate against that fixed property version, not a platform-dependent locale or an unspecified evolving system character set. The predicate does not automatically trim, case-fold, change Unicode normalization, derive a name from Repository identity or compare names for uniqueness. Save the operator-confirmed text as entered and display it only when permitted, subject to actual supported text and storage boundaries; an unsupported or unrepresentable input requires an explicit limitation rather than silent truncation. This rule defines whitespace-only validity, not a universal guarantee that every accepted string renders visibly on every device.
-    purpose_policy: Purpose is optional local text under 0025. Absence, a retained value and an unavailable or restricted value are distinct; do not turn an unavailable value into absence or silently clear an existing purpose during another edit. Under the 0025 first-version editor candidate, an explicit reviewed edit to exactly empty text expresses clear and produces absence; a nonempty supplied text value is preserved as entered rather than trimmed or borrowed from GitHub. A previously stored empty value is not silently migrated on read or unrelated edit. The caller must distinguish unchanged, clear and set intents and preserve a separately unavailable value; if it cannot support safe preservation it reports a limitation rather than fabricating absence. Exact native text-entry controls and supported text-storage limits remain open.
-    duplicate_names: Project identity is independent of name. Two separately confirmed Projects may have identical or canonically equivalent displayed names; do not merge, reject or substitute one solely because its name matches. Where equal or visually ambiguous names make an action unclear, offer sufficient permitted context to identify the intended Project under 0047 and accessibility rules without exposing restricted Repository details.
-    core_invariants: A confirmed valid saved Project has a nonempty name and at least one confirmed distinct GitHub-managed Repository member under 0025. Confirmed duplicate references to the same source Repository are one membership, not multiple; two different confirmed identities stay distinct even when names match. Membership in other Projects is permitted and is not itself a conflict. If identity equivalence, GitHub management or applicable eligibility for a newly added member cannot be established, the affected requirement is unknown rather than automatically valid or invalid.
-    confirmed_duplicate_normalization: When the supplied evidence confirms that multiple proposed references denote the same source Repository, treat them as one membership and provide the resulting distinct-member proposal with that association context for coordinated save under 0104. This normalization does not merge same-named entries with unproven identity or remove another distinct Repository. If equivalence is unresolved and can affect validity or membership, preserve the uncertainty rather than returning a complete normalized set or authorizing a guessed write. This is a logical result, not a new Project, source mutation or operation retry.
-    outcome_precedence: Return an explicit invalid proposal with the supported invariant violations when at least one required condition is confirmed false. Preserve independent unknown or unassessed conditions; invalid does not imply every condition was evaluated or every problem identified. If no condition is confirmed false and at least one required condition is unknown, return insufficient evidence. Return valid only when every applicable invariant is supported in the supplied context. An invalid or insufficient result must not request a durable write automatically.
-    proposed_association: For an existing default Project, keep its default association if its associated Repository remains a member; if a confirmed valid edit removes that Repository while another remains, the proposed saved state removes that association under 0025. If whether the associated Repository remains cannot be established, do not propose a definite disassociation or claim a valid invariant. A separate intentional custom Project does not automatically become a default; default setup retains per-Repository uniqueness under 0052.
-    access_and_privacy: Source access evidence for newly added members is distinct from a retained existing membership and from local configuration readability. A transient source failure is not an explicit denial or deletion; an explicit applicable denial is represented as a limitation under 0036 without disclosing restricted identities in a visible explanation. The policy may return safe reason categories and scoped evidence references but must not expose hidden names, links or revealing counts through result presentation.
-    source_observation_limit: Eligibility describes what the supplied, applicable access evidence supports for the captured source and account context; it is not an oracle for an unobserved permission change at GitHub. Locally known denial or account replacement must be considered before admission under 0045. A remote change not yet observed cannot be atomically ordered with a local save; do not present the local commit as proof that remote access remained unchanged through that instant. Later supported denial restricts affected content without itself deleting saved membership.
-    eligibility_not_commit: A valid result means only that the proposed configuration satisfies supported policy conditions in that captured context. It is not a successful Project save, a guarantee that the base is still current or proof of a successful GitHub refresh. A stale base, deleted Project, competing default association or indeterminate previous operation is reported by the coordination or storage boundary under 0082, 0103 and 0104; it must not be relabeled as a validation result derived from an unrelated earlier snapshot. Before an effect commits, coordinate current base, access and uniqueness validation with the effect so an intervening change cannot bypass them.
-    decision_representation: For a validated applicable context, use a SpecificationCore typed DecisionSpec result for valid, invalid and insufficient evidence. A DecisionSpec no-match is reserved for a truly non-applicable rule; an unexpected nil at the top-level applicable decision is an integration limitation, not valid, invalid or ordinary insufficient evidence. The inspected SpecificationCore checkout supports optional typed DecisionSpec results; the actual resolved version and exact Swift type are not selected. Do not negate an unknown Boolean fact into a known valid condition.
-    decision_exchange: The caller passes one immutable proposal and evidence context, including operation identity, base where applicable, proposed text and member references, identity and eligibility facts, and any default-association facts. Return the explicit overall result with supported invariant violations, independently unknown or unassessed conditions and safe evidence references as applicable. For a supported valid proposal, also provide the confirmed distinct member identities and applicable default-association effect so the caller can coordinate the same intended configuration; do not claim that the result was committed. A known violation can make the overall result invalid while another requirement remains unknown; a valid result requires all applicable requirements to be supported. A missing result for an otherwise applicable validated context is an integration limitation, not an empty violation list or permission to save. Result explanations are projected under current access policy; evaluating this decision does not submit the operation, persist its draft or disclose restricted facts.
-    local_version_evidence: Candidate 0110 records a separately verified local `2.1.0` tag and the matching inspected protocol source. This is evidence that an optional typed decision is expressible in that tagged source, not a selected or resolved GitView dependency, a compiled Project policy or proof of compatible toolchain and platform integration.
-    observation_not_action: A saved configuration can establish current membership where its identity and validity are confirmed; it does not by itself prove which actor added a Repository, why, at what exact time or whether membership persisted continuously. Candidate ontology names for the membership link and actor-action relations support vocabulary, not proof of an event. Existing history and observations for other Projects are not deleted by validation.
-    verification: Under 0040 and 0079 prepare externally meaningful TDD cases for valid multi-organization membership, shared Repository, known empty name or membership, unknown identity and access, confirmed duplicate and ambiguous equivalence, default-member removal, stale edit, concurrent save and lost acknowledgement. Test pure outcomes separately from boundary tests with injected persistence and from actual durable restart or GitHub integration. A named policy and scenario set do not establish that any app test has run.
-    provenance: Project composition, one default Project per Repository and shared membership follow the owner's choices. The three-outcome validity policy, precedence and domain-aware coordination are agent-authored working refinements; exact type names, validation APIs and database technology remain unselected.
+    boundary: Evaluate one explicit proposed creation or edit against supplied confirmed or uncertain
+      source identities, eligible access facts and the relevant saved Project and default-association
+      context. Do not read GitHub, mutate storage, navigate, invent an ontology actor or assert that the
+      operator performed an action. The same input context yields the same policy result; changes in source
+      access or configuration require new evidence and reevaluation.
+    inputs: Supply the operation kind and identity, target Project identity and confirmed base evidence
+      for an edit, proposed name and optional purpose, proposed member references, any affected default
+      association, and the source identity and applicable access evidence needed for each newly added
+      member. Input also identifies unresolved, unavailable or restricted facts rather than replacing
+      them with empty collections. An unavailable name is not a confirmed empty name; the caller supplies
+      the actual available text or an explicit unavailable state.
+    name_policy: As an agent-authored first-version proposal, a supplied name is invalid when empty or
+      when every Unicode scalar has the `White_Space` property in the Unicode 17.0.0 property data identified
+      in sources. Otherwise this name rule is satisfied. Evaluate against that fixed property version,
+      not a platform-dependent locale or an unspecified evolving system character set. The predicate does
+      not automatically trim, case-fold, change Unicode normalization, derive a name from Repository identity
+      or compare names for uniqueness. Save the operator-confirmed text as entered and display it only
+      when permitted, subject to actual supported text and storage boundaries; an unsupported or unrepresentable
+      input requires an explicit limitation rather than silent truncation. This rule defines whitespace-only
+      validity, not a universal guarantee that every accepted string renders visibly on every device.
+    purpose_policy: Purpose is optional local text under 0025. Absence, a retained value and an unavailable
+      or restricted value are distinct; do not turn an unavailable value into absence or silently clear
+      an existing purpose during another edit. Under the 0025 first-version editor candidate, an explicit
+      reviewed edit to exactly empty text expresses clear and produces absence; a nonempty supplied text
+      value is preserved as entered rather than trimmed or borrowed from GitHub. A previously stored empty
+      value is not silently migrated on read or unrelated edit. The caller must distinguish unchanged,
+      clear and set intents and preserve a separately unavailable value; if it cannot support safe preservation
+      it reports a limitation rather than fabricating absence. Exact native text-entry controls and supported
+      text-storage limits remain open.
+    duplicate_names: Project identity is independent of name. Two separately confirmed Projects may have
+      identical or canonically equivalent displayed names; do not merge, reject or substitute one solely
+      because its name matches. Where equal or visually ambiguous names make an action unclear, offer
+      sufficient permitted context to identify the intended Project under 0047 and accessibility rules
+      without exposing restricted Repository details.
+    core_invariants: A confirmed valid saved Project has a nonempty name and at least one confirmed distinct
+      GitHub-managed Repository member under 0025. Confirmed duplicate references to the same source Repository
+      are one membership, not multiple; two different confirmed identities stay distinct even when names
+      match. Membership in other Projects is permitted and is not itself a conflict. If identity equivalence,
+      GitHub management or applicable eligibility for a newly added member cannot be established, the
+      affected requirement is unknown rather than automatically valid or invalid.
+    confirmed_duplicate_normalization: When the supplied evidence confirms that multiple proposed references
+      denote the same source Repository, treat them as one membership and provide the resulting distinct-member
+      proposal with that association context for coordinated save under 0104. This normalization does
+      not merge same-named entries with unproven identity or remove another distinct Repository. If equivalence
+      is unresolved and can affect validity or membership, preserve the uncertainty rather than returning
+      a complete normalized set or authorizing a guessed write. This is a logical result, not a new Project,
+      source mutation or operation retry.
+    outcome_precedence: Return an explicit invalid proposal with the supported invariant violations when
+      at least one required condition is confirmed false. Preserve independent unknown or unassessed conditions;
+      invalid does not imply every condition was evaluated or every problem identified. If no condition
+      is confirmed false and at least one required condition is unknown, return insufficient evidence.
+      Return valid only when every applicable invariant is supported in the supplied context. An invalid
+      or insufficient result must not request a durable write automatically.
+    proposed_association: For an existing default Project, keep its default association if its associated
+      Repository remains a member; if a confirmed valid edit removes that Repository while another remains,
+      the proposed saved state removes that association under 0025. If whether the associated Repository
+      remains cannot be established, do not propose a definite disassociation or claim a valid invariant.
+      A separate intentional custom Project does not automatically become a default; default setup retains
+      per-Repository uniqueness under 0052.
+    access_and_privacy: Source access evidence for newly added members, previously saved membership and
+      local readability are distinct. A transient source failure does not prove denial or deletion. Confirmed
+      GitHub revocation alone does not hide already saved local identity or membership under 0019; show
+      its applicable limitation and supported time when known. Do not invent missing facts, and keep account
+      isolation and external handoff separate.
+    source_observation_limit: Eligibility reflects applicable evidence for its captured source and account;
+      it cannot observe an unreported remote change. Before admitting a new member, consider locally known
+      denial or account replacement under 0045; saved local visibility does not itself authorize new membership
+      or source reads. A local save is not proof of continuous source access. A later confirmed revocation
+      stops normal affected synchronization but does not hide previously saved local membership or facts
+      under 0019.
+    eligibility_not_commit: A valid result means only that the proposed configuration satisfies supported
+      policy conditions in that captured context. It is not a successful Project save, a guarantee that
+      the base is still current or proof of a successful GitHub refresh. A stale base, deleted Project,
+      competing default association or indeterminate previous operation is reported by the coordination
+      or storage boundary under 0082, 0103 and 0104; it must not be relabeled as a validation result derived
+      from an unrelated earlier snapshot. Before an effect commits, coordinate current base, access and
+      uniqueness validation with the effect so an intervening change cannot bypass them.
+    decision_representation: For a validated applicable context, use a SpecificationCore typed DecisionSpec
+      result for valid, invalid and insufficient evidence. A DecisionSpec no-match is reserved for a truly
+      non-applicable rule; an unexpected nil at the top-level applicable decision is an integration limitation,
+      not valid, invalid or ordinary insufficient evidence. The inspected SpecificationCore checkout supports
+      optional typed DecisionSpec results; the actual resolved version and exact Swift type are not selected.
+      Do not negate an unknown Boolean fact into a known valid condition.
+    decision_exchange: The caller passes one immutable proposal and evidence context, including operation
+      identity, base where applicable, proposed text and member references, identity and eligibility facts,
+      and any default-association facts. Return the explicit overall result with supported invariant violations,
+      independently unknown or unassessed conditions and safe evidence references as applicable. For a
+      supported valid proposal, also provide the confirmed distinct member identities and applicable default-association
+      effect so the caller can coordinate the same intended configuration; do not claim that the result
+      was committed. A known violation can make the overall result invalid while another requirement remains
+      unknown; a valid result requires all applicable requirements to be supported. A missing result for
+      an otherwise applicable validated context is an integration limitation, not an empty violation list
+      or permission to save. Result explanations are projected under current access policy; evaluating
+      this decision does not submit the operation, persist its draft or disclose restricted facts.
+    local_version_evidence: Candidate 0110 records a separately verified local `2.1.0` tag and the matching
+      inspected protocol source. This is evidence that an optional typed decision is expressible in that
+      tagged source, not a selected or resolved GitView dependency, a compiled Project policy or proof
+      of compatible toolchain and platform integration.
+    observation_not_action: A saved configuration can establish current membership where its identity
+      and validity are confirmed; it does not by itself prove which actor added a Repository, why, at
+      what exact time or whether membership persisted continuously. Candidate ontology names for the membership
+      link and actor-action relations support vocabulary, not proof of an event. Existing history and
+      observations for other Projects are not deleted by validation.
+    verification: Under 0040 and 0079 prepare externally meaningful TDD cases for valid multi-organization
+      membership, shared Repository, known empty name or membership, unknown identity and access, confirmed
+      duplicate and ambiguous equivalence, default-member removal, stale edit, concurrent save and lost
+      acknowledgement. Test pure outcomes separately from boundary tests with injected persistence and
+      from actual durable restart or GitHub integration. A named policy and scenario set do not establish
+      that any app test has run.
+    provenance: Project composition, one default Project per Repository and shared membership follow the
+      owner's choices. The three-outcome validity policy, precedence and domain-aware coordination are
+      agent-authored working refinements; exact type names, validation APIs and database technology remain
+      unselected.
   scenarios:
     policy_result_is_not_save:
-      given: A fully supported proposed Project configuration produces a valid result for its captured base and access context.
-      when: The caller receives that pure decision and the saved configuration has not yet been independently committed.
-      then: No Project is reported saved solely from the valid result; the caller can proceed only through the separately coordinated admission and durable outcome, and a later changed base requires reevaluation.
+      given: A fully supported proposed Project configuration produces a valid result for its captured
+        base and access context.
+      when: The caller receives that pure decision and the saved configuration has not yet been independently
+        committed.
+      then: No Project is reported saved solely from the valid result; the caller can proceed only through
+        the separately coordinated admission and durable outcome, and a later changed base requires reevaluation.
     whitespace_only_name:
-      given: A proposed Project has otherwise supported membership and a name made entirely of space and a no-break space, both classified as White_Space in the specified Unicode property version.
+      given: A proposed Project has otherwise supported membership and a name made entirely of space and
+        a no-break space, both classified as White_Space in the specified Unicode property version.
       when: The validity decision evaluates the name.
-      then: It reports the name invalid without saving a replacement or treating the Project as unnamed due to unavailable data.
+      then: It reports the name invalid without saving a replacement or treating the Project as unnamed
+        due to unavailable data.
     preserve_text_and_identity:
-      given: Two distinct explicitly created Projects have the same operator-confirmed name, including leading and trailing spaces, and valid supported memberships.
+      given: Two distinct explicitly created Projects have the same operator-confirmed name, including
+        leading and trailing spaces, and valid supported memberships.
       when: Their configurations are saved and later inspected.
-      then: The entered name is not silently trimmed or used to merge their identities, and the operator has a permitted way to distinguish the Projects before acting.
+      then: The entered name is not silently trimmed or used to merge their identities, and the operator
+        has a permitted way to distinguish the Projects before acting.
     unavailable_name_and_invalid_members:
       given: A proposed Project name is unavailable while its member collection is confirmed empty.
       when: The validity decision is evaluated.
-      then: The proposal is invalid for the supported no-member condition, while name validity remains unknown rather than being reported as a confirmed empty string.
+      then: The proposal is invalid for the supported no-member condition, while name validity remains
+        unknown rather than being reported as a confirmed empty string.
     shared_membership:
-      given: Confirmed Repository R is already a member of Project Q and a new explicitly named Project P proposes R and another confirmed eligible Repository S from a different organization.
+      given: Confirmed Repository R is already a member of Project Q and a new explicitly named Project
+        P proposes R and another confirmed eligible Repository S from a different organization.
       when: The pure configuration decision evaluates P with all other required facts supported.
-      then: Sharing R and the different organizations do not invalidate P; a valid result does not itself create P or alter Q.
+      then: Sharing R and the different organizations do not invalidate P; a valid result does not itself
+        create P or alter Q.
     empty_members_with_unknown_access:
-      given: An edit proposal has a confirmed empty member collection while an independent source access field is unknown.
+      given: An edit proposal has a confirmed empty member collection while an independent source access
+        field is unknown.
       when: The decision evaluates the proposal.
-      then: It returns invalid for the known no-member invariant while preserving the independent unknown; it does not claim that every access condition was evaluated.
+      then: It returns invalid for the known no-member invariant while preserving the independent unknown;
+        it does not claim that every access condition was evaluated.
     confirmed_duplicate_references:
-      given: A new Project has a valid name and two proposed references independently confirmed to denote the same eligible Repository R, with all other applicable evidence supported.
+      given: A new Project has a valid name and two proposed references independently confirmed to denote
+        the same eligible Repository R, with all other applicable evidence supported.
       when: Its pure validity decision is evaluated.
-      then: The valid normalized proposal contains R once with the supported association context; it does not become an empty set, a second Repository or an already saved Project. The caller must still coordinate the actual durable effect under 0104.
+      then: The valid normalized proposal contains R once with the supported association context; it does
+        not become an empty set, a second Repository or an already saved Project. The caller must still
+        coordinate the actual durable effect under 0104.
     uncertain_identity:
-      given: A proposed Project has a valid name and one member reference whose source Repository identity or eligibility cannot be confirmed.
+      given: A proposed Project has a valid name and one member reference whose source Repository identity
+        or eligibility cannot be confirmed.
       when: The decision evaluates the member set.
-      then: The result is insufficient evidence rather than a confirmed valid Project or a claim that the user selected no member.
+      then: The result is insufficient evidence rather than a confirmed valid Project or a claim that
+        the user selected no member.
     default_member_removed:
-      given: Confirmed default Project P has members R and S with an active default association for R, another Project Q contains R, and a valid reviewed edit removes R from P while retaining S.
+      given: Confirmed default Project P has members R and S with an active default association for R,
+        another Project Q contains R, and a valid reviewed edit removes R from P while retaining S.
       when: The proposed configuration is evaluated.
-      then: It may be valid with a proposed removal of R's default association; P and S retain their identities, Q's unrelated membership is untouched and no durable change is claimed before commit.
+      then: It may be valid with a proposed removal of R's default association; P and S retain their identities,
+        Q's unrelated membership is untouched and no durable change is claimed before commit.
     identity_ambiguity:
-      given: Two selected source entries have the same display name but evidence cannot establish whether they are one Repository or two.
+      given: Two selected source entries have the same display name but evidence cannot establish whether
+        they are one Repository or two.
       when: The decision evaluates membership and uniqueness.
-      then: It does not merge or count them as distinct solely by name, and reports insufficient evidence for the affected identity-dependent claim.
+      then: It does not merge or count them as distinct solely by name, and reports insufficient evidence
+        for the affected identity-dependent claim.
     valid_then_stale:
-      given: An edit is valid against confirmed Project version V1 and an independent edit is durably saved as V2 before the first reaches commit.
+      given: An edit is valid against confirmed Project version V1 and an independent edit is durably
+        saved as V2 before the first reaches commit.
       when: The first edit attempts to commit against V1.
-      then: Its earlier valid result is not a successful save and the storage boundary reports conflict or another explicitly supported safe outcome without overwriting V2.
+      then: Its earlier valid result is not a successful save and the storage boundary reports conflict
+        or another explicitly supported safe outcome without overwriting V2.
     source_revoked_without_local_evidence:
-      given: A proposed member was eligible under the latest applicable accepted source evidence, but the source revokes access before local commit and no denial has yet reached GitView.
+      given: A proposed member was eligible under the latest applicable accepted source evidence, but
+        the source revokes access before local commit and no denial has yet reached GitView.
       when: The earlier proposal is saved and a later observation establishes denial.
-      then: The decision and save retain their admitted evidence context rather than claiming a continuously valid remote grant; current source-derived visibility is restricted and the saved membership is not silently erased.
+      then: The decision and save retain their actual admitted evidence context without claiming a continuously
+        valid remote grant. A later confirmed revocation stops ordinary synchronization and is indicated;
+        saved local membership and available data remain accessible under 0019 with supported times when
+        known.
     unexpected_no_rule:
-      given: The top-level policy receives a validated applicable Project proposal but no decision rule returns a result due to incomplete composition.
+      given: The top-level policy receives a validated applicable Project proposal but no decision rule
+        returns a result due to incomplete composition.
       when: The caller interprets that absence.
-      then: It reports an integration limitation rather than claiming the Project is valid, invalid or simply missing source evidence.
+      then: It reports an integration limitation rather than claiming the Project is valid, invalid or
+        simply missing source evidence.
   unresolved:
-  - The fixed Unicode whitespace-only rule and purpose behavior above are working first-version choices; ambiguous visual names require distinguishing context, and legacy empty purpose is retained rather than silently migrated. Concrete Swift input types, supported text boundaries and a compatible SpecificationCore version are selected and verified during implementation.
-  - Establish source identity and access eligibility mappings for newly added Repositories; candidates 0112–0114 propose eligibility, coordinated commit and credential recovery, but their concrete interfaces and behavior remain unverified.
+  - The fixed Unicode whitespace-only rule and purpose behavior above are working first-version choices;
+    ambiguous visual names require distinguishing context, and legacy empty purpose is retained rather
+    than silently migrated. Concrete Swift input types, supported text boundaries and a compatible SpecificationCore
+    version are selected and verified during implementation.
+  - Establish source identity and access eligibility mappings for newly added Repositories; candidates
+    0112–0114 propose eligibility, coordinated commit and credential recovery, but their concrete interfaces
+    and behavior remain unverified.
   - No product policy, durable storage, source integration or TDD cycle has been implemented or verified.

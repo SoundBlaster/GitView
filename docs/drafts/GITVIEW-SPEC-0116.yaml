@@ -31,16 +31,32 @@ sources:
   github_graphql_limits: https://docs.github.com/en/graphql/overview/rate-limits-and-query-limits-for-the-graphql-api
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Source attempt, accepted fact, population coverage, local retention and present disclosure eligibility remain independently representable for the exact affected scope.
-- Field evidence distinguishes supported values or absence from omitted, error-affected, inaccessible and conflicting information without converting them into zero or deletion.
-- Object representations are associated only with sufficient typed source identity and Repository context; an Issue representation of a PR is not an extra Issue.
-- A partial response can contribute supported fields without refreshing unrelated facts or asserting a complete population.
-- Retention, replay and later reads preserve per-fact context and do not manufacture a source observation or a durable success.
-- The route receives permitted prepared facts and limitations through injectable domain-facing boundaries without receiving raw credentials or treating a transport response as a domain object.
+- Source attempt, accepted fact, population coverage, local retention and present disclosure eligibility
+  remain independently representable for the exact affected scope.
+- Field evidence distinguishes supported values or absence from omitted, error-affected, inaccessible
+  and conflicting information without converting them into zero or deletion.
+- Object representations are associated only with sufficient typed source identity and Repository context;
+  an Issue representation of a PR is not an extra Issue.
+- A partial response can contribute supported fields without refreshing unrelated facts or asserting a
+  complete population.
+- Retention, replay and later reads preserve per-fact context and do not manufacture a source observation
+  or a durable success.
+- The route receives permitted prepared facts and limitations through injectable domain-facing boundaries
+  without receiving raw credentials or treating a transport response as a domain object.
 specification:
-  current_intent_boundary: The owner selected Today to include older unfinished work and work completed during the current calendar day in the user local time zone; a previous day completion alone does not qualify an object for the new Today. Applicable states remain visible without saved exclusions and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical object viewing and the technical contracts below remain candidates. The following historical boundary predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
-  historical_intent_boundary_before_local_day_approval: The Today-specific prepared alternatives, captured-day exchange and examples below reflect the superseded calendar-based candidate. The separate fact, identity, observation time, error, access, retention and coverage boundaries remain applicable; a new current-work decision input must be selected.
-  objective: Specify the information contract between the selected initial GitHub observations, retained local evidence and the Project work route without fixing a physical schema.
+  current_intent_boundary: The owner selected Today to include older unfinished work and work completed
+    during the current calendar day in the user local time zone; a previous day completion alone does
+    not qualify an object for the new Today. Applicable states remain visible without saved exclusions
+    and selected filters persist. Other inclusion conditions, detailed time-zone-change behavior, historical
+    object viewing and the technical contracts below remain candidates. The following historical boundary
+    predates this decision and is retained only for provenance. See canonical 0001 and 0007 and sketch
+    revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
+  historical_intent_boundary_before_local_day_approval: The Today-specific prepared alternatives, captured-day
+    exchange and examples below reflect the superseded calendar-based candidate. The separate fact, identity,
+    observation time, error, access, retention and coverage boundaries remain applicable; a new current-work
+    decision input must be selected.
+  objective: Specify the information contract between the selected initial GitHub observations, retained
+    local evidence and the Project work route without fixing a physical schema.
   ontology_refs:
   - gitview:GitHub
   - gitview:Project
@@ -48,146 +64,507 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    persistence_candidate_boundary: The exchange requires attributable retention outcomes and recovery under the applicable observation contract; 0113 is a related persistence candidate, not the only permitted provider or setup design. A selected alternative must demonstrate equivalent applicable consistency, access and recovery outcomes; this contextual link does not itself establish them.
-    downstream_assembly_boundary: References to 0115 and 0124 identify downstream route or persistence refinements that use this exchange contract. They are not reciprocal prerequisites of this contract; checking its prerequisite closure alone does not establish assembly or durable identity-association readiness.
-    request_context: A source attempt captures its own identity, initiating source and account context, confirmed or unresolved Repository scope, requested object categories and field or event scope, and relevant selection period and revision where applicable. Request start and completion describe the attempt; neither is automatically an event time, a source ordering, a successful observation of every requested field or complete coverage. Cancellation, access and account changes are evaluated under their own contracts. Do not embed tokens or authorization responses in route-visible state or normal diagnostics.
-    source_outcome: A completed source response may contain independently usable fields and scoped errors; transport success does not make every field or collection successful. Represent attempt outcome and affected scope separately from interpreted values, including incomplete response, source failure, cancellation or deferred work where supported. A generic error or status is not an invented denial, empty collection, deletion or proof of a specific cause. Attempts with different completion order do not establish source revision order under 0037 and 0053.
-    graphql_error_attribution: For the selected GraphQL operation, interpret `data` and `errors` together using the actual response shape, request selections, aliases, schema nullability and response-path list indices. A field-associated error path names response keys, including aliases, and indices in that particular returned list; it is not a durable object identifier and must not be associated to a locally reordered collection by index. If non-null error propagation replaces an ancestor or list with null, treat the affected returned subtree as unavailable rather than reconstructing missing siblings or interpreting the propagated null as semantic absence. Independently returned siblings can supply supported values only where their own identity, path, source context and access remain established. An omitted data entry, malformed path, unscoped error or otherwise ambiguous association does not identify a precise field cause; conservatively limit the affected scope instead of attaching the error to an arbitrary object or declaring the operation empty. Preserve safe structured diagnostic classification without exposing raw private response paths, bodies or messages in ordinary UI or logs.
-    graphql_nullable_pr_nodes: GitHub documents `PullRequestConnection.nodes` as `[PullRequest]`; both the list and its elements are nullable in that schema; `PullRequest.isDraft` is non-null on a typed PR. For an operation that actually selects these positions, if an execution error at `isDraft` propagates to a nullable PR element and the returned element is null, treat the entire returned element as unavailable, not as a PR with draft false or as a recoverable title, state or identity from that missing element. If propagation or another error leaves the entire `nodes` list null, it is unavailable rather than an empty list. Independently returned, source-associated and permitted siblings can still supply their supported facts. Interpret the actual operation, schema and error path rather than assuming every null arose from an error or a specific permission denial. A returned terminal `pageInfo` can describe traversal but cannot by itself repair a lost element or certify exhaustive candidate materialization; a separate aggregate retains only the scope and source semantics it independently establishes. Apply 0102 to any affected population claim and do not infer a private object's identity or number of missing matches from a null slot. This conditional mapping is based on documented schema and GraphQL execution semantics, not a verified live GitHub response or proof of source permissions.
-    graphql_transport_and_limits: GitHub documents that primary GraphQL rate-limit errors can accompany HTTP 200, and resource-limited requests can return partial results with an error. Evaluate the response envelope and applicable limit evidence before classifying a requested scope; HTTP 200 alone is not a complete successful observation. Apply the source-supported rate-limit and refresh policy under 0048, keeping any independently usable facts and their own coverage. Do not infer a permission denial, fabricate a numerical missing-object count, retry without regard to the documented reset or Retry-After evidence, or promote a last page to complete solely because another part of the response succeeded. The particular query, cost budget and live response behavior remain unverified.
-    restored_source_outcome: After restart, expose a latest terminal source-attempt outcome only where its identity, scope and ordering context are independently recoverable under 0105. A recoverable prior fact is not proof that an ensuing source attempt succeeded or failed, and a retained failure is not a new attempt. If an outcome write or read is indeterminate, the route receives an unknown outcome or safe local recovery limitation rather than a fabricated success or GitHub failure. Apply current disclosure rules to the reason and affected scope.
-    object_identity: Interpret each usable source record under the confirmed source instance and Repository identity and retain its actual source identifier kind and type. Normalize GitHub's PR-marked Issues representation under 0101 before counting or selection, using source-supported association rather than title or unscoped number. A record without enough evidence for type or identity remains unresolved and cannot be silently merged, opened as another object or counted as a confirmed distinct Issue or PR. A separately confirmed linked Issue remains its own object.
-    field_evidence: For each requested or retained domain fact distinguish a source-supported value, source-supported absence where its semantics permit it, not requested, failed or unobservable for this attempt, access-restricted and unresolved conflict. Known zero and known empty are values only when the corresponding source semantics and scope establish them. A null-like field affected by an error is not authoritative absence; omission does not delete or refresh an earlier accepted value. Preserve why a field is unavailable only to the extent source and privacy evidence support that explanation.
-    exchange_shapes: As an agent-authored interface contract, describe each attempt with its captured scope and outcome; each field update with its object and field identity, interpretation and supported context; each coverage result with its own scope and reference; each retention result with its logical operation identity; and each read with independently supported records, gaps or failures. These are separate value responsibilities rather than required Swift type names or ontology entities. A disclosure decision is an independent current projection over those facts and must not be stored as if it were a permanent property of a source value.
-    limitation_exchange: The linked Today exchange contract enumerates distinguishable local-read, scheduling, source-attempt, field, retention, identity, decision-integration and disclosure limitations and the evidence each can safely carry. Preserve concurrently applicable outcomes at their actual scope instead of promoting a partial source response to global success or converting a local-save uncertainty into a GitHub failure. This is a proposed semantic handoff, not a selected public Swift error hierarchy or a claim that a cause can always be identified.
-    graphql_discovery_exchange: For the initial 0102 GraphQL direction, the domain-facing source boundary returns a separately attributable result for each requested Repository, confirmed object kind and discovery purpose — open Issues, recent Issues, open PRs or recent PRs. A result identifies the actual operation and effective state, order and time predicates, initiating account and source, captured Repository identity or its unresolved association, request and observation contexts, usable typed representations, scoped errors or unavailable fields, and traversal status or continuation where supported. A bounded page or terminal traversal describes that source portion, not exhaustive Today coverage. The result does not expose credentials or require one network request per portion; compatible portions may share a response only when each actual contribution and limitation remain attributable to its original predicates. Response indices and cursors are not work-object identities. Exact Swift declarations, query document, pagination size and GraphQL field-level permissions remain open.
-    shared_portion_compatibility: The linked Today exchange contract identifies source instance, account generation, Repository identity, typed purpose, effective predicates, actual selected fields, cursor context, observation reference and current admission as dimensions to evaluate before shared work serves more than one consumer. A provably compatible narrower fact can be reused without asserting full narrower population coverage. Unestablished compatibility stays limited or needs separate work; equal Project labels, source paths or current card counts are not sufficient. Each consumer retains its own request, outcome and disclosure context under 0048 and 0102.
-    discovery_portion_outcome_candidate: For each admitted discovery portion, hand the caller its captured portion identity and query context together with independently interpretable usable observations, any safely attributable source limitations, and its traversal outcome. The latter distinguishes a usable page with a supported continuation, a usable terminal page, an affected or unobservable requested portion, and work deferred or cancelled before a usable result. A page may contain useful facts and an independently attributable field or connection error; it must not be flattened into either a full success or a total failure. A requested portion absent from a response without sufficient evidence for its meaning remains unobserved or unavailable, not an empty terminal page. If a caller has not admitted a portion, represent that fact separately from a failed GitHub attempt and do not manufacture an attempt timestamp. Bind any continuation to its actual purpose, scope and effective parameters; it is optional evidence of traversal, not a count or a complete-coverage certificate. Source attempt, per-portion traversal, field facts, collection coverage and local retention each remain separately attributable even when one underlying operation produces several portions. This is an information contract, not a mandated Swift enum, one response per HTTP request, or a claim that GitHub exposes these categories directly.
-    discovery_fact_handoff: Normalize every usable typed representation under 0101 into independently supported facts for the source-confirmed work identity, with per-field and event evidence, scope and actual observation context. An open-work and recent-work portion may both return that same identity; the caller evaluates it as one candidate when the association is supported, while retaining both observations and each portion's traversal status. Do not overwrite a newer comparable field with an older observation or resolve unordered conflicts by portion, page or response arrival order. An untyped or unassociated representation remains an unresolved coverage limitation and is not fabricated as a second card. Facts for different fields, close-event evidence and Project-wide population coverage remain distinct inputs to 0110 and its collection assembler.
-    discovery_retention_handoff: Submit independently eligible accepted fact bundles and optional continuation or coverage evidence through 0105 with their own logical operation and portion context. Source success, a fact's durable acceptance, continuation retention and a coverage claim have independently established outcomes; saving one does not prove another or advance another purpose's checkpoint. The route may use an eligible in-memory fact when its save fails, marked transient, but after restart only independently recovered evidence supports the fact and its original observation time. Reevaluate Project membership, filters and current disclosure under 0115 before any presentation; a retained portion or older successful response does not authorize current access or manufacture a current complete Project view.
-    field_limitation_handoff: When retaining a field-specific source limitation, hand it to downstream 0126 as its own scoped attempt outcome and local operation with supported subject or explicitly unresolved association, field meaning and privacy-safe cause if known. This is not a replacement field value or evidence that the source attempt as a whole failed. A source fact, field limitation and overall terminal outcome can have different retention results; a saved title cannot prove that a review error was retained. When the limitation is not retained or its read is indeterminate, preserve only independently supported facts and safe unknown status. The 0126 reference is a downstream refinement of 0105 that depends on this exchange; it is not a reciprocal prerequisite edge.
-    field_update_interpretation: For one identified field, an update can carry a supported value, a source-supported semantic absence, or no accepted replacement with a reason such as not requested, field error or unavailable evidence. Conflict represents competing incompatible observations that cannot be ordered; retain or identify enough evidence under 0053. Not requested is a property of this attempt, not a command to erase a previous field. Access restriction is applied independently of either an old value or new attempt result and cannot be overridden by the existence of retained data. A source-supported empty collection or zero is a value for its proven scope, not an alias for not requested or failure.
-    combining_updates: A usable new value or supported absence can replace a comparable earlier value for the current field only when applicable source evidence supports the new value and ordering. An omitted or failed field retains any independently readable earlier permitted value with its original context, or is unknown if none is recoverable; do not assign the new attempt time to it. A known earlier value can remain last known with a limitation when current applicability is unproven. Incompatible unordered values become conflicted or uncertain rather than choosing by arrival time. Successful siblings remain individually usable without promoting the entire response to complete.
-    read_result_shape: A local read reports recoverable records and their individual evidence contexts, plus the scope of any unavailable, inconsistent or unresolved portion. Confirmed local absence means the read reliably supports absence of the relevant local record; it is not a confirmed empty GitHub collection. A locally stored empty-source observation requires its own valid source evidence and is distinct from no stored observation. If neither an earlier nor a later record is independently recoverable, the route receives unavailable or unknown, not an assumed earlier successful value.
-    historical_retention_exchange: As an agent-authored information contract, submit one logical retention intent with its opaque operation identity and immutable binding, the source observation or explicitly attributed retrieval identity, the intended history generation captured when eligible work began, and one or more scoped evidence bundles. Each bundle identifies metric and predicate version, value or explicit unavailable state, unit and subject, confirmed or unresolved source identity, Repository and membership basis, source event time or state reference where supported, observation or retrieval context, coverage and applicable access context. Explicit unknowns are not represented as empty collections, zero or invented timestamps. An absent required context prevents a stronger claim but does not require rejecting an independently interpretable partial bundle. Do not include credentials, raw authorization responses or source text not needed by the selected retention policy. This describes information crossing the boundary, not one mandatory Swift type, table, batch-wide transaction or a durable success.
-    historical_retention_outcome: Return the logical operation identity with applied, confirmed terminal non-application or conflict, or indeterminate status under 0103 and 0105. For an applied effect expose only the recoverable scoped effect and its evidence context; per-bundle outcomes remain separate when they did not commit atomically. A known non-application of one operation does not imply that another operation or the source attempt failed. An indeterminate admission, unknown generation or lost acknowledgement does not establish either a committed sample or safe non-application; reconcile using the original identity and clear boundary before replay. Current access is reevaluated separately before presenting retained contents.
-    historical_read_exchange: A history read identifies the requested metric, Project or source scope and fixed temporal context, and returns independently recoverable supported values with their own predicate version, unit, time, membership basis and coverage, plus attributable incomplete, unavailable or conflicting portions. A complete zero requires its own source and population evidence; a successful read with no local records is local absence, not source zero. A persisted operation receipt is not itself a readable point or evidence of current authorization. A separately supported current-cache fact cannot silently replace missing history, and exact result serialization remains open.
-    retention_result_shape: Bind the submitted operation identity and immutable intent to an applied, confirmed terminal non-application or conflict, or indeterminate result under 0103 and 0105. An applied receipt supports the historical local effect only if its binding and context are recoverable; it does not by itself establish that a later read succeeds. A known terminal failure does not prove an earlier observation survived an interrupted write unless an independent read confirms it. An indeterminate result cannot be turned into rollback, a new observation, or a distinct retry while an earlier effect could still commit.
-    provenance: Associate each accepted fact with the exact object, source representation, field or event meaning, applicable observation and source-event times, relevant revision or ordering evidence, access context and scope. An event time can precede observation; an unavailable event time stays unknown. A last-known fact remains last known for its own context even if a sibling field is newly observed. Do not serialize a group of differently timed facts as one simultaneous current source snapshot unless independently established.
-    coverage: Supply a separate coverage assessment for the requested Repository set, object category, Today alternatives or other predicate, selected period, applicable filters, source and access context under 0102. Distinguish unobserved, incomplete or unproven, and sufficiently established coverage with its supported reference; a last page or successful local write alone is not sufficient proof. A count of known candidates is not a count of unseen source objects. Keep a prior supported coverage claim at its original scope and time rather than advancing it with an unrelated partial field.
-    aggregate_and_objects: Exchange and retain a supported aggregate claim independently from object-level materialization coverage. A durably retained count and its provenance need not contain member identities and cannot by itself supply a complete route input or fabricated cards. A local read must not report the grid as fully populated solely because an aggregate exists or the number of recovered objects happens to match it. An independently established exact collection retains its own identity, predicate and reference evidence; count and collection can support one another only to the extent their contexts and semantics are established as compatible under 0102.
-    retention: A domain-aware boundary accepts a logical 0103 retention operation with its bound supported facts and interpretation context under 0105; 0113 proposes one persistence design. Return applied, terminal rejection or conflict where supported, or indeterminate independently of the source attempt. Same-operation replay cannot become another source observation, and a checkpoint or coverage advance cannot outlive the evidence required to support it. A successful cache write does not establish separate history retention or current source access.
-    route_read: A work route reads the current saved Project membership and the eligible recoverable observations under their respective boundaries. Its prepared input includes per-object typed facts and limitations, an independently scoped population assessment, relevant latest source attempt and local retention outcomes, and safe access state. A pending source response can be presented transiently only when permitted and explicitly not claimed durable; an unreadable local read or an indeterminate save remains a recovery condition rather than a confirmed empty Project. The current Project identity and filter context are supplied by the route, not inferred from a source record.
-    prepared_today_input: For each confirmed typed candidate, provide the source-supported facts and evidence or limitations needed to derive the 0110 open, creation and outcome alternatives in the captured local-day context. In particular, an absent closure event or a terminal traversal is not by itself a supported false outcome alternative; its negative value needs sufficient applicable event coverage for that object and interval. Keep this per-object evidence separate from the population coverage for the entire selection. An independently supported creation or open fact can remain usable even when outcome-event history is unknown, subject to identity, time and access applicability.
-    combined_condition_preparation: For a condition that claims a conjunction at a particular reference, prepare each constituent only if its own subject, access, revision, semantics and time support that same requested claim. Two positive last-known facts at different references do not by themselves establish that their conjunction was true at either reference. Preserve them as separately inspectable observations, while an unestablished required current constituent is unknown for the current selection and measurement. An unchanged head alone does not show that CI, review requests or thread state stayed unchanged; a changed head alone does not determine an unrelated review or thread result. A known false constituent can exclude only when it is supported for the requested context. A labeled mixed-time working overview may display the facts separately under 0046, without claiming a simultaneous source snapshot or current combined positive.
-    last_known_and_current_selection: Distinguish a permitted previously observed lifecycle from an independently supported lifecycle fact applicable to the current evaluation. If the current open condition cannot be established, pass unknown for that current condition even when an older read says open; retain that earlier observation with its own time for a permitted last-known explanation. A successful local read proves only the recoverable stored evidence, not a new GitHub observation, and a failed source attempt is not a closure. Evaluate supported events against the captured day independently; an event may establish inclusion only under an applicable selected condition. Creation alone is an unselected candidate and does not by itself establish Today inclusion under the current decision. If no other alternative is supported, pass the uncertainty to 0110 and retain the known candidate for the accessible uncertainty path under 0042. This does not introduce an expiry duration or say that elapsed time alone proves a source change; the selected applicability policy and supported evidence must be specified before treating any observation as current.
-    transient_identity_resolution: Under 0124 a source-supported identity association can be usable during the current session even when its local retention fails or remains indeterminate. Carry the association evidence and source context separately from the persistence outcome, show a safe recoverability limitation and do not claim it survives restart. Reapply current access and route relevance before projection. A local save failure does not imply source denial, and a source success does not imply a durable association.
-    ordering_and_presentation: Reconcile only comparable facts using supported source ordering and current access, not callback completion or record insertion order. When values cannot be ordered retain an explicit conflict or uncertainty; a response started before denial or a previous account cannot unlock restricted content. Before producing visual, accessible, preview or sharing state, apply current privacy and relevance under 0036, 0112 and 0115. Suppress restricted identity, values and revealing aggregates, while preserving a safe general limitation where allowed.
-    response_boundaries: The selection policy receives immutable prepared facts and their contextual uncertainty rather than raw GraphQL or REST payloads, database handles, credential values or UI objects. The route can change density, filters or navigation without causing the source observation itself to change; a newly relevant context requires a new evaluation. The initial discovery and closure operations are selected in 0102; exact Swift interfaces, serialization, scheduling and result presentation remain separately specified.
-    verification: Prepare TDD cases with injected source responses and local outcomes for a partial response with a failed sibling field, PR issue representation, unknown identity, overlapping unordered attempts, denied access, lost save acknowledgement and restart. Verify real GitHub response mapping, persistent storage and native rendering separately from deterministic doubles. This specification and ontology checks do not demonstrate any implemented adapter or product.
-    provenance_note: Offline last-known data, visible update errors, a dense Today overview and DI with TDD were requested by the owner. The evidence dimensions and boundary are agent-authored working refinements; they introduce no new product ontology entity or mandatory source API.
+    persistence_candidate_boundary: The exchange requires attributable retention outcomes and recovery
+      under the applicable observation contract; 0113 is a related persistence candidate, not the only
+      permitted provider or setup design. A selected alternative must demonstrate equivalent applicable
+      consistency, access and recovery outcomes; this contextual link does not itself establish them.
+    downstream_assembly_boundary: References to 0115 and 0124 identify downstream route or persistence
+      refinements that use this exchange contract. They are not reciprocal prerequisites of this contract;
+      checking its prerequisite closure alone does not establish assembly or durable identity-association
+      readiness.
+    request_context: A source attempt captures its own identity, initiating source and account context,
+      confirmed or unresolved Repository scope, requested object categories and field or event scope,
+      and relevant selection period and revision where applicable. Request start and completion describe
+      the attempt; neither is automatically an event time, a source ordering, a successful observation
+      of every requested field or complete coverage. Cancellation, access and account changes are evaluated
+      under their own contracts. Do not embed tokens or authorization responses in route-visible state
+      or normal diagnostics.
+    source_outcome: A completed source response may contain independently usable fields and scoped errors;
+      transport success does not make every field or collection successful. Represent attempt outcome
+      and affected scope separately from interpreted values, including incomplete response, source failure,
+      cancellation or deferred work where supported. A generic error or status is not an invented denial,
+      empty collection, deletion or proof of a specific cause. Attempts with different completion order
+      do not establish source revision order under 0037 and 0053.
+    graphql_error_attribution: For the selected GraphQL operation, interpret `data` and `errors` together
+      using the actual response shape, request selections, aliases, schema nullability and response-path
+      list indices. A field-associated error path names response keys, including aliases, and indices
+      in that particular returned list; it is not a durable object identifier and must not be associated
+      to a locally reordered collection by index. If non-null error propagation replaces an ancestor or
+      list with null, treat the affected returned subtree as unavailable rather than reconstructing missing
+      siblings or interpreting the propagated null as semantic absence. Independently returned siblings
+      can supply supported values only where their own identity, path, source context and access remain
+      established. An omitted data entry, malformed path, unscoped error or otherwise ambiguous association
+      does not identify a precise field cause; conservatively limit the affected scope instead of attaching
+      the error to an arbitrary object or declaring the operation empty. Preserve safe structured diagnostic
+      classification without exposing raw private response paths, bodies or messages in ordinary UI or
+      logs.
+    graphql_nullable_pr_nodes: GitHub documents `PullRequestConnection.nodes` as `[PullRequest]`; both
+      the list and its elements are nullable in that schema; `PullRequest.isDraft` is non-null on a typed
+      PR. For an operation that actually selects these positions, if an execution error at `isDraft` propagates
+      to a nullable PR element and the returned element is null, treat the entire returned element as
+      unavailable, not as a PR with draft false or as a recoverable title, state or identity from that
+      missing element. If propagation or another error leaves the entire `nodes` list null, it is unavailable
+      rather than an empty list. Independently returned, source-associated and permitted siblings can
+      still supply their supported facts. Interpret the actual operation, schema and error path rather
+      than assuming every null arose from an error or a specific permission denial. A returned terminal
+      `pageInfo` can describe traversal but cannot by itself repair a lost element or certify exhaustive
+      candidate materialization; a separate aggregate retains only the scope and source semantics it independently
+      establishes. Apply 0102 to any affected population claim and do not infer a private object's identity
+      or number of missing matches from a null slot. This conditional mapping is based on documented schema
+      and GraphQL execution semantics, not a verified live GitHub response or proof of source permissions.
+    graphql_transport_and_limits: GitHub documents that primary GraphQL rate-limit errors can accompany
+      HTTP 200, and resource-limited requests can return partial results with an error. Evaluate the response
+      envelope and applicable limit evidence before classifying a requested scope; HTTP 200 alone is not
+      a complete successful observation. Apply the source-supported rate-limit and refresh policy under
+      0048, keeping any independently usable facts and their own coverage. Do not infer a permission denial,
+      fabricate a numerical missing-object count, retry without regard to the documented reset or Retry-After
+      evidence, or promote a last page to complete solely because another part of the response succeeded.
+      The particular query, cost budget and live response behavior remain unverified.
+    restored_source_outcome: After restart, expose a latest terminal source-attempt outcome only where
+      its identity, scope and ordering context are independently recoverable under 0105. A recoverable
+      prior fact is not proof that an ensuing source attempt succeeded or failed, and a retained failure
+      is not a new attempt. If an outcome write or read is indeterminate, the route receives an unknown
+      outcome or safe local recovery limitation rather than a fabricated success or GitHub failure. Apply
+      current disclosure rules to the reason and affected scope.
+    object_identity: Interpret each usable source record under the confirmed source instance and Repository
+      identity and retain its actual source identifier kind and type. Normalize GitHub's PR-marked Issues
+      representation under 0101 before counting or selection, using source-supported association rather
+      than title or unscoped number. A record without enough evidence for type or identity remains unresolved
+      and cannot be silently merged, opened as another object or counted as a confirmed distinct Issue
+      or PR. A separately confirmed linked Issue remains its own object.
+    field_evidence: For each requested or retained domain fact distinguish a source-supported value, source-supported
+      absence where its semantics permit it, not requested, failed or unobservable for this attempt, access-restricted
+      and unresolved conflict. Known zero and known empty are values only when the corresponding source
+      semantics and scope establish them. A null-like field affected by an error is not authoritative
+      absence; omission does not delete or refresh an earlier accepted value. Preserve why a field is
+      unavailable only to the extent source and privacy evidence support that explanation.
+    exchange_shapes: As an agent-authored interface contract, describe each attempt with its captured
+      scope and outcome; each field update with its object and field identity, interpretation and supported
+      context; each coverage result with its own scope and reference; each retention result with its logical
+      operation identity; and each read with independently supported records, gaps or failures. These
+      are separate value responsibilities rather than required Swift type names or ontology entities.
+      A disclosure decision is an independent current projection over those facts and must not be stored
+      as if it were a permanent property of a source value.
+    limitation_exchange: The linked Today exchange contract enumerates distinguishable local-read, scheduling,
+      source-attempt, field, retention, identity, decision-integration and disclosure limitations and
+      the evidence each can safely carry. Preserve concurrently applicable outcomes at their actual scope
+      instead of promoting a partial source response to global success or converting a local-save uncertainty
+      into a GitHub failure. This is a proposed semantic handoff, not a selected public Swift error hierarchy
+      or a claim that a cause can always be identified.
+    graphql_discovery_exchange: For the initial 0102 GraphQL direction, the domain-facing source boundary
+      returns a separately attributable result for each requested Repository, confirmed object kind and
+      discovery purpose — open Issues, recent Issues, open PRs or recent PRs. A result identifies the
+      actual operation and effective state, order and time predicates, initiating account and source,
+      captured Repository identity or its unresolved association, request and observation contexts, usable
+      typed representations, scoped errors or unavailable fields, and traversal status or continuation
+      where supported. A bounded page or terminal traversal describes that source portion, not exhaustive
+      Today coverage. The result does not expose credentials or require one network request per portion;
+      compatible portions may share a response only when each actual contribution and limitation remain
+      attributable to its original predicates. Response indices and cursors are not work-object identities.
+      Exact Swift declarations, query document, pagination size and GraphQL field-level permissions remain
+      open.
+    shared_portion_compatibility: The linked Today exchange contract identifies source instance, account
+      generation, Repository identity, typed purpose, effective predicates, actual selected fields, cursor
+      context, observation reference and current admission as dimensions to evaluate before shared work
+      serves more than one consumer. A provably compatible narrower fact can be reused without asserting
+      full narrower population coverage. Unestablished compatibility stays limited or needs separate work;
+      equal Project labels, source paths or current card counts are not sufficient. Each consumer retains
+      its own request, outcome and disclosure context under 0048 and 0102.
+    discovery_portion_outcome_candidate: For each admitted discovery portion, hand the caller its captured
+      portion identity and query context together with independently interpretable usable observations,
+      any safely attributable source limitations, and its traversal outcome. The latter distinguishes
+      a usable page with a supported continuation, a usable terminal page, an affected or unobservable
+      requested portion, and work deferred or cancelled before a usable result. A page may contain useful
+      facts and an independently attributable field or connection error; it must not be flattened into
+      either a full success or a total failure. A requested portion absent from a response without sufficient
+      evidence for its meaning remains unobserved or unavailable, not an empty terminal page. If a caller
+      has not admitted a portion, represent that fact separately from a failed GitHub attempt and do not
+      manufacture an attempt timestamp. Bind any continuation to its actual purpose, scope and effective
+      parameters; it is optional evidence of traversal, not a count or a complete-coverage certificate.
+      Source attempt, per-portion traversal, field facts, collection coverage and local retention each
+      remain separately attributable even when one underlying operation produces several portions. This
+      is an information contract, not a mandated Swift enum, one response per HTTP request, or a claim
+      that GitHub exposes these categories directly.
+    discovery_fact_handoff: Normalize every usable typed representation under 0101 into independently
+      supported facts for the source-confirmed work identity, with per-field and event evidence, scope
+      and actual observation context. An open-work and recent-work portion may both return that same identity;
+      the caller evaluates it as one candidate when the association is supported, while retaining both
+      observations and each portion's traversal status. Do not overwrite a newer comparable field with
+      an older observation or resolve unordered conflicts by portion, page or response arrival order.
+      An untyped or unassociated representation remains an unresolved coverage limitation and is not fabricated
+      as a second card. Facts for different fields, close-event evidence and Project-wide population coverage
+      remain distinct inputs to 0110 and its collection assembler.
+    discovery_retention_handoff: Submit independently eligible accepted fact bundles and optional continuation
+      or coverage evidence through 0105 with their own logical operation and portion context. Source success,
+      a fact's durable acceptance, continuation retention and a coverage claim have independently established
+      outcomes; saving one does not prove another or advance another purpose's checkpoint. The route may
+      use an eligible in-memory fact when its save fails, marked transient, but after restart only independently
+      recovered evidence supports the fact and its original observation time. Reevaluate Project membership,
+      filters and current disclosure under 0115 before any presentation; a retained portion or older successful
+      response does not authorize current access or manufacture a current complete Project view.
+    field_limitation_handoff: When retaining a field-specific source limitation, hand it to downstream
+      0126 as its own scoped attempt outcome and local operation with supported subject or explicitly
+      unresolved association, field meaning and privacy-safe cause if known. This is not a replacement
+      field value or evidence that the source attempt as a whole failed. A source fact, field limitation
+      and overall terminal outcome can have different retention results; a saved title cannot prove that
+      a review error was retained. When the limitation is not retained or its read is indeterminate, preserve
+      only independently supported facts and safe unknown status. The 0126 reference is a downstream refinement
+      of 0105 that depends on this exchange; it is not a reciprocal prerequisite edge.
+    field_update_interpretation: An identified field update can carry a supported value, supported semantic
+      absence, or no accepted replacement such as not requested, field error or unavailable evidence.
+      Preserve unorderable conflict and do not erase an older value merely because it was not requested.
+      Confirmed private Repository revocation limits source synchronization but does not hide already
+      saved local data under 0019; show its applicable indication and supported time. A supported empty
+      collection or zero applies only to its proven scope.
+    combining_updates: A usable new value or supported absence can replace a comparable earlier value
+      for the current field only when applicable source evidence supports the new value and ordering.
+      An omitted or failed field retains any independently readable earlier permitted value with its original
+      context, or is unknown if none is recoverable; do not assign the new attempt time to it. A known
+      earlier value can remain last known with a limitation when current applicability is unproven. Incompatible
+      unordered values become conflicted or uncertain rather than choosing by arrival time. Successful
+      siblings remain individually usable without promoting the entire response to complete.
+    read_result_shape: A local read reports recoverable records and their individual evidence contexts,
+      plus the scope of any unavailable, inconsistent or unresolved portion. Confirmed local absence means
+      the read reliably supports absence of the relevant local record; it is not a confirmed empty GitHub
+      collection. A locally stored empty-source observation requires its own valid source evidence and
+      is distinct from no stored observation. If neither an earlier nor a later record is independently
+      recoverable, the route receives unavailable or unknown, not an assumed earlier successful value.
+    historical_retention_exchange: As an agent-authored information contract, submit one logical retention
+      intent with its opaque operation identity and immutable binding, the source observation or explicitly
+      attributed retrieval identity, the intended history generation captured when eligible work began,
+      and one or more scoped evidence bundles. Each bundle identifies metric and predicate version, value
+      or explicit unavailable state, unit and subject, confirmed or unresolved source identity, Repository
+      and membership basis, source event time or state reference where supported, observation or retrieval
+      context, coverage and applicable access context. Explicit unknowns are not represented as empty
+      collections, zero or invented timestamps. An absent required context prevents a stronger claim but
+      does not require rejecting an independently interpretable partial bundle. Do not include credentials,
+      raw authorization responses or source text not needed by the selected retention policy. This describes
+      information crossing the boundary, not one mandatory Swift type, table, batch-wide transaction or
+      a durable success.
+    historical_retention_outcome: Return the logical operation identity with applied, confirmed terminal
+      non-application or conflict, or indeterminate status under 0103 and 0105. For an applied effect
+      expose only the recoverable scoped effect and its evidence context; per-bundle outcomes remain separate
+      when they did not commit atomically. A known non-application of one operation does not imply that
+      another operation or the source attempt failed. An indeterminate admission, unknown generation or
+      lost acknowledgement does not establish either a committed sample or safe non-application; reconcile
+      using the original identity and clear boundary before replay. Current access is reevaluated separately
+      before presenting retained contents.
+    historical_read_exchange: A history read identifies the requested metric, Project or source scope
+      and fixed temporal context, and returns independently recoverable supported values with their own
+      predicate version, unit, time, membership basis and coverage, plus attributable incomplete, unavailable
+      or conflicting portions. A complete zero requires its own source and population evidence; a successful
+      read with no local records is local absence, not source zero. A persisted operation receipt is not
+      itself a readable point or evidence of current authorization. A separately supported current-cache
+      fact cannot silently replace missing history, and exact result serialization remains open.
+    retention_result_shape: Bind the submitted operation identity and immutable intent to an applied,
+      confirmed terminal non-application or conflict, or indeterminate result under 0103 and 0105. An
+      applied receipt supports the historical local effect only if its binding and context are recoverable;
+      it does not by itself establish that a later read succeeds. A known terminal failure does not prove
+      an earlier observation survived an interrupted write unless an independent read confirms it. An
+      indeterminate result cannot be turned into rollback, a new observation, or a distinct retry while
+      an earlier effect could still commit.
+    provenance: Associate each accepted fact with the exact object, source representation, field or event
+      meaning, applicable observation and source-event times, relevant revision or ordering evidence,
+      access context and scope. An event time can precede observation; an unavailable event time stays
+      unknown. A last-known fact remains last known for its own context even if a sibling field is newly
+      observed. Do not serialize a group of differently timed facts as one simultaneous current source
+      snapshot unless independently established.
+    coverage: Supply a separate coverage assessment for the requested Repository set, object category,
+      Today alternatives or other predicate, selected period, applicable filters, source and access context
+      under 0102. Distinguish unobserved, incomplete or unproven, and sufficiently established coverage
+      with its supported reference; a last page or successful local write alone is not sufficient proof.
+      A count of known candidates is not a count of unseen source objects. Keep a prior supported coverage
+      claim at its original scope and time rather than advancing it with an unrelated partial field.
+    aggregate_and_objects: Exchange and retain a supported aggregate claim independently from object-level
+      materialization coverage. A durably retained count and its provenance need not contain member identities
+      and cannot by itself supply a complete route input or fabricated cards. A local read must not report
+      the grid as fully populated solely because an aggregate exists or the number of recovered objects
+      happens to match it. An independently established exact collection retains its own identity, predicate
+      and reference evidence; count and collection can support one another only to the extent their contexts
+      and semantics are established as compatible under 0102.
+    retention: A domain-aware boundary accepts a logical 0103 retention operation with its bound supported
+      facts and interpretation context under 0105; 0113 proposes one persistence design. Return applied,
+      terminal rejection or conflict where supported, or indeterminate independently of the source attempt.
+      Same-operation replay cannot become another source observation, and a checkpoint or coverage advance
+      cannot outlive the evidence required to support it. A successful cache write does not establish
+      separate history retention or current source access.
+    route_read: A work route reads the current saved Project membership and the eligible recoverable observations
+      under their respective boundaries. Its prepared input includes per-object typed facts and limitations,
+      an independently scoped population assessment, relevant latest source attempt and local retention
+      outcomes, and safe access state. A pending source response can be presented transiently only when
+      permitted and explicitly not claimed durable; an unreadable local read or an indeterminate save
+      remains a recovery condition rather than a confirmed empty Project. The current Project identity
+      and filter context are supplied by the route, not inferred from a source record.
+    prepared_today_input: For each confirmed typed candidate, provide the source-supported facts and evidence
+      or limitations needed to derive the 0110 open, creation and outcome alternatives in the captured
+      local-day context. In particular, an absent closure event or a terminal traversal is not by itself
+      a supported false outcome alternative; its negative value needs sufficient applicable event coverage
+      for that object and interval. Keep this per-object evidence separate from the population coverage
+      for the entire selection. An independently supported creation or open fact can remain usable even
+      when outcome-event history is unknown, subject to identity, time and access applicability.
+    combined_condition_preparation: For a condition that claims a conjunction at a particular reference,
+      prepare each constituent only if its own subject, access, revision, semantics and time support that
+      same requested claim. Two positive last-known facts at different references do not by themselves
+      establish that their conjunction was true at either reference. Preserve them as separately inspectable
+      observations, while an unestablished required current constituent is unknown for the current selection
+      and measurement. An unchanged head alone does not show that CI, review requests or thread state
+      stayed unchanged; a changed head alone does not determine an unrelated review or thread result.
+      A known false constituent can exclude only when it is supported for the requested context. A labeled
+      mixed-time working overview may display the facts separately under 0046, without claiming a simultaneous
+      source snapshot or current combined positive.
+    last_known_and_current_selection: Distinguish a permitted previously observed lifecycle from an independently
+      supported lifecycle fact applicable to the current evaluation. If the current open condition cannot
+      be established, pass unknown for that current condition even when an older read says open; retain
+      that earlier observation with its own time for a permitted last-known explanation. A successful
+      local read proves only the recoverable stored evidence, not a new GitHub observation, and a failed
+      source attempt is not a closure. Evaluate supported events against the captured day independently;
+      an event may establish inclusion only under an applicable selected condition. Creation alone is
+      an unselected candidate and does not by itself establish Today inclusion under the current decision.
+      If no other alternative is supported, pass the uncertainty to 0110 and retain the known candidate
+      for the accessible uncertainty path under 0042. This does not introduce an expiry duration or say
+      that elapsed time alone proves a source change; the selected applicability policy and supported
+      evidence must be specified before treating any observation as current.
+    transient_identity_resolution: Under 0124 a source-supported identity association can be usable during
+      the current session even when its local retention fails or remains indeterminate. Carry the association
+      evidence and source context separately from the persistence outcome, show a safe recoverability
+      limitation and do not claim it survives restart. Reapply current access and route relevance before
+      projection. A local save failure does not imply source denial, and a source success does not imply
+      a durable association.
+    ordering_and_presentation: Reconcile comparable facts using supported source ordering and observation
+      context, not callback completion or record insertion order. If values cannot be ordered, retain
+      explicit conflict or uncertainty. After confirmed private Repository revocation, preserve previously
+      saved local identity, facts and supported aggregates as last known under 0019 with revocation and
+      supported times; a pre-revocation response does not become a new accepted update or grant. Cross-account
+      disclosure and external sharing remain separate.
+    response_boundaries: The selection policy receives immutable prepared facts and their contextual uncertainty
+      rather than raw GraphQL or REST payloads, database handles, credential values or UI objects. The
+      route can change density, filters or navigation without causing the source observation itself to
+      change; a newly relevant context requires a new evaluation. The initial discovery and closure operations
+      are selected in 0102; exact Swift interfaces, serialization, scheduling and result presentation
+      remain separately specified.
+    verification: Prepare TDD cases with injected source responses and local outcomes for a partial response
+      with a failed sibling field, PR issue representation, unknown identity, overlapping unordered attempts,
+      denied access, lost save acknowledgement and restart. Verify real GitHub response mapping, persistent
+      storage and native rendering separately from deterministic doubles. This specification and ontology
+      checks do not demonstrate any implemented adapter or product.
+    provenance_note: Offline last-known data, visible update errors, a dense Today overview and DI with
+      TDD were requested by the owner. The evidence dimensions and boundary are agent-authored working
+      refinements; they introduce no new product ontology entity or mandatory source API.
   scenarios:
     mixed_reference_ci_and_review:
-      given: A permitted PR created today has an open lifecycle and changes-requested assessment independently supported for a compatible reference T2. Its last observed failed check is for head H at T1; head H is again observed at T2 but CI has not been refreshed or independently established for T2. Other PRs and complete Project coverage are unobserved.
-      when: The coordinator prepares a failed-CI filter, a changes-requested signal and the PR overview for the T2 context.
-      then: Today inclusion is supported and the review assessment can contribute one permitted observed positive to its own open-PR subset at T2. The old failed check remains inspectable at T1 for H but does not establish current failed CI or a healthy result merely because H is unchanged; its filter result is uncertain and cannot contribute a confirmed T2 failure. The two signals keep independent times and limitations, no complete Project totals or simultaneous CI-and-review snapshot are asserted, and the PR appears only once in any one destination.
+      given: A permitted PR created today has an open lifecycle and changes-requested assessment independently
+        supported for a compatible reference T2. Its last observed failed check is for head H at T1; head
+        H is again observed at T2 but CI has not been refreshed or independently established for T2. Other
+        PRs and complete Project coverage are unobserved.
+      when: The coordinator prepares a failed-CI filter, a changes-requested signal and the PR overview
+        for the T2 context.
+      then: Today inclusion is supported and the review assessment can contribute one permitted observed
+        positive to its own open-PR subset at T2. The old failed check remains inspectable at T1 for H
+        but does not establish current failed CI or a healthy result merely because H is unchanged; its
+        filter result is uncertain and cannot contribute a confirmed T2 failure. The two signals keep
+        independent times and limitations, no complete Project totals or simultaneous CI-and-review snapshot
+        are asserted, and the PR appears only once in any one destination.
     recovered_open_without_current_lifecycle_candidate:
-      given: A permitted identified PR was last observed open before the captured day and has a supported creation before that day. Its saved fact is read successfully after restart, the current refresh fails, and no applicable current lifecycle or complete in-day outcome-event evidence is established. Another permitted identified PR has a separately supported creation inside the captured day but an unknown current lifecycle. Scope, type and unrestricted filters are supported for both.
+      given: A permitted identified PR was last observed open before the captured day and has a supported
+        creation before that day. Its saved fact is read successfully after restart, the current refresh
+        fails, and no applicable current lifecycle or complete in-day outcome-event evidence is established.
+        Another permitted identified PR has a separately supported creation inside the captured day but
+        an unknown current lifecycle. Scope, type and unrestricted filters are supported for both.
       when: The coordinator prepares the two candidates for the current Today evaluation.
-      then: The first PR's old open observation remains inspectable with its original time but its current open and outcome alternatives are unknown, so it is a known uncertain candidate rather than a confirmed current-open match or a disappearance. If the unselected creation-inclusion alternative is adopted, the second matches Today through its creation event while its lifecycle stays unknown; otherwise creation alone does not establish a match. The failure and incomplete population coverage remain separate, and neither local reading nor the sibling event refreshes the first PR's source time.
+      then: The first PR's old open observation remains inspectable with its original time but its current
+        open and outcome alternatives are unknown, so it is a known uncertain candidate rather than a
+        confirmed current-open match or a disappearance. If the unselected creation-inclusion alternative
+        is adopted, the second matches Today through its creation event while its lifecycle stays unknown;
+        otherwise creation alone does not establish a match. The failure and incomplete population coverage
+        remain separate, and neither local reading nor the sibling event refreshes the first PR's source
+        time.
     compatible_shared_portion_distinct_projects:
-      given: Projects P and Q both currently contain confirmed Repository R and request the same permitted open-PR discovery portion under the same active account, source and effective parameters. A shared source attempt returns one identified PR with a supported open state and an incomplete traversal; the fact's local retention is indeterminate.
-      when: Each Project assembles its own Today selection while current disclosure still permits that fact.
-      then: Each may evaluate the same PR once in its own Project context using the original observation and an independently attributed transient-save limitation. Neither receives a complete Project population, a later observation timestamp or a second PR from sharing the attempt; P and Q retain their own remaining portions and request outcomes.
+      given: Projects P and Q both currently contain confirmed Repository R and request the same permitted
+        open-PR discovery portion under the same active account, source and effective parameters. A shared
+        source attempt returns one identified PR with a supported open state and an incomplete traversal;
+        the fact's local retention is indeterminate.
+      when: Each Project assembles its own Today selection while current disclosure still permits that
+        fact.
+      then: Each may evaluate the same PR once in its own Project context using the original observation
+        and an independently attributed transient-save limitation. Neither receives a complete Project
+        population, a later observation timestamp or a second PR from sharing the attempt; P and Q retain
+        their own remaining portions and request outcomes.
     same_repository_different_day_cursor:
-      given: A recent-Issue traversal for R captured day D1 and its since predicate, leaving a continuation cursor. The local day changes to D2 while the source account and Repository identity remain unchanged, and no source guarantee establishes that the old cursor is valid for D2's different effective predicate.
+      given: A recent-Issue traversal for R captured day D1 and its since predicate, leaving a continuation
+        cursor. The local day changes to D2 while the source account and Repository identity remain unchanged,
+        and no source guarantee establishes that the old cursor is valid for D2's different effective
+        predicate.
       when: A new Today route requests D2 discovery.
-      then: The D1 cursor and coverage are not treated as D2 continuation or complete D2 discovery merely because R is unchanged. An independently applicable permitted object fact can be reevaluated against D2 with its original observation context, while any necessary new traversal and its coverage remain separate.
+      then: The D1 cursor and coverage are not treated as D2 continuation or complete D2 discovery merely
+        because R is unchanged. An independently applicable permitted object fact can be reevaluated against
+        D2 with its original observation context, while any necessary new traversal and its coverage remain
+        separate.
     same_repository_changed_account:
-      given: A private PR observation and an incomplete source attempt for R were obtained under account A. Account B is now active, but its permission to that private PR and the affected Repository is not established.
+      given: A private PR observation and an incomplete source attempt for R were obtained under account
+        A. Account B is now active, but its permission to that private PR and the affected Repository
+        is not established.
       when: A Project containing R requests the corresponding portion under B.
-      then: The A attempt, its cursor and prior authorization do not establish B's access or satisfy B's request. The private identity and revealing values stay withheld under the current policy; any later B observation needs its own supported association, access and scope, and does not retroactively change A's original result.
+      then: The A attempt, its cursor and prior authorization do not establish B's access or satisfy B's
+        request. The private identity and revealing values stay withheld under the current policy; any
+        later B observation needs its own supported association, access and scope, and does not retroactively
+        change A's original result.
     requested_portion_missing_from_shared_response:
-      given: One admitted request was intended to retrieve open PRs and open Issues for the same permitted Repository, but the response contains a usable PR page and omits the requested Issue subtree without sufficient evidence of a semantic empty result; a separate recent-Issue portion has not been admitted.
+      given: One admitted request was intended to retrieve open PRs and open Issues for the same permitted
+        Repository, but the response contains a usable PR page and omits the requested Issue subtree without
+        sufficient evidence of a semantic empty result; a separate recent-Issue portion has not been admitted.
       when: The boundary returns its outcomes and the caller assembles Today.
-      then: The supported PR page and its actual traversal state remain usable, the requested Issue portion is unobserved or unavailable rather than a successful empty page, and the unadmitted recent portion is not reported as a GitHub failure. Coverage of the full Today selection remains independently incomplete or unproven, without inventing a missing-object count or a source denial.
+      then: The supported PR page and its actual traversal state remain usable, the requested Issue portion
+        is unobserved or unavailable rather than a successful empty page, and the unadmitted recent portion
+        is not reported as a GitHub failure. Coverage of the full Today selection remains independently
+        incomplete or unproven, without inventing a missing-object count or a source denial.
     same_pr_two_portions_one_storage_failure:
-      given: The open-PR and recent-PR portions for the same confirmed Repository independently return source-associated representations of the same PR. The open portion supplies a permitted title at T1 and its retention succeeds; the recent portion supplies an applicable state observation at T2 but its retention is indeterminate. The Issue portion has not been observed.
-      when: The active route prepares Today and a later process restarts before the indeterminate write can be reconciled.
-      then: During the session there is at most one confirmed PR candidate using the supported T1 title and T2 state with their own contexts and a local-save limitation; the unobserved Issue portion prevents a complete Project selection. After restart only independently recoverable facts can be used, the T2 state is not claimed durable without its own evidence, and replay or matching values do not create a second PR or a new source observation.
+      given: The open-PR and recent-PR portions for the same confirmed Repository independently return
+        source-associated representations of the same PR. The open portion supplies a permitted title
+        at T1 and its retention succeeds; the recent portion supplies an applicable state observation
+        at T2 but its retention is indeterminate. The Issue portion has not been observed.
+      when: The active route prepares Today and a later process restarts before the indeterminate write
+        can be reconciled.
+      then: During the session there is at most one confirmed PR candidate using the supported T1 title
+        and T2 state with their own contexts and a local-save limitation; the unobserved Issue portion
+        prevents a complete Project selection. After restart only independently recoverable facts can
+        be used, the T2 state is not claimed durable without its own evidence, and replay or matching
+        values do not create a second PR or a new source observation.
     shared_response_separate_purpose_outcome:
-      given: One GraphQL response contains a usable open-Issue connection and an error-affected recent-Issue connection for the same Repository and account.
+      given: One GraphQL response contains a usable open-Issue connection and an error-affected recent-Issue
+        connection for the same Repository and account.
       when: The boundary maps, retains and presents the usable open portion.
-      then: Supported open Issues can be evaluated and their retention outcomes reported, while the recent portion remains independently limited; neither the shared response nor the accepted open facts prove a complete Today union or a successful recent traversal.
+      then: Supported open Issues can be evaluated and their retention outcomes reported, while the recent
+        portion remains independently limited; neither the shared response nor the accepted open facts
+        prove a complete Today union or a successful recent traversal.
     graphql_aliased_field_error:
-      given: A GraphQL result contains two independently identified PRs in response order, and an error path uses the requested alias and index of the second PR's review field while the first PR and second PR's title are returned with supported identity and context.
+      given: A GraphQL result contains two independently identified PRs in response order, and an error
+        path uses the requested alias and index of the second PR's review field while the first PR and
+        second PR's title are returned with supported identity and context.
       when: The source boundary prepares facts for a grid that is locally sorted in the opposite order.
-      then: The error is attributed using the response path and query mapping rather than the later grid index; the second PR's review is unavailable or last known, while independently supported first-PR facts and the second title retain their own contexts.
+      then: The error is attributed using the response path and query mapping rather than the later grid
+        index; the second PR's review is unavailable or last known, while independently supported first-PR
+        facts and the second title retain their own contexts.
     graphql_nonnull_propagation:
-      given: A required nested GraphQL field fails and source schema nullability propagates null to its nearest nullable parent, leaving the parent's other requested fields absent from returned data.
+      given: A required nested GraphQL field fails and source schema nullability propagates null to its
+        nearest nullable parent, leaving the parent's other requested fields absent from returned data.
       when: The route requests those fields for the affected object or collection.
-      then: The omitted subtree is unavailable within its supported scope, no absent field becomes an empty value or a successful observation, and independently returned permitted siblings remain usable without a complete-population claim.
+      then: The omitted subtree is unavailable within its supported scope, no absent field becomes an
+        empty value or a successful observation, and independently returned permitted siblings remain
+        usable without a complete-population claim.
     pr_state_error_versus_nullable_merge_time:
-      given: A selected PR query requests non-null state and nullable mergedAt for X, with permitted prior facts at T1. In one response a state execution error propagates to null the PR node or another nullable ancestor; in a separate response X remains identifiable with title and state but mergedAt is null with its field error.
+      given: A selected PR query requests non-null state and nullable mergedAt for X, with permitted prior
+        facts at T1. In one response a state execution error propagates to null the PR node or another
+        nullable ancestor; in a separate response X remains identifiable with title and state but mergedAt
+        is null with its field error.
       when: Each response is prepared independently for Today.
-      then: The first response does not supply X's title, state or mergedAt from the missing subtree; independently recoverable applicable T1 evidence may still be used under current access. The second may supply its supported title and state at T2, while the failed mergedAt supplies no merge time or semantic absence; applicable T1 merge evidence retains T1 context. Neither case proves full population coverage or a new access grant.
+      then: The first response does not supply X's title, state or mergedAt from the missing subtree;
+        independently recoverable applicable T1 evidence may still be used under current access. The second
+        may supply its supported title and state at T2, while the failed mergedAt supplies no merge time
+        or semantic absence; applicable T1 merge evidence retains T1 context. Neither case proves full
+        population coverage or a new access grant.
     nullable_pr_node_in_terminal_page:
-      given: A scoped GraphQL PR connection returns a supported terminal pageInfo and two node positions. One typed, source-associated permitted PR returns open state and isDraft false; the other position is null with an execution-error path identifying its isDraft field, consistent with the selected schema's null propagation. No independent evidence establishes the affected PR's identity or the missing population.
-      when: The source boundary prepares its facts and the caller evaluates Today and the optional open non-draft selection.
-      then: The first PR can be evaluated using its independently supported facts; the null position supplies no PR identity, title, state or draft value and creates no fabricated card. Terminal traversal does not make the affected candidate population complete or establish a number of missing matches; the permitted limitation remains separate from known candidate results and current access is reapplied.
+      given: A scoped GraphQL PR connection returns a supported terminal pageInfo and two node positions.
+        One typed, source-associated permitted PR returns open state and isDraft false; the other position
+        is null with an execution-error path identifying its isDraft field, consistent with the selected
+        schema's null propagation. No independent evidence establishes the affected PR's identity or the
+        missing population.
+      when: The source boundary prepares its facts and the caller evaluates Today and the optional open
+        non-draft selection.
+      then: The first PR can be evaluated using its independently supported facts; the null position supplies
+        no PR identity, title, state or draft value and creates no fabricated card. Terminal traversal
+        does not make the affected candidate population complete or establish a number of missing matches;
+        the permitted limitation remains separate from known candidate results and current access is reapplied.
     graphql_200_with_rate_limit_error:
-      given: GitHub responds with HTTP 200, a GraphQL rate-limit error and supporting limit evidence while some unrelated requested values are independently usable.
+      given: GitHub responds with HTTP 200, a GraphQL rate-limit error and supporting limit evidence while
+        some unrelated requested values are independently usable.
       when: The attempt is mapped for refresh and presentation.
-      then: The rate-limited scope is not labeled successful or empty, supported siblings retain their own context, and the next eligible attempt follows applicable reset or retry evidence rather than immediate repeated requests.
+      then: The rate-limited scope is not labeled successful or empty, supported siblings retain their
+        own context, and the next eligible attempt follows applicable reset or retry evidence rather than
+        immediate repeated requests.
     history_read_after_lost_retention_ack:
-      given: An eligible historical sample's retention acknowledgement was lost, and the current source observation remains independently usable in memory.
+      given: An eligible historical sample's retention acknowledgement was lost, and the current source
+        observation remains independently usable in memory.
       when: The route reads historical data before durable reconciliation.
-      then: The receipt is indeterminate and the transient observation retains its own context; the read returns only independently recoverable history or an explicit limitation, without inventing a durable point or an empty source.
+      then: The receipt is indeterminate and the transient observation retains its own context; the read
+        returns only independently recoverable history or an explicit limitation, without inventing a
+        durable point or an empty source.
     history_bundle_partial_context:
-      given: A retained permitted title has complete interpretation context but an independently submitted review-state fact lacks the source context necessary to interpret it.
+      given: A retained permitted title has complete interpretation context but an independently submitted
+        review-state fact lacks the source context necessary to interpret it.
       when: Those independently scoped evidence bundles are recovered.
-      then: The title may remain usable with its own time, while the review fact is unavailable or uncertain rather than inheriting the title's context or becoming a confirmed historical review point.
+      then: The title may remain usable with its own time, while the review fact is unavailable or uncertain
+        rather than inheriting the title's context or becoming a confirmed historical review point.
     retained_count_missing_object:
-      given: A source-supported aggregate of two PRs and its context were durably retained, but the source supplied and local storage retained facts for only one identified matching PR.
+      given: A source-supported aggregate of two PRs and its context were durably retained, but the source
+        supplied and local storage retained facts for only one identified matching PR.
       when: The app restarts and prepares the work route from a successful local read.
-      then: The count remains a separately attributed permitted measurement, the single recovered PR may be shown, and the route reports incomplete object materialization rather than inventing a second card or claiming an exhaustive grid.
+      then: The count remains a separately attributed permitted measurement, the single recovered PR may
+        be shown, and the route reports incomplete object materialization rather than inventing a second
+        card or claiming an exhaustive grid.
     title_and_failed_ci_field:
-      given: An applicable PR response successfully supplies a new title at T2 but its CI field has an error; a permitted CI observation from T1 is retained.
+      given: An applicable PR response successfully supplies a new title at T2 but its CI field has an
+        error; a permitted CI observation from T1 is retained.
       when: The source response is normalized and the route is prepared.
-      then: The title can carry T2 while CI remains last known at T1 or unavailable with its own limitation; no zero, current success or full-Project refresh is inferred.
+      then: The title can carry T2 while CI remains last known at T1 or unavailable with its own limitation;
+        no zero, current success or full-Project refresh is inferred.
     marked_pr_representation:
-      given: A usable source record in an Issues response is marked as a PR and its association to a separately received PR identity is supported in the same confirmed Repository.
+      given: A usable source record in an Issues response is marked as a PR and its association to a separately
+        received PR identity is supported in the same confirmed Repository.
       when: The route builds its distinct work candidates.
-      then: The two representations contribute one PR, their source ID kinds remain distinct and no independent Issue is fabricated.
+      then: The two representations contribute one PR, their source ID kinds remain distinct and no independent
+        Issue is fabricated.
     partial_with_storage_failure:
-      given: A source attempt supplies two supported PR facts but leaves a second Repository unobserved and its local retention fails.
+      given: A source attempt supplies two supported PR facts but leaves a second Repository unobserved
+        and its local retention fails.
       when: The current route displays the result and later restarts.
-      then: Permitted transient facts may be shown with their context and failure, Project coverage remains incomplete, and after restart no new durable observation is claimed without an independently readable save.
+      then: Permitted transient facts may be shown with their context and failure, Project coverage remains
+        incomplete, and after restart no new durable observation is claimed without an independently readable
+        save.
     unordered_values:
-      given: Two applicable observations give incompatible current CI states for the same entry with no source-supported ordering.
+      given: Two applicable observations give incompatible current CI states for the same entry with no
+        source-supported ordering.
       when: The route requests the current failure filter.
-      then: The field remains conflicted or unknown and no callback order is used to manufacture a confirmed match or exclusion.
+      then: The field remains conflicted or unknown and no callback order is used to manufacture a confirmed
+        match or exclusion.
     stale_response_after_denial:
-      given: A request for a private Issue began under account A, and a later applicable denial restricts its identity before that response completes.
+      given: A request for a private Issue began under account A, saved local Issue data exists, and source
+        revocation is confirmed before the response completes.
       when: The result is mapped and the route renders.
-      then: The old response cannot unlock the Issue or reveal its restricted identity or derived count; a permitted limitation may remain visible.
+      then: The older response does not become a new accepted update or establish restored GitHub access.
+        The previously saved local Issue remains visible as last known with the revocation indication
+        and supported time when known under 0019.
     absent_and_unrequested:
-      given: A supported source response establishes an empty assignee collection for an Issue but did not request its review-related PR information.
+      given: A supported source response establishes an empty assignee collection for an Issue but did
+        not request its review-related PR information.
       when: Facts are handed to their respective overviews.
-      then: The Issue assignee collection can be known empty in that context, while unrequested PR review data is not cleared or labeled a zero review state.
+      then: The Issue assignee collection can be known empty in that context, while unrequested PR review
+        data is not cleared or labeled a zero review state.
     unsupported_null_with_prior_value:
-      given: A PR review assessment was accepted at T1; a later source response at T2 returns null for that field with an error and contains a supported new title.
+      given: A PR review assessment was accepted at T1; a later source response at T2 returns null for
+        that field with an error and contains a supported new title.
       when: The attempt and field evidence are combined for the permitted route.
-      then: The title may use T2, the review retains its independently recoverable T1 value as last known or remains unavailable, and the error does not become a confirmed empty review or a T2 observation.
+      then: The title may use T2, the review retains its independently recoverable T1 value as last known
+        or remains unavailable, and the error does not become a confirmed empty review or a T2 observation.
     supported_absence_with_order:
-      given: An Issue's assignee collection was nonempty at T1 and a comparable source response at T2 independently establishes a complete empty assignee collection with sufficient ordering and access evidence.
+      given: An Issue's assignee collection was nonempty at T1 and a comparable source response at T2
+        independently establishes a complete empty assignee collection with sufficient ordering and access
+        evidence.
       when: The current field result is prepared.
-      then: The T2 collection can be reported as known empty for that scope while the prior observation retains its own history; this absence does not erase unrelated fields or historical facts.
+      then: The T2 collection can be reported as known empty for that scope while the prior observation
+        retains its own history; this absence does not erase unrelated fields or historical facts.
     failed_write_does_not_restore_baseline:
-      given: A title at T1 was reported saved, a later T2 retention attempt fails, and the subsequent local read cannot establish either title or its evidence.
+      given: A title at T1 was reported saved, a later T2 retention attempt fails, and the subsequent
+        local read cannot establish either title or its evidence.
       when: The route is recovered after interruption.
-      then: Neither T1 nor T2 is claimed durably recovered solely from earlier acknowledgements; the affected title is unavailable or unknown and local recovery remains separate from source emptiness.
+      then: Neither T1 nor T2 is claimed durably recovered solely from earlier acknowledgements; the affected
+        title is unavailable or unknown and local recovery remains separate from source emptiness.
   unresolved:
-  - The initial discovery mapping and error, identity and coverage responsibilities follow 0101, 0102 and the exchange contracts above; source facts not established by those mappings remain limited. Choose concrete Swift interface shapes and verify field-specific response semantics and permissions during implementation.
-  - Preserve the applicable logical consistency and recovery outcomes described by 0113 and 0126; specify and validate their physical realization, access, timestamps and conflict handling with the provider chosen during implementation.
-  - No adapter, live GitHub interaction, persistence, product TDD cycle or native presentation has been implemented or verified.
+  - The initial discovery mapping and error, identity and coverage responsibilities follow 0101, 0102
+    and the exchange contracts above; source facts not established by those mappings remain limited. Choose
+    concrete Swift interface shapes and verify field-specific response semantics and permissions during
+    implementation.
+  - Preserve the applicable logical consistency and recovery outcomes described by 0113 and 0126; specify
+    and validate their physical realization, access, timestamps and conflict handling with the provider
+    chosen during implementation.
+  - No adapter, live GitHub interaction, persistence, product TDD cycle or native presentation has been
+    implemented or verified.

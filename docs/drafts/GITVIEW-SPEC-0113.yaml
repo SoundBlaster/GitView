@@ -31,13 +31,19 @@ sources:
   project_recovery_data: docs/drafts/project-creation-recovery-data-contract-20261115.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- The proposed local persistence direction supports one coordinated commit for a Project effect and its operation evidence while exposing domain-facing interfaces to callers.
-- Operation identity and, if the proposed default-association mechanism is selected, association uniqueness are enforced in the chosen local consistency boundary rather than inferred from a prior read.
-- Known conflict, unavailable storage and indeterminate outcomes remain distinguishable across interruption and retry.
-- If SQLite is selected, its build, journal and durability configuration are not assumed safe without target-specific evidence, including applicable WAL defects.
-- Credential storage, source access and local database commits retain their distinct boundaries and recovery outcomes.
+- The proposed local persistence direction supports one coordinated commit for a Project effect and its
+  operation evidence while exposing domain-facing interfaces to callers.
+- Operation identity and, if the proposed default-association mechanism is selected, association uniqueness
+  are enforced in the chosen local consistency boundary rather than inferred from a prior read.
+- Known conflict, unavailable storage and indeterminate outcomes remain distinguishable across interruption
+  and retry.
+- If SQLite is selected, its build, journal and durability configuration are not assumed safe without
+  target-specific evidence, including applicable WAL defects.
+- Credential storage, source access and local database commits retain their distinct boundaries and recovery
+  outcomes.
 specification:
-  objective: Define provider-independent local persistence obligations and a reviewable SQLite option before implementation readiness.
+  objective: Define provider-independent local persistence obligations and a reviewable SQLite option
+    before implementation readiness.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -45,89 +51,276 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    direction: Choose a local persistence provider and coordinated consistency boundaries behind injected Project, operation and observation storage interfaces before implementing them. SQLite is an agent-authored candidate, not a product requirement or selected provider. Another design is permissible if it establishes the same applicable observable guarantees, access ordering and recovery behavior under 0106 and its dependencies. Logical data responsibilities are not product ontology entities. The implementation may choose a suitable provider and internal schema if it meets the observable contract below. The provider-specific transaction, migration, protection and recovery behavior must be verified before the product claims those guarantees; a particular database library or table layout is not itself a prerequisite for specifying domain behavior.
-    minimum_retained_data: Retain local Project identity, name, optional purpose, ordered identity where used, current confirmed Repository membership and applicable default association. Retain eligible source-derived PR and Issue facts with source and Repository identity, each relevant value or event meaning, its supported observation time and event time where applicable, plus scoped refresh outcome and coverage needed to explain last-known or incomplete data. Retain the selected historical metric evidence with its metric, unit, time and membership basis; a current cached value does not invent past history. Retain sufficient evidence to reconcile admitted local writes with uncertain outcomes. Credentials remain in the separate secure credential boundary, not in Project or observation records. This is a logical data inventory; it does not require a table, protocol or write transaction per item or per field.
-    minimum_boundary_operations: Through injected domain-facing boundaries, support reading the Project collection and one Project, creating or editing a confirmed valid Project, reading eligible observations for a current Project or Repository scope, and retaining supported observations and selected historical evidence. A read returns independently usable values and limitations; a write reports supported success, confirmed non-application or conflict, or uncertainty when it cannot establish the outcome. Source refresh and screen navigation remain outside storage. A saved Project survives a source refresh failure and keeps shared Repository identity; an unreadable local store is a local limitation, not an empty source or authorization failure.
-    minimum_consistency: A committed Project configuration and its membership are observed as one valid local result; an interrupted or uncertain write is reconciled before a retry that could duplicate or overwrite it. Independently committed Projects remain available after a partial multi-selection. A fresh source response does not become durable merely because it was shown; a successful local read does not become a fresh GitHub observation. Preserve applicable access restrictions and distinguish unobserved from zero. Store layout, library, batching and transaction granularity are implementation decisions, provided the corresponding observable guarantees and tests hold.
-    default_creation: After explicit confirmation and applicable local entry admission under 0045, a coordinated durable commit validates the bound operation intent, checks the current default association for the confirmed Repository, and establishes either a valid Project with membership and association or a supported reuse or conflict outcome under 0052 and 0104. Persist sufficient operation evidence to reconcile an uncertain submitted effect together with that effect or decision. A persistent record of the whole pending selection is not required. No source network request or system authorization UI runs while holding a database transaction.
-    project_overview_order: Retain a source-independent stable local Project order when supported under 0072. An insertion-order key is one possible implementation, not a mandatory counter or a reason to block an otherwise valid Project write. If ordering metadata is unavailable or inconsistent, use the supported deterministic identity-based fallback with a discoverable limitation; preserve Project identity, valid membership and recovery independently.
-    uniqueness_and_revisions: Enforce at most one active default association for a confirmed Repository within its source identity scope at the database boundary, including concurrent writers; a uniqueness constraint or equivalent verified mechanism is required, not merely a preflight query. Distinct custom Projects can include the same Repository. A Project configuration version must distinguish successive committed states even if values return to an earlier state; an edit compares its reviewed base to the current version at its coordinated write boundary. Exact schema, identifier encoding and migration representation remain open.
-    operation_recovery: Persist a stable logical operation binding and terminal outcome together with its effect or reuse decision. After an interrupted commit or lost acknowledgement, recover that operation from the durable store or keep its outcome indeterminate; a current association or a current Project read alone does not prove the historical result of that operation. Safe redelivery follows 0103 and does not create a second effect. An old applied receipt is not an independently current readable Project.
-    observation_retention: Use the coordinated boundary in 0105 for a retained field or event, its necessary interpretation evidence and its local operation outcome. A separate coverage claim can commit only when its required scoped evidence is durably recoverable or part of that same commit; source-supported aggregate evidence is acceptable only to the extent it actually establishes the claim. Facts, source scopes and history samples may have separate commits and outcomes. A storage transaction does not prove a collection was complete or that its contents were simultaneous at GitHub.
-    admission_ordering: Coordinate entry admission with locally established account replacement, denial and cancellation under 0045 and 0112. An old access read cannot authorize an entry after an applicable local change or cancellation has taken effect. Ordering must follow the actual admitted effect, not merely task creation; an unobserved remote GitHub grant change remains outside the local transaction. Persist evidence needed to recover a submitted uncertain effect; the design need not persist unsubmitted selection or batch cancellation solely for restart.
-    proposed_local_fence: A serialized admission coordinator and durable generation fence are one possible implementation when needed to preserve the ordering guarantees. A durable per-batch active or cancelled fence is not mandatory when unsubmitted selections are not resumed after process termination. All participating scenes and background entry producers must respect the selected admission boundary; independently verify the provider and lifecycle guarantees rather than assuming that task enqueue order establishes them.
-    immediate_restriction: When an applicable denial, disconnect or account replacement is observed in the running process, immediately block new affected admission requests and restrict app-controlled private presentation under 0036. Do not wait for the database or Keychain before applying this in-memory restriction. An already admitted transaction may have a separately recoverable local outcome and cannot itself restore source visibility. Account B is not reported as the confirmed active replacement for new admissions until its credential binding under 0086 and the applicable local fence are consistently established. If a fence update fails or its result is uncertain, retain the restriction and fail closed for affected new admissions; surface a recovery problem instead of claiming the change was durably recorded.
-    async_serialization: An actor, serial dispatch label or enqueue order alone does not prove exclusivity across a suspended asynchronous database operation. The coordinator's concrete protocol must prevent another entry from passing admission while a conflicting fence operation is pending, including while an await or database error occurs, while allowing immediate presentation restriction without waiting for the write. Do not hold a database write transaction across Keychain, network, UI or another unbounded operation. Define ordering at actual admission and durable fence boundaries, not at the time a task was created or a button was tapped.
-    restart_gap: After a confirmed durable fence, restart must respect that fence before allowing new entries. If the process terminates after a denial or disconnect was observed in memory but before its durable fence or equivalent recovery evidence was established, SQLite and Keychain cannot by themselves prove that the event occurred. The initial offline policy in 0036 permits eligible last-known data when durable context is consistent and no restriction or pending transition is known, explicitly accepting that the unrecorded event may be lost and affected cached content may reappear. Do not describe this as a guarantee that denial survives every crash, or as current GitHub access. A confirmed durable or recoverably pending restriction still applies; a previously unseen remote grant change is a separate limitation.
-    local_disconnect_acknowledgement: A disconnect request restricts affected content in the running process immediately. Report its durable local restriction as confirmed only after the applicable fence is known committed; credential deletion remains a separate outcome under 0086. If interruption occurs before any durable evidence exists, the later process cannot establish the requested disconnect from an earlier tap alone. Do not label it completed based on a missing result or infer an unrecorded request; recovery uses the working offline policy and its explicitly acknowledged limitation.
-    source_and_credential: Repository observations and access evidence retain source and account scope; local membership or a database receipt cannot establish present GitHub permissions. Store OAuth secrets in the platform secure credential store under 0019 and 0086, not in this database or its diagnostics. Database commit and secure-store changes have separate outcomes; no cross-store atomicity is asserted. Protect retained private source data and all database-associated files with an explicitly chosen platform policy before implementation readiness.
-    errors: A busy or locked database, full volume, inaccessible protected file, failed read, corruption signal, failed commit and unconfirmed acknowledgement are not automatically equivalent. Map each to known non-application only where the chosen transaction and subsequent evidence establish that no effect can still commit; otherwise preserve an indeterminate operation and a safe recovery route. Do not delete, recreate or silently reset an unreadable database to satisfy first-run behavior. Retry or backoff policy and concrete source of each status remain open.
-    sqlite_transaction_error_boundary: If SQLite is selected, SQLite documents that a COMMIT failing with SQLITE_BUSY because another reader holds the database can leave the transaction active for a later commit retry. For SQLITE_FULL, SQLITE_IOERR, SQLITE_INTERRUPT and SQLITE_NOMEM within a transaction, SQLite documents that either the statement or the entire transaction may be rolled back depending on circumstances. The selected provider must expose sufficient connection and transaction state or otherwise establish the actual outcome; the error code alone is not proof that the logical operation was rolled back, committed or can be safely resubmitted as a new identity. Stop uncoordinated use of that transaction, decide whether to retry the same still-active commit or perform and verify rollback under the provider's supported behavior, and reconcile durable operation evidence under 0103 before reporting a terminal outcome. After connection loss or process restart, in-memory transaction state alone is not a durable receipt. Preserve supported error classification without leaking restricted payloads. Exact provider API and retry limits remain unselected.
-    sqlite_assumptions: If SQLite is selected, SQLite documentation describes atomic commits and single-writer isolation under its stated assumptions, not an unconditional guarantee for every filesystem, library build or configuration. Identify the actual SQLite version and compile configuration on each supported iOS environment and select a journal and synchronization policy compatible with the contract. Do not assume WAL mode. Investigate the documented WAL-reset defect and fixes for the actual library and connection pattern, and treat its associated files as part of database state if WAL is chosen. No filesystem power-loss or iOS behavior is claimed verified.
-    initial_sqlite_profile: As an agent-authored candidate for the initial on-device store, investigate the platform-provided SQLite API with a single persistent main database, rollback journal mode DELETE and synchronous EXTRA. SQLite documents that FULL with rollback journal mode may lose a recently committed transaction after power loss; EXTRA requests an additional directory sync in DELETE mode, subject to VFS and filesystem assumptions. This profile avoids reliance on WAL for new stores but does not establish power-loss durability or exclude other defects. The iPhoneOS 27.1 SDK inspected locally includes sqlite3.h and a libsqlite3 linker stub; this establishes neither the runtime library version nor support on every target device. The exact adapter and iOS runtime evidence remain open.
-    profile_admission: If the proposed SQLite profile is selected, before a connection performs application writes or migrations, establish its effective main-database journal mode, synchronous setting and foreign-key enforcement; set and read back the applicable settings through the selected provider outside any active transaction. SQLite can return the original journal mode if a requested change fails and can ignore unknown PRAGMAs, so successful command submission alone is insufficient. If the required profile cannot be established, deny affected writes and report a local storage limitation without resetting the store. A temporary in-memory database or mock is not evidence that the persistent profile is supported. Opening an existing store in another mode, including WAL with companion files, requires a separately verified safe transition and recovery path; do not delete associated files or force conversion solely to satisfy this profile.
-    protected_store_candidate: Evaluate completeUntilFirstUserAuthentication for the database and all sensitive associated files as a candidate compatible with background work after the first unlock, subject to actual file creation, inheritance, temporary-file and restore behavior. It does not permit access before first unlock after reboot, does not prove Keychain accessibility or background scheduling, and is not yet an adopted backup or protection policy. If protected storage is unavailable, preserve the existing store and distinguish unavailable from empty under 0122.
-    verification: For the specification, define observable migration and recovery obligations and deterministic tests of two concurrent default operations, stale Project edits, lost acknowledgement, cancellation and account-change ordering, process termination, inaccessible storage and recovery. The chosen implementation must document and verify its provider-specific schema, migration and coordination sufficiently to meet those obligations. Later run real persistence and restart checks on supported iOS versions separately from injected doubles. Do not infer such evidence from this candidate or vendor documentation.
-    provenance: Local saved observations, default Projects, DI, testability and TDD follow the owner's choices. SQLite, the single consistency boundary and coordination approach are agent-authored working decisions; no product implementation, system setting or dependency has been created.
-  scenario_scope: Provider-independent outcomes apply to any chosen implementation. SQLite error and profile scenarios are conditional on selecting SQLite or the particular profile; an alternative must provide its own meaningful failure and recovery evidence.
+    direction: Choose a local persistence provider and coordinated consistency boundaries behind injected
+      Project, operation and observation storage interfaces before implementing them. SQLite is an agent-authored
+      candidate, not a product requirement or selected provider. Another design is permissible if it establishes
+      the same applicable observable guarantees, access ordering and recovery behavior under 0106 and
+      its dependencies. Logical data responsibilities are not product ontology entities. The implementation
+      may choose a suitable provider and internal schema if it meets the observable contract below. The
+      provider-specific transaction, migration, protection and recovery behavior must be verified before
+      the product claims those guarantees; a particular database library or table layout is not itself
+      a prerequisite for specifying domain behavior.
+    minimum_retained_data: Retain local Project identity, name, optional purpose, ordered identity where
+      used, current confirmed Repository membership and applicable default association. Retain eligible
+      source-derived PR and Issue facts with source and Repository identity, each relevant value or event
+      meaning, its supported observation time and event time where applicable, plus scoped refresh outcome
+      and coverage needed to explain last-known or incomplete data. Retain the selected historical metric
+      evidence with its metric, unit, time and membership basis; a current cached value does not invent
+      past history. Retain sufficient evidence to reconcile admitted local writes with uncertain outcomes.
+      Credentials remain in the separate secure credential boundary, not in Project or observation records.
+      This is a logical data inventory; it does not require a table, protocol or write transaction per
+      item or per field.
+    minimum_boundary_operations: Through injected domain-facing boundaries, support reading the Project
+      collection and one Project, creating or editing a confirmed valid Project, reading eligible observations
+      for a current Project or Repository scope, and retaining supported observations and selected historical
+      evidence. A read returns independently usable values and limitations; a write reports supported
+      success, confirmed non-application or conflict, or uncertainty when it cannot establish the outcome.
+      Source refresh and screen navigation remain outside storage. A saved Project survives a source refresh
+      failure and keeps shared Repository identity; an unreadable local store is a local limitation, not
+      an empty source or authorization failure.
+    minimum_consistency: A committed Project configuration and its membership are observed as one valid
+      local result; an interrupted or uncertain write is reconciled before a retry that could duplicate
+      or overwrite it. Independently committed Projects remain available after a partial multi-selection.
+      A fresh source response does not become durable merely because it was shown; a successful local
+      read does not become a fresh GitHub observation. Preserve applicable access restrictions and distinguish
+      unobserved from zero. Store layout, library, batching and transaction granularity are implementation
+      decisions, provided the corresponding observable guarantees and tests hold.
+    default_creation: After explicit confirmation and applicable local entry admission under 0045, a coordinated
+      durable commit validates the bound operation intent, checks the current default association for
+      the confirmed Repository, and establishes either a valid Project with membership and association
+      or a supported reuse or conflict outcome under 0052 and 0104. Persist sufficient operation evidence
+      to reconcile an uncertain submitted effect together with that effect or decision. A persistent record
+      of the whole pending selection is not required. No source network request or system authorization
+      UI runs while holding a database transaction.
+    project_overview_order: Retain a source-independent stable local Project order when supported under
+      0072. An insertion-order key is one possible implementation, not a mandatory counter or a reason
+      to block an otherwise valid Project write. If ordering metadata is unavailable or inconsistent,
+      use the supported deterministic identity-based fallback with a discoverable limitation; preserve
+      Project identity, valid membership and recovery independently.
+    uniqueness_and_revisions: Enforce at most one active default association for a confirmed Repository
+      within its source identity scope at the database boundary, including concurrent writers; a uniqueness
+      constraint or equivalent verified mechanism is required, not merely a preflight query. Distinct
+      custom Projects can include the same Repository. A Project configuration version must distinguish
+      successive committed states even if values return to an earlier state; an edit compares its reviewed
+      base to the current version at its coordinated write boundary. Exact schema, identifier encoding
+      and migration representation remain open.
+    operation_recovery: Persist a stable logical operation binding and terminal outcome together with
+      its effect or reuse decision. After an interrupted commit or lost acknowledgement, recover that
+      operation from the durable store or keep its outcome indeterminate; a current association or a current
+      Project read alone does not prove the historical result of that operation. Safe redelivery follows
+      0103 and does not create a second effect. An old applied receipt is not an independently current
+      readable Project.
+    observation_retention: Use the coordinated boundary in 0105 for a retained field or event, its necessary
+      interpretation evidence and its local operation outcome. A separate coverage claim can commit only
+      when its required scoped evidence is durably recoverable or part of that same commit; source-supported
+      aggregate evidence is acceptable only to the extent it actually establishes the claim. Facts, source
+      scopes and history samples may have separate commits and outcomes. A storage transaction does not
+      prove a collection was complete or that its contents were simultaneous at GitHub.
+    admission_ordering: Coordinate entry admission with locally established account replacement, denial
+      and cancellation under 0045 and 0112. An old access read cannot authorize an entry after an applicable
+      local change or cancellation has taken effect. Ordering must follow the actual admitted effect,
+      not merely task creation; an unobserved remote GitHub grant change remains outside the local transaction.
+      Persist evidence needed to recover a submitted uncertain effect; the design need not persist unsubmitted
+      selection or batch cancellation solely for restart.
+    proposed_local_fence: A serialized admission coordinator and durable generation fence are one possible
+      implementation when needed to preserve the ordering guarantees. A durable per-batch active or cancelled
+      fence is not mandatory when unsubmitted selections are not resumed after process termination. All
+      participating scenes and background entry producers must respect the selected admission boundary;
+      independently verify the provider and lifecycle guarantees rather than assuming that task enqueue
+      order establishes them.
+    immediate_restriction: When an applicable denial, disconnect or account replacement is observed, immediately
+      block affected new source requests and new admission or entry effects that rely on prior access,
+      without waiting for durable fence writes. A pending, failed or uncertain fence cannot admit such
+      effects on old evidence. Confirmed GitHub revocation does not hide already saved local content under
+      0019; show the applicable indication and supported time when known. A prior admitted transaction
+      may have a separately reconciled local outcome but cannot itself establish restored source access
+      or a fresh update. Do not confirm an account replacement or durable fence without evidence; expose
+      recovery if uncertain.
+    async_serialization: An actor, queue or enqueue order alone does not prove exclusivity across a suspended
+      database operation. The concrete protocol prevents conflicting new admission effects from passing
+      while a fence operation is pending, including an await or database error. Stop affected source work
+      promptly without hiding previously saved local content under 0019. Do not hold a database write
+      transaction across Keychain, network, UI or another unbounded operation; define ordering at actual
+      admission and durable fence boundaries.
+    restart_gap: A confirmed durable fence governs new source admissions after restart. If denial or disconnect
+      was observed only in memory and the process terminated before durable evidence, the recovered store
+      cannot prove the event occurred. Show locally available saved data with supported observation context
+      without claiming current GitHub access or inventing a revocation indication that is no longer supported;
+      expose known recovery limitations. A recoverably pending fence still governs new admissions.
+    local_disconnect_acknowledgement: A disconnect immediately stops affected new source admissions while
+      preserving access to locally saved data. Report a durable local disconnect only after its fence
+      is known committed; credential deletion remains a separate outcome. After interruption before any
+      durable evidence, do not label the disconnect completed or infer an unrecorded request; recover
+      the available local state and its limitations.
+    source_and_credential: Repository observations and access evidence retain source and account scope;
+      local membership or a database receipt cannot establish present GitHub permissions. Store OAuth
+      secrets in the platform secure credential store under 0019 and 0086, not in this database or its
+      diagnostics. Database commit and secure-store changes have separate outcomes; no cross-store atomicity
+      is asserted. Protect retained private source data and all database-associated files with an explicitly
+      chosen platform policy before implementation readiness.
+    errors: A busy or locked database, full volume, inaccessible protected file, failed read, corruption
+      signal, failed commit and unconfirmed acknowledgement are not automatically equivalent. Map each
+      to known non-application only where the chosen transaction and subsequent evidence establish that
+      no effect can still commit; otherwise preserve an indeterminate operation and a safe recovery route.
+      Do not delete, recreate or silently reset an unreadable database to satisfy first-run behavior.
+      Retry or backoff policy and concrete source of each status remain open.
+    sqlite_transaction_error_boundary: If SQLite is selected, SQLite documents that a COMMIT failing with
+      SQLITE_BUSY because another reader holds the database can leave the transaction active for a later
+      commit retry. For SQLITE_FULL, SQLITE_IOERR, SQLITE_INTERRUPT and SQLITE_NOMEM within a transaction,
+      SQLite documents that either the statement or the entire transaction may be rolled back depending
+      on circumstances. The selected provider must expose sufficient connection and transaction state
+      or otherwise establish the actual outcome; the error code alone is not proof that the logical operation
+      was rolled back, committed or can be safely resubmitted as a new identity. Stop uncoordinated use
+      of that transaction, decide whether to retry the same still-active commit or perform and verify
+      rollback under the provider's supported behavior, and reconcile durable operation evidence under
+      0103 before reporting a terminal outcome. After connection loss or process restart, in-memory transaction
+      state alone is not a durable receipt. Preserve supported error classification without leaking restricted
+      payloads. Exact provider API and retry limits remain unselected.
+    sqlite_assumptions: If SQLite is selected, SQLite documentation describes atomic commits and single-writer
+      isolation under its stated assumptions, not an unconditional guarantee for every filesystem, library
+      build or configuration. Identify the actual SQLite version and compile configuration on each supported
+      iOS environment and select a journal and synchronization policy compatible with the contract. Do
+      not assume WAL mode. Investigate the documented WAL-reset defect and fixes for the actual library
+      and connection pattern, and treat its associated files as part of database state if WAL is chosen.
+      No filesystem power-loss or iOS behavior is claimed verified.
+    initial_sqlite_profile: As an agent-authored candidate for the initial on-device store, investigate
+      the platform-provided SQLite API with a single persistent main database, rollback journal mode DELETE
+      and synchronous EXTRA. SQLite documents that FULL with rollback journal mode may lose a recently
+      committed transaction after power loss; EXTRA requests an additional directory sync in DELETE mode,
+      subject to VFS and filesystem assumptions. This profile avoids reliance on WAL for new stores but
+      does not establish power-loss durability or exclude other defects. The iPhoneOS 27.1 SDK inspected
+      locally includes sqlite3.h and a libsqlite3 linker stub; this establishes neither the runtime library
+      version nor support on every target device. The exact adapter and iOS runtime evidence remain open.
+    profile_admission: If the proposed SQLite profile is selected, before a connection performs application
+      writes or migrations, establish its effective main-database journal mode, synchronous setting and
+      foreign-key enforcement; set and read back the applicable settings through the selected provider
+      outside any active transaction. SQLite can return the original journal mode if a requested change
+      fails and can ignore unknown PRAGMAs, so successful command submission alone is insufficient. If
+      the required profile cannot be established, deny affected writes and report a local storage limitation
+      without resetting the store. A temporary in-memory database or mock is not evidence that the persistent
+      profile is supported. Opening an existing store in another mode, including WAL with companion files,
+      requires a separately verified safe transition and recovery path; do not delete associated files
+      or force conversion solely to satisfy this profile.
+    protected_store_candidate: Evaluate completeUntilFirstUserAuthentication for the database and all
+      sensitive associated files as a candidate compatible with background work after the first unlock,
+      subject to actual file creation, inheritance, temporary-file and restore behavior. It does not permit
+      access before first unlock after reboot, does not prove Keychain accessibility or background scheduling,
+      and is not yet an adopted backup or protection policy. If protected storage is unavailable, preserve
+      the existing store and distinguish unavailable from empty under 0122.
+    verification: For the specification, define observable migration and recovery obligations and deterministic
+      tests of two concurrent default operations, stale Project edits, lost acknowledgement, cancellation
+      and account-change ordering, process termination, inaccessible storage and recovery. The chosen
+      implementation must document and verify its provider-specific schema, migration and coordination
+      sufficiently to meet those obligations. Later run real persistence and restart checks on supported
+      iOS versions separately from injected doubles. Do not infer such evidence from this candidate or
+      vendor documentation.
+    provenance: Local saved observations, default Projects, DI, testability and TDD follow the owner's
+      choices. SQLite, the single consistency boundary and coordination approach are agent-authored working
+      decisions; no product implementation, system setting or dependency has been created.
+  scenario_scope: Provider-independent outcomes apply to any chosen implementation. SQLite error and profile
+    scenarios are conditional on selecting SQLite or the particular profile; an alternative must provide
+    its own meaningful failure and recovery evidence.
   scenarios:
     restart_with_stale_data:
-      given: A Project with a Repository and a permitted PR title observed at T1 were successfully saved; a later refresh failed, its outcome is independently recoverable, and no newer source result was accepted.
+      given: A Project with a Repository and a permitted PR title observed at T1 were successfully saved;
+        a later refresh failed, its outcome is independently recoverable, and no newer source result was
+        accepted.
       when: The app restarts and independently reads the saved Project and observations.
-      then: The Project and eligible last-known title can be shown with T1 and the recoverable refresh limitation, rather than as fresh data or an empty Repository; no source access is inferred merely from the local read.
+      then: The Project and eligible last-known title can be shown with T1 and the recoverable refresh
+        limitation, rather than as fresh data or an empty Repository; no source access is inferred merely
+        from the local read.
     selected_unstarted_work_after_restart:
-      given: Two Repositories were selected, the first Project committed, and the second had not been submitted when the process stopped; no complete selection journal was saved.
+      given: Two Repositories were selected, the first Project committed, and the second had not been
+        submitted when the process stopped; no complete selection journal was saved.
       when: The app restarts and reads valid Project configuration.
-      then: The first Project remains available, the second is not silently created, and the operator may select it again under current access rules. No already committed Project or unrelated observation is erased.
+      then: The first Project remains available, the second is not silently created, and the operator
+        may select it again under current access rules. No already committed Project or unrelated observation
+        is erased.
     competing_default:
-      given: Two confirmed operations for the same source Repository execute through the local storage boundary.
+      given: Two confirmed operations for the same source Repository execute through the local storage
+        boundary.
       when: Both attempt to establish a default association.
-      then: At most one active association is committed, and each operation's result is durably bound as created, reused, conflict or indeterminate according to the established facts.
+      then: At most one active association is committed, and each operation's result is durably bound
+        as created, reused, conflict or indeterminate according to the established facts.
     lost_acknowledgement:
-      given: A transaction commits the default Project and its bound operation result, but the caller loses its acknowledgement.
+      given: A transaction commits the default Project and its bound operation result, but the caller
+        loses its acknowledgement.
       when: The same operation is reconciled after restart.
-      then: Its established result can be recovered without creating a duplicate, while navigation still requires an independently readable current Project.
+      then: Its established result can be recovered without creating a duplicate, while navigation still
+        requires an independently readable current Project.
     outside_database_race:
-      given: A Repository was selected under account A and the app establishes account B before A's not-yet-admitted entry begins its coordinated write.
+      given: A Repository was selected under account A and the app establishes account B before A's not-yet-admitted
+        entry begins its coordinated write.
       when: The old entry attempts admission.
-      then: A's earlier access observation alone cannot authorize the entry; SQLite serialization alone is not treated as proof that the external account change was ordered.
+      then: A's earlier access observation alone cannot authorize the entry; SQLite serialization alone
+        is not treated as proof that the external account change was ordered.
     restriction_while_write_in_flight:
-      given: A Project entry has already passed coordinated admission for account A but its local transaction has not yet returned, and an applicable denial is observed.
+      given: A Project entry has already passed coordinated admission for account A but its local transaction
+        has not yet returned, and an applicable denial is observed.
       when: The app applies the denial while the earlier transaction eventually commits.
-      then: Affected private content is restricted immediately, the earlier operation is reconciled as a local outcome without undoing the restriction, and no later entry is admitted on the earlier access evidence.
+      then: Affected new admissions and source work stop immediately. Previously saved local content remains
+        accessible under 0019 with its supported time and applicable limitation. The earlier operation
+        is reconciled as a local outcome without establishing a source grant or newly accepted update,
+        and no later entry is admitted on the earlier access evidence.
     denial_fence_write_uncertain:
-      given: An applicable denial is observed and presentation is restricted, but writing its durable admission fence has an indeterminate outcome.
+      given: An applicable source denial is observed and new source admission is stopped, but writing
+        its durable fence has an indeterminate outcome; previously saved local data remains available.
       when: A new affected entry requests admission in the same process.
-      then: It remains blocked with a recoverable uncertainty rather than using the old generation or reporting the denial durably persisted.
+      then: It remains blocked with a recoverable uncertainty rather than using the old generation or
+        reporting the denial durably persisted.
     termination_before_fence:
-      given: A denial was observed only in process memory and the process stops before its fence or equivalent recovery evidence is established.
+      given: A denial was observed only in process memory and the process stops before its fence or equivalent
+        recovery evidence is established.
       when: The app later starts with last-known local data and no evidence of that denial.
-      then: The retained database does not prove the event occurred. Under the working policy of 0036 previously permitted cached data may reappear with its last observation and no claim of current access if no persisted restriction or pending transition is known; the app does not claim that this unrecorded denial survived the crash.
+      then: The retained database does not prove the unrecorded event occurred. Locally saved data remains
+        available with supported observation time and no claim of current GitHub access; the app does
+        not invent a revocation indication or claim that the denial survived the crash.
     inaccessible_after_reboot:
-      given: The database cannot be opened because its selected file-protection policy does not permit access in the current device state.
+      given: The database cannot be opened because its selected file-protection policy does not permit
+        access in the current device state.
       when: A background refresh or the user opens the app.
-      then: The database is unavailable rather than a confirmed empty portfolio, and the app does not delete or replace it; the permitted recovery or unlock path remains distinguishable.
+      then: The database is unavailable rather than a confirmed empty portfolio, and the app does not
+        delete or replace it; the permitted recovery or unlock path remains distinguishable.
     busy_commit_remains_active:
-      given: A transaction has applied a logical operation but COMMIT returns SQLITE_BUSY in a documented circumstance where the same transaction remains active.
+      given: A transaction has applied a logical operation but COMMIT returns SQLITE_BUSY in a documented
+        circumstance where the same transaction remains active.
       when: The storage boundary handles the result.
-      then: It does not call the operation rolled back or start a second logical operation solely from BUSY; it resolves the same transaction by an applicable retry or verified rollback and reports a terminal outcome only with sufficient evidence.
+      then: It does not call the operation rolled back or start a second logical operation solely from
+        BUSY; it resolves the same transaction by an applicable retry or verified rollback and reports
+        a terminal outcome only with sufficient evidence.
     statement_error_requires_transaction_state:
-      given: A write statement returns SQLITE_FULL or SQLITE_IOERR after earlier statements in the same transaction, and the provider has not established whether the transaction remains active or was rolled back.
+      given: A write statement returns SQLITE_FULL or SQLITE_IOERR after earlier statements in the same
+        transaction, and the provider has not established whether the transaction remains active or was
+        rolled back.
       when: The caller asks for the logical operation outcome.
-      then: The outcome remains indeterminate until the transaction and durable operation evidence are reconciled; neither a partial statement error nor an earlier statement success is a durable operation receipt.
+      then: The outcome remains indeterminate until the transaction and durable operation evidence are
+        reconciled; neither a partial statement error nor an earlier statement success is a durable operation
+        receipt.
     uncertain_commit:
-      given: A database commit reports an error and neither its terminal effect nor safe non-application is established after the attempted recovery.
+      given: A database commit reports an error and neither its terminal effect nor safe non-application
+        is established after the attempted recovery.
       when: The caller requests the entry outcome.
-      then: The operation remains indeterminate, its previous identity is retained, and no unrelated new operation is reported as a safe retry.
+      then: The operation remains indeterminate, its previous identity is retained, and no unrelated new
+        operation is reported as a safe retry.
     journal_profile_refused:
-      given: The persistent store opens but the provider returns WAL or another mode when DELETE is requested, or cannot confirm EXTRA and foreign-key enforcement for the writing connection.
+      given: The persistent store opens but the provider returns WAL or another mode when DELETE is requested,
+        or cannot confirm EXTRA and foreign-key enforcement for the writing connection.
       when: A Project change or migration requests a write.
-      then: The write is not admitted under the candidate profile, the existing database and its associated files are preserved, and the local storage limitation is reported without claiming that the store is empty.
+      then: The write is not admitted under the candidate profile, the existing database and its associated
+        files are preserved, and the local storage limitation is reported without claiming that the store
+        is empty.
     first_unlock_unavailable:
-      given: After a reboot, protected local data or the independently stored credential is unavailable before first unlock.
+      given: After a reboot, protected local data or the independently stored credential is unavailable
+        before first unlock.
       when: iOS gives GitView an opportunity to refresh in the background.
-      then: GitView does not treat the inaccessible data as absent, does not replace the store, and waits for a later eligible opportunity without claiming an update occurred.
+      then: GitView does not treat the inaccessible data as absent, does not replace the store, and waits
+        for a later eligible opportunity without claiming an update occurred.
   unresolved:
-  - During implementation select and verify the actual persistence provider and applicable journal, synchronization, protection and backup behavior; SQLite-specific constraints apply only if SQLite is selected.
-  - Specify the chosen provider's physical schema, migration path and coordinator as implementation design; 0122 defines observable migration and recovery obligations but does not establish provider behavior. Verify the offline tradeoff and recovery semantics, including the known unrecorded-denial crash gap, before claiming the implemented guarantee.
-  - Choose and test iOS file protection, background availability, credentials/database reconciliation and actual interruption behavior on supported devices.
+  - During implementation select and verify the actual persistence provider and applicable journal, synchronization,
+    protection and backup behavior; SQLite-specific constraints apply only if SQLite is selected.
+  - Specify the chosen provider's physical schema, migration path and coordinator as implementation design;
+    0122 defines observable migration and recovery obligations but does not establish provider behavior.
+    Verify the offline tradeoff and recovery semantics, including the known unrecorded-denial crash gap,
+    before claiming the implemented guarantee.
+  - Choose and test iOS file protection, background availability, credentials/database reconciliation
+    and actual interruption behavior on supported devices.

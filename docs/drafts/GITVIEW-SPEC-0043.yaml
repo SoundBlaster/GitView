@@ -84,15 +84,30 @@ sources:
   root_intent: .specgraph/root_intent.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- The end-to-end path preserves source identity, Project membership and explicit scope from setup to overview, preview and source navigation.
-- Current work and explicit filters preserve source records; confirmed merged PRs leave unfinished work and contribute to supported metrics; unfiltered Today includes all applicable states and selected filters persist; source range and persistence scope remain open.
-- Partial, stale, failed and explicitly denied data remain distinguishable throughout the overview and recovery paths.
-- Shared Repositories are included in each relevant Project and deduplicated in portfolio-wide unique totals.
-- If the optional open non-draft PR filter is selected for release, it remains distinct from unrestricted Today, review assignment and merge eligibility throughout preview and return.
-- Evidence distinguishes a planned scenario, a deterministic test with doubles, a real source integration observation and a native device observation.
+- The end-to-end path preserves source identity, Project membership and explicit scope from setup to overview,
+  preview and source navigation.
+- Current work and explicit filters preserve source records; confirmed merged PRs leave unfinished work
+  and contribute to supported metrics; unfiltered Today includes all applicable states and selected filters
+  persist; source range and persistence scope remain open.
+- Partial, stale, failed and explicitly denied data remain distinguishable throughout the overview and
+  recovery paths.
+- Shared Repositories are included in each relevant Project and deduplicated in portfolio-wide unique
+  totals.
+- If the optional open non-draft PR filter is selected for release, it remains distinct from unrestricted
+  Today, review assignment and merge eligibility throughout preview and return.
+- Evidence distinguishes a planned scenario, a deterministic test with doubles, a real source integration
+  observation and a native device observation.
 specification:
-  current_intent_boundary: Today includes older unfinished work and work completed during the current calendar day in the user's local time zone; a prior day's completion alone does not qualify an object for the new Today. Applicable lifecycle states are included without saved exclusions and selected filters persist. Confirmed merged PRs leave unfinished-only work and contribute to supported metrics. Historical object viewing, other inclusion conditions, source coverage and persistence scope remain open. Preserve identity, access, incomplete observation and safe recovery boundaries; examples do not automatically select their detailed mechanisms. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
-  objective: Combine selected user journeys into verifiable expectations across the refined specification branches.
+  current_intent_boundary: Today includes older unfinished work and work completed during the current
+    calendar day in the user's local time zone; a prior day's completion alone does not qualify an object
+    for the new Today. Applicable lifecycle states are included without saved exclusions and selected
+    filters persist. Confirmed merged PRs leave unfinished-only work and contribute to supported metrics.
+    Historical object viewing, other inclusion conditions, source coverage and persistence scope remain
+    open. Preserve identity, access, incomplete observation and safe recovery boundaries; examples do
+    not automatically select their detailed mechanisms. See canonical 0001 and 0007 and sketch revisions
+    cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
+  objective: Combine selected user journeys into verifiable expectations across the refined specification
+    branches.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -100,416 +115,826 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    composition: Each scenario assumes the applicable parent and dependency rules; no scenario's successful outcome implies that another branch or the entire application is implemented or accepted.
-    observations: Counts and selections are evaluated only for the source scope and coverage stated in the scenario. Unknown, partial or denied information remains visible as such rather than being converted to a successful zero.
-    identity: PR and Issue identity is resolved in source Repository context; Project identity is local and multiple Projects may share a Repository.
-    evidence: A later run must record test inputs, actual outputs, scope, implementation version and test level. User-facing and platform behavior requires native observations; a mock-only result is not proof of GitHub or iOS behavior.
-    provenance: The owner requested a dense overview with explicit filters, source navigation and retained completed work. These composite scenarios are agent-authored checks derived from those requirements.
-    optional_default_association_boundary: The persistent default association and its confirmation and recovery protocols in 0045 and 0052 are an agent-authored candidate. Scenarios that assert its association lifecycle or uniqueness, including sole_member_replacement_preserves_route_and_scope, membership_readded_after_removal, project_deletion_review_and_shared_repository, default_setup_review_changes_in_flight and interrupted_setup_restart, apply to that candidate if selected. Their general outcomes, including preserving Project identity, other memberships, source data and truthful recovery, still need an applicable contract for any alternative. A default Project in a generic first-setup scenario does not alone establish a persistent association.
-    storage_candidate_boundary: Candidate 0113 combines provider-independent persistence outcomes with a proposed coordination design and conditional SQLite profile. Regardless of provider, an implemented journey must preserve eligible last-known data, distinguish local failure and unknown outcomes from source results, and respect current applicable access as described by 0003, 0019 and 0025. The selected technical storage design must separately demonstrate its actual consistency, access ordering and recovery; this contextual reference alone does not establish them.
-    migration_candidate_boundary: Candidate 0122 proposes schema evolution and backup recovery for one local database direction. The upgrade_and_recover_portfolio and unsupported_schema_at_startup scenarios exercise that candidate where its versioned-store conditions apply; a selected alternative must still preserve supported saved Projects and observation meaning, avoid representing unreadable data as a fresh empty portfolio, and expose applicable migration or recovery limitations. Actual upgrade and restore behavior requires separate provider and platform evidence.
-    optional_long_thread_proxy_boundary: The 24-hour comment-age interpretation in 0094 is an agent-authored option; scenarios specifically evaluating it apply only if it is selected. The initial long-discussion volume interpretation is defined in 0062; duration and inactivity remain distinct unresolved meanings.
-    optional_history_clear_boundary: The all-local-history clear in 0067 and its protocol in 0117 are agent-authored optional candidates with undecided first-release inclusion. Scenarios involving this clear apply only if it is included; chart history and local observations remain independently required. Other deletion and access rules are unaffected.
-    optional_review_stage_boundary: The agent-proposed open non-draft filter in 0125 is conditional, not a prerequisite for the core Today journey. Its acceptance scenario applies only if it is included; the owner's broader ready-work need remains unresolved.
-    optional_cross_scope_zoom_boundary: The targeted pinch transition between scopes in 0120 is conditional and not a prerequisite for the initial navigation and density-change journey. Its scenario applies only if the interaction is selected; ordinary explicit opening, return and within-scope pinch remain independently required.
-    optional_cohort_boundary: The dynamic Today journey and its acceptance do not require capturing a fixed PR cohort. Candidate 0055 describes a separate proposed view whose first-release scope is unresolved; its conditional scenarios apply if that capability is included, without making it a prerequisite for the core journey.
-    proposed_github_app_boundary: Scenarios that describe GitHub App installation, user-token renewal or its rotation apply to the agent-proposed connection direction in 0098 and 0099 if selected. They do not make this specific authorization method a prerequisite for understanding or accepting the core product journey; independently applicable access, refresh and recovery expectations remain in force.
-    dependency_model_limitation: Scenarios specific to the proposed GitHub App require applicable review of 0098, 0099 and 0100 if that flow is selected; they do not make those candidates blockers for the general journey. Their relates_to edges preserve context but do not express this conditional prerequisite to the installed tool. Before claiming such a scenario ready, review its selected authorization, access profile and evidence explicitly; a graph-only check cannot establish this conditional obligation.
-    dependency_model_evidence: In installed runtime 3593bd75, SG-SPEC-0014 describes depends_on as declared blocking and relates_to as non-blocking context. The inspected supervisor work_dependencies_ready evaluates every direct dependency against its ready statuses without interpreting scenario conditions; candidate-file checking is a separate limited operation and this is not an executed readiness result for 0043. After reviewing 0112, 0106, 0101, 0108 and 0107, the general 0043 depends_on closure no longer reaches 0098, 0099 or 0100. This is a structural observation, not proof of semantic completeness or actual readiness. A future conditional-dependency mechanism or separate method-specific spec can make the selected-flow requirement machine-readable.
+    composition: Each scenario assumes the applicable parent and dependency rules; no scenario's successful
+      outcome implies that another branch or the entire application is implemented or accepted.
+    observations: Counts and selections are evaluated only for the source scope and coverage stated in
+      the scenario. Unknown, partial or denied information remains visible as such rather than being converted
+      to a successful zero.
+    identity: PR and Issue identity is resolved in source Repository context; Project identity is local
+      and multiple Projects may share a Repository.
+    evidence: A later run must record test inputs, actual outputs, scope, implementation version and test
+      level. User-facing and platform behavior requires native observations; a mock-only result is not
+      proof of GitHub or iOS behavior.
+    provenance: The owner requested a dense overview with explicit filters, source navigation and retained
+      completed work. These composite scenarios are agent-authored checks derived from those requirements.
+    optional_default_association_boundary: The persistent default association and its confirmation and
+      recovery protocols in 0045 and 0052 are an agent-authored candidate. Scenarios that assert its association
+      lifecycle or uniqueness, including sole_member_replacement_preserves_route_and_scope, membership_readded_after_removal,
+      project_deletion_review_and_shared_repository, default_setup_review_changes_in_flight and interrupted_setup_restart,
+      apply to that candidate if selected. Their general outcomes, including preserving Project identity,
+      other memberships, source data and truthful recovery, still need an applicable contract for any
+      alternative. A default Project in a generic first-setup scenario does not alone establish a persistent
+      association.
+    storage_candidate_boundary: Candidate 0113 combines provider-independent persistence outcomes with
+      a proposed coordination design and conditional SQLite profile. Regardless of provider, an implemented
+      journey must preserve eligible last-known data, distinguish local failure and unknown outcomes from
+      source results, and respect current applicable access as described by 0003, 0019 and 0025. The selected
+      technical storage design must separately demonstrate its actual consistency, access ordering and
+      recovery; this contextual reference alone does not establish them.
+    migration_candidate_boundary: Candidate 0122 proposes schema evolution and backup recovery for one
+      local database direction. The upgrade_and_recover_portfolio and unsupported_schema_at_startup scenarios
+      exercise that candidate where its versioned-store conditions apply; a selected alternative must
+      still preserve supported saved Projects and observation meaning, avoid representing unreadable data
+      as a fresh empty portfolio, and expose applicable migration or recovery limitations. Actual upgrade
+      and restore behavior requires separate provider and platform evidence.
+    optional_long_thread_proxy_boundary: The 24-hour comment-age interpretation in 0094 is an agent-authored
+      option; scenarios specifically evaluating it apply only if it is selected. The initial long-discussion
+      volume interpretation is defined in 0062; duration and inactivity remain distinct unresolved meanings.
+    optional_history_clear_boundary: The all-local-history clear in 0067 and its protocol in 0117 are
+      agent-authored optional candidates with undecided first-release inclusion. Scenarios involving this
+      clear apply only if it is included; chart history and local observations remain independently required.
+      Other deletion and access rules are unaffected.
+    optional_review_stage_boundary: The agent-proposed open non-draft filter in 0125 is conditional, not
+      a prerequisite for the core Today journey. Its acceptance scenario applies only if it is included;
+      the owner's broader ready-work need remains unresolved.
+    optional_cross_scope_zoom_boundary: The targeted pinch transition between scopes in 0120 is conditional
+      and not a prerequisite for the initial navigation and density-change journey. Its scenario applies
+      only if the interaction is selected; ordinary explicit opening, return and within-scope pinch remain
+      independently required.
+    optional_cohort_boundary: The dynamic Today journey and its acceptance do not require capturing a
+      fixed PR cohort. Candidate 0055 describes a separate proposed view whose first-release scope is
+      unresolved; its conditional scenarios apply if that capability is included, without making it a
+      prerequisite for the core journey.
+    proposed_github_app_boundary: Scenarios that describe GitHub App installation, user-token renewal
+      or its rotation apply to the agent-proposed connection direction in 0098 and 0099 if selected. They
+      do not make this specific authorization method a prerequisite for understanding or accepting the
+      core product journey; independently applicable access, refresh and recovery expectations remain
+      in force.
+    dependency_model_limitation: Scenarios specific to the proposed GitHub App require applicable review
+      of 0098, 0099 and 0100 if that flow is selected; they do not make those candidates blockers for
+      the general journey. Their relates_to edges preserve context but do not express this conditional
+      prerequisite to the installed tool. Before claiming such a scenario ready, review its selected authorization,
+      access profile and evidence explicitly; a graph-only check cannot establish this conditional obligation.
+    dependency_model_evidence: In installed runtime 3593bd75, SG-SPEC-0014 describes depends_on as declared
+      blocking and relates_to as non-blocking context. The inspected supervisor work_dependencies_ready
+      evaluates every direct dependency against its ready statuses without interpreting scenario conditions;
+      candidate-file checking is a separate limited operation and this is not an executed readiness result
+      for 0043. After reviewing 0112, 0106, 0101, 0108 and 0107, the general 0043 depends_on closure no
+      longer reaches 0098, 0099 or 0100. This is a structural observation, not proof of semantic completeness
+      or actual readiness. A future conditional-dependency mechanism or separate method-specific spec
+      can make the selected-flow requirement machine-readable.
   scenarios:
     review_stage_filter_preview_and_return:
-      given: The optional open non-draft filter is included. A single-Repository Project P's permitted unrestricted Today view contains an open non-draft PR A, an open draft PR B and a same-day merged PR C, with independently supported typed identities and applicable facts. The operator selected a dense layout; source evidence and permissions are sufficient for these three objects but do not establish an exhaustive population or merge policy.
-      when: The operator explicitly selects the open non-draft filter, uses an accessible preview to open A, returns to the work grid and clears only that filter.
-      then: Initially all three supported cards remain visible. The filtered selection includes A without asserting a review request, approval or merge eligibility; the preview and overview remain bound to A and its Repository. On return P, Today and density remain; clearing the condition makes B and C eligible again under current independently applicable evidence. No complete Project count is inferred from these three observations, no unrelated filter or GitHub object is changed, and any source or access limitations remain discoverable where permitted.
+      given: The optional open non-draft filter is included. A single-Repository Project P's permitted
+        unrestricted Today view contains an open non-draft PR A, an open draft PR B and a same-day merged
+        PR C, with independently supported typed identities and applicable facts. The operator selected
+        a dense layout; source evidence and permissions are sufficient for these three objects but do
+        not establish an exhaustive population or merge policy.
+      when: The operator explicitly selects the open non-draft filter, uses an accessible preview to open
+        A, returns to the work grid and clears only that filter.
+      then: Initially all three supported cards remain visible. The filtered selection includes A without
+        asserting a review request, approval or merge eligibility; the preview and overview remain bound
+        to A and its Repository. On return P, Today and density remain; clearing the condition makes B
+        and C eligible again under current independently applicable evidence. No complete Project count
+        is inferred from these three observations, no unrelated filter or GitHub object is changed, and
+        any source or access limitations remain discoverable where permitted.
     check_count_to_changed_project_selection:
-      given: At T1 Project P contains Repositories A and B. Two distinct permitted open PRs, one in each Repository, have five applicable failure-category check entries between them; the separately identified Project failed-CI signal counts two affected PRs while the check total is five. Both values carry their actual T1 scope and sufficient T1 evidence.
-      when: Before opening the Project signal, a later independently supported observation establishes that the A PR no longer matches failed CI while the B PR still does; the operator opens the signal and then explicitly clears its failure condition.
-      then: The origin retains its two-PR T1 meaning and is not labeled five PRs. The destination is independently evaluated for its actual later context and can identify the B PR as one supported current match, with any unproven population coverage exposed separately. Clearing the condition makes the actual new selection identifiable and does not change either PR, its checks or the historical T1 signal. The app does not infer the membership of an otherwise unobserved population, promise a complete destination solely from the origin, or infer that the B PR has only one failed check.
+      given: At T1 Project P contains Repositories A and B. Two distinct permitted open PRs, one in each
+        Repository, have five applicable failure-category check entries between them; the separately identified
+        Project failed-CI signal counts two affected PRs while the check total is five. Both values carry
+        their actual T1 scope and sufficient T1 evidence.
+      when: Before opening the Project signal, a later independently supported observation establishes
+        that the A PR no longer matches failed CI while the B PR still does; the operator opens the signal
+        and then explicitly clears its failure condition.
+      then: The origin retains its two-PR T1 meaning and is not labeled five PRs. The destination is independently
+        evaluated for its actual later context and can identify the B PR as one supported current match,
+        with any unproven population coverage exposed separately. Clearing the condition makes the actual
+        new selection identifiable and does not change either PR, its checks or the historical T1 signal.
+        The app does not infer the membership of an otherwise unobserved population, promise a complete
+        destination solely from the origin, or infer that the B PR has only one failed check.
     sole_member_replacement_preserves_route_and_scope:
-      given: Project P has sole member A, is A's default and is open on its Project-wide Today grid with an explicit filter and density. Another Project Q also contains A; an A PR preview is open and permitted, while B is an eligible Repository whose work is unobserved.
-      when: One reviewed local edit replaces A with B in P, its complete effect is durably confirmed, and the operator dismisses the preview and returns to the work collection.
-      then: The preview remains bound to the A PR until dismissal; P retains its identity, its current Project-wide scope becomes B with the same period, filter and density, and incomplete B coverage is discoverable. The old A observation is not relabeled as B or proof of B's empty work, and the former A default association is removed without assigning B as default. Q and both source Repositories remain unchanged; the route does not silently switch to Q, invent a replacement anchor or infer an individual ontology-action sequence.
+      given: Project P has sole member A, is A's default and is open on its Project-wide Today grid with
+        an explicit filter and density. Another Project Q also contains A; an A PR preview is open and
+        permitted, while B is an eligible Repository whose work is unobserved.
+      when: One reviewed local edit replaces A with B in P, its complete effect is durably confirmed,
+        and the operator dismisses the preview and returns to the work collection.
+      then: The preview remains bound to the A PR until dismissal; P retains its identity, its current
+        Project-wide scope becomes B with the same period, filter and density, and incomplete B coverage
+        is discoverable. The old A observation is not relabeled as B or proof of B's empty work, and the
+        former A default association is removed without assigning B as default. Q and both source Repositories
+        remain unchanged; the route does not silently switch to Q, invent a replacement anchor or infer
+        an individual ontology-action sequence.
     discovery_gap_after_scope_and_access_change:
-      given: Project P formerly contained A and B and has a retained recent-work gap for B under account X and an earlier local day. A repair for B began, then P changes to A and C and B becomes restricted before that repair returns; C has not yet been observed.
+      given: Project P formerly contained A and B and has a retained recent-work gap for B under account
+        X and an earlier local day. A repair for B began, then P changes to A and C and B becomes restricted
+        before that repair returns; C has not yet been observed.
       when: The operator opens P's current Today collection and the old repair response arrives.
-      then: The active selection retains P and its valid filters with current A-and-C membership; C remains unobserved and B is not disclosed or presented as a current member. The old gap and response keep their original account, Repository and day context and cannot restore B's private content, complete C or relabel old-day work as the current Today coverage. Independently permitted A facts retain their own times and a non-sensitive applicable limitation remains discoverable.
+      then: The active selection retains P and its valid filters with current A-and-C membership; C remains
+        unobserved and B is not disclosed or presented as a current member. The old gap and response keep
+        their original account, Repository and day context and cannot restore B's private content, complete
+        C or relabel old-day work as the current Today coverage. Independently permitted A facts retain
+        their own times and a non-sensitive applicable limitation remains discoverable.
     portfolio_configuration_recovers_during_refresh:
-      given: The local identity set contains P and Q but Q's configuration is unreadable; P is independently available, and a source refresh for a previously known Q Repository finishes while Q's configuration remains unavailable.
-      when: The overview shows P with a local limitation, the operator moves to P, a newer local read establishes Q's valid configuration, and an older local read then finishes.
-      then: Q becomes available only with its actual saved configuration and current disclosure, the supported source observation keeps its own Repository scope and time, and it is not treated as proof of Q's complete work or Project-wide refresh. P remains the operator's position when valid; the older read does not replace the newer overview, assert Q deleted or establish an empty portfolio.
+      given: The local identity set contains P and Q but Q's configuration is unreadable; P is independently
+        available, and a source refresh for a previously known Q Repository finishes while Q's configuration
+        remains unavailable.
+      when: The overview shows P with a local limitation, the operator moves to P, a newer local read
+        establishes Q's valid configuration, and an older local read then finishes.
+      then: Q becomes available only with its actual saved configuration and current disclosure, the supported
+        source observation keeps its own Repository scope and time, and it is not treated as proof of
+        Q's complete work or Project-wide refresh. P remains the operator's position when valid; the older
+        read does not replace the newer overview, assert Q deleted or establish an empty portfolio.
     upgrade_and_recover_portfolio:
-      given: A supported older local schema contains Projects P and Q sharing Repository R and independently retained PR observations for R.
-      when: The app completes a supported upgrade under 0122 and the overview reads the migrated configuration while GitHub is offline.
-      then: P and Q retain their identities and shared membership; permitted observations remain scoped to R with their original freshness and coverage, and the offline state is distinguishable from a failed migration or a new empty portfolio.
+      given: A supported older local schema contains Projects P and Q sharing Repository R and independently
+        retained PR observations for R.
+      when: The app completes a supported upgrade under 0122 and the overview reads the migrated configuration
+        while GitHub is offline.
+      then: P and Q retain their identities and shared membership; permitted observations remain scoped
+        to R with their original freshness and coverage, and the offline state is distinguishable from
+        a failed migration or a new empty portfolio.
     unsupported_schema_at_startup:
-      given: A previously installed application version encounters a local store created by a newer incompatible version.
+      given: A previously installed application version encounters a local store created by a newer incompatible
+        version.
       when: It starts the Project overview and a background refresh opportunity is offered.
-      then: It preserves the store, admits neither incompatible writes nor a first-run reset, identifies a local compatibility limitation and offers an available update or recovery route without claiming that GitHub or the Project collection is empty.
+      then: It preserves the store, admits neither incompatible writes nor a first-run reset, identifies
+        a local compatibility limitation and offers an available update or recovery route without claiming
+        that GitHub or the Project collection is empty.
     today_typed_decision_to_overview:
-      given: In a Project-wide Today selection, a permitted identified PR is confirmed merged today and has a failed check observed earlier for revision R1, but its current applicable revision or checks cannot be established. The operator has activated a failed-CI filter and another Repository's work population is not fully observed.
+      given: In a Project-wide Today selection, a permitted identified PR is confirmed merged today and
+        has a failed check observed earlier for revision R1, but its current applicable revision or checks
+        cannot be established. The operator has activated a failed-CI filter and another Repository's
+        work population is not fully observed.
       when: The caller evaluates the normalized PR under 0110 and renders the filtered Project collection.
-      then: The merge supports base Today inclusion while the earlier failed check retains its own revision and time. The CI filter remains uncertain, so the PR is an uncertain candidate rather than a confirmed current failure or exclusion. The unobserved population remains an independent coverage limitation, and the overview does not claim an exact zero or a complete failed-CI count. A top-level rule unexpectedly returning no result is an integration limitation rather than that domain uncertainty.
+      then: The merge supports base Today inclusion while the earlier failed check retains its own revision
+        and time. The CI filter remains uncertain, so the PR is an uncertain candidate rather than a confirmed
+        current failure or exclusion. The unobserved population remains an independent coverage limitation,
+        and the overview does not claim an exact zero or a complete failed-CI count. A top-level rule
+        unexpectedly returning no result is an integration limitation rather than that domain uncertainty.
     source_revoked_between_admission_and_save:
-      given: A Repository selection is locally admitted under source-supported access for account A, and GitHub revokes access before local save without GitView yet observing the revocation.
-      when: The Project save succeeds and an applicable denial is observed afterward.
-      then: The saved Project remains under its own local identity, the earlier admission does not prove continuous source access, and restricted source-derived data is hidden under the current policy.
+      given: A Repository selection is locally admitted under source-supported access for account A, and
+        GitHub revokes access before local save without GitView yet observing the revocation.
+      when: The Project save succeeds and Repository access revocation is explicitly confirmed afterward.
+      then: The saved Project retains its local identity and any actually saved source data remains visible
+        under 0019 with the revocation indication and supported time when known. Project save alone does
+        not establish that PR or Issue observations were saved, and the earlier admission does not prove
+        continuous source access. Ordinary synchronization stops.
     empty_status_rollup_on_fork:
-      given: A fork-based PR has a source combined commit-status state pending because no status contexts exist, and check-run association and coverage are not established.
+      given: A fork-based PR has a source combined commit-status state pending because no status contexts
+        exist, and check-run association and coverage are not established.
       when: The Project and PR CI summaries are evaluated.
-      then: The aggregate pending state does not fabricate an individual pending check, an empty pull_requests array does not prove no checks apply, and the complete CI total remains unknown.
+      then: The aggregate pending state does not fabricate an individual pending check, an empty pull_requests
+        array does not prove no checks apply, and the complete CI total remains unknown.
     source_labels_do_not_imply_other_facts:
-      given: A source PR observation supplies a head ref name without confirming that the ref is still accessible, and a linked Issue has a sub-issue summary whose completed value is not established as equivalent to all closed children.
+      given: A source PR observation supplies a head ref name without confirming that the ref is still
+        accessible, and a linked Issue has a sub-issue summary whose completed value is not established
+        as equivalent to all closed children.
       when: Their selected overview facts are displayed.
-      then: The PR name retains its own context without asserting branch availability, and the Issue's closed-child count remains unknown or independently established rather than silently taking the completed value.
+      then: The PR name retains its own context without asserting branch availability, and the Issue's
+        closed-child count remains unknown or independently established rather than silently taking the
+        completed value.
     confirmed_setup_to_offline_work:
-      given: Under a confirmed GitHub identity the operator explicitly selects eligible Repository R and its default Project is durably saved; its work has not yet been observed.
+      given: Under a confirmed GitHub identity the operator explicitly selects eligible Repository R and
+        its default Project is durably saved; its work has not yet been observed.
       when: The operator enters that Project and its first PR and Issue refresh fails while offline.
-      then: The same saved Project and R remain identifiable where permitted, the work scopes remain unobserved with a visible refresh limitation, and neither an empty source nor a failed Project creation is inferred.
+      then: The same saved Project and R remain identifiable where permitted, the work scopes remain unobserved
+        with a visible refresh limitation, and neither an empty source nor a failed Project creation is
+        inferred.
     late_history_for_former_members:
-      given: A history graph request uses Project members A and B; after membership changes the operator explicitly selects an A and C graph, with C's historical coverage incomplete.
+      given: A history graph request uses Project members A and B; after membership changes the operator
+        explicitly selects an A and C graph, with C's historical coverage incomplete.
       when: The older A and B result arrives after the new graph is selected.
-      then: The old result is not presented as the A and C graph, C is not treated as zero, and any permitted earlier result retains its own scope and observation context.
+      then: The old result is not presented as the A and C graph, C is not treated as zero, and any permitted
+        earlier result retains its own scope and observation context.
     stale_source_link_and_later_denial:
-      given: A permitted PR has a previously source-associated link with no verified current resolution, and the operator starts a share flow using the last-known link.
+      given: A permitted PR has a previously source-associated link with no verified current resolution,
+        and the operator starts a share flow using the last-known link.
       when: Explicit denial occurs before any app-controlled delayed provider supplies that link.
-      then: The earlier address is not promoted to a confirmed current destination, the restricted payload is withheld before provision, and the application makes no claim that already handed-off content can be revoked.
+      then: The earlier address is not promoted to a confirmed current destination, the restricted payload
+        is withheld before provision, and the application makes no claim that already handed-off content
+        can be revoked.
     preview_reopened_while_old_request_finishes:
-      given: The operator dismisses a PR preview and opens a new preview for the same PR while the first preview's request is still in flight.
+      given: The operator dismisses a PR preview and opens a new preview for the same PR while the first
+        preview's request is still in flight.
       when: Its old callback arrives after the new preview has appeared.
-      then: It cannot directly mutate the new presentation instance; any independently accepted result retains its original source and access context and is rendered only through a valid current read.
+      then: It cannot directly mutate the new presentation instance; any independently accepted result
+        retains its original source and access context and is rendered only through a valid current read.
     portfolio_return_with_partial_local_read:
-      given: The operator opened Project Q from a portfolio containing P and Q, and Q's local configuration cannot currently be verified while P is independently readable.
+      given: The operator opened Project Q from a portfolio containing P and Q, and Q's local configuration
+        cannot currently be verified while P is independently readable.
       when: The operator returns to the portfolio.
-      then: P remains available where permitted, the incomplete local read is discoverable, and Q is neither declared deleted nor silently replaced by P as the originating Project.
+      then: P remains available where permitted, the incomplete local read is discoverable, and Q is neither
+        declared deleted nor silently replaced by P as the originating Project.
     retention_recovery_after_restart:
-      given: Project P has independently readable permitted T1 data. A T2 source observation is accepted, its history-retention operation O may have committed, and the acknowledgement is lost; no durable source-attempt outcome is established.
-      when: The operator can discover the local uncertainty through an accessible status route, restarts the app and requests recovery; durable evidence then confirms O and its correctly associated T2 sample.
-      then: Before recovery the app neither claims O failed nor promises T2 was durable. After recovery it can show that one T2 sample with its actual source context and retain T1 where independently readable, without creating a second sample from reconciliation. The post-restart latest source-attempt outcome remains unknown unless independently recovered; the confirmed history receipt is not presented as a new GitHub success. The affected status and return path remain available without color or a transient notice, and current access restrictions apply.
+      given: Project P has independently readable permitted T1 data. A T2 source observation is accepted,
+        its history-retention operation O may have committed, and the acknowledgement is lost; no durable
+        source-attempt outcome is established.
+      when: The operator can discover the local uncertainty through an accessible status route, restarts
+        the app and requests recovery; durable evidence then confirms O and its correctly associated T2
+        sample.
+      then: Before recovery the app neither claims O failed nor promises T2 was durable. After recovery
+        it can show that one T2 sample with its actual source context and retain T1 where independently
+        readable, without creating a second sample from reconciliation. The post-restart latest source-attempt
+        outcome remains unknown unless independently recovered; the confirmed history receipt is not presented
+        as a new GitHub success. The affected status and return path remain available without color or
+        a transient notice, and current access restrictions apply.
     retention_recovery_still_unreadable:
-      given: A T2 historical write may have committed and its operation identity is known, but after restart neither its durable outcome nor the prior T1 fact and context can be read.
+      given: A T2 historical write may have committed and its operation identity is known, but after restart
+        neither its durable outcome nor the prior T1 fact and context can be read.
       when: The operator uses the accessible recovery route.
-      then: The affected history remains unavailable or indeterminate, neither a T1 baseline nor T2 rollback or success is invented, and retry does not submit a distinct duplicating effect while O may still commit. The independently readable Project and permitted unrelated scopes remain available.
+      then: The affected history remains unavailable or indeterminate, neither a T1 baseline nor T2 rollback
+        or success is invented, and retry does not submit a distinct duplicating effect while O may still
+        commit. The independently readable Project and permitted unrelated scopes remain available.
     local_recovery_without_assumed_baseline:
-      given: A Project's PR observations were once saved at T1, a T2 local write was interrupted, and restart cannot validate either observation while Project configuration is independently recoverable.
+      given: A Project's PR observations were once saved at T1, a T2 local write was interrupted, and
+        restart cannot validate either observation while Project configuration is independently recoverable.
       when: The operator opens the Project overview.
-      then: The Project remains available with the affected PR scope unknown or unavailable and a permitted recovery path; neither T1 nor T2 is asserted recovered, and no source-empty result or silent Project deletion is invented.
+      then: The Project remains available with the affected PR scope unknown or unavailable and a permitted
+        recovery path; neither T1 nor T2 is asserted recovered, and no source-empty result or silent Project
+        deletion is invented.
     summary_to_incomplete_destination:
-      given: A Project has a permitted source-supported failed-CI PR signal at T1; a later paged traversal succeeds but cannot establish complete coverage at T2.
+      given: A Project has a permitted source-supported failed-CI PR signal at T1; a later paged traversal
+        succeeds but cannot establish complete coverage at T2.
       when: The operator opens the signal and inspects its matching PR collection.
-      then: The signal's supported reference remains T1, the destination retains the failed-CI condition and exposes its own uncertainty, and success of the traversal is not represented as an exact current count or a confirmed empty list.
+      then: The signal's supported reference remains T1, the destination retains the failed-CI condition
+        and exposes its own uncertainty, and success of the traversal is not represented as an exact current
+        count or a confirmed empty list.
     resolved_pr_association_survives_restart:
-      given: A permitted GitHub issue-shaped record is known to represent a PR, but its association with an independently identified PR is initially unresolved. A later source-supported association is prepared for the same Repository; its retention operation may have committed but its acknowledgement is lost.
-      when: The app restarts and independently recovers the association, required evidence and the original operation outcome under 0124; current access still permits the PR.
-      then: The representations can identify the same PR once in the applicable selection, with their original fact and observation contexts. Recovery does not create a new GitHub observation, infer a separate Issue or establish full Today population coverage; the current Project and access context are checked independently.
+      given: A permitted GitHub issue-shaped record is known to represent a PR, but its association with
+        an independently identified PR is initially unresolved. A later source-supported association is
+        prepared for the same Repository; its retention operation may have committed but its acknowledgement
+        is lost.
+      when: The app restarts and independently recovers the association, required evidence and the original
+        operation outcome under 0124; current access still permits the PR.
+      then: The representations can identify the same PR once in the applicable selection, with their
+        original fact and observation contexts. Recovery does not create a new GitHub observation, infer
+        a separate Issue or establish full Today population coverage; the current Project and access context
+        are checked independently.
     github_issue_representation_of_pr:
-      given: A source-confirmed PR is observed through both PR and PR-marked Issues representations, alongside a separate Issue linked to that PR in the same Repository.
+      given: A source-confirmed PR is observed through both PR and PR-marked Issues representations, alongside
+        a separate Issue linked to that PR in the same Repository.
       when: The Project Today grid and its counts are built from those observations.
-      then: The PR contributes once and the independent Issue contributes separately when each matches the selection; unsupported association or incomplete coverage cannot establish an exact total.
+      then: The PR contributes once and the independent Issue contributes separately when each matches
+        the selection; unsupported association or incomplete coverage cannot establish an exact total.
     partially_approved_github_data_categories:
-      given: A Project has a source-confirmed permitted PR and an independently accessible Issue, but the check collection is unavailable or its permission update has not been approved.
+      given: A Project has a source-confirmed permitted PR and an independently accessible Issue, but
+        the check collection is unavailable or its permission update has not been approved.
       when: The operator opens the Project and a PR overview.
-      then: Available facts retain their own source times, the missing check category is discoverable and is not shown as healthy, green or zero, and a specific permission cause is asserted only if source evidence supports it.
+      then: Available facts retain their own source times, the missing check category is discoverable
+        and is not shown as healthy, green or zero, and a specific permission cause is asserted only if
+        source evidence supports it.
     first_setup_partial_github_installation:
-      given: A GitHub identity is confirmed, Repository A is accessible through one app installation, and a separate organization-scope approval remains pending with source-supported evidence.
+      given: A GitHub identity is confirmed, Repository A is accessible through one app installation,
+        and a separate organization-scope approval remains pending with source-supported evidence.
       when: The operator explicitly selects A for default setup while the other scope remains unresolved.
-      then: A can become one local default Project under per-entry persistence rules; its PR and Issue data remain unobserved until fetched, while the pending scope is not presented as an empty organization or an approved installation.
+      then: A can become one local default Project under per-entry persistence rules; its PR and Issue
+        data remain unobserved until fetched, while the pending scope is not presented as an empty organization
+        or an approved installation.
     github_token_rotation_response_lost:
-      given: A Project shows previously permitted cached observations while an expiring GitHub App user token is being renewed, and GitHub may have rotated the pair before the response is lost.
+      given: A Project shows previously permitted cached observations while an expiring GitHub App user
+        token is being renewed, and GitHub may have rotated the pair before the response is lost.
       when: The operator opens the Project after an interrupted restart and requests refresh.
-      then: GitView does not claim that the old credential remains valid or that source data was refreshed; saved Projects and eligible observations retain their actual context, and an accessible reauthorization route is available when necessary.
+      then: GitView does not claim that the old credential remains valid or that source data was refreshed;
+        saved Projects and eligible observations retain their actual context, and an accessible reauthorization
+        route is available when necessary.
     aged_comment_signal_navigation_at_new_time:
-      given: At T1 a Project signal counts two qualifying review threads belonging to one PR; by T2 one thread is source-confirmed resolved and the other still qualifies under applicable state evidence.
+      given: At T1 a Project signal counts two qualifying review threads belonging to one PR; by T2 one
+        thread is source-confirmed resolved and the other still qualifies under applicable state evidence.
       when: The operator opens the current signal and the PR selection is reevaluated at T2.
-      then: The Project and named 24-hour comment-age condition remain identifiable, the origin keeps its two-thread T1 context, and the destination can represent one remaining thread on one PR at T2 without inferring a missing PR or source failure.
+      then: The Project and named 24-hour comment-age condition remain identifiable, the origin keeps
+        its two-thread T1 context, and the destination can represent one remaining thread on one PR at
+        T2 without inferring a missing PR or source failure.
     aged_comment_with_incomplete_thread_history:
-      given: An open PR has one observed unresolved review thread containing a confirmed submitted comment created 25 elapsed hours before the reference instant; other threads and comments are only partly observed.
+      given: An open PR has one observed unresolved review thread containing a confirmed submitted comment
+        created 25 elapsed hours before the reference instant; other threads and comments are only partly
+        observed.
       when: The Project's proposed 24-hour comment-age attention and its history are inspected.
-      then: The supported thread can contribute one observed positive with incomplete coverage, without asserting the thread was continuously unresolved for 25 hours or treating the observed count as a complete Project total.
+      then: The supported thread can contribute one observed positive with incomplete coverage, without
+        asserting the thread was continuously unresolved for 25 hours or treating the observed count as
+        a complete Project total.
     attention_history_units:
-      given: One Project's supported observation has three unresolved review threads on one open PR, while a separate PR's failed CI was observed for a different revision and time.
+      given: One Project's supported observation has three unresolved review threads on one open PR, while
+        a separate PR's failed CI was observed for a different revision and time.
       when: The operator inspects the corresponding historical summary metrics.
-      then: Thread and affected-PR series retain their distinct units and actual contexts; the CI result is not backdated or substituted for an unobserved historical PR state, and unavailable or restricted inputs remain incomplete.
+      then: Thread and affected-PR series retain their distinct units and actual contexts; the CI result
+        is not backdated or substituted for an unobserved historical PR state, and unavailable or restricted
+        inputs remain incomplete.
     historical_point_access_and_return:
-      given: A historical outcome point is inspectable with permitted partial evidence and an object selection is open when access to a contributing private Repository becomes restricted.
-      when: The restriction is applied, the operator returns using an accessible navigation path, and later only the Repository name is newly permitted without restoring the historical inputs.
-      then: Restricted details and inferable totals are not newly exposed, the earlier point is not mislabeled as a new scope, and a safe limitation or recovery route retains the permitted period and context where valid. The restored name alone does not unlock the older historical point or prove its underlying event coverage; independently supported permitted values keep their own scope and evidence.
+      given: A historical outcome point is inspectable with permitted partial evidence and an object selection
+        is open when access to a contributing private Repository becomes restricted.
+      when: The restriction is applied, the operator returns using an accessible navigation path, and
+        later only the Repository name is newly permitted without restoring the historical inputs.
+      then: For confirmed GitHub revocation, saved supported historical points remain locally available
+        as last known under 0019 with their scope, time, coverage and applicable indication. A later Repository
+        name observation does not refresh the historical inputs or prove complete event coverage. Preserve
+        valid period and accessible navigation; other account and external disclosure cases are separate.
     closure_chart_distinct_period_and_navigation:
-      given: An identified Issue closes on two different days in a selected fixed historical period, with a reopening between them and sufficient permitted event, identity and coverage evidence for that Issue; after the second closure it is independently observed open again. Another Repository in the same Project has no eligible historical evidence.
-      when: The operator inspects daily closure buckets, the period-wide distinct-Issue total and the supported object selection for one bucket without requiring pinch or long press.
-      then: The Issue contributes once to each supported daily bucket but only once to a distinct total over those days; its separately supported current open state does not erase either closure. The Project-wide result remains incomplete because of the unobserved Repository. The destination retains the selected bucket's actual bounds and predicate and does not fabricate an object count or a complete Project history.
+      given: An identified Issue closes on two different days in a selected fixed historical period, with
+        a reopening between them and sufficient permitted event, identity and coverage evidence for that
+        Issue; after the second closure it is independently observed open again. Another Repository in
+        the same Project has no eligible historical evidence.
+      when: The operator inspects daily closure buckets, the period-wide distinct-Issue total and the
+        supported object selection for one bucket without requiring pinch or long press.
+      then: The Issue contributes once to each supported daily bucket but only once to a distinct total
+        over those days; its separately supported current open state does not erase either closure. The
+        Project-wide result remains incomplete because of the unobserved Repository. The destination retains
+        the selected bucket's actual bounds and predicate and does not fabricate an object count or a
+        complete Project history.
     captured_chart_period_after_zone_change:
-      given: The operator opened a historical outcome chart with local-day bucket boundaries captured in time zone A and a permitted event exactly on the boundary of two adjacent buckets.
-      when: The device changes to time zone B, the operator refreshes that existing selection without explicitly reevaluating its period, and inspects the boundary event.
-      then: The chart and eligible destination retain the captured absolute boundaries and A interpretation; the event belongs only to the later half-open bucket. A newly requested period in B is separately identified and does not silently rewrite the earlier selection or its coverage.
+      given: The operator opened a historical outcome chart with local-day bucket boundaries captured
+        in time zone A and a permitted event exactly on the boundary of two adjacent buckets.
+      when: The device changes to time zone B, the operator refreshes that existing selection without
+        explicitly reevaluating its period, and inspects the boundary event.
+      then: The chart and eligible destination retain the captured absolute boundaries and A interpretation;
+        the event belongs only to the later half-open bucket. A newly requested period in B is separately
+        identified and does not silently rewrite the earlier selection or its coverage.
     history_retry_across_restart:
-      given: A permitted source refresh yields an open-PR history observation, its retention may have committed, and its acknowledgement is lost before restart.
+      given: A permitted source refresh yields an open-PR history observation, its retention may have
+        committed, and its acknowledgement is lost before restart.
       when: GitView recovers the retention attempt and retries or reconciles it.
-      then: Source success remains distinct from local retention outcome, the same attempt does not create a second independent sample, and an unreadable outcome stays uncertain. A confirmed clear under 0067 prevents pre-clear work from silently restoring cleared history.
+      then: Source success remains distinct from local retention outcome, the same attempt does not create
+        a second independent sample, and an unreadable outcome stays uncertain. A confirmed clear under
+        0067 prevents pre-clear work from silently restoring cleared history.
     clear_then_late_response_and_backfill:
-      given: An old refresh is in flight when an explicit all-local-history clear is confirmed, and a separate source-history retrieval starts after the clear.
+      given: An old refresh is in flight when an explicit all-local-history clear is confirmed, and a
+        separate source-history retrieval starts after the clear.
       when: Both responses arrive and the operator opens a historical chart.
-      then: The old refresh cannot silently recreate cleared points; separately supported events from the new retrieval may appear with their original event times and new retrieval context, without claiming complete history or that deleted local records survived.
+      then: The old refresh cannot silently recreate cleared points; separately supported events from
+        the new retrieval may appear with their original event times and new retrieval context, without
+        claiming complete history or that deleted local records survived.
     identity_changes_during_inspection_and_refresh:
-      given: Project P contains private Repository R; identity A has a PR preview and an accessible focus open while a refresh under A is in flight. A different identity B becomes active without confirmed R access.
-      when: The old refresh completes and the operator dismisses the preview or returns to the Project collection.
-      then: A's response does not establish B's access or coverage; restricted app-controlled details, accessible labels, pending announcements and revealing counts are not exposed under B. P and its saved membership remain, the previous anchor is not relabeled as a different object and a permitted recovery context is reachable. Speech already delivered and content already handed to another app cannot be recalled.
+      given: Project P contains private Repository R; identity A has a PR preview and an accessible focus
+        open while a refresh under A is in flight. A different identity B becomes active without confirmed
+        R access.
+      when: The old refresh completes and the operator dismisses the preview or returns to the Project
+        collection.
+      then: A's response does not establish B's access or coverage; restricted app-controlled details,
+        accessible labels, pending announcements and revealing counts are not exposed under B. P and its
+        saved membership remain, the previous anchor is not relabeled as a different object and a permitted
+        recovery context is reachable. Speech already delivered and content already handed to another
+        app cannot be recalled.
     shared_history_clear_is_explicit:
-      given: Projects P and Q both use historical evidence for the same Repository and retain their own local configurations.
-      when: The operator opens the proposed all-local-history clear from a Project context, reviews its disclosed scope and confirms it successfully.
-      then: The action does not claim to affect P alone, the disclosed historical scope is cleared for both Projects, their configurations and permitted current observations remain, and graphs do not turn the cleared history into zero source activity.
+      given: Projects P and Q both use historical evidence for the same Repository and retain their own
+        local configurations.
+      when: The operator opens the proposed all-local-history clear from a Project context, reviews its
+        disclosed scope and confirms it successfully.
+      then: The action does not claim to affect P alone, the disclosed historical scope is cleared for
+        both Projects, their configurations and permitted current observations remain, and graphs do not
+        turn the cleared history into zero source activity.
     current_refresh_with_missing_history:
-      given: A Project has a previously retained open-PR sample, the next day's background opportunity does not occur and no other sufficient evidence establishes that day's open-PR state; a later source refresh succeeds while retaining its new history sample fails.
+      given: A Project has a previously retained open-PR sample, the next day's background opportunity
+        does not occur and no other sufficient evidence establishes that day's open-PR state; a later
+        source refresh succeeds while retaining its new history sample fails.
       when: The operator opens the Project overview and the historical series.
-      then: The current source observation and local retention failure are distinguishable, the prior retained point keeps its time, and neither the day without an observation nor the failed write is represented as a durable zero or invented sample.
+      then: The current source observation and local retention failure are distinguishable, the prior
+        retained point keeps its time, and neither the day without an observation nor the failed write
+        is represented as a durable zero or invented sample.
     today_breakdown_changes_without_cohort:
-      given: A fully covered Project-wide Today selection contains 100 PRs, of which 95 are observed merged and five open in a compatible context, with no fixed cohort captured.
-      when: A new eligible distinct open PR is observed and the dynamic Today selection is completely reevaluated.
-      then: The current Today breakdown can show 101 PRs with 95 merged and six open without creating a cohort; those counts alone prove neither a historical trend nor the number of merge events today.
+      given: A fully covered Project-wide Today selection contains 100 PRs, of which 95 are observed merged
+        and five open in a compatible context, with no fixed cohort captured.
+      when: A new eligible distinct open PR is observed and the dynamic Today selection is completely
+        reevaluated.
+      then: The current Today breakdown can show 101 PRs with 95 merged and six open without creating
+        a cohort; those counts alone prove neither a historical trend nor the number of merge events today.
     today_partial_refresh_and_membership_change:
-      given: Project P previously held 100 permitted open PR observations across members A and B, and a Project-wide Today refresh begins.
-      when: The saved membership changes to A and unobserved C, then the older A-B refresh returns an open-only subset and B's later request fails.
-      then: The A-C selection does not claim completeness or a new complete time; applicable A facts keep their own evidence, C remains unobserved, B's failure retains its old request scope, and missing open-list entries are not invented as merges or deletions.
+      given: Project P previously held 100 permitted open PR observations across members A and B, and
+        a Project-wide Today refresh begins.
+      when: The saved membership changes to A and unobserved C, then the older A-B refresh returns an
+        open-only subset and B's later request fails.
+      then: The A-C selection does not claim completeness or a new complete time; applicable A facts keep
+        their own evidence, C remains unobserved, B's failure retains its old request scope, and missing
+        open-list entries are not invented as merges or deletions.
     complete_multi_repository_today_journey:
-      given: The proposed Project-wide work collection is selected for a multi-Repository Project P. P has two confirmed Repositories with 100 distinct permitted open PRs in total, and relevant Today, lifecycle and identity coverage is sufficient.
-      when: The operator enters P's all-members Today work collection, 95 PRs merge today, then the operator previews and opens one of those PRs and returns without applying a lifecycle exclusion.
-      then: Within the same local day and unchanged scope, access and other eligibility, the selection still contains the same 100 PRs subject to the stated observations, the 95 merged PRs retain their distinct identities and current source states, the opened PR retains its Repository and Project context, and return preserves the collection's valid scope, filters, density and identity-based position.
+      given: The proposed Project-wide work collection is selected for a multi-Repository Project P. P
+        has two confirmed Repositories with 100 distinct permitted open PRs in total, and relevant Today,
+        lifecycle and identity coverage is sufficient.
+      when: The operator enters P's all-members Today work collection, 95 PRs merge today, then the operator
+        previews and opens one of those PRs and returns without applying a lifecycle exclusion.
+      then: Within the same local day and unchanged scope, access and other eligibility, the selection
+        still contains the same 100 PRs subject to the stated observations, the 95 merged PRs retain their
+        distinct identities and current source states, the opened PR retains its Repository and Project
+        context, and return preserves the collection's valid scope, filters, density and identity-based
+        position.
     project_summary_at_dense_scale:
-      given: A two-Repository Project is represented at dense scale; one Repository has known open PRs and the other's CI scope is unobserved.
-      when: The operator opens the same Project's summary and then requests its open-PR history without a pinch or long press.
-      then: Available facts and their coverage remain attributable to that Project, unobserved CI is not a healthy zero, and missing historical evidence is shown as a gap or incomplete rather than backfilled from the current count.
+      given: A two-Repository Project is represented at dense scale; one Repository has known open PRs
+        and the other's CI scope is unobserved.
+      when: The operator opens the same Project's summary and then requests its open-PR history without
+        a pinch or long press.
+      then: Available facts and their coverage remain attributable to that Project, unobserved CI is not
+        a healthy zero, and missing historical evidence is shown as a gap or incomplete rather than backfilled
+        from the current count.
     project_summary_mixed_category_coverage:
-      given: Project P contains A and B, the open-PR category is sufficiently observed for both, and B's applicable CI data is unavailable.
+      given: Project P contains A and B, the open-PR category is sufficiently observed for both, and B's
+        applicable CI data is unavailable.
       when: The operator inspects P's open-PR and failed-CI signals.
-      then: The open-PR value can retain its own supported completeness while failed-CI coverage is incomplete or unavailable; one successful category does not turn the other into zero or healthy.
+      then: The open-PR value can retain its own supported completeness while failed-CI coverage is incomplete
+        or unavailable; one successful category does not turn the other into zero or healthy.
     targeted_zoom_single_member_return:
-      given: The optional targeted zoom interaction is included and identifies Project P containing one confirmed Repository R, and P's origin is the Projects overview.
-      when: The transition is committed and the operator later returns by an available zoom-return or Back action.
-      then: P's work opens without a redundant Repository screen, the same P and R remain attributable, and return follows the actual origin rather than a fabricated intermediate step.
+      given: The optional targeted zoom interaction is included and identifies Project P containing one
+        confirmed Repository R, and P's origin is the Projects overview.
+      when: The transition is committed and the operator later returns by an available zoom-return or
+        Back action.
+      then: P's work opens without a redundant Repository screen, the same P and R remain attributable,
+        and return follows the actual origin rather than a fabricated intermediate step.
     share_boundary_then_denial:
-      given: A private PR's source link has crossed the actual platform handoff boundary, and a source access restriction is established before the operator chooses a recipient.
+      given: A private PR's source link has crossed the actual platform handoff boundary, and a source
+        access restriction is established before the operator chooses a recipient.
       when: GitView applies the restriction and handles any later app-controlled provider request.
-      then: Future app-controlled provisions are independently checked and restricted where applicable, while the app does not claim that the earlier platform payload was never supplied or retracted.
+      then: Future app-controlled provisions are independently checked and restricted where applicable,
+        while the app does not claim that the earlier platform payload was never supplied or retracted.
     discovery_search_and_custom_intent:
-      given: Existing Projects are visible and the operator starts custom Project creation, selects Repository A, then searches a partially observed discovery scope for B.
+      given: Existing Projects are visible and the operator starts custom Project creation, selects Repository
+        A, then searches a partially observed discovery scope for B.
       when: The current search has no observed matches and a late response for an earlier query arrives.
-      then: A and the custom-creation intent remain pending, no source-wide absence or saved Project is asserted, the earlier response is not labeled as the current query, and the existing portfolio remains intact.
+      then: A and the custom-creation intent remain pending, no source-wide absence or saved Project is
+        asserted, the earlier response is not labeled as the current query, and the existing portfolio
+        remains intact.
     create_custom_project_from_shared_repositories:
-      given: The proposed custom-creation route is selected, and two eligible Repositories each already have a saved default Project and belong to different organizations.
-      when: The operator explicitly creates a separate custom Project containing both and opens it from the overview.
-      then: The new Project has its own identity and both members, the prior Projects and defaults remain intact, and its initial multi-member route is scoped to that new Project.
+      given: The proposed custom-creation route is selected, and two eligible Repositories each already
+        have a saved default Project and belong to different organizations.
+      when: The operator explicitly creates a separate custom Project containing both and opens it from
+        the overview.
+      then: The new Project has its own identity and both members, the prior Projects and defaults remain
+        intact, and its initial multi-member route is scoped to that new Project.
     project_purpose_across_edit:
       given: A Project has a permitted locally saved purpose description and multiple Repository members.
-      when: The operator saves a valid membership edit without changing the description, then opens a Project preview.
-      then: The same description remains saved and is inspectable through the Project route even if omitted from compact preview; no GitHub Repository description is changed.
+      when: The operator saves a valid membership edit without changing the description, then opens a
+        Project preview.
+      then: The same description remains saved and is inspectable through the Project route even if omitted
+        from compact preview; no GitHub Repository description is changed.
     old_thread_partial_signal:
-      given: Two unresolved threads belong to one open PR; one has a submitted comment at least 24 hours old and the other's eligible comment history is unavailable.
+      given: Two unresolved threads belong to one open PR; one has a submitted comment at least 24 hours
+        old and the other's eligible comment history is unavailable.
       when: The operator opens the Project's long-thread signal and previews the affected PR.
-      then: The known qualifying thread identifies one affected PR, the unknown thread and incomplete coverage remain distinguishable, and neither age nor unresolved state is represented as review approval or the time waiting for a response.
+      then: The known qualifying thread identifies one affected PR, the unknown thread and incomplete
+        coverage remain distinguishable, and neither age nor unresolved state is represented as review
+        approval or the time waiting for a response.
     preview_late_response_after_denial:
-      given: A permitted private PR preview was opened from a filtered Project grid and a fact refresh began.
+      given: A permitted private PR preview was opened from a filtered Project grid and a fact refresh
+        began.
       when: Source access is explicitly denied before the response arrives and the operator tries to share.
-      then: Restricted app-controlled preview content and link are not exposed or handed off, the late response does not restore access and a non-sensitive recovery path remains available.
+      then: When private Repository revocation is confirmed, the saved local preview remains visible and
+        accessible with the revocation indication and supported time when known under 0019. The late response
+        does not establish restored source access or become a fresh update. Sharing follows a separate
+        handoff boundary.
     signal_filter_changed_after_entry:
-      given: The operator opens a Project's failed-CI signal whose observed count covers two PRs, with the failure condition active in the destination.
-      when: The operator clears that condition and the permitted Project work collection includes additional non-failing or unknown PRs.
-      then: The current filter state reflects the explicit change and the additional cards are not presented as failed merely because the route originated from the signal; the earlier count retains its own scope and observation context.
+      given: The operator opens a Project's failed-CI signal whose observed count covers two PRs, with
+        the failure condition active in the destination.
+      when: The operator clears that condition and the permitted Project work collection includes additional
+        non-failing or unknown PRs.
+      then: The current filter state reflects the explicit change and the additional cards are not presented
+        as failed merely because the route originated from the signal; the earlier count retains its own
+        scope and observation context.
     single_project_expands_while_open:
-      given: P initially contains only A and its Project-wide Today collection was opened directly from the portfolio with an active filter.
-      when: A saved edit adds unobserved B while an object preview remains open, then the operator dismisses the preview and returns.
-      then: The preview remains bound to its original permitted object, the Project-wide collection is reevaluated for A and B with incomplete B coverage and unchanged filter, and return follows the actual portfolio origin without inventing a member screen.
+      given: P initially contains only A and its Project-wide Today collection was opened directly from
+        the portfolio with an active filter.
+      when: A saved edit adds unobserved B while an object preview remains open, then the operator dismisses
+        the preview and returns.
+      then: The preview remains bound to its original permitted object, the Project-wide collection is
+        reevaluated for A and B with incomplete B coverage and unchanged filter, and return follows the
+        actual portfolio origin without inventing a member screen.
     required_format_unverified_path:
-      given: A participating repository contains the agreed PR template, but an agent creates a PR through a path whose evaluation coverage is not established.
+      given: A participating repository contains the agreed PR template, but an agent creates a PR through
+        a path whose evaluation coverage is not established.
       when: The participating process and GitView overview are considered.
-      then: The template alone is not reported as proof of the body's compliance or path enforcement, while GitView can display the permitted original body without mutating or hiding the PR.
+      then: The template alone is not reported as proof of the body's compliance or path enforcement,
+        while GitView can display the permitted original body without mutating or hiding the PR.
     issue_reopens_across_day:
-      given: An Issue was confirmed closed just before the local day boundary and is independently confirmed reopened and currently open just after it, with identity, event times and scope established.
-      when: The operator views the new Today and then opens a historical selection for the preceding day's closure.
-      then: The Issue appears once in new Today as unfinished and once in the historical distinct-object selection for the prior closure, with the separately observed open state; an explicit current-closed filter excludes it without deleting or altering the closure event.
+      given: An Issue was confirmed closed just before the local day boundary and is independently confirmed
+        reopened and currently open just after it, with identity, event times and scope established.
+      when: The operator views the new Today and then opens a historical selection for the preceding day's
+        closure.
+      then: The Issue appears once in new Today as unfinished and once in the historical distinct-object
+        selection for the prior closure, with the separately observed open state; an explicit current-closed
+        filter excludes it without deleting or altering the closure event.
     issue_reopens_missing_closure_time:
-      given: An Issue is independently confirmed currently open after a reported earlier closure, but no sufficient evidence establishes that closure's event time or complete history.
+      given: An Issue is independently confirmed currently open after a reported earlier closure, but
+        no sufficient evidence establishes that closure's event time or complete history.
       when: The new Today and a previous-day closure selection are evaluated.
-      then: The Issue qualifies for Today as open, while the previous-day event match remains uncertain rather than a confirmed match or zero; the current open fact is not proof of the missing event time.
+      then: The Issue qualifies for Today as open, while the previous-day event match remains uncertain
+        rather than a confirmed match or zero; the current open fact is not proof of the missing event
+        time.
     day_change_denies_uncertain_candidate:
-      given: A filtered Today grid contains a previously visible private PR whose CI match becomes uncertain while a pinch and local-day transition are in progress.
-      when: Explicit denial restricts that PR's existence, identity and CI before the gesture ends.
-      then: Restricted visual and app-controlled accessible facts and revealing counts are removed immediately; the app does not label the PR a confirmed non-match or expose it as an uncertain candidate, while permitted scope and recovery remain available.
+      given: A filtered Today grid contains a previously visible private PR whose CI match becomes uncertain
+        while a pinch and local-day transition are in progress.
+      when: Revocation of that PR private Repository is confirmed before the gesture ends.
+      then: The already saved PR remains locally inspectable with revocation indication and supported
+        time when known, including accessibility, while its uncertain CI match is not promoted to a confirmed
+        match or non-match. The day and filter context remain explicit and source sync stops under 0019.
     authorization_and_missing_installation:
-      given: The operator connects one source identity and a GitHub App-based proposal has access to one organization but lacks an installation or grant for another.
+      given: The operator connects one source identity and a GitHub App-based proposal has access to one
+        organization but lacks an installation or grant for another.
       when: Repository discovery and Project setup are opened.
-      then: Permitted results remain selectable, the missing scope is not labeled an empty organization and existing Projects are not deleted or silently rewritten.
+      then: Permitted results remain selectable, the missing scope is not labeled an empty organization
+        and existing Projects are not deleted or silently rewritten.
     disconnect_during_credential_replacement:
-      given: A credential replacement for account A is in flight and its private Repository observations are stored locally.
+      given: A credential replacement for account A is in flight and its private Repository observations
+        are stored locally.
       when: The operator disconnects A and the older credential write completes late.
-      then: A is not silently reconnected, private observations remain restricted, the local credential removal outcome is recoverable rather than assumed and saved Projects are retained.
+      then: A is not silently reconnected and new affected admissions remain blocked. Already saved local
+        observations and Projects remain accessible with their supported times and connection limitation;
+        credential removal outcome is recoverable rather than assumed.
     credential_expiry_then_denial:
-      given: A previously permitted private Repository has cached observations and its account credential is known locally expired without a source denial.
-      when: A refresh fails and a later applicable source response is independently established as explicit denial.
-      then: The previous observation time is retained, the initial local condition is not described as source revocation, and the later denial restricts the affected private content without deleting its Project.
+      given: A previously permitted private Repository has cached observations and its account credential
+        is known locally expired without a source denial.
+      when: A refresh fails and a later source-supported observation independently confirms Repository
+        access revocation.
+      then: The initial local expiry is not described as source revocation. The saved data and Project
+        remain accessible with the supported observation time and revocation indication, and ordinary
+        synchronization stops under 0019.
     membership_readded_after_removal:
       given: P contains R and S with R associated as default, and Q also contains R.
       when: R is durably removed from P and later explicitly re-added to the same P.
-      then: R is present in both P and Q, the old removal remains historical if supported by evidence, and P's removed default association is not inferred merely from current membership.
+      then: R is present in both P and Q, the old removal remains historical if supported by evidence,
+        and P's removed default association is not inferred merely from current membership.
     project_deletion_review_and_shared_repository:
-      given: Projects P and Q both contain confirmed Repository R, P is R's default, and the operator reviews deletion of P at a supported configuration version. Independently retained R observations remain permitted for Q.
-      when: The operator confirms deletion and the matching local operation is durably applied without an intervening P edit.
-      then: The overview removes P and its default association, Q retains its identity and membership of R, and permitted R observations remain available in Q with their own context. GitHub R is not deleted, a global history clear is not claimed, and the actual route follows 0024. A separate explicit setup is needed to establish a later default for R.
+      given: Projects P and Q both contain confirmed Repository R, P is R's default, and the operator
+        reviews deletion of P at a supported configuration version. Independently retained R observations
+        remain permitted for Q.
+      when: The operator confirms deletion and the matching local operation is durably applied without
+        an intervening P edit.
+      then: The overview removes P and its default association, Q retains its identity and membership
+        of R, and permitted R observations remain available in Q with their own context. GitHub R is not
+        deleted, a global history clear is not claimed, and the actual route follows 0024. A separate
+        explicit setup is needed to establish a later default for R.
     project_delete_after_configuration_change:
-      given: The operator reviews deletion of P at V1 while Q independently shares a Repository with P; another confirmed edit changes P to V2 before the deletion reaches its effect boundary.
+      given: The operator reviews deletion of P at V1 while Q independently shares a Repository with P;
+        another confirmed edit changes P to V2 before the deletion reaches its effect boundary.
       when: The V1 deletion is evaluated and the operator returns to the overview.
-      then: P at V2 is not deleted by the stale confirmation, a conflict and permitted route to review its current configuration are discoverable, and Q and the shared source Repository remain unchanged. A new deletion requires a new reviewed intent; an indeterminate original operation is reconciled first.
+      then: P at V2 is not deleted by the stale confirmation, a conflict and permitted route to review
+        its current configuration are discoverable, and Q and the shared source Repository remain unchanged.
+        A new deletion requires a new reviewed intent; an indeterminate original operation is reconciled
+        first.
     default_setup_review_changes_in_flight:
-      given: Setup for R is reviewed as creating a new default Project, but before that entry's effect another operation establishes a valid default Project Q for R.
+      given: Setup for R is reviewed as creating a new default Project, but before that entry's effect
+        another operation establishes a valid default Project Q for R.
       when: The original entry reaches its coordinated boundary and the operator inspects its result.
-      then: It does not create a second default or silently substitute Q for the reviewed creation; the changed outcome is available for review where permitted. A later reuse requires an explicit new intent after any unresolved earlier effect is reconciled, and unrelated completed batch entries remain saved.
+      then: It does not create a second default or silently substitute Q for the reviewed creation; the
+        changed outcome is available for review where permitted. A later reuse requires an explicit new
+        intent after any unresolved earlier effect is reconciled, and unrelated completed batch entries
+        remain saved.
     review_conflicting_project_edit:
-      given: The operator drafted removal of Repository B from Project P while another confirmed edit added Repository C.
-      when: The operator reviews the newer saved configuration and explicitly retries removal of B against it.
-      then: A valid confirmed result retains C, removes B only from P, and does not change another Project or the source Repositories.
+      given: The operator drafted removal of Repository B from Project P while another confirmed edit
+        added Repository C.
+      when: The operator reviews the newer saved configuration and explicitly retries removal of B against
+        it.
+      then: A valid confirmed result retains C, removes B only from P, and does not change another Project
+        or the source Repositories.
     conflicting_project_edits:
-      given: Two edits of the same Project start from the same saved membership, and the first adds a Repository shared with another Project.
+      given: Two edits of the same Project start from the same saved membership, and the first adds a
+        Repository shared with another Project.
       when: The first edit is confirmed and the second stale edit attempts to save.
-      then: The second edit cannot silently erase the confirmed addition; a conflict or separately specified safe merge is reported, and the other Project and source Repository are unchanged.
+      then: The second edit cannot silently erase the confirmed addition; a conflict or separately specified
+        safe merge is reported, and the other Project and source Repository are unchanged.
     address_conflict_recheck:
       given: A Repository is included in two Projects and has two unordered conflicting address observations.
       when: The operator requests a recheck and the source response does not resolve the ordering.
-      then: Both Project memberships remain, source success and address uncertainty are distinguishable, and any source action follows the independently established link and access rules.
+      then: Both Project memberships remain, source success and address uncertainty are distinguishable,
+        and any source action follows the independently established link and access rules.
     same_id_address_uncertain:
-      given: A Repository in two Projects has two conflicting source addresses observed under the same confirmed numeric ID without source ordering evidence.
+      given: A Repository in two Projects has two conflicting source addresses observed under the same
+        confirmed numeric ID without source ordering evidence.
       when: Its Projects and source navigation are displayed.
-      then: Both Project memberships remain attached to the same Repository, the current address is uncertain rather than chosen by arrival order, and no unverified source link is asserted current.
+      then: Both Project memberships remain attached to the same Repository, the current address is uncertain
+        rather than chosen by arrival order, and no unverified source link is asserted current.
     cross_cutting_evidence:
-      given: A Project grid scenario passes controlled tests while native accessibility and live source integration have not been checked.
+      given: A Project grid scenario passes controlled tests while native accessibility and live source
+        integration have not been checked.
       when: Its verification result is summarized.
-      then: Controlled results are identified at their actual boundary and the applicable native and source evidence remains explicitly unverified under 0079.
+      then: Controlled results are identified at their actual boundary and the applicable native and source
+        evidence remains explicitly unverified under 0079.
     issue_link_denied:
-      given: An accessible Issue in Project P has a previously observed link to a private PR outside P, and the link and target become restricted.
+      given: An accessible Issue in Project P has a previously observed link to a private PR outside P,
+        and the link and target become restricted.
       when: The operator opens the Issue and its related-work section.
-      then: Restricted link and PR details or revealing counts are not exposed, no confirmed empty result is fabricated, and the external Repository is not added to P.
+      then: Restricted link and PR details or revealing counts are not exposed, no confirmed empty result
+        is fabricated, and the external Repository is not added to P.
     partial_issue_discussion:
-      given: An Issue overview has a recent title observation and an older partial discussion observation with an unknown comment author.
+      given: An Issue overview has a recent title observation and an older partial discussion observation
+        with an unknown comment author.
       when: The operator opens the Issue from its Project grid.
-      then: The title and discussion keep their respective contexts, the exact participant count and latest comment time remain uncertain, and missing discussion data is not shown as zero.
+      then: The title and discussion keep their respective contexts, the exact participant count and latest
+        comment time remain uncertain, and missing discussion data is not shown as zero.
     pr_selected_facts_after_compact_preview:
-      given: A permitted identified PR appears in a dense Project grid. Its static preview shows its title and a CI signal; independently supported author, requested reviewers, branch names, change counters and original body are available for the same PR, while the review assessment is unavailable.
-      when: The operator opens that PR's overview through an accessible route and inspects its selected facts.
-      then: The available selected context, counters and original body are reachable in GitView with their own source and observation contexts. The missing review assessment is distinguishable from approval or no reviews, the preview does not substitute another PR, and an eligible source link can be opened separately rather than being the only path to already available selected facts. Individual review threads and check details are not required.
+      given: A permitted identified PR appears in a dense Project grid. Its static preview shows its title
+        and a CI signal; independently supported author, requested reviewers, branch names, change counters
+        and original body are available for the same PR, while the review assessment is unavailable.
+      when: The operator opens that PR's overview through an accessible route and inspects its selected
+        facts.
+      then: The available selected context, counters and original body are reachable in GitView with their
+        own source and observation contexts. The missing review assessment is distinguishable from approval
+        or no reviews, the preview does not substitute another PR, and an eligible source link can be
+        opened separately rather than being the only path to already available selected facts. Individual
+        review threads and check details are not required.
     issue_selected_facts_after_compact_preview:
-      given: A permitted Issue appears in a Project grid with a compact preview. Its author, assignees, milestone and one related PR are supported; its relationship population and direct-child closed count remain incomplete, and an available original body contains no recognized structured sections.
+      given: A permitted Issue appears in a Project grid with a compact preview. Its author, assignees,
+        milestone and one related PR are supported; its relationship population and direct-child closed
+        count remain incomplete, and an available original body contains no recognized structured sections.
       when: The operator opens the same Issue's overview and inspects its selected details.
-      then: The supported roles, milestone and related PR are accessible with their actual scope, incomplete relationships and unknown child count are not presented as empty or zero, and the original body remains available without invented sections. A related Repository outside the Project is not added to its membership, the relationship is not presented as an actor's motive, and individual discussion contents are not required.
+      then: The supported roles, milestone and related PR are accessible with their actual scope, incomplete
+        relationships and unknown child count are not presented as empty or zero, and the original body
+        remains available without invented sections. A related Repository outside the Project is not added
+        to its membership, the relationship is not presented as an actor's motive, and individual discussion
+        contents are not required.
     description_edit_after_assessment:
-      given: A participating PR had a structurally conforming description and GitView displayed its original permitted body.
+      given: A participating PR had a structurally conforming description and GitView displayed its original
+        permitted body.
       when: The PR description changes but the new body has not yet received an applicable external assessment.
-      then: The earlier result is not attributed to the new body, GitView preserves available source text and independent CI status, and no GitView source mutation is implied.
+      then: The earlier result is not attributed to the new body, GitView preserves available source text
+        and independent CI status, and no GitView source mutation is implied.
     grid_pinch_not_preview:
       given: The operator begins touching a PR cell in a filtered Project grid but has not activated preview.
       when: A second contact results in a recognized pinch that changes density.
-      then: The pending preview does not open, no object is entered and the same Project, selection and filters remain identifiable.
+      then: The pending preview does not open, no object is entered and the same Project, selection and
+        filters remain identifiable.
     dense_grid_zoom_preview_round_trip:
-      given: Project P's permitted Today collection contains approximately 100 identified PRs and Issues, is shown at a compact density around eight cells across, and has an explicit lifecycle filter. One visible PR is identifiable in its Repository context.
-      when: The operator changes density within that collection, opens the same PR's static preview, enters its overview and returns to the retained work route.
-      then: Density changes do not change Project, Repository scope, Today or filters; preview and overview refer to the same source PR and return preserves the valid route and identity-based position. If source observations changed independently during the journey, the collection is reevaluated with its actual coverage rather than forcing the prior card count. The exact column counts are adaptive, not fixed device requirements.
+      given: Project P's permitted Today collection contains approximately 100 identified PRs and Issues,
+        is shown at a compact density around eight cells across, and has an explicit lifecycle filter.
+        One visible PR is identifiable in its Repository context.
+      when: The operator changes density within that collection, opens the same PR's static preview, enters
+        its overview and returns to the retained work route.
+      then: Density changes do not change Project, Repository scope, Today or filters; preview and overview
+        refer to the same source PR and return preserves the valid route and identity-based position.
+        If source observations changed independently during the journey, the collection is reevaluated
+        with its actual coverage rather than forcing the prior card count. The exact column counts are
+        adaptive, not fixed device requirements.
     accessible_dense_grid_equivalent:
-      given: The same permitted dense Project collection is used with an accessibility service and enlarged text; two PRs share a local number but belong to different Repositories.
-      when: The operator changes density using an available non-pinch action, identifies and opens one PR without long press, then returns.
-      then: The chosen PR is distinguishable by its permitted Repository context, the overview opens that identity, and the actual Project, active selection and valid focus or honest fallback are preserved. Essential meaning and return do not rely solely on color, touch timing or animation.
+      given: The same permitted dense Project collection is used with an accessibility service and enlarged
+        text; two PRs share a local number but belong to different Repositories.
+      when: The operator changes density using an available non-pinch action, identifies and opens one
+        PR without long press, then returns.
+      then: The chosen PR is distinguishable by its permitted Repository context, the overview opens that
+        identity, and the actual Project, active selection and valid focus or honest fallback are preserved.
+        Essential meaning and return do not rely solely on color, touch timing or animation.
     direct_signal_return:
-      given: The operator opens a failed-CI signal on Project P in the portfolio and the affected PRs are in two different member Repositories.
-      when: The operator inspects the cross-repository selection and returns without entering a member Repository separately.
-      then: The destination retains P and the signal scope and distinguishes the Repositories; return goes to the originating portfolio and preserves its valid density and position.
+      given: The operator opens a failed-CI signal on Project P in the portfolio and the affected PRs
+        are in two different member Repositories.
+      when: The operator inspects the cross-repository selection and returns without entering a member
+        Repository separately.
+      then: The destination retains P and the signal scope and distinguishes the Repositories; return
+        goes to the originating portfolio and preserves its valid density and position.
     accessible_focus_after_refresh:
-      given: A VoiceOver user is inspecting one of two same-numbered PRs from different Repositories in a filtered Project grid.
+      given: A VoiceOver user is inspecting one of two same-numbered PRs from different Repositories in
+        a filtered Project grid.
       when: A refresh reorders the grid and the selected PR's filter result becomes uncertain.
-      then: The same permitted PR remains inspectable through the uncertainty path with its Repository context; a different PR is not substituted and the incomplete selection remains discoverable.
+      then: The same permitted PR remains inspectable through the uncertainty path with its Repository
+        context; a different PR is not substituted and the incomplete selection remains discoverable.
     portfolio_return_after_refresh:
       given: Projects P and Q are visible in stable order and the operator opens Q.
       when: A background refresh changes P's signals and the operator returns.
-      then: P and Q retain their relative order and Q is restored as the position anchor if still available, with current access and observation limitations applied.
+      then: P and Q retain their relative order and Q is restored as the position anchor if still available,
+        with current access and observation limitations applied.
     local_retention_failure_restart:
-      given: A Project has a previously saved PR observation and a later refresh obtains new PR facts while local retention fails.
+      given: A Project has a previously saved PR observation and a later refresh obtains new PR facts
+        while local retention fails.
       when: The operator sees the refresh outcome and restarts the application.
-      then: Source success and retention failure remain distinguishable; after restart the Project uses only confirmed recoverable facts and their own coverage and times, without inventing a new durable history point or an empty source.
+      then: Source success and retention failure remain distinguishable; after restart the Project uses
+        only confirmed recoverable facts and their own coverage and times, without inventing a new durable
+        history point or an empty source.
     first_overview:
-      given: No Projects exist; the operator connects one source identity and confirms two accessible repositories in different organizations.
+      given: No Projects exist; the operator connects one source identity and confirms two accessible
+        repositories in different organizations.
       when: Two single-repository default Projects are saved and source observations are obtained.
-      then: Both Projects are identifiable, each has the confirmed source Repository, and available work can be reached without conflating organizations with Projects.
+      then: Both Projects are identifiable, each has the confirmed source Repository, and available work
+        can be reached without conflating organizations with Projects.
     setup_changes_account:
-      given: A connected account A has a partial discovery result and a confirmed two-entry setup whose first Project was saved; the second entry has not been submitted.
-      when: The active connection changes to B before the second entry starts and an old A discovery response arrives.
-      then: The saved Project remains subject to access policy, the response does not become B's discovery or unlock A data, and the remaining entry requires explicit confirmation and applicable access evidence under B before a new submission.
+      given: A connected account A has a partial discovery result and a confirmed two-entry setup whose
+        first Project was saved; the second entry has not been submitted.
+      when: The active connection changes to B before the second entry starts and an old A discovery response
+        arrives.
+      then: The saved Project remains subject to access policy, the response does not become B's discovery
+        or unlock A data, and the remaining entry requires explicit confirmation and applicable access
+        evidence under B before a new submission.
     shared_repository:
-      given: Repository R belongs to both Project P and Project Q and contains one observed open PR under complete coverage.
+      given: Repository R belongs to both Project P and Project Q and contains one observed open PR under
+        complete coverage.
       when: P, Q and a portfolio-wide unique total are displayed.
-      then: The PR contributes once to each Project and once to the unique portfolio total; the source Repository is unchanged.
+      then: The PR contributes once to each Project and once to the unique portfolio total; the source
+        Repository is unchanged.
     work_completes:
       given: Today contains 100 distinct PRs in the selected Project with complete coverage.
       when: Ninety-five become merged today and the unfiltered selection is refreshed successfully.
-      then: Within the same local day and unchanged scope, access and other eligibility, all 100 remain visible with current observed states; excluding merged explicitly retains only the other matching PRs without deleting the merged records.
+      then: Within the same local day and unchanged scope, access and other eligibility, all 100 remain
+        visible with current observed states; excluding merged explicitly retains only the other matching
+        PRs without deleting the merged records.
     completed_work_filtered_during_refresh_failure:
-      given: A permitted Project Today collection previously observed 100 distinct PRs with sufficient coverage, including 95 observed merged today and five observed open. The operator has not excluded merged work.
-      when: A later refresh fails, the operator explicitly excludes merged PRs, previews one of the five last-observed open PRs and returns, then clears the exclusion.
-      then: The five last-observed open PRs remain eligible subject to their applicable observation and access context; the refresh failure and observation time remain discoverable without claiming their current GitHub state or current complete coverage. Preview and return retain the selected PR and Project context. If the 95 previously observed merged PRs remain eligible under the applicable local day or another supported condition, clearing the exclusion permits them to appear without implying they were re-fetched or that no other work exists; filtering does not delete their records.
+      given: A permitted Project Today collection previously observed 100 distinct PRs with sufficient
+        coverage, including 95 observed merged today and five observed open. The operator has not excluded
+        merged work.
+      when: A later refresh fails, the operator explicitly excludes merged PRs, previews one of the five
+        last-observed open PRs and returns, then clears the exclusion.
+      then: The five last-observed open PRs remain eligible subject to their applicable observation and
+        access context; the refresh failure and observation time remain discoverable without claiming
+        their current GitHub state or current complete coverage. Preview and return retain the selected
+        PR and Project context. If the 95 previously observed merged PRs remain eligible under the applicable
+        local day or another supported condition, clearing the exclusion permits them to appear without
+        implying they were re-fetched or that no other work exists; filtering does not delete their records.
     preview_and_source:
-      given: A filtered dense Project grid contains PR 42 in Repository R2, and another Repository has a different PR 42.
+      given: A filtered dense Project grid contains PR 42 in Repository R2, and another Repository has
+        a different PR 42.
       when: The operator previews R2's PR, opens it and requests its original source.
-      then: Preview, overview and source request all refer to R2's PR; returning preserves the originating context under 0024.
+      then: Preview, overview and source request all refer to R2's PR; returning preserves the originating
+        context under 0024.
     offline_and_denial:
-      given: A private Repository has a prior permitted observation and belongs to a Project; the applicable account and restriction context supports last-known display.
-      when: A refresh first fails offline, a later response independently supports a rate limit with a valid retry delay, and an applicable subsequent response explicitly denies access.
-      then: During offline and the rate-limit wait, the previously permitted data can remain visible with its observation time and the applicable failure or deferral; a manual refresh does not bypass the supported wait. The rate-limit response is not described as a Repository denial or empty result. After the independently established denial, affected private data is hidden while the Repository and membership are retained.
+      given: A private Repository has a prior permitted observation and belongs to a Project; the applicable
+        account and restriction context supports last-known display.
+      when: A refresh fails offline, a later response supports a rate limit, and a subsequent source-supported
+        observation confirms Repository revocation.
+      then: During offline and rate limiting saved data remains available with its supported time and
+        failure or deferral; a manual refresh does not bypass a valid wait. Confirmed revocation is distinguished
+        from rate limiting and an empty result. Saved data remains locally visible with revocation indication
+        while ordinary synchronization stops under 0019.
     result_after_denial:
       given: A refresh of a private Repository was started before an explicit source access denial.
       when: Its response arrives after denial without access having been re-established.
-      then: The response alone does not unlock the restricted private data or change the denial into a successful empty result.
+      then: Previously saved data remains locally visible on confirmed revocation under 0019. The late
+        response does not become a fresh accepted update or turn revocation into a successful empty result.
     interrupted_setup_restart:
-      given: A confirmed two-repository setup has durable selection context; the first Project is saved and the second outcome is unknown when the process stops.
+      given: A confirmed two-repository setup has durable selection context; the first Project is saved
+        and the second outcome is unknown when the process stops.
       when: A new session reads local configuration and the operation record.
-      then: The first Project remains available, the second outcome is reconciled or remains explicitly unknown, and no second default association or automatic submission is invented.
+      then: The first Project remains available, the second outcome is reconciled or remains explicitly
+        unknown, and no second default association or automatic submission is invented.
     deferred_and_coalesced_refresh:
-      given: A Project view requests refresh of PRs and Issues while an existing request covers PRs only, and the Issue request cannot start because of a known budget constraint.
+      given: A Project view requests refresh of PRs and Issues while an existing request covers PRs only,
+        and the Issue request cannot start because of a known budget constraint.
       when: The PR request succeeds and the operator opens another Project.
-      then: Only the original Project's covered PR scope receives that result; its Issue scope remains deferred or incomplete and the other Project is not marked refreshed.
+      then: Only the original Project's covered PR scope receives that result; its Issue scope remains
+        deferred or incomplete and the other Project is not marked refreshed.
     retry_with_unresolved_conflict:
-      given: A Project has a permitted last-known PR state and an unresolved conflicting observation; an unrelated Repository has its own successful observation.
-      when: The operator discovers the affected scope and requests refresh, and the source responds but its value cannot be ordered against all conflicting observations.
-      then: The response is distinguishable from resolving the conflict, the affected state remains uncertain with its last-known context, and neither its complete-scope time nor the unrelated Repository's state is advanced by that response alone.
+      given: A Project has a permitted last-known PR state and an unresolved conflicting observation;
+        an unrelated Repository has its own successful observation.
+      when: The operator discovers the affected scope and requests refresh, and the source responds but
+        its value cannot be ordered against all conflicting observations.
+      then: The response is distinguishable from resolving the conflict, the affected state remains uncertain
+        with its last-known context, and neither its complete-scope time nor the unrelated Repository's
+        state is advanced by that response alone.
     membership_changes_during_refresh:
-      given: Project P contains A and B, Project Q also contains B, and P has a failed-CI filter and an in-flight refresh for A and B; C is unobserved.
-      when: The operator saves an edit replacing B with C in P and the original refresh completes without covering C.
-      then: P retains the filter but evaluates A and C with incomplete coverage; B remains in Q and its observations are not erased, and the result for A and B is not described as a complete refresh or count for P's new membership.
+      given: Project P contains A and B, Project Q also contains B, and P has a failed-CI filter and an
+        in-flight refresh for A and B; C is unobserved.
+      when: The operator saves an edit replacing B with C in P and the original refresh completes without
+        covering C.
+      then: P retains the filter but evaluates A and C with incomplete coverage; B remains in Q and its
+        observations are not erased, and the result for A and B is not described as a complete refresh
+        or count for P's new membership.
     restart_after_membership_edit:
-      given: P's membership edit from A and B to A and C may have committed, an old A and B summary exists, and the process stops before reporting the save outcome.
+      given: P's membership edit from A and B to A and C may have committed, an old A and B summary exists,
+        and the process stops before reporting the save outcome.
       when: A new session cannot yet read P's durable configuration.
-      then: The overview identifies P's saved scope as uncertain and does not present the old summary as a complete current Project count; once a valid saved configuration is confirmed, coverage is evaluated for that membership under 0046 and access policy.
+      then: The overview identifies P's saved scope as uncertain and does not present the old summary
+        as a complete current Project count; once a valid saved configuration is confirmed, coverage is
+        evaluated for that membership under 0046 and access policy.
     partial_signal_navigation:
-      given: A Project has an observed failed check on one identified PR and another PR has unknown checks, with incomplete Project coverage.
+      given: A Project has an observed failed check on one identified PR and another PR has unknown checks,
+        with incomplete Project coverage.
       when: The operator opens the failed-CI signal.
-      then: The observed PR is available under the failed-check condition, the unknown portion is not silently excluded as healthy, and the destination does not claim an exhaustive current total.
+      then: The observed PR is available under the failed-check condition, the unknown portion is not
+        silently excluded as healthy, and the destination does not claim an exhaustive current total.
     timeout_signal_to_preview:
-      given: A Project's complete observed CI summary contains one open PR with a timed-out current entry and a second open PR with a skipped entry, with no source changes during navigation.
-      when: The operator opens the failure-category signal, previews the matching PR, then inspects the second PR in the unfiltered grid.
-      then: The timeout contributes one affected PR and remains identifiable as a timeout; the skipped result is not described as a successful execution or hidden from an accessible inspection path.
+      given: A Project's complete observed CI summary contains one open PR with a timed-out current entry
+        and a second open PR with a skipped entry, with no source changes during navigation.
+      when: The operator opens the failure-category signal, previews the matching PR, then inspects the
+        second PR in the unfiltered grid.
+      then: The timeout contributes one affected PR and remains identifiable as a timeout; the skipped
+        result is not described as a successful execution or hidden from an accessible inspection path.
     review_signal_to_preview:
-      given: One open PR has a current changes-requested assessment and zero unresolved threads, while another has two unresolved threads and unknown assessment.
-      when: The operator opens each Project review-attention signal and previews its matching PR with no intervening source change.
-      then: The changes-requested destination identifies the first PR; the thread destination identifies the second as one affected PR with two threads, and neither signal invents the other's review assessment.
+      given: One open PR has a current changes-requested assessment and zero unresolved threads, while
+        another has two unresolved threads and unknown assessment.
+      when: The operator opens each Project review-attention signal and previews its matching PR with
+        no intervening source change.
+      then: The changes-requested destination identifies the first PR; the thread destination identifies
+        the second as one affected PR with two threads, and neither signal invents the other's review
+        assessment.
     blocked_issue_external_source:
-      given: Project P contains Repository A with one open Issue blocked by an accessible open Issue in Repository B, which is outside P.
-      when: The operator opens P's blocked-Issue signal and previews its affected Issue without intervening source changes.
-      then: The Issue in A is shown once, B does not become a Project member, and the permitted blocker information retains its source context.
+      given: Project P contains Repository A with one open Issue blocked by an accessible open Issue in
+        Repository B, which is outside P.
+      when: The operator opens P's blocked-Issue signal and previews its affected Issue without intervening
+        source changes.
+      then: The Issue in A is shown once, B does not become a Project member, and the permitted blocker
+        information retains its source context.
     denied_preview_and_share:
       given: A private PR preview is open and a source link was eligible before explicit access denial.
       when: Denial is applied and the operator attempts to share the link.
-      then: Restricted content is absent from visual and assistive representations, the link is not supplied to the share flow after denial, and an accessible recovery path is available.
+      then: On confirmed revocation the already saved local preview remains visually and accessibly available
+        with the revoked indication and supported time when known under 0019. An accessible recovery or
+        explicit local deletion path remains. External link handoff has a separate access and sharing
+        boundary and is not asserted successful.
     historical_outcome_reopened:
-      given: An Issue was closed in the selected past week and subsequently reopened, with source evidence sufficient for that event.
+      given: An Issue was closed in the selected past week and subsequently reopened, with source evidence
+        sufficient for that event.
       when: The operator opens the week's distinct-Issue closure selection.
-      then: The Issue can appear once with its separately observed open state; the historical condition and original period remain identifiable under 0056 and are not silently replaced with a current-closed or Today filter.
+      then: The Issue can appear once with its separately observed open state; the historical condition
+        and original period remain identifiable under 0056 and are not silently replaced with a current-closed
+        or Today filter.
     format_and_external_objects:
-      given: A participating authoring process requires the agreed PR sections and a separate external Issue has an unstructured description.
+      given: A participating authoring process requires the agreed PR sections and a separate external
+        Issue has an unstructured description.
       when: A new participating PR is evaluated and GitView displays the external Issue.
-      then: The required PR format is evaluated under the participating process, while the Issue's original text remains visible without invented sections; the presence of a template alone is not reported as proof of enforcement.
+      then: The required PR format is evaluated under the participating process, while the Issue's original
+        text remains visible without invented sections; the presence of a template alone is not reported
+        as proof of enforcement.
   unresolved:
-  - Precise device and source fixtures, credentials, test levels and executable acceptance procedures depend on implementation and platform decisions.
-  - Exact source mapping, refresh concurrency reconciliation and view composition remain open in dependency branches.
+  - Precise device and source fixtures, credentials, test levels and executable acceptance procedures
+    depend on implementation and platform decisions.
+  - Exact source mapping, refresh concurrency reconciliation and view composition remain open in dependency
+    branches.
   - These scenarios sample critical paths but do not establish complete coverage of the graph.

@@ -24,16 +24,30 @@ sources:
   observation_contract: docs/drafts/GITVIEW-SPEC-0044.yaml
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- An object's inclusion evidence, each active filter input and its displayed current state retain their own time, revision, scope and coverage where applicable.
-- A supported past event and the object's present lifecycle or another filter are independent facts; whether that event supports current-work inclusion depends on the selected completed-card policy.
-- An obsolete or inapplicable lifecycle or CI observation is not used as a confirmed current match or exclusion merely because another field refreshed.
-- A confirmed false required condition can exclude only within the time and source context that supports that condition; an unknown required condition remains uncertain unless another applicable false condition decides the conjunction.
+- An object's inclusion evidence, each active filter input and its displayed current state retain their
+  own time, revision, scope and coverage where applicable.
+- A supported past event and the object's present lifecycle or another filter are independent facts; whether
+  that event supports current-work inclusion depends on the selected completed-card policy.
+- An obsolete or inapplicable lifecycle or CI observation is not used as a confirmed current match or
+  exclusion merely because another field refreshed.
+- A confirmed false required condition can exclude only within the time and source context that supports
+  that condition; an unknown required condition remains uncertain unless another applicable false condition
+  decides the conjunction.
 - A source-confirmed newer PR revision does not silently inherit status checks observed for an older revision.
-- Distinct-time observations are not presented as a confirmed simultaneous source snapshot without sufficient evidence.
-- Current access restrictions apply before displaying candidate identity, retained values or derived counts.
+- Distinct-time observations are not presented as a confirmed simultaneous source snapshot without sufficient
+  evidence.
+- Confirmed GitHub revocation alone does not hide a locally saved candidate, retained value or supported
+  count under 0019; show the applicable indication and supported time when known. Independent account
+  and sharing boundaries remain separate.
 specification:
-  current_intent_boundary: The owner selected Today to include older unfinished work and work completed during the current calendar day in the user's local time zone; a previous day's completion alone does not qualify an object for the new Today. Other inclusion alternatives, detailed time-zone-change handling and source coverage remain candidates. Separate event time, observation context, current state, filter applicability and access remain distinct. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
-  objective: Clarify how Today inclusion and filters use observations from different times and revisions without requiring a particular source request strategy.
+  current_intent_boundary: The owner selected Today to include older unfinished work and work completed
+    during the current calendar day in the user's local time zone; a previous day's completion alone does
+    not qualify an object for the new Today. Other inclusion alternatives, detailed time-zone-change handling
+    and source coverage remain candidates. Separate event time, observation context, current state, filter
+    applicability and access remain distinct. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad
+    and 3077fdcd9a8247769def8d6403c2e61c.
+  objective: Clarify how Today inclusion and filters use observations from different times and revisions
+    without requiring a particular source request strategy.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
@@ -41,54 +55,149 @@ specification:
   - gitview:Issue
   - gitview:CIStatus
   contract:
-    claims: Interpret each source fact with its established object identity, scope, event time if applicable, observation time, field coverage and revision context. A time at which GitView received a response is not automatically the time a source event occurred. A field omitted from a later response retains its own earlier context under 0044.
-    today_event: As an agent-authored full inclusion candidate, including the unselected creation alternative, a source-confirmed eligible creation, merge or closure event can establish its Today inclusion alternative by event time, even when learned later and even if current lifecycle is unknown or later changes. The event does not alone establish the entire intervening history, a present open or closed state, an achieved outcome or the result of a separate current-state filter. Source correction, identity conflict and access restrictions remain independently applicable.
-    current_lifecycle: A lifecycle observation supports the state and time it actually establishes. If reliable evidence places a conflicting lifecycle transition after an older state observation, do not present the older state as confirmed current. Do not infer a complete later state solely from an isolated event where reopening or other transitions remain possible; establish it independently or show it as unknown or last known. A confirmed current open state can still supply the unfinished alternative under 0027.
-    applicability_by_claim: For the initial working policy, interpret a successfully mapped lifecycle, draft, review or CI observation as a source-reported value at its own supported observation reference, not as proof it remained unchanged until the device's present clock time. An authorized last-known observation can inform an explicitly time-qualified observed view; a current-context assertion or filter requires applicable evidence for that requested context. If that applicability is not established, prepare current input as unknown and preserve the permitted old observation separately. In particular, a successful local read, 0048's fifteen-minute refresh-eligibility threshold, and the absence of a known newer event do not independently prove uninterrupted validity. A successful source response also has an observation reference rather than a guarantee of simultaneous remote state at every later instant. The concrete source-specific mechanism that establishes applicability for a requested current context remains unresolved; do not silently replace it with an arbitrary TTL or permanent unknown.
-    observation_reference: A newly mapped supported response can establish an observed-value decision for its actual observation reference T, with its access and source limitations, without proving the remote value at every instant after T. The same independently recoverable and currently permitted evidence can support that same T-qualified decision after restart if its subject and required context remain available and no applicable contradiction makes it uncertain. Such a decision is not a new observation or a present-time assertion. If the route requests a present-time condition that the evidence does not establish, use the distinct unknown result and uncertainty presentation under 0042; do not silently substitute the T-qualified classification. As an agent-authored first-version proposal, make the permitted known candidate available through the accessible uncertainty treatment of 0042 with its last-known value and observation time where supported, and make the relevant refresh outcome and manual refresh reachable. This preserves access to saved work without claiming the candidate passes a current filter; an entirely unobserved object or restricted identity does not become a card.
-    event_reuse: As an agent-authored technical candidate, for a supported identity-associated reported creation instant or a specific eligible close or merge event, retain the source event meaning and its observation reference independently from lifecycle. Where the source interpretation and association remain applicable and no supported correction or conflict invalidates them, compare the same reported event instant with each captured half-open day; a restart, a different local time zone, or a later unsuccessful refresh does not turn it into a newly observed event. A positive event supports only that event and interval. Failure to recover the event or sufficient event coverage is unknown, not proof that no event occurred; source correction and uncertainty of the underlying event clock remain separately represented.
-    revision_context: A CI result is attributable to its observed check entry and applicable PR revision or revisions under 0060. If a newer PR head is confirmed and no evidence establishes that the earlier checks apply to the selected current check context, the old check result remains historical or last known and the current CI filter input is unknown. Head and test-merge contexts are not automatically interchangeable. A new head alone does not order or invalidate unrelated review fields without their own source semantics under 0053.
-    evaluation: First derive each inclusion alternative and active-filter condition only in the stated selection context, using unknown when an applicable current value is not established. Then apply 0027's disjunction and conjunction. A true historical Today event may confirm base inclusion while an unknown current CI or lifecycle filter makes the filtered outcome uncertain. An independently confirmed false required condition may determine exclusion only for its own applicable context; a stale false value is not a current false condition.
-    observation_not_snapshot: A set of individually supported facts from different times may be presented with each fact's own context where access permits. Do not call their conjunction a confirmed simultaneous current source snapshot or assign one shared freshness time without source or reconciliation evidence. Completion of one field's request does not refresh a different field or the complete collection time.
-    selection_and_coverage: Preserve explicitly selected Project, Repository scope, period mode and filters through reevaluation under 0042 and 0049. Under the selected user-local-day direction, dynamic Today uses the current applicable local-day interval, while a fixed historical period retains its separately defined boundaries; preserving the selection does not freeze an obsolete Today interval. How to determine the user's local zone and handle changes remains open. A partially observed candidate or unobserved source portion remains discoverable through an access-safe uncertainty path; a confirmed Today alternative alone does not make the entire Project's source coverage complete. Identity ambiguity and shared Repository deduplication follow 0002 and 0029.
-    privacy: Apply 0036 and 0088 before presenting current or historical facts, candidates, links and derived values. An older permitted observation cannot override a later applicable denial or disconnect; information already handed to the system or another app cannot be recalled.
-    verification: Under 0040 and 0079, controlled tests should cover event time versus retrieval time, newer revision versus older CI, stale known-false inputs, incompatible or missing source ordering, and access changes. Check actual source and native boundaries separately. A finite independent-input truth table does not by itself test temporal applicability, source truth or product behavior.
-    provenance: The owner's requirement keeps completed work visible in Today. Evidence composition, treatment of obsolete states and revision scope are agent-authored refinements of that requirement.
+    claims: Interpret each source fact with its established object identity, scope, event time if applicable,
+      observation time, field coverage and revision context. A time at which GitView received a response
+      is not automatically the time a source event occurred. A field omitted from a later response retains
+      its own earlier context under 0044.
+    today_event: As an agent-authored full inclusion candidate, including the unselected creation alternative,
+      a source-confirmed eligible creation, merge or closure event can establish its Today inclusion alternative
+      by event time, even when learned later and even if current lifecycle is unknown or later changes.
+      The event does not alone establish the entire intervening history, a present open or closed state,
+      an achieved outcome or the result of a separate current-state filter. Source correction, identity
+      conflict and access restrictions remain independently applicable.
+    current_lifecycle: A lifecycle observation supports the state and time it actually establishes. If
+      reliable evidence places a conflicting lifecycle transition after an older state observation, do
+      not present the older state as confirmed current. Do not infer a complete later state solely from
+      an isolated event where reopening or other transitions remain possible; establish it independently
+      or show it as unknown or last known. A confirmed current open state can still supply the unfinished
+      alternative under 0027.
+    applicability_by_claim: For the initial working policy, interpret a successfully mapped lifecycle,
+      draft, review or CI observation as a source-reported value at its own supported observation reference,
+      not as proof it remained unchanged until the device's present clock time. An authorized last-known
+      observation can inform an explicitly time-qualified observed view; a current-context assertion or
+      filter requires applicable evidence for that requested context. If that applicability is not established,
+      prepare current input as unknown and preserve the permitted old observation separately. In particular,
+      a successful local read, 0048's fifteen-minute refresh-eligibility threshold, and the absence of
+      a known newer event do not independently prove uninterrupted validity. A successful source response
+      also has an observation reference rather than a guarantee of simultaneous remote state at every
+      later instant. The concrete source-specific mechanism that establishes applicability for a requested
+      current context remains unresolved; do not silently replace it with an arbitrary TTL or permanent
+      unknown.
+    observation_reference: A supported observation establishes a value for its actual time T and scope,
+      not every later instant. Recoverable saved evidence can support the same T-qualified decision after
+      confirmed revocation under 0019 with its actual time and revocation indication; it is not a new
+      observation or present-time assertion. If a filter requires unsupported current evidence, expose
+      the uncertainty path under 0042 rather than claiming a current match. Do not send ordinary refresh
+      for the confirmed-revoked Repository; make an applicable recovery route discoverable. Unobserved
+      objects are not invented as cards.
+    event_reuse: As an agent-authored technical candidate, for a supported identity-associated reported
+      creation instant or a specific eligible close or merge event, retain the source event meaning and
+      its observation reference independently from lifecycle. Where the source interpretation and association
+      remain applicable and no supported correction or conflict invalidates them, compare the same reported
+      event instant with each captured half-open day; a restart, a different local time zone, or a later
+      unsuccessful refresh does not turn it into a newly observed event. A positive event supports only
+      that event and interval. Failure to recover the event or sufficient event coverage is unknown, not
+      proof that no event occurred; source correction and uncertainty of the underlying event clock remain
+      separately represented.
+    revision_context: A CI result is attributable to its observed check entry and applicable PR revision
+      or revisions under 0060. If a newer PR head is confirmed and no evidence establishes that the earlier
+      checks apply to the selected current check context, the old check result remains historical or last
+      known and the current CI filter input is unknown. Head and test-merge contexts are not automatically
+      interchangeable. A new head alone does not order or invalidate unrelated review fields without their
+      own source semantics under 0053.
+    evaluation: First derive each inclusion alternative and active-filter condition only in the stated
+      selection context, using unknown when an applicable current value is not established. Then apply
+      0027's disjunction and conjunction. A true historical Today event may confirm base inclusion while
+      an unknown current CI or lifecycle filter makes the filtered outcome uncertain. An independently
+      confirmed false required condition may determine exclusion only for its own applicable context;
+      a stale false value is not a current false condition.
+    observation_not_snapshot: A set of individually supported facts from different times may be presented
+      with each fact's own context where access permits. Do not call their conjunction a confirmed simultaneous
+      current source snapshot or assign one shared freshness time without source or reconciliation evidence.
+      Completion of one field's request does not refresh a different field or the complete collection
+      time.
+    selection_and_coverage: Preserve explicitly selected Project, Repository scope, period mode and filters
+      through reevaluation under 0042 and 0049. Under the selected user-local-day direction, dynamic Today
+      uses the current applicable local-day interval, while a fixed historical period retains its separately
+      defined boundaries; preserving the selection does not freeze an obsolete Today interval. How to
+      determine the user's local zone and handle changes remains open. A partially observed candidate
+      or unobserved source portion remains discoverable through an access-safe uncertainty path; a confirmed
+      Today alternative alone does not make the entire Project's source coverage complete. Identity ambiguity
+      and shared Repository deduplication follow 0002 and 0029.
+    privacy: On confirmed private Repository revocation, previously saved facts, supported values and
+      local identity remain visible as last known under 0019 with revocation and supported observation
+      times; do not accept a late response as fresh or assert current GitHub access. Account isolation
+      and external handoff remain separate. Information already handed to another app cannot be recalled.
+    verification: Under 0040 and 0079, controlled tests should cover event time versus retrieval time,
+      newer revision versus older CI, stale known-false inputs, incompatible or missing source ordering,
+      and access changes. Check actual source and native boundaries separately. A finite independent-input
+      truth table does not by itself test temporal applicability, source truth or product behavior.
+    provenance: The owner's requirement keeps completed work visible in Today. Evidence composition, treatment
+      of obsolete states and revision scope are agent-authored refinements of that requirement.
   scenarios:
     refresh_age_is_not_applicability:
-      given: A permitted PR's open state was last accepted ten minutes ago, its context is recoverable, and no source evidence establishes whether it remained open for a requested present-time claim. The foreground refresh policy does not request another attempt solely on age.
-      when: The operator views the recovered observation and a current-context Today classification is requested.
-      then: The observation may be described as last known open at its own time, but the refresh threshold does not prove it is still open. The current open input remains unknown unless independently applicable evidence exists; other supported alternatives and current access are evaluated separately. The age rule does not itself establish source failure or forbid a manual refresh.
+      given: A permitted PR's open state was last accepted ten minutes ago, its context is recoverable,
+        and no source evidence establishes whether it remained open for a requested present-time claim.
+        The foreground refresh policy does not request another attempt solely on age.
+      when: The operator views the recovered observation and a current-context Today classification is
+        requested.
+      then: The observation may be described as last known open at its own time, but the refresh threshold
+        does not prove it is still open. The current open input remains unknown unless independently applicable
+        evidence exists; other supported alternatives and current access are evaluated separately. The
+        age rule does not itself establish source failure or forbid a manual refresh.
     event_reused_across_days_candidate:
-      given: Under the unselected creation-inclusion and half-open-boundary candidates, a permitted Issue has a source-supported creation instant at the inclusive start of a captured local day D1, retained with its own subject and observation context. A new captured day D2 starts at the exclusive end of D1, and no correction or identity conflict is supported.
+      given: Under the unselected creation-inclusion and half-open-boundary candidates, a permitted Issue
+        has a source-supported creation instant at the inclusive start of a captured local day D1, retained
+        with its own subject and observation context. A new captured day D2 starts at the exclusive end
+        of D1, and no correction or identity conflict is supported.
       when: The creation alternative is evaluated independently in each day after restart.
-      then: The reported instant supports creation within D1 and outside D2 without a new source request or observation time. It does not establish current lifecycle, absence of a later closure, complete Today population or access beyond the independently applicable disclosure policy.
+      then: The reported instant supports creation within D1 and outside D2 without a new source request
+        or observation time. It does not establish current lifecycle, absence of a later closure, complete
+        Today population or access beyond the independently applicable disclosure policy.
     event_after_old_open:
-      given: An Issue was observed open at T1; an independently confirmed completion event occurred later today at T2, and no later lifecycle observation is available.
+      given: An Issue was observed open at T1; an independently confirmed completion event occurred later
+        today at T2, and no later lifecycle observation is available.
       when: The unfiltered Today selection is evaluated.
-      then: The same Issue remains eligible through its Today event, the old open observation keeps T1 and is not labeled confirmed current, and no later reopening history is invented.
+      then: The same Issue remains eligible through its Today event, the old open observation keeps T1
+        and is not labeled confirmed current, and no later reopening history is invented.
     head_changes_before_ci:
-      given: A PR was observed with a failed check for revision R1, then a source-confirmed head R2 is observed without applicable R2 or test-merge checks.
+      given: A PR was observed with a failed check for revision R1, then a source-confirmed head R2 is
+        observed without applicable R2 or test-merge checks.
       when: The current failed-CI filter is evaluated.
-      then: The R1 result may remain permitted last-known evidence for R1, while the current filter is uncertain rather than a confirmed match or exclusion.
+      then: The R1 result may remain permitted last-known evidence for R1, while the current filter is
+        uncertain rather than a confirmed match or exclusion.
     inclusion_true_filter_unknown:
-      given: A source-confirmed merge event places a PR in Today, but its current CI status is unavailable and a failed-CI filter is active.
+      given: A source-confirmed merge event places a PR in Today, but its current CI status is unavailable
+        and a failed-CI filter is active.
       when: The filtered collection is evaluated.
-      then: The event confirms base Today inclusion while the current filter outcome remains uncertain; the PR is accessible only through the permitted uncertainty path.
+      then: The event confirms base Today inclusion while the current filter outcome remains uncertain;
+        the PR is accessible only through the permitted uncertainty path.
     stale_false_filter:
-      given: A PR matched Today and an old observation classified its checks as non-failing, but the applicable current check context is no longer established.
+      given: A PR matched Today and an old observation classified its checks as non-failing, but the applicable
+        current check context is no longer established.
       when: The current failed-CI filter is applied.
-      then: The old non-failure is not used as a confirmed current exclusion; the permitted candidate remains uncertain unless another independently applicable false condition determines exclusion.
+      then: The old non-failure is not used as a confirmed current exclusion; the permitted candidate
+        remains uncertain unless another independently applicable false condition determines exclusion.
     mixed_observation_times:
-      given: A PR lifecycle is observed at T1 and an applicable review field at T2, with no evidence that both were simultaneous.
+      given: A PR lifecycle is observed at T1 and an applicable review field at T2, with no evidence that
+        both were simultaneous.
       when: The overview or a combined summary shows them.
-      then: Each fact retains its own context and the combination is not asserted to be a simultaneous snapshot or assigned a fabricated shared observation time.
+      then: Each fact retains its own context and the combination is not asserted to be a simultaneous
+        snapshot or assigned a fabricated shared observation time.
     denied_before_late_result:
-      given: A private PR and its earlier failed CI were visible before explicit access denial; a previously started response arrives after denial.
-      when: Today and its failed-CI filter are reevaluated.
-      then: Restricted identity, facts and revealing counts remain hidden, and the late response alone cannot restore access or create a confirmed current match.
+      given: A private PR and its earlier failed CI were visible before explicit access denial; a previously
+        started response arrives after denial.
+      when: Revocation of that private Repository is confirmed before the old response arrives, and Today
+        and its failed-CI filter are reevaluated.
+      then: The saved PR and prior CI remain locally inspectable as last known with a revocation indication
+        and supported time when known; the old response cannot become a fresh update, restore access or
+        create a confirmed current match.
   unresolved:
-  - Source-specific ordering, revision applicability, correction and freshness evidence remain to be established for each selected field.
-  - Evaluate the proposed first-screen uncertainty presentation with realistic retained-data volume and accessible native controls; the age-based refresh trigger is not a validity guarantee.
-  - Exact representation of individual observation contexts, uncertainty and accessible recovery requires UX and platform evaluation.
-  - No source adapter, retention mechanism, actual privacy behavior or application implementation has been tested.
+  - Source-specific ordering, revision applicability, correction and freshness evidence remain to be established
+    for each selected field.
+  - Evaluate the proposed first-screen uncertainty presentation with realistic retained-data volume and
+    accessible native controls; the age-based refresh trigger is not a validity guarantee.
+  - Exact representation of individual observation contexts, uncertainty and accessible recovery requires
+    UX and platform evaluation.
+  - No source adapter, retention mechanism, actual privacy behavior or application implementation has
+    been tested.

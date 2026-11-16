@@ -21,67 +21,142 @@ sources:
   user_update: conversation:gitview/excerpt-68
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A last confirmed account identity, current credential usability, and current access to a Repository are distinct facts.
-- Known local expiry or an unusable credential produces a recoverable connection state without claiming source deletion, an empty account or a successful refresh.
-- Explicit source authentication or authorization denial applies the existing restriction policy independently of an earlier offline or locally expired state.
-- Reauthorization cannot restore restricted Repository observations until the applicable identity and access evidence is re-established.
-- Late results and overlapping attempts cannot silently replace a newer confirmed connection or undo a disconnect or denial.
+- A last confirmed account identity, current credential usability, and current access to a Repository
+  are distinct facts.
+- Known local expiry or an unusable credential produces a recoverable connection state without claiming
+  source deletion, an empty account or a successful refresh.
+- Explicit source authentication or authorization denial applies the existing restriction policy independently
+  of an earlier offline or locally expired state.
+- Reauthorization must not be represented as restored GitHub access or fresh data without applicable identity
+  and source evidence; already saved local observations remain accessible under 0019.
+- Late results and overlapping attempts cannot silently replace a newer confirmed connection or undo a
+  disconnect or denial.
 - Connection problems and recovery are discoverable without exposing credentials or relying on color alone.
 specification:
-  objective: Define user-observable recovery when an existing source credential is expired or unusable without selecting a GitHub authorization protocol.
+  objective: Define user-observable recovery when an existing source credential is expired or unusable
+    without selecting a GitHub authorization protocol.
   ontology_refs:
   - gitview:User
   - gitview:GitHub
   - gitview:Project
   - gitview:Repository
   contract:
-    distinct_facts: Preserve the identity last established by a confirmed connection separately from evidence that its present credential can authenticate and that a particular Repository remains accessible. A local account label or last-success time is not present authorization. A confirmed unusable credential means a new authenticated refresh cannot be claimed until usable credentials are established; it does not erase saved Projects or source identities.
-    expiry_evidence: Interpret expiration only when the selected credential mechanism and reliable local or source evidence establish it. A missing expiry field, ambiguous timestamp, local clock uncertainty, secure-store read failure or generic network failure is not by itself proof of expiry or revocation. Concrete provider semantics and clock tolerance are outside this candidate.
-    locally_unusable: When expiry or local unusability is established without an explicit source denial or disconnect, show that connection recovery is needed and preserve previously saved observations and their timestamps. Under 0036, previously permitted private observations may remain eligible with their limitations; do not imply that GitHub has just reverified current access. Do not assert source revocation, empty data, deletion, or a successful refresh merely from the local condition.
-    source_denial: If an applicable response is established as explicit authentication or authorization denial, apply 0036 to the affected private scope and prevent a later pre-denial result from unlocking it under 0037. Do not assume that a generic 401, 403 or 404 universally proves a particular cause or repository-level denial without source-specific mapping. A confirmed local expiry and a separately confirmed source denial can coexist; the stricter applicable visibility restriction remains.
-    current_credential_rejected: As an agent-authored conservative first-version policy, if a trusted GitHub REST response to a request known to have used the currently active user credential establishes an authentication rejection for that credential generation, stop new authenticated work for that generation and apply the applicable private-cache restriction in 0036 until recovery. GitHub documents 401 for invalid credentials and notes that a revoked user token can receive `Bad Credentials`; that response alone does not distinguish expiration, revocation, malformed token or another cause, nor establish a Repository-specific denial. An offline or local-expiry condition without an actual authentication rejection continues to follow locally_unusable. If the credential sent, responding source or request context cannot be established, report an appropriately scoped unknown failure instead of manufacturing a confirmed rejection or cause. This security choice and its offline-visibility tradeoff are not evidence that the provider revoked access.
-    rejected_superseded_generation: Attribute a rejected response to the credential generation actually used by its request. If that generation has already been superseded by a consistently established newer connection, the old rejection does not by itself mark the newer credential invalid, disconnect it or restrict independently eligible data under its context. Independently established current denial, unresolved ordering or account changes still follow 0036 and 0086. A late older successful response likewise does not restore the rejected generation or advance the new connection's source observations.
-    recovery_route: Offer an accessible route to reconnect or authorize again, plus a way to return to permitted last-known content when applicable. Recovery can be initiated by the operator without automatically deleting Projects, cached observations or the previous credential. The selected protocol may support noninteractive renewal, but it is not assumed. Background execution must not unexpectedly demand interactive authorization; make an actionable state available when the operator returns.
-    attempt_and_identity: Use 0058 for active-attempt ordering, validated identity and secure storage. A failed or cancelled attempt preserves the prior confirmed identity record and saved data, but cannot make an expired credential usable or bypass a previously established restriction. A different confirmed source identity is not the same account merely because display names match and cannot automatically unlock previous private observations.
-    restore_per_repository: A confirmed connection to the same source identity is not by itself evidence of access to every previously observed Repository. Re-establish affected Repository access separately before lifting a prior explicit denial or disconnect restriction. Rediscovery and partial grant handling follow 0059 and 0036. Where no such restriction exists, a recovered credential does not by itself make stale facts newly observed.
-    concurrent: An invalidated, cancelled or superseded authorization attempt cannot establish credentials or visibility after a newer connection or disconnect. A response started under an older credential is evaluated for its original identity, applicable source evidence and current restrictions under 0037; request completion alone neither reauthorizes nor advances an unrelated scope. A previously valid response may be retained only where the applicable ordering, access and identity contracts permit it.
-    operation_outcome: A failed, deferred or interrupted refresh due to unusable credentials retains prior successful observation times and identifies the affected scope and recovery need. It is not a successful empty collection. Do not run an uncontrolled loop of identical failed attempts; exact retry scheduling and rate policy remain open under 0048.
-    secrecy_and_accessibility: Do not put credential values or authorization responses into UI, share payloads or normal diagnostics. Expose recovery and the distinction between stale content, restricted content and current access using text or accessible labels as well as any system icon; do not require long press, color or a timed gesture.
-    provenance: Cached last-known data and visible refresh failure follow the owner's direction. The local-expiry distinction, recovery behavior and conservative restriction boundaries are agent-authored proposals pending source and native validation.
+    distinct_facts: Preserve the identity last established by a confirmed connection separately from evidence
+      that its present credential can authenticate and that a particular Repository remains accessible.
+      A local account label or last-success time is not present authorization. A confirmed unusable credential
+      means a new authenticated refresh cannot be claimed until usable credentials are established; it
+      does not erase saved Projects or source identities.
+    expiry_evidence: Interpret expiration only when the selected credential mechanism and reliable local
+      or source evidence establish it. A missing expiry field, ambiguous timestamp, local clock uncertainty,
+      secure-store read failure or generic network failure is not by itself proof of expiry or revocation.
+      Concrete provider semantics and clock tolerance are outside this candidate.
+    locally_unusable: When expiry or local unusability is established without an explicit source denial
+      or disconnect, show that connection recovery is needed and preserve previously saved observations
+      and their timestamps. Under 0036, previously permitted private observations may remain eligible
+      with their limitations; do not imply that GitHub has just reverified current access. Do not assert
+      source revocation, empty data, deletion, or a successful refresh merely from the local condition.
+    source_denial: An explicit source denial is distinct from expiry and offline. For confirmed private
+      Repository revocation, retain and show saved local content with revocation indication and supported
+      update time when known under 0019; stop ordinary synchronization and do not accept a pre-revocation
+      response as a new update. Generic 401, 403 or 404 alone does not universally prove a particular
+      cause or Repository-level revocation.
+    current_credential_rejected: A trusted GitHub response that establishes rejection of the currently
+      active credential generation stops new authenticated work using that generation. It does not alone
+      establish expiration, revocation or a Repository-specific denial. Keep saved locally available observations
+      as last known with supported times and a discoverable connection problem and recovery route. A response
+      for an unknown or superseded generation does not establish a new denial of the current generation.
+    rejected_superseded_generation: Attribute a rejected response to the credential generation actually
+      used by its request. If that generation has already been superseded by a consistently established
+      newer connection, the old rejection does not by itself mark the newer credential invalid, disconnect
+      it or restrict independently eligible data under its context. Independently established current
+      denial, unresolved ordering or account changes still follow 0036 and 0086. A late older successful
+      response likewise does not restore the rejected generation or advance the new connection's source
+      observations.
+    recovery_route: Offer an accessible route to reconnect or authorize again, plus a way to return to
+      permitted last-known content when applicable. Recovery can be initiated by the operator without
+      automatically deleting Projects, cached observations or the previous credential. The selected protocol
+      may support noninteractive renewal, but it is not assumed. Background execution must not unexpectedly
+      demand interactive authorization; make an actionable state available when the operator returns.
+    attempt_and_identity: Use 0058 for active-attempt ordering, validated identity and secure storage.
+      A failed or cancelled attempt preserves the prior confirmed identity record and saved data, but
+      cannot make an expired credential usable or bypass a previously established restriction. A different
+      confirmed source identity is not the same account merely because display names match and cannot
+      automatically unlock previous private observations.
+    restore_per_repository: A connection to the same source identity does not by itself establish restored
+      GitHub access to each Repository or refresh all saved facts. Previously saved data remains locally
+      accessible after confirmed revocation under 0019 with its actual time and limitation; evidence and
+      timing for restoring ordinary synchronization remain open.
+    concurrent: An invalidated, cancelled or superseded authorization attempt cannot establish credentials
+      or visibility after a newer connection or disconnect. A response started under an older credential
+      is evaluated for its original identity, applicable source evidence and current restrictions under
+      0037; request completion alone neither reauthorizes nor advances an unrelated scope. A previously
+      valid response may be retained only where the applicable ordering, access and identity contracts
+      permit it.
+    operation_outcome: A failed, deferred or interrupted refresh due to unusable credentials retains prior
+      successful observation times and identifies the affected scope and recovery need. It is not a successful
+      empty collection. Do not run an uncontrolled loop of identical failed attempts; exact retry scheduling
+      and rate policy remain open under 0048.
+    secrecy_and_accessibility: Do not put credential values or authorization responses into UI, share
+      payloads or normal diagnostics. Expose recovery and the distinction between stale content, restricted
+      content and current access using text or accessible labels as well as any system icon; do not require
+      long press, color or a timed gesture.
+    provenance: Cached last-known data and visible refresh failure follow the owner's direction. The local-expiry
+      distinction, recovery behavior and conservative restriction boundaries are agent-authored proposals
+      pending source and native validation.
   scenarios:
     rejected_current_credential_cause_unknown:
-      given: A request is confirmed to have used the active credential generation and a trusted GitHub REST response establishes authentication rejection, but there is no independent evidence whether the token expired or was revoked.
+      given: A request is confirmed to have used the active credential generation and a trusted GitHub
+        REST response establishes authentication rejection, but there is no independent evidence whether
+        the token expired or was revoked.
       when: The app presents the connection and previously saved private observations.
-      then: The current generation stops new authenticated work and affected private presentation follows the conservative restriction policy, while the cause remains unknown and saved Projects and observations are not deleted.
+      then: The rejected credential generation stops new authenticated work. Previously saved local observations
+        remain accessible as last known with supported times and a discoverable connection problem; the
+        rejection cause remains unknown and no Repository-specific denial is invented.
     old_credential_rejected_after_rotation:
-      given: A request used credential generation A, and a newer generation B for the same connection was consistently established before A's authentication rejection is processed.
+      given: A request used credential generation A, and a newer generation B for the same connection
+        was consistently established before A's authentication rejection is processed.
       when: The late response is reconciled with the current binding.
-      then: The rejection remains attributable to A and does not alone mark B invalid or disconnect it; a separate applicable denial or uncertainty for B retains its own effect.
+      then: The rejection remains attributable to A and does not alone mark B invalid or disconnect it;
+        a separate applicable denial or uncertainty for B retains its own effect.
     expiry_without_denial:
-      given: Account A was confirmed earlier, permitted private observations remain saved and trustworthy local evidence says its credential expired; no source denial or disconnect is established.
+      given: Account A was confirmed earlier, permitted private observations remain saved and trustworthy
+        local evidence says its credential expired; no source denial or disconnect is established.
       when: A refresh is requested while offline.
-      then: The affected scope is not reported refreshed, its prior observation time remains, a recovery route is discoverable and previously permitted content may remain visible with limitations under 0036.
+      then: The affected scope is not reported refreshed, its prior observation time remains, a recovery
+        route is discoverable and previously permitted content may remain visible with limitations under
+        0036.
     subsequent_source_denial:
       given: A previously permitted private Repository remains visible after a locally detected expiry.
-      when: An applicable source response is independently established as explicit denial for that scope.
-      then: The affected private content is restricted under 0036, the saved Project is retained and an old successful response cannot alone restore visibility.
+      when: Source revocation of access to that Repository is independently confirmed.
+      then: Previously saved local content remains visible with the revocation indication and supported
+        time when known under 0019; the saved Project remains and an old response cannot establish a new
+        update or source grant.
     cancelled_reauthorization:
       given: A's credential is known unusable and a new authorization attempt is pending.
       when: The operator cancels the attempt.
-      then: A's last confirmed identity and saved Projects remain, but the old credential is not described as usable and no restricted content is unlocked by the cancelled attempt.
+      then: A's last confirmed identity and saved Projects remain, but the old credential is not described
+        as usable and no restricted content is unlocked by the cancelled attempt.
     partial_restoration:
-      given: A was disconnected and its cached private Repositories R1 and R2 are restricted.
+      given: A disconnected account A has saved local private Repositories R1 and R2.
       when: A reconnects with confirmed identity and only R1's access is re-established.
-      then: R1 may be displayed under its own access and observation limits, R2 remains restricted and neither Repository's last-success time is advanced merely by reconnection.
+      then: R1 and R2 remain locally accessible as last known with their supported times and relevant
+        connection limitation. Reconnection and evidence for R1 alone do not prove source access to R2
+        or advance either Repository last-success time.
     late_old_response:
-      given: An old request for A started before a confirmed disconnect and a different account B is later connected.
+      given: An old request for A started before a confirmed disconnect and a different account B is later
+        connected.
       when: The old A response arrives.
-      then: It is not attributed to B, does not unlock A's restricted observations or replace B's connection, and does not mark B's scope refreshed.
+      then: It is not attributed to B, does not unlock A's restricted observations or replace B's connection,
+        and does not mark B's scope refreshed.
     storage_unreadable:
       given: The secure credential store cannot be read and no expiry or denial has otherwise been established.
       when: The operator opens the app.
-      then: A recoverable local security or connection problem is shown without claiming the credential was deleted, expired or accepted by GitHub.
+      then: A recoverable local security or connection problem is shown without claiming the credential
+        was deleted, expired or accepted by GitHub.
   unresolved:
-  - Candidate 0098 proposes GitHub App public-client authorization and expiring-token renewal; source-specific errors and actual provider behavior require separate verification.
-  - Secure-store interruption and credential replacement are refined in 0086; concrete atomicity and provider-side revocation remain unverified.
-  - Exact native recovery controls, background delivery and accessibility need platform evaluation; no live source or device behavior has been tested.
+  - Candidate 0098 proposes GitHub App public-client authorization and expiring-token renewal; source-specific
+    errors and actual provider behavior require separate verification.
+  - Secure-store interruption and credential replacement are refined in 0086; concrete atomicity and provider-side
+    revocation remain unverified.
+  - Exact native recovery controls, background delivery and accessibility need platform evaluation; no
+    live source or device behavior has been tested.

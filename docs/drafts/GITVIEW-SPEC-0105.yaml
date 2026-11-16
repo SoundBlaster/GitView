@@ -22,132 +22,391 @@ sources:
   progress_transaction_candidate: docs/drafts/discovery-progress-transaction-candidate-20261115.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- An accepted observation and the contexts required to interpret it remain associated through durable retention and recovery.
-- Source result, local retention outcome, population coverage and current access remain independently interpretable.
+- An accepted observation and the contexts required to interpret it remain associated through durable
+  retention and recovery.
+- Source result, local retention outcome, population coverage and current access remain independently
+  interpretable.
 - Retention retries do not create extra source observations or bypass a confirmed history clear.
-- A read with missing or invalid evidence is not returned as a confirmed empty collection or complete newer snapshot.
-- The observation retention boundary can be injected and exercised with deterministic storage failures independently of GitHub and UI, including its own fact, coverage and recovery outcomes.
+- A read with missing or invalid evidence is not returned as a confirmed empty collection or complete
+  newer snapshot.
+- The observation retention boundary can be injected and exercised with deterministic storage failures
+  independently of GitHub and UI, including its own fact, coverage and recovery outcomes.
 specification:
-  objective: Define domain-facing storage behavior for source observations, coverage evidence and separately retained metric history.
+  objective: Define domain-facing storage behavior for source observations, coverage evidence and separately
+    retained metric history.
   ontology_refs:
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
   - gitview:Metric
   contract:
-    responsibility: A domain-aware observation boundary retains and reads normalized permitted source facts and their interpretation contexts under 0044, 0053 and 0101. Generic storage remains domain-neutral under 0095. It neither calls GitHub nor declares access renewed and it does not decide UI navigation.
-    retain_request: The caller supplies a 0103 logical retention operation with bound source and confirmed object identities where established, category, relevant Repository and selection scope, actual field or event values, source and observation times where supported, revision or ordering evidence, coverage and current retention eligibility. Unknown or incomplete items remain marked as such; an omitted field is not serialized as a confirmed empty value by assumption. Coverage claims follow 0102 and cannot be stronger than supplied evidence.
-    fact_bundle: A durably claimed field or event requires a consistently recoverable association between its interpretation or value, confirmed object and source identity where established, field or event meaning, source and observation times when supported, scope, applicable revision or ordering evidence, access context, and any limitation or unresolved conflict necessary to interpret that claim. An unavailable input may be retained explicitly as unavailable; do not fabricate a complete bundle or an exact time. A confirmed absence or empty value carries the source evidence and scope that support that specific absence. The operation identity and outcome remain associated with the retained effect under 0103.
-    bundle_commit: Under the working SQLite direction in 0113, commit an accepted fact bundle and the evidence needed to identify its retention outcome in one local transaction or an equivalent verified boundary. Other facts or Repositories from the same source attempt can commit separately; their presence or absence and outcomes remain independent, so a partial response is not all-or-nothing across the Project. Shared context can be referenced instead of duplicated only when that exact context stays recoverable and associated with each fact; a later change to another fact must not rewrite the context of an older one.
-    coverage_commit: A retained sufficiently complete coverage claim must identify its actual Repository and object scope, predicate or category, reference time or interval, access context and the evidence that supports completeness under 0102. Before reporting it durably applied, commit the claim and its associated operation outcome consistently, and establish that all prerequisite evidence is already recoverable or is committed with that claim. Evidence can be a source-supported aggregate or other sufficient proof and need not always enumerate every object; a stored aggregate alone still does not establish object navigation. A collection of successful page writes without the required completeness evidence cannot be promoted to complete merely because its final checkpoint was saved.
-    discovery_progress: If progress for the 0102 candidate-acquisition strategy is retained, associate it with the specific discovery purpose, source instance, account and applicable access context, confirmed Repository, object category, source operation and effective query constraints, relevant captured interval, continuation evidence and recoverable operation outcome. Open-work and recent-work progress remain separate even where one source response contributes to both. Store only continuation material appropriate to the source and privacy policy, never credentials. A progress record means work was attempted or a traversal boundary was retained; it is not itself an accepted object fact, a successful refresh of another purpose or proof of complete population.
-    progress_disposition_commit_candidate: For an agent-authored SQLite direction, bind a newly reported durable traversal boundary to its exact portion context, immutable operation and a recoverable disposition for the processed page. That disposition identifies independently recoverable required evidence or an explicit safely scoped gap when evidence is missing. Commit progress and disposition together in one local consistency boundary or an independently verified recoverable protocol; if neither evidence nor a safe gap can be retained, do not confirm the new durable boundary. A boundary with a gap is progress with a limitation, not coverage or a statement about the missing object's identity. Each fact and any coverage claim retains its own outcome and prerequisites. On restart a missing disposition or evidence leaves coverage unproven, not a fabricated specific failure; apply 0102 for repair and actual scope relevance.
-    progress_membership_and_access_boundary: A Project membership edit and an access restriction are different changes. Removing Repository B from Project P invalidates B as a member of P's new selection, but does not by itself revoke B source access, erase B's independently permitted Repository-scoped progress or prevent its use by another Project Q containing B. If the original B progress remains otherwise eligible, it may be retained and later inspected only under its original source, account, Repository, query and time context; it cannot certify P's new member set. An independently observed restriction for B immediately governs disclosure and new affected admission under 0036 and 0113 regardless of Project membership. A progress transaction already admitted before that restriction may have a separately recoverable durable outcome, but its completion cannot restore visibility or authorize a new repair; an indeterminate fence or operation is reconciled under its own binding. This local ordering does not assert an atomic remote GitHub grant change or guarantee recovery of a restriction that never became durable.
-    resume_applicability: Before using a recovered continuation, establish that its source semantics, query and identity context and applicable access still permit its use for the requested scope. A changed day, account, Repository identity or relevant query constraint cannot inherit an old continuation as if it described the new scope; a separately valid old traversal can retain its own context. If the token is missing, expired, incompatible or its applicability cannot be established, retain any independently recoverable permitted facts, mark the affected discovery incomplete and restart or request a new traversal when permitted. Even a usable continuation and successful remaining pages do not by themselves establish snapshot consistency or fill earlier gaps under 0102.
-    missing_page_recovery: As an agent-authored recovery direction, when a retained continuation advances beyond a page whose accepted facts or required interpretation evidence cannot be recovered, retain a separately scoped unresolved discovery gap rather than treating the continuation as evidence that the earlier page was durably processed. A later eligible opportunity must make repair of that affected discovery purpose eligible under the fair scheduling and access rules in 0102 and 0048. The repair may restart the relevant portion or use a separately justified targeted reread when the source supports it; following the retained continuation for later pages is allowed only while the earlier gap remains explicit. A retry or reread is a new source attempt with its own scope and observation context; deduplicate only by supported identity and reconcile conflicts under 0053, not by assuming that mutable pages reproduce the earlier result. A later page, retry, valid cursor or independently recovered subset does not by itself close the gap or prove a complete snapshot. If storage, permission, source backoff or platform execution prevents repair, preserve permitted facts and expose a recoverable limitation without a tight retry loop, a deadline or fabricated success.
-    gap_context_and_recovery: Retain the gap's original source, account, Repository, discovery purpose, query and period context when those are recoverable, independently of current Project membership or route. A confirmed membership or day change requires a fresh applicability evaluation under 0102; the gap must not silently become a new member's or new day's gap, success or coverage. If its identity or scope cannot be recovered, expose an appropriately safe local limitation and do not dispatch a guessed repair against another Repository. Retained old data and progress remain subject to current access under 0112; a later response from work started before a relevant denial cannot restore the restricted content or mark a new account's discovery complete. Existing supported facts for other scopes retain their original context and current eligibility.
-    evidence_lifecycle: A coverage claim and a field may share immutable or versioned context when their original associations remain clear. Compaction, replacement, clear and recovery must not discard or silently rewrite evidence still needed for an exposed completeness or freshness claim. If a later read cannot validate required identity, interpretation, time, revision or coverage evidence, downgrade the affected claim to unknown, incomplete or unavailable as supported, rather than attach an unrelated context. Preserve independently recoverable scopes and apply privacy and explicit history clear rules separately.
-    write_ordering: A local transaction serializes the local effect but does not establish source freshness. Before replacing a comparable retained value, apply the source-supported ordering and conflict rules in 0053; an older response arriving later cannot win merely because its transaction commits later. An unordered competitor may be retained or represented as conflict without fabricating a single current value. Replaying one operation is not a new source request or new observation time.
-    distinct_observation_retention: Bind each retained sample to its separately initiated accepted source observation and its own retention operation under 0103. An uncertain earlier retention does not make a subsequent independently accepted observation a retry merely because their values or timestamp precision match. The later operation may proceed when its own access, generation and ordering preconditions allow, without asserting the unresolved earlier effect; reconcile a late earlier completion against its own identity and evidence. The same source event independently retrieved twice remains one event for event-count purposes when source-supported event identity establishes equivalence, even though retrieval and retention operations are distinct. If event equivalence or operation outcome is unknown, do not silently deduplicate by equal content or count two confirmed events.
-    history_scope: Current cache and historical evidence are distinguishable outcomes even if they share a physical record. A history retention request includes the supported metric, unit, predicate version, subject, scope and observation context required by 0066 and 0097; it respects the 0067 clear boundary. A source response or a successful current-cache write alone does not confirm history retention.
-    attempt_outcome_retention: Under the working policy of 0044, retain the latest relevant terminal source-attempt outcome with a stable attempt identity, captured source/account and actual requested scope, terminal outcome and supported completion or ordering context, and an access-safe reason when available. Bind the outcome to its retention operation and report an applied, rejected or indeterminate local result independently from the source attempt; a recorded source failure can itself fail to persist. Recording a failed attempt does not modify the last successful fact or complete-coverage time, and persisting a source success does not establish durable retention of every accepted fact or completeness claim. Do not store credentials or raw sensitive error material merely to explain the outcome. Retention of earlier superseded attempts and the physical representation remain open.
-    attempt_recovery: After restart, independently recover a supported terminal outcome and enough context to attribute it to its original attempt and scope. Do not infer a terminal outcome from an in-flight marker, a fact record, a coverage checkpoint or a generic database receipt. If durable outcome or ordering evidence is unavailable, return an explicit unknown or local recovery limitation; a previously recoverable last-success fact keeps its own context. A newer scoped terminal result supersedes the older one as latest only with sufficient ordering evidence and does not erase independently relevant failures for another scope. Current disclosure policy applies to stored reasons and identifiers.
-    unrecorded_attempt_gap: A recoverable older terminal record alone cannot prove that no later attempt began or finished without a durable record. Claim it as the latest attempt only when the adopted admission and recovery protocol establishes sufficient absence of later unrecorded attempts for that scope; otherwise it is the last recoverable recorded outcome and latest is unknown. The working journaled-attempt proposal uses a durable pre-attempt marker, subject to the transient fallback below. If the process dies before such a marker can be made durable, recovery cannot reconstruct an unrecorded attempt from the old record; do not claim universal crash-proof attempt history.
-    journaled_attempt_proposal: For a recoverable refresh attempt, as a working design first durably bind an attempt identity and its captured source, account and requested scope to a pending admission before dispatching the source request. A confirmed admission means only that this local intent may proceed, not that a request reached GitHub. When the attempt ends, durably bind its supported terminal outcome to that same attempt, preserving any independently stored facts and coverage under their separate operations. An unavailable or indeterminate admission cannot be represented as a durably tracked attempt; safe replay of the local admission uses the same bound identity under 0103 and does not by itself dispatch a second source request. No transaction is held across the network. Exact dispatcher coordination and operation binding remain to be designed and verified.
-    pending_attempt_recovery: A recovered pending admission without a terminal outcome does not prove that dispatch occurred, that GitHub saw the request, or that it succeeded, failed or was cancelled. Preserve its identity, scope and recovery limitation. If any earlier process or task could still deliver a result, do not declare it terminal or allow its late outcome to be confused with an unrelated new attempt. A separately initiated refresh has a distinct attempt identity; whether it can safely proceed depends on access, scheduling and retention ordering, not on assuming that the old request failed. An old permitted response retains its original attempt and access context under 0037.
-    transient_refresh: If storage is unavailable or admission cannot be confirmed, the working policy permits an explicitly requested refresh to proceed as a transient attempt when source access and execution constraints allow. Present its permitted facts and outcome for the active session without promising durable recovery; do not claim it was durably admitted or silently count it as a replay of a journaled attempt. After restart, because such an attempt may have left no durable trace, a previously recorded outcome is only the last recoverable recorded outcome unless an independently established protocol excludes later untracked attempts. This fallback preserves refresh availability but cannot promise a crash-complete attempt history.
-    journaled_ordering: Attempt admission order does not prove completion order. For overlapping admitted attempts, associate each terminal outcome with its attempt and any supported completion-order evidence; where the actual order cannot be recovered or timestamps tie without a reliable ordering witness, latest terminal outcome is uncertain. Coalesced UI requests can share an underlying source attempt only for the actual scope it covers; each request's satisfaction and the source attempt are distinct. A source attempt, a terminal-outcome retention operation and an accepted source fact are distinct identities and do not become one another on retry.
-    project_request_recovery: To support recovery of an explicit Project refresh's aggregate status under 0048, retain a stable request identity, its captured source and account context, Project and member scope, required categories or discovery purposes, and supported associations from each portion to its actual attempt or deferred state. Record only evidence whose own local retention has a supported outcome; a source attempt can be associated with multiple requests without becoming multiple source attempts. A request manifest or an admission is not proof of source dispatch, completed coverage, durable field retention or current authorization. If the manifest, portion mapping or outcomes are missing, inconsistent or unreadable, recover only independently supported scoped facts and report the aggregate as incomplete or unknown rather than reconstructing the requested set from whichever attempts survived. A manual transient refresh remains possible under transient_refresh and does not acquire a durable request or attempt record by assumption. Do not put credentials, unneeded source payloads or restricted details into diagnostics.
-    durable_outcomes: A caller can distinguish source acceptance from applied, rejected or indeterminate local retention. A confirmed applied result requires recoverable association of the fact with its required context and operation outcome under 0071 and 0103. A repeated delivery of the same operation does not fabricate a second source observation; a fresh observation is separately contextualized even with the same value. Interruption or failed local save cannot advance a coverage boundary without independently recoverable evidence.
-    read_and_access: A read supplies an appropriately scoped set of recoverable facts with their own observation and coverage contexts, together with unavailable, inconsistent or unknown portions. It cannot turn a missing or invalid record into an empty source result. Apply the current access policy before exposing source-derived data or revealing counts; retained data and a prior permission observation do not renew access. Independently valid unrelated scopes remain separately interpretable.
-    read_consistency_candidate: As an agent-authored storage-boundary requirement, each recovered claim and the mandatory local associations used to interpret it must be read from one internally compatible durable state, or verified against a version or equivalent evidence that detects a concurrent relevant local change. The same applies to a coverage claim and its required recoverable support, and to an operation outcome and the binding required to interpret that outcome. A coherent local read does not make differently timed GitHub facts a simultaneous source snapshot. Independently valid claims may have different read contexts if the caller preserves those contexts and does not combine them into a stronger claim without compatible evidence. If consistency cannot be established, retry a bounded read where permitted or return the affected claim or scope as uncertain or unavailable while keeping independently valid permitted facts; do not assemble a claim using an old subject association and a new unrelated context. A local read transaction, version check or another verified mechanism may satisfy this contract; no network request, user interaction or indefinite waiting is required inside a local transaction. Revalidate current access and route membership before projection under 0115, since a coherent past read is not a current authorization or navigation grant.
-    ordering_and_clear: Reconcile incompatible facts using source-supported ordering under 0053, not storage arrival order. A confirmed clear prevents pre-clear work from silently recreating historical evidence even on replay or restart; an indeterminate clear keeps the affected admission outcome uncertain. A later explicitly initiated source-history retrieval or observation retains its own evidence and is not proof that deleted local records survived.
-    caller_contract: Selection and summary decisions consume prepared facts and explicit uncertainty rather than raw storage details. A page may show permitted transient facts while a local save is unconfirmed, but must not call them durable or attribute their time to older facts. A current read is separate from an earlier retention receipt and from the last complete coverage claim.
-    verification: Under 0040 and 0079 specify TDD scenarios for lost acknowledgement, same-operation replay, equal-value distinct observations, partial field writes, conflicting observations, clear races, denied access and restart. Verify actual persistence and source mappings separately from doubles, and native presentation separately from both.
-    provenance: Local cache, last-update visibility and history follow owner direction. This storage boundary, the SQLite direction in 0113 and separation of outcome types are agent-authored proposals, not an implemented database or a selected historical data source.
+    responsibility: A domain-aware observation boundary retains and reads normalized permitted source
+      facts and their interpretation contexts under 0044, 0053 and 0101. Generic storage remains domain-neutral
+      under 0095. It neither calls GitHub nor declares access renewed and it does not decide UI navigation.
+    retain_request: The caller supplies a 0103 logical retention operation with bound source and confirmed
+      object identities where established, category, relevant Repository and selection scope, actual field
+      or event values, source and observation times where supported, revision or ordering evidence, coverage
+      and current retention eligibility. Unknown or incomplete items remain marked as such; an omitted
+      field is not serialized as a confirmed empty value by assumption. Coverage claims follow 0102 and
+      cannot be stronger than supplied evidence.
+    fact_bundle: A durably claimed field or event requires a consistently recoverable association between
+      its interpretation or value, confirmed object and source identity where established, field or event
+      meaning, source and observation times when supported, scope, applicable revision or ordering evidence,
+      access context, and any limitation or unresolved conflict necessary to interpret that claim. An
+      unavailable input may be retained explicitly as unavailable; do not fabricate a complete bundle
+      or an exact time. A confirmed absence or empty value carries the source evidence and scope that
+      support that specific absence. The operation identity and outcome remain associated with the retained
+      effect under 0103.
+    bundle_commit: Under the working SQLite direction in 0113, commit an accepted fact bundle and the
+      evidence needed to identify its retention outcome in one local transaction or an equivalent verified
+      boundary. Other facts or Repositories from the same source attempt can commit separately; their
+      presence or absence and outcomes remain independent, so a partial response is not all-or-nothing
+      across the Project. Shared context can be referenced instead of duplicated only when that exact
+      context stays recoverable and associated with each fact; a later change to another fact must not
+      rewrite the context of an older one.
+    coverage_commit: A retained sufficiently complete coverage claim must identify its actual Repository
+      and object scope, predicate or category, reference time or interval, access context and the evidence
+      that supports completeness under 0102. Before reporting it durably applied, commit the claim and
+      its associated operation outcome consistently, and establish that all prerequisite evidence is already
+      recoverable or is committed with that claim. Evidence can be a source-supported aggregate or other
+      sufficient proof and need not always enumerate every object; a stored aggregate alone still does
+      not establish object navigation. A collection of successful page writes without the required completeness
+      evidence cannot be promoted to complete merely because its final checkpoint was saved.
+    discovery_progress: If progress for the 0102 candidate-acquisition strategy is retained, associate
+      it with the specific discovery purpose, source instance, account and applicable access context,
+      confirmed Repository, object category, source operation and effective query constraints, relevant
+      captured interval, continuation evidence and recoverable operation outcome. Open-work and recent-work
+      progress remain separate even where one source response contributes to both. Store only continuation
+      material appropriate to the source and privacy policy, never credentials. A progress record means
+      work was attempted or a traversal boundary was retained; it is not itself an accepted object fact,
+      a successful refresh of another purpose or proof of complete population.
+    progress_disposition_commit_candidate: For an agent-authored SQLite direction, bind a newly reported
+      durable traversal boundary to its exact portion context, immutable operation and a recoverable disposition
+      for the processed page. That disposition identifies independently recoverable required evidence
+      or an explicit safely scoped gap when evidence is missing. Commit progress and disposition together
+      in one local consistency boundary or an independently verified recoverable protocol; if neither
+      evidence nor a safe gap can be retained, do not confirm the new durable boundary. A boundary with
+      a gap is progress with a limitation, not coverage or a statement about the missing object's identity.
+      Each fact and any coverage claim retains its own outcome and prerequisites. On restart a missing
+      disposition or evidence leaves coverage unproven, not a fabricated specific failure; apply 0102
+      for repair and actual scope relevance.
+    progress_membership_and_access_boundary: A membership edit and source revocation are distinct. Removing
+      B from P prevents treating B as part of P current selection but does not erase saved B progress
+      or Q membership. Confirmed B revocation stops new normal synchronization or repair under 0019; previously
+      saved B facts remain locally accessible in their applicable Project and original context with their
+      supported times. A late response does not become a new accepted update or grant. A separately admitted
+      local transaction may have a durable outcome only when independently supported.
+    resume_applicability: Before using a recovered continuation, establish that its source semantics,
+      query and identity context and applicable access still permit its use for the requested scope. A
+      changed day, account, Repository identity or relevant query constraint cannot inherit an old continuation
+      as if it described the new scope; a separately valid old traversal can retain its own context. If
+      the token is missing, expired, incompatible or its applicability cannot be established, retain any
+      independently recoverable permitted facts, mark the affected discovery incomplete and restart or
+      request a new traversal when permitted. Even a usable continuation and successful remaining pages
+      do not by themselves establish snapshot consistency or fill earlier gaps under 0102.
+    missing_page_recovery: As an agent-authored recovery direction, when a retained continuation advances
+      beyond a page whose accepted facts or required interpretation evidence cannot be recovered, retain
+      a separately scoped unresolved discovery gap rather than treating the continuation as evidence that
+      the earlier page was durably processed. A later eligible opportunity must make repair of that affected
+      discovery purpose eligible under the fair scheduling and access rules in 0102 and 0048. The repair
+      may restart the relevant portion or use a separately justified targeted reread when the source supports
+      it; following the retained continuation for later pages is allowed only while the earlier gap remains
+      explicit. A retry or reread is a new source attempt with its own scope and observation context;
+      deduplicate only by supported identity and reconcile conflicts under 0053, not by assuming that
+      mutable pages reproduce the earlier result. A later page, retry, valid cursor or independently recovered
+      subset does not by itself close the gap or prove a complete snapshot. If storage, permission, source
+      backoff or platform execution prevents repair, preserve permitted facts and expose a recoverable
+      limitation without a tight retry loop, a deadline or fabricated success.
+    gap_context_and_recovery: Retain a gap original source, account, Repository, query and time context
+      independently of current membership. Do not relabel an old gap to a new member or day or dispatch
+      a guessed repair. Confirmed revocation stops ordinary affected synchronization and repair while
+      already saved data remains locally accessible under 0019 with its actual context and limitation.
+      A late response cannot become a new accepted update or establish another account discovery as complete.
+    evidence_lifecycle: A coverage claim and a field may share immutable or versioned context when their
+      original associations remain clear. Compaction, replacement, clear and recovery must not discard
+      or silently rewrite evidence still needed for an exposed completeness or freshness claim. If a later
+      read cannot validate required identity, interpretation, time, revision or coverage evidence, downgrade
+      the affected claim to unknown, incomplete or unavailable as supported, rather than attach an unrelated
+      context. Preserve independently recoverable scopes and apply privacy and explicit history clear
+      rules separately.
+    write_ordering: A local transaction serializes the local effect but does not establish source freshness.
+      Before replacing a comparable retained value, apply the source-supported ordering and conflict rules
+      in 0053; an older response arriving later cannot win merely because its transaction commits later.
+      An unordered competitor may be retained or represented as conflict without fabricating a single
+      current value. Replaying one operation is not a new source request or new observation time.
+    distinct_observation_retention: Bind each retained sample to its separately initiated accepted source
+      observation and its own retention operation under 0103. An uncertain earlier retention does not
+      make a subsequent independently accepted observation a retry merely because their values or timestamp
+      precision match. The later operation may proceed when its own access, generation and ordering preconditions
+      allow, without asserting the unresolved earlier effect; reconcile a late earlier completion against
+      its own identity and evidence. The same source event independently retrieved twice remains one event
+      for event-count purposes when source-supported event identity establishes equivalence, even though
+      retrieval and retention operations are distinct. If event equivalence or operation outcome is unknown,
+      do not silently deduplicate by equal content or count two confirmed events.
+    history_scope: Current cache and historical evidence are distinguishable outcomes even if they share
+      a physical record. A history retention request includes the supported metric, unit, predicate version,
+      subject, scope and observation context required by 0066 and 0097; it respects the 0067 clear boundary.
+      A source response or a successful current-cache write alone does not confirm history retention.
+    attempt_outcome_retention: Under the working policy of 0044, retain the latest relevant terminal source-attempt
+      outcome with a stable attempt identity, captured source/account and actual requested scope, terminal
+      outcome and supported completion or ordering context, and an access-safe reason when available.
+      Bind the outcome to its retention operation and report an applied, rejected or indeterminate local
+      result independently from the source attempt; a recorded source failure can itself fail to persist.
+      Recording a failed attempt does not modify the last successful fact or complete-coverage time, and
+      persisting a source success does not establish durable retention of every accepted fact or completeness
+      claim. Do not store credentials or raw sensitive error material merely to explain the outcome. Retention
+      of earlier superseded attempts and the physical representation remain open.
+    attempt_recovery: After restart, independently recover a supported terminal outcome and enough context
+      to attribute it to its original attempt and scope. Do not infer a terminal outcome from an in-flight
+      marker, a fact record, a coverage checkpoint or a generic database receipt. If durable outcome or
+      ordering evidence is unavailable, return an explicit unknown or local recovery limitation; a previously
+      recoverable last-success fact keeps its own context. A newer scoped terminal result supersedes the
+      older one as latest only with sufficient ordering evidence and does not erase independently relevant
+      failures for another scope. Current disclosure policy applies to stored reasons and identifiers.
+    unrecorded_attempt_gap: A recoverable older terminal record alone cannot prove that no later attempt
+      began or finished without a durable record. Claim it as the latest attempt only when the adopted
+      admission and recovery protocol establishes sufficient absence of later unrecorded attempts for
+      that scope; otherwise it is the last recoverable recorded outcome and latest is unknown. The working
+      journaled-attempt proposal uses a durable pre-attempt marker, subject to the transient fallback
+      below. If the process dies before such a marker can be made durable, recovery cannot reconstruct
+      an unrecorded attempt from the old record; do not claim universal crash-proof attempt history.
+    journaled_attempt_proposal: For a recoverable refresh attempt, as a working design first durably bind
+      an attempt identity and its captured source, account and requested scope to a pending admission
+      before dispatching the source request. A confirmed admission means only that this local intent may
+      proceed, not that a request reached GitHub. When the attempt ends, durably bind its supported terminal
+      outcome to that same attempt, preserving any independently stored facts and coverage under their
+      separate operations. An unavailable or indeterminate admission cannot be represented as a durably
+      tracked attempt; safe replay of the local admission uses the same bound identity under 0103 and
+      does not by itself dispatch a second source request. No transaction is held across the network.
+      Exact dispatcher coordination and operation binding remain to be designed and verified.
+    pending_attempt_recovery: A recovered pending admission without a terminal outcome does not prove
+      that dispatch occurred, that GitHub saw the request, or that it succeeded, failed or was cancelled.
+      Preserve its identity, scope and recovery limitation. If any earlier process or task could still
+      deliver a result, do not declare it terminal or allow its late outcome to be confused with an unrelated
+      new attempt. A separately initiated refresh has a distinct attempt identity; whether it can safely
+      proceed depends on access, scheduling and retention ordering, not on assuming that the old request
+      failed. An old permitted response retains its original attempt and access context under 0037.
+    transient_refresh: If storage is unavailable or admission cannot be confirmed, the working policy
+      permits an explicitly requested refresh to proceed as a transient attempt when source access and
+      execution constraints allow. Present its permitted facts and outcome for the active session without
+      promising durable recovery; do not claim it was durably admitted or silently count it as a replay
+      of a journaled attempt. After restart, because such an attempt may have left no durable trace, a
+      previously recorded outcome is only the last recoverable recorded outcome unless an independently
+      established protocol excludes later untracked attempts. This fallback preserves refresh availability
+      but cannot promise a crash-complete attempt history.
+    journaled_ordering: Attempt admission order does not prove completion order. For overlapping admitted
+      attempts, associate each terminal outcome with its attempt and any supported completion-order evidence;
+      where the actual order cannot be recovered or timestamps tie without a reliable ordering witness,
+      latest terminal outcome is uncertain. Coalesced UI requests can share an underlying source attempt
+      only for the actual scope it covers; each request's satisfaction and the source attempt are distinct.
+      A source attempt, a terminal-outcome retention operation and an accepted source fact are distinct
+      identities and do not become one another on retry.
+    project_request_recovery: To support recovery of an explicit Project refresh's aggregate status under
+      0048, retain a stable request identity, its captured source and account context, Project and member
+      scope, required categories or discovery purposes, and supported associations from each portion to
+      its actual attempt or deferred state. Record only evidence whose own local retention has a supported
+      outcome; a source attempt can be associated with multiple requests without becoming multiple source
+      attempts. A request manifest or an admission is not proof of source dispatch, completed coverage,
+      durable field retention or current authorization. If the manifest, portion mapping or outcomes are
+      missing, inconsistent or unreadable, recover only independently supported scoped facts and report
+      the aggregate as incomplete or unknown rather than reconstructing the requested set from whichever
+      attempts survived. A manual transient refresh remains possible under transient_refresh and does
+      not acquire a durable request or attempt record by assumption. Do not put credentials, unneeded
+      source payloads or restricted details into diagnostics.
+    durable_outcomes: A caller can distinguish source acceptance from applied, rejected or indeterminate
+      local retention. A confirmed applied result requires recoverable association of the fact with its
+      required context and operation outcome under 0071 and 0103. A repeated delivery of the same operation
+      does not fabricate a second source observation; a fresh observation is separately contextualized
+      even with the same value. Interruption or failed local save cannot advance a coverage boundary without
+      independently recoverable evidence.
+    read_and_access: A read supplies an appropriately scoped set of recoverable facts with their own observation
+      and coverage contexts, together with unavailable, inconsistent or unknown portions. It cannot turn
+      a missing or invalid record into an empty source result. Apply the current access policy before
+      exposing source-derived data or revealing counts; retained data and a prior permission observation
+      do not renew access. Independently valid unrelated scopes remain separately interpretable.
+    read_consistency_candidate: As an agent-authored storage-boundary requirement, each recovered claim
+      and the mandatory local associations used to interpret it must be read from one internally compatible
+      durable state, or verified against a version or equivalent evidence that detects a concurrent relevant
+      local change. The same applies to a coverage claim and its required recoverable support, and to
+      an operation outcome and the binding required to interpret that outcome. A coherent local read does
+      not make differently timed GitHub facts a simultaneous source snapshot. Independently valid claims
+      may have different read contexts if the caller preserves those contexts and does not combine them
+      into a stronger claim without compatible evidence. If consistency cannot be established, retry a
+      bounded read where permitted or return the affected claim or scope as uncertain or unavailable while
+      keeping independently valid permitted facts; do not assemble a claim using an old subject association
+      and a new unrelated context. A local read transaction, version check or another verified mechanism
+      may satisfy this contract; no network request, user interaction or indefinite waiting is required
+      inside a local transaction. Revalidate current access and route membership before projection under
+      0115, since a coherent past read is not a current authorization or navigation grant.
+    ordering_and_clear: Reconcile incompatible facts using source-supported ordering under 0053, not storage
+      arrival order. A confirmed clear prevents pre-clear work from silently recreating historical evidence
+      even on replay or restart; an indeterminate clear keeps the affected admission outcome uncertain.
+      A later explicitly initiated source-history retrieval or observation retains its own evidence and
+      is not proof that deleted local records survived.
+    caller_contract: Selection and summary decisions consume prepared facts and explicit uncertainty rather
+      than raw storage details. A page may show permitted transient facts while a local save is unconfirmed,
+      but must not call them durable or attribute their time to older facts. A current read is separate
+      from an earlier retention receipt and from the last complete coverage claim.
+    verification: Under 0040 and 0079 specify TDD scenarios for lost acknowledgement, same-operation replay,
+      equal-value distinct observations, partial field writes, conflicting observations, clear races,
+      denied access and restart. Verify actual persistence and source mappings separately from doubles,
+      and native presentation separately from both.
+    provenance: Local cache, last-update visibility and history follow owner direction. This storage boundary,
+      the SQLite direction in 0113 and separation of outcome types are agent-authored proposals, not an
+      implemented database or a selected historical data source.
   scenarios:
     shared_progress_after_one_membership_changes:
-      given: Two Project requests used one compatible Repository R discovery attempt. Its portion context, continuation and an explicit earlier-page gap are durably recoverable; the individual request context for P is unreadable, while Q's request context and current membership of R are readable. Before restart P removed R, and current source account and access for R remain independently applicable.
+      given: Two Project requests used one compatible Repository R discovery attempt. Its portion context,
+        continuation and an explicit earlier-page gap are durably recoverable; the individual request
+        context for P is unreadable, while Q's request context and current membership of R are readable.
+        Before restart P removed R, and current source account and access for R remain independently applicable.
       when: The application restores the two Project overviews and considers continuing Q's discovery.
-      then: Q may use the compatible R continuation with the original gap still visible and eligible for repair under 0102; neither terminal traversal nor the shared cursor establishes complete Q coverage. P's unreadable historical request remains a safe local limitation and R is not reinserted into P. The stored portion does not claim that both original Project requests succeeded or create a second source observation.
+      then: Q may use the compatible R continuation with the original gap still visible and eligible for
+        repair under 0102; neither terminal traversal nor the shared cursor establishes complete Q coverage.
+        P's unreadable historical request remains a safe local limitation and R is not reinserted into
+        P. The stored portion does not claim that both original Project requests succeeded or create a
+        second source observation.
     changed_association_during_read:
-      given: A local read begins while permitted representation X has a supported association with PR A, and a coordinated correction changes that association to PR B before the read has obtained every required context. A separate fact for PR C remains independently readable.
+      given: A local read begins while permitted representation X has a supported association with PR
+        A, and a coordinated correction changes that association to PR B before the read has obtained
+        every required context. A separate fact for PR C remains independently readable.
       when: The storage boundary prepares the result for the Project route.
-      then: It returns an internally coherent supported association and its own evidence, retries against a valid local state, or marks X's affected association uncertain or unavailable; it never combines A's identity with B's association evidence. C remains usable under its own context and current disclosure. A later route projection reevaluates membership and access rather than treating the earlier read as current authorization.
+      then: It returns an internally coherent supported association and its own evidence, retries against
+        a valid local state, or marks X's affected association uncertain or unavailable; it never combines
+        A's identity with B's association evidence. C remains usable under its own context and current
+        disclosure. A later route projection reevaluates membership and access rather than treating the
+        earlier read as current authorization.
     recovered_cursor_for_old_day:
-      given: Recent-work discovery saved a continuation bound to one local-day interval, while an independently retained old-open Issue remains available with its own context.
+      given: Recent-work discovery saved a continuation bound to one local-day interval, while an independently
+        retained old-open Issue remains available with its own context.
       when: The app restarts after the local day changes and prepares the new Today selection.
-      then: The old-day continuation is not relabeled as progress for the new day; the permitted old-open observation remains available within its applicable context and new-day coverage remains incomplete until independently supported.
+      then: The old-day continuation is not relabeled as progress for the new day; the permitted old-open
+        observation remains available within its applicable context and new-day coverage remains incomplete
+        until independently supported.
     removed_member_late_progress_with_denial:
-      given: Project P changes from members A and B to A and C while a B-scoped source page is in flight. Project Q still contains B. The process then observes an applicable denial for B and restricts disclosure before the page response arrives; a B progress transaction had already been admitted and its acknowledgement is lost.
+      given: Project P changes from members A and B to A and C while a B-scoped source page is in flight.
+        Project Q still contains B. The process then confirms revocation of B and stops normal B synchronization
+        without hiding saved local data; a B progress transaction had already been admitted and its acknowledgement
+        is lost.
       when: The B response and operation are reconciled while P's new Today route is active.
-      then: P evaluates A and C with their own evidence and does not count B or treat B's progress as C coverage. B's earlier admitted operation may be applied, not applied or indeterminate only as independently supported, while denial continues to prevent restricted presentation and new B repair in both Projects. Q's membership is retained but does not override denial; a local receipt does not prove source access. A later restart applies the actual durable restriction and recovery evidence, including the unrecorded-denial limitation in 0113.
+      then: P evaluates A and C under their own evidence and does not count B or treat B progress as C
+        coverage. A prior B operation is reconciled only as supported; confirmed B revocation prevents
+        normal new B repair or accepting a late response as fresh. Q keeps B membership and saved local
+        B facts remain visible under 0019 with the revocation indication and supported update times when
+        known. A local receipt is not proof of source access.
     progress_without_page_evidence:
-      given: A continuation was recorded for a source traversal but the facts or required context for an earlier page cannot be recovered.
+      given: A continuation was recorded for a source traversal but the facts or required context for
+        an earlier page cannot be recovered.
       when: The app resumes and receives the remaining pages without transport error.
-      then: Supported recoverable facts remain usable, but the missing earlier evidence is not invented and the full collection is not reported complete solely from the resumed traversal or its terminal cursor. The earlier gap remains eligible for a permitted bounded repair rather than being silently abandoned; repair outcomes have their own context and do not automatically establish a coherent source snapshot.
+      then: Supported recoverable facts remain usable, but the missing earlier evidence is not invented
+        and the full collection is not reported complete solely from the resumed traversal or its terminal
+        cursor. The earlier gap remains eligible for a permitted bounded repair rather than being silently
+        abandoned; repair outcomes have their own context and do not automatically establish a coherent
+        source snapshot.
     source_success_storage_unknown:
-      given: GitHub supplies a permitted updated PR title at T2 while the corresponding local retention outcome is indeterminate; T1 title evidence is independently recoverable.
+      given: GitHub supplies a permitted updated PR title at T2 while the corresponding local retention
+        outcome is indeterminate; T1 title evidence is independently recoverable.
       when: The current session displays the result and later restarts.
-      then: T2 may be shown as transient with its source context, but not promised durable; after restart T1 is available only with its independently recovered context unless T2 is independently established.
+      then: T2 may be shown as transient with its source context, but not promised durable; after restart
+        T1 is available only with its independently recovered context unless T2 is independently established.
     source_failure_save_unknown:
-      given: A source request fails, its prior successful observation is independently durable, and the attempt-outcome retention operation has an indeterminate result at process termination.
-      when: A later process recovers the earlier observation but cannot recover a bound terminal outcome or prove its non-application.
-      then: The earlier permitted observation remains last known under its own context, while the latest attempt outcome is unknown and local recovery remains distinct. The earlier fact does not prove that the later request succeeded or that its failure was saved.
+      given: A source request fails, its prior successful observation is independently durable, and the
+        attempt-outcome retention operation has an indeterminate result at process termination.
+      when: A later process recovers the earlier observation but cannot recover a bound terminal outcome
+        or prove its non-application.
+      then: The earlier permitted observation remains last known under its own context, while the latest
+        attempt outcome is unknown and local recovery remains distinct. The earlier fact does not prove
+        that the later request succeeded or that its failure was saved.
     newer_unrecorded_attempt:
-      given: An older PR success is durably recorded, a later PR request fails, and the process stops before any evidence of that later request or its outcome is durable.
-      when: A new process reads the old success without a source-backed or locally durable guarantee that all later attempts would have been recorded.
-      then: The old success is the last recoverable recorded outcome, not proof of the latest actual attempt; the unrecorded failure cannot be described as known and the latest outcome remains unknown.
+      given: An older PR success is durably recorded, a later PR request fails, and the process stops
+        before any evidence of that later request or its outcome is durable.
+      when: A new process reads the old success without a source-backed or locally durable guarantee that
+        all later attempts would have been recorded.
+      then: The old success is the last recoverable recorded outcome, not proof of the latest actual attempt;
+        the unrecorded failure cannot be described as known and the latest outcome remains unknown.
     crash_after_admission_before_dispatch:
-      given: A tracked refresh admission is durably recorded, but the process stops before a request is dispatched or its terminal outcome is stored.
+      given: A tracked refresh admission is durably recorded, but the process stops before a request is
+        dispatched or its terminal outcome is stored.
       when: Recovery reads the pending admission.
-      then: The attempt remains unresolved in its original scope; the admission is not represented as a GitHub request, failure, success or automatically cancelled attempt.
+      then: The attempt remains unresolved in its original scope; the admission is not represented as
+        a GitHub request, failure, success or automatically cancelled attempt.
     transient_refresh_during_storage_failure:
-      given: Local storage cannot confirm a tracked admission and an operator explicitly requests refresh while source access is available.
-      when: The app runs a permitted transient attempt, receives a usable response and later restarts without a durable trace of that attempt.
-      then: During the session the response may be shown with its source context and nondurable limitation; after restart no outcome or fact from it is invented, and an older stored outcome is not asserted to be the latest actual attempt without separate sufficient evidence.
+      given: Local storage cannot confirm a tracked admission and an operator explicitly requests refresh
+        while source access is available.
+      when: The app runs a permitted transient attempt, receives a usable response and later restarts
+        without a durable trace of that attempt.
+      then: During the session the response may be shown with its source context and nondurable limitation;
+        after restart no outcome or fact from it is invented, and an older stored outcome is not asserted
+        to be the latest actual attempt without separate sufficient evidence.
     admissions_are_not_completion_order:
-      given: Two tracked attempts A and B for an overlapping scope are durably admitted in that order, and their completion times or order cannot be recovered reliably.
+      given: Two tracked attempts A and B for an overlapping scope are durably admitted in that order,
+        and their completion times or order cannot be recovered reliably.
       when: Their terminal records are read after restart.
-      then: Admission order does not select B as the later completion; both supported outcomes retain their scopes and the latest affected outcome is uncertain.
+      then: Admission order does not select B as the later completion; both supported outcomes retain
+        their scopes and the latest affected outcome is uncertain.
     scope_specific_attempt_outcomes:
-      given: A failed PR attempt for Repository A is durably recorded, then a later Issue attempt for A succeeds and its own outcome is recorded.
+      given: A failed PR attempt for Repository A is durably recorded, then a later Issue attempt for
+        A succeeds and its own outcome is recorded.
       when: Both scopes are read after restart.
-      then: The Issue success does not replace the latest PR failure or advance its successful observation time; each outcome and any source facts retain their own context.
+      then: The Issue success does not replace the latest PR failure or advance its successful observation
+        time; each outcome and any source facts retain their own context.
     uncertain_write_then_equal_new_observation:
-      given: Retention operation O1 for an accepted state observation has an indeterminate outcome; a separately initiated eligible source observation yields the same value at T2 and is bound to distinct operation O2.
+      given: Retention operation O1 for an accepted state observation has an indeterminate outcome; a
+        separately initiated eligible source observation yields the same value at T2 and is bound to distinct
+        operation O2.
       when: O2 is durably retained and O1 later resolves as applied.
-      then: O2 remains associated with its own supported observation and O1 resolves to its original observation without an extra sample from replay; equal values alone do not collapse the independent observations, while applicable clear and access boundaries remain enforced.
+      then: O2 remains associated with its own supported observation and O1 resolves to its original observation
+        without an extra sample from replay; equal values alone do not collapse the independent observations,
+        while applicable clear and access boundaries remain enforced.
     same_event_two_retrievals:
-      given: Two independent source retrievals report the same source-confirmed closure event identity and each has a distinct retention operation.
+      given: Two independent source retrievals report the same source-confirmed closure event identity
+        and each has a distinct retention operation.
       when: Both are reconciled and an event-count bucket is evaluated.
-      then: Their retrieval contexts remain distinguishable but the confirmed source event contributes once, not twice; neither matching content nor local operation identity alone substitutes for source event identity.
+      then: Their retrieval contexts remain distinguishable but the confirmed source event contributes
+        once, not twice; neither matching content nor local operation identity alone substitutes for source
+        event identity.
     omitted_field:
-      given: A T2 observation contains a PR title but omits its review assessment, which was last observed at T1.
+      given: A T2 observation contains a PR title but omits its review assessment, which was last observed
+        at T1.
       when: The T2 observation is retained and read.
-      then: The T1 assessment is neither cleared nor relabeled as observed at T2 solely because the title was saved.
+      then: The T1 assessment is neither cleared nor relabeled as observed at T2 solely because the title
+        was saved.
     old_retention_after_clear:
-      given: A historical retention operation began before the confirmed history-clear boundary and its acknowledgement was lost.
+      given: A historical retention operation began before the confirmed history-clear boundary and its
+        acknowledgement was lost.
       when: Its delivery is retried after restart.
-      then: The old operation cannot restore cleared history as a new sample; a separately initiated fresh observation retains its actual later context.
+      then: The old operation cannot restore cleared history as a new sample; a separately initiated fresh
+        observation retains its actual later context.
     incomplete_coverage_after_save:
-      given: An accepted page contains three supported PRs but does not establish complete population coverage.
+      given: An accepted page contains three supported PRs but does not establish complete population
+        coverage.
       when: The page is durably retained and read.
-      then: Its facts remain available with their own context while the Project total is not asserted complete merely because the write succeeded.
+      then: Its facts remain available with their own context while the Project total is not asserted
+        complete merely because the write succeeded.
     value_without_its_context:
-      given: A local recovery can read a PR CI value but cannot recover the source identity or revision context required to interpret it.
+      given: A local recovery can read a PR CI value but cannot recover the source identity or revision
+        context required to interpret it.
       when: The caller asks for a current CI result.
-      then: The value is not paired with an unrelated current PR or head revision and is not presented as a confirmed current result; the affected fact remains unavailable or uncertain.
+      then: The value is not paired with an unrelated current PR or head revision and is not presented
+        as a confirmed current result; the affected fact remains unavailable or uncertain.
     shared_context_not_redated:
-      given: A retained title and review assessment both refer to valid source context T1; a later accepted title at T2 is stored independently without a new review observation.
+      given: A retained title and review assessment both refer to valid source context T1; a later accepted
+        title at T2 is stored independently without a new review observation.
       when: Both fields are read after restart.
-      then: The title can retain T2 while the earlier review remains attributed to T1 or is unavailable if its evidence is missing; shared context does not turn the review into a T2 observation.
+      then: The title can retain T2 while the earlier review remains attributed to T1 or is unavailable
+        if its evidence is missing; shared context does not turn the review into a T2 observation.
     interrupted_coverage_publication:
-      given: Two source pages were accepted for a Repository and their fact bundles were stored, but evidence required to establish the full scoped population or the coverage operation outcome is not recoverable.
+      given: Two source pages were accepted for a Repository and their fact bundles were stored, but evidence
+        required to establish the full scoped population or the coverage operation outcome is not recoverable.
       when: The caller reads the Project work scope after restart.
-      then: Independently readable permitted facts can remain available, while complete coverage and its newer timestamp are not claimed solely from the stored pages or a terminal cursor.
+      then: Independently readable permitted facts can remain available, while complete coverage and its
+        newer timestamp are not claimed solely from the stored pages or a terminal cursor.
   unresolved:
-  - Candidate 0113 proposes separate coordinated fact and coverage commits; define their physical representation, applicable atomicity and independently recoverable history outcomes before implementation readiness.
-  - Define attempt admission and recovery evidence, durable ordering, retention lifetime and accessible recovery for terminal outcomes, including unrecorded or indeterminate writes and overlapping scopes; no source attempt can be assumed durable merely from its completion.
-  - Establish source-specific field, timestamp and revision semantics and privacy-safe retention and compaction before selecting actual mappings.
+  - Candidate 0113 proposes separate coordinated fact and coverage commits; define their physical representation,
+    applicable atomicity and independently recoverable history outcomes before implementation readiness.
+  - Define attempt admission and recovery evidence, durable ordering, retention lifetime and accessible
+    recovery for terminal outcomes, including unrecorded or indeterminate writes and overlapping scopes;
+    no source attempt can be assumed durable merely from its completion.
+  - Establish source-specific field, timestamp and revision semantics and privacy-safe retention and compaction
+    before selecting actual mappings.
   - No source adapter, persistence implementation, process-restart or native behavior has been tested.

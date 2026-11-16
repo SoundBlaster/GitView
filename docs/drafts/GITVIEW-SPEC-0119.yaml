@@ -27,15 +27,23 @@ sources:
   source_coverage: docs/drafts/today-source-evidence-crosswalk-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A deterministic aggregation evaluates one named metric and explicit scope from supplied evidence without fetching, saving or navigating.
-- Complete value, supported observed subset and unavailable or indeterminate result remain distinct; zero requires evidence for the claimed scope.
-- Repository membership, object identity, predicates, coverage, access and component times are retained with each applicable result and cannot be replaced by a newer unrelated observation.
-- Shared Repository membership contributes to each Project but only once to a separately requested unique portfolio; unresolved identity cannot yield a fabricated exact unique count.
-- One known signal does not imply that unrelated metrics or missing input categories are complete, current, healthy or zero.
-- Access restrictions and derived-value policy are applied before any exact or partial value is presented, including accessible and shareable output.
-- Described scenarios and injected verification do not claim a completed implementation or live-source evidence.
+- A deterministic aggregation evaluates one named metric and explicit scope from supplied evidence without
+  fetching, saving or navigating.
+- Complete value, supported observed subset and unavailable or indeterminate result remain distinct; zero
+  requires evidence for the claimed scope.
+- Repository membership, object identity, predicates, coverage, access and component times are retained
+  with each applicable result and cannot be replaced by a newer unrelated observation.
+- Shared Repository membership contributes to each Project but only once to a separately requested unique
+  portfolio; unresolved identity cannot yield a fabricated exact unique count.
+- One known signal does not imply that unrelated metrics or missing input categories are complete, current,
+  healthy or zero.
+- Access restrictions and derived-value policy are applied before any exact or partial value is presented,
+  including accessible and shareable output.
+- Described scenarios and injected verification do not claim a completed implementation or live-source
+  evidence.
 specification:
-  objective: Define a pure decision boundary for Project and unique-portfolio summary values under partial coverage, overlapping membership and independent observation contexts.
+  objective: Define a pure decision boundary for Project and unique-portfolio summary values under partial
+    coverage, overlapping membership and independent observation contexts.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -45,117 +53,334 @@ specification:
   - gitview:ReviewThread
   - gitview:Metric
   contract:
-    boundary: Evaluate one explicitly named measurement for one confirmed Project, one Repository or a separately requested unique portfolio using supplied normalized facts, membership and evidence. The decision performs no source request, persistence, mutation, clock read or navigation. A caller may evaluate multiple metrics separately; a successful result for one does not certify another. This is an agent-authored decision contract using SpecificationCore, not an ontology entity or a claim of a compiled Swift API.
-    inputs: Supply metric and predicate version, unit and object type, captured source and Repository scope, known or uncertain Project membership, relevant current-state reference or fixed half-open event period, supported source identities, per-fact value and applicable times or revisions, per-category population coverage, and current disclosure eligibility. Inject evaluation time and calendar context where the predicate needs them. Distinguish missing, unreadable, restricted, conflicting and independently supported observations; a generic connection or cached Project is not proof of all category access.
-    output: Return an explicit result whose supported state is complete-for-its-stated-context, observed-subset-with-limitation, or unavailable-or-indeterminate, with enough permitted attribution to interpret its unit, predicate, scope, membership basis, relevant times and coverage. An unavailable result carries no numeric value for that requested claim; an independently supported earlier or narrower value remains a separate result with its own context. A partial value describes only the actually supported permitted observations; it is not automatically a bound on the present population. Exact serialization and visual wording are not selected.
-    specificationcore_decision: As the working integration, represent a supported metric request with a typed SpecificationCore DecisionSpec result carrying complete, observed-subset or unavailable as domain outcomes. Reserve nil for a rule that is not applicable; for a validated supported top-level request an unexpected nil is an integration limitation, not unavailable data, an empty value or zero. Unsupported requests are identified before evaluation. Do not use Boolean negation or an unconditional first-match fallback to turn missing evidence into a negative result. The local 2.1.0 tag inspected in 0110 provides an optional typed DecisionSpec result, but the actual application dependency, compiler and caller remain to be resolved and tested during implementation.
-    ontology_result_boundary: A supported measured value may correspond to the working Metric meaning with its applicable interpretation context. An unavailable or indeterminate outcome is a decision about insufficient evidence, not a measured zero or a Metric value. Complete, partial and unavailable are result-interpretation states, not additional domain entities or action-derived relations.
-    presentation_handoff: Supply the presentation caller enough permitted semantic information to distinguish a supported complete zero, a safely disclosed observed subset and an unavailable result, plus the actual observation context and any non-revealing limitation. The caller renders the proposed first-version treatment in 0047 and independently rechecks current disclosure before output. An operation's loading or failure state is not a fourth numeric measurement and must not replace this result's original observation time. This does not authorize exposing an exact hidden scope or the contribution of a restricted Repository.
-    candidate_non_draft_measurement: If a separate optional summary metric for the 0125 open non-draft filter is selected, treat it as a distinct-PR measurement with the same lifecycle-and-draft predicate, scope and applicable context as its 0110 destination. Count an identified PR only when both required facts are supported for that context; an unknown draft or lifecycle is not itself a confirmed positive or negative contribution; an independently supported false conjunct can still establish a non-match. A permitted observed subset can be returned with its actual scope and coverage; exact total or zero requires sufficient population and predicate coverage. A Project-wide open-PR count and a draft-PR count cannot be subtracted to obtain the non-draft total unless compatible complete populations, identity, time and predicate evidence independently support that operation. Receiving a value does not itself establish that matching identities are materialized or that the destination supports the filter; follow 0092 and 0125 without synthesizing cards. This is a candidate metric, not a claim that it is selected for release.
-    affected_repository_measurement: When requested for a Project attention predicate under 0057, return a separately identified distinct-Repository measurement. A Repository contributes once when applicable, permitted evidence confirms at least one matching object associated with that member; multiple matching PRs or Issues in the same Repository do not add more. Missing object-to-Repository association, unknown member eligibility or incomplete predicate coverage prevent an unsupported exact Project result; provide an independently supported subset or unavailable outcome with its own context and disclosure limits. Do not add this value to the corresponding object count or infer object identities from a count alone.
-    decision_exchange: For one validated applicable metric request, supply an immutable evaluation context containing the metric and version, unit, captured subject and Repository set or membership uncertainty, reference or fixed interval, prepared source facts or supported aggregate evidence, coverage and current disclosure inputs. Return the explicit supported result state with a value only when justified, the captured evaluation identity and permitted evidence references or safe limitation categories needed to interpret it. An observed subset identifies the exact scope and reference its value supports without presenting itself as the full requested population; an unavailable result carries no fabricated zero. The unit and aggregation predicate cannot be silently changed to match a different destination. These are information obligations, not mandatory Swift names, stored ontology entities or UI labels.
-    caller_and_nonapplicability: The caller validates whether the requested metric and subject are supported, supplies prepared inputs and interprets the decision independently from source, storage and UI effects. A deliberately unsupported metric or subject is not an observed zero; invalid context or an unexpected missing result from the top-level decision is an integration limitation, not ordinary domain uncertainty or an empty Project. An applicable metric with insufficient evidence yields the explicit limited or unavailable domain result. The caller separately checks current disclosure, selection relevance and whether object-level evidence supports navigation under 0092; receiving an aggregate result does not start a refresh, create cards, persist a history point or open a route.
-    calculation: Count each source-confirmed qualifying object at most once for a distinct-object metric, each identified qualifying thread at most once for a thread metric, and each supported event according to the event metric's own unit and interval. Apply the category predicates in 0057 and the source normalization in 0101. One PR with multiple failing checks contributes once to a failed-CI PR metric but the check count remains a separate metric; overlapping PR and Issue or CI and review categories are not combined as independent work items.
-    aggregate_input: A source-supported aggregate may be an input without enumerated contributing identities when its documented unit, predicate, Repository and account scope, reference, access and sufficient population semantics match the requested measurement under 0102. Return its value only within that supported and permitted context; carry its provenance and independently unknown object materialization into the result. A matching count alone is not a list of its members and cannot establish a destination grid. If aggregate semantics or disclosure eligibility cannot be established, report an appropriately limited or unavailable result rather than infer equivalence from the source field name.
-    untyped_source_record: An unresolved source representation is not itself a confirmed PR or Issue and cannot contribute one additional distinct object to an observed-subset count. If it could qualify, object-derived counts and completeness retain that limitation. A separately sufficient and compatible source aggregate can still support its own exact count without enumerating or resolving this representation under 0102; retain its provenance and the independent limitation of the destination grid. If its predicate, access scope or relationship to the record is unsupported or conflicting, do not use the number to claim completeness or infer a hidden contribution. Recheck disclosure before displaying either value.
-    aggregate_combination: Do not add an aggregate and individually observed candidates merely because both are available; the candidates may already be included in the aggregate. Combine measurements only when identity, disjointness, membership, predicate, time and access evidence support the particular operation and its disclosure under 0064. Equal values do not establish equal membership. An exact aggregate for one Repository can coexist with incomplete object materialization for that Repository and unobserved coverage in another; it does not become an exact Project total unless the complete Project measurement is independently supported.
-    temporal_reconciliation: A complete aggregate at an earlier source reference and later individually observed additions or closures cannot be arithmetically promoted to an exact later total merely because each input is individually supported. Establish whether the affected identity was included in the baseline, the applicable predicate transition and sufficient gap-free coverage of all relevant changes to the later reference; otherwise preserve the prior aggregate and the later facts with separate references and expose the later completeness limitation. This applies even if the observed fact is newer or the latest request succeeded; a previously closed item may have reopened or another item may have changed outside the partial observation.
-    complete_and_zero: A complete value or zero requires supported scope, identity, relevant predicates, access and sufficient population evidence for every required input under 0102 and 0046. A successful page, absence of an observed positive, unobserved Repository or missing category field is not such evidence. A supported complete value remains tied to its actual source reference; it does not claim no later changes occurred. When component observations differ in time, report the supported time context and do not call their sum a simultaneous snapshot without evidence.
-    working_view_reference: An overview may request an observed measurement at the reference supported by its inputs rather than an unprovable continuously live GitHub total. A complete-at-T value, a T-qualified observed subset and an indeterminate later-reference value remain distinct results. Recovered T evidence retains T, including after an age-only refresh decision or a local read; no threshold or lack of known changes advances it to a later source reference. If inputs support only a clearly qualified mixed-time value, preserve those times and limitations under 0046 rather than claiming a single T snapshot. An actionable signal opens an independently evaluated destination under 0092, so its cards, temporal context and coverage need not reproduce that historical value.
-    subset: Individually confirmed permitted positives may form an observed subset if their identities and applicable predicates can be established, even when other Repositories, pages or fields are incomplete. Label its actual scope and coverage safely. Missing or stale facts do not become negative predicate results; an old observed subset is not an automatic lower bound on current work. A sum of overlapping input aggregates is not a distinct-object count unless disjointness or sufficient member identity evidence is established. Unknown equivalence between candidate identities keeps the affected uniqueness or total uncertain.
-    membership_and_overlap: A Project evaluation captures its own confirmed member identities and evaluates each eligible member once. The same Repository can contribute to each of two Project results. A unique-portfolio evaluation instead uses the confirmed union of Repository and object identities, not the arithmetic sum of Project values. Same local PR or Issue numbers in different Repositories are not equal identities; a separately identified linked Issue is not its PR. Unknown membership or an unresolved identity prevents a complete unique total where it could affect the value.
-    compound_predicates: CI, review, threads, blockers and lifecycle use their own subject, revision, observation time and completeness. A source-confirmed failing check can establish a positive for an applicable PR even when other checks are missing; absence of any observed failure is not a confirmed negative without sufficient applicable check coverage. Open-at-T2 and failed-at-T1 do not alone prove one simultaneous open-and-failed PR at T2. A new title, Issue result or successful refresh does not advance unrelated CI or review evidence.
-    access_and_privacy: Treat disclosure eligibility as an input and enforce 0036, 0064 and 0112 at the app-controlled presentation or handoff boundary as well as when producing permitted result material. Do not include restricted identity or a revealing count merely to explain uncertainty. A supported permitted subset may be shown with non-revealing incomplete scope only if its lineage and combination with other exposed values satisfy the applicable disclosure rule; a formerly visible total does not become safe merely because it was cached. Prior disclosures outside app control cannot be recalled.
-    partially_restored_predicate: A newly permitted object identity or title does not authorize using that object's still-restricted CI, review or other predicate fact to derive an exposed positive, negative, zero, subset membership or count. Evaluate the affected metric using independently permitted applicable facts and explicit unknowns under 0110 and 0112; do not expose a retained aggregate whose lineage includes a still-restricted input under 0064. A successful reconnect or metadata read is not a new observation of the metric, and the applicable limitation must not disclose restricted identities or their exact contribution.
-    reevaluation: Bind every result to the actual membership, metric, selected period, inputs, access and evidence context. An older computation finishing late cannot overwrite a separately selected newer context or be relabeled with a new member set or observation time. New observations and explicit membership changes require a new evaluation; safely reusable individual facts retain their original scope and time. A caller that offers navigation must independently evaluate whether underlying objects and access support its destination; this pure decision neither constructs nor opens that destination.
-    verification: Under 0040 and 0079 prepare TDD cases for complete zero versus unknown, mixed categories, partial positives, mixed times, duplicate representations, cross-Project overlap, uncertain identity, membership changes during evaluation and access restriction before display. Exercise the pure decision with injected evidence separately from source, persistent recovery, real permissions and native UI tests. Use the selected typed SpecificationCore decision contract; resolve the actual package version and verify the caller during implementation without collapsing unknown and non-applicable states.
-    provenance: The owner chose Projects containing one or more Repositories, overlapping membership, summaries and graphs. Result categories, source-evidence rules and this pure decision boundary are agent-authored refinements requiring review; no product code, source access or tested interface is claimed.
+    boundary: Evaluate one explicitly named measurement for one confirmed Project, one Repository or a
+      separately requested unique portfolio using supplied normalized facts, membership and evidence.
+      The decision performs no source request, persistence, mutation, clock read or navigation. A caller
+      may evaluate multiple metrics separately; a successful result for one does not certify another.
+      This is an agent-authored decision contract using SpecificationCore, not an ontology entity or a
+      claim of a compiled Swift API.
+    inputs: Supply metric and predicate version, unit and object type, captured source and Repository
+      scope, known or uncertain Project membership, relevant current-state reference or fixed half-open
+      event period, supported source identities, per-fact value and applicable times or revisions, per-category
+      population coverage, and current disclosure eligibility. Inject evaluation time and calendar context
+      where the predicate needs them. Distinguish missing, unreadable, restricted, conflicting and independently
+      supported observations; a generic connection or cached Project is not proof of all category access.
+    output: Return an explicit result whose supported state is complete-for-its-stated-context, observed-subset-with-limitation,
+      or unavailable-or-indeterminate, with enough permitted attribution to interpret its unit, predicate,
+      scope, membership basis, relevant times and coverage. An unavailable result carries no numeric value
+      for that requested claim; an independently supported earlier or narrower value remains a separate
+      result with its own context. A partial value describes only the actually supported permitted observations;
+      it is not automatically a bound on the present population. Exact serialization and visual wording
+      are not selected.
+    specificationcore_decision: As the working integration, represent a supported metric request with
+      a typed SpecificationCore DecisionSpec result carrying complete, observed-subset or unavailable
+      as domain outcomes. Reserve nil for a rule that is not applicable; for a validated supported top-level
+      request an unexpected nil is an integration limitation, not unavailable data, an empty value or
+      zero. Unsupported requests are identified before evaluation. Do not use Boolean negation or an unconditional
+      first-match fallback to turn missing evidence into a negative result. The local 2.1.0 tag inspected
+      in 0110 provides an optional typed DecisionSpec result, but the actual application dependency, compiler
+      and caller remain to be resolved and tested during implementation.
+    ontology_result_boundary: A supported measured value may correspond to the working Metric meaning
+      with its applicable interpretation context. An unavailable or indeterminate outcome is a decision
+      about insufficient evidence, not a measured zero or a Metric value. Complete, partial and unavailable
+      are result-interpretation states, not additional domain entities or action-derived relations.
+    presentation_handoff: Supply enough supported semantic information to distinguish complete zero, an
+      observed subset and unavailable result, together with actual scope, time and limitations. Previously
+      saved supported metrics remain visible locally after confirmed GitHub revocation under 0019 with
+      an applicable indication; loading or failure is not a numeric result and does not refresh their
+      timestamp. Do not invent an unknown scope or contribution. External sharing and account isolation
+      remain separate.
+    candidate_non_draft_measurement: If a separate optional summary metric for the 0125 open non-draft
+      filter is selected, treat it as a distinct-PR measurement with the same lifecycle-and-draft predicate,
+      scope and applicable context as its 0110 destination. Count an identified PR only when both required
+      facts are supported for that context; an unknown draft or lifecycle is not itself a confirmed positive
+      or negative contribution; an independently supported false conjunct can still establish a non-match.
+      A permitted observed subset can be returned with its actual scope and coverage; exact total or zero
+      requires sufficient population and predicate coverage. A Project-wide open-PR count and a draft-PR
+      count cannot be subtracted to obtain the non-draft total unless compatible complete populations,
+      identity, time and predicate evidence independently support that operation. Receiving a value does
+      not itself establish that matching identities are materialized or that the destination supports
+      the filter; follow 0092 and 0125 without synthesizing cards. This is a candidate metric, not a claim
+      that it is selected for release.
+    affected_repository_measurement: When requested for a Project attention predicate under 0057, return
+      a separately identified distinct-Repository measurement. A Repository contributes once when applicable,
+      permitted evidence confirms at least one matching object associated with that member; multiple matching
+      PRs or Issues in the same Repository do not add more. Missing object-to-Repository association,
+      unknown member eligibility or incomplete predicate coverage prevent an unsupported exact Project
+      result; provide an independently supported subset or unavailable outcome with its own context and
+      disclosure limits. Do not add this value to the corresponding object count or infer object identities
+      from a count alone.
+    decision_exchange: For one validated applicable metric request, supply an immutable evaluation context
+      containing the metric and version, unit, captured subject and Repository set or membership uncertainty,
+      reference or fixed interval, prepared source facts or supported aggregate evidence, coverage and
+      current disclosure inputs. Return the explicit supported result state with a value only when justified,
+      the captured evaluation identity and permitted evidence references or safe limitation categories
+      needed to interpret it. An observed subset identifies the exact scope and reference its value supports
+      without presenting itself as the full requested population; an unavailable result carries no fabricated
+      zero. The unit and aggregation predicate cannot be silently changed to match a different destination.
+      These are information obligations, not mandatory Swift names, stored ontology entities or UI labels.
+    caller_and_nonapplicability: The caller validates whether the requested metric and subject are supported,
+      supplies prepared inputs and interprets the decision independently from source, storage and UI effects.
+      A deliberately unsupported metric or subject is not an observed zero; invalid context or an unexpected
+      missing result from the top-level decision is an integration limitation, not ordinary domain uncertainty
+      or an empty Project. An applicable metric with insufficient evidence yields the explicit limited
+      or unavailable domain result. The caller separately checks current disclosure, selection relevance
+      and whether object-level evidence supports navigation under 0092; receiving an aggregate result
+      does not start a refresh, create cards, persist a history point or open a route.
+    calculation: Count each source-confirmed qualifying object at most once for a distinct-object metric,
+      each identified qualifying thread at most once for a thread metric, and each supported event according
+      to the event metric's own unit and interval. Apply the category predicates in 0057 and the source
+      normalization in 0101. One PR with multiple failing checks contributes once to a failed-CI PR metric
+      but the check count remains a separate metric; overlapping PR and Issue or CI and review categories
+      are not combined as independent work items.
+    aggregate_input: A source-supported aggregate may be an input without enumerated contributing identities
+      when its documented unit, predicate, Repository and account scope, reference, access and sufficient
+      population semantics match the requested measurement under 0102. Return its value only within that
+      supported and permitted context; carry its provenance and independently unknown object materialization
+      into the result. A matching count alone is not a list of its members and cannot establish a destination
+      grid. If aggregate semantics or disclosure eligibility cannot be established, report an appropriately
+      limited or unavailable result rather than infer equivalence from the source field name.
+    untyped_source_record: An unresolved source representation is not itself a confirmed PR or Issue and
+      cannot contribute one additional distinct object to an observed-subset count. If it could qualify,
+      object-derived counts and completeness retain that limitation. A separately sufficient and compatible
+      source aggregate can still support its own exact count without enumerating or resolving this representation
+      under 0102; retain its provenance and the independent limitation of the destination grid. If its
+      predicate, access scope or relationship to the record is unsupported or conflicting, do not use
+      the number to claim completeness or infer a hidden contribution. Recheck disclosure before displaying
+      either value.
+    aggregate_combination: Do not add an aggregate and individually observed candidates merely because
+      both are available; the candidates may already be included in the aggregate. Combine measurements
+      only when identity, disjointness, membership, predicate, time and access evidence support the particular
+      operation and its disclosure under 0064. Equal values do not establish equal membership. An exact
+      aggregate for one Repository can coexist with incomplete object materialization for that Repository
+      and unobserved coverage in another; it does not become an exact Project total unless the complete
+      Project measurement is independently supported.
+    temporal_reconciliation: A complete aggregate at an earlier source reference and later individually
+      observed additions or closures cannot be arithmetically promoted to an exact later total merely
+      because each input is individually supported. Establish whether the affected identity was included
+      in the baseline, the applicable predicate transition and sufficient gap-free coverage of all relevant
+      changes to the later reference; otherwise preserve the prior aggregate and the later facts with
+      separate references and expose the later completeness limitation. This applies even if the observed
+      fact is newer or the latest request succeeded; a previously closed item may have reopened or another
+      item may have changed outside the partial observation.
+    complete_and_zero: A complete value or zero requires supported scope, identity, relevant predicates,
+      access and sufficient population evidence for every required input under 0102 and 0046. A successful
+      page, absence of an observed positive, unobserved Repository or missing category field is not such
+      evidence. A supported complete value remains tied to its actual source reference; it does not claim
+      no later changes occurred. When component observations differ in time, report the supported time
+      context and do not call their sum a simultaneous snapshot without evidence.
+    working_view_reference: An overview may request an observed measurement at the reference supported
+      by its inputs rather than an unprovable continuously live GitHub total. A complete-at-T value, a
+      T-qualified observed subset and an indeterminate later-reference value remain distinct results.
+      Recovered T evidence retains T, including after an age-only refresh decision or a local read; no
+      threshold or lack of known changes advances it to a later source reference. If inputs support only
+      a clearly qualified mixed-time value, preserve those times and limitations under 0046 rather than
+      claiming a single T snapshot. An actionable signal opens an independently evaluated destination
+      under 0092, so its cards, temporal context and coverage need not reproduce that historical value.
+    subset: Individually confirmed permitted positives may form an observed subset if their identities
+      and applicable predicates can be established, even when other Repositories, pages or fields are
+      incomplete. Label its actual scope and coverage safely. Missing or stale facts do not become negative
+      predicate results; an old observed subset is not an automatic lower bound on current work. A sum
+      of overlapping input aggregates is not a distinct-object count unless disjointness or sufficient
+      member identity evidence is established. Unknown equivalence between candidate identities keeps
+      the affected uniqueness or total uncertain.
+    membership_and_overlap: A Project evaluation captures its own confirmed member identities and evaluates
+      each eligible member once. The same Repository can contribute to each of two Project results. A
+      unique-portfolio evaluation instead uses the confirmed union of Repository and object identities,
+      not the arithmetic sum of Project values. Same local PR or Issue numbers in different Repositories
+      are not equal identities; a separately identified linked Issue is not its PR. Unknown membership
+      or an unresolved identity prevents a complete unique total where it could affect the value.
+    compound_predicates: CI, review, threads, blockers and lifecycle use their own subject, revision,
+      observation time and completeness. A source-confirmed failing check can establish a positive for
+      an applicable PR even when other checks are missing; absence of any observed failure is not a confirmed
+      negative without sufficient applicable check coverage. Open-at-T2 and failed-at-T1 do not alone
+      prove one simultaneous open-and-failed PR at T2. A new title, Issue result or successful refresh
+      does not advance unrelated CI or review evidence.
+    access_and_privacy: Confirmed GitHub revocation alone does not hide supported saved local metric values
+      or their supported scope under 0019. Keep their actual times and coverage, and distinguish them
+      from new source observations. Do not fabricate unobserved identities or contributions. Other account
+      disclosure and external handoff rules remain separate; past disclosures cannot be recalled.
+    partially_restored_predicate: A newly observed object identity or title does not refresh its previously
+      saved CI, review or other predicate fact. Saved supported metric inputs and aggregates remain locally
+      available as last known after confirmed revocation under 0019 with actual time and coverage. Unknown
+      current evidence remains uncertain and is not a current zero, complete count or successful refresh.
+      Cross-account and external disclosure remain separate.
+    reevaluation: Bind every result to the actual membership, metric, selected period, inputs, access
+      and evidence context. An older computation finishing late cannot overwrite a separately selected
+      newer context or be relabeled with a new member set or observation time. New observations and explicit
+      membership changes require a new evaluation; safely reusable individual facts retain their original
+      scope and time. A caller that offers navigation must independently evaluate whether underlying objects
+      and access support its destination; this pure decision neither constructs nor opens that destination.
+    verification: Under 0040 and 0079 prepare TDD cases for complete zero versus unknown, mixed categories,
+      partial positives, mixed times, duplicate representations, cross-Project overlap, uncertain identity,
+      membership changes during evaluation and access restriction before display. Exercise the pure decision
+      with injected evidence separately from source, persistent recovery, real permissions and native
+      UI tests. Use the selected typed SpecificationCore decision contract; resolve the actual package
+      version and verify the caller during implementation without collapsing unknown and non-applicable
+      states.
+    provenance: The owner chose Projects containing one or more Repositories, overlapping membership,
+      summaries and graphs. Result categories, source-evidence rules and this pure decision boundary are
+      agent-authored refinements requiring review; no product code, source access or tested interface
+      is claimed.
   scenarios:
     observed_summary_and_destination_after_restart:
-      given: A permitted source-supported count of three open PRs for Repository R is complete at T1. After restart the count is readable with its predicate and context, the scope is not due for age-only refresh, and separately retained object evidence identifies one PR as open at T1; current completeness and the other object identities are not established.
+      given: A permitted source-supported count of three open PRs for Repository R is complete at T1.
+        After restart the count is readable with its predicate and context, the scope is not due for age-only
+        refresh, and separately retained object evidence identifies one PR as open at T1; current completeness
+        and the other object identities are not established.
       when: The operator inspects R's summary and opens its work selection.
-      then: The value three can be presented as complete for R at T1 with its actual reference, not as an exact continuously current value. The identified PR can appear with its own T1 observation, while the destination remains incomplete and does not fabricate two other cards or infer an exact later count. Local reading and refresh eligibility are not new source observations.
+      then: The value three can be presented as complete for R at T1 with its actual reference, not as
+        an exact continuously current value. The identified PR can appear with its own T1 observation,
+        while the destination remains incomplete and does not fabricate two other cards or infer an exact
+        later count. Local reading and refresh eligibility are not new source observations.
     repeated_closures_and_restricted_member:
-      given: Project P contains A and B. One permitted identified Issue in A has two distinct confirmed closures during the same local day, is independently observed open after reopening, and one closure has been reobserved. Relevant B inputs are restricted. A's observations independently support the stated A-scoped predicates and current disclosure.
-      when: The Today open-Issue summary and a distinct closed-Issue outcome for that day are separately evaluated.
-      then: Each can include the Issue once in its own A-scoped supported subset with its actual temporal context and safe limitation; the repeated event observation adds neither another Issue nor another closure. Neither value is promoted to a complete P result or combined to infer B's contribution. An event-count metric, if separately requested and supported, uses two distinct events rather than the one distinct Issue.
+      given: Project P contains A and B. One permitted identified Issue in A has two distinct confirmed
+        closures during the same local day, is independently observed open after reopening, and one closure
+        has been reobserved. Relevant B inputs are restricted. A's observations independently support
+        the stated A-scoped predicates and current disclosure.
+      when: The Today open-Issue summary and a distinct closed-Issue outcome for that day are separately
+        evaluated.
+      then: Each can include the Issue once in its own A-scoped supported subset with its actual temporal
+        context and safe limitation; the repeated event observation adds neither another Issue nor another
+        closure. Neither value is promoted to a complete P result or combined to infer B's contribution.
+        An event-count metric, if separately requested and supported, uses two distinct events rather
+        than the one distinct Issue.
     overlapping_thread_and_ci_units:
-      given: Under sufficient compatible evidence for one permitted Project context, open PR A has three unresolved threads and four failed check entries, while open PR B has two unresolved threads and no failed checks in its complete applicable set.
+      given: Under sufficient compatible evidence for one permitted Project context, open PR A has three
+        unresolved threads and four failed check entries, while open PR B has two unresolved threads and
+        no failed checks in its complete applicable set.
       when: Separate review-thread, affected-PR and failed-CI PR measurements are evaluated.
-      then: The supported measurements are five unresolved threads, two PRs with unresolved threads and one failed-CI PR. They are separate overlapping units and populations, not eight independent objects or four failing PRs; deriving a filtered destination still requires independently supported PR identities and predicates.
+      then: The supported measurements are five unresolved threads, two PRs with unresolved threads and
+        one failed-CI PR. They are separate overlapping units and populations, not eight independent objects
+        or four failing PRs; deriving a filtered destination still requires independently supported PR
+        identities and predicates.
     candidate_non_draft_partial_and_unknown:
-      given: Project P contains A and B. A has one identified applicable open non-draft PR and another open PR with an unavailable applicable draft fact; B's PR population is unobserved.
-      when: The candidate open non-draft summary and destination are evaluated independently for the same stated context.
-      then: The summary may expose the one supported PR only as a safely qualified observed subset, the destination can identify the second PR as uncertain, and the missing B population stays a separate limitation. Neither a Project-wide total nor a number of hidden matches is inferred.
+      given: Project P contains A and B. A has one identified applicable open non-draft PR and another
+        open PR with an unavailable applicable draft fact; B's PR population is unobserved.
+      when: The candidate open non-draft summary and destination are evaluated independently for the same
+        stated context.
+      then: The summary may expose the one supported PR only as a safely qualified observed subset, the
+        destination can identify the second PR as uncertain, and the missing B population stays a separate
+        limitation. Neither a Project-wide total nor a number of hidden matches is inferred.
     exact_aggregate_with_untyped_record:
-      given: For Repository R a permitted independent source aggregate establishes exactly two open PRs at T1 under the required predicate and scope. One typed PR is identified, while a separate permitted source representation has unresolved PR-versus-Issue type and unknown identity association at the same applicable reference.
+      given: For Repository R a permitted independent source aggregate establishes exactly two open PRs
+        at T1 under the required predicate and scope. One typed PR is identified, while a separate permitted
+        source representation has unresolved PR-versus-Issue type and unknown identity association at
+        the same applicable reference.
       when: The metric and its object-level destination are independently prepared.
-      then: The source-supported count of two remains attributable to R and T1 if no conflicting evidence undermines it, but the destination is not called fully materialized. The unresolved record is not added as a third PR or assigned a missing identity, and no exact number of missing cards is inferred by subtraction.
+      then: The source-supported count of two remains attributable to R and T1 if no conflicting evidence
+        undermines it, but the destination is not called fully materialized. The unresolved record is
+        not added as a third PR or assigned a missing identity, and no exact number of missing cards is
+        inferred by subtraction.
     restored_identity_restricted_failure:
-      given: A Project PR's identity and title become permitted after reconnect, while its formerly observed failed-CI fact remains restricted and no new applicable CI observation exists.
+      given: A Project PR has a saved failed-CI fact after confirmed GitHub revocation. Independently
+        retained local evidence supports its identity and title; no new eligible source request or new
+        CI observation has occurred.
       when: Failed-CI summary and filter are projected under current access.
-      then: The old failure cannot contribute to an exposed count or a confirmed filter match, the title can remain independently usable where permitted, and the affected metric and selection retain safe uncertainty rather than zero or healthy CI.
+      then: The saved failed-CI fact remains inspectable locally as last known with supported time and
+        applicable revocation indication. It is not automatically a confirmed current filter match or
+        a current healthy status; metric and selection uncertainty remain visible.
     missing_decision_is_not_zero:
-      given: A valid request asks for the open-PR measurement of Project P, but the top-level aggregation unexpectedly produces no decision result.
+      given: A valid request asks for the open-PR measurement of Project P, but the top-level aggregation
+        unexpectedly produces no decision result.
       when: The caller constructs the Project summary.
-      then: It reports an appropriate integration limitation rather than zero open PRs or a complete empty Project, and does not invoke source or persistence effects as an implied consequence of that decision.
+      then: It reports an appropriate integration limitation rather than zero open PRs or a complete empty
+        Project, and does not invoke source or persistence effects as an implied consequence of that decision.
     limited_result_is_not_complete_selection:
-      given: A Project measurement can safely return an observed subset of two distinct PRs for Repository A while member B and object materialization remain unobserved.
+      given: A Project measurement can safely return an observed subset of two distinct PRs for Repository
+        A while member B and object materialization remain unobserved.
       when: The caller renders the measurement and offers an applicable route to the work selection.
-      then: The value stays identified as an A-scoped subset, B is not assigned zero and object-level selection is separately evaluated; no third or missing card is fabricated from the measurement.
+      then: The value stays identified as an A-scoped subset, B is not assigned zero and object-level
+        selection is separately evaluated; no third or missing card is fabricated from the measurement.
     exact_source_aggregate_without_objects:
-      given: A permitted source-supported aggregate establishes exactly two qualifying PRs for Repository A at T1 under the requested predicate, while only one qualifying PR identity is separately available and the Repository B part of Project P is unobserved.
+      given: A permitted source-supported aggregate establishes exactly two qualifying PRs for Repository
+        A at T1 under the requested predicate, while only one qualifying PR identity is separately available
+        and the Repository B part of Project P is unobserved.
       when: A's summary and P's summary are independently evaluated and the A signal is opened.
-      then: A's exact value may be attributed to its own T1 scope and the known PR may be shown; P is not asserted to have exactly two, the known PR is not added to A's aggregate as a third, and the destination does not invent the missing PR or claim exhaustive materialization.
+      then: A's exact value may be attributed to its own T1 scope and the known PR may be shown; P is
+        not asserted to have exactly two, the known PR is not added to A's aggregate as a third, and the
+        destination does not invent the missing PR or claim exhaustive materialization.
     stale_aggregate_and_partial_closure:
-      given: A source-supported aggregate counted three open PRs at T1; at T2 an identified PR is observed closed, but neither its membership in the T1 aggregate nor all changes between references are established.
+      given: A source-supported aggregate counted three open PRs at T1; at T2 an identified PR is observed
+        closed, but neither its membership in the T1 aggregate nor all changes between references are
+        established.
       when: The open-PR metric is evaluated for the later context.
-      then: The decision may retain the exact T1 value and the separately supported T2 observation, but cannot infer an exact T2 count of two or relabel the T1 value as current.
+      then: The decision may retain the exact T1 value and the separately supported T2 observation, but
+        cannot infer an exact T2 count of two or relabel the T1 value as current.
     baseline_identity_without_change_stream:
-      given: A complete T1 aggregate and object identities establish that PR A was one of three open PRs, and A is observed closed at T2 while other changes remain uncovered.
+      given: A complete T1 aggregate and object identities establish that PR A was one of three open PRs,
+        and A is observed closed at T2 while other changes remain uncovered.
       when: The open-PR metric is evaluated at T2.
-      then: Identifying A in the baseline is insufficient to claim exactly two at T2 or a current lower bound; missing intervening changes remain a completeness limitation.
+      then: Identifying A in the baseline is insufficient to claim exactly two at T2 or a current lower
+        bound; missing intervening changes remain a completeness limitation.
     same_count_does_not_establish_membership:
-      given: A source-supported aggregate counts two qualifying PRs at T1 while two separately identified permitted PRs match at T2, without evidence of identical membership.
+      given: A source-supported aggregate counts two qualifying PRs at T1 while two separately identified
+        permitted PRs match at T2, without evidence of identical membership.
       when: The summary and its destination are presented.
-      then: Each result keeps its own reference and coverage; matching numbers do not prove that the T2 PRs are the aggregate's T1 members or that either collection is a simultaneous snapshot of the other.
+      then: Each result keeps its own reference and coverage; matching numbers do not prove that the T2
+        PRs are the aggregate's T1 members or that either collection is a simultaneous snapshot of the
+        other.
     zero_for_one_repository_not_project:
-      given: Project P has confirmed members A and B. A has a permitted sufficiently covered current open-Issue observation establishing zero, while B has no applicable Issue observation.
+      given: Project P has confirmed members A and B. A has a permitted sufficiently covered current open-Issue
+        observation establishing zero, while B has no applicable Issue observation.
       when: The caller independently requests the A measurement and the P measurement.
-      then: A may have a complete zero for its own supported context. P remains incomplete or unavailable and is not assigned zero merely because no positive object is observed; any safely presented A-only value remains labeled with its scope and does not establish B's contribution or an exhaustive Project-wide object list.
+      then: A may have a complete zero for its own supported context. P remains incomplete or unavailable
+        and is not assigned zero merely because no positive object is observed; any safely presented A-only
+        value remains labeled with its scope and does not establish B's contribution or an exhaustive
+        Project-wide object list.
     known_issue_subset_unobserved_member:
-      given: Project P has confirmed members A and B; A has three permitted open Issues with supported A-only coverage and B has no applicable Issue observation.
+      given: Project P has confirmed members A and B; A has three permitted open Issues with supported
+        A-only coverage and B has no applicable Issue observation.
       when: The open-Issue summary is evaluated.
-      then: A's observed three can be presented as an appropriately scoped incomplete subset where safe; P is not reported as having exactly three open Issues and B is not assigned zero.
+      then: A's observed three can be presented as an appropriately scoped incomplete subset where safe;
+        P is not reported as having exactly three open Issues and B is not assigned zero.
     category_independence:
-      given: Both Project members have sufficient open-PR evidence, but one member has no applicable CI observation.
+      given: Both Project members have sufficient open-PR evidence, but one member has no applicable CI
+        observation.
       when: Open-PR and failed-CI PR summaries are evaluated.
-      then: The open-PR value may be complete for its own supported context while the failed-CI result remains incomplete or unavailable; the former does not certify CI as healthy.
+      then: The open-PR value may be complete for its own supported context while the failed-CI result
+        remains incomplete or unavailable; the former does not certify CI as healthy.
     confirmed_failure_partial_checks:
-      given: A permitted identified open PR has a confirmed applicable failed check and its remaining check collection is incomplete.
+      given: A permitted identified open PR has a confirmed applicable failed check and its remaining
+        check collection is incomplete.
       when: The failed-CI PR metric is evaluated.
-      then: That PR may contribute once to a safely presented observed positive subset, while unknown other PRs and checks prevent an unsupported complete Project count.
+      then: That PR may contribute once to a safely presented observed positive subset, while unknown
+        other PRs and checks prevent an unsupported complete Project count.
     shared_repository:
-      given: The same confirmed Repository R containing one qualifying PR belongs to Projects P and Q, and all relevant scopes and predicates have sufficient compatible coverage.
+      given: The same confirmed Repository R containing one qualifying PR belongs to Projects P and Q,
+        and all relevant scopes and predicates have sufficient compatible coverage.
       when: Both Project summaries and a separate unique portfolio summary are evaluated.
-      then: R's PR can appear once in each Project and once in the deduplicated portfolio, not twice in the portfolio by summing P and Q.
+      then: R's PR can appear once in each Project and once in the deduplicated portfolio, not twice in
+        the portfolio by summing P and Q.
     uncertain_unique_identity:
-      given: Two source representations might describe the same PR but their association is unresolved and either could qualify for the unique portfolio predicate.
+      given: Two source representations might describe the same PR but their association is unresolved
+        and either could qualify for the unique portfolio predicate.
       when: The distinct-object total is evaluated.
-      then: The decision does not merge by title or count both as definitely distinct, and the exact unique total remains uncertain until evidence resolves the association.
+      then: The decision does not merge by title or count both as definitely distinct, and the exact unique
+        total remains uncertain until evidence resolves the association.
     different_component_times:
-      given: A PR has a confirmed failed check for revision A at T1 and is observed open at T2, with no evidence that the check still applies at T2.
+      given: A PR has a confirmed failed check for revision A at T1 and is observed open at T2, with no
+        evidence that the check still applies at T2.
       when: An open-and-failed current summary is evaluated.
-      then: The earlier failed fact and later lifecycle keep their own context; their combination is not asserted as a simultaneous confirmed positive at T2.
+      then: The earlier failed fact and later lifecycle keep their own context; their combination is not
+        asserted as a simultaneous confirmed positive at T2.
     membership_changes_during_evaluation:
-      given: A summary computation captured members A and B while the saved Project is subsequently changed to A and C, with no applicable C observation.
+      given: A summary computation captured members A and B while the saved Project is subsequently changed
+        to A and C, with no applicable C observation.
       when: The old computation completes.
-      then: Its result keeps the A-and-B basis and cannot become the current A-and-C total; the latter is separately incomplete or unknown.
+      then: Its result keeps the A-and-B basis and cannot become the current A-and-C total; the latter
+        is separately incomplete or unknown.
     restricted_input_after_computation:
-      given: A stored total was derived from permitted A and B, and B's private inputs become restricted before presentation.
+      given: A supported stored total was derived from A and B, and GitHub revocation for B is confirmed
+        before presentation.
       when: The summary and a separately supported A-only value are projected.
-      then: The exact total and revealing equivalents are suppressed under the current policy; an independently safe A-only value can remain labeled as incomplete without asserting B contributes zero.
+      then: The supported saved total and separately supported A-only value remain locally accessible
+        as last known with actual scope, coverage and times under 0019. They are not newly current, missing
+        contributions are not invented and external sharing remains separate.
   unresolved:
-  - Implement concrete input and result types and caller composition against the resolved SpecificationCore version; the logical outcomes and non-applicability boundary are defined above.
-  - Establish source-specific temporal, identity and coverage semantics for each selected predicate and practical privacy-safe lineage for retained aggregates.
-  - Evaluate native presentation and perform actual product, source, storage, accessibility and device tests after implementation; none have run.
+  - Implement concrete input and result types and caller composition against the resolved SpecificationCore
+    version; the logical outcomes and non-applicability boundary are defined above.
+  - Establish source-specific temporal, identity and coverage semantics for each selected predicate and
+    practical privacy-safe lineage for retained aggregates.
+  - Evaluate native presentation and perform actual product, source, storage, accessibility and device
+    tests after implementation; none have run.

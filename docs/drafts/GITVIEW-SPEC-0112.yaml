@@ -24,92 +24,214 @@ sources:
   github_partial_results: https://docs.github.com/en/graphql/overview/rate-limits-and-query-limits-for-the-graphql-api
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Access evidence is interpreted in its source, account, Repository, operation and observation context; a connection or a local Project is not itself Repository access.
-- A positive discovery observation within the active selection supports admitting its matching Repository, but does not establish permission to read every type of source data.
-- Local account changes, disconnection or applicable denial invalidate earlier evidence for new admission, without pretending to detect an unobserved remote revocation.
-- Offline or an ambiguous source failure alone does not turn prior permitted cached content into a confirmed denial.
-- Reconnection and late responses cannot automatically lift an applicable restriction; restored access must be supported for the affected scope.
+- Access evidence is interpreted in its source, account, Repository, operation and observation context;
+  a connection or a local Project is not itself Repository access.
+- A positive discovery observation within the active selection supports admitting its matching Repository,
+  but does not establish permission to read every type of source data.
+- Local account changes, disconnection or applicable denial invalidate earlier evidence for new admission,
+  without pretending to detect an unobserved remote revocation.
+- Offline or an ambiguous source failure alone does not turn prior permitted cached content into a confirmed
+  denial.
+- Reconnection and late responses cannot automatically lift an applicable restriction; restored access
+  must be supported for the affected scope.
 specification:
-  objective: Define when source observations can support adding a Repository or displaying last-known data, without requiring a network request for each interaction.
+  objective: Define when source observations can support adding a Repository or displaying last-known
+    data, without requiring a network request for each interaction.
   ontology_refs:
   - gitview:User
   - gitview:GitHub
   - gitview:Project
   - gitview:Repository
   contract:
-    setup_boundary: These access-evidence rules do not by themselves select a Project setup mechanism or Project validity decision. If the proposed default-association setup and 0111 decision are selected, apply their applicable admission and validation obligations as well; an alternative must establish appropriate identity, access and safe local-effect boundaries independently.
-    context: Associate each access observation with the source instance, confirmed source account, confirmed Repository identity where known, supported operation or data scope, observation and relevant local connection context. Keep time and provenance when available without treating a timestamp as a guarantee of current access. Do not put credentials in the evidence presented or stored for this purpose.
-    discovery_witness: For the GitHub App user-access path proposed in 0098, a successful applicable user-scoped discovery result explicitly containing a confirmed Repository identity can support eligibility to add that Repository to a local Project. Its user, installation and source context must match the active selection; an installation-only credential or an account authorization alone is not proof of that user's Repository access. This is evidence of access observed for discovery, not a guarantee that GitHub still grants it at a later commit.
-    selection_lifetime: As a working first-version policy, reuse a qualifying positive observation during the same active selection, including a partial result that actually contains the Repository. Closing or cancelling that selection, the selection-owning scene entering background, restarting the process, changing the confirmed account or establishing a relevant local denial or disconnect ends its use for new admission. On return to foreground, entries not already admitted need a new applicable positive discovery observation initiated for the current foreground selection; a response from a pre-background request alone cannot renew that evidence. Reopening or explicitly retrying a recovered selection needs new applicable positive evidence for entries not yet admitted; already saved Projects remain intact. Coordinate admission with these locally established changes; if the proposed setup is selected, apply 0045. No numerical time-to-live, periodic polling interval or mandatory request per tap is specified.
-    other_permissions: Metadata discovery does not prove permission to read PRs, Issues, reviews or CI; each source read is limited by the operation and source evidence actually established. A positive result for one Repository does not establish access to another. A missing Repository from a partial result is unknown, not evidence of denial or deletion. Interpret source errors according to their operation; 403 and 404 alone do not universally identify denial.
-    cached_display: A prior eligible observation remains eligible for last-known display during an offline, rate-limited or locally expired credential state when no applicable explicit denial or disconnect has been established, subject to 0036 and 0085. Show its age and limitations under the overview contract. Reusing the cache is not a fresh source verification. Previously established restrictions remain effective across a transient failure.
-    credential_rejection_scope: Apply the working 0085 policy when a trusted source rejects the confirmed current credential generation. Restrict its affected private observations immediately and stop new authenticated work for that generation; the error does not prove whether expiry or revocation caused it or that any particular Repository was denied. Attribute an older response to the generation actually used. A late rejection for a superseded generation does not independently impose its restriction on the confirmed newer generation. If ordering, request generation or current binding cannot be established, preserve the applicable uncertainty and safe recovery rather than inventing an account-wide or Repository-specific conclusion. A local expiry or offline failure without established current-credential rejection does not itself invoke this rejection policy.
-    restoration: Once a relevant denial or disconnect is locally established, restrict affected private observations. A successful connection alone does not unlock every Repository or data category. An applicable, successfully established later source observation must support restoration for the affected scope; a pre-restriction in-flight response cannot undo the restriction merely by arriving late. Independently retain old observation times until the corresponding data is refreshed.
-    restoration_witness: After reestablishing the same confirmed source identity and active connection, an applicable request started after the restriction may establish newly observed facts for the exact Repository, object and fields actually returned successfully. Evaluate source errors and field paths rather than HTTP status alone; a failed field, unreturned page or ambiguous null is not a positive observation. Explicitly source-confirmed null can be a current value for that field when the response semantics establish it. Never infer that a successful Repository name read restores Issues, PRs, review threads or checks. Do not lift a restriction using a source response that cannot be reliably related to the active identity, request scope and post-restriction ordering.
-    restoration_after_credential_rejection: After a confirmed current-credential rejection, a new usable binding for the same source identity can permit fresh source requests; it is not itself evidence for the previously restricted Repository fields. For each restored fact, require a supported request under the new applicable binding that began after the restriction and returned that exact permitted fact without a field error. Reevaluate the result against any newer restriction or account change before disclosure. A current-credential rejection does not erase membership or turn independently eligible public data into a negative observation, and a later partial success does not lift restrictions for the unreturned scopes or expose their old aggregates. Older retained private facts remain subject to old_cache_after_restoration even where the same object has one newly observed field.
-    old_cache_after_restoration: A successful later read makes its supported returned facts eligible in the current context; it does not automatically reveal every older cached object, field or historical aggregate in that category. A complete empty collection is evidence of emptiness only for its supported current scope and does not itself restore historical private observations absent from that result. A broader restoration of old cached material needs separately established source semantics and coverage; until then keep it restricted. A source observation for another account must not be applied to old private material from the previous account; newly obtained permitted facts for the new account are handled under their own context.
-    partial_response: A partial response can contribute only successfully interpreted, eligible fields and observed objects. A field affected by an error stays restricted or unknown as applicable; a successful sibling is not proof about it. A visible incomplete indicator and safe recovery route remain available without revealing restricted identifiers or derived counts. Source pagination and completeness rules decide whether a collection can be reported as complete; one successful page alone does not establish it.
-    action_boundary: Reevaluate locally applicable identity, evidence and restrictions before admitting a new membership or presenting a source-derived action or share payload. Refresh and discovery can obtain new evidence through their normal requests; do not add a fresh online check to every tap. Source-derived contents and URLs remain governed by their own access and handoff contracts. A permission change at GitHub that is not yet observed cannot be ordered atomically with a local effect.
-    verification: Use injected source observations and local connection state to test positive and partial discovery, account replacement, cancellation, offline, explicit denial, delayed responses and scope-specific restoration. Separately verify the eventual GitHub mapping and real authentication behavior; this candidate is not evidence of a working integration or a completed TDD cycle.
-    provenance: Last-known offline presentation follows the owner's direction. The selection lifetime and the access-evidence rules are agent-authored working policy, subject to source and usability validation.
+    setup_boundary: These access-evidence rules do not by themselves select a Project setup mechanism
+      or Project validity decision. If the proposed default-association setup and 0111 decision are selected,
+      apply their applicable admission and validation obligations as well; an alternative must establish
+      appropriate identity, access and safe local-effect boundaries independently.
+    context: Associate each access observation with the source instance, confirmed source account, confirmed
+      Repository identity where known, supported operation or data scope, observation and relevant local
+      connection context. Keep time and provenance when available without treating a timestamp as a guarantee
+      of current access. Do not put credentials in the evidence presented or stored for this purpose.
+    discovery_witness: For the GitHub App user-access path proposed in 0098, a successful applicable user-scoped
+      discovery result explicitly containing a confirmed Repository identity can support eligibility to
+      add that Repository to a local Project. Its user, installation and source context must match the
+      active selection; an installation-only credential or an account authorization alone is not proof
+      of that user's Repository access. This is evidence of access observed for discovery, not a guarantee
+      that GitHub still grants it at a later commit.
+    selection_lifetime: As a working first-version policy, reuse a qualifying positive observation during
+      the same active selection, including a partial result that actually contains the Repository. Closing
+      or cancelling that selection, the selection-owning scene entering background, restarting the process,
+      changing the confirmed account or establishing a relevant local denial or disconnect ends its use
+      for new admission. On return to foreground, entries not already admitted need a new applicable positive
+      discovery observation initiated for the current foreground selection; a response from a pre-background
+      request alone cannot renew that evidence. Reopening or explicitly retrying a recovered selection
+      needs new applicable positive evidence for entries not yet admitted; already saved Projects remain
+      intact. Coordinate admission with these locally established changes; if the proposed setup is selected,
+      apply 0045. No numerical time-to-live, periodic polling interval or mandatory request per tap is
+      specified.
+    other_permissions: Metadata discovery does not prove permission to read PRs, Issues, reviews or CI;
+      each source read is limited by the operation and source evidence actually established. A positive
+      result for one Repository does not establish access to another. A missing Repository from a partial
+      result is unknown, not evidence of denial or deletion. Interpret source errors according to their
+      operation; 403 and 404 alone do not universally identify denial.
+    cached_display: When previously saved local observations are available, retain and display them under
+      0019 with their supported observation times and limitations. For confirmed private Repository revocation,
+      show the revocation indication and keep a point of access to recovery or explicit local deletion.
+      Local display is not fresh source verification or a current GitHub grant. Temporary offline, rate
+      limiting and expired credentials do not themselves prove revocation. Cross-account and other independently
+      applicable disclosure questions remain separate.
+    credential_rejection_scope: A trusted source rejection of the confirmed current credential stops new
+      authenticated work using that generation. It does not itself establish whether expiry or revocation
+      caused the rejection or prove denial of a particular Repository. Previously saved locally available
+      observations remain visible as last known with supported times and a discoverable connection problem
+      and recovery route under 0019 and 0036. A late rejection for a superseded credential does not establish
+      a new denial of the current generation. Uncertain generation or binding remains explicit; do not
+      attribute saved data to another account.
+    restoration: A confirmed private Repository revocation stops synchronization but does not hide previously
+      saved local observations under 0019. A successful connection alone does not establish source access
+      to every Repository or category. Restoring synchronization requires applicable source evidence for
+      the affected scope; an in-flight response started before revocation does not become a new accepted
+      update or undo the restriction merely by arriving late. Keep each saved observation time until supported
+      refresh.
+    restoration_witness: Once the same source identity and an applicable connection are re-established,
+      a bounded recovery check may establish new source facts for the exact scope and fields actually
+      returned successfully. This check is distinct from resuming ordinary synchronization; its triggering
+      and admissible evidence remain open. An arbitrary late response or refresh does not establish restored
+      access. Source errors and field paths remain distinct from successful observations; do not infer
+      that one Repository name read refreshes Issues, PRs, review threads or checks.
+    restoration_after_credential_rejection: After confirmed current-credential rejection, a new usable
+      binding for the same source identity can permit fresh source requests but is not itself evidence
+      that each Repository fact was refreshed. Attribute newly observed facts only to their applicable
+      successful request, exact field and time. Previously saved local facts and supported aggregates
+      remain available as last known with their own times and applicable limitation under 0019, without
+      claiming that reconnect or a partial success refreshed them. Cross-account disclosure remains separate.
+    old_cache_after_restoration: Already saved local observations remain available as last known under
+      0019 after confirmed private Repository revocation and during source recovery. A successful later
+      read supports only its returned facts and actual source scope; it does not make older cached fields
+      or historical aggregates newly observed. A complete empty collection is evidence of emptiness only
+      for its supported current scope. A source observation for another account must not be attributed
+      to the previous account; cross-account disclosure remains a separate policy question.
+    partial_response: A partial response can support only successfully interpreted fields and observed
+      objects in its actual eligible source context. A field affected by an error remains unknown or last
+      known according to its supported prior local observation; a successful sibling is not proof about
+      it. For confirmed revocation preserve already saved local observations under 0019 with their own
+      times and a revocation indication. A visible incomplete indicator and recovery route remain available.
+      One successful page does not establish collection completeness.
+    action_boundary: Reevaluate locally applicable identity and evidence before a new membership or external
+      source action. Once private Repository revocation is confirmed, do not dispatch ordinary refresh
+      or synchronization for it while revocation applies under 0019. A separately bounded recovery check
+      is distinct and its triggering and evidence remain open. Other eligible discovery or refresh may
+      obtain source evidence without a fresh online check for every tap. Sharing and cross-account boundaries
+      remain separate; an unobserved remote permission change cannot be ordered atomically with a local
+      effect.
+    verification: Use injected source observations and local connection state to test positive and partial
+      discovery, account replacement, cancellation, offline, explicit denial, delayed responses and scope-specific
+      restoration. Separately verify the eventual GitHub mapping and real authentication behavior; this
+      candidate is not evidence of a working integration or a completed TDD cycle.
+    provenance: Last-known offline presentation follows the owner's direction. The selection lifetime
+      and the access-evidence rules are agent-authored working policy, subject to source and usability
+      validation.
   scenarios:
     background_during_selection:
-      given: An active selection has positive evidence for R1 and R2; R1 was admitted, while R2 was not. A discovery request began before the selection-owning scene entered background.
+      given: An active selection has positive evidence for R1 and R2; R1 was admitted, while R2 was not.
+        A discovery request began before the selection-owning scene entered background.
       when: The scene returns to foreground and the older request completes.
-      then: The older response does not authorize a new admission for R2; a new applicable foreground observation is needed. Reconcile R1 under its own admitted operation and preserve any confirmed saved Project; backgrounding does not prove denial or erase cached observations.
+      then: The older response does not authorize a new admission for R2; a new applicable foreground
+        observation is needed. Reconcile R1 under its own admitted operation and preserve any confirmed
+        saved Project; backgrounding does not prove denial or erase cached observations.
     credential_rejection_then_partial_reconnect:
-      given: A trusted GitHub authentication rejection for active generation A restricts previously cached private PR and Issue facts in Repository R. The same identity later establishes binding B, and a post-restriction request under B returns one PR title but its review field errors and Issues are not requested.
+      given: A trusted GitHub authentication rejection for active generation A leaves locally saved private
+        PR and Issue facts in Repository R. The same identity later establishes binding B, and a supported
+        subsequent request under B returns one PR title but its review field errors and Issues are not
+        requested.
       when: GitView opens R and the Project summary.
-      then: The newly supported title can be presented with its own time and permitted identity context; old review and Issue data remain restricted or unknown, no empty-Issue or complete-Project claim is inferred, and reconnect alone does not refresh their timestamps.
+      then: The newly supported title may be shown with its own time and correct identity. Locally saved
+        review and Issue data remain accessible as last known with their supported times and the relevant
+        connection limitation; no empty Issue or complete Project claim is inferred and reconnect alone
+        does not refresh their timestamps.
     new_denial_after_restoration_request:
-      given: A post-restriction request under replacement binding B is in flight to recover one private PR field, and a newer applicable restriction is locally established before its response is presented.
+      given: A post-restriction request under replacement binding B is in flight to recover one private
+        PR field, and a newer applicable restriction is locally established before its response is presented.
       when: The response reports that field successfully.
-      then: The earlier-started request does not lift the newer restriction merely by arriving later; the retained value is not disclosed until separately applicable post-restriction evidence exists, and the request does not erase Project membership.
+      then: The earlier-started request does not lift the newer restriction merely by arriving later or
+        become a new accepted update. For confirmed revocation previously saved local values remain visible
+        as last known with the revoked indication and their supported times under 0019. The request does
+        not erase Project membership or establish a GitHub grant.
     old_generation_rejection_after_new_success:
-      given: The same account has an independently confirmed replacement binding B and a post-restriction B request successfully observes a permitted Issue title; a delayed request from superseded generation A then receives an authentication rejection.
+      given: The same account has an independently confirmed replacement binding B and a post-restriction
+        B request successfully observes a permitted Issue title; a delayed request from superseded generation
+        A then receives an authentication rejection.
       when: Both results are projected under the current B context.
-      then: The A rejection alone does not restrict B's independently supported title or establish that B is invalid, while each attempt retains its own generation and time and no unrelated Issue field or population becomes complete.
+      then: The A rejection alone does not restrict B's independently supported title or establish that
+        B is invalid, while each attempt retains its own generation and time and no unrelated Issue field
+        or population becomes complete.
     partial_positive:
-      given: An active selection for account A has a successful partial user-scoped discovery result containing confirmed Repository R.
+      given: An active selection for account A has a successful partial user-scoped discovery result containing
+        confirmed Repository R.
       when: The operator confirms R before any applicable local invalidation.
-      then: The observation can support R's admission without asserting that absent Repository S is denied or that all R data categories are readable.
+      then: The observation can support R's admission without asserting that absent Repository S is denied
+        or that all R data categories are readable.
     other_account:
       given: Account A's discovery found R and account B becomes active before R is admitted.
       when: GitView evaluates the earlier selection.
-      then: A's observation cannot authorize B's admission; unsubmitted entries require applicable confirmation and evidence; if the proposed setup is selected, apply 0045.
+      then: A's observation cannot authorize B's admission; unsubmitted entries require applicable confirmation
+        and evidence; if the proposed setup is selected, apply 0045.
     restart_before_admission:
       given: A confirmed selection saved R1 but stopped before R2 was submitted.
       when: The operator later retries R2 after restarting the app.
-      then: R1 remains saved and R2 needs a new applicable positive observation; the old result alone does not authorize it.
+      then: R1 remains saved and R2 needs a new applicable positive observation; the old result alone
+        does not authorize it.
     offline_without_denial:
       given: Private observations of R were permitted and no applicable denial or disconnect is known.
       when: A refresh fails offline.
-      then: The last-known eligible content can remain visible with its observation time and refresh failure; no new successful check is asserted.
+      then: The last-known eligible content can remain visible with its observation time and refresh failure;
+        no new successful check is asserted.
     denial_and_late_success:
-      given: A request for private R began and a relevant denial was subsequently established before its response arrived.
+      given: A request for private R began and a relevant denial was subsequently established before its
+        response arrived.
       when: The old successful response arrives.
-      then: It does not lift the restriction merely because it arrived last; a separately applicable later source observation is needed for restoration.
+      then: It does not lift the restriction merely because it arrived last; a separately applicable later
+        source observation is needed for restoration.
     metadata_not_issues:
       given: Discovery positively identifies R but the app lacks Issues permission.
       when: The operator adds R and GitView attempts to read its Issues.
-      then: Admission is not proof that Issues can be read; show the source limitation instead of an empty Issues collection.
+      then: Admission is not proof that Issues can be read; show the source limitation instead of an empty
+        Issues collection.
     partial_restoration:
-      given: A same-account reconnect follows denial of private PR and Issue data, and a new applicable response returns PR 42's title successfully while the Issue field fails.
+      given: A same-account reconnect follows denial of private PR and Issue data, and a new applicable
+        response returns PR 42's title successfully while the Issue field fails.
       when: GitView applies the response under the current restriction and ordering context.
-      then: The supported PR title can be shown as newly observed; Issue data and unrevalidated older PR facts remain restricted or unknown, and the failure is not reported as zero Issues.
+      then: The supported PR title may be shown as newly observed only if the response is admitted under
+        the current source context. Previously saved Issue data and older PR facts remain visible as last
+        known under 0019 with their own times and applicable revocation indication; an Issue field failure
+        is not reported as zero Issues or a successful refresh.
     project_summary_after_metadata_recovery:
-      given: A Project retains members A and B; B was restricted and a post-restriction same-account response supports only B's Repository metadata, while A's work data remains independently permitted.
+      given: A Project retains members A and B; B was restricted and a post-restriction same-account response
+        supports only B's Repository metadata, while A's work data remains independently permitted.
       when: The app projects the Project summary and opens its work scope.
-      then: B's supported metadata can be eligible, but B's previously restricted work and derived historical aggregates do not become current or visible solely from that response; A's evidence keeps its own time and Project-wide coverage reflects the unresolved B categories.
+      then: B's supported metadata may be newly observed in the applicable source context. Previously
+        saved work and historical aggregates remain visible as last known under 0019 with their supported
+        times and applicable revocation indication, not newly current merely because metadata was observed.
+        A's evidence retains its own time and Project-wide coverage reflects unresolved categories.
     empty_after_denial:
-      given: After access restriction a new applicable, sufficiently complete source observation establishes that the current Issue collection for R is empty.
+      given: After access restriction a new applicable, sufficiently complete source observation establishes
+        that the current Issue collection for R is empty.
       when: GitView shows the current Issue summary.
-      then: It may show a confirmed current zero for that exact collection and scope, but does not expose old restricted Issue titles or historical metrics merely because the new collection is empty.
+      then: A confirmed current zero may be shown for the exact collection and scope only when a subsequent
+        eligible source observation supports it. Previously saved Issue titles or historical metrics remain
+        available as last known under 0019 with their actual observation context; they are not represented
+        as current results of that empty collection.
     http_success_with_error:
-      given: An applicable GraphQL request receives HTTP 200 with an error affecting its CI field and an independently successful PR title field.
+      given: An applicable GraphQL request receives HTTP 200 with an error affecting its CI field and
+        an independently successful PR title field.
       when: GitView interprets the response.
-      then: The title may be accepted for its own scope, while the CI error remains a limitation rather than a successful check observation or automatic proof of a specific permission denial.
+      then: The title may be accepted for its own scope, while the CI error remains a limitation rather
+        than a successful check observation or automatic proof of a specific permission denial.
   unresolved:
-  - Confirm the exact selected GitHub endpoint, pagination, field-level permissions and applicable response mappings against the chosen authentication integration.
-  - Map supported source responses to exact field and collection coverage, and establish whether any broader access witness can safely restore old cached fields; verify ordering and races through actual integration.
-  - The foreground-selection lifetime is a working policy; validate its usability and source behavior during implementation. A long foreground selection has no claimed guarantee against an unobserved remote permission change.
+  - Confirm the exact selected GitHub endpoint, pagination, field-level permissions and applicable response
+    mappings against the chosen authentication integration.
+  - Map supported source responses to exact field and collection coverage, and determine evidence of restored
+    source access and freshness for old cached fields; locally saved display after confirmed revocation
+    is already selected under 0019.
+  - The foreground-selection lifetime is a working policy; validate its usability and source behavior
+    during implementation. A long foreground selection has no claimed guarantee against an unobserved
+    remote permission change.

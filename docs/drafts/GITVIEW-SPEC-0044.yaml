@@ -15,79 +15,157 @@ sources:
   overview: docs/drafts/GITVIEW-SPEC-0023.yaml
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Known data, observation coverage, request outcome and eligibility to display private data are independently interpretable for the affected scope.
-- A successful partial response does not establish complete coverage, and a failed request does not erase the last accepted successful observation.
+- Known data, observation coverage, request outcome and eligibility to display private data are independently
+  interpretable for the affected scope.
+- A successful partial response does not establish complete coverage, and a failed request does not erase
+  the last accepted successful observation.
 - An observed empty collection, no observation and unavailable access are distinguishable.
-- An observed time identifies the scope and observation it belongs to and is not advanced by an unsuccessful request.
+- An observed time identifies the scope and observation it belongs to and is not advanced by an unsuccessful
+  request.
 specification:
-  objective: Define how observation data, coverage, refresh outcome and access restrictions combine without collapsing different situations into a single status.
+  objective: Define how observation data, coverage, refresh outcome and access restrictions combine without
+    collapsing different situations into a single status.
   ontology_refs:
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    axes: For each meaningful scope retain separately the accepted known observations, whether the requested scope was unobserved, partial or sufficiently covered, the last relevant successful observation time, the outcome of the latest request, and whether previously saved private data may currently be displayed. These are product-state properties, not new ontology entities.
-    field_evidence: Interpret an individual field only within the source response, object identity, applicable scope and observation context that established it. A field omitted because it was not requested, unavailable, inaccessible or affected by a source error is unknown for that observation, not automatically empty, zero or a deletion. An explicit empty or absent value may be reported as known only when the selected source contract establishes that meaning for the field and the relevant response is usable; a null-like representation alone is not universally equivalent to any one meaning.
-    field_refresh: A later response that observes one field does not refresh omitted fields merely because they belong to the same object. A previously accepted permitted value may remain available with its own earlier observation context and applicable stale or incomplete indication; do not attribute the later field's time or revision to it without evidence.
-    unobserved: Before any accepted observation of a collection, the collection is unknown. A first failed request adds a failure outcome but does not make the collection a known empty result.
-    confirmed_empty: A known empty result requires a successful observation sufficient for the exact Repository, object category and time or filter scope being described. Complete coverage of one scope does not establish emptiness in another.
-    traversal_vs_coverage: A successful final page is an outcome of traversal, not automatically proof of an exhaustive source state. When changes during traversal or gaps in source guarantees leave coverage unproven, mark the collection's coverage uncertain or incomplete and retain any earlier successful complete-observation time with its original scope. Do not equate uncertainty about completeness with proof that a specific item is absent or present.
-    coverage_evidence: Candidate 0102 distinguishes a source-supported scoped reference from completion time, and specifies when evidence can extend a prior coverage claim across refreshes and restarts. A complete historical observation is not continuously live.
-    partial: A successful subset can provide accepted facts and its own observation time while that attempt's scope coverage remains partial. An independent complete observation retains its separately supported scope and reference; do not attribute its coverage to the subset or erase it merely because the subset completed. It must not replace the prior complete-observation timestamp with the subset's time or attribute that subset time to retained unobserved facts.
-    failed_after_success: A failed refresh records its own failure and does not itself erase accepted data or successful observation times. A concurrent independently accepted observation can change those data or times; retain its actual scope and evidence rather than restoring a snapshot from before the failed request. A failure can coexist with prior or independently established complete or partial coverage; do not model failure as erasing coverage history.
-    overlapping_attempts: For the same requested scope, distinguish in-flight attempts from terminal attempt outcomes. The latest terminal attempt is the one whose completion is established as latest by reliable ordering evidence; a displayed wall-clock time alone need not establish that order, for example if the clock changed; an in-flight attempt does not erase an earlier failure. Completion order describes attempts only, not source revision order or coverage. If completion times cannot be ordered, retain the ambiguity instead of fabricating an order. Display of a terminal success does not imply that unresolved conflicts or incomplete coverage have been repaired.
-    outcome_after_restart: As an agent-authored working policy, retain the latest relevant terminal attempt outcome and its scope for recovery under 0105 when local persistence succeeds. A restored failure remains an earlier attempt outcome with its own time and permitted reason; a later ordered success changes the latest outcome only for the scope it actually covers. A request that was in flight when the process ended is not automatically a GitHub failure or success. If the outcome or its ordering cannot be recovered, the latest outcome is unknown or unavailable, rather than asserted successful or failed; independently recoverable source facts and observation times may still be shown under current access policy. A local save failure is distinct from a source error.
-    access: Explicit denial or disconnect can restrict display of private cached data independently of whether an earlier observation succeeded. A temporary network failure alone does not change previously permitted data into a confirmed denial. Actual content display follows 0036.
-    summary: A Project or portfolio covering multiple scopes may report a summary status, but the operator can identify affected scopes and unequal freshness or coverage. It cannot declare all inputs current solely because one scope refreshed.
-    ordering: Conflicting or concurrent results follow 0037; a request completion timestamp alone is not a source freshness ordering.
-    provenance: The owner asked to show last update and GitHub error on failure. Separate coverage, request outcome and access axes are agent-authored refinements.
+    axes: For each meaningful scope retain separately the accepted known observations, whether the requested
+      scope was unobserved, partial or sufficiently covered, the last relevant successful observation
+      time, the outcome of the latest request, and whether previously saved private data may currently
+      be displayed. These are product-state properties, not new ontology entities.
+    field_evidence: Interpret an individual field only within the source response, object identity, applicable
+      scope and observation context that established it. A field omitted because it was not requested,
+      unavailable, inaccessible or affected by a source error is unknown for that observation, not automatically
+      empty, zero or a deletion. An explicit empty or absent value may be reported as known only when
+      the selected source contract establishes that meaning for the field and the relevant response is
+      usable; a null-like representation alone is not universally equivalent to any one meaning.
+    field_refresh: A later response that observes one field does not refresh omitted fields merely because
+      they belong to the same object. A previously accepted permitted value may remain available with
+      its own earlier observation context and applicable stale or incomplete indication; do not attribute
+      the later field's time or revision to it without evidence.
+    unobserved: Before any accepted observation of a collection, the collection is unknown. A first failed
+      request adds a failure outcome but does not make the collection a known empty result.
+    confirmed_empty: A known empty result requires a successful observation sufficient for the exact Repository,
+      object category and time or filter scope being described. Complete coverage of one scope does not
+      establish emptiness in another.
+    traversal_vs_coverage: A successful final page is an outcome of traversal, not automatically proof
+      of an exhaustive source state. When changes during traversal or gaps in source guarantees leave
+      coverage unproven, mark the collection's coverage uncertain or incomplete and retain any earlier
+      successful complete-observation time with its original scope. Do not equate uncertainty about completeness
+      with proof that a specific item is absent or present.
+    coverage_evidence: Candidate 0102 distinguishes a source-supported scoped reference from completion
+      time, and specifies when evidence can extend a prior coverage claim across refreshes and restarts.
+      A complete historical observation is not continuously live.
+    partial: A successful subset can provide accepted facts and its own observation time while that attempt's
+      scope coverage remains partial. An independent complete observation retains its separately supported
+      scope and reference; do not attribute its coverage to the subset or erase it merely because the
+      subset completed. It must not replace the prior complete-observation timestamp with the subset's
+      time or attribute that subset time to retained unobserved facts.
+    failed_after_success: A failed refresh records its own failure and does not itself erase accepted
+      data or successful observation times. A concurrent independently accepted observation can change
+      those data or times; retain its actual scope and evidence rather than restoring a snapshot from
+      before the failed request. A failure can coexist with prior or independently established complete
+      or partial coverage; do not model failure as erasing coverage history.
+    overlapping_attempts: For the same requested scope, distinguish in-flight attempts from terminal attempt
+      outcomes. The latest terminal attempt is the one whose completion is established as latest by reliable
+      ordering evidence; a displayed wall-clock time alone need not establish that order, for example
+      if the clock changed; an in-flight attempt does not erase an earlier failure. Completion order describes
+      attempts only, not source revision order or coverage. If completion times cannot be ordered, retain
+      the ambiguity instead of fabricating an order. Display of a terminal success does not imply that
+      unresolved conflicts or incomplete coverage have been repaired.
+    outcome_after_restart: As an agent-authored working policy, retain the latest relevant terminal attempt
+      outcome and its scope for recovery under 0105 when local persistence succeeds. A restored failure
+      remains an earlier attempt outcome with its own time and permitted reason; a later ordered success
+      changes the latest outcome only for the scope it actually covers. A request that was in flight when
+      the process ended is not automatically a GitHub failure or success. If the outcome or its ordering
+      cannot be recovered, the latest outcome is unknown or unavailable, rather than asserted successful
+      or failed; independently recoverable source facts and observation times may still be shown under
+      current access policy. A local save failure is distinct from a source error.
+    access: For confirmed private Repository revocation, retain and display the last saved observation
+      with revocation indication and supported update time when known under 0019; stop synchronization.
+      A temporary network failure alone does not establish denial or deletion. Other account and access
+      cases require their own treatment.
+    summary: A Project or portfolio covering multiple scopes may report a summary status, but the operator
+      can identify affected scopes and unequal freshness or coverage. It cannot declare all inputs current
+      solely because one scope refreshed.
+    ordering: Conflicting or concurrent results follow 0037; a request completion timestamp alone is not
+      a source freshness ordering.
+    provenance: The owner asked to show last update and GitHub error on failure. Separate coverage, request
+      outcome and access axes are agent-authored refinements.
   scenarios:
     first_failure:
       given: No Issue list has been accepted for Repository R.
       when: The first request fails.
-      then: R's Issue scope is unobserved with a visible failure and has no invented successful observation time or zero count.
+      then: R's Issue scope is unobserved with a visible failure and has no invented successful observation
+        time or zero count.
     complete_zero_then_failure:
       given: A fully covered PR list for R was observed empty at T1.
       when: A later refresh fails.
-      then: The last known empty observation at T1 remains identifiable and the later failure is visible; it is not described as a newly verified empty list.
+      then: The last known empty observation at T1 remains identifiable and the later failure is visible;
+        it is not described as a newly verified empty list.
     subset_after_complete:
       given: PRs A and B were fully observed at T1.
       when: A partial refresh observes A at T2 and does not cover B.
-      then: A can use T2, B retains its prior observation context, and the full scope remains partial rather than fully observed at T2.
+      then: A can use T2, B retains its prior observation context, and the full scope remains partial
+        rather than fully observed at T2.
     denied_after_success:
       given: A private Repository has an earlier fully covered PR observation.
-      when: Source access is explicitly denied.
-      then: The prior observation remains stored but restricted from display; the interface identifies the access problem without presenting an empty PR list.
+      when: Source revocation of access to that Repository is explicitly confirmed.
+      then: The prior observation remains visible as last known with revocation indication and supported
+        observation time; synchronization stops and the interface does not claim a newly empty PR list.
     overlapping_failure_and_success:
-      given: Two refresh attempts cover the same PR scope, A and B; A starts first and B fails while A is still in flight.
+      given: Two refresh attempts cover the same PR scope, A and B; A starts first and B fails while A
+        is still in flight.
       when: A later completes successfully with only partial data.
-      then: Before A finishes, B's failure and A's in-flight state are distinguishable. After A finishes, its terminal outcome is later in completion order, while incomplete coverage and any unresolved conflicting source values remain independently visible; this ordering says nothing about which source values are newer.
+      then: Before A finishes, B's failure and A's in-flight state are distinguishable. After A finishes,
+        its terminal outcome is later in completion order, while incomplete coverage and any unresolved
+        conflicting source values remain independently visible; this ordering says nothing about which
+        source values are newer.
     clock_changes_between_completions:
-      given: Two overlapping terminal attempts have wall-clock timestamps that appear reversed after a device clock adjustment, and no reliable completion-order witness is available.
+      given: Two overlapping terminal attempts have wall-clock timestamps that appear reversed after a
+        device clock adjustment, and no reliable completion-order witness is available.
       when: The current latest outcome is reconstructed.
-      then: The app retains the supported outcomes and reports latest ordering as uncertain rather than choosing solely by the wall-clock values; source fact ordering remains separately governed by 0053.
+      then: The app retains the supported outcomes and reports latest ordering as uncertain rather than
+        choosing solely by the wall-clock values; source fact ordering remains separately governed by
+        0053.
     restart_after_durable_failure:
-      given: An Issue refresh fails after a previous successful observation and the terminal failure, scope and permitted reason are durably recorded.
+      given: An Issue refresh fails after a previous successful observation and the terminal failure,
+        scope and permitted reason are durably recorded.
       when: The app restarts offline and successfully reads those records.
-      then: The last supported Issue observation retains its original time and the earlier failure remains discoverable with its own scope and attempt time; no new request or success is invented.
+      then: The last supported Issue observation retains its original time and the earlier failure remains
+        discoverable with its own scope and attempt time; no new request or success is invented.
     restart_with_unrecoverable_attempt_outcome:
-      given: An Issue refresh fails but local storage cannot establish whether its terminal outcome was retained before the process stops; the earlier Issue observation is independently recoverable.
+      given: An Issue refresh fails but local storage cannot establish whether its terminal outcome was
+        retained before the process stops; the earlier Issue observation is independently recoverable.
       when: The app restarts and no applicable later attempt has completed.
-      then: The earlier permitted observation may be shown with its own time, but the latest attempt outcome is unknown rather than falsely reported as success or as a recovered failure. A known local recovery problem remains distinct from an invented GitHub error.
+      then: The earlier permitted observation may be shown with its own time, but the latest attempt outcome
+        is unknown rather than falsely reported as success or as a recovered failure. A known local recovery
+        problem remains distinct from an invented GitHub error.
     terminal_page_unproven:
-      given: A prior complete Issue observation exists and the source collection changes during a later traversal whose consistency cannot be established.
+      given: A prior complete Issue observation exists and the source collection changes during a later
+        traversal whose consistency cannot be established.
       when: All pages returned by that traversal finish successfully.
-      then: The latest traversal outcome is distinguishable from its unproven coverage; the old complete time is not advanced as if the newer traversal had proved an exhaustive snapshot.
+      then: The latest traversal outcome is distinguishable from its unproven coverage; the old complete
+        time is not advanced as if the newer traversal had proved an exhaustive snapshot.
     omitted_review_and_checks:
-      given: A PR review assessment and check counts were observed at T1 and a later response observes only its title at T2.
+      given: A PR review assessment and check counts were observed at T1 and a later response observes
+        only its title at T2.
       when: The PR overview is displayed.
-      then: The title may carry its T2 context, while the earlier review assessment and check counts retain T1 or are shown unavailable under current policy; they are not silently refreshed, cleared or assigned T2.
+      then: The title may carry its T2 context, while the earlier review assessment and check counts retain
+        T1 or are shown unavailable under current policy; they are not silently refreshed, cleared or
+        assigned T2.
     null_with_error:
-      given: A requested PR field is represented as null-like in a response accompanied by an error affecting that field and its source contract does not establish an authoritative empty value.
+      given: A requested PR field is represented as null-like in a response accompanied by an error affecting
+        that field and its source contract does not establish an authoritative empty value.
       when: The field is interpreted.
-      then: Its value is unknown or unavailable for that observation rather than a confirmed empty value, zero or absence.
+      then: Its value is unknown or unavailable for that observation rather than a confirmed empty value,
+        zero or absence.
   unresolved:
   - Exact scope representation and completeness proof for individual source endpoints.
   - Freshness thresholds, per-field granularity, UI representation and durable storage mechanism.
-  - The 0105 working policy retains the latest applicable terminal attempt when possible; retention and presentation of older outcomes, exact recovery feedback and ordering when timestamps are insufficient remain open.
-  - Source-specific semantics for omitted, null-like, empty and error-bearing fields; these cannot be inferred from representation alone.
+  - The 0105 working policy retains the latest applicable terminal attempt when possible; retention and
+    presentation of older outcomes, exact recovery feedback and ordering when timestamps are insufficient
+    remain open.
+  - Source-specific semantics for omitted, null-like, empty and error-bearing fields; these cannot be
+    inferred from representation alone.

@@ -34,168 +34,540 @@ sources:
   today_source_crosswalk: docs/drafts/today-source-evidence-crosswalk-20261114.md
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- A claim of complete population identifies its scope and supported reference time or interval; completing a traversal does not imply a continuously current snapshot.
-- A source-specific completeness argument accounts for changes and access across the entire claimed scope and does not infer absent objects from an incomplete traversal.
-- Incremental results may extend a prior coverage claim only when a documented source guarantee and retained evidence close the relevant interval without gaps.
-- Interrupted, delayed, overlapping or unorderable results cannot advance a complete-coverage boundary past an unaccounted gap.
-- Last-known results, new supported facts and request outcomes remain available under their own access, scope and time contexts when completeness cannot be established.
+- A claim of complete population identifies its scope and supported reference time or interval; completing
+  a traversal does not imply a continuously current snapshot.
+- A source-specific completeness argument accounts for changes and access across the entire claimed scope
+  and does not infer absent objects from an incomplete traversal.
+- Incremental results may extend a prior coverage claim only when a documented source guarantee and retained
+  evidence close the relevant interval without gaps.
+- Interrupted, delayed, overlapping or unorderable results cannot advance a complete-coverage boundary
+  past an unaccounted gap.
+- Last-known results, new supported facts and request outcomes remain available under their own access,
+  scope and time contexts when completeness cannot be established.
 specification:
-  current_intent_boundary: The owner selected older unfinished work and work completed during the current calendar day in the user's local time zone; a prior day's completion alone does not qualify an object for the new Today. Other inclusion conditions remain open. The open-plus-recent acquisition plan and its completeness claims below remain source-operation candidates, not proven complete or automatically accepted by this decision. Preserve per-purpose identity, partial errors, ordering, coverage and access boundaries; actual source operations require verification. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
-  objective: Define the initial Today discovery operations and what an overview can claim about their population coverage without assuming a source snapshot.
+  current_intent_boundary: The owner selected older unfinished work and work completed during the current
+    calendar day in the user's local time zone; a prior day's completion alone does not qualify an object
+    for the new Today. Other inclusion conditions remain open. The open-plus-recent acquisition plan and
+    its completeness claims below remain source-operation candidates, not proven complete or automatically
+    accepted by this decision. Preserve per-purpose identity, partial errors, ordering, coverage and access
+    boundaries; actual source operations require verification. See canonical 0001 and 0007 and sketch
+    revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
+  objective: Define the initial Today discovery operations and what an overview can claim about their
+    population coverage without assuming a source snapshot.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    downstream_policy_boundary: Reference to 0110 below identifies a downstream consumer of this coverage contract, not a prerequisite of coverage itself. A review of the assembled Today route considers both contracts and their applicable dependencies; checking 0102's prerequisite closure alone does not check the selection decision.
-    observation_claim: A coverage claim names the confirmed Repository set and identity context, object categories, relevant Today alternatives and filters, access context, and the source-supported reference time or interval. Describe it as a last-known observation at that reference rather than a continuously live state; the time at which the last page or local save completed is not automatically the source reference time. Individual object and field observations retain their own contexts under 0044 and 0089.
-    population_basis: Complete coverage requires a source-backed method covering the relevant union under 0027 and all active filter inputs that can affect the claimed selection. A simultaneous snapshot, a consistent baseline followed by an uninterrupted complete change stream, or another method is sufficient only to the extent its actual source guarantees establish the claim. A traversal or a nonempty cursor alone is not such a guarantee. A method may support a scoped historical or bounded observation without supporting a present instantaneous state.
-    count_versus_materialization: A source-supported exact aggregate may establish a count for its own matching predicate, subject, access and reference without establishing the identities or individual facts of every member. Keep count evidence separate from evidence that every corresponding object has been identified, retrieved and prepared for the work grid. Even equal aggregate and visible-card counts do not independently prove identical membership or a fully materialized selection. Claim an exhaustive card collection only with sufficient object-level identity, predicate, access, time and population evidence for that exact selection; otherwise show permitted cards and an appropriate collection limitation. Conversely, a complete materialized selection supports an exact distinct count only where its identity, predicate and context evidence support that count. This distinction does not require every count to enumerate objects or every selection to expose an exact count.
-    unresolved_representation_and_aggregate: An untyped or identity-ambiguous permitted source representation that could satisfy the selected condition limits an object-level completeness claim under 0101 and 0110. It does not automatically invalidate an independently source-supported exact aggregate for the same predicate, scope, reference and disclosure context if that aggregate's sufficiency is established without resolving the record and no conflicting evidence undermines it. Preserve the aggregate's own reference and present the materialization limitation separately. Do not add the unresolved representation to that aggregate, subtract visible cards to derive an unexplained missing-object count, or infer that it is a distinct member. A count-only claim cannot turn the unresolved representation into an identified object or establish an exhaustive grid.
-    coverage_after_identity_resolution: Reevaluate affected distinctness, predicate support and materialization when a previously unresolved source representation is associated with a confirmed typed object. A newly established association can remove that particular identity limitation for the original evidence scope, but does not by itself establish that all records or pages were found, that source or access remained unchanged, or that all retained observations share one time. A complete historical selection may be claimed only when its own population, predicates, identity and disclosure evidence together support that exact past reference; the time of local resolution is not a new source reference. A present claim requires its own applicable later evidence. A duplicate association can reduce a previously observed distinct subset; do not describe that correction as a source deletion or change in lifecycle.
-    alternative_coverage: For the unselected complete union candidate, coverage would require evidence for still-open work, items created during the selected Today interval and eligible closure or merge events during that interval. Creation alone and the complete union are not owner-selected inclusion rules. The device-local calendar day is one proposed interpretation under 0049, not a settled product choice. A source query for currently open objects alone cannot account for objects merged or closed today; a query for recent updates alone is not an event history or a demonstrated complete union. Each active filter adds its own applicable evidence needs. Known positive objects may be shown with their supported facts while missing branches and unobserved Repository scopes remain independently incomplete.
-    documented_rest_example: GitHub documents `open` as the default state for the repository Issue and PR list operations; Issue `since` selects results updated after its supplied time. Therefore, a default-state list excludes currently closed work, and an Issues query restricted to recent updates need not contain an older open Issue that was not updated within that interval. These are constraints of those particular operations, not a requirement to use them. Even `state=all` and successful traversal do not by themselves prove the occurrence and time of every closure, a coherent snapshot, or complete visibility for the selected Project. GraphQL pageInfo describes page traversal; do not infer a documented snapshot guarantee solely from its terminal cursor. Choose and justify applicable operations and evidence separately for each Today alternative and Repository.
-    candidate_acquisition: Conditional on adoption of the unselected full inclusion formula, as an agent-authored initial acquisition strategy for each eligible Repository and object category, combine permitted last-known observations with two separately tracked discovery purposes — open work without a recent-update cutoff, and potentially relevant recent work across open and closed states. Normalize identities under 0101, retrieve or reuse applicable creation, lifecycle, merge and closure-event evidence, and evaluate the actual Today alternatives under 0027. This is a strategy for finding candidates, not proof that every open or completed object is found; source operations and their paging, permission and event semantics remain subject to selection and verification. An object created today but now closed remains eligible by its confirmed creation instant even if no separate closure event was recovered.
-    candidate_rest_routes: As documented examples for that strategy, GitHub's per-Repository PR and Issue list operations support open and all states; the PR list supports sorting by updated time, while Issue `since` filters on update time and can include PR representations. An open-work pass must not depend solely on a recent `since` boundary. An all-state or recent-updates pass can discover candidates for further supported fact evaluation, but updated time is neither creation nor closure event time, and strict `since` boundaries, mutable pages, visibility and indexing cannot be assumed gap-free. These examples do not fix the final API mix, page size, numerical refresh budget or guarantee of exact population; do not translate a GraphQL Node ID into a REST numeric ID without supported association.
-    issue_since_source_semantics: For the documented GitHub repository Issues REST operation, `since` describes records last updated after the supplied instant; GraphQL `IssueFilters.since` describes Issues updated at or after it. Preserve the endpoint, source version, actual query predicate and boundary inclusivity with the observation; the same timestamp does not describe an identical interval in the two APIs. Neither predicate is an event-time filter or a complete history. An item whose last update equals a REST boundary is not covered by that documented predicate; an inclusive GraphQL predicate alone still does not establish exhaustive pages, event history, visibility or a stable snapshot. Timestamp precision, ties, access, indexing and mutable pages still require evidence. Do not silently advance an incremental coverage checkpoint across an unproven boundary.
-    selected_today_operations: As an agent-selected working candidate rather than an owner-selected implementation, and conditional on the chosen population,  use the four GraphQL operations in today-graphql-operation-candidates-20261115.md for each permitted Repository with a supported GraphQL Repository Node ID — open Issues, recent Issues, open PRs and recent PRs. The open portions have no recent cutoff; recent Issues use the captured Today interval start as the query since value and recent PRs use the all-state updated-order connection. A device-local calendar day is one proposed interpretation under 0049; applicability of the source cutoff to any selected interval must be established independently. Request pages as permitted by refresh opportunities; a bounded or interrupted scan remains incomplete. Keep each purpose and its actual scope, pages, supported facts and errors distinct. The documented typed Repository parent supplies the object association only when successfully returned and matched under 0101; unresolved identity is a limitation, not an empty list. These operations are the initial selection for base Today discovery, superseding the earlier candidate-only status in their unchanged evidence documents; selection is not proof of complete coverage, accepted grant, live GitHub behavior or a fixed request budget.
-    selected_outcome_evidence: Conditional on adoption of the full proposed inclusion formula, including its unselected creation alternative, evaluate each discovered or retained permitted object against the captured Today interval and its selected boundary interpretation. A supported creation instant, applicable open state or PR merge instant can independently establish a positive match under 0110. For a candidate whose outcome evidence is needed and not already supported, the typed Issue or PR timeline operation in today-closure-graphql-operation-candidates-20261115.md is the working source for closure evidence. Bind each usable ClosedEvent to its supported subject and Repository, and compare its event time with that interval. A PR ClosedEvent alone does not establish that the particular closure was without merge; require independently source-supported applicable evidence for that event classification, or retain the outcome alternative as unknown unless another supported alternative establishes inclusion. Fetching a timeline for every object is not required when another supported Today alternative already establishes inclusion; a failure or incomplete timeline remains an outcome limitation. Neither an update timestamp nor a closed current state alone proves the relevant closure event, and discovering timelines only for known candidates cannot prove that all relevant objects were found.
-    selected_initial_handoff: Pass typed identities, individually supported state, creation or outcome facts and their actual observation contexts to 0116; pass per-Repository and per-purpose attempt, coverage and errors separately. Feed the prepared observations to 0110, then 0115 for the work grid. Include independently supported matches once per identity, retain permitted last-known information with its time, and communicate incomplete discovery or refresh failure without inventing a missing count, zero, deletion or current success. The day and active Project scope are captured for evaluation and recomputed when applicable, not inferred from a response timestamp. Detailed filter inputs, full PR and Issue overview fields and historical metrics use their own contracts rather than being implied by these four discovery operations.
-    candidate_graphql_routes: The documented GraphQL Repository issues connection accepts state filters and `IssueFilters`, while its pullRequests connection has its own state and pagination arguments. A candidate plan can request open Issues without a since filter separately from recent Issue candidates filtered by `IssueFilters.since`; PR discovery remains a separate connection and must not assume that the Issue-only filter also applies there. Record effective filter arguments and page outcomes per Repository, object type and discovery purpose. Retrieve only available typed facts from each usable field; field errors and inaccessible connections do not become empty collections. The initial operations are selected in selected_today_operations; their available permissions, live behavior, snapshot guarantees and numerical refresh policy are not established.
-    initial_source_route: As an agent-authored first-version direction for GitHub.com Today discovery, use typed GraphQL Repository `issues` and `pullRequests` connections for the two separately tracked discovery purposes under candidate_acquisition. For open work request the applicable OPEN state without a recent-update cutoff for each type. For recent candidates use the Issue connection with the relevant all-state selection and a captured `IssueFilters.since` based on the selected day, and use the separate PR connection with applicable open, closed and merged states ordered by supported update ordering. Record the actual parameters and context of each portion; a bounded PR scan need not finish or assume that a recent-update prefix proves all matching events. For each usable node obtain the typed identity and Repository witness and the available creation, state and PR merge facts specified in 0101, alongside independently supported presentation fields. When the Today inclusion or an explicitly requested outcome requires a close event not established by these fields, obtain or reuse permitted subject-associated timeline evidence under 0101 and 0065; no complete event history is implied by this direction. Open and recent portions may reuse the same source-supported object facts without creating duplicate objects or equating their coverage. A connection, field or related event that cannot be observed leaves its actual portion or fact limited; the route must still show permitted supported observations under 0115. Other approved field groups and source families may require further operations, and this direction does not select their queries, pagination size, numeric budget or an alternative when the documented route is unavailable.
-    initial_query_shapes: The four independently scoped GraphQL examples linked in sources are an agent-selected candidate for the initial typed Repository-node lookup and open or recent Issue and PR portions, with variable page size and continuation. The published public GitHub schema snapshot identified in the validation report accepts their syntax, fields and declared argument types under the recorded local validator; this is not evidence of current live schema, query permissions, source responses, population completeness or a verified production integration. Per-object facts, attribution and partial errors still follow 0101 and 0116, with separate event evidence when required. A malformed or inaccessible node, a null list or terminal page does not become a confirmed empty Repository. Page size, cost, scheduling, all other selected fields and runtime behavior and source permissions of close-event retrieval remain open.
-    repository_identity_handoff: For the 0099 explicit locator route, a usable REST Repository observation may bind its validated numeric Repository ID and `node_id` for that same resource and source instance under 0080. Pass the associated opaque Node ID and the captured intended local Repository identity to each independently scoped Today operation; never convert the numeric ID or re-resolve a mutable name as proof of continuity. Attribute returned connection facts only when the usable GraphQL parent is typed Repository and its returned ID is the bound Node ID or is related through a separately source-supported alias. A supported old-to-new Node ID migration lookup can supply that alias under 0080; different unassociated strings, an unexpected type, null parent or an unassociated response leave the portion unresolved, not empty or assigned to a same-named Repository. Recheck the actual disclosure context and route relevance before presentation. The association identifies a resource, not a current grant, stable address, complete collection or simultaneous source snapshot.
-    repository_pr_order_input: GitHub's published GraphQL `Repository.pullRequests` reference currently documents its `orderBy` argument as `IssueOrder`, whose documented `IssueOrderField` includes `UPDATED_AT`; a separately documented `PullRequestOrder` is a distinct input type and cannot be substituted solely by its name. For the proposed recent-PR traversal, keep the actual operation's schema type and selected ordering with its request context and validate the chosen query against the target GitHub schema before calling it implementable. If schema validation rejects an input type, treat that as an operation/request limitation rather than a successful empty PR page or proof of an access denial. The reference establishes a documented candidate input, not a successful live query, a stable ordering across mutations or a complete Today population.
-    plan_limits: This working operation selection is not proof that `updatedAt` changes for every relevant historical event, that the recent candidate list has every eligible object, or that an `IssueFilters.since` boundary, mutable pages and timeline `since` supply gap-free or equivalent event coverage. A successful operation establishes only documented, returned and applicable facts in its captured scope and actual access context. Preserve inclusive or exclusive boundary semantics for the particular operation; do not infer absence of an event, current state, durable retention or complete Project coverage from a successful discovery portion. Verify the selected operation shape, field permissions, null and error propagation and account access before calling the adapter implementable; if evidence remains insufficient, retain the supported limited result rather than blocking all use of the overview.
-    bounded_fair_progress: Prioritize the visible scope and useful permitted facts, while keeping unfinished discovery purposes and unobserved Repository/category portions separately identifiable. A large stream of recent activity or one large Repository must not be treated as a reason to permanently discard the old-open purpose or other selected scopes. Subsequent user-requested or system-granted opportunities can resume or restart work where the source and persisted continuation remain applicable; do not promise a deadline or progress when iOS, access, source limits or execution prevent it. Preserve independently supported earlier observations and avoid treating a traversal cursor as proof of a consistent snapshot.
-    fair_scheduling_candidate: As an agent-authored scheduling policy, represent each needed discovery purpose for a confirmed Repository and object category as a separately eligible work portion. Within a continuing selection of finitely many portions, rotate admission among portions that remain eligible instead of repeatedly restarting the same visible recent-work traversal. After one bounded quantum of a portion is admitted, move it behind the other eligible portions even if it still has pages; a quantum must fit the available execution and source constraints and need not have a predetermined page or request count here. A newly visible scope can be preferred for an initial quantum, but repeated foreground entries must not continually reset the rotation for other already-waiting portions. Explicit user refresh remains bound to its requested scope under 0048 and does not override backoff or access restrictions. A deferred, denied or invalid portion is not represented as completed; reconsider it when its eligibility changes. If the process ends, a persisted rotation position may be resumed only with applicable scope and access context; otherwise rebuild fairly without claiming the earlier order survived. Fairness is conditional on finitely many continuously eligible portions and sufficiently many actual execution opportunities; it is neither a deadline nor a promise of a complete snapshot.
-    fairness_with_shared_portions: When multiple Project requests can use the same independently confirmed Repository, account, object category, discovery purpose and compatible effective predicates, a shared admitted quantum may make progress for each eligible consumer under 0048. Do not give the same source portion an additional share of the rotation solely because it occurs in several Projects, or erase each request's separate captured scope and outcome. A different day, account, filter or source predicate is not automatically compatible merely because the Repository is shared. An explicit user request can still receive the proposed initial visible-scope priority, without repeatedly resetting other continuously eligible waiting portions. A portion postponed by access, rate limits or unavailable execution is not considered completed or continuously eligible during that interval; its supported pending state remains distinguishable. This is a conditional fairness contract, not an assertion of background opportunities, a numerical budget or guaranteed source completeness.
-    mutable_traversal: A collection can change while pages are requested. Overlap or duplicate records may be reconciled using confirmed identities, but their removal does not prove that unseen records were not skipped. A successful terminal page or repeated traversal without a documented sufficiency argument does not alone establish an exhaustive population. Preserve supported observations and communicate unproven coverage without inventing a missing record.
-    incremental_extension: If an implementation uses a baseline and incremental changes, preserve enough evidence to establish the baseline scope, applicable ordering or bounds and complete coverage of all relevant changes to the proposed new reference. An update timestamp, an inclusive or exclusive cursor boundary, or an overlap window is sufficient only for the source operations and data kinds for which its documented semantics cover all required changes, including visibility and late indexing where relevant. Do not derive event time or merge from an update timestamp alone. Failure to prove a gap-free extension leaves the new completeness unknown or partial; no particular endpoint, cursor or overlap duration is required.
-    invalidation_and_scope: Reassess claims when source identity, access, Repository membership, selected day, categories or filters change. Newly gained access and newly added scope are not covered by an earlier restricted baseline; an explicit denial restricts content immediately under 0036. The earlier permitted scope and its historical context may remain separately identifiable where allowed. A change after a reference time does not rewrite that historical claim, but it prevents describing that earlier observation as a newly verified current state.
-    continuation_and_durability: If an implementation persists progress or a checkpoint, a restart may use it for complete coverage only when both its supported boundary and all prerequisite accepted data and coverage evidence are durably consistent. A partial page, failed save, expired continuation or unknown checkpoint must not silently advance the coverage boundary. Supported individual facts can still be retained separately. The persistence mechanism and transaction design are deferred.
-    repair_unrecoverable_page: When an applicable saved continuation skips a portion whose earlier accepted facts or required evidence are not independently recoverable, track that gap separately under 0105 and make its discovery purpose eligible for bounded repair. Continuing later pages does not retire the earlier gap. A fresh restart or supported targeted reread has its own attempt, access and observation context; previously recovered data can be reused only under the relevant identity and ordering rules. The conditional fairness policy applies when the repair remains eligible and opportunities are actually granted. A repair attempt can fail, be deferred or remain incomplete; it is not a guarantee of eventual execution, exact historical recovery or a complete GitHub snapshot.
-    repair_null_node_page: When a usable discovery page contained a nullable PR node with no supported identity or facts under 0116, a continuation beyond that page does not itself resolve the affected population limitation. If enough safe scoped evidence is retained, keep that portion eligible for a bounded fresh reread or a separately supported repair; a retry has its own observation context and is not guaranteed to reproduce the same object, original result or complete snapshot. If the original gap record is lost but the recoverable evidence does not establish an exhaustive population, retain an unproven coverage state rather than asserting that a specific null, permission failure or hidden PR occurred. Do not infer an exact missing count, construct an object identity from a cursor or response index, or retire the limitation merely because later traversal is terminal. A repair result can support its own permitted facts and coverage only where its actual source, scope, access and consistency evidence justify them.
-    repair_context_change: Reevaluate a gap's captured source account, Repository identity, discovery purpose, effective query and period, and current access before admitting a repair or projecting its result. A Project-wide request for a new member set does not acquire a removed Repository's old gap, and its retained evidence is not deleted merely because the Repository leaves that Project; it may remain relevant to another permitted scope under its own policy. A gap bound to an earlier local-day interval is not relabeled as the new day's recent-work coverage. A separately applicable open-work portion can be reused only to the extent its actual query, identity, access and evidence support the new evaluation; it does not supply the new day's event alternatives. A locally observed denial or account replacement restricts or prevents affected work under 0036 and 0112, and an earlier repair response arriving afterward cannot itself restore private access. Preserve the operator's valid Project scope and explicit filters and expose only a safe relevant limitation; do not show a restricted Repository name or gap count to explain it.
-    deletion_and_absence: An item missing from a later partial result, a changed access context, a filtered list or an unproven traversal is not a confirmed deletion, closed state or merge. Absence becomes evidence only within a source-backed complete scope and reference context that supports the specific conclusion; a source-confirmed deletion or restriction follows its own evidence and access rules.
-    usability: The operator may inspect permitted last-known objects and explicitly request refresh even where exact completeness cannot be established. Show the latest supported observation context and any applicable refresh failure or coverage limitation without implying a live count; do not disable the overview solely because a stronger snapshot claim is unavailable. Presentation detail remains a UX refinement.
-    verification: Before implementation, evaluate each selected source operation against its documented population and ordering guarantees and explicitly record unresolved limits. Planned deterministic cases use controlled pages, late changes, duplicate identities, missing ranges, access changes and failed durable saves. Actual GitHub integration and native presentation require separate evidence; neither documentation nor a synthetic test establishes the behavior of the product.
-    provenance: The owner requested local cached data, a visible last update and error, a dense Today overview including completed work, and restrained API use. This coverage-evidence contract and acquisition strategies are agent-authored refinements. The four documented GraphQL discovery examples and typed closure examples are an agent-selected working candidate, not an owner decision or a verified source capability, exhaustive grant, API budget or storage implementation.
+    downstream_policy_boundary: Reference to 0110 below identifies a downstream consumer of this coverage
+      contract, not a prerequisite of coverage itself. A review of the assembled Today route considers
+      both contracts and their applicable dependencies; checking 0102's prerequisite closure alone does
+      not check the selection decision.
+    observation_claim: A coverage claim names the confirmed Repository set and identity context, object
+      categories, relevant Today alternatives and filters, access context, and the source-supported reference
+      time or interval. Describe it as a last-known observation at that reference rather than a continuously
+      live state; the time at which the last page or local save completed is not automatically the source
+      reference time. Individual object and field observations retain their own contexts under 0044 and
+      0089.
+    population_basis: Complete coverage requires a source-backed method covering the relevant union under
+      0027 and all active filter inputs that can affect the claimed selection. A simultaneous snapshot,
+      a consistent baseline followed by an uninterrupted complete change stream, or another method is
+      sufficient only to the extent its actual source guarantees establish the claim. A traversal or a
+      nonempty cursor alone is not such a guarantee. A method may support a scoped historical or bounded
+      observation without supporting a present instantaneous state.
+    count_versus_materialization: A source-supported exact aggregate may establish a count for its own
+      matching predicate, subject, access and reference without establishing the identities or individual
+      facts of every member. Keep count evidence separate from evidence that every corresponding object
+      has been identified, retrieved and prepared for the work grid. Even equal aggregate and visible-card
+      counts do not independently prove identical membership or a fully materialized selection. Claim
+      an exhaustive card collection only with sufficient object-level identity, predicate, access, time
+      and population evidence for that exact selection; otherwise show permitted cards and an appropriate
+      collection limitation. Conversely, a complete materialized selection supports an exact distinct
+      count only where its identity, predicate and context evidence support that count. This distinction
+      does not require every count to enumerate objects or every selection to expose an exact count.
+    unresolved_representation_and_aggregate: An untyped or identity-ambiguous permitted source representation
+      that could satisfy the selected condition limits an object-level completeness claim under 0101 and
+      0110. It does not automatically invalidate an independently source-supported exact aggregate for
+      the same predicate, scope, reference and disclosure context if that aggregate's sufficiency is established
+      without resolving the record and no conflicting evidence undermines it. Preserve the aggregate's
+      own reference and present the materialization limitation separately. Do not add the unresolved representation
+      to that aggregate, subtract visible cards to derive an unexplained missing-object count, or infer
+      that it is a distinct member. A count-only claim cannot turn the unresolved representation into
+      an identified object or establish an exhaustive grid.
+    coverage_after_identity_resolution: Reevaluate affected distinctness, predicate support and materialization
+      when a previously unresolved source representation is associated with a confirmed typed object.
+      A newly established association can remove that particular identity limitation for the original
+      evidence scope, but does not by itself establish that all records or pages were found, that source
+      or access remained unchanged, or that all retained observations share one time. A complete historical
+      selection may be claimed only when its own population, predicates, identity and disclosure evidence
+      together support that exact past reference; the time of local resolution is not a new source reference.
+      A present claim requires its own applicable later evidence. A duplicate association can reduce a
+      previously observed distinct subset; do not describe that correction as a source deletion or change
+      in lifecycle.
+    alternative_coverage: For the unselected complete union candidate, coverage would require evidence
+      for still-open work, items created during the selected Today interval and eligible closure or merge
+      events during that interval. Creation alone and the complete union are not owner-selected inclusion
+      rules. The device-local calendar day is one proposed interpretation under 0049, not a settled product
+      choice. A source query for currently open objects alone cannot account for objects merged or closed
+      today; a query for recent updates alone is not an event history or a demonstrated complete union.
+      Each active filter adds its own applicable evidence needs. Known positive objects may be shown with
+      their supported facts while missing branches and unobserved Repository scopes remain independently
+      incomplete.
+    documented_rest_example: GitHub documents `open` as the default state for the repository Issue and
+      PR list operations; Issue `since` selects results updated after its supplied time. Therefore, a
+      default-state list excludes currently closed work, and an Issues query restricted to recent updates
+      need not contain an older open Issue that was not updated within that interval. These are constraints
+      of those particular operations, not a requirement to use them. Even `state=all` and successful traversal
+      do not by themselves prove the occurrence and time of every closure, a coherent snapshot, or complete
+      visibility for the selected Project. GraphQL pageInfo describes page traversal; do not infer a documented
+      snapshot guarantee solely from its terminal cursor. Choose and justify applicable operations and
+      evidence separately for each Today alternative and Repository.
+    candidate_acquisition: Conditional on adoption of the unselected full inclusion formula, as an agent-authored
+      initial acquisition strategy for each eligible Repository and object category, combine permitted
+      last-known observations with two separately tracked discovery purposes — open work without a recent-update
+      cutoff, and potentially relevant recent work across open and closed states. Normalize identities
+      under 0101, retrieve or reuse applicable creation, lifecycle, merge and closure-event evidence,
+      and evaluate the actual Today alternatives under 0027. This is a strategy for finding candidates,
+      not proof that every open or completed object is found; source operations and their paging, permission
+      and event semantics remain subject to selection and verification. An object created today but now
+      closed remains eligible by its confirmed creation instant even if no separate closure event was
+      recovered.
+    candidate_rest_routes: As documented examples for that strategy, GitHub's per-Repository PR and Issue
+      list operations support open and all states; the PR list supports sorting by updated time, while
+      Issue `since` filters on update time and can include PR representations. An open-work pass must
+      not depend solely on a recent `since` boundary. An all-state or recent-updates pass can discover
+      candidates for further supported fact evaluation, but updated time is neither creation nor closure
+      event time, and strict `since` boundaries, mutable pages, visibility and indexing cannot be assumed
+      gap-free. These examples do not fix the final API mix, page size, numerical refresh budget or guarantee
+      of exact population; do not translate a GraphQL Node ID into a REST numeric ID without supported
+      association.
+    issue_since_source_semantics: For the documented GitHub repository Issues REST operation, `since`
+      describes records last updated after the supplied instant; GraphQL `IssueFilters.since` describes
+      Issues updated at or after it. Preserve the endpoint, source version, actual query predicate and
+      boundary inclusivity with the observation; the same timestamp does not describe an identical interval
+      in the two APIs. Neither predicate is an event-time filter or a complete history. An item whose
+      last update equals a REST boundary is not covered by that documented predicate; an inclusive GraphQL
+      predicate alone still does not establish exhaustive pages, event history, visibility or a stable
+      snapshot. Timestamp precision, ties, access, indexing and mutable pages still require evidence.
+      Do not silently advance an incremental coverage checkpoint across an unproven boundary.
+    selected_today_operations: As an agent-selected working candidate rather than an owner-selected implementation,
+      and conditional on the chosen population,  use the four GraphQL operations in today-graphql-operation-candidates-20261115.md
+      for each permitted Repository with a supported GraphQL Repository Node ID — open Issues, recent
+      Issues, open PRs and recent PRs. The open portions have no recent cutoff; recent Issues use the
+      captured Today interval start as the query since value and recent PRs use the all-state updated-order
+      connection. A device-local calendar day is one proposed interpretation under 0049; applicability
+      of the source cutoff to any selected interval must be established independently. Request pages as
+      permitted by refresh opportunities; a bounded or interrupted scan remains incomplete. Keep each
+      purpose and its actual scope, pages, supported facts and errors distinct. The documented typed Repository
+      parent supplies the object association only when successfully returned and matched under 0101; unresolved
+      identity is a limitation, not an empty list. These operations are the initial selection for base
+      Today discovery, superseding the earlier candidate-only status in their unchanged evidence documents;
+      selection is not proof of complete coverage, accepted grant, live GitHub behavior or a fixed request
+      budget.
+    selected_outcome_evidence: Conditional on adoption of the full proposed inclusion formula, including
+      its unselected creation alternative, evaluate each discovered or retained permitted object against
+      the captured Today interval and its selected boundary interpretation. A supported creation instant,
+      applicable open state or PR merge instant can independently establish a positive match under 0110.
+      For a candidate whose outcome evidence is needed and not already supported, the typed Issue or PR
+      timeline operation in today-closure-graphql-operation-candidates-20261115.md is the working source
+      for closure evidence. Bind each usable ClosedEvent to its supported subject and Repository, and
+      compare its event time with that interval. A PR ClosedEvent alone does not establish that the particular
+      closure was without merge; require independently source-supported applicable evidence for that event
+      classification, or retain the outcome alternative as unknown unless another supported alternative
+      establishes inclusion. Fetching a timeline for every object is not required when another supported
+      Today alternative already establishes inclusion; a failure or incomplete timeline remains an outcome
+      limitation. Neither an update timestamp nor a closed current state alone proves the relevant closure
+      event, and discovering timelines only for known candidates cannot prove that all relevant objects
+      were found.
+    selected_initial_handoff: Pass typed identities, individually supported state, creation or outcome
+      facts and their actual observation contexts to 0116; pass per-Repository and per-purpose attempt,
+      coverage and errors separately. Feed the prepared observations to 0110, then 0115 for the work grid.
+      Include independently supported matches once per identity, retain permitted last-known information
+      with its time, and communicate incomplete discovery or refresh failure without inventing a missing
+      count, zero, deletion or current success. The day and active Project scope are captured for evaluation
+      and recomputed when applicable, not inferred from a response timestamp. Detailed filter inputs,
+      full PR and Issue overview fields and historical metrics use their own contracts rather than being
+      implied by these four discovery operations.
+    candidate_graphql_routes: The documented GraphQL Repository issues connection accepts state filters
+      and `IssueFilters`, while its pullRequests connection has its own state and pagination arguments.
+      A candidate plan can request open Issues without a since filter separately from recent Issue candidates
+      filtered by `IssueFilters.since`; PR discovery remains a separate connection and must not assume
+      that the Issue-only filter also applies there. Record effective filter arguments and page outcomes
+      per Repository, object type and discovery purpose. Retrieve only available typed facts from each
+      usable field; field errors and inaccessible connections do not become empty collections. The initial
+      operations are selected in selected_today_operations; their available permissions, live behavior,
+      snapshot guarantees and numerical refresh policy are not established.
+    initial_source_route: As an agent-authored first-version direction for GitHub.com Today discovery,
+      use typed GraphQL Repository `issues` and `pullRequests` connections for the two separately tracked
+      discovery purposes under candidate_acquisition. For open work request the applicable OPEN state
+      without a recent-update cutoff for each type. For recent candidates use the Issue connection with
+      the relevant all-state selection and a captured `IssueFilters.since` based on the selected day,
+      and use the separate PR connection with applicable open, closed and merged states ordered by supported
+      update ordering. Record the actual parameters and context of each portion; a bounded PR scan need
+      not finish or assume that a recent-update prefix proves all matching events. For each usable node
+      obtain the typed identity and Repository witness and the available creation, state and PR merge
+      facts specified in 0101, alongside independently supported presentation fields. When the Today inclusion
+      or an explicitly requested outcome requires a close event not established by these fields, obtain
+      or reuse permitted subject-associated timeline evidence under 0101 and 0065; no complete event history
+      is implied by this direction. Open and recent portions may reuse the same source-supported object
+      facts without creating duplicate objects or equating their coverage. A connection, field or related
+      event that cannot be observed leaves its actual portion or fact limited; the route must still show
+      permitted supported observations under 0115. Other approved field groups and source families may
+      require further operations, and this direction does not select their queries, pagination size, numeric
+      budget or an alternative when the documented route is unavailable.
+    initial_query_shapes: The four independently scoped GraphQL examples linked in sources are an agent-selected
+      candidate for the initial typed Repository-node lookup and open or recent Issue and PR portions,
+      with variable page size and continuation. The published public GitHub schema snapshot identified
+      in the validation report accepts their syntax, fields and declared argument types under the recorded
+      local validator; this is not evidence of current live schema, query permissions, source responses,
+      population completeness or a verified production integration. Per-object facts, attribution and
+      partial errors still follow 0101 and 0116, with separate event evidence when required. A malformed
+      or inaccessible node, a null list or terminal page does not become a confirmed empty Repository.
+      Page size, cost, scheduling, all other selected fields and runtime behavior and source permissions
+      of close-event retrieval remain open.
+    repository_identity_handoff: For the 0099 explicit locator route, a usable REST Repository observation
+      may bind its validated numeric Repository ID and `node_id` for that same resource and source instance
+      under 0080. Pass the associated opaque Node ID and the captured intended local Repository identity
+      to each independently scoped Today operation; never convert the numeric ID or re-resolve a mutable
+      name as proof of continuity. Attribute returned connection facts only when the usable GraphQL parent
+      is typed Repository and its returned ID is the bound Node ID or is related through a separately
+      source-supported alias. A supported old-to-new Node ID migration lookup can supply that alias under
+      0080; different unassociated strings, an unexpected type, null parent or an unassociated response
+      leave the portion unresolved, not empty or assigned to a same-named Repository. Recheck the actual
+      disclosure context and route relevance before presentation. The association identifies a resource,
+      not a current grant, stable address, complete collection or simultaneous source snapshot.
+    repository_pr_order_input: GitHub's published GraphQL `Repository.pullRequests` reference currently
+      documents its `orderBy` argument as `IssueOrder`, whose documented `IssueOrderField` includes `UPDATED_AT`;
+      a separately documented `PullRequestOrder` is a distinct input type and cannot be substituted solely
+      by its name. For the proposed recent-PR traversal, keep the actual operation's schema type and selected
+      ordering with its request context and validate the chosen query against the target GitHub schema
+      before calling it implementable. If schema validation rejects an input type, treat that as an operation/request
+      limitation rather than a successful empty PR page or proof of an access denial. The reference establishes
+      a documented candidate input, not a successful live query, a stable ordering across mutations or
+      a complete Today population.
+    plan_limits: This working operation selection is not proof that `updatedAt` changes for every relevant
+      historical event, that the recent candidate list has every eligible object, or that an `IssueFilters.since`
+      boundary, mutable pages and timeline `since` supply gap-free or equivalent event coverage. A successful
+      operation establishes only documented, returned and applicable facts in its captured scope and actual
+      access context. Preserve inclusive or exclusive boundary semantics for the particular operation;
+      do not infer absence of an event, current state, durable retention or complete Project coverage
+      from a successful discovery portion. Verify the selected operation shape, field permissions, null
+      and error propagation and account access before calling the adapter implementable; if evidence remains
+      insufficient, retain the supported limited result rather than blocking all use of the overview.
+    bounded_fair_progress: Prioritize the visible scope and useful permitted facts, while keeping unfinished
+      discovery purposes and unobserved Repository/category portions separately identifiable. A large
+      stream of recent activity or one large Repository must not be treated as a reason to permanently
+      discard the old-open purpose or other selected scopes. Subsequent user-requested or system-granted
+      opportunities can resume or restart work where the source and persisted continuation remain applicable;
+      do not promise a deadline or progress when iOS, access, source limits or execution prevent it. Preserve
+      independently supported earlier observations and avoid treating a traversal cursor as proof of a
+      consistent snapshot.
+    fair_scheduling_candidate: As an agent-authored scheduling policy, represent each needed discovery
+      purpose for a confirmed Repository and object category as a separately eligible work portion. Within
+      a continuing selection of finitely many portions, rotate admission among portions that remain eligible
+      instead of repeatedly restarting the same visible recent-work traversal. After one bounded quantum
+      of a portion is admitted, move it behind the other eligible portions even if it still has pages;
+      a quantum must fit the available execution and source constraints and need not have a predetermined
+      page or request count here. A newly visible scope can be preferred for an initial quantum, but repeated
+      foreground entries must not continually reset the rotation for other already-waiting portions. Explicit
+      user refresh remains bound to its requested scope under 0048 and does not override backoff or access
+      restrictions. A deferred, denied or invalid portion is not represented as completed; reconsider
+      it when its eligibility changes. If the process ends, a persisted rotation position may be resumed
+      only with applicable scope and access context; otherwise rebuild fairly without claiming the earlier
+      order survived. Fairness is conditional on finitely many continuously eligible portions and sufficiently
+      many actual execution opportunities; it is neither a deadline nor a promise of a complete snapshot.
+    fairness_with_shared_portions: When multiple Project requests can use the same independently confirmed
+      Repository, account, object category, discovery purpose and compatible effective predicates, a shared
+      admitted quantum may make progress for each eligible consumer under 0048. Do not give the same source
+      portion an additional share of the rotation solely because it occurs in several Projects, or erase
+      each request's separate captured scope and outcome. A different day, account, filter or source predicate
+      is not automatically compatible merely because the Repository is shared. An explicit user request
+      can still receive the proposed initial visible-scope priority, without repeatedly resetting other
+      continuously eligible waiting portions. A portion postponed by access, rate limits or unavailable
+      execution is not considered completed or continuously eligible during that interval; its supported
+      pending state remains distinguishable. This is a conditional fairness contract, not an assertion
+      of background opportunities, a numerical budget or guaranteed source completeness.
+    mutable_traversal: A collection can change while pages are requested. Overlap or duplicate records
+      may be reconciled using confirmed identities, but their removal does not prove that unseen records
+      were not skipped. A successful terminal page or repeated traversal without a documented sufficiency
+      argument does not alone establish an exhaustive population. Preserve supported observations and
+      communicate unproven coverage without inventing a missing record.
+    incremental_extension: If an implementation uses a baseline and incremental changes, preserve enough
+      evidence to establish the baseline scope, applicable ordering or bounds and complete coverage of
+      all relevant changes to the proposed new reference. An update timestamp, an inclusive or exclusive
+      cursor boundary, or an overlap window is sufficient only for the source operations and data kinds
+      for which its documented semantics cover all required changes, including visibility and late indexing
+      where relevant. Do not derive event time or merge from an update timestamp alone. Failure to prove
+      a gap-free extension leaves the new completeness unknown or partial; no particular endpoint, cursor
+      or overlap duration is required.
+    invalidation_and_scope: Reassess claims when source identity, access, Repository membership, selected
+      day, categories or filters change. Confirmed revocation stops normal synchronization for the affected
+      Repository but does not hide already saved local content under 0019. Preserve its supported historical
+      context, revocation indication and time when known; do not describe it as a newly verified current
+      state. A new member or newly gained access is not covered by an earlier baseline.
+    continuation_and_durability: If an implementation persists progress or a checkpoint, a restart may
+      use it for complete coverage only when both its supported boundary and all prerequisite accepted
+      data and coverage evidence are durably consistent. A partial page, failed save, expired continuation
+      or unknown checkpoint must not silently advance the coverage boundary. Supported individual facts
+      can still be retained separately. The persistence mechanism and transaction design are deferred.
+    repair_unrecoverable_page: When an applicable saved continuation skips a portion whose earlier accepted
+      facts or required evidence are not independently recoverable, track that gap separately under 0105
+      and make its discovery purpose eligible for bounded repair. Continuing later pages does not retire
+      the earlier gap. A fresh restart or supported targeted reread has its own attempt, access and observation
+      context; previously recovered data can be reused only under the relevant identity and ordering rules.
+      The conditional fairness policy applies when the repair remains eligible and opportunities are actually
+      granted. A repair attempt can fail, be deferred or remain incomplete; it is not a guarantee of eventual
+      execution, exact historical recovery or a complete GitHub snapshot.
+    repair_null_node_page: When a usable discovery page contained a nullable PR node with no supported
+      identity or facts under 0116, a continuation beyond that page does not itself resolve the affected
+      population limitation. If enough safe scoped evidence is retained, keep that portion eligible for
+      a bounded fresh reread or a separately supported repair; a retry has its own observation context
+      and is not guaranteed to reproduce the same object, original result or complete snapshot. If the
+      original gap record is lost but the recoverable evidence does not establish an exhaustive population,
+      retain an unproven coverage state rather than asserting that a specific null, permission failure
+      or hidden PR occurred. Do not infer an exact missing count, construct an object identity from a
+      cursor or response index, or retire the limitation merely because later traversal is terminal. A
+      repair result can support its own permitted facts and coverage only where its actual source, scope,
+      access and consistency evidence justify them.
+    repair_context_change: Retain and verify a gap captured source account, Repository identity, discovery
+      purpose, query and period before admitting repair or projecting its result. Membership, day or account
+      changes do not relabel an old gap into a different context; independently applicable account boundaries
+      remain in effect. Confirmed revocation stops ordinary repair and synchronization for that Repository
+      under 0019; a prior response does not become a new accepted update or establish restored access.
+      Previously saved local data and supported gap context remain accessible with their limitations.
+      Do not dispatch a guessed or context-inapplicable repair or invent an unknown count.
+    deletion_and_absence: An item missing from a later partial result, a changed access context, a filtered
+      list or an unproven traversal is not a confirmed deletion, closed state or merge. Absence becomes
+      evidence only within a source-backed complete scope and reference context that supports the specific
+      conclusion; a source-confirmed deletion or restriction follows its own evidence and access rules.
+    usability: The operator may inspect permitted last-known objects and explicitly request refresh even
+      where exact completeness cannot be established. Show the latest supported observation context and
+      any applicable refresh failure or coverage limitation without implying a live count; do not disable
+      the overview solely because a stronger snapshot claim is unavailable. Presentation detail remains
+      a UX refinement.
+    verification: Before implementation, evaluate each selected source operation against its documented
+      population and ordering guarantees and explicitly record unresolved limits. Planned deterministic
+      cases use controlled pages, late changes, duplicate identities, missing ranges, access changes and
+      failed durable saves. Actual GitHub integration and native presentation require separate evidence;
+      neither documentation nor a synthetic test establishes the behavior of the product.
+    provenance: The owner requested local cached data, a visible last update and error, a dense Today
+      overview including completed work, and restrained API use. This coverage-evidence contract and acquisition
+      strategies are agent-authored refinements. The four documented GraphQL discovery examples and typed
+      closure examples are an agent-selected working candidate, not an owner decision or a verified source
+      capability, exhaustive grant, API budget or storage implementation.
   scenarios:
     selected_route_with_source_error:
-      given: Project P contains permitted Repositories A and B. A's open-Issue operation returns a typed older open Issue and its recent-PR operation returns a typed PR merged today; B's relevant discovery is unavailable and A's separate closure request fails.
+      given: Project P contains permitted Repositories A and B. A's open-Issue operation returns a typed
+        older open Issue and its recent-PR operation returns a typed PR merged today; B's relevant discovery
+        is unavailable and A's separate closure request fails.
       when: The Project-wide Today route evaluates the selected operations for the captured local day.
-      then: The confirmed A Issue and merged PR can each appear once with their source context; the failed closure request and unobserved B scope remain distinguishable limitations. No complete Project collection, missing-card count or empty B is inferred, and eligible last-known data retains its own observation time.
+      then: The confirmed A Issue and merged PR can each appear once with their source context; the failed
+        closure request and unobserved B scope remain distinguishable limitations. No complete Project
+        collection, missing-card count or empty B is inferred, and eligible last-known data retains its
+        own observation time.
     shared_portion_and_waiting_scope:
-      given: Projects P and Q both request compatible PR discovery for shared Repository A, while Project Q also has a continuously eligible Issue portion for Repository C. A's portion keeps receiving new activity and repeated openings of P occur; the rotation and the Q request remain valid and enough bounded opportunities are actually granted.
+      given: Projects P and Q both request compatible PR discovery for shared Repository A, while Project
+        Q also has a continuously eligible Issue portion for Repository C. A's portion keeps receiving
+        new activity and repeated openings of P occur; the rotation and the Q request remain valid and
+        enough bounded opportunities are actually granted.
       when: The scheduler admits shared work and applies the conditional rotation.
-      then: A's compatible admitted quantum may serve both requests with its own evidence, but its presence in two Projects does not by itself displace C indefinitely. Q's C portion receives an admission opportunity without implying successful retrieval, and neither Project is reported fully covered solely from A's response.
+      then: A's compatible admitted quantum may serve both requests with its own evidence, but its presence
+        in two Projects does not by itself displace C indefinitely. Q's C portion receives an admission
+        opportunity without implying successful retrieval, and neither Project is reported fully covered
+        solely from A's response.
     typed_discovery_partial_timeline:
-      given: A GraphQL open-Issue portion returns a confirmed older open Issue, and a separate all-state PR discovery portion returns a confirmed merged PR with a usable merge instant in Today. Timeline retrieval for another candidate fails.
+      given: A GraphQL open-Issue portion returns a confirmed older open Issue, and a separate all-state
+        PR discovery portion returns a confirmed merged PR with a usable merge instant in Today. Timeline
+        retrieval for another candidate fails.
       when: The route assembles Today for that Repository under the initial source direction.
-      then: The older open Issue and the merged PR can be included using their separate supported facts; the failed timeline and any unproven discovery coverage remain limited, rather than excluding the other candidate or establishing a complete collection. The PR and Issue portions retain their actual contexts and no numeric budget is implied.
+      then: The older open Issue and the merged PR can be included using their separate supported facts;
+        the failed timeline and any unproven discovery coverage remain limited, rather than excluding
+        the other candidate or establishing a complete collection. The PR and Issue portions retain their
+        actual contexts and no numeric budget is implied.
     fair_discovery_across_opportunities:
-      given: A Project has two permitted Repositories with open-work and recent-work portions, each remains eligible, and repeated bounded opportunities each have capacity to admit only one portion. The visible recent-work portion keeps receiving new activity.
+      given: A Project has two permitted Repositories with open-work and recent-work portions, each remains
+        eligible, and repeated bounded opportunities each have capacity to admit only one portion. The
+        visible recent-work portion keeps receiving new activity.
       when: The scheduler carries forward an applicable rotation across enough opportunities.
-      then: The other continuously waiting portions also receive an admission opportunity rather than being perpetually displaced by the visible recent-work portion. Their admission alone does not prove completed pages, exhaustive coverage or success when source execution fails.
+      then: The other continuously waiting portions also receive an admission opportunity rather than
+        being perpetually displaced by the visible recent-work portion. Their admission alone does not
+        prove completed pages, exhaustive coverage or success when source execution fails.
     discovery_rotation_after_process_loss:
-      given: A process stops with multiple unfinished portions and no independently recoverable scheduling position, while some previously accepted observations are durably readable.
+      given: A process stops with multiple unfinished portions and no independently recoverable scheduling
+        position, while some previously accepted observations are durably readable.
       when: A later eligible refresh is requested for the same Project.
-      then: The scheduler may rebuild a fair rotation without asserting that the lost position was retained; recovered observations keep their original scope and time, and uncovered portions remain unproven rather than complete.
+      then: The scheduler may rebuild a fair rotation without asserting that the lost position was retained;
+        recovered observations keep their original scope and time, and uncovered portions remain unproven
+        rather than complete.
     identity_resolved_but_page_missing:
-      given: Two previously ambiguous permitted records are later confirmed as representations of one PR; an additional page of the relevant Repository population remains unobserved.
+      given: Two previously ambiguous permitted records are later confirmed as representations of one
+        PR; an additional page of the relevant Repository population remains unobserved.
       when: Today coverage and the distinct observed subset are recalculated.
-      then: The confirmed PR contributes at most once and the identity limitation for those records can be removed, while the missing population keeps the selection incomplete and the association time is not a source refresh or deletion event.
+      then: The confirmed PR contributes at most once and the identity limitation for those records can
+        be removed, while the missing population keeps the selection incomplete and the association time
+        is not a source refresh or deletion event.
     identity_resolution_completes_historical_claim_only:
-      given: A source-backed method independently establishes exhaustive population and applicable predicate evidence at T1 except for the identity association of one retained record; at T2 evidence independently confirms the association applies to that T1 record, without any observation of intervening source changes.
+      given: A source-backed method independently establishes exhaustive population and applicable predicate
+        evidence at T1 except for the identity association of one retained record; at T2 evidence independently
+        confirms the association applies to that T1 record, without any observation of intervening source
+        changes.
       when: Historical T1 coverage and current T2 coverage are assessed.
-      then: The supported identity association may complete the T1 claim under its original scope and disclosure context, but it does not establish complete current T2 coverage or relabel the event or facts as observed at T2.
+      then: The supported identity association may complete the T1 claim under its original scope and
+        disclosure context, but it does not establish complete current T2 coverage or relabel the event
+        or facts as observed at T2.
     old_open_and_recent_done:
-      given: A Project has an Issue opened months ago with no recent updates and a PR created and merged during the current local day; neither was previously cached.
-      when: Acquisition obtains the older Issue through an uncut open-work purpose and independently obtains enough identity and event evidence for the PR through a recent all-state purpose.
-      then: Both are eligible for Today under their own confirmed alternatives and context; no recent-update cutoff drops the old Issue, and the PR's update timestamp alone is not called its merge time.
+      given: A Project has an Issue opened months ago with no recent updates and a PR created and merged
+        during the current local day; neither was previously cached.
+      when: Acquisition obtains the older Issue through an uncut open-work purpose and independently obtains
+        enough identity and event evidence for the PR through a recent all-state purpose.
+      then: Both are eligible for Today under their own confirmed alternatives and context; no recent-update
+        cutoff drops the old Issue, and the PR's update timestamp alone is not called its merge time.
     large_recent_stream_does_not_erase_open_work:
-      given: A selected Repository has many recently updated PRs and an older open Issue, while the permitted execution opportunity expires before all discovery purposes and pages finish.
+      given: A selected Repository has many recently updated PRs and an older open Issue, while the permitted
+        execution opportunity expires before all discovery purposes and pages finish.
       when: The current Project selection is presented and a later permitted refresh occurs.
-      then: Supported facts are usable with incomplete scope, the old-open Issue purpose remains pending rather than being declared empty or discarded, and a later opportunity can continue or repeat it without promising an exact completion time.
+      then: Supported facts are usable with incomplete scope, the old-open Issue purpose remains pending
+        rather than being declared empty or discarded, and a later opportunity can continue or repeat
+        it without promising an exact completion time.
     created_today_closed_event_unknown_candidate:
-      given: An identified Issue is created during the local day and is subsequently observed closed, but no sufficient closure-event history was recovered.
+      given: An identified Issue is created during the local day and is subsequently observed closed,
+        but no sufficient closure-event history was recovered.
       when: Unfiltered Today is evaluated.
-      then: The confirmed creation instant can include the Issue once; its precise close event and any separate closure metric remain independently unknown.
+      then: The confirmed creation instant can include the Issue once; its precise close event and any
+        separate closure metric remain independently unknown.
     wrong_order_input_type:
-      given: A proposed recent-PR GraphQL request declares an order variable with a type incompatible with the target schema's Repository.pullRequests orderBy argument, and request validation fails before a usable PR result is produced.
+      given: A proposed recent-PR GraphQL request declares an order variable with a type incompatible
+        with the target schema's Repository.pullRequests orderBy argument, and request validation fails
+        before a usable PR result is produced.
       when: The route evaluates that discovery portion.
-      then: The portion is unavailable or failed with its supported safe request-level limitation, not an empty PR list, a terminal successful traversal or proof of denied Repository access. Independently usable prior observations retain their own context; a corrected request is a new source attempt.
+      then: The portion is unavailable or failed with its supported safe request-level limitation, not
+        an empty PR list, a terminal successful traversal or proof of denied Repository access. Independently
+        usable prior observations retain their own context; a corrected request is a new source attempt.
     moved_between_pages:
-      given: During a successful multi-page traversal an object changes position so that the observed pages do not establish whether it was seen, and the selected source contract provides no consistency guarantee.
+      given: During a successful multi-page traversal an object changes position so that the observed
+        pages do not establish whether it was seen, and the selected source contract provides no consistency
+        guarantee.
       when: The final page succeeds and the Project Today count is evaluated.
-      then: Valid observed objects remain available, but successful pagination and deduplication alone do not support an exact complete population or a new complete snapshot time.
+      then: Valid observed objects remain available, but successful pagination and deduplication alone
+        do not support an exact complete population or a new complete snapshot time.
     baseline_gap:
-      given: A source-backed baseline is complete for the stated scope at T1; a later incremental observation has an unaccounted interval after T1.
+      given: A source-backed baseline is complete for the stated scope at T1; a later incremental observation
+        has an unaccounted interval after T1.
       when: The operator refreshes at T2.
-      then: Supported new observations may be shown with their own contexts, the T1 claim remains historical, and completeness is not advanced across the gap.
+      then: Supported new observations may be shown with their own contexts, the T1 claim remains historical,
+        and completeness is not advanced across the gap.
     open_only_refresh:
-      given: The source successfully returns a supported collection of currently open PRs, but no source-backed coverage of PRs merged or closed during today was obtained.
+      given: The source successfully returns a supported collection of currently open PRs, but no source-backed
+        coverage of PRs merged or closed during today was obtained.
       when: The Project-wide unfiltered Today selection is displayed.
-      then: Eligible observed open PRs remain usable while the completed-today branch is unobserved; the app does not call the displayed collection the complete Today population or claim zero completed work.
+      then: Eligible observed open PRs remain usable while the completed-today branch is unobserved; the
+        app does not call the displayed collection the complete Today population or claim zero completed
+        work.
     recent_issue_updates_miss_old_open:
-      given: An Issue remains open from an earlier day and its last update precedes the `since` boundary of a GitHub repository Issues query; no separate applicable baseline or unfiltered source observation covers it.
+      given: An Issue remains open from an earlier day and its last update precedes the `since` boundary
+        of a GitHub repository Issues query; no separate applicable baseline or unfiltered source observation
+        covers it.
       when: The recent-updates query completes and Today is evaluated.
-      then: Its absence from that query is not evidence that no older open Issue exists, and the open-work population is not claimed complete from the query alone.
+      then: Its absence from that query is not evidence that no older open Issue exists, and the open-work
+        population is not claimed complete from the query alone.
     all_current_states_not_event_history:
-      given: An Issue closed and reopened during the selected day, and a later current-state listing reports it open without a supported closure event.
+      given: An Issue closed and reopened during the selected day, and a later current-state listing reports
+        it open without a supported closure event.
       when: The operator requests both Today and that day's closure outcomes.
-      then: The source-supported open state can include the Issue in Today, while its historical closure condition remains unknown until separately supported event-time evidence is obtained.
+      then: The source-supported open state can include the Issue in Today, while its historical closure
+        condition remains unknown until separately supported event-time evidence is obtained.
     proven_extension:
-      given: A documented source method establishes a complete baseline and all relevant changes through T2 for the unchanged scope and access context, with accepted consistent evidence.
+      given: A documented source method establishes a complete baseline and all relevant changes through
+        T2 for the unchanged scope and access context, with accepted consistent evidence.
       when: The selection and coverage are recomputed.
-      then: The observation may claim complete coverage through the supported T2 reference, without implying that no source changes occurred afterward.
+      then: The observation may claim complete coverage through the supported T2 reference, without implying
+        that no source changes occurred afterward.
     tied_boundary:
-      given: Two relevant updates share the finest source timestamp supported by an incremental query, and its boundary semantics do not prove that both were enumerated.
+      given: Two relevant updates share the finest source timestamp supported by an incremental query,
+        and its boundary semantics do not prove that both were enumerated.
       when: A later page succeeds.
-      then: The affected interval remains unproven unless independent source evidence closes it; a higher locally recorded time alone is insufficient.
+      then: The affected interval remains unproven unless independent source evidence closes it; a higher
+        locally recorded time alone is insufficient.
     different_since_boundaries:
-      given: An Issue's last-update instant equals T and otherwise matches the same Repository and state scope in both the REST repository Issues operation and a GraphQL IssueFilters query using T as `since`.
+      given: An Issue's last-update instant equals T and otherwise matches the same Repository and state
+        scope in both the REST repository Issues operation and a GraphQL IssueFilters query using T as
+        `since`.
       when: GitView evaluates what each documented predicate covers.
-      then: The REST predicate describes updates after T and therefore does not cover the equal-boundary update; GraphQL describes updates at or after T. Neither result alone proves the Issue was returned, that pages were complete or that a closure occurred at T.
+      then: The REST predicate describes updates after T and therefore does not cover the equal-boundary
+        update; GraphQL describes updates at or after T. Neither result alone proves the Issue was returned,
+        that pages were complete or that a closure occurred at T.
     explicit_lookup_then_transfer_and_address_reuse:
-      given: A permitted REST lookup associates Repository R and Node ID N with address X, and a Project is explicitly saved with R. The source later supports R at another address while a separate Repository S is confirmed at X; a Today GraphQL operation returns a typed parent associated with N and permitted child facts.
+      given: A permitted REST lookup associates Repository R and Node ID N with address X, and a Project
+        is explicitly saved with R. The source later supports R at another address while a separate Repository
+        S is confirmed at X; a Today GraphQL operation returns a typed parent associated with N and permitted
+        child facts.
       when: GitView assembles the Project's Today data.
-      then: The supported GraphQL facts remain attributable to R and its existing Project membership, subject to current access and coverage. S does not inherit that membership or R's history merely by using X; neither the prior address nor transfer alone proves current access or an exhaustive population.
+      then: The supported GraphQL facts remain attributable to R and its existing Project membership,
+        subject to current access and coverage. S does not inherit that membership or R's history merely
+        by using X; neither the prior address nor transfer alone proves current access or an exhaustive
+        population.
     public_lookup_without_graphql_bridge:
-      given: An explicit REST lookup confirms Repository R at X and permits its metadata, but its Node ID is absent or unusable; a later same-name GraphQL result has no independently supported identity association to R.
+      given: An explicit REST lookup confirms Repository R at X and permits its metadata, but its Node
+        ID is absent or unusable; a later same-name GraphQL result has no independently supported identity
+        association to R.
       when: A Today request or its result is considered for R's Project.
-      then: The GraphQL result is not attributed to R by name or numerical resemblance and the affected work portion remains unresolved. R's permitted REST metadata and local Project membership retain their own context; the limitation is not an empty work list or proof of deletion.
+      then: The GraphQL result is not attributed to R by name or numerical resemblance and the affected
+        work portion remains unresolved. R's permitted REST metadata and local Project membership retain
+        their own context; the limitation is not an empty work list or proof of deletion.
     graphql_recent_does_not_cover_old_open:
-      given: A Repository has an open Issue last updated before T and an open PR, and GitView has obtained only a GraphQL Issues connection filtered by `IssueFilters.since` equal to T.
+      given: A Repository has an open Issue last updated before T and an open PR, and GitView has obtained
+        only a GraphQL Issues connection filtered by `IssueFilters.since` equal to T.
       when: The app prepares its unfiltered Today grid.
-      then: The filtered Issue result does not establish absence of the older open Issue or cover the separate PR connection; supported returned facts remain available with incomplete population coverage.
+      then: The filtered Issue result does not establish absence of the older open Issue or cover the
+        separate PR connection; supported returned facts remain available with incomplete population coverage.
     newly_granted_access:
-      given: A previous Project observation covered only Repository A under an earlier grant and the source later grants access to B, which is also in the selected Project.
+      given: A previous Project observation covered only Repository A under an earlier grant and the source
+        later grants access to B, which is also in the selected Project.
       when: Today is evaluated for A and B.
-      then: A's supported historical claim retains its context and B requires applicable evidence; the earlier claim cannot prove an exhaustive A-and-B result.
+      then: A's supported historical claim retains its context and B requires applicable evidence; the
+        earlier claim cannot prove an exhaustive A-and-B result.
     terminal_cursor_after_null_node_restart:
-      given: An applicable PR discovery page returned one usable permitted PR and a null node with an execution error; its terminal traversal metadata and the PR's required fact evidence were durably saved, but the scoped error or gap record was not recoverable after restart. No other recoverable evidence establishes exhaustive materialization.
-      when: The route restores the saved PR and terminal progress, then considers whether a fresh source repair is eligible.
-      then: The PR remains usable only with its own recovered context and current access; the affected population remains unproven, without inventing a specific error, hidden identity or missing-match count. Terminal progress does not establish coverage, and a permitted new attempt may seek better evidence under its own context without claiming to recreate the earlier response.
+      given: An applicable PR discovery page returned one usable permitted PR and a null node with an
+        execution error; its terminal traversal metadata and the PR's required fact evidence were durably
+        saved, but the scoped error or gap record was not recoverable after restart. No other recoverable
+        evidence establishes exhaustive materialization.
+      when: The route restores the saved PR and terminal progress, then considers whether a fresh source
+        repair is eligible.
+      then: The PR remains usable only with its own recovered context and current access; the affected
+        population remains unproven, without inventing a specific error, hidden identity or missing-match
+        count. Terminal progress does not establish coverage, and a permitted new attempt may seek better
+        evidence under its own context without claiming to recreate the earlier response.
     save_failure_before_checkpoint:
-      given: A refresh receives a source page and the application cannot durably save all data and evidence needed to support its proposed new coverage boundary.
+      given: A refresh receives a source page and the application cannot durably save all data and evidence
+        needed to support its proposed new coverage boundary.
       when: The process restarts and resumes.
-      then: The failed boundary is not treated as durably complete; any independently persisted permitted facts retain their own provenance and recovery remains possible.
+      then: The failed boundary is not treated as durably complete; any independently persisted permitted
+        facts retain their own provenance and recovery remains possible.
     latest_update_without_snapshot:
-      given: A successful traversal finishes at T2 but its source cannot establish an exhaustive snapshot or gap-free coverage; an earlier supported complete observation exists at T1.
+      given: A successful traversal finishes at T2 but its source cannot establish an exhaustive snapshot
+        or gap-free coverage; an earlier supported complete observation exists at T1.
       when: The overview reports its status.
-      then: It can distinguish the T2 request outcome and newly observed facts from the T1 complete observation and the current coverage limitation; it does not label T2 as a new complete snapshot.
+      then: It can distinguish the T2 request outcome and newly observed facts from the T1 complete observation
+        and the current coverage limitation; it does not label T2 as a new complete snapshot.
     exact_aggregate_without_members:
-      given: A permitted exact source-supported count reports two distinct matching PRs for a fixed scope and reference, but only one independently identified matching PR is available and no evidence establishes the other identity.
+      given: A permitted exact source-supported count reports two distinct matching PRs for a fixed scope
+        and reference, but only one independently identified matching PR is available and no evidence
+        establishes the other identity.
       when: The work grid is opened for that same condition.
-      then: The count retains its supported scope and reference, the one supported PR may be shown, and the collection is identified as not fully materialized. The missing PR is not fabricated, and the current grid is not claimed exhaustive from the count alone.
+      then: The count retains its supported scope and reference, the one supported PR may be shown, and
+        the collection is identified as not fully materialized. The missing PR is not fabricated, and
+        the current grid is not claimed exhaustive from the count alone.
     equal_count_different_members:
-      given: A supported aggregate reports two PRs at T1, while two independently permitted PR cards match at T2 but no evidence establishes the same membership or a comparable simultaneous scope.
+      given: A supported aggregate reports two PRs at T1, while two independently permitted PR cards match
+        at T2 but no evidence establishes the same membership or a comparable simultaneous scope.
       when: The aggregate and work grid are compared.
-      then: Equal numbers do not establish that both sets contain the same identities or that the T2 grid exhausts the T1 aggregate; each claim retains its own context and coverage.
+      then: Equal numbers do not establish that both sets contain the same identities or that the T2 grid
+        exhausts the T1 aggregate; each claim retains its own context and coverage.
   unresolved:
-  - Establish the supported permission profile and source semantics for the selected operations, and implement honest limited coverage for pagination, update visibility, ordering, deletion, access and temporal guarantees not established by documentation. No exact request budget is selected.
-  - Determine an adequate source-backed method, its feasible freshness and an understandable accessible presentation of limited coverage without assuming continuous live consistency.
+  - Establish the supported permission profile and source semantics for the selected operations, and implement
+    honest limited coverage for pagination, update visibility, ordering, deletion, access and temporal
+    guarantees not established by documentation. No exact request budget is selected.
+  - Determine an adequate source-backed method, its feasible freshness and an understandable accessible
+    presentation of limited coverage without assuming continuous live consistency.
   - Actual source, storage, process-restart and native behavior remain unimplemented and unverified.

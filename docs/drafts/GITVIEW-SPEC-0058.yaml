@@ -14,49 +14,98 @@ sources:
   startup: docs/drafts/GITVIEW-SPEC-0022.yaml
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- An authorization attempt has a distinguishable pending, cancelled, failed or confirmed connection outcome without exposing credentials.
+- An authorization attempt has a distinguishable pending, cancelled, failed or confirmed connection outcome
+  without exposing credentials.
 - Connection is not confirmed before source identity and usable local credential storage are established.
-- Cancellation or failure of a new attempt does not silently replace an existing confirmed connection or erase saved Projects.
-- A late result from a cancelled or superseded attempt cannot restore a disconnected account or replace a newer confirmed connection.
-- Disconnect restricts affected private observations and stops refresh; failure to remove a local credential is visible and is not reported as complete removal.
+- Cancellation or failure of a new attempt does not silently replace an existing confirmed connection
+  or erase saved Projects.
+- A late result from a cancelled or superseded attempt cannot restore a disconnected account or replace
+  a newer confirmed connection.
+- Disconnect stops new refresh and preserves a user-visible point of access to already saved data; failure
+  to remove a local credential is visible and is not reported as complete removal.
 specification:
-  objective: Define observable connection and recovery outcomes without selecting an authorization protocol or credential implementation.
+  objective: Define observable connection and recovery outcomes without selecting an authorization protocol
+    or credential implementation.
   ontology_refs:
   - gitview:User
   - gitview:GitHub
   - gitview:Repository
   contract:
-    attempt: A user-initiated authorization or reauthorization has a distinct local attempt context and an observable outcome. A request to begin, receipt of a callback or receipt of credential material alone is not a confirmed source identity or successful connection. Source identity must be established by appropriate authenticated evidence, not a display name or a locally supplied label.
-    commit: Confirm a connection only after the applicable authorization result is validated, the source identity is established and the credential is stored in platform-provided secure storage or an equivalent platform security facility. A confirmed identity-verification or secure-storage failure is actionable and does not establish a new confirmed connection. If a write's outcome is unknown, reconcile it under 0086 rather than call it a confirmed failure or success. Concrete protocol, permissions, credential format and verification method remain open.
-    existing: During an attempt that could replace an existing connection, retain the prior confirmed identity as local context until the new connection is confirmed or an explicit disconnect is performed, and do not deliberately delete a usable prior credential merely to start the attempt. Cancellation or failure alone does not establish that a credential was erased or retained after an indeterminate write; reconcile the durable binding under 0086. Local retention does not prove provider-side validity. Projects and observations are not silently erased. This proposal supports one active source identity and does not by itself choose an account-switching UX or authorize access to cached private observations for a different identity.
-    stale_result: Associate results with their still-active attempt. Once cancelled, superseded or invalidated by disconnect, a late result cannot establish a connection, replace a newer identity, resume refresh or unlock private observations. A subsequent connection requires its own valid active attempt and source-access evidence under 0036. The mechanism for ordering or invalidating attempts is not prescribed.
-    disconnect: An explicit disconnect immediately stops new refresh for the affected identity and restricts private observations under 0036, even if secure credential removal fails. Report local credential removal as complete only after it is confirmed; otherwise expose a recoverable local-security problem and do not treat the credential as successfully removed. An already started response is governed by 0037. No GitHub object or local Project is silently deleted.
-    restore: Reconnecting the same verified source identity is separate from re-establishing access to each affected private Repository. A different identity or a partial grant cannot automatically restore previous private visibility. A local storage read failure does not establish either absence of a credential or a valid active connection.
-    secrecy: Credential values, authorization responses and other secrets must not appear in normal logs, sharing, previews or user-facing errors. Errors can describe the recoverable category without revealing private source contents. This contract does not specify provider-side revocation or claim a particular security protocol.
-    provenance: Secure credential handling and read-only access follow 0019; attempt ordering and interrupted disconnect behavior are agent-authored proposals that require native and source-specific validation.
+    attempt: A user-initiated authorization or reauthorization has a distinct local attempt context and
+      an observable outcome. A request to begin, receipt of a callback or receipt of credential material
+      alone is not a confirmed source identity or successful connection. Source identity must be established
+      by appropriate authenticated evidence, not a display name or a locally supplied label.
+    commit: Confirm a connection only after the applicable authorization result is validated, the source
+      identity is established and the credential is stored in platform-provided secure storage or an equivalent
+      platform security facility. A confirmed identity-verification or secure-storage failure is actionable
+      and does not establish a new confirmed connection. If a write's outcome is unknown, reconcile it
+      under 0086 rather than call it a confirmed failure or success. Concrete protocol, permissions, credential
+      format and verification method remain open.
+    existing: During an attempt that could replace an existing connection, retain the prior confirmed
+      identity as local context until the new connection is confirmed or an explicit disconnect is performed,
+      and do not deliberately delete a usable prior credential merely to start the attempt. Cancellation
+      or failure alone does not establish that a credential was erased or retained after an indeterminate
+      write; reconcile the durable binding under 0086. Local retention does not prove provider-side validity.
+      Projects and observations are not silently erased. This proposal supports one active source identity
+      and does not by itself choose an account-switching UX or authorize access to cached private observations
+      for a different identity.
+    stale_result: Associate results with their still-active attempt. Once cancelled, superseded or invalidated
+      by disconnect, a late result cannot establish a connection, replace a newer identity, resume refresh
+      or unlock private observations. A subsequent connection requires its own valid active attempt and
+      source-access evidence under 0036. The mechanism for ordering or invalidating attempts is not prescribed.
+    disconnect: An explicit disconnect immediately stops new refresh for the affected identity, even if
+      secure credential removal fails. Retain already saved local data and a visible point of access for
+      recovery or explicit deletion; account isolation and presentation details remain open. Report credential
+      removal complete only after confirmation; otherwise expose a recoverable problem. No GitHub object
+      or local Project is silently deleted.
+    restore: Reconnecting the same verified source identity is separate from re-establishing access to
+      each affected private Repository. A different identity or a partial grant cannot automatically restore
+      previous private visibility. A local storage read failure does not establish either absence of a
+      credential or a valid active connection.
+    secrecy: Credential values, authorization responses and other secrets must not appear in normal logs,
+      sharing, previews or user-facing errors. Errors can describe the recoverable category without revealing
+      private source contents. This contract does not specify provider-side revocation or claim a particular
+      security protocol.
+    provenance: Secure credential handling and read-only access follow 0019; attempt ordering and interrupted
+      disconnect behavior are agent-authored proposals that require native and source-specific validation.
   scenarios:
     cancelled_reauthorization:
-      given: A confirmed connection for A exists, its durable binding remains supported, and a new authorization attempt is pending with no independent invalidation.
+      given: A confirmed connection for A exists, its durable binding remains supported, and a new authorization
+        attempt is pending with no independent invalidation.
       when: The operator cancels the new attempt.
-      then: A remains the confirmed connection in that supported context, saved Projects remain, and the cancelled attempt cannot later replace A. An independent rejection, disconnect or indeterminate binding follows its own recovery rules.
+      then: A remains the confirmed connection in that supported context, saved Projects remain, and the
+        cancelled attempt cannot later replace A. An independent rejection, disconnect or indeterminate
+        binding follows its own recovery rules.
     stale_callback_after_disconnect:
       given: Authorization for A is in progress and the operator disconnects A before the attempt completes.
       when: A late result from the invalidated attempt arrives.
       then: It does not reconnect A, start refresh or unlock restricted private observations.
     secure_storage_failure:
-      given: A new authorization response is received and source identity is verified, but secure credential storage fails.
+      given: A new authorization response is received and source identity is verified, but secure credential
+        storage fails.
       when: The attempt ends.
-      then: The new connection is not reported confirmed, the error is recoverable and credential material is not displayed or logged.
+      then: The new connection is not reported confirmed, the error is recoverable and credential material
+        is not displayed or logged.
     disconnect_removal_failure:
-      given: A connected identity has private observations and credential deletion fails during an explicit disconnect.
+      given: A connected identity has private observations and credential deletion fails during an explicit
+        disconnect.
       when: The operator returns to the overview.
-      then: Private observations remain restricted and refresh is stopped, while failed local credential removal is reported rather than claimed complete.
+      then: Already saved private observations remain locally accessible with supported times and a connection
+        limitation; refresh is stopped and failed credential removal is reported rather than claimed complete.
     partial_reconnect:
       given: A had prior private observations in R1 and R2 and was explicitly disconnected.
-      when: A reconnects and only a post-restriction R1 metadata request establishes its returned permitted fields.
-      then: Those supported R1 metadata fields may become eligible under current access policy, while R1 work fields and R2 remain restricted or unknown until their own applicable evidence supports disclosure under 0112. Reconnection or metadata alone does not restore older cached work.
+      when: A reconnects and only a post-restriction R1 metadata request establishes its returned permitted
+        fields.
+      then: Saved R1 work and R2 observations remain locally accessible as last known with supported times
+        and applicable connection limitations. A later supported R1 metadata observation does not refresh
+        prior work, establish R2 source access or advance either Repository last-success time without
+        supporting evidence.
   unresolved:
-  - Actual supported GitHub authorization flow, minimum permissions, callback validation and source identity verification require source and platform research.
-  - Token expiry and recovery are refined in 0085; the authorization mechanism, provider-side revocation and policy for an interrupted secure-store operation remain open.
-  - Credential replacement and interrupted secure storage are refined in 0086; account switching and concrete secure-store coordination require further specification within the one-active-identity boundary.
-  - Implementation and device evidence for secure storage, access enforcement and lifecycle ordering are absent.
+  - Actual supported GitHub authorization flow, minimum permissions, callback validation and source identity
+    verification require source and platform research.
+  - Token expiry and recovery are refined in 0085; the authorization mechanism, provider-side revocation
+    and policy for an interrupted secure-store operation remain open.
+  - Credential replacement and interrupted secure storage are refined in 0086; account switching and concrete
+    secure-store coordination require further specification within the one-active-identity boundary.
+  - Implementation and device evidence for secure storage, access enforcement and lifecycle ordering are
+    absent.

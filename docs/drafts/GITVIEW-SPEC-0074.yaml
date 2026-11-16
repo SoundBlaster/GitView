@@ -26,15 +26,29 @@ sources:
   owner_direction: conversation:gitview/excerpt-46
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Ordinary Project entry has a defined route for one or several confirmed member Repositories without treating either a GitHub organization or a density change as a Project transition.
-- A multi-member Project offers a reachable Project-wide work collection and a grid of its permitted Repositories, with access to each individual Repository route. Treating the member grid as secondary to direct Project-wide entry is the candidate navigation choice below.
-- Within an overview, changing density preserves the selected scope and objects except for independent data or membership changes.
-- A Project signal can open its corresponding cross-repository work selection without traversing an unrelated Repository screen.
-- Returning follows the actual originating route and restores its valid context rather than inventing intermediate screens or switching Project identities.
-- Unavailable member observations and restricted identity do not erase membership or become a known empty work collection.
+- Ordinary Project entry has a defined route for one or several confirmed member Repositories without
+  treating either a GitHub organization or a density change as a Project transition.
+- A multi-member Project offers a reachable Project-wide work collection and a grid of its permitted Repositories,
+  with access to each individual Repository route. Treating the member grid as secondary to direct Project-wide
+  entry is the candidate navigation choice below.
+- Within an overview, changing density preserves the selected scope and objects except for independent
+  data or membership changes.
+- A Project signal can open its corresponding cross-repository work selection without traversing an unrelated
+  Repository screen.
+- Returning follows the actual originating route and restores its valid context rather than inventing
+  intermediate screens or switching Project identities.
+- Unavailable member observations and restricted identity do not erase membership or become a known empty
+  work collection.
 specification:
-  current_intent_boundary: Today includes older unfinished work and work completed during the current calendar day in the user's local time zone; a prior day's completion alone does not qualify an object for the new Today. A merged PR leaves unfinished-only work, not necessarily unfiltered Today; applicable states are included without saved exclusions and selected filters persist. Historical drill-down, other inclusion conditions and source coverage remain open. Project and Repository identity, scope, accessible entry and return remain applicable. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad and 3077fdcd9a8247769def8d6403c2e61c.
-  objective: Define the relationship between the Projects overview, a Project's Repository overview, work collections and object overviews while keeping density independent of navigation.
+  current_intent_boundary: Today includes older unfinished work and work completed during the current
+    calendar day in the user's local time zone; a prior day's completion alone does not qualify an object
+    for the new Today. A merged PR leaves unfinished-only work, not necessarily unfiltered Today; applicable
+    states are included without saved exclusions and selected filters persist. Historical drill-down,
+    other inclusion conditions and source coverage remain open. Project and Repository identity, scope,
+    accessible entry and return remain applicable. See canonical 0001 and 0007 and sketch revisions cc419cb9283f471b88b6f4b66e56c5ad
+    and 3077fdcd9a8247769def8d6403c2e61c.
+  objective: Define the relationship between the Projects overview, a Project's Repository overview, work
+    collections and object overviews while keeping density independent of navigation.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -42,104 +56,259 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    dimensions: A navigation scope identifies which Projects, Repositories or work objects are being surveyed; density controls presentation inside the current overview. An interaction recognized as an in-scope density change changes density and detail without silently selecting a Project, Repository or object. The owner's Photos-inspired direction also envisions moving between overview levels. Candidate 0120 explores targeted pinch and a possible boundary distinguishing it from in-scope scaling; that proposal still requires UX and native feasibility validation. Any selected transition must preserve the actual target and origin and offer an accessible alternative.
-    portfolio: The initial Projects overview presents saved Projects according to 0047 and 0072. Explicitly opening one Project selects that identity; a source signal can instead open its corresponding work selection as described below. The detail available in a Project cell may increase with density without changing its membership or creating a new scope.
-    multiple_members: As an agent-authored working choice, ordinary entry to a Project opens its Project-wide work collection directly, including when it contains several Repositories. The collection uses confirmed current membership, identifies each object's permitted source Repository where needed and exposes incomplete coverage; it does not require first choosing a Repository. Provide an accessible way to narrow to a permitted member and to reach member summaries. This extension of the owner's Project work-grid direction to multi-member Projects remains subject to product evaluation under 0006. Different GitHub organizations remain source metadata, not alternate Project identities.
-    member_overview_presentation: For a multi-member Project, provide an accessible member Repository grid; under the direct-entry candidate this is secondary rather than a required intermediate screen. Identify each permitted member with enough permitted source context to distinguish equal names and provide an accessible way to inspect its work and supported summaries. Adapt the grid to text size and available width; an exact column count is not required, and offer an accessible equivalent if a grid is unsuitable. Apply the existing access-safe and incomplete-coverage rules; a hidden member does not become an empty or nonexistent Repository.
-    member_order_candidate: Order permitted member entries deterministically by stable confirmed local Repository reference within the current Project; this is a display order, not a priority or GitHub activity ranking. Source rename, owner transfer, refresh and summary changes do not themselves move a confirmed member; a confirmed membership change or identity reconciliation may change the set. Only order eligible representations, without reserved slots, absolute positions or counts that reveal restricted members. If a reference or membership cannot be established, follow the uncertainty route instead of merging or ordering by a guessed name. The exact reference encoding and native focus behavior need validation.
-    project_wide_entry: Under the direct-entry candidate, ordinary Project entry opens the Project-wide work collection directly with Today and lifecycle defaults under initial_work, regardless of whether confirmed membership has one or several Repositories. The applicable scope is current Project membership, not a synthetic Repository identity; unobserved members do not become empty. The Project summary and eligible history remain reachable without requiring an individual Repository route.
-    member_overview_return: Within a retained member-overview route, density and a permitted Repository anchor belong to that route rather than to its work destination. On return from a Repository or Project-wide collection, retain the actual Project and restore the eligible anchor where applicable; apply 0024 and 0091 to removal, restriction, partial local reads or changed membership. A safe fallback never labels another Repository as the original. A fresh route may use the proposed starting density; changing the Project-wide work density does not rewrite the member overview's density.
-    initial_work: As an agent-authored navigation direction for a newly opened ordinary Project-wide or explicitly selected Repository work context, show the current-work view under 0027 without an implicit attention filter. Confirmed merged PRs leave an unfinished-only selection but remain eligible in unfiltered Today when they meet an applicable inclusion condition alongside other closed states; applicable filters persist. An explicit signal retains its actual condition; historical outcome drill-down is an optional candidate under 0056 rather than a mandatory route. An in-session return restores its actual prior context under 0024 rather than resetting it to this default.
-    project_editor_route: Provide an accessible path to edit the currently identified Project from its Project work context under 0025. The target is the Project, not one of its Repositories; editing is distinct from changing density or opening work. On cancellation or a confirmed save, return to the actual valid originating context under 0024 and 0091; a changed membership updates that scope without changing its explicit intent. The native control and placement remain open.
-    single_member: A one-member Project reaches its work without a redundant intermediate Repository screen. Under the direct-entry candidate it follows the same Project-wide work route as a multi-member Project. Project-wide intent remains distinct from a Repository scope explicitly selected by the operator; 0091 refines behavior if membership later changes. The Project and Repository remain separately identifiable where permitted, and source context is retained.
-    uncertain_membership: Under the direct-entry candidate, Project-wide entry does not require disclosing a member count, but its result must not claim complete scope when the applicable saved membership cannot be established. For any selected route, surface local recovery under 0023, preserve known permitted context and do not silently discard or substitute a member. An unobserved member's work remains unknown under 0047 rather than absent.
-    restricted_member_presentation: A valid saved Project may have several members while current disclosure permits only some member identities or work. Keep the internal Project-wide intent and evaluate its coverage against the actual saved scope, but do not reveal restricted members, their exact number or contribution through one-for-one placeholders, a displayed count, an accessible label or a route whose only meaning is the existence of an additional restricted member. Present permitted members or work and an access-safe limitation or recovery route where allowed; if none is permitted, offer a safe Project-level recovery or exit. A permitted subset is not relabeled as the complete Project or as a confirmed single-member Project, even if only one member is visible. Exact layout and source-derived detail classification require privacy and native design review.
-    access_safe_routing: If the direct-entry candidate is selected, use the same Project-wide entry direction regardless of membership count. For any selected navigation, do not reveal restricted membership through screen choice, placeholders, counts or accessible labels. If scope cannot be disclosed or established, show permitted work and an access-safe limitation or recovery route where supported without claiming a complete Project. This does not require exposing a restriction that would itself reveal protected information.
-    neutral_route_after_access_restoration: If a Project is open with partially restricted scope, later access restoration updates permitted content and coverage under 0112 without automatically replacing its active route or asserting completeness from a restored source field. Preserve its actual origin and applicable density, filter and anchor under 0024 and 0091. Restoring a member name does not restore its PR, Issue, CI or historical observations. Restricted identity, membership and revealing counts remain withheld.
-    repository_work: Explicitly opening a member Repository's work retains the enclosing Project and the selected source Repository. Changing its density does not widen to all Project members or narrow the active filters, period or object types. A Repository shared by another Project is not silently relabeled as originating there.
-    signal_route: Opening an actionable Project signal selects the signal's condition, applicable period and originating Project and can reach matching work across member Repositories directly. The destination identifies Repository context and incomplete or restricted scope under 0047. A count of checks, threads or events is not necessarily the number of destination object cards; 0029 and 0056 determine the units and historical evidence.
-    member_signal_route: If a permitted member Repository summary offers an actionable signal, its destination keeps both the enclosing Project and that Repository identity, plus the condition and applicable period under 0029 and 0092. It does not silently expand to Project-wide work or switch to another Project sharing that Repository. Return follows the actual member overview or other originating surface; a removed or restricted member follows 0024 and 0091. This is conditional on the signal being actionable, not a mandate for every value to open a collection.
-    origin_and_return: An ordinary entry and a signal shortcut retain their actual originating route. Back from Project-wide work entered from the portfolio returns to that portfolio. A separately selected Repository scope or secondary member overview returns to its actual origin, without fabricating an intermediate screen. Back from a signal destination returns to the surface on which it was activated. Return from an object restores its originating work selection under 0024.
-    density_state: Each currently retained overview context carries its own density and identity-based position during the active session. Changing one overview's density does not silently overwrite the originating overview's density on return. Candidate 0047 proposes a two-across starting target for a new portfolio overview; this is independent of the denser work context. As an agent-authored initial design for a newly opened work collection, start in the compact bird's-eye grid illustrated by the owner, targeting roughly eight cells across on a representative iPhone when the available layout and accessibility settings permit. These are adaptive visual targets, not exact column-count or minimum hit-target guarantees; system accessibility and available space may require another density or an equivalent accessible path. A new ordinary route starts from its applicable initial density; a retained route restores its own density under 0024. No cross-launch density preference is established by this candidate.
-    scope_change: If saved membership or Project availability changes during navigation, use the confirmed current configuration and the changed-origin rules of 0024. A Project deleted locally is not replaced by another that happens to contain the same Repository. Explicit source denial restricts private detail immediately; it does not itself remove a Project member.
-    accessibility: Scope entry, return and density change have distinguishable accessible paths under 0032 and 0073. Non-color identity and state, Dynamic Type and Reduce Motion remain applicable at every level; physical gestures and animation are not the only way to operate the app.
-    provenance: The owner described entering a Project to inspect its dense work grid, accepted a member Repository grid and established shared and multi-Repository membership. Direct Project-wide entry for several Repositories and making the member grid a secondary route are agent-authored reconciliations; existing prototypes demonstrate a single-member Project only.
-  scenario_scope: Scenarios asserting ordinary direct Project-wide entry for multiple members describe the agent-authored navigation candidate; scope, identity, accessibility and actual-origin guarantees also apply to whichever route is selected.
+    dimensions: A navigation scope identifies which Projects, Repositories or work objects are being surveyed;
+      density controls presentation inside the current overview. An interaction recognized as an in-scope
+      density change changes density and detail without silently selecting a Project, Repository or object.
+      The owner's Photos-inspired direction also envisions moving between overview levels. Candidate 0120
+      explores targeted pinch and a possible boundary distinguishing it from in-scope scaling; that proposal
+      still requires UX and native feasibility validation. Any selected transition must preserve the actual
+      target and origin and offer an accessible alternative.
+    portfolio: The initial Projects overview presents saved Projects according to 0047 and 0072. Explicitly
+      opening one Project selects that identity; a source signal can instead open its corresponding work
+      selection as described below. The detail available in a Project cell may increase with density without
+      changing its membership or creating a new scope.
+    multiple_members: As an agent-authored working choice, ordinary entry to a Project opens its Project-wide
+      work collection directly, including when it contains several Repositories. The collection uses confirmed
+      current membership, identifies each object's permitted source Repository where needed and exposes
+      incomplete coverage; it does not require first choosing a Repository. Provide an accessible way
+      to narrow to a permitted member and to reach member summaries. This extension of the owner's Project
+      work-grid direction to multi-member Projects remains subject to product evaluation under 0006. Different
+      GitHub organizations remain source metadata, not alternate Project identities.
+    member_overview_presentation: For a multi-member Project, provide an accessible member Repository
+      grid; under the direct-entry candidate this is secondary rather than a required intermediate screen.
+      Identify each permitted member with enough permitted source context to distinguish equal names and
+      provide an accessible way to inspect its work and supported summaries. Adapt the grid to text size
+      and available width; an exact column count is not required, and offer an accessible equivalent if
+      a grid is unsuitable. Apply the existing access-safe and incomplete-coverage rules; a hidden member
+      does not become an empty or nonexistent Repository.
+    member_order_candidate: Order permitted member entries deterministically by stable confirmed local
+      Repository reference within the current Project; this is a display order, not a priority or GitHub
+      activity ranking. Source rename, owner transfer, refresh and summary changes do not themselves move
+      a confirmed member; a confirmed membership change or identity reconciliation may change the set.
+      Only order eligible representations, without reserved slots, absolute positions or counts that reveal
+      restricted members. If a reference or membership cannot be established, follow the uncertainty route
+      instead of merging or ordering by a guessed name. The exact reference encoding and native focus
+      behavior need validation.
+    project_wide_entry: Under the direct-entry candidate, ordinary Project entry opens the Project-wide
+      work collection directly with Today and lifecycle defaults under initial_work, regardless of whether
+      confirmed membership has one or several Repositories. The applicable scope is current Project membership,
+      not a synthetic Repository identity; unobserved members do not become empty. The Project summary
+      and eligible history remain reachable without requiring an individual Repository route.
+    member_overview_return: Within a retained member-overview route, density and a permitted Repository
+      anchor belong to that route rather than to its work destination. On return from a Repository or
+      Project-wide collection, retain the actual Project and restore the eligible anchor where applicable;
+      apply 0024 and 0091 to removal, restriction, partial local reads or changed membership. A safe fallback
+      never labels another Repository as the original. A fresh route may use the proposed starting density;
+      changing the Project-wide work density does not rewrite the member overview's density.
+    initial_work: As an agent-authored navigation direction for a newly opened ordinary Project-wide or
+      explicitly selected Repository work context, show the current-work view under 0027 without an implicit
+      attention filter. Confirmed merged PRs leave an unfinished-only selection but remain eligible in
+      unfiltered Today when they meet an applicable inclusion condition alongside other closed states;
+      applicable filters persist. An explicit signal retains its actual condition; historical outcome
+      drill-down is an optional candidate under 0056 rather than a mandatory route. An in-session return
+      restores its actual prior context under 0024 rather than resetting it to this default.
+    project_editor_route: Provide an accessible path to edit the currently identified Project from its
+      Project work context under 0025. The target is the Project, not one of its Repositories; editing
+      is distinct from changing density or opening work. On cancellation or a confirmed save, return to
+      the actual valid originating context under 0024 and 0091; a changed membership updates that scope
+      without changing its explicit intent. The native control and placement remain open.
+    single_member: A one-member Project reaches its work without a redundant intermediate Repository screen.
+      Under the direct-entry candidate it follows the same Project-wide work route as a multi-member Project.
+      Project-wide intent remains distinct from a Repository scope explicitly selected by the operator;
+      0091 refines behavior if membership later changes. The Project and Repository remain separately
+      identifiable where permitted, and source context is retained.
+    uncertain_membership: Under the direct-entry candidate, Project-wide entry does not require disclosing
+      a member count, but its result must not claim complete scope when the applicable saved membership
+      cannot be established. For any selected route, surface local recovery under 0023, preserve known
+      permitted context and do not silently discard or substitute a member. An unobserved member's work
+      remains unknown under 0047 rather than absent.
+    restricted_member_presentation: A valid saved Project may contain several members. Confirmed GitHub
+      revocation alone does not hide a previously saved local member, saved work or supported counts under
+      0019; show the supported time when known, coverage and revocation indication. Do not fabricate unobserved
+      members or claim a partial scope is complete. Other account isolation and disclosure questions remain
+      separate.
+    access_safe_routing: If the direct-entry candidate is selected, use the same Project-wide entry direction
+      regardless of membership count. For any selected navigation, do not reveal restricted membership
+      through screen choice, placeholders, counts or accessible labels. If scope cannot be disclosed or
+      established, show permitted work and an access-safe limitation or recovery route where supported
+      without claiming a complete Project. This does not require exposing a restriction that would itself
+      reveal protected information.
+    neutral_route_after_access_restoration: A later source restoration does not automatically replace
+      a Project route or establish complete coverage from one field. Previously saved member names, PR,
+      Issue, CI and history remain locally accessible as last known after confirmed revocation under 0019.
+      Their freshness and actual observation times are not advanced merely because one source field was
+      restored; preserve scope, filters, density and anchor.
+    repository_work: Explicitly opening a member Repository's work retains the enclosing Project and the
+      selected source Repository. Changing its density does not widen to all Project members or narrow
+      the active filters, period or object types. A Repository shared by another Project is not silently
+      relabeled as originating there.
+    signal_route: Opening an actionable Project signal selects the signal's condition, applicable period
+      and originating Project and can reach matching work across member Repositories directly. The destination
+      identifies Repository context and incomplete or restricted scope under 0047. A count of checks,
+      threads or events is not necessarily the number of destination object cards; 0029 and 0056 determine
+      the units and historical evidence.
+    member_signal_route: If a permitted member Repository summary offers an actionable signal, its destination
+      keeps both the enclosing Project and that Repository identity, plus the condition and applicable
+      period under 0029 and 0092. It does not silently expand to Project-wide work or switch to another
+      Project sharing that Repository. Return follows the actual member overview or other originating
+      surface; a removed or restricted member follows 0024 and 0091. This is conditional on the signal
+      being actionable, not a mandate for every value to open a collection.
+    origin_and_return: An ordinary entry and a signal shortcut retain their actual originating route.
+      Back from Project-wide work entered from the portfolio returns to that portfolio. A separately selected
+      Repository scope or secondary member overview returns to its actual origin, without fabricating
+      an intermediate screen. Back from a signal destination returns to the surface on which it was activated.
+      Return from an object restores its originating work selection under 0024.
+    density_state: Each currently retained overview context carries its own density and identity-based
+      position during the active session. Changing one overview's density does not silently overwrite
+      the originating overview's density on return. Candidate 0047 proposes a two-across starting target
+      for a new portfolio overview; this is independent of the denser work context. As an agent-authored
+      initial design for a newly opened work collection, start in the compact bird's-eye grid illustrated
+      by the owner, targeting roughly eight cells across on a representative iPhone when the available
+      layout and accessibility settings permit. These are adaptive visual targets, not exact column-count
+      or minimum hit-target guarantees; system accessibility and available space may require another density
+      or an equivalent accessible path. A new ordinary route starts from its applicable initial density;
+      a retained route restores its own density under 0024. No cross-launch density preference is established
+      by this candidate.
+    scope_change: If saved membership or Project availability changes during navigation, use the confirmed
+      configuration and changed-origin rules of 0024. A deleted Project is not replaced by another with
+      the same Repository. Confirmed GitHub revocation alone neither removes saved membership nor hides
+      locally saved details under 0019; indicate the revocation and supported time when known. Cross-account
+      disclosure remains separate.
+    accessibility: Scope entry, return and density change have distinguishable accessible paths under
+      0032 and 0073. Non-color identity and state, Dynamic Type and Reduce Motion remain applicable at
+      every level; physical gestures and animation are not the only way to operate the app.
+    provenance: The owner described entering a Project to inspect its dense work grid, accepted a member
+      Repository grid and established shared and multi-Repository membership. Direct Project-wide entry
+      for several Repositories and making the member grid a secondary route are agent-authored reconciliations;
+      existing prototypes demonstrate a single-member Project only.
+  scenario_scope: Scenarios asserting ordinary direct Project-wide entry for multiple members describe
+    the agent-authored navigation candidate; scope, identity, accessibility and actual-origin guarantees
+    also apply to whichever route is selected.
   scenarios:
     member_grid_secondary_route:
-      given: Project P has permitted members A and B from different organizations and its Project-wide Today collection is open.
-      when: The operator explicitly opens the member Repository grid, selects B, inspects its work and returns.
-      then: The grid identifies A and B in P with their permitted source context; the selected work remains scoped to B, and return follows the actual member-grid origin with its valid density and anchor. Ordinary Project entry remains direct and no restricted membership is disclosed.
+      given: Project P has permitted members A and B from different organizations and its Project-wide
+        Today collection is open.
+      when: The operator explicitly opens the member Repository grid, selects B, inspects its work and
+        returns.
+      then: The grid identifies A and B in P with their permitted source context; the selected work remains
+        scoped to B, and return follows the actual member-grid origin with its valid density and anchor.
+        Ordinary Project entry remains direct and no restricted membership is disclosed.
     all_work_for_multiple_repositories:
-      given: Project P has confirmed members A and B and their permitted work observations; B belongs to another organization.
+      given: Project P has confirmed members A and B and their permitted work observations; B belongs
+        to another organization.
       when: The operator opens the Project-wide work route from P without choosing a signal.
-      then: Today uses the confirmed A and B Project scope, includes applicable known current work according to the selected policy, and identifies the source Repository of each object. Confirmed merged PRs leave an unfinished-only selection but remain eligible in unfiltered Today when they meet an applicable inclusion condition alongside other closed states.
+      then: Today uses the confirmed A and B Project scope, includes applicable known current work according
+        to the selected policy, and identifies the source Repository of each object. Confirmed merged
+        PRs leave an unfinished-only selection but remain eligible in unfiltered Today when they meet
+        an applicable inclusion condition alongside other closed states.
     signal_does_not_become_today:
       given: An operator opens a historical Project closure outcome for a fixed period from P.
       when: The work collection appears.
-      then: The explicit historical event condition and period remain active under 0056 rather than being replaced by the ordinary-entry Today default.
+      then: The explicit historical event condition and period remain active under 0056 rather than being
+        replaced by the ordinary-entry Today default.
     single_member_editor_adds_member:
-      given: P contains only A and its ordinary entry reaches Project-wide work directly; the operator has an explicit filter and density on that retained work route.
+      given: P contains only A and its ordinary entry reaches Project-wide work directly; the operator
+        has an explicit filter and density on that retained work route.
       when: The operator opens P's editor in that context, adds eligible B and confirms the save.
-      then: P keeps its identity, its Project-wide work route includes the new confirmed membership under 0091 while retaining the valid filter and density, and incomplete B observations remain limited rather than empty. The editor neither creates a new Project nor changes A or B on GitHub; a newly opened ordinary P route still opens its Project-wide work directly.
+      then: P keeps its identity, its Project-wide work route includes the new confirmed membership under
+        0091 while retaining the valid filter and density, and incomplete B observations remain limited
+        rather than empty. The editor neither creates a new Project nor changes A or B on GitHub; a newly
+        opened ordinary P route still opens its Project-wide work directly.
     partial_membership_is_not_single:
-      given: A local read independently establishes that R belongs to P but cannot establish whether P has additional members.
+      given: A local read independently establishes that R belongs to P but cannot establish whether P
+        has additional members.
       when: The operator opens P from the Projects overview.
-      then: R may be presented only within its supported permitted context, while membership completeness and recovery remain visible; the app does not treat R as proof that P has exactly one member or claim complete Project-wide work on that basis.
+      then: R may be presented only within its supported permitted context, while membership completeness
+        and recovery remain visible; the app does not treat R as proof that P has exactly one member or
+        claim complete Project-wide work on that basis.
     multi_repository_entry:
-      given: Project P has confirmed members A and B from different organizations and B's work has never been observed.
+      given: Project P has confirmed members A and B from different organizations and B's work has never
+        been observed.
       when: The operator opens P from the Projects overview.
-      then: The Project-wide work grid opens directly in P, showing permitted A work where available and indicating incomplete coverage for B; B is unobserved rather than an empty Repository. A route to select a member remains available.
+      then: The Project-wide work grid opens directly in P, showing permitted A work where available and
+        indicating incomplete coverage for B; B is unobserved rather than an empty Repository. A route
+        to select a member remains available.
     distinguish_equal_repository_names:
-      given: Project P has two permitted members with the same Repository name under different GitHub owners and both confirmed source identities remain distinct.
+      given: Project P has two permitted members with the same Repository name under different GitHub
+        owners and both confirmed source identities remain distinct.
       when: The member overview is displayed and the operator opens the second member.
-      then: Permitted owner or other permitted source context distinguishes the entries, the selected Repository work stays in P, and the first Repository's objects are not substituted.
+      then: Permitted owner or other permitted source context distinguishes the entries, the selected
+        Repository work stays in P, and the first Repository's objects are not substituted.
     project_wide_from_member_overview:
       given: P contains permitted members A and B, A has observed work and B has not been observed.
       when: The operator chooses the explicit Project-wide work action without selecting a signal.
-      then: The destination identifies P and Project-wide Today intent, shows eligible A work while indicating incomplete B coverage, applies the selected lifecycle inclusion policy and does not claim a complete Project result. Unfiltered Today includes applicable lifecycle states; saved filters may narrow it.
+      then: The destination identifies P and Project-wide Today intent, shows eligible A work while indicating
+        incomplete B coverage, applies the selected lifecycle inclusion policy and does not claim a complete
+        Project result. Unfiltered Today includes applicable lifecycle states; saved filters may narrow
+        it.
     restricted_member_no_extra_slot:
-      given: P contains permitted A and private B, but B's identity, membership and contribution are now restricted.
+      given: P contains saved members A and private B; GitHub revocation for B is confirmed.
       when: The member overview and Project-wide action are presented, including accessible navigation.
-      then: A may be shown and the Project-wide action retains its non-revealing intent; no B-specific tile, reserved position or revealing member count is exposed and any limitation is access-safe.
+      then: Previously saved B and supported Project scope remain locally accessible with revocation indication
+        and supported time when known; do not invent unobserved work or claim current complete coverage.
+        Cross-account disclosure remains separate.
     restricted_membership_route:
-      given: P has permitted A and a restricted B whose membership existence cannot be disclosed, and a separate Project Q has A with membership completeness unavailable.
+      given: In a hypothetical independently established disclosure restriction other than GitHub revocation
+        alone, P has permitted A and B whose membership cannot be disclosed; Q has A with membership completeness
+        unavailable. This cross-account disclosure policy remains undecided.
       when: Each Project is opened under the same applicable disclosure policy.
-      then: The route used for P does not reveal B merely by selecting a multi-member-only screen; a neutral Project context can also serve Q, while each route retains its actual internal Project scope and applicable permitted facts.
+      then: The route used for P does not reveal B merely by selecting a multi-member-only screen; a neutral
+        Project context can also serve Q, while each route retains its actual internal Project scope and
+        applicable permitted facts.
     member_overview_large_text:
       given: P has multiple permitted members and the operator uses enlarged text on a narrow screen.
       when: A secondary member overview is displayed.
-      then: It may use fewer columns or taller entries while preserving identification, open actions, an accessible Project-wide work route and applicable summary limitations.
+      then: It may use fewer columns or taller entries while preserving identification, open actions,
+        an accessible Project-wide work route and applicable summary limitations.
     single_repository_entry:
       given: Project P has one confirmed member R and permitted observations.
       when: The operator opens P.
-      then: R's work is reachable directly in P without a duplicate Repository screen; P and R remain distinct in context.
+      then: R's work is reachable directly in P without a duplicate Repository screen; P and R remain
+        distinct in context.
     neutral_route_partial_restoration_and_return:
-      given: Project P contains A and B, B's membership cannot be disclosed, and an operator entered P through a neutral route from the portfolio. While P remains open, an applicable new observation makes B's identity and membership displayable but not its PR or Issue facts.
+      given: Project P contains saved members A and B, B has confirmed GitHub revocation, and P is entered
+        from the portfolio. A later admissible observation supports B metadata without refreshing its
+        PR or Issue facts.
       when: The route refreshes its permitted presentation and the operator returns to the portfolio.
-      then: P remains the same active route and actual portfolio origin rather than automatically inserting a member-overview navigation step. B may be identified only to the supported permitted extent while its work remains unobserved or restricted, and no complete P work count is inferred. Returning restores the valid portfolio anchor and density; a later explicit fresh entry opens the Project-wide work route with its then-supported coverage.
+      then: P remains the same route and portfolio origin. Already saved B work remains accessible as
+        last known under 0019 with supported times and applicable revocation indication; a metadata observation
+        does not make it current or establish complete coverage. Return preserves the valid portfolio
+        anchor and density.
     restricted_member_after_save:
-      given: A saved Project has confirmed members A and private B, and B's source identity and contribution become restricted while A remains permitted.
+      given: A saved Project has confirmed members A and private B, and GitHub revocation for B is confirmed
+        while A remains available.
       when: The operator opens the Project and its Project-wide work.
-      then: The local Project and both memberships remain unchanged, permitted A work can be reachable with a safe scope limitation, and neither B nor its exact contribution is revealed through a member placeholder, count or accessible route. The visible A subset is not called the full Project or proof that P has one member.
+      then: The local Project and both memberships remain unchanged; B and its already saved supported
+        work remain locally accessible with revocation indication and supported time when known under
+        0019. Do not claim complete current coverage or invent unobserved work.
     portfolio_signal_shortcut:
-      given: A failed-CI signal on P's portfolio cell represents checks affecting PRs in A and B with known coverage.
+      given: A failed-CI signal on P's portfolio cell represents checks affecting PRs in A and B with
+        known coverage.
       when: The operator opens the signal and then returns without opening an individual Repository.
-      then: The destination retains P, the signal condition and each PR's Repository, and return goes to the originating portfolio surface rather than an invented Repository screen.
+      then: The destination retains P, the signal condition and each PR's Repository, and return goes
+        to the originating portfolio surface rather than an invented Repository screen.
     independent_densities:
-      given: P's member overview is at a dense scale and the operator opens member A's work collection at a more spacious scale.
+      given: P's member overview is at a dense scale and the operator opens member A's work collection
+        at a more spacious scale.
       when: The operator changes A's work density and returns.
-      then: P's prior member-overview density and available position remain, while the work density change does not change P membership or its filters.
+      then: P's prior member-overview density and available position remain, while the work density change
+        does not change P membership or its filters.
     membership_unknown:
       given: A Project's saved membership cannot currently be read and an earlier view showed one Repository.
       when: The operator opens that Project.
-      then: The app identifies the configuration uncertainty and offers recovery rather than claiming the Project still has exactly one member or automatically selecting an unrelated Repository.
+      then: The app identifies the configuration uncertainty and offers recovery rather than claiming
+        the Project still has exactly one member or automatically selecting an unrelated Repository.
     removed_origin:
-      given: An object opened through P remains accessible in Repository R, and P is durably removed while another Project Q also contains R.
+      given: An object opened through P remains accessible in Repository R, and P is durably removed while
+        another Project Q also contains R.
       when: The operator returns.
-      then: The changed origin and an available route are offered without silently treating Q as the original Project.
+      then: The changed origin and an available route are offered without silently treating Q as the original
+        Project.
   unresolved:
-  - Evaluate the proposed initial portfolio, member and work-grid densities, control placement and navigation transitions with native-device and accessibility evidence.
-  - Validate the proposed local reference ordering and access-safe presentation against storage, identity reconciliation and privacy requirements.
-  - Candidate 0120 explores zoom across scope boundaries; determine whether it belongs in the first version and validate any chosen interaction. It is distinct from the separately deferred sliding preview.
+  - Evaluate the proposed initial portfolio, member and work-grid densities, control placement and navigation
+    transitions with native-device and accessibility evidence.
+  - Validate the proposed local reference ordering and access-safe presentation against storage, identity
+    reconciliation and privacy requirements.
+  - Candidate 0120 explores zoom across scope boundaries; determine whether it belongs in the first version
+    and validate any chosen interaction. It is distinct from the separately deferred sliding preview.
   - No implementation, source integration or native navigation test has been performed.
