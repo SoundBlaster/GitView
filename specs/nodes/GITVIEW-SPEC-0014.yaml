@@ -14,6 +14,7 @@ sources:
   predecessor_revision: 852649f
   dense_prototype: docs/drafts/dense-overview-prototype.md
   ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
+  pinch_scope_decision: conversation_memory/sketches/gitview/revisions/408e46cab5da424d829e0ce07503fd28/metadata.json
 specification:
   ontology_refs:
   - gitview:Project
@@ -22,13 +23,15 @@ specification:
   - gitview:Issue
   objective: Provide a Photos-inspired grid that moves between dense overview and more detailed cards
     within a stable scope.
-  authority_boundary: The owner selected multiple density levels and pinch, with dense work-grid examples.
-    Exact native layout, anchoring, gesture arbitration and performance require refinement and device
-    verification; this node does not assert an implementation.
+  authority_boundary: The owner selected discrete pinch density levels and a transition to the next level
+    at maximum cell size. The maximum depends on grid width and the chosen maximum cell size in points;
+    its numerical value, target anchoring, native layout and gesture coordination remain open.
   requirements:
-    density: Support several levels of grid density within the same Project or Repository scope. Pinch
-      changes scale and the amount of visible information without itself changing scope, selected period,
-      filters or the selected objects.
+    density: Pinch increases or decreases grid detail through discrete density levels. Within a level
+      and before its boundary, changes preserve the current scope, selected period, filters and selected
+      objects. When an expanding cell reaches its maximum size, the gesture triggers a transition to the
+      corresponding next level; the maximum depends on grid width and the chosen maximum cell size in
+      points.
     independent_changes: Source observations or membership may independently change the selection; a zoom
       gesture does not guarantee a fixed dataset when other events occur. Preserve the focused identity
       where possible and convey incomplete coverage.
@@ -38,9 +41,10 @@ specification:
     recognition: Distinguish PR and Issue at compact scale and expose meaningful state without relying
       on color alone. More information can appear as cells grow; content adapts to available space and
       text size.
-    navigation: Inspecting or opening an object is distinguishable from changing density. Return retains
-      the valid scope, applicable filters and scale, and restores position when possible without silently
-      switching the origin.
+    navigation: A boundary transition enters the intended object or scope at the next level; do not infer
+      a different target when it is ambiguous. Return retains valid scope, applicable filters and scale
+      and restores position when possible. How the target is established and exact reverse-transition
+      behavior remain open.
     preview: First-version long-press preview supports inspecting an object before opening it. A later
       sliding rich preview lets the operator inspect neighboring cells without leaving the dense overview;
       its activation and gesture arbitration remain open.
@@ -51,19 +55,26 @@ specification:
       Glass in keeping with the selected Apple Look; exact components remain subject to design and platform
       validation.
   scenarios:
-    pinch: A filtered selection contains 100 confirmed objects and no independent data change occurs during
-      the gesture. Increasing card size retains the same selected objects, Project, period and filter.
+    pinch: A filtered selection contains 100 confirmed objects and no independent data change occurs.
+      Pinch increases detail through discrete steps while preserving the selection until the maximum cell-size
+      boundary is reached; at the boundary the intended next-level transition occurs when the target is
+      unambiguous.
     large_text: When the illustrative eight columns cannot present legible content at the selected text
       size, adapt the layout rather than shrinking required content merely to preserve eight columns.
+    ambiguous_target: At the maximum-size boundary, if the intended target is unavailable or ambiguous,
+      do not substitute another object; preserve a coherent view and offer a meaningful available fallback
+      under 0024.
   open_questions:
   - Native collection behavior, zoom anchors, transitions and gesture conflicts, and measured device performance.
   - Exact object cues at each density, accessible controls and changed-origin recovery interaction.
   ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; presentation
     does not establish ontology approval.
 acceptance:
-- Pinch changes grid density and detail within its current scope without itself changing the selected
-  set or filters.
+- Pinch changes detail in discrete steps; on reaching maximum cell size it transitions to the intended
+  next level when the target is unambiguous, with the threshold depending on grid width and maximum cell
+  size in points.
 - Dense view supports the intended scale of approximately 100 simultaneously visible objects without treating
   illustrative object and column counts as fixed device-independent requirements.
 - Object type and meaningful state remain accessible without reliance on color or pinch alone.
-- Opening an object is distinct from changing density; returning preserves valid context where possible.
+- A boundary transition retains the intended target and valid context; returning preserves valid context
+  where possible.

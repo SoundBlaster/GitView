@@ -105,10 +105,12 @@ specification:
     data: Previously received data may be stored locally. A failed GitHub refresh must be clearly indicated,
       with the last successful update time for its supported scope when known; incomplete or failed refresh
       is not a confirmed empty result. Observation times and limitations retain their actual scopes. After
-      explicit GitHub access revocation for a private Repository, keep already saved local data and show
-      it with a revocation indicator and the supported last update time when known; stop synchronizing
-      that Repository while revocation applies. Do not invent a time or treat network failure alone as
-      proof of revocation. Other private-data cases remain open.
+      external GitHub access revocation for a private Repository, keep already saved local data; while
+      its account remains active, show it with a revocation indicator and the supported last update time
+      when known. Stop synchronizing that Repository while revocation applies. While account B is active,
+      do not show private data saved from account A; switching does not delete that data. This account
+      boundary applies to the other visibility rules in this graph under 0019. Do not invent a time or
+      treat network failure alone as proof of revocation. Other private-data cases remain open.
     platform: Prefer Apple system appearance and components, SF Symbols, system colors and Liquid Glass
       with minimal decoration, while providing accessibility and alternatives to gesture- or color-only
       operation.
@@ -121,8 +123,9 @@ specification:
     represented by the unfiltered Today grid.
   - Scope, reset behavior and cross-device synchronization, if any, for persistent filters.
   - Exact meaning of ready or attention and the evidence for any derived signal.
-  - Private-data availability for ordinary offline use, disconnect, account change and restoration; exact
-    confirmation and recovery behavior for explicit revocation and presentation of missing update times.
+  - Private-data availability for ordinary offline use, disconnect, other account changes and restoration;
+    exact confirmation and recovery behavior for explicit revocation and presentation of missing update
+    times.
   - Sharing payload, historical metric periods and handling uncertain current membership, supported devices
     and exact native interactions.
   - Detailed GitHub source mappings, authorization, storage guarantees and implementation-ready leaf contracts.

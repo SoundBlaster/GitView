@@ -15,6 +15,7 @@ sources:
   predecessor_revision: 852649f
   owner_direction: docs/drafts/product-foundation.md
   ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
+  project_sharing_decision: conversation_memory/sketches/gitview/revisions/5f262787f9ac49e2a8b7abda20d6955b/metadata.json
 specification:
   ontology_refs:
   - gitview:User
@@ -41,6 +42,8 @@ specification:
       disclosure is uncertain.
     candidate: Source-link-only sharing without automatic private text, repository contents or screenshots
       is an agent-authored candidate, not an independently selected owner requirement.
+    local_project: Sharing the local Project itself is not required for now. This does not remove lightweight
+      sharing of eligible GitHub Repository, PR or Issue context.
   scenarios:
     unavailable: A selected Issue has no eligible known source URL. Offer an understandable unavailable
       state instead of opening a different object or a fabricated link.

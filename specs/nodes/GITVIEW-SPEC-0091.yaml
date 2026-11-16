@@ -21,6 +21,7 @@ depends_on:
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0091.yaml
   project_model: docs/drafts/project-summary-proposal.md
+  multi_repository_entry_decision: conversation_memory/sketches/gitview/revisions/35c247299c0b447dbe280e0d9a3bfbd9/metadata.json
 specification:
   ontology_refs:
   - gitview:User
@@ -31,8 +32,8 @@ specification:
   - gitview:projectIncludesRepository
   objective: Preserve the operator's actual Project or Repository work scope as Project membership changes.
   authority_boundary: A Project contains one or more Repositories, and a Repository may belong to several
-    Projects. Ordinary entry behavior for a multi-Repository Project remains open; this node applies to
-    whichever Project-wide or explicit Repository route the operator actually uses.
+    Projects. Ordinary entry to a multi-Repository Project is Project-wide; this node distinguishes it
+    from an explicitly selected Repository route.
   requirements:
     scope_intent: Distinguish a Project-wide work selection from an explicitly selected Repository within
       a Project, even if the Project currently has only one member. Density or source refresh does not
@@ -54,8 +55,8 @@ specification:
     open_object: An already open preview or object that remains available under the applicable context
       stays available with its supported identity through a membership edit; it does not silently become
       a different object. On dismissal or return restore the actual valid in-session origin or explain
-      its limitation under 0024 and 0031, without inventing a new intermediate route. This does not select
-      the default for a later fresh entry.
+      its limitation under 0024 and 0031, without inventing a new intermediate route. This preserves the
+      actual origin without changing the selected Project-wide ordinary entry for a later fresh entry.
     access: Confirmed GitHub revocation of private Repository access for the relevant account does not
       hide already saved local Project or Repository information under 0019. Keep its indication and supported
       update time when known, stop syncing the affected Repository and do not claim renewed access.
@@ -75,7 +76,7 @@ specification:
       substituting a B object for the previewed PR or claiming A was deleted from the source.
     direct_route_return: The operator entered P-wide work directly from the portfolio when P had one member;
       P later gains another member. Return to the actual valid portfolio origin rather than inventing
-      an intermediate member-overview step; later fresh Project entry remains a separate open question.
+      an intermediate member-overview step; a later ordinary Project entry opens Project-wide work.
     signal_member_change: A failed-CI signal was observed for P members A and B; P changes to A and C,
       whose work is unobserved. Preserve the old signal's A-and-B context and do not label it a complete
       current A-and-C result; any new supported selection retains incomplete coverage for C.
@@ -84,7 +85,6 @@ specification:
     uncertain_outcome: An edit from A to A and B may have committed but the durable result cannot be established.
       Do not assert that either set is confirmed current or its work coverage complete.
   open_questions:
-  - Default entry and presentation for multi-Repository Projects.
   - Native presentation of changed or uncertain origin, focus and recovery.
   - Storage and coordination mechanisms for membership edits and their evidence.
   ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; work scope

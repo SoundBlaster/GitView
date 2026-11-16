@@ -16,6 +16,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0024.yaml
   predecessor_revision: c40ba68
   ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
+  pinch_scope_decision: conversation_memory/sketches/gitview/revisions/408e46cab5da424d829e0ce07503fd28/metadata.json
 specification:
   ontology_refs:
   - gitview:Project
@@ -40,7 +41,8 @@ specification:
       or recovery path appropriate to the supported facts.
     density: Changing density within a scope does not itself change the selected Project, Repository scope,
       period or filters. Independent updates may change the supported collection and retain their own
-      observation context.
+      observation context. At the maximum cell-size boundary an intentional pinch transition to the next
+      level follows 0014 while retaining the intended target and applicable context.
     filters: Explicitly selected lifecycle filters persist and restore when applicable under 0007. The
       selected historical merged counter exception under 0047 is a temporary transition override and does
       not itself rewrite the saved preference.
@@ -71,7 +73,7 @@ acceptance:
   density when available.
 - Missing or inaccessible context is not silently replaced with a different object or treated as a confirmed
   empty collection.
-- Pinch density changes alone do not change scope, period or filters; independent source changes remain
-  distinguishable.
+- Before the maximum-size boundary, pinch density changes preserve scope, period and filters; an intentional
+  boundary transition follows 0014, and independent source changes remain distinguishable.
 - Saved filters and the limited historical merged-counter override follow 0007 and 0047 without silently
   rewriting preferences.

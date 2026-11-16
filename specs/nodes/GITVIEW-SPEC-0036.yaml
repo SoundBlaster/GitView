@@ -14,6 +14,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0036.yaml
   predecessor_revision: fef38bd
   visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
+  account_switch_decision: conversation_memory/sketches/gitview/revisions/3bb8ef35b11a499091c40333c03d2566/metadata.json
 specification:
   ontology_refs:
   - gitview:User
@@ -22,8 +23,9 @@ specification:
   objective: Help the operator understand connection problems while retaining access to information already
     saved locally.
   authority_boundary: This node describes product outcomes and does not choose an authorization mechanism,
-    account model, credential storage, source error mapping, exact native presentation or cross-account
-    disclosure policy. It does not claim source access or implementation readiness.
+    account model, credential storage, source error mapping, exact native presentation or the remaining
+    cross-account disclosure policies beyond the selected A-to-B rule under 0019. It does not claim source
+    access or implementation readiness.
   requirements:
     distinguish: Distinguish a temporary network failure, a connection or credential problem, an explicitly
       confirmed Repository access revocation and an intentional disconnect when supported by evidence.
@@ -34,40 +36,45 @@ specification:
       connection limitation discoverable. For confirmed private Repository revocation the owner-selected
       visibility rule below applies. Locally readable data is not itself evidence of a current GitHub
       grant or a successful new refresh.
-    revoked: On confirmed GitHub access revocation for a private Repository, retain and show its saved
-      local data with the revocation indication and supported last update time when known under 0019;
-      stop synchronization for that Repository while revocation applies. Do not accept an earlier in-flight
-      response as a fresh successful update merely because it arrives later.
+    revoked: On confirmed GitHub access revocation for a private Repository, retain its saved local data;
+      while its account remains active show it with the revocation indication and supported last update
+      time when known under 0019. While B is active, the A-to-B visibility boundary applies; stop synchronization
+      for that Repository while revocation applies. Do not accept an earlier in-flight response as a fresh
+      successful update merely because it arrives later.
     operator_control: Retain a discoverable route to understand the connection problem, pursue recovery
-      or intentionally delete local data under 0019. Recovery does not guarantee the source grants access,
-      and local deletion does not assert deletion of GitHub objects.
+      or intentionally delete local data under 0019, subject to its account-change visibility boundary.
+      Recovery does not guarantee the source grants access, and local deletion does not assert deletion
+      of GitHub objects.
     disconnect: An intentional local disconnect stops new refresh for the affected connection and does
       not by itself delete saved local information. Handling and disclosure of retained private data after
       disconnect remain separately open under 0019. Indicate an unresolved credential-removal outcome
       when known; do not equate a local disconnect with source deletion or provider-side revocation.
     isolation: Keep observation and operation context attributable to the account and Repository that
-      produced it. A changed identity or later connection does not automatically establish access to previous
-      source data; detailed account isolation and disclosure remain open. Confirmed GitHub revocation
-      alone does not hide an available saved local card from the operator under 0019.
+      produced it. While account B is active, previously saved private data from account A is not shown
+      under 0019; switching accounts does not itself delete A’s data. For external GitHub revocation of
+      A’s access while A remains active, saved data remains visible with the selected indication under
+      0019. Other account isolation and disclosure details remain open.
     accessibility: Make the applicable connection limitation and available recovery or local action discoverable
       without relying only on color or a transient notice.
   scenarios:
     offline: A Repository has saved observations and a refresh fails because the network is unavailable.
       Show eligible available last-known information with its supported time when known and an applicable
       failure; do not assert a new source denial or empty Repository.
-    revoked: GitHub explicitly confirms revocation for a private Repository with saved observations. Keep
-      those observations visible with the revoked indication and supported time when known; stop synchronization
-      and keep the local recovery or deletion entry point available.
+    revoked: GitHub explicitly confirms revocation for a private Repository with saved observations while
+      its account remains active. Keep those observations visible with the revoked indication and supported
+      time when known; stop synchronization and keep the local recovery or deletion entry point available.
     disconnect: The operator intentionally disconnects an account. Stop new refresh for that connection
       and do not treat disconnect itself as local or source deletion. Retained private-data disclosure
       remains subject to its separately unresolved policy; do not report uncertain credential removal
       as completed.
-    unknown_time: Saved local data remains available after revocation but its update time is not reliably
-      known. Do not invent a time or hide the data solely for that reason.
+    unknown_time: Saved local data remains available after revocation while its account remains active,
+      but its update time is not reliably known. Do not invent a time or hide the data solely for that
+      reason.
   open_questions:
   - Source evidence sufficient to establish Repository revocation and restore access; behavior when evidence
     is unavailable after interruption.
-  - Account identity, cross-account isolation, credential lifecycle and exact disconnect recovery flow.
+  - Account identity, other cross-account isolation beyond 0019, credential lifecycle and exact disconnect
+    recovery flow.
   - Native presentation and supported recovery controls for each connection state.
   ontology_status: Repository and User use selected ontology vocabulary; connection and observation states
     are product behavior rather than newly asserted domain entities.
@@ -77,9 +84,9 @@ acceptance:
 - Available previously saved observations remain accessible where their applicable disclosure is supported,
   with time when known and a discoverable connection limitation; confirmed private Repository revocation
   follows the selected visibility rule. Local visibility does not establish live GitHub access.
-- Confirmed private Repository revocation preserves saved local data with its indication and supported
-  time when known, stops synchronization and retains recovery or explicit local deletion access under
-  0019.
+- Confirmed private Repository revocation preserves saved local data and stops synchronization; while
+  its account remains active, show its indication and supported time when known and retain recovery or
+  explicit local deletion access under 0019.
 - An intentional disconnect stops new refresh without silently deleting saved local information or claiming
   that GitHub objects were deleted.
 - Connection problems and applicable recovery paths are available without relying solely on color or transient

@@ -16,6 +16,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0035.yaml
   predecessor_revision: 9c598dd
   dense_prototype: docs/drafts/dense-overview-prototype.md
+  pinch_scope_decision: conversation_memory/sketches/gitview/revisions/408e46cab5da424d829e0ce07503fd28/metadata.json
 specification:
   ontology_refs:
   - gitview:Project
@@ -28,10 +29,11 @@ specification:
     counts, animation, gesture arbitration, visual cues and native performance remain to be evaluated;
     this node does not establish implementation readiness.
   requirements:
-    scale: During pinch, provide interactive visual feedback as the operator changes density between a
-      denser overview and more detailed cards. Exact layout interpolation, animation and native feasibility
-      require evaluation. Approximate examples of eight columns and a hundred objects express the desired
-      scale, not a fixed device-independent count or performance guarantee.
+    scale: Pinch changes grid detail through discrete density steps, with visual feedback as the operator
+      moves between them. At maximum cell size, the gesture transitions to the intended next level under
+      0014; the boundary depends on grid width and the maximum cell size in points. Approximate examples
+      of eight columns and a hundred objects illustrate desired scale, not fixed counts or a performance
+      guarantee.
     selection: Changing density alone does not change the selected Project or Repository, period, explicit
       filters, object identity, lifecycle state, source observation or collection coverage. An independent
       refresh or membership change may still alter the collection and retains its own explanation.
@@ -45,9 +47,9 @@ specification:
     focus: Preserve the identity of an available focused or anchored object and a meaningful position
       where possible as density changes. If an independent data or scope change makes it unavailable,
       use a supported fallback under 0024 without presenting another object as the original.
-    navigation: Inspecting or opening an object is distinguishable from changing density. The same scope
-      can be viewed at several densities; entering another scope follows the navigation contract and is
-      not silently inferred from an ambiguous target.
+    navigation: Before the maximum cell-size boundary, density changes keep the current scope. At the
+      boundary an intentional transition enters the corresponding next level under 0014; ambiguous target
+      selection must not silently open another object. Exact anchoring and reverse behavior remain open.
     accessibility: Provide an accessible alternative to pinch and a way to identify and inspect objects
       without relying on color or tiny targets alone under 0032. Large text or screen size can change
       the layout rather than forcing an illustrative column count.
@@ -67,11 +69,12 @@ specification:
   open_questions:
   - Native collection layout, animation, anchoring and gesture coordination across density levels.
   - Exact visual and accessible cues at each scale and the treatment of independent changes during interaction.
-  - How intentional navigation between scopes relates to zoom beyond the agreed in-scope density change.
+  - How the intended target and return or reverse transition are established at a level boundary.
   ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; density
     and visual position are presentation concepts rather than new domain entities.
 acceptance:
-- Changing density alone preserves the applicable collection scope, period, filters and object identities.
+- Before the boundary, changing density preserves the applicable collection scope, period, filters and
+  object identities; at the boundary the intended next-level transition follows 0014.
 - Dense and spacious presentations retain accessible identification and inspection of available objects
   without relying solely on color or pinch.
 - A focused object remains the same object where it is available; an unavailable origin is not silently

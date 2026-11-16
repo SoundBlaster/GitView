@@ -21,6 +21,7 @@ sources:
   project_summary: docs/drafts/project-summary-proposal.md
   dense_prototype: docs/drafts/dense-overview-prototype.md
   ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
+  multi_repository_entry_decision: conversation_memory/sketches/gitview/revisions/35c247299c0b447dbe280e0d9a3bfbd9/metadata.json
 specification:
   ontology_refs:
   - gitview:User
@@ -38,9 +39,10 @@ specification:
     summary: Preserve the actual scope, unit, observation and coverage of Project summaries under 0047;
       do not silently add overlapping Project totals as unique portfolio totals.
     navigation: The operator can open a selected Project and use actionable Project signals to reach corresponding
-      scoped work under 0006. The Today work selection follows 0007; the default ordinary multi-member
-      Project entry remains an open choice. Today is the opening current-work mode, not a decision that
-      the work grid must be the first app screen; cold-launch navigation remains open.
+      scoped work under 0006. The Today work selection follows 0007; ordinary entry to a multi-Repository
+      Project opens its Project-wide work grid, and its Repository list is available in Project settings.
+      Today is the opening current-work mode, not a decision that the work grid must be the first app
+      screen; cold-launch navigation remains open.
     data_states: Distinguish confirmed empty local Project collection from incomplete or unobserved data,
       stale results and refresh failure. A failed refresh retains eligible prior observations and exposes
       scoped failure and supported observation time according to 0003; missing data is not confirmed absence.
@@ -65,8 +67,7 @@ specification:
     signal: Selecting a Project's failed-CI signal opens its corresponding selection in that Project,
       with permitted source context.
   open_questions:
-  - First launch and subsequent launch restoration, exact interaction order and multi-Repository default
-    entry.
+  - First launch and subsequent launch restoration, exact interaction order.
   - Exact layout and accessible control placement across densities, and disclosure of restricted Project
     information.
   - Local collection coverage, loading, failure and ordering contracts in detailed scenarios.

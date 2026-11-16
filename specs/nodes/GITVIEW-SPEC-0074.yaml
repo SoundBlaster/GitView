@@ -20,6 +20,8 @@ sources:
   predecessor_revision: 9bbf79f
   owner_selection: docs/drafts/project-summary-proposal.md
   ux_candidate: docs/drafts/ux-zoom-levels-proposal.md
+  multi_repository_entry_decision: conversation_memory/sketches/gitview/revisions/35c247299c0b447dbe280e0d9a3bfbd9/metadata.json
+  pinch_scope_decision: conversation_memory/sketches/gitview/revisions/408e46cab5da424d829e0ce07503fd28/metadata.json
 specification:
   ontology_refs:
   - gitview:User
@@ -30,10 +32,9 @@ specification:
   - gitview:projectIncludesRepository
   objective: Let the operator move from an overview of Projects into the relevant Repository or work scope
     without losing identity or navigation context.
-  authority_boundary: Single-Repository entry, member inspection and direct actionable Project-signal
-    navigation follow the selected direction. The default ordinary entry for a multi-Repository Project,
-    exact transition gestures and platform layout remain open; this node does not establish implementation
-    readiness.
+  authority_boundary: Single-Repository entry, Project-wide work entry for a multi-Repository Project,
+    member list in Project settings and actionable signal navigation are selected. Exact native transitions,
+    target anchoring and layout remain open; this node does not establish implementation readiness.
   requirements:
     single_repository: A Project with one Repository reaches that Repository's work without a redundant
       intermediate Repository screen. Project and Repository remain distinct, with their supported identities
@@ -47,12 +48,13 @@ specification:
       does not establish an exhaustive selection. For the selected historical merged-PR counter transition,
       apply the temporary conflicting merged-filter override under 0047 without rewriting the saved preference;
       this does not select overrides for other signals.
-    ordinary_entry: A direct ordinary entry to a Project-wide collection is a working candidate, not a
-      selected default for multi-Repository Projects. If later chosen, it must preserve the existing member
-      and signal routes and actual Project scope rather than silently selecting an arbitrary Repository.
-    density: Pinch or an accessible equivalent can change density within the current scope under 0035.
-      A density change does not itself select another Project or Repository, change the explicit filters
-      or establish a different period.
+    ordinary_entry: Ordinary entry to a multi-Repository Project opens its Project-wide PR and Issue grid
+      across the applicable member scope; the Repository list is available in Project settings. Preserve
+      member inspection, per-Repository work and actionable signal routes.
+    density: Pinch or an accessible equivalent changes density in discrete steps within the current scope
+      under 0035. On reaching the maximum cell size, pinch enters the corresponding next level when the
+      intended target is unambiguous under 0014; this intentional transition preserves the selected target
+      and its context.
     identity: A Repository shared by several Projects retains the actual Project origin from which it
       was opened. The same name or position does not justify silently substituting another Project or
       Repository.
@@ -68,9 +70,9 @@ specification:
   scenarios:
     single_member: A Project contains one Repository. The operator reaches its PR and Issue work without
       a duplicate intermediate Repository screen and can still identify both Project and source Repository.
-    multi_member: A Project contains two Repositories from different organizations. The operator can inspect
-      both supported members and reach each one's work without treating the organizations as separate
-      Projects.
+    multi_member: A Project contains two Repositories from different organizations. Ordinary entry opens
+      one grid with work across the Project; its member list is available in Project settings and each
+      member remains inspectable.
     shared_repository: A Repository belongs to Projects A and B and is opened from A. Returning preserves
       A as the originating Project rather than silently switching to B.
     signal_selection: A supported Project failed-CI signal is opened. The destination covers its applicable
@@ -80,7 +82,6 @@ specification:
       supported saved member remains accessible with its revocation indication and supported time when
       known; its local visibility is not a GitHub grant.
   open_questions:
-  - Default ordinary entry for multi-Repository Projects and any direct Project-wide collection.
   - Native scope transitions, focus or position restoration, and gesture interaction across levels.
   - Exact signal predicates, source coverage and response to Project membership changes during an open
     route.
@@ -93,7 +94,9 @@ acceptance:
   do not silently redefine Project membership.
 - An actionable Project signal reaches its corresponding work across the applicable scope without an individual
   Repository detour and retains its supported condition and source context.
-- Density changes and return navigation do not silently switch Project, Repository scope, period or explicit
-  filters.
+- Before the boundary, density changes preserve scope and filters; an intentional boundary transition
+  and return preserve the intended target and applicable context.
 - Confirmed private Repository revocation does not hide already saved local Project or member information
   under 0019.
+- Ordinary entry to a multi-Repository Project opens its Project-wide work grid, with its member list
+  available in Project settings.
