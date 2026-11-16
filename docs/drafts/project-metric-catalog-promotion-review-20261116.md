@@ -1,0 +1,7 @@
+# Project metric catalog: outlined node
+
+Baseline `01609c1`; predecessor 0057. The node refines owner-selected Project summary categories and graphs, keeping predicates, source mapping, history coverage and native presentation open. It does not choose a merge-readiness predicate or treat the draft ontology as semantically accepted. The pinned ontology compiler digest mismatch is recorded in the 0AL ledger; no fresh composition verification is claimed.
+
+Independent read-only first-draft review checked SHA `8a655ae21e3a68135d0ea4229ddf7fffd146942900aa4a42a8f8b2f39a942e94`. The reviewer found omissions of supported member count and category coverage, the individually selected attention categories, and a discoverable Issue closure-reason breakdown. The author added these while preserving unknown inputs and open exact predicates. Focused review of SHA `af1d1a6698f893f5bee28e05f58e95dc54f73059fa27c1a17e2a8126b36ef214` confirmed the primary points and requested an explicit acceptance criterion for the breakdown and `when known` for observation time. The author corrected both; final focused rereview confirmed SHA `6c1b4be600cb4ee1cafd74ba484c9bc79f07727acb88dec33946175b662d3808` and reported the concerns closed.
+
+A byte-identical temporary candidate returned `checked`; target next-move and YAML lint passed. These are not proof of actual source coverage, native charts, merge readiness or implementation readiness.

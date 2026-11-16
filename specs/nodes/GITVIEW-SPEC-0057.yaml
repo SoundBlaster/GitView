@@ -1,0 +1,106 @@
+id: GITVIEW-SPEC-0057
+title: GitView - Project metric catalog and coverage
+kind: spec
+created_at: '2026-11-16T08:46:00Z'
+updated_at: '2026-11-16T08:46:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0013
+depends_on:
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0011
+- GITVIEW-SPEC-0012
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0028
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0030
+- GITVIEW-SPEC-0039
+- GITVIEW-SPEC-0041
+- GITVIEW-SPEC-0047
+- GITVIEW-SPEC-0056
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0057.yaml
+  predecessor_revision: 9c598dd
+  owner_selection: docs/drafts/project-summary-proposal.md
+specification:
+  objective: Make selected Project work, attention and period outcomes available as interpretable measurements
+    and graphs when evidence supports them.
+  authority_boundary: The Project summary categories and graphs are owner-selected; exact predicates,
+    source mappings, supported history, native chart design and implementation remain to be refined. This
+    node does not define merge readiness or imply every metric has complete historical evidence.
+  requirements:
+    scope: A Project summary uses its applicable confirmed member Repositories; a shared Repository contributes
+      within each Project while an asserted unique portfolio total follows 0029. Make the supported distinct
+      member-Repository count and applicable category-specific coverage discoverable, such as an observed
+      subset of a known member set; an unknown identity or denominator is not fabricated. Each value retains
+      its actual scope, object category, unit, condition, supported observation time or period and coverage
+      when available.
+    current_work: Distinguish supported open PRs, draft PRs and open Issues. A known draft PR is a subset
+      of open PRs rather than additional independent work; an unknown draft flag is not silently non-draft.
+      Current PR and Issue counts do not prove the number of independent tasks.
+    attention: Make supported attention signals separately discoverable for failed CI, work awaiting review,
+      changes requested, unresolved review threads and PRs affected by them, and Issues with supported
+      open blockers. Keep each signal's actual unit, predicate and coverage distinct; a PR can contribute
+      to several signals without becoming several PRs. Individual failed checks, affected PRs, affected
+      Repositories and review threads are different units. Exact source predicates remain open; a review
+      requirement or assignment to the operator is not automatically equivalent to awaiting review.
+    readiness: A green CI count, review assessment or zero visible unresolved threads does not alone establish
+      merge readiness. A combined checks-and-review-passed selection requires a separately defined and
+      accepted predicate; do not invent a ready count from unknown inputs.
+    outcomes: Distinguish supported merged-PR outcomes and closed-Issue outcomes for an identified period.
+      Make an Issue closure breakdown discoverable by source-supported reasons and retain unknown reason
+      and incomplete coverage where applicable. A closure does not automatically establish a completed
+      task; a current reason is not assigned to an earlier event without evidence. Distinguish event counts
+      from distinct affected object counts, and do not assume reason groups sum to distinct Issues when
+      one Issue can have multiple events.
+    current_vs_history: A confirmed merged PR can leave an unfinished-only current-work selection while
+      remaining visible in unfiltered Today for the applicable local day under 0007. Its supported merge
+      outcome can contribute to the applicable metric when subject, scope, period and evidence support
+      it; one known outcome does not establish an exact total or complete coverage.
+    graphs: Provide graphs of selected supported summary metrics where historical evidence is sufficient
+      under 0030. Identify current Project composition as the basis for its historical graphs under 0047;
+      do not present it as the Project's historical membership. Missing history is a gap or incomplete
+      scope, not an invented zero.
+    navigation: An actionable metric or signal retains its condition, actual Project or Repository scope,
+      period and applicable coverage when opening a work selection. Event counts, check counts and distinct
+      PR or Issue cards are not silently equated. The selected historical merged-counter transition uses
+      the limited temporary filter override in 0047 and 0056 without rewriting saved preference.
+    coverage: Unknown, partial or stale source evidence retains its limitations and supported observation
+      time when known; do not invent an unknown time. Successful metadata or one Repository data does
+      not establish complete PR, Issue, review, CI or historical coverage for the whole Project.
+    saved_data: Confirmed GitHub revocation of a private Repository does not hide previously saved supported
+      local measurements under 0019. Retain their actual scope, coverage, supported time when known and
+      revocation indication; do not report them as newly refreshed.
+  scenarios:
+    overlapping_attention: One PR has a failed check and an unresolved review thread. It can contribute
+      to each supported signal but is not represented as two PRs.
+    incomplete_member: A Project has five Repositories but one lacks the observation needed for a metric.
+      Preserve the supported observed portion with its incomplete coverage; do not count the missing member
+      as zero.
+    closure_reason: A closed Issue's closure reason is unavailable. Preserve the supported closure and
+      unknown reason rather than silently counting it as a confirmed completed task.
+    membership_change: A Repository with earlier activity is added to a Project. Recalculate its historical
+      graph using the current composition and identify that basis without claiming it was a member at
+      the earlier time.
+  open_questions:
+  - Exact metric predicates, source-specific mapping, history availability and aggregation units for each
+    supported signal.
+  - How to define any higher-level ready or long-discussion signal and its evidence without conflating
+    independent facts.
+  - Native presentation, chart periods, partial coverage and any formal burn-down definition.
+  ontology_status: Project, Repository, PullRequest, Issue, ReviewThread, CIStatus and Metric use working
+    draft vocabulary; a chart or counter does not establish an actor action or a new domain entity.
+acceptance:
+- Supported current work, attention and period outcomes remain distinguishable by Project or Repository
+  scope, unit, condition, time and coverage.
+- Overlapping signals and different units are not silently added as separate PRs, Issues or independent
+  tasks.
+- Graphs identify their current Project membership basis and do not turn missing historical evidence into
+  a confirmed zero.
+- A closed Issue with unknown or non-completion reason is not automatically a completed task.
+- A historical merged-counter transition preserves the selected event scope and limited temporary filter
+  override under 0047 and 0056.
+- Confirmed private Repository revocation does not hide saved supported local measurements under 0019
+  or make them newly current.
+- For the selected period, a discoverable Issue closure breakdown preserves supported reasons and the
+  applicable unknown or incomplete coverage without inventing counts for unobserved work.
