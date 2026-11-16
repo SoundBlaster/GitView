@@ -1,0 +1,105 @@
+id: GITVIEW-SPEC-0059
+title: GitView - Repository discovery and selection continuity
+kind: spec
+created_at: '2026-11-16T11:27:00Z'
+updated_at: '2026-11-16T11:27:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0019
+depends_on:
+- GITVIEW-SPEC-0022
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0045
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0059.yaml
+specification:
+  objective: Let the operator find and choose Repositories without confusing incomplete discovery, pending
+    choices or saved Project membership.
+  authority_boundary: Selecting eligible Repositories and one Project per Repository as the default are
+    selected; a Repository can belong to multiple Projects. If multiple Repositories are supported in
+    default setup, it corresponds to a separate Project for each Repository under 0045. Search and continuity
+    requirements are refinements; the default-association and reuse mechanisms, exact search controls,
+    multi-selection, source pagination, authorization method and admission mechanism remain open. This
+    node does not establish actual source permissions or a live GitHub integration.
+  requirements:
+    scope: Attribute results to their supported source account, query or selection scope, access context
+      and coverage. Independently available choices remain usable when the result is partial, with the
+      limitation visible. A sufficiently covered empty result establishes no match only within its stated
+      scope; a failed or partial result does not establish source-wide absence.
+    search: Provide a way to find Repositories within available discovery and return to the broader available
+      scope. A search over an incompletely observed subset does not prove there are no source matches.
+      Matching, supported fields, ordering and whether search runs at the source remain open.
+    identity: Use supported Repository identity under 0038 for selection and reconciliation. A name or
+      address alone does not prove identity, and insufficient identity evidence remains unresolved rather
+      than silently selecting or merging a different Repository.
+    pending: A pending selection is distinct from a visible search subset and from saved Project membership.
+      Search changes, refresh, pagination or temporary failure do not silently discard a confirmed pending
+      choice. Provide a way to inspect and explicitly remove choices; selection alone neither creates
+      a Project nor proves present source access under 0045. A choice retains its source account and intended
+      operation; it is not silently relabeled or submitted under another account or setup intent. Exact
+      retention and disclosure after an account change remain open.
+    late_responses: Retain each response's actual source, account, query and attempt context. A late response
+      for an earlier search cannot be presented as the current query's complete result or establish access
+      for a different connection. For the same query, arrival order alone does not establish which source
+      observation or eligibility decision is newer; retain each attempt's coverage and failure context.
+    admission: Before a selected entry changes Project configuration, establish the identity and applicable
+      access required by that operation. Missing evidence remains unresolved; a confirmed denial is not
+      a valid prior grant. Keep independently supported outcomes distinct under 0045, without requiring
+      batch selection or selecting a particular confirmation flow. Absence from partial discovery is not
+      proof of denial, deletion or deselection; preserve a pending choice separately from its unresolved
+      eligibility and offer an applicable retry or recovery when available.
+    revoked_private: When GitHub explicitly confirms access revocation for a private Repository for the
+      relevant account, already saved local Repository data remains visible as last known with a revocation
+      indication and supported update time when known; synchronization stops under 0019. An earlier in-flight
+      response cannot silently restart sync or become a newly accepted update. Retained local visibility
+      is not renewed source access or sufficient admission for a new operation. Account-change disclosure
+      and treatment of unsaved pending data in other circumstances remain open.
+    accessibility: Make search scope, available choices, incomplete discovery and applicable errors understandable
+      without relying solely on color or transient feedback.
+  scenarios:
+    partial_search: Discovery has returned only a partial subset and a local search finds no match. Explain
+      the incomplete scope instead of claiming no Repository matches at the source; clearing search retains
+      its own coverage and pending choices.
+    selection_across_search: A supported Repository is selected and then omitted from a narrower query.
+      It remains a pending choice until explicitly removed; no Project has been saved solely by selecting
+      it.
+    superseded_query: Search B is current after search A was issued. A's later response is not relabeled
+      as B's result or evidence of B's coverage.
+    same_query_retry: A retry for the same query yields incomplete eligibility evidence; an earlier attempt's
+      response arrives later. Preserve the attempt contexts and do not replace the newer supported outcome
+      solely due to arrival order.
+    revoked_before_processing: If the chosen flow supports multiple pending choices, two independently
+      selected Repositories have different access outcomes. GitHub confirms private access revocation
+      for one relevant account. Its already saved local data remains visible as last known with indication
+      and supported time when known, while its old grant does not authorize a new operation; the other
+      entry retains its own supported outcome.
+    partial_recheck: If multiple choices are supported, A is independently eligible while B is absent
+      from a partial response. B remains selected and unresolved rather than denied or deleted; A may
+      proceed where the selected operation supports it, with the limitation and available recovery visible.
+    account_change: A choice made for an operation under account A is not silently relabeled or submitted
+      under account B or a different operation after account change. Its local disclosure remains open.
+    late_revocation: After explicit private Repository revocation for the relevant account, a response
+      from an earlier discovery attempt arrives. It does not silently restart synchronization or become
+      a fresh accepted update, while supported saved data remains visible under 0019.
+  open_questions:
+  - Discovery source, search and pagination semantics, permission scope and per-entry admission evidence.
+  - Multi-selection, confirmation flow and pending-selection behavior after account changes.
+  - Native presentation of coverage, failure, selection and recovery.
+  ontology_status: User, GitHub, Repository and Project use working draft vocabulary; queries and pending
+    choices are interaction state, not new domain entities.
+acceptance:
+- Discovery identifies its supported scope and distinguishes incomplete or failed results from confirmed
+  empty results.
+- Selection retains supported Repository identity and survives a changed visible search subset without
+  silently saving a Project.
+- Earlier responses are not presented as another query or connection, and insufficient identity or access
+  remains unresolved.
+- Pending choice and operation intent are not silently relabeled or submitted under another account or
+  intent.
+- Saved private data stays visible as last known after confirmed revocation with indication and supported
+  time when known; sync stops, an earlier response does not silently restart it, and visibility does not
+  authorize a new operation.
+- Search, available choices and discovery limitations are accessible without color or transient feedback
+  alone.

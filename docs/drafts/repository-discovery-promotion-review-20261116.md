@@ -1,0 +1,7 @@
+# Repository discovery and pending selection: outlined node
+
+Baseline `ead88e6`. Node 0059 refines discovery scope, pending selection, identity and supported outcomes without choosing multi-selection, source search or a persistent default association. The predecessor was corrected to preserve already saved private data after confirmed revocation under 0019. Ontology vocabulary remains draft.
+
+Independent read-only review examined initial node SHA `c9b1533767c1527b7805ac389129bab72c79bac8a62f6c640c352f44ba382f77` and revised draft SHA `5ebcd9fb3132020f0882a58236ac3c2502cdb8e3b844a364b233d02ef7fe9747`. It identified ambiguity in the selected default, missing late-response protection after revocation, pending-choice account and intent context, same-query attempt ordering, and partial recheck behavior. The author corrected these; focused review of intermediate node SHA `e4fc111a2e3669b921d49727a69e17a69e1fd662553c1b86f574738c0be7f66c` confirmed the corrections and suggested clarifying that default association and reuse are open. The author clarified this, and focused rereview confirmed final node SHA `2b8ae16f0b8c44f81615f1265876d6ded3b0d512cdf7997204bd22f4bd1397aa`.
+
+Byte-identical node and draft candidate checks returned `checked`; target next-move and runtime YAML lint passed for the node. The draft retains the same two baseline lint findings: missing `updated_at` and noncanonical formatting. Structural and semantic checks do not establish source permissions, live GitHub behavior, ontology acceptance or implementation readiness.
