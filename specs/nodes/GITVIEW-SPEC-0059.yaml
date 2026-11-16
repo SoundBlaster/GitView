@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0059
 title: GitView - Repository discovery and selection continuity
 kind: spec
 created_at: '2026-11-16T11:27:00Z'
-updated_at: '2026-11-16T11:27:00Z'
-status: outlined
+updated_at: '2026-11-16T19:51:27Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0019
 depends_on:
@@ -50,10 +50,10 @@ specification:
       a Project nor proves present source access under 0045. A choice retains its source account and intended
       operation; it is not silently relabeled or submitted under another account or setup intent. Exact
       retention and disclosure after an account change remain open.
-    late_responses: Retain each response's actual source, account, query and attempt context. A late response
-      for an earlier search cannot be presented as the current query's complete result or establish access
-      for a different connection. For the same query, arrival order alone does not establish which source
-      observation or eligibility decision is newer; retain each attempt's coverage and failure context.
+    late_responses: Retain each response’s actual source, account and query context. A result for an earlier
+      search is not presented as the current query’s complete result or as proof of access for a different
+      connection. Make incomplete discovery and failures understandable; treatment of attempts for the
+      same query remains a technical refinement.
     admission: Before a selected entry changes Project configuration, establish the identity and applicable
       access required by that operation. Missing evidence remains unresolved; a confirmed denial is not
       a valid prior grant. Keep independently supported outcomes distinct under 0045, without requiring
@@ -77,9 +77,8 @@ specification:
       it.
     superseded_query: Search B is current after search A was issued. A's later response is not relabeled
       as B's result or evidence of B's coverage.
-    same_query_retry: A retry for the same query yields incomplete eligibility evidence; an earlier attempt's
-      response arrives later. Preserve the attempt contexts and do not replace the newer supported outcome
-      solely due to arrival order.
+    same_query_retry: A retry for the same query yields incomplete eligibility evidence. Keep the incompleteness
+      visible rather than presenting an unconfirmed list as complete.
     revoked_before_processing: The relevant account remains active throughout this scenario. If the chosen
       flow supports multiple pending choices, two independently selected Repositories have different access
       outcomes. GitHub confirms private access revocation for one relevant account. Its already saved

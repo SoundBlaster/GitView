@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0058
 title: GitView - Connection and authorization outcomes
 kind: spec
 created_at: '2026-11-16T12:51:00Z'
-updated_at: '2026-11-16T12:51:00Z'
-status: outlined
+updated_at: '2026-11-16T19:51:27Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0019
 depends_on:

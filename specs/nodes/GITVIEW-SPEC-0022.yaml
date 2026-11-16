@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0022
 title: GitView - First launch and Project setup
 kind: spec
 created_at: '2026-11-15T21:35:00Z'
-updated_at: '2026-11-15T21:35:00Z'
-status: outlined
+updated_at: '2026-11-16T19:51:27Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0004
 depends_on:

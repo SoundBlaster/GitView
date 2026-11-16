@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0019
 title: GitView - GitHub access and repository discovery
 kind: spec
 created_at: '2026-11-15T21:28:00Z'
-updated_at: '2026-11-15T21:28:00Z'
-status: outlined
+updated_at: '2026-11-16T19:51:27Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0001
 depends_on:
@@ -55,7 +55,7 @@ specification:
       restores GitHub access. Exact evidence, presentation, recovery and other account-change behavior
       require refinement.
     retained_data_actions: While the relevant account remains active after revocation, preserve a discoverable
-      local entry point for understanding it, pursuing access recovery or explicitly deleting locally
+      local entry point for understanding it, pursuing access recovery and explicitly deleting locally
       retained data. The available local view and user control do not establish a restored GitHub grant,
       guarantee successful recovery, or delete source objects. Exact native controls and recovery mechanics
       remain open.
@@ -81,8 +81,8 @@ specification:
       successful update merely because it arrives after revocation.
     local_control_after_revocation: After confirmed revocation while the relevant account remains active,
       the operator can still find the already saved Repository and its available data, understand the
-      access limitation, and reach recovery or intentional local deletion. No successful source access,
-      restored data or source deletion is implied.
+      access limitation, and reach both recovery and intentional local deletion. No successful source
+      access, restored data or source deletion is implied.
     revoked_without_known_time: A private Repository has saved local data but no reliable update time,
       and access revocation is explicitly confirmed while its account remains active. Continue showing
       the saved data with the revocation indication; do not invent a time. Exact missing-time presentation

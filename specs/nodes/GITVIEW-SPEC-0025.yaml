@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0025
 title: GitView - Project lifecycle and membership
 kind: spec
 created_at: '2026-11-16T08:22:00Z'
-updated_at: '2026-11-16T08:22:00Z'
-status: outlined
+updated_at: '2026-11-16T19:51:27Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0005
 depends_on:

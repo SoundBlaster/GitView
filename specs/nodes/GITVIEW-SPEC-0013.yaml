@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0013
 title: GitView - Metrics, history and charts
 kind: spec
 created_at: '2026-11-15T21:19:00Z'
-updated_at: '2026-11-15T21:19:00Z'
-status: outlined
+updated_at: '2026-11-16T19:51:49Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0001
 depends_on:
