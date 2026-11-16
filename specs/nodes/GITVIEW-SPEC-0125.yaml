@@ -1,0 +1,85 @@
+id: GITVIEW-SPEC-0125
+title: GitView - Completed work and PR review stage
+kind: spec
+created_at: '2026-11-16T12:21:00Z'
+updated_at: '2026-11-16T12:21:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0011
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0028
+- GITVIEW-SPEC-0039
+- GITVIEW-SPEC-0041
+- GITVIEW-SPEC-0042
+- GITVIEW-SPEC-0057
+- GITVIEW-SPEC-0062
+- GITVIEW-SPEC-0089
+- GITVIEW-SPEC-0092
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0125.yaml
+  owner_intent_review: docs/drafts/owner-intent-coverage-review-20261115.md
+specification:
+  objective: Preserve the requested view of what is ready while distinguishing completed outcomes from
+    review stage and independently supported attention signals.
+  authority_boundary: The owner asked to see what is ready and approved showing completed and unfinished
+    work together in Today. A combined ready predicate, an open non-draft filter, exact source mappings
+    and any merge-eligibility decision remain open; this node does not claim to resolve the broader need.
+  requirements:
+    product_need: Keep the question of what is ready as an explicit product need even while the definition
+      and evidence of a combined ready state remain unresolved. Do not use a single convenient source
+      field as a complete answer without a separately established meaning.
+    completed: Present a supported merged PR as merged and a PR closed without merge accordingly. Present
+      an Issue as closed with its supported reason when available; an unknown or non-completion reason
+      does not automatically establish a successfully completed task. Current lifecycle and an event during
+      a selected period are distinct facts under 0039, 0041 and 0057.
+    today: Without an applicable saved exclusion, an eligible PR in the selected Project with a supported
+      merge today remains the same object in unfiltered Today while an explicitly unfinished-only selection
+      can hide it under 0027. A filter does not modify the source object or erase the supported outcome.
+    independent_signals: Preserve applicable PR lifecycle, draft status, review assessment, requests,
+      unresolved threads and CI as independently supported facts with their actual observation context.
+      Non-draft, green CI, approval or zero visible threads alone does not prove an assigned reviewer,
+      completed review or merge eligibility. A combination of these signals also does not establish merge
+      eligibility without a separately defined applicable predicate and sufficient source evidence.
+    optional_candidate: If a future open non-draft PR filter is selected, name and explain its actual
+      predicate; it must not be called merge-ready or treated as a review request solely from that status.
+      The predecessor's proposed filter remains a candidate, not a mandatory first-version feature.
+    uncertainty: Missing, stale, incompatible or incomplete evidence is not a confirmed ready state, completed
+      outcome, exact count or absence. An independently supported lifecycle outcome may remain visible
+      with its own context even when a review or CI signal is unknown.
+    navigation: If an applicable signal or count opens work, retain its condition, scope, time and coverage
+      under 0047 and 0092. Different counts or observations do not automatically identify the same PR
+      population, and navigation does not modify GitHub.
+    saved_data: After confirmed GitHub revocation of private Repository access for the relevant account,
+      supported saved facts remain visible as last known with indication and supported update time when
+      known under 0019; synchronization stops and a late old response does not restore current access.
+    accessibility: Supported outcomes, independent signals and their limitations are understandable without
+      relying on color or transient feedback alone.
+  scenarios:
+    merged_today: An eligible PR in the selected Project is confirmed merged during the user's current
+      local day. The same PR remains in unfiltered Today and may be absent from an explicitly unfinished-only
+      view; its source state is unchanged by the filter.
+    non_draft_unknown_rules: A PR is confirmed open and non-draft while its branch rules and permissions
+      are unobserved. Do not infer approval, required review completion or merge eligibility from non-draft.
+    closed_issue_unknown_reason: An Issue is confirmed closed, but its applicable reason is unavailable.
+      Show closed without fabricating the reason or calling the work successfully completed.
+    green_and_review: A PR has a supported successful CI observation and independently supported changes
+      requested. Preserve both rather than describing the PR as approved or ready to merge.
+    unknown_merge_rules: A PR has supported green CI, approval and zero unresolved threads, but branch
+      rules and permissions are unknown. Do not claim merge eligibility from that combination alone.
+  open_questions:
+  - What product-visible meaning of ready should be selected, for whom and with which evidence.
+  - Whether an optional open non-draft PR filter is useful and how its source inputs are established.
+  - Any merge eligibility scope, source policy and action require separate refinement.
+  ontology_status: PullRequest, Issue and Project use working draft vocabulary; a stage or readiness signal
+    does not create a domain entity or prove actor motive.
+acceptance:
+- The need to see ready work remains explicit without asserting that an unselected predicate resolves
+  it.
+- Supported completed outcomes, PR draft status, review signals and CI retain distinct meanings and context.
+- Unfiltered Today preserves eligible same-day merged PRs unless the operator's applicable saved filter
+  excludes them.
+- Unknown or incomplete evidence does not become a confirmed ready state, completed outcome or exact count.
+- Saved supported facts remain visible after confirmed private Repository revocation with indication and
+  supported time when known.
