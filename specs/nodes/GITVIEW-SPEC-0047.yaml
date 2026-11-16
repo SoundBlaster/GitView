@@ -9,6 +9,7 @@ refines:
 depends_on:
 - GITVIEW-SPEC-0005
 - GITVIEW-SPEC-0006
+- GITVIEW-SPEC-0019
 relates_to:
 - GITVIEW-SPEC-0007
 sources:
@@ -82,6 +83,11 @@ specification:
     presentation: The overview uses a zoomable Project grid and makes summary information inspectable
       without requiring all details to fit a compact cell. Exact density, accessible controls and arrangement
       remain open.
+    revoked_private: When GitHub confirms private Repository access revocation, keep the saved Project
+      and available local summary information for the affected Repository visible as last known with the
+      revocation indication and supported update time when known. Stop synchronization for the affected
+      Repository and preserve a discoverable path to recovery or explicit local deletion under 0019. Other
+      account-change disclosure cases remain open.
   scenarios:
     historical_filter_override: A saved filter hides merged PRs; the operator opens a supported historical
       merged-PR counter for last week. Temporarily override that conflicting exclusion for the destination,
@@ -98,6 +104,9 @@ specification:
     missing_history: A current open-PR count is available but an earlier graph point has insufficient
       evidence. The historical point is shown as unavailable or incomplete, not as zero or as the current
       count.
+    revoked_member: A Project summary includes saved information from a private Repository whose access
+      is confirmed revoked. Keep the Project and saved information visible with the revocation indication
+      and supported time when known; do not present the data as newly refreshed or replace it with zero.
   open_questions:
   - Exact definitions, source mappings, freshness and coverage requirements for each metric and attention
     signal.
@@ -118,3 +127,5 @@ acceptance:
 - Shared Repository contributions are correct in each Project and any claimed unique portfolio total.
 - An actionable signal reaches its corresponding scoped selection without assuming unchanged observations
   or full coverage.
+- Confirmed private Repository revocation keeps the saved Project and available local summary information
+  for the affected Repository visible with its indication and supported time when known under 0019.

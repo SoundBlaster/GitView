@@ -9,6 +9,7 @@ refines:
 depends_on:
 - GITVIEW-SPEC-0003
 - GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0019
 relates_to:
 - GITVIEW-SPEC-0006
 - GITVIEW-SPEC-0007
@@ -25,7 +26,8 @@ specification:
   - gitview:User
   - gitview:Project
   - gitview:Repository
-  objective: Help the operator survey Projects and choose where to inspect current work and attention.
+  objective: Let the operator quickly survey Projects, see where work is progressing or needs attention,
+    and open the relevant work.
   authority_boundary: This node records the selected Project overview and its relation to work. Exact
     cold-launch navigation, restoration, layout and access behavior remain to be refined; the current-work
     Today mode is not itself a required historical viewer. No native implementation is established.
@@ -48,13 +50,18 @@ specification:
     context: Changing density and opening or returning from an object retain valid Project, selection
       and permitted source context; do not silently switch to an unrelated Project when the original cannot
       be established.
+    revoked_private: When GitHub confirms access revocation for a private Repository, keep its saved Project
+      and available local information for the affected Repository visible as last known with the revocation
+      indication and supported update time when known. Stop synchronization for the affected Repository
+      and retain a discoverable path to access recovery or explicit local deletion under 0019. Other account-change
+      disclosure cases remain open.
   scenarios:
     choose_project: Several identifiable permitted Projects are visible. The operator selects one and
       can reach its work in that context.
-    partial: One Project has incomplete source observations. If its representation is permitted, keep
-      it visible with an access-safe limitation rather than presenting its work as confirmed empty. Otherwise
-      convey an access-safe scope-level limitation when one can be disclosed without revealing restricted
-      existence, names or counts; non-disclosure alone is not proof of an empty or complete scope.
+    partial: A Project has incomplete source observations. Present available Project information and disclose
+      the limitation according to the applicable disclosure policy rather than presenting work as confirmed
+      empty. Confirmed private Repository revocation retains the saved Project and affected local data
+      visibly under 0019; other account-change disclosure cases remain open.
     signal: Selecting a Project's failed-CI signal opens its corresponding selection in that Project,
       with permitted source context.
   open_questions:
@@ -71,3 +78,6 @@ acceptance:
 - An unobserved or failed source refresh does not become a confirmed empty Project or an invented success
   time.
 - The overview remains operable without reliance on color or a single gesture.
+- Confirmed private Repository revocation keeps the saved Project and available local information for
+  the affected Repository visible with its indication and supported time when known, and preserves recovery
+  or explicit local deletion under 0019.
