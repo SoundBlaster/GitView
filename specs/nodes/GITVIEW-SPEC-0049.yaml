@@ -1,0 +1,79 @@
+id: GITVIEW-SPEC-0049
+title: GitView - Today boundary and active navigation
+kind: spec
+created_at: '2026-11-16T08:39:00Z'
+updated_at: '2026-11-16T08:39:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0027
+depends_on:
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0042
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0049.yaml
+  predecessor_revision: 33fb739
+  owner_day_decision: conversation_memory/sketches/gitview/revisions/cc419cb9283f471b88b6f4b66e56c5ad/notes.hc
+  owner_timezone_decision: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc
+specification:
+  objective: Keep the selected Today view understandable when the user's local calendar day changes while
+    preserving navigation and filter context.
+  authority_boundary: The owner selected the user's local time zone for the day and approved retaining
+    earlier unfinished work and results completed today. The precise time-zone source, interval mechanics,
+    native reordering and background timing remain open; this node does not establish implementation readiness.
+  requirements:
+    local_day: Interpret the current Today calendar day in the user's local time zone under 0007. Earlier
+      unfinished PRs and Issues remain eligible; work completed during that day remains eligible. Completion
+      on the previous day alone does not establish eligibility for the new Today.
+    context: A change in the evaluated Today day or applicable local time-zone context does not by itself
+      change the selected Project, Repository scope, object type or explicit filters. Source event and
+      observation times are not rewritten to fit a new view.
+    coverage: Reevaluate supported selection and coverage for the applicable day, membership and filters.
+      Missing evidence for the new scope remains unknown or incomplete rather than a confirmed empty selection;
+      do not attribute an older day's result to the new day as a fresh observation.
+    interaction: If the applicable Today context changes during an active gesture or while a filter control
+      is open, avoid silently switching the inspected object or clearing the operator's explicit selections.
+      Exact visual reordering, focus and gesture coordination remain to be specified and evaluated.
+    open_object: A preview or overview already open for a PR or Issue remains associated with that same
+      source object when Today changes. If its prior cell no longer belongs to the selection, returning
+      uses a supported current-context fallback under 0024 rather than substituting another object.
+    private_data: Confirmed private Repository revocation does not hide already saved local data under
+      0019; keep the indication and supported time when known and stop synchronization for that Repository.
+      A day change does not itself prove revocation or restoration of GitHub access.
+    historical_period: Do not silently relabel a separately selected historical period as the new dynamic
+      Today. Exact historical-period boundaries and behavior after a time-zone change remain open.
+    accessibility: Make an applicable changed day, incomplete coverage or recovery limitation discoverable
+      without relying solely on color or a transient visual cue.
+  scenarios:
+    new_day: An older PR is still unfinished and another PR was merged yesterday with no other supported
+      inclusion condition. In the new local day the unfinished PR remains eligible; yesterday's merge
+      alone does not keep the other PR in Today.
+    open_preview: A saved PR preview is open as the applicable local day changes and its cell no longer
+      qualifies for Today. Keep the preview associated with that PR; on dismissal return to a supported
+      current selection or fallback without opening a different object.
+    incomplete_new_day: The day changes but source evidence for the newly applicable scope is incomplete.
+      Preserve supported observations with their times and identify incomplete coverage rather than claiming
+      a complete empty day.
+    filter_preserved: The operator has saved a filter that excludes merged PRs when Today changes to the
+      next local day. Reevaluate the current selection without silently clearing that preference; a separate
+      unsaved change is not represented as a confirmed saved preference.
+  open_questions:
+  - Source of the user's local time zone, exact calendar boundaries, daylight-saving and clock-change
+    mechanics.
+  - Native timing, focus and reordering while a gesture, preview or filter control is active.
+  - Historical-period interpretation across time-zone changes and evidence needed to claim complete Today
+    coverage.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; day boundaries
+    and navigation state are specification and interaction concepts.
+acceptance:
+- Today uses the user's local calendar day, retaining earlier unfinished work and work completed on that
+  day under 0007.
+- A new day does not make a prior-day completion alone qualify or delete the object from source history.
+- A changed day does not silently change Project or Repository scope or clear an explicit filter.
+- An open PR or Issue preview remains associated with the same object; missing new-day evidence does not
+  become a confirmed empty selection.
+- Confirmed private Repository revocation preserves saved local information and its applicable limitation
+  under 0019.
