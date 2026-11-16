@@ -1,0 +1,96 @@
+id: GITVIEW-SPEC-0062
+title: GitView - Independent review attention conditions
+kind: spec
+created_at: '2026-11-16T08:49:00Z'
+updated_at: '2026-11-16T08:49:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0028
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0011
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0037
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0047
+- GITVIEW-SPEC-0057
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0062.yaml
+  predecessor_revision: 9c598dd
+  owner_selection: docs/drafts/pull-request-ontology-options.md
+specification:
+  objective: Make review-related attention understandable without collapsing review requests, assessment
+    and discussion into a single invented state.
+  authority_boundary: The owner selected supported review signals and counters. The exact definition of
+    awaiting review, long discussion, source mapping and native badges remains open; this node does not
+    define merge readiness, require individual thread content or establish implementation readiness.
+  requirements:
+    requests: Keep supported outstanding review requests distinct from a source review assessment and
+      from review-thread counts, each with its applicable source context, observation time when known
+      and coverage. An unavailable request collection is not automatically a known empty collection.
+    assessment: Show a supported source review assessment without inferring approval from an absent request
+      or zero unresolved threads. A source-reported review requirement, absence of reviews and unavailable
+      assessment remain distinct where evidence supports them.
+    threads: Preserve supported total and unresolved review-thread counts separately. A confirmed unresolved
+      thread can support a positive attention signal even if remaining coverage is incomplete; zero observed
+      unresolved threads does not establish absence when coverage or resolution evidence is incomplete.
+      Outdated and resolved are separate source facts; a supported unresolved thread is not automatically
+      treated as resolved or excluded from an all-unresolved count solely because it is outdated. Exact
+      source mapping requires verification.
+    changes_requested: A source-reported request for changes and the existence of unresolved review threads
+      are independent facts. A changes-requested assessment may remain meaningful even if supported thread
+      evidence reports zero unresolved threads; do not convert either into approval or merge readiness.
+    summary_units: For an applicable Project or Repository signal, distinguish the count of unresolved
+      threads from the count of affected PRs. If counts are presented as comparable, retain the same explicitly
+      stated PR population and period while preserving their distinct units and coverage. A single PR
+      with several unresolved threads is not several distinct PRs. This does not impose that Project population
+      on an individual PR overview.
+    time_and_revision: Attribute review facts to their supported source time, revision and observation
+      context when known. A later PR revision or a recently refreshed unrelated field does not silently
+      make an older approval, request or thread count current for that revision.
+    uncertainty: Missing, partial, conflicting or stale evidence remains distinguishable from a confirmed
+      healthy or zero result. A source-reported review requirement or assignment to the operator is not
+      automatically the chosen definition of awaiting review.
+    long_discussion: Keep the requested problem of lengthy review discussions visible as an open product
+      question. Do not silently select a duration threshold, comment-count formula or responsible person
+      without separate support.
+    navigation: An actionable review or thread signal opens the corresponding supported work selection
+      with its actual Project or Repository scope, condition, lifecycle population and applicable time
+      or period under 0047. A count of threads is not automatically the count of resulting PR cards; incomplete
+      selection coverage remains discoverable. Exact review or lifecycle predicates remain subject to
+      their applicable specification.
+    saved_data: Confirmed GitHub revocation of a private Repository does not hide previously saved supported
+      review facts under 0019; retain the applicable indication and supported time when known without
+      claiming a fresh source result.
+    accessibility: Review state and its limitations are understandable without relying on color alone.
+      Exact glyphs and native presentation remain open.
+  scenarios:
+    requested_changes_without_threads: Source review assessment reports changes requested while supported
+      thread evidence reports zero unresolved threads. Preserve both facts rather than announcing approval
+      or readiness.
+    one_pr_many_threads: One PR has three supported unresolved threads. A thread count can be three and
+      an affected-PR count one, with their actual scope and coverage.
+    partial_thread_coverage: One unresolved thread is confirmed but the rest of the collection is unobserved.
+      The positive signal is supported, but the total number and absence of additional unresolved threads
+      are not established.
+    newer_revision: A previous review approval is supported for an older PR revision, while its applicability
+      to the newer revision is unknown. Do not silently present the earlier approval as current.
+  open_questions:
+  - Source evidence and exact predicates for awaiting review, review assessment applicability and requested-review
+    scope.
+  - What user-meaningful signal identifies a long or inactive review discussion and what evidence it requires.
+  - Native badges, summaries and incomplete-coverage presentation at each density.
+  ontology_status: PullRequest and ReviewThread use working draft vocabulary; source review facts and
+    presentation signals do not prove an actor's motive or add new domain entities.
+acceptance:
+- Review requests, assessment and total and unresolved thread counts remain distinct supported facts with
+  their own applicable context and coverage.
+- Zero visible unresolved threads or zero outstanding requests alone does not establish approval, completed
+  review or merge readiness.
+- A supported positive unresolved thread can be shown under incomplete coverage without claiming the full
+  count or absence of others.
+- Thread counts and affected-PR counts are distinct units, and their navigation preserves the supported
+  scope and condition.
+- Confirmed private Repository revocation does not hide previously saved supported review facts under
+  0019.

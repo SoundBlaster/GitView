@@ -1,0 +1,81 @@
+id: GITVIEW-SPEC-0063
+title: GitView - Blocked Issue attention
+kind: spec
+created_at: '2026-11-16T08:49:00Z'
+updated_at: '2026-11-16T08:49:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0039
+depends_on:
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0009
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0047
+- GITVIEW-SPEC-0057
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0063.yaml
+  predecessor_revision: 9c598dd
+  owner_selection: docs/drafts/project-summary-proposal.md
+specification:
+  objective: Make supported blocked-Issue attention visible without confusing blocker links, source state
+    or counts.
+  authority_boundary: The selected Project summary includes attention for Issues with open blockers. The
+    direct-link interpretation is an agent-authored refinement; exact source mapping, current-state evidence,
+    accessible presentation and incomplete-evidence treatment require further refinement. This node does
+    not infer actor motives or establish implementation readiness.
+  requirements:
+    direction: Distinguish an Issue blocked by another Issue from an Issue that blocks another. A mention,
+      parent-child relationship or ordinary link alone does not prove a blocking relationship.
+    positive: A supported direct blocked-by relationship, open state of the affected Issue and open state
+      of its blocker can establish a positive attention signal only when their observation contexts are
+      sufficiently applicable to that claim. Differently timed or stale facts do not by themselves prove
+      the relationship and both states were current together. Preserve supported last-known facts and
+      their limitations without inventing a current positive.
+    scope: Attribute the affected Issue to the selected Project or Repository scope. A supported blocker
+      may be outside the originating Project without becoming a member of that Project merely through
+      the relationship.
+    units: A blocked-Issue summary counts distinct affected open Issues, not blocker links or the number
+      of blocking Issues. An Issue with two supported open blockers is still one affected Issue for this
+      measurement; one Issue may also contribute to other independent signals.
+    uncertainty: Unobserved or incomplete blocker links, unavailable blocker state, uncertain identity
+      or partial scope do not establish that an Issue is unblocked or that a Project has zero blocked
+      Issues. Preserve the supported observation context and coverage and make the limitation discoverable.
+    navigation: An actionable blocked-Issue signal opens the distinct affected open Issues in its supported
+      selection, not the blocker Issues merely because they are linked. Preserve the originating Project
+      or Repository, supported condition and actual scope under 0047. Do not claim that a count of blocker
+      links equals the count of Issue cards or that an incomplete destination is exhaustive.
+    saved_data: Confirmed GitHub revocation of a private Repository does not hide previously saved supported
+      local facts under 0019; retain the indication and supported observation time when known. Local visibility
+      does not prove a current source grant or current blocker state.
+    accessibility: The applicable attention state, its uncertainty and available navigation remain understandable
+      without relying solely on color.
+  scenarios:
+    two_blockers: Open Issue A is blocked by two separately supported open Issues. Count A once as an
+      affected open Issue, not twice because it has two blockers.
+    external_blocker: Open Issue A is in Project P and has a supported open blocker in Repository R outside
+      P. The relationship does not make R a Project member; retain the supported source context and applicable
+      access limitations.
+    unknown_blocker: An Issue's blocked-by relationship is known but the blocker's current state is unavailable.
+      Do not claim that the Issue has no open blocker or that the Project has zero blocked Issues.
+    reverse_direction: An Issue is known to block another Issue. Do not label the first Issue itself as
+      blocked solely from that outward relationship.
+  open_questions:
+  - GitHub source evidence, current-state timing and coverage sufficient for the selected direct-blocker
+    predicate.
+  - Native presentation of partial blocker evidence and navigation across Project or source boundaries.
+  - Account isolation and source-access behavior for unavailable blocker details.
+  ontology_status: Issue, Repository and Project use working draft vocabulary; a source dependency link
+    does not by itself establish an actor's motive or a new domain entity.
+acceptance:
+- A supported blocked-Issue attention count uses distinct affected open Issues, not the number of blocker
+  links.
+- Supported blocked-by and blocking directions remain distinguishable, including when a blocker is outside
+  the Project.
+- Unknown blocker state or incomplete relationship coverage is not treated as a confirmed unblocked Issue
+  or a known zero.
+- An actionable signal preserves the originating scope and supported condition when opening its selection.
+- Confirmed private Repository revocation does not hide previously saved supported local information under
+  0019.
