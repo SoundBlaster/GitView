@@ -1,0 +1,90 @@
+id: GITVIEW-SPEC-0027
+title: GitView - Today selection and uncertain observations
+kind: spec
+created_at: '2026-11-16T07:16:00Z'
+updated_at: '2026-11-16T07:16:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0007
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0026
+relates_to:
+- GITVIEW-SPEC-0047
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0027.yaml
+  predecessor_revision: fef38bd
+  owner_today_and_filters: conversation_memory/sketches/gitview/revisions/ed322706b55a4798a4328a69982fcbae/notes.hc
+  owner_local_day: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc
+specification:
+  objective: Preserve the selected Today and filter behavior when the application has incomplete or uncertain
+    work observations.
+  authority_boundary: This node refines product-visible selection and uncertainty. It does not select
+    GitHub queries, source history limits, filter control design, exact native presentation or implementation
+    readiness.
+  requirements:
+    today: Apply the owner-selected Today meaning under 0007 in the selected Project and user local calendar
+      day; earlier unfinished work remains eligible and work completed today remains eligible. Completion
+      yesterday alone does not qualify an object today; other applicable conditions may do so.
+    all_states: Without an applicable saved exclusion, show eligible PRs and Issues across their lifecycle
+      states, including merged and closed. A PR merged today remains the same object and may stay visible
+      in unfiltered Today; it leaves an explicitly selected unfinished-only view.
+    saved_filters: Explicit lifecycle filters can hide applicable states and persist between launches
+      when saved. Restore a valid saved selection in the ordinary view; an unavailable or uncertain save
+      is not reported as confirmed. The limited historical merged-counter override follows 0047 and does
+      not rewrite the saved preference.
+    identity: A source-confirmed PR or Issue is represented once in a selection even when several conditions
+      apply. PR and Issue remain separate objects, and equal local numbers in different Repositories do
+      not establish identical identity. Do not assert confirmed uniqueness when identity evidence is unresolved.
+    unknown: Missing data or an incomplete refresh alone does not establish that an object matches, does
+      not match, is completed or was deleted. A known object with an unresolved selection condition remains
+      distinguishable from a confirmed match or exclusion; do not invent an unobserved object or an exact
+      count from incomplete coverage.
+    independent_evidence: An independently supported inclusion alternative can contribute to a confirmed
+      match even if another inclusion alternative is unknown, provided all applicable required conditions
+      and active filters are supported as satisfied or do not apply. An unknown required filter keeps
+      the selection outcome uncertain; a supported false required filter can exclude the object without
+      making unrelated unknown facts known.
+    observations: Preserve the actual time, scope and coverage of saved observations under 0026. An unfiltered
+      grid is not evidence that all GitHub work has been observed. On confirmed private Repository revocation,
+      already saved local data remains accessible with the revocation indication and supported time when
+      known under 0019; synchronization stops for that Repository.
+    accessibility: The operator can discover applicable filter state, uncertain data and incomplete coverage
+      without relying solely on color or a transient message. Exact controls remain open.
+  scenarios:
+    merged_today: A PR that was already in Today is confirmed merged during the current local day. Keep
+      the same object in unfiltered Today; an explicit unfinished-only filter may hide it without deleting
+      it.
+    prior_open: A PR began before today and remains unfinished. It remains eligible today even though
+      its creation is older than the current local day.
+    incomplete_filter_evidence: A previously observed PR lacks enough supported information to decide
+      an active filter. Do not present the missing information as a confirmed match or non-match, or treat
+      the Project as confirmed empty.
+    independent_alternative: One supported inclusion alternative qualifies an object, another inclusion
+      alternative is unknown, and every applicable required condition and active filter is supported as
+      satisfied or does not apply. The known alternative can establish the match without claiming the
+      unknown alternative is known.
+    revoked_repository: Previously saved private work is available locally when GitHub revocation is confirmed.
+      Preserve its local visibility and applicable selection context with the revocation indication and
+      supported time when known; do not claim current source access.
+  open_questions:
+  - Other possible Today inclusion conditions and the source history needed to evaluate them.
+  - Exact treatment and native presentation of individually uncertain candidates and incomplete population
+    coverage.
+  - Filter storage scope, reset, cross-device synchronization and behavior when local time zone changes
+    during interaction.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; selection
+    and uncertainty are not newly asserted domain entities.
+acceptance:
+- Applicable earlier unfinished work and work completed during the current user local calendar day remain
+  eligible under 0007.
+- Without an applicable saved exclusion, eligible PRs and Issues appear across lifecycle states; explicit
+  lifecycle filters persist when saved and do not change source objects.
+- An incomplete observation does not by itself establish a confirmed match, non-match, deletion or empty
+  source, and supported independent evidence retains its own meaning.
+- Each included confirmed object has one cell per selection even if multiple conditions apply; linked
+  PR and Issue and same-number objects in different Repositories are not conflated.
+- Confirmed private Repository revocation does not hide saved local work under 0019 or turn it into newly
+  current source data.
