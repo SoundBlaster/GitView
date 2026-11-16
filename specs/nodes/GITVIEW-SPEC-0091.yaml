@@ -18,7 +18,6 @@ depends_on:
 - GITVIEW-SPEC-0049
 - GITVIEW-SPEC-0073
 - GITVIEW-SPEC-0089
-- GITVIEW-SPEC-0102
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0091.yaml
   project_model: docs/drafts/project-summary-proposal.md
@@ -41,7 +40,7 @@ specification:
     confirmed_expansion: When a saved membership edit adds Repository B to Project P, an existing P-wide
       selection reevaluates against P's confirmed new member set while retaining the valid Project, period,
       filters and density. Prior complete observations for A alone do not establish B's work or complete
-      coverage for A and B under 0102.
+      coverage for A and B under 0044.
     explicit_repository: When the operator is viewing explicitly selected Repository A within P, adding
       B does not silently widen the selection to B. If A is removed from P, do not silently substitute
       B or another Project; identify the changed origin and offer a supported route under 0024.

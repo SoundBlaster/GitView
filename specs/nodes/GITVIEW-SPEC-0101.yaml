@@ -16,7 +16,6 @@ depends_on:
 - GITVIEW-SPEC-0041
 - GITVIEW-SPEC-0044
 - GITVIEW-SPEC-0089
-- GITVIEW-SPEC-0102
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0101.yaml
   selected_fields: docs/drafts/pr-issue-selected-fields-coverage-20261114.md
@@ -57,7 +56,7 @@ specification:
       retrieval time. A closed PR is not automatically merged; a PR closure is not an Issue closure.
     incomplete: An unresolved representation or missing type evidence can limit the completeness of a
       materialized work selection. Independently supported counts retain their own scope and evidence;
-      a count alone does not create object identities or establish that all cards are present under 0102.
+      a count alone does not create object identities or establish that all cards are present under 0044.
     revoked_private: On GitHub-confirmed private Repository revocation for the relevant account, previously
       saved supported work remains visible locally as last known with revocation indication and supported
       time when known under 0019; synchronization stops. An earlier response does not silently become
