@@ -48,7 +48,8 @@ specification:
       from each other. Distinguish supported Issue closure reasons and unknown reason; a closed Issue
       is not automatically a completed task. Do not attribute a current reason to a past closure event
       without evidence. A link between a PR and Issue does not establish a single measured object or two
-      independent tasks.
+      independent tasks. When the type of a closed object is unknown, do not count it as an Issue or PR,
+      or dismiss it as irrelevant while claiming an exact type-specific total.
     unit: Distinguish a count of events in a period from a count of distinct objects with at least one
       qualifying event. A repeated observation of the same event must not become another event; a distinct-event
       count requires sufficient identity and source evidence. Match label, time buckets when used and
