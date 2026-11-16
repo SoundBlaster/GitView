@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0075
 title: GitView - Grid interaction and interruption
 kind: spec
 created_at: '2026-11-16T11:42:00Z'
-updated_at: '2026-11-16T11:42:00Z'
-status: outlined
+updated_at: '2026-11-16T20:00:50Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0035
 depends_on:

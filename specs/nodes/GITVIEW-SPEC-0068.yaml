@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0068
 title: GitView - Metric history presentation and navigation
 kind: spec
 created_at: '2026-11-16T08:52:00Z'
-updated_at: '2026-11-16T08:52:00Z'
-status: outlined
+updated_at: '2026-11-16T20:00:50Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0013
 depends_on:
@@ -58,12 +58,15 @@ specification:
       observed at different times do not automatically have equal counts. A later selection with the same
       count is not the exact original contributor set unless identity evidence supports that claim; otherwise
       preserve its own observation context and coverage.
-    filters: The selected historical merged-PR counter transition temporarily overrides a conflicting
-      saved merged exclusion under 0047 and 0056 without rewriting the saved preference. Behavior for
-      other conflicting filters remains open.
+    filters: 'The selected historical merged-PR counter transition temporarily overrides a conflicting
+      saved merged exclusion under 0047 and 0056 without rewriting the saved preference. Other signal
+      transitions follow the actual origin filter context under 0092: filters within that scope apply;
+      unrelated filters outside it do not narrow the result. Exact filter hierarchy, controls and return
+      behavior remain open.'
     saved_data: Confirmed GitHub revocation of a private Repository does not hide a previously saved supported
       local series under 0019. Retain its actual scope, supported time when known, coverage and applicable
-      indication; do not present it as newly current.
+      indication; do not present it as newly current. Visibility follows the active-account and A-to-B
+      boundary under 0019.
     return: Returning from metric history or its selection preserves valid originating Project context
       under 0024. Displaying or leaving history does not itself change source objects, membership or saved
       filter preferences.
@@ -72,9 +75,10 @@ specification:
   scenarios:
     partial_history: A selected Project metric has supported values for some periods and missing evidence
       for another. Distinguish the gap from confirmed zero and keep the applicable coverage discoverable.
-    historical_transition: The operator opens a supported merged-PR outcome for a period while a saved
-      filter excludes merged PRs. Preserve the historical condition and temporarily override the conflicting
-      exclusion without rewriting the preference.
+    historical_transition: In the selected case, the counter’s originating scope includes merged PRs and
+      the saved merged exclusion is outside that scope. The operator opens a supported merged-PR outcome
+      for a period. Preserve the historical condition and temporarily override that unrelated exclusion
+      without rewriting the preference.
     membership_basis: A Repository is added today with supported activity from an earlier month. The historical
       graph uses current Project composition and identifies that basis without claiming that Repository
       was a member in the earlier month.
@@ -95,7 +99,8 @@ acceptance:
 - An actionable historical outcome preserves its supported origin and event condition or exposes a limitation
   rather than silently becoming Today.
 - Event or check counts are not silently equated with distinct PR or Issue card counts.
-- The selected merged-counter transition preserves the limited temporary filter override without rewriting
-  the saved preference.
+- For the selected merged counter whose origin includes merged PRs and whose saved exclusion is outside
+  that origin, the transition preserves the limited temporary filter override without rewriting the saved
+  preference.
 - Supported history and limitations are accessible without reliance solely on color, chart position or
   a particular gesture.

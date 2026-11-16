@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0094
 title: GitView - Attention to lengthy review discussions
 kind: spec
 created_at: '2026-11-16T12:20:00Z'
-updated_at: '2026-11-16T12:20:00Z'
-status: outlined
+updated_at: '2026-11-16T20:02:31Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0062
 depends_on:

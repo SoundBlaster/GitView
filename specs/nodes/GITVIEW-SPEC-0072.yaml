@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0072
 title: GitView - Project overview order and position
 kind: spec
 created_at: '2026-11-16T11:18:00Z'
-updated_at: '2026-11-16T11:18:00Z'
-status: outlined
+updated_at: '2026-11-16T20:00:50Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0047
 depends_on:

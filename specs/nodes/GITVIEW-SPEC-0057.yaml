@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0057
 title: GitView - Project metric catalog and coverage
 kind: spec
 created_at: '2026-11-16T08:46:00Z'
-updated_at: '2026-11-16T08:46:00Z'
-status: outlined
+updated_at: '2026-11-16T20:00:50Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0013
 depends_on:
@@ -83,7 +83,8 @@ specification:
       not establish complete PR, Issue, review, CI or historical coverage for the whole Project.
     saved_data: Confirmed GitHub revocation of a private Repository does not hide previously saved supported
       local measurements under 0019. Retain their actual scope, coverage, supported time when known and
-      revocation indication; do not report them as newly refreshed.
+      revocation indication; do not report them as newly refreshed. Visibility follows the active-account
+      and A-to-B boundary under 0019.
   scenarios:
     overlapping_attention: One PR has a failed check and an unresolved review thread. It can contribute
       to each supported signal but is not represented as two PRs.
@@ -112,9 +113,10 @@ acceptance:
 - Graphs identify their current Project membership basis and do not turn missing historical evidence into
   a confirmed zero.
 - A closed Issue with unknown or non-completion reason is not automatically a completed task.
-- A historical merged-counter transition preserves the selected event scope and limited temporary filter
-  override under 0047 and 0056.
-- Confirmed private Repository revocation does not hide saved supported local measurements under 0019
-  or make them newly current.
+- The selected merged-counter transition, whose origin includes merged PRs and whose saved exclusion is
+  outside that origin, preserves its event scope and limited temporary filter override under 0047 and
+  0056.
+- Confirmed private Repository revocation alone does not hide saved supported local measurements under
+  0019 or make them newly current.
 - For the selected period, a discoverable Issue closure breakdown preserves supported reasons and the
   applicable unknown or incomplete coverage without inventing counts for unobserved work.

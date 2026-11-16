@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0056
 title: GitView - Historical outcome selection
 kind: spec
 created_at: '2026-11-16T08:41:00Z'
-updated_at: '2026-11-16T08:41:00Z'
-status: outlined
+updated_at: '2026-11-16T20:00:50Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0007
 depends_on:
@@ -66,9 +66,10 @@ specification:
       0047, with that basis identified. If Project membership changes while an existing historical selection
       is open, preserve its actual captured origin or disclose a limitation; do not silently claim an
       old captured scope is the new current composition.
-    access: Confirmed private Repository revocation does not hide already saved supported local historical
-      information under 0019. Preserve its supported scope, time and applicable indication; do not claim
-      newly current source access or fabricate missing event history.
+    access: Confirmed private Repository revocation alone does not hide already saved supported local
+      historical information under 0019. Preserve its supported scope, time and applicable indication;
+      do not claim newly current source access or fabricate missing event history. Visibility follows
+      the active-account and A-to-B boundary under 0019.
     navigation: Preserve valid originating context on return under 0024. If the originating Project or
       period cannot be supported, offer an appropriate limitation or fallback without silently substituting
       another Project or unrelated period.
@@ -106,5 +107,5 @@ acceptance:
 - 'For the selected counter whose originating scope includes merged PRs and whose saved merged exclusion
   is outside that scope: The selected historical merged-counter transition temporarily overrides a conflicting
   saved merged exclusion without rewriting the saved preference.'
-- Incomplete coverage remains visible, and confirmed private Repository revocation does not hide saved
-  supported local history under 0019.
+- Incomplete coverage remains visible, and confirmed private Repository revocation alone does not hide
+  saved supported local history under 0019.
