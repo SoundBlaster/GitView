@@ -2,7 +2,7 @@ id: GITVIEW-SPEC-0017
 title: GitView - Accessibility and platform behavior
 kind: spec
 created_at: '2026-11-15T21:33:00Z'
-updated_at: '2026-11-15T21:33:00Z'
+updated_at: '2026-11-16T12:55:00Z'
 status: outlined
 refines:
 - GITVIEW-SPEC-0001
@@ -10,6 +10,7 @@ depends_on:
 - GITVIEW-SPEC-0014
 - GITVIEW-SPEC-0015
 - GITVIEW-SPEC-0016
+- GITVIEW-SPEC-0019
 relates_to: []
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0017.yaml
@@ -28,7 +29,9 @@ specification:
     descriptions: Assistive technologies receive understandable object type, permitted identity and source
       context, relevant known state and limitations. Unknown and stale observations retain their status
       and applicable scope and time when supported; stale success is not announced as current. Unknown
-      data is not announced as success, and restricted information is not disclosed to identify an object.
+      data is not announced as success. Confirmed private Repository revocation does not hide already
+      saved local information under 0019; accessible descriptions retain its applicable revocation indication
+      and supported time when known. Other account and external-disclosure cases remain open.
     adaptive: Adapt layout to Dynamic Type and interaction to Reduce Motion. Large text can require fewer
       columns; motion must not be necessary to understand navigation.
     focus: On dismissal or return, restore accessibility focus to the original object when available and
@@ -44,6 +47,10 @@ specification:
       provided without silently substituting a different object.
     adaptive_layout: With large text and Reduce Motion enabled, the grid can become more spacious while
       content and navigation remain understandable.
+    revoked_saved_preview: A saved private PR preview is open when GitHub confirms access revocation for
+      the relevant account. Its saved details remain available visually and through assistive technology
+      as last known with indication and supported time when known; synchronization stops, and local routes
+      to recovery and explicit deletion remain accessible under 0019 without guaranteeing recovery succeeds.
   open_questions:
   - Exact native accessibility actions, focus fallback, minimum platform support and device verification.
   - Access-safe labels and treatment of unavailable or changing data in each view.
@@ -51,7 +58,7 @@ specification:
     controls add no domain entities.
 acceptance:
 - Essential interactions have accessible alternatives to a single gesture and color-only communication.
-- Assistive descriptions preserve permitted identity, known state and applicable uncertainty without restricted
-  disclosure.
+- Assistive descriptions preserve supported identity, known state and applicable uncertainty; confirmed
+  private Repository revocation does not hide saved local content under 0019.
 - Larger text and Reduce Motion retain understandable content and navigation without fixed density.
 - Return focus uses the valid original object when available or a sensible available fallback.
