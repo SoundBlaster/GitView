@@ -19,6 +19,13 @@ depends_on:
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0102.yaml
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  - gitview:projectIncludesRepository
   objective: Explain what a Today work collection or count covers without assuming all matching source
     objects have been identified or that a finished refresh is a complete snapshot.
   authority_boundary: Today includes earlier unfinished work and work completed during the user's current
@@ -68,8 +75,8 @@ specification:
   - Source-backed evidence and feasible collection strategy for each requested selection and filter.
   - User-facing explanation of partial population and independently supported counts.
   - Native behavior and source access under account changes beyond confirmed private revocation.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; coverage and
-    materialization are observation concepts rather than new domain entities.
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; coverage
+    and materialization are observation concepts rather than new domain entities.
 acceptance:
 - A population claim retains its supported scope, selection, time and coverage and is not inferred complete
   from request success alone.

@@ -54,6 +54,23 @@ For an individual draft, pass its `docs/drafts/...yaml` path instead. Inspect
 the JSON `status` and per-file `issues`; lint checks YAML and canonical
 formatting, not semantic review, ontology approval or implementation readiness.
 
+## Ontology references during promotion
+
+When creating or revising a governed node from a predecessor draft, compare its
+explicit `ontology_refs` and `specification.terminology` with the node's actual
+scope and the selected ontology context. Preserve or add relevant references;
+record the reason for omitted predecessor declarations and for a node with no
+applicable references. Do not infer specific actor actions or instance facts
+from vocabulary references. Historical source material retains its own context.
+
+Run the installed runtime's `domain_vocabulary` context check for each changed
+node and inspect inventory, resolved candidates and gaps, not only `checked`.
+Record a no-input result separately from a successful binding. A structural
+binding does not establish semantic correctness or implementation behavior.
+When the installed runtime supports `ontology-ref-diff`, use it for the
+predecessor/successor comparison and explicitly explain intentional removals;
+until then retain a reviewable manual comparison.
+
 ## Independent specification review
 
 For a new or substantively revised specification, run the structural

@@ -20,6 +20,18 @@ sources:
   project_summary: docs/drafts/project-summary-proposal.md
   repository_summary: docs/drafts/repository-summary-proposal.md
 specification:
+  ontology_refs:
+  - gitview:pullRequestRepository
+  - gitview:issueRepository
+  - gitview:pullRequestIssueLink
+  - gitview:CIStatus
+  - gitview:ReviewThread
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  - gitview:projectIncludesRepository
   objective: Keep Repository, Project and unique portfolio work summaries interpretable when Repositories
     and attention signals overlap.
   authority_boundary: This node refines scope, identity and units of supported summaries. It does not
@@ -67,7 +79,7 @@ specification:
     scope.
   - Native presentation of incomplete coverage and differences between a signal and its destination selection.
   - Counting of historical events, reopened objects and unknown identity when source evidence is incomplete.
-  ontology_status: Project, Repository, PullRequest, Issue and Metric use the working draft vocabulary;
+  ontology_status: Project, Repository, PullRequest, Issue and Metric use the selected ontology vocabulary;
     a summary or counter is not a new ontology entity.
 acceptance:
 - Supported summaries identify their actual Repository, Project or portfolio scope, unit, applicable period

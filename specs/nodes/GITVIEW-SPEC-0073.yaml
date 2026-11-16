@@ -17,6 +17,12 @@ depends_on:
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0073.yaml
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Preserve meaningful accessible navigation when overview content, scope or data status changes.
   authority_boundary: Accessible navigation and saved-data visibility after confirmed private Repository
     revocation are selected. Specific focus APIs, ordering mechanics and announcement timing remain open;
@@ -59,8 +65,8 @@ specification:
   - Platform focus restoration, announcement timing and behavior under assistive technologies.
   - Presentation and grouping of uncertain selections.
   - Local disclosure after account changes outside confirmed private Repository revocation.
-  ontology_status: Project, Repository, PullRequest and Issue remain working draft terms; focus and announcements
-    are interaction concerns rather than new domain entities.
+  ontology_status: Project, Repository, PullRequest and Issue use the selected ontology vocabulary; focus
+    and announcements are interaction concerns rather than new domain entities.
 acceptance:
 - Reordering or reflow does not substitute an object for another at the previous position.
 - Uncertain selection and incomplete coverage remain accessible without inventing exclusions or counts.

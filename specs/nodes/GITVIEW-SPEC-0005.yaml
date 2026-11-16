@@ -13,13 +13,23 @@ sources:
   predecessor_revision: 1f910ace120a741dfd30d0d998395a8276b03647
   owner_selection: docs/drafts/project-summary-proposal.md
   default_mechanism_review: docs/drafts/project-default-association-review-20261115.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:GitHubRepository
+  - gitview:projectIncludesRepository
+  - gitview:AddRepository
+  - gitview:addsRepositoryTo
+  - gitview:RemoveRepository
+  - gitview:removesRepositoryFrom
   objective: Let the operator organize GitHub repositories into identifiable GitView Projects for work
     overview.
-  authority_boundary: This node records the owner's selected composition and user outcomes. The ontology
-    package and referenced draft designs remain candidates; this node does not assert that a particular
-    membership action occurred, select a storage mechanism or establish implementation readiness.
+  authority_boundary: This node records the owner's selected composition and user outcomes. The referenced
+    draft designs remain candidates; this node does not assert that a particular membership action occurred,
+    select a storage mechanism or establish implementation readiness.
   requirements:
     project: A saved Project has a stable local identity, a name, an optional description and one or more
       source-identified GitHub repositories. A Project and its repositories remain distinct objects.
@@ -46,8 +56,8 @@ specification:
   - Actual persistence, source identity evidence, access policy and recovery contracts for the selected
     design.
   ontology_status: The working Project, Repository, User and membership vocabulary comes from the project's
-    selected draft ontology context; this node does not grant semantic approval or infer an actor, motive
-    or event from membership alone.
+    selected ontology context; this node does not grant semantic approval or infer an actor, motive or
+    event from membership alone.
 acceptance:
 - A Project with one or more confirmed repositories is distinguishable from each repository and from GitHub
   organizations.

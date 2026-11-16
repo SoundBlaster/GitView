@@ -14,8 +14,19 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0009.yaml
   predecessor_revision: 05c27259cd47f1967ec871802579414dac47301e
   owner_selection: docs/drafts/issue-ontology-options.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:Issue
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:issueRepository
+  - gitview:issueClosingPullRequest
+  - gitview:issueMentionedPullRequest
+  - gitview:issueParent
+  - gitview:issueSubIssue
+  - gitview:issueBlockedBy
+  - gitview:issueBlocks
   objective: Provide a compact, source-linked overview of a selected Issue and its supported relationships.
   authority_boundary: The owner selected the field categories; exact mappings, display and availability
     require refinement. This node does not establish an implementation, an actor's motive or ontology
@@ -56,8 +67,8 @@ specification:
   open_questions:
   - Source mappings, relationship and count evidence, API availability and freshness.
   - Field priority, truncation, access, sharing payload and exact display.
-  ontology_status: Issue and related terms use working draft vocabulary; source links do not prove actor
-    actions or semantic approval.
+  ontology_status: Issue and related terms use selected ontology vocabulary; source links do not prove
+    actor actions or semantic approval.
 acceptance:
 - The selected Issue retains its identity and Repository context with supported permitted identifying
   fields and state reason.

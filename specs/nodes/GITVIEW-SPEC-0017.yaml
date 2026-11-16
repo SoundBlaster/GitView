@@ -16,8 +16,14 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0017.yaml
   predecessor_revision: 3fbc0f9
   root_intent: .specgraph/root_intent.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Make overview, preview and object access usable with platform accessibility features.
   authority_boundary: Accessible alternatives and Apple system appearance are selected directions. Exact
     native controls, supported platform versions and device behavior require refinement and validation;
@@ -54,8 +60,8 @@ specification:
   open_questions:
   - Exact native accessibility actions, focus fallback, minimum platform support and device verification.
   - Access-safe labels and treatment of unavailable or changing data in each view.
-  ontology_status: User, Project, Repository, PullRequest and Issue use working draft vocabulary; accessibility
-    controls add no domain entities.
+  ontology_status: User, Project, Repository, PullRequest and Issue use selected ontology vocabulary;
+    accessibility controls add no domain entities.
 acceptance:
 - Essential interactions have accessible alternatives to a single gesture and color-only communication.
 - Assistive descriptions preserve supported identity, known state and applicable uncertainty; confirmed

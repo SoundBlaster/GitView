@@ -13,14 +13,20 @@ sources:
   predecessor_revision: 523f1057d5114f800350015721bdf1805fe5e550
   owner_decision: ontology/review/repository-identity.md
   owner_source_identity_decision: conversation:gitview/excerpt-60-reply
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:GitHub
+  - gitview:Repository
+  - gitview:GitHubRepository
+  - gitview:Project
+  - gitview:projectIncludesRepository
   objective: Preserve the identity and context of a GitHub Repository as its name or owner changes.
   authority_boundary: The owner selected continuity when GitHub confirms the same object and accepted
     the recorded same-GitHub numeric ID examples. Mapping those examples to a particular REST identifier
     is an agent-authored source-mapping candidate requiring verification. This node does not establish
-    an integration, storage mechanism or proof of a source event. The draft ontology and predecessor detailed
-    contracts require their own review.
+    an integration, storage mechanism or proof of a source event. The predecessor detailed contracts require
+    their own review.
   requirements:
     continuity: When GitHub confirms that a renamed or transferred repository is the same source object,
       GitView keeps one Repository with its existing history and all Project memberships. A change of
@@ -44,7 +50,7 @@ specification:
   - Valid source identity evidence and instance scope, including identifier changes and conflicting observations.
   - Retention and presentation of prior addresses, alias resolution, and handling source access changes.
   - Storage, reconciliation and explicit deletion or removal behavior.
-  ontology_status: Repository, GitHubRepository and Project use the selected draft vocabulary; identity
+  ontology_status: Repository, GitHubRepository and Project use the selected ontology vocabulary; identity
     continuity does not establish an actor action, a motive or an uninterrupted management interval.
   scenarios:
     confirmed_change: A repository in Projects P and Q is renamed and then transferred; GitHub confirms

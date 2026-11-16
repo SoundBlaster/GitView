@@ -18,6 +18,11 @@ sources:
   root_intent: .specgraph/root_intent.md
   visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Let the operator inspect a selected object without losing its identity or the originating
     overview.
   authority_boundary: This node refines the selected first-version static preview. It does not select
@@ -56,8 +61,8 @@ specification:
   - Exact native preview and menu behavior, gesture arbitration and cancellation.
   - Fallback position and focus after changes to the original scope.
   - Source evidence for revocation and the mechanics of access recovery.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; preview and
-    presentation identity are interaction concepts.
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; preview
+    and presentation identity are interaction concepts.
 acceptance:
 - First-version preview provides readable additional available details for the selected object without
   navigating away and offers explicit local open and dismissal; opening preserves its identity and origin.

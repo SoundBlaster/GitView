@@ -18,6 +18,11 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0072.yaml
   ux_direction: docs/drafts/ux-zoom-levels-proposal.md
 specification:
+  ontology_refs:
+  - gitview:projectIncludesRepository
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
   objective: Keep Projects identifiable and the overview position understandable across updates and navigation.
   authority_boundary: Project overview and identity-preserving navigation are selected. Stable relative
     order across ordinary refresh and density changes is an agent-authored refinement; initial sort, insertion
@@ -65,8 +70,8 @@ specification:
   - Initial order, deterministic fallback policy, user-controlled sorting and cross-device ordering.
   - Platform-specific layout, focus and transition behavior.
   - Account-change disclosure outside confirmed private Repository revocation.
-  ontology_status: Project and Repository use working draft vocabulary; position and ordering are interface
-    concepts, not new domain entities.
+  ontology_status: Project and Repository use selected ontology vocabulary; position and ordering are
+    interface concepts, not new domain entities.
 acceptance:
 - Existing Projects retain supported identity and stable relative order through ordinary refresh or density
   changes.

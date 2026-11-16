@@ -15,8 +15,14 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0022.yaml
   predecessor_revision: 33887d5
   root_intent: .specgraph/root_intent.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:GitHub
+  - gitview:projectIncludesRepository
   objective: Let the operator progress from an empty Project collection to a GitHub-backed Project without
     confusing missing data and failures.
   authority_boundary: One Project per Repository is the selected default. The detailed onboarding flow,
@@ -68,8 +74,8 @@ specification:
   - Recovery after interrupted setup and save outcomes, accessible feedback and disclosure for restricted
     source data.
   - Loading order and the threshold for a complete current local collection.
-  ontology_status: User, GitHub, Project and Repository use the working draft vocabulary; setup does not
-    establish ontology approval.
+  ontology_status: User, GitHub, Project and Repository use the selected ontology vocabulary; setup does
+    not establish ontology approval.
 acceptance:
 - With an eligible selected Repository and successful required operations, the operator can complete default
   setup and open the saved identifiable Project's permitted work.

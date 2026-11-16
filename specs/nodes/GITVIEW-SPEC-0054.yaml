@@ -15,6 +15,9 @@ sources:
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/github-templates/README.md
 specification:
+  ontology_refs:
+  - gitview:Issue
+  - gitview:PullRequest
   objective: Make the selected Issue and PR description structure a requirement of the participating repository
     authoring process while keeping GitView usable for other source material.
   authority_boundary: The owner chose the mandatory section sets. Which repositories and authoring paths
@@ -59,7 +62,7 @@ specification:
   - The conformance rule, enforcement or correction point, handling of exceptions and evidence of creation-path
     coverage.
   - Template versions, section syntax and exact semantics of incomplete or ambiguous authored content.
-  ontology_status: Issue and PullRequest use working draft vocabulary; authored statements and process
+  ontology_status: Issue and PullRequest use selected ontology vocabulary; authored statements and process
     conformance do not establish an actor's actual motive or a new domain entity.
 acceptance:
 - The participating process requires the selected Issue and PR section sets for new descriptions across

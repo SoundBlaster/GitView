@@ -18,6 +18,12 @@ sources:
   predecessor_revision: 33fb739
   root_intent: .specgraph/root_intent.md
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Let the operator request or benefit from bounded refresh while understanding what has actually
     updated.
   authority_boundary: Manual refresh, stale-on-open and opportunistic background updates follow the owner
@@ -76,8 +82,8 @@ specification:
   - GitHub operations, rate-limit interpretation, request budgets, retry and background scheduling appropriate
     to the implementation.
   - Source evidence and explicit recovery path after access revocation or uncertain local retention.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; refresh triggers
-    and request outcomes are interaction and specification concepts, not new domain entities.
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; refresh
+    triggers and request outcomes are interaction and specification concepts, not new domain entities.
 acceptance:
 - The operator can request refresh using pull-to-refresh where appropriate or an equivalent accessible
   action.

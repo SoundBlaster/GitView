@@ -17,6 +17,11 @@ sources:
   predecessor_revision: 9c598dd
   dense_prototype: docs/drafts/dense-overview-prototype.md
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Let the operator move between a dense overview and more detailed cards without losing the
     meaning or scope of the selected work.
   authority_boundary: This node refines the selected Photos-inspired in-scope density change. Exact column
@@ -63,8 +68,8 @@ specification:
   - Native collection layout, animation, anchoring and gesture coordination across density levels.
   - Exact visual and accessible cues at each scale and the treatment of independent changes during interaction.
   - How intentional navigation between scopes relates to zoom beyond the agreed in-scope density change.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; density and
-    visual position are presentation concepts rather than new domain entities.
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; density
+    and visual position are presentation concepts rather than new domain entities.
 acceptance:
 - Changing density alone preserves the applicable collection scope, period, filters and object identities.
 - Dense and spacious presentations retain accessible identification and inspection of available objects

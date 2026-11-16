@@ -15,12 +15,18 @@ sources:
   predecessor_revision: eed15c6dc028565c5ade0bc0283d6480b2102cd3
   owner_selection: docs/drafts/project-summary-proposal.md
   ux_candidate: docs/drafts/ux-zoom-levels-proposal.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:projectIncludesRepository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Let the operator navigate from a Project overview to its repositories and their work while
     retaining context.
   authority_boundary: This node records selected navigation outcomes and bounded refinement, not the complete
-    predecessor draft, a selected default for every multi-repository entry, an accepted ontology or implementation
+    predecessor draft, a selected default for every multi-repository entry, ontology approval or implementation
     readiness.
   requirements:
     context: Project and Repository remain distinct and identifiable in the permitted context. Repository
@@ -64,7 +70,7 @@ specification:
   - Exact navigation controls and transitions, context restoration when data or membership changes, and
     gesture behavior.
   - Signal predicates, freshness and coverage, selection details, and disclosure after access changes.
-  ontology_status: Project, Repository, PullRequest and Issue use the selected draft vocabulary; navigation
+  ontology_status: Project, Repository, PullRequest and Issue use the selected ontology vocabulary; navigation
     does not itself establish a domain action, motive or semantic approval of the ontology.
 acceptance:
 - A single-Repository Project reaches its work without a redundant intermediate Repository screen and

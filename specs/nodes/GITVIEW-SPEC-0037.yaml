@@ -15,6 +15,11 @@ sources:
   predecessor_revision: fef38bd
   visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Preserve truthful scope and freshness when source observations overlap or access changes
     during refresh.
   authority_boundary: This node describes observable ordering and access outcomes. It does not select
@@ -58,8 +63,8 @@ specification:
   - Source evidence and comparison rules sufficient to order each kind of observation.
   - Conflict resolution, reconnect evidence and handling of in-flight or interrupted local writes.
   - Account isolation and exact native presentation of uncertain or incomplete observations.
-  ontology_status: Repository, Project, PullRequest and Issue use working draft vocabulary; request ordering
-    and observation states are specification concepts rather than new domain entities.
+  ontology_status: Repository, Project, PullRequest and Issue use selected ontology vocabulary; request
+    ordering and observation states are specification concepts rather than new domain entities.
 acceptance:
 - Source-confirmed older data does not silently replace a newer accepted observation for the same fact
   and scope solely because it arrived later.

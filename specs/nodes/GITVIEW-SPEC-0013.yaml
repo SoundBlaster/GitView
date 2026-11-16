@@ -15,8 +15,18 @@ sources:
   predecessor_revision: 852649f
   owner_selection: docs/drafts/project-summary-proposal.md
   historical_membership_decision: conversation_memory/sketches/gitview/revisions/a55f271ca16f4283bfaf67095616ee7a/notes.hc
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:projectIncludesRepository
+  - gitview:pullRequestRepository
+  - gitview:issueRepository
+  - gitview:pullRequestIssueLink
+  - gitview:Metric
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Make work and completion trends interpretable without inventing historical observations.
   authority_boundary: Metrics, graphs and visibility of completion and unfinished work are selected. Exact
     metric predicates, periods, source reconstruction, history retention and burn-down formula remain
@@ -69,8 +79,8 @@ specification:
   - History retention, time buckets, chart presentation and access policy; evidence when current Project
     membership is uncertain.
   - Burn-down population, cohort and formula if a formal burn-down chart is selected.
-  ontology_status: Metric, Project, Repository, PullRequest and Issue use working draft vocabulary; a
-    displayed metric does not establish ontology approval or a concrete actor action.
+  ontology_status: Metric, Project, Repository, PullRequest and Issue use selected ontology vocabulary;
+    a displayed metric does not establish ontology approval or a concrete actor action.
 acceptance:
 - Historical Project graphs use the current Repository membership basis and do not claim it is historical
   Project membership.

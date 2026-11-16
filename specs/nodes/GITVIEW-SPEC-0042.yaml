@@ -16,6 +16,11 @@ sources:
   predecessor_revision: 33fb739
   root_intent: .specgraph/root_intent.md
 specification:
+  ontology_refs:
+  - gitview:Issue
+  - gitview:PullRequest
+  - gitview:Repository
+  - gitview:Project
   objective: Make incomplete work selection understandable while preserving the operator's context and
     access to already observed work.
   authority_boundary: This node specifies product-visible outcomes. It does not select a separate uncertainty
@@ -55,8 +60,8 @@ specification:
     grid densities.
   - Scope and persistence of collection status and focus fallback during concurrent changes.
   - Source evidence required for coverage and exact refresh controls.
-  ontology_status: PullRequest, Repository and Project use working draft vocabulary; uncertainty and presentation
-    are interaction and specification concepts.
+  ontology_status: PullRequest, Repository and Project use selected ontology vocabulary; uncertainty and
+    presentation are interaction and specification concepts.
 acceptance:
 - A supported confirmed match is distinguishable from an identified object whose applicable selection
   condition is unknown.

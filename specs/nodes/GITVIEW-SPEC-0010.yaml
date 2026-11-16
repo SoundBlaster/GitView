@@ -14,8 +14,11 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0010.yaml
   predecessor_revision: 3fbc0f9
   owner_selection: docs/drafts/github-templates/README.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:Issue
+  - gitview:PullRequest
   objective: Preserve authored Issue and PR descriptions while supporting the selected structured formats.
   authority_boundary: The owner selected mandatory templates and sections for the participating repository
     process. Template deployment, enforcement across creation paths, parsing and versioning need separate
@@ -45,8 +48,8 @@ specification:
   - Participating repository scope, supported creation paths, installation, versioning and enforcement
     mechanisms.
   - Extraction, display and handling of unavailable or restricted authored content.
-  ontology_status: Issue and PullRequest use the working draft vocabulary; authored text does not establish
-    actor motives as facts.
+  ontology_status: Issue and PullRequest use the selected ontology vocabulary; authored text does not
+    establish actor motives as facts.
 acceptance:
 - The selected Issue and PR formats retain their distinct named sections and apply to new descriptions
   through all supported creation paths of the participating process; the templates support but do not

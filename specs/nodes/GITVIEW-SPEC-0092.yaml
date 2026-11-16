@@ -20,6 +20,17 @@ sources:
   predecessor_revision: 9bbf79f
   owner_selection: docs/drafts/project-summary-proposal.md
 specification:
+  ontology_refs:
+  - gitview:projectIncludesRepository
+  - gitview:pullRequestRepository
+  - gitview:issueRepository
+  - gitview:ReviewThread
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
   objective: Preserve the meaning of an actionable summary signal when the operator opens and navigates
     its associated work selection.
   authority_boundary: Direct navigation from an actionable Project signal and the limited historical merged-counter
@@ -73,8 +84,8 @@ specification:
   - Native controls for changing signal conditions, return behavior and filter persistence scope.
   - Behavior for conflicting saved filters beyond the selected merged-counter transition.
   - Exact predicate and source evidence for each actionable signal and historical period.
-  ontology_status: Project, Repository, PullRequest, Issue and Metric use working draft vocabulary; signal
-    selection and navigation are interaction and measurement concepts, not new domain entities.
+  ontology_status: Project, Repository, PullRequest, Issue and Metric use selected ontology vocabulary;
+    signal selection and navigation are interaction and measurement concepts, not new domain entities.
 acceptance:
 - An actionable signal preserves its supported origin, condition, scope, unit and period when opening
   its corresponding work selection, or exposes a limitation.

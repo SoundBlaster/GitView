@@ -15,8 +15,13 @@ relates_to:
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0024.yaml
   predecessor_revision: c40ba68
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Preserve understandable navigation context while moving among Projects, work collections
     and object overviews.
   authority_boundary: This node refines context and return outcomes without selecting a cold-launch destination,
@@ -59,7 +64,7 @@ specification:
   - Persistence scope and reset of filters, and non-merged historical counter overrides.
   - Access and disclosure policy after disconnect or account changes, exact revocation evidence and recovery,
     and behavior of an open overview in other access cases remain to be decided.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; navigation
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; navigation
     context is not a domain entity.
 acceptance:
 - Returning from an object retains its valid permitted originating scope, applicable period, filter and

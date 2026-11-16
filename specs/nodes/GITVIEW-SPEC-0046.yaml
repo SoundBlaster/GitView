@@ -19,6 +19,16 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0046.yaml
   revoked_private_visibility: specs/nodes/GITVIEW-SPEC-0019.yaml
 specification:
+  ontology_refs:
+  - gitview:pullRequestRepository
+  - gitview:issueRepository
+  - gitview:CIStatus
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  - gitview:projectIncludesRepository
   objective: Preserve the meaning and limits of counts derived from observations with differing coverage,
     time or Project membership.
   authority_boundary: Project summaries, current membership for historical Project graphs and retained
@@ -76,8 +86,8 @@ specification:
   - Per-metric source evidence for coverage, comparable times and identity.
   - Native representation of partial, mixed-time and last-known aggregates.
   - Account-change and other disclosure conditions beyond confirmed private Repository revocation.
-  ontology_status: Project, Repository, PullRequest, Issue and Metric use working draft vocabulary; coverage
-    and aggregation are observation properties rather than new domain entities.
+  ontology_status: Project, Repository, PullRequest, Issue and Metric use selected ontology vocabulary;
+    coverage and aggregation are observation properties rather than new domain entities.
 acceptance:
 - Displayed counts retain supported metric, scope, membership basis, time and coverage without inventing
   a simultaneous snapshot.

@@ -19,6 +19,13 @@ sources:
   predecessor_revision: 9c598dd
   default_mechanism_review: docs/drafts/project-default-association-review-20261115.md
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:GitHub
+  - gitview:GitHubRepository
+  - gitview:projectIncludesRepository
   objective: Keep Repository selection and the outcome of creating or reusing Project configuration understandable
     when source or save evidence is incomplete.
   authority_boundary: The owner selected one Project per Repository as the default and allowed a Project
@@ -74,8 +81,8 @@ specification:
     or alternative reuse design.
   - Evidence and recovery for a submitted operation whose outcome cannot be confirmed.
   - Native feedback and accessibility details for partial discovery, cancellation and per-effect outcomes.
-  ontology_status: Project, Repository and User use working draft vocabulary; a selection or saved membership
-    does not itself prove an actor's motive or a particular ontology action.
+  ontology_status: Project, Repository and User use selected ontology vocabulary; a selection or saved
+    membership does not itself prove an actor's motive or a particular ontology action.
 acceptance:
 - Repository selection is distinguishable from a successfully saved Project and from a loaded work collection.
 - Default one-Repository composition remains distinct from the unselected persistent-association mechanism.

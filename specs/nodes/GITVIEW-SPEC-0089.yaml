@@ -19,6 +19,13 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0089.yaml
   owner_local_day: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc
 specification:
+  ontology_refs:
+  - gitview:pullRequestRepository
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:CIStatus
   objective: Preserve the meaning of Today inclusion and active filters when their source observations
     refer to different times or revisions.
   authority_boundary: Today includes earlier unfinished work and work completed during the user's current
@@ -69,7 +76,7 @@ specification:
   - Source-specific ordering, revision applicability and evidence for current filter claims.
   - Other Today inclusion alternatives and behavior when the user local time zone changes.
   - Native presentation of uncertain candidates and per-field observation context.
-  ontology_status: Project, Repository, PullRequest, Issue and CIStatus use working draft vocabulary;
+  ontology_status: Project, Repository, PullRequest, Issue and CIStatus use selected ontology vocabulary;
     temporal applicability and filtering are not new domain entities.
 acceptance:
 - Today retains the selected local-day behavior and does not treat yesterday's completion alone as today's

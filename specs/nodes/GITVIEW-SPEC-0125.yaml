@@ -21,6 +21,13 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0125.yaml
   owner_intent_review: docs/drafts/owner-intent-coverage-review-20261115.md
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:ReviewThread
   objective: Preserve the requested view of what is ready while distinguishing completed outcomes from
     review stage and independently supported attention signals.
   authority_boundary: The owner asked to see what is ready and approved showing completed and unfinished
@@ -72,8 +79,8 @@ specification:
   - What product-visible meaning of ready should be selected, for whom and with which evidence.
   - Whether an optional open non-draft PR filter is useful and how its source inputs are established.
   - Any merge eligibility scope, source policy and action require separate refinement.
-  ontology_status: PullRequest, Issue and Project use working draft vocabulary; a stage or readiness signal
-    does not create a domain entity or prove actor motive.
+  ontology_status: PullRequest, Issue and Project use selected ontology vocabulary; a stage or readiness
+    signal does not create a domain entity or prove actor motive.
 acceptance:
 - The need to see ready work remains explicit without asserting that an unselected predicate resolves
   it.

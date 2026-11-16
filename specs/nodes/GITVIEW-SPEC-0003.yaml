@@ -13,8 +13,13 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0003.yaml
   predecessor_revision: 852649f
   revoked_private_data_decision: conversation_memory/sketches/gitview/revisions/b0795ae580e94ba0be8c59cefcbd3a97/notes.hc
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:GitHub
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Reuse previously received data while keeping refresh outcomes, freshness and incomplete coverage
     understandable.
   authority_boundary: The owner proposed app-owned persisted data and requested visible refresh failure,
@@ -69,8 +74,8 @@ specification:
     evidence, recovery and missing-time presentation for explicit revocation remain open.
   - Storage schema and durability, staleness, prioritization, pagination, retries and exact source budget.
   - Presentation of partial data and exact refresh controls in each interaction context.
-  ontology_status: GitHub, Repository, PullRequest and Issue use the working draft vocabulary; an observation
-    or link alone does not establish a domain action or ontology approval.
+  ontology_status: GitHub, Repository, PullRequest and Issue use the selected ontology vocabulary; an
+    observation or link alone does not establish a domain action or ontology approval.
 acceptance:
 - Eligible last-known data can be used without waiting for a new request, subject to applicable access
   restrictions.

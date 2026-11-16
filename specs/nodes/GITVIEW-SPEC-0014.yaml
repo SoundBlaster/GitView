@@ -13,8 +13,13 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0014.yaml
   predecessor_revision: 852649f
   dense_prototype: docs/drafts/dense-overview-prototype.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Provide a Photos-inspired grid that moves between dense overview and more detailed cards
     within a stable scope.
   authority_boundary: The owner selected multiple density levels and pinch, with dense work-grid examples.
@@ -53,7 +58,7 @@ specification:
   open_questions:
   - Native collection behavior, zoom anchors, transitions and gesture conflicts, and measured device performance.
   - Exact object cues at each density, accessible controls and changed-origin recovery interaction.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; presentation
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; presentation
     does not establish ontology approval.
 acceptance:
 - Pinch changes grid density and detail within its current scope without itself changing the selected

@@ -16,6 +16,10 @@ depends_on:
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0053.yaml
 specification:
+  ontology_refs:
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Preserve the meaning of conflicting observations without treating transport arrival order
     as source freshness.
   authority_boundary: Keeping last-known data and showing failures are owner-selected. Conflict resolution
@@ -64,7 +68,7 @@ specification:
   open_questions:
   - Source-specific evidence for ordering each relevant fact and partial response.
   - Conflict presentation, representation of competing values and resolution when ordering cannot be established.
-  ontology_status: Existing Repository, PullRequest and Issue vocabulary remains draft; an observation
+  ontology_status: Repository, PullRequest and Issue use the selected ontology vocabulary; an observation
     conflict is a data-quality condition, not a new domain entity.
 acceptance:
 - Comparable facts do not regress to a source-confirmed older value solely because a response arrived

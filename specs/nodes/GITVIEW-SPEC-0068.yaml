@@ -20,6 +20,14 @@ sources:
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/project-summary-proposal.md
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  - gitview:projectIncludesRepository
   objective: Let the operator inspect available Project metric history and move to supported related work
     without losing the measurement context.
   authority_boundary: Project graphs and supported signal navigation follow the owner-selected direction.
@@ -78,8 +86,8 @@ specification:
   - Supported source history, measurement predicates and evidence for each graph or outcome.
   - Handling of origin or membership changes during an already open historical selection beyond the supported
     captured context.
-  ontology_status: Project, Repository, PullRequest, Issue and Metric use working draft vocabulary; graph,
-    point and navigation are presentation and measurement concepts.
+  ontology_status: Project, Repository, PullRequest, Issue and Metric use selected ontology vocabulary;
+    graph, point and navigation are presentation and measurement concepts.
 acceptance:
 - Available metric history preserves its originating Project, supported measurement and selected period.
 - Series scope, unit, current-membership basis and applicable coverage are distinguishable; an unobserved

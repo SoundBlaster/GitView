@@ -23,6 +23,17 @@ sources:
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/project-summary-proposal.md
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:ReviewThread
+  - gitview:CIStatus
+  - gitview:Metric
+  - gitview:projectIncludesRepository
+  - gitview:pullRequestRepository
+  - gitview:issueRepository
   objective: Make selected Project work, attention and period outcomes available as interpretable measurements
     and graphs when evidence supports them.
   authority_boundary: The Project summary categories and graphs are owner-selected; exact predicates,
@@ -88,8 +99,9 @@ specification:
   - How to define any higher-level ready or long-discussion signal and its evidence without conflating
     independent facts.
   - Native presentation, chart periods, partial coverage and any formal burn-down definition.
-  ontology_status: Project, Repository, PullRequest, Issue, ReviewThread, CIStatus and Metric use working
-    draft vocabulary; a chart or counter does not establish an actor action or a new domain entity.
+  ontology_status: Project, Repository, PullRequest, Issue, ReviewThread, CIStatus and Metric use the
+    selected ontology vocabulary; a chart or counter does not establish an actor action or a new domain
+    entity.
 acceptance:
 - Supported current work, attention and period outcomes remain distinguishable by Project or Repository
   scope, unit, condition, time and coverage.

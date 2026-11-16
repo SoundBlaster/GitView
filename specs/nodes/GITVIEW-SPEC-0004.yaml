@@ -19,13 +19,16 @@ sources:
   root_intent: .specgraph/root_intent.md
   project_summary: docs/drafts/project-summary-proposal.md
   dense_prototype: docs/drafts/dense-overview-prototype.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
   objective: Help the operator survey Projects and choose where to inspect current work and attention.
   authority_boundary: This node records the selected Project overview and its relation to work. Exact
     cold-launch navigation, restoration, layout and access behavior remain to be refined; the current-work
-    Today mode is not itself a required historical viewer. No native implementation or accepted ontology
-    is established.
+    Today mode is not itself a required historical viewer. No native implementation is established.
   requirements:
     projects: Provide an overview of saved GitView Projects whose representation is permitted, identifiable
       where their information is permitted, with available work and attention signals inspectable. Project
@@ -60,8 +63,8 @@ specification:
   - Exact layout and accessible control placement across densities, and disclosure of restricted Project
     information.
   - Local collection coverage, loading, failure and ordering contracts in detailed scenarios.
-  ontology_status: User, Project and Repository use the working draft vocabulary; an overview is a presentation,
-    not a new domain entity.
+  ontology_status: User, Project and Repository use the selected ontology vocabulary; an overview is a
+    presentation, not a new domain entity.
 acceptance:
 - Permitted Projects are identifiable and their available work and attention are inspectable.
 - Project and actionable-signal navigation preserve applicable scope and source context.

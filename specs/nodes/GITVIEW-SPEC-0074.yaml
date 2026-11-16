@@ -21,6 +21,13 @@ sources:
   owner_selection: docs/drafts/project-summary-proposal.md
   ux_candidate: docs/drafts/ux-zoom-levels-proposal.md
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:projectIncludesRepository
   objective: Let the operator move from an overview of Projects into the relevant Repository or work scope
     without losing identity or navigation context.
   authority_boundary: Single-Repository entry, member inspection and direct actionable Project-signal
@@ -77,8 +84,8 @@ specification:
   - Native scope transitions, focus or position restoration, and gesture interaction across levels.
   - Exact signal predicates, source coverage and response to Project membership changes during an open
     route.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; visual levels
-    and navigation actions are interaction concepts, not newly asserted domain entities.
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; visual
+    levels and navigation actions are interaction concepts, not newly asserted domain entities.
 acceptance:
 - A single-Repository Project reaches its work without a redundant intermediate Repository screen while
   retaining both identities.

@@ -22,6 +22,16 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0101.yaml
   selected_fields: docs/drafts/pr-issue-selected-fields-coverage-20261114.md
 specification:
+  ontology_refs:
+  - gitview:GitHub
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:pullRequestRepository
+  - gitview:issueRepository
+  - gitview:pullRequestIssueLink
+  - gitview:projectIncludesRepository
   objective: Preserve distinct source-supported PR and Issue identities when constructing a Today work
     selection from potentially overlapping or incomplete observations.
   authority_boundary: Today presents each eligible PR or Issue once per selection and retains distinct
@@ -78,7 +88,7 @@ specification:
   - Source-specific type, object and Repository identity mapping and association evidence.
   - Partial population, access and source ordering semantics for selected operations.
   - Native presentation for unresolved records and their selection limitations.
-  ontology_status: GitHub, Repository, PullRequest and Issue use working draft vocabulary; normalization
+  ontology_status: GitHub, Repository, PullRequest and Issue use selected ontology vocabulary; normalization
     is an observation operation, not a new domain entity or proof of actor motive.
 acceptance:
 - Confirmed PRs and Issues retain supported identity and type; unresolved representations are not silently

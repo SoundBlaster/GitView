@@ -18,6 +18,11 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0077.yaml
   selected_fields: docs/drafts/issue-ontology-options.md
 specification:
+  ontology_refs:
+  - gitview:Issue
+  - gitview:Repository
+  - gitview:Metric
+  - gitview:issueRepository
   objective: Make Issue comment and participant counts and the time of the latest comment interpretable
     with their actual scope and evidence.
   authority_boundary: The owner selected comment and discussion-participant counts and the latest comment
@@ -67,7 +72,7 @@ specification:
   - Participant population and exact GitHub source mapping, permissions, pagination and evidence of coverage.
   - Whether to show a separate count of distinct comment authors and its population.
   - Native representation of unavailable, partial and last-known values.
-  ontology_status: Issue, Repository and Metric use working draft vocabulary; counts do not introduce
+  ontology_status: Issue, Repository and Metric use selected ontology vocabulary; counts do not introduce
     a new domain entity or identify an actor's motive.
 acceptance:
 - Issue comments, participants and latest-comment time retain distinct units, supported context and limitations.

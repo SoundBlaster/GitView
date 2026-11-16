@@ -19,6 +19,11 @@ sources:
   owner_today_and_filters: conversation_memory/sketches/gitview/revisions/ed322706b55a4798a4328a69982fcbae/notes.hc
   owner_local_day: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Preserve the selected Today and filter behavior when the application has incomplete or uncertain
     work observations.
   authority_boundary: This node refines product-visible selection and uncertainty. It does not select
@@ -75,7 +80,7 @@ specification:
     coverage.
   - Filter storage scope, reset, cross-device synchronization and behavior when local time zone changes
     during interaction.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; selection
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; selection
     and uncertainty are not newly asserted domain entities.
 acceptance:
 - Applicable earlier unfinished work and work completed during the current user local calendar day remain

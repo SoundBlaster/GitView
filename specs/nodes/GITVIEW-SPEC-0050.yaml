@@ -22,6 +22,13 @@ sources:
   discovery: docs/product-discovery.md
   revoked_private_visibility: specs/nodes/GITVIEW-SPEC-0019.yaml
 specification:
+  ontology_refs:
+  - gitview:CIStatus
+  - gitview:Metric
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Support inspection of a selected object from the overview with a compact, type-aware preview.
   authority_boundary: The owner requested a minimal overview with examples including name, ID, badges
     and text, and selected a first-version long-press preview. Those examples are not an exhaustive field
@@ -83,8 +90,8 @@ specification:
   - Source-specific evidence for individual fields and handling of account-change disclosure.
   - Treatment of special or unclassified CI checks in compact representations, beyond the parent signal
     contract.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; preview is
-    an interaction, not a new domain entity.
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; preview
+    is an interaction, not a new domain entity.
 acceptance:
 - Preview identifies the selected object in its supported scope, provides readable additional available
   detail beyond the cell and offers local open and dismissal without retargeting it.

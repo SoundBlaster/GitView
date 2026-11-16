@@ -16,6 +16,16 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0084.yaml
   ontology_review: ontology/review/membership-lifecycle-state-evidence.md
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:GitHubRepository
+  - gitview:AddRepository
+  - gitview:addsRepositoryTo
+  - gitview:RemoveRepository
+  - gitview:removesRepositoryFrom
+  - gitview:projectIncludesRepository
   objective: Keep current Project membership distinct from an intended change and evidence about a particular
     actor's past action.
   authority_boundary: The owner selected one or more Repositories per Project and shared membership across
@@ -64,8 +74,8 @@ specification:
   - Evidence and recovery for an indeterminate Project edit, including concurrent changes.
   - Whether a separately defined default association is needed and how it relates to membership.
   - Any retention or presentation of historical membership and action evidence.
-  ontology_status: Project, Repository and User use working draft vocabulary. A supported membership link
-    is not by itself evidence that a particular actor performed a specific action or had a motive.
+  ontology_status: Project, Repository and User use selected ontology vocabulary. A supported membership
+    link is not by itself evidence that a particular actor performed a specific action or had a motive.
 acceptance:
 - Membership presence or absence is attributed to a confirmed valid configuration for the same identified
   Project and Repository; unreadable, inconsistent or indeterminate configuration remains unknown.

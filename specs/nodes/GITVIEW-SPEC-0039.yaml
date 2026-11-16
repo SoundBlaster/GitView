@@ -18,6 +18,17 @@ sources:
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/issue-ontology-options.md
 specification:
+  ontology_refs:
+  - gitview:Issue
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:issueRepository
+  - gitview:issueClosingPullRequest
+  - gitview:issueMentionedPullRequest
+  - gitview:issueParent
+  - gitview:issueSubIssue
+  - gitview:issueBlockedBy
+  - gitview:issueBlocks
   objective: Make the selected Issue facts and relationships inspectable without conflating source state,
     discussion and inferred intent.
   authority_boundary: The owner selected the Issue field categories and a compact source-linked overview.
@@ -77,8 +88,8 @@ specification:
     facts.
   - Source and access handling for linked objects outside the originating Project and historical event
     coverage.
-  ontology_status: Issue, PullRequest and Repository use working draft vocabulary; source links and author
-    text do not establish actor motives or additional domain entities.
+  ontology_status: Issue, PullRequest and Repository use selected ontology vocabulary; source links and
+    author text do not establish actor motives or additional domain entities.
 acceptance:
 - The selected Issue retains its supported identity and Repository context; state, closure reason, type
   and labels are not silently conflated.

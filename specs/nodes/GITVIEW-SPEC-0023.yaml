@@ -17,6 +17,9 @@ sources:
   root_intent: .specgraph/root_intent.md
   visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
   objective: Help the operator understand what the Project overview knows, what remains unknown and when
     previously observed information was updated.
   authority_boundary: This node records product-visible distinctions and the selected local visibility
@@ -58,7 +61,7 @@ specification:
   - Native presentation, wording and persistence of overview status and recovery actions.
   - Source evidence sufficient to establish revocation and the supported recovery flow.
   - Account isolation, incomplete local recovery and exact behavior for other access cases.
-  ontology_status: Project and Repository use the working draft vocabulary; observation and presentation
+  ontology_status: Project and Repository use the selected ontology vocabulary; observation and presentation
     status do not introduce a new domain entity.
 acceptance:
 - A confirmed empty local Project collection is distinguishable from unreadable configuration, unobserved

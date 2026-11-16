@@ -16,6 +16,11 @@ sources:
   predecessor_revision: 9c598dd
   owner_direction: docs/drafts/product-foundation.md
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Let the operator reach a selected object's original GitHub source and share useful context
     without confusing the object or implying external access.
   authority_boundary: Source navigation and lightweight sharing are selected. The default sharing payload,
@@ -71,8 +76,8 @@ specification:
   - Sharing payload, optional added context and disclosure policy for private data.
   - Supported evidence and native behavior for current and last-known source links, handoff and cancellation.
   - Exact link eligibility and source access recovery after a confirmed revocation.
-  ontology_status: Repository, PullRequest and Issue use working draft vocabulary; a source link or handoff
-    does not establish an actor motive or a new domain entity.
+  ontology_status: Repository, PullRequest and Issue use selected ontology vocabulary; a source link or
+    handoff does not establish an actor motive or a new domain entity.
 acceptance:
 - An offered source link remains associated with the correct selected object and Repository context.
 - A source-opening action and lightweight platform sharing are available when their applicable eligibility

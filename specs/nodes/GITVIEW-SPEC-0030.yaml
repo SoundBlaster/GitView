@@ -19,6 +19,16 @@ sources:
   project_summary: docs/drafts/project-summary-proposal.md
   history_membership_decision: conversation_memory/sketches/gitview/revisions/a55f271ca16f4283bfaf67095616ee7a/notes.hc
 specification:
+  ontology_refs:
+  - gitview:pullRequestRepository
+  - gitview:issueRepository
+  - gitview:pullRequestIssueLink
+  - gitview:Metric
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:projectIncludesRepository
   objective: Present historical work measurements with enough scope and evidence to distinguish progress
     from missing information.
   authority_boundary: The owner chose historical graphs and current Project composition as their membership
@@ -72,8 +82,8 @@ specification:
   - Exact selected metrics, event and object units, source evidence, time-zone and bucket rules.
   - Treatment and native presentation of partial coverage, gaps and changed composition.
   - Whether and how a separately defined burn-down view belongs in a later product increment.
-  ontology_status: Project, Repository and Metric use working draft vocabulary; graph buckets and chart
-    styles are presentation and measurement concepts rather than new domain entities.
+  ontology_status: Project, Repository and Metric use selected ontology vocabulary; graph buckets and
+    chart styles are presentation and measurement concepts rather than new domain entities.
 acceptance:
 - A historical series identifies its supported scope, measurement unit, period and coverage.
 - A Project historical graph identifies current Project composition as its basis and does not present

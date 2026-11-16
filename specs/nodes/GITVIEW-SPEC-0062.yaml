@@ -20,6 +20,12 @@ sources:
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/pull-request-ontology-options.md
 specification:
+  ontology_refs:
+  - gitview:Metric
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:ReviewThread
   objective: Make review-related attention understandable without collapsing review requests, assessment
     and discussion into a single invented state.
   authority_boundary: The owner selected supported review signals and counters. The exact definition of
@@ -81,8 +87,8 @@ specification:
     scope.
   - What user-meaningful signal identifies a long or inactive review discussion and what evidence it requires.
   - Native badges, summaries and incomplete-coverage presentation at each density.
-  ontology_status: PullRequest and ReviewThread use working draft vocabulary; source review facts and
-    presentation signals do not prove an actor's motive or add new domain entities.
+  ontology_status: PullRequest and ReviewThread use selected ontology vocabulary; source review facts
+    and presentation signals do not prove an actor's motive or add new domain entities.
 acceptance:
 - Review requests, assessment and total and unresolved thread counts remain distinct supported facts with
   their own applicable context and coverage.

@@ -18,6 +18,16 @@ sources:
   predecessor_revision: 9c598dd
   project_summary: docs/drafts/project-summary-proposal.md
 specification:
+  ontology_refs:
+  - gitview:Metric
+  - gitview:projectIncludesRepository
+  - gitview:pullRequestRepository
+  - gitview:issueRepository
+  - gitview:pullRequestIssueLink
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Let the operator inspect work associated with a supported historical outcome without confusing
     that event with the object's current state.
   authority_boundary: Project historical graphs and the selected merged-counter transition follow 0047.
@@ -77,7 +87,7 @@ specification:
     an active selection.
   - Behavior of historical transitions conflicting with saved filters other than the selected merged-counter
     case.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; selection
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; selection
     predicates and chart navigation are specification and interaction concepts.
 acceptance:
 - A historical outcome selection preserves its originating Project, supported condition, category, period,

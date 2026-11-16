@@ -15,8 +15,14 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0018.yaml
   predecessor_revision: 70feca6
   root_intent: .specgraph/root_intent.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:Metric
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Preserve the discussed contribution-style calendar and deeper PR exploration as possible
     later product directions.
   authority_boundary: Neither calendar nor deeper in-app PR exploration is a first-version prerequisite.
@@ -36,8 +42,8 @@ specification:
   open_questions:
   - Whether and when to select a calendar, its metric, scope, navigation, representation and source evidence.
   - Whether and when to select deeper in-app PR exploration and its boundaries.
-  ontology_status: Metric, Project, Repository, PullRequest and Issue use working draft vocabulary; a
-    calendar cell does not establish a new entity.
+  ontology_status: Metric, Project, Repository, PullRequest and Issue use selected ontology vocabulary;
+    a calendar cell does not establish a new entity.
   scenario_candidate: If a future calendar displays a day for which history is unavailable, it must not
     describe that day as an observed zero.
 acceptance:

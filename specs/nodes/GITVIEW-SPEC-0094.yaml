@@ -19,6 +19,13 @@ sources:
   project_summary: docs/drafts/project-summary-proposal.md
   owner_intent: conversation:gitview/excerpt-02
 specification:
+  ontology_refs:
+  - gitview:pullRequestRepository
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:ReviewThread
+  - gitview:Metric
   objective: Preserve the product need to find lengthy review discussions while keeping the signal's exact
     meaning and evidence open for refinement.
   authority_boundary: The owner requested visibility of problematic long threads and counters rather than
@@ -71,8 +78,8 @@ specification:
     proxy is appropriate.
   - Any duration, activity or size threshold and its treatment across changes in source state.
   - GitHub source evidence, coverage and permissions for the selected meaning, and native presentation.
-  ontology_status: PullRequest and ReviewThread use working draft vocabulary; an attention signal is a
-    measurement and presentation concept, not a new domain entity or proof of actor motive.
+  ontology_status: PullRequest and ReviewThread use selected ontology vocabulary; an attention signal
+    is a measurement and presentation concept, not a new domain entity or proof of actor motive.
 acceptance:
 - The requested ability to notice lengthy review discussions remains an explicit product need with its
   definition unresolved.

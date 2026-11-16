@@ -23,6 +23,13 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0091.yaml
   project_model: docs/drafts/project-summary-proposal.md
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:projectIncludesRepository
   objective: Preserve the operator's actual Project or Repository work scope as Project membership changes.
   authority_boundary: A Project contains one or more Repositories, and a Repository may belong to several
     Projects. Ordinary entry behavior for a multi-Repository Project remains open; this node applies to
@@ -81,7 +88,7 @@ specification:
   - Default entry and presentation for multi-Repository Projects.
   - Native presentation of changed or uncertain origin, focus and recovery.
   - Storage and coordination mechanisms for membership edits and their evidence.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; work scope
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; work scope
     and navigation are interaction concepts rather than new domain entities.
 acceptance:
 - Project-wide and explicitly Repository-scoped selections preserve their distinct intent as membership

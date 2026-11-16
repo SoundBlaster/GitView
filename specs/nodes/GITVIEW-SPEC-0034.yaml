@@ -16,6 +16,9 @@ sources:
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/github-templates/README.md
 specification:
+  ontology_refs:
+  - gitview:Issue
+  - gitview:PullRequest
   objective: Preserve what an Issue or PR author wrote while making reliably identified sections understandable
     as authored statements.
   authority_boundary: The owner selected description formats for the participating process. Exact parsing
@@ -61,7 +64,7 @@ specification:
   - Source coverage, attribution and exact handling of unavailable or differently formatted descriptions.
   - Which repositories and authoring paths participate in the selected mandatory format and how conformance
     is checked.
-  ontology_status: PullRequest and Issue use working draft vocabulary; description fields are authored
+  ontology_status: PullRequest and Issue use selected ontology vocabulary; description fields are authored
     content, not proof of an actor's motive or new ontology entities.
 acceptance:
 - Available original Issue and PR descriptions remain accessible even when structured extraction is absent

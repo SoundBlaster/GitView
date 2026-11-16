@@ -15,6 +15,13 @@ depends_on:
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0059.yaml
 specification:
+  ontology_refs:
+  - gitview:GitHubRepository
+  - gitview:projectIncludesRepository
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Repository
+  - gitview:Project
   objective: Let the operator find and choose Repositories without confusing incomplete discovery, pending
     choices or saved Project membership.
   authority_boundary: Selecting eligible Repositories and one Project per Repository as the default are
@@ -87,8 +94,8 @@ specification:
   - Discovery source, search and pagination semantics, permission scope and per-entry admission evidence.
   - Multi-selection, confirmation flow and pending-selection behavior after account changes.
   - Native presentation of coverage, failure, selection and recovery.
-  ontology_status: User, GitHub, Repository and Project use working draft vocabulary; queries and pending
-    choices are interaction state, not new domain entities.
+  ontology_status: User, GitHub, Repository and Project use selected ontology vocabulary; queries and
+    pending choices are interaction state, not new domain entities.
 acceptance:
 - Discovery identifies its supported scope and distinguishes incomplete or failed results from confirmed
   empty results.

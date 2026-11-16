@@ -17,8 +17,13 @@ sources:
   root_intent: .specgraph/root_intent.md
   revoked_private_data_decision: conversation_memory/sketches/gitview/revisions/b0795ae580e94ba0be8c59cefcbd3a97/notes.hc
   visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Repository
+  - gitview:Project
   objective: Provide the operator a path to connect GitHub and find eligible repositories for a GitView
     Project.
   authority_boundary: GitHub access is necessary to the selected product direction. Initial account count,
@@ -80,8 +85,8 @@ specification:
   - Retained private-data disclosure under ordinary offline, disconnected and account-changed conditions.
   - Repository selection, onboarding, stopping refresh on disconnect, credential removal and uncertain-removal
     recovery, and exact UI behavior.
-  ontology_status: User, GitHub, Repository and Project use working draft vocabulary; authorization does
-    not establish an actor's motive.
+  ontology_status: User, GitHub, Repository and Project use selected ontology vocabulary; authorization
+    does not establish an actor's motive.
 acceptance:
 - The operator can initiate and complete supported source authorization and identify the connected account.
 - The operator can select an eligible discovered Repository for Project composition without treating selection

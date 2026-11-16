@@ -13,8 +13,13 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0011.yaml
   predecessor_revision: 3fbc0f9
   owner_selection: docs/drafts/pull-request-ontology-options.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:Metric
+  - gitview:PullRequest
+  - gitview:ReviewThread
+  - gitview:CIStatus
   objective: Keep current PR check counts, review assessments and thread counts independently interpretable.
   authority_boundary: The owner selected counts and GitHub behavior as the direction; actual source representations,
     retry equivalence, revision mapping and special conclusions require verification. No native behavior
@@ -52,7 +57,7 @@ specification:
   open_questions:
   - Actual GitHub mappings for checks, retries, head revision and special or unknown conclusions.
   - Observation coverage and the exact UI representation of partial or unavailable signals.
-  ontology_status: PullRequest, ReviewThread and CIStatus use the selected draft vocabulary; counters
+  ontology_status: PullRequest, ReviewThread and CIStatus use the selected ontology vocabulary; counters
     do not establish actor actions.
 acceptance:
 - Supported permitted review assessment and both thread counts are shown; unavailable assessment, absence

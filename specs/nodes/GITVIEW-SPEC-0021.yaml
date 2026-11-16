@@ -13,7 +13,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0021.yaml
   predecessor_revision: 852649f
   root_intent: .specgraph/root_intent.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
   objective: Make product behavior testable and guide implementation without choosing a premature module
     structure.
@@ -50,7 +50,7 @@ specification:
   - Select actual modules, dependency composition and domain policies after the corresponding product
     contracts are sufficiently refined.
   - Define appropriate integration and device verification for implemented slices.
-  ontology_status: Domain vocabulary remains the selected draft; dependency boundaries do not establish
+  ontology_status: The local domain vocabulary is owner-approved; dependency boundaries do not establish
     ontology approval.
 acceptance:
 - The architecture direction includes FSD iOS and appropriately selected SpecificationCore decisions without

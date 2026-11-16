@@ -19,8 +19,20 @@ sources:
   predecessor_revision: 33887d5
   project_summary: docs/drafts/project-summary-proposal.md
   repository_proposal: docs/drafts/repository-summary-proposal.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:CIStatus
+  - gitview:ReviewThread
+  - gitview:projectIncludesRepository
+  - gitview:pullRequestRepository
+  - gitview:issueRepository
+  - gitview:pullRequestIssueLink
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
   objective: Make current work, attention and outcomes interpretable at Repository and Project scopes.
   authority_boundary: The Project summary categories are owner-selected; the Repository summary and precise
     predicates remain working refinements. The selected Project overview categories are owned by 0047;
@@ -63,8 +75,8 @@ specification:
   - Exact Repository summary field selection, metric predicates, applicable source evidence and time periods.
   - Partial-coverage presentation, privacy policy and signal-selection behavior when observations change.
   - Definition and applicability of a checks-and-review-passed predicate.
-  ontology_status: Repository, Project, PullRequest, Issue and Metric use draft vocabulary; summaries
-    do not add a new domain entity.
+  ontology_status: Repository, Project, PullRequest, Issue and Metric use the selected ontology vocabulary;
+    summaries do not add a new domain entity.
 acceptance:
 - Supported current work and attention retain their Repository or Project scope, units, coverage and freshness.
 - Project membership overlap and any claimed unique portfolio count follow confirmed identities without

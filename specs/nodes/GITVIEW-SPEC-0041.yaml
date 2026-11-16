@@ -19,6 +19,16 @@ sources:
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/pull-request-ontology-options.md
 specification:
+  ontology_refs:
+  - gitview:issueClosingPullRequest
+  - gitview:issueMentionedPullRequest
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Repository
+  - gitview:ReviewThread
+  - gitview:CIStatus
+  - gitview:pullRequestRepository
+  - gitview:pullRequestIssueLink
   objective: Make the selected PR's compact facts, change counters and independent signals inspectable
     in the correct source context.
   authority_boundary: The owner selected the field categories and compact source-linked overview. Exact
@@ -72,8 +82,8 @@ specification:
   - Source evidence and mapping for PR counts, branches, revisions, requested reviewers and related Issues.
   - Exact field priority, truncation, native presentation and behavior of partial or stale observations.
   - Current-check identity, retries, special conclusions and source permissions needed by selected operations.
-  ontology_status: PullRequest, Issue and Repository use working draft vocabulary; observed links and
-    authored text do not establish an actor's motive or a new domain entity.
+  ontology_status: PullRequest, Issue and Repository use selected ontology vocabulary; observed links
+    and authored text do not establish an actor's motive or a new domain entity.
 acceptance:
 - The selected PR retains its supported identity, PR-associated Repository and separately supported base
   or head Repository context, including when another Repository contains a same-number PR.

@@ -16,6 +16,10 @@ depends_on:
 sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0058.yaml
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Repository
   objective: Let the operator understand whether a GitHub connection attempt succeeded, was cancelled,
     failed or remains unresolved without mistaking any one step for the whole outcome.
   authority_boundary: Connecting GitHub and protecting credentials are selected. Authorization method,
@@ -72,8 +76,8 @@ specification:
   - Authorization method, permissions, account count and source identity evidence.
   - Exact disconnect, credential removal and recovery behavior, including other account-change disclosure.
   - Native presentation of connection outcomes and continuation or recovery.
-  ontology_status: User, GitHub and Repository use working draft vocabulary; authorization attempts and
-    presentation states do not establish an actor's motive or create new domain entities.
+  ontology_status: User, GitHub and Repository use selected ontology vocabulary; authorization attempts
+    and presentation states do not establish an actor's motive or create new domain entities.
 acceptance:
 - Authorization attempt outcomes remain distinguishable without reporting a callback or unverified account
   label as a confirmed connection.

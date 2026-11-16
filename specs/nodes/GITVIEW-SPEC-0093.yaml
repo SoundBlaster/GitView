@@ -21,6 +21,12 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0093.yaml
   preview_proposal: docs/drafts/ux-preview-interactions.md
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Keep the selected object's preview useful and correctly attributed as data availability and
     source observations change.
   authority_boundary: The first-version static preview and local retention after confirmed private Repository
@@ -71,8 +77,8 @@ specification:
   - Whether and when preview initiates a separate refresh and its platform cancellation behavior.
   - Native presentation, precise field priorities and accessibility announcements.
   - Handling retained data in account-change contexts other than confirmed private Repository revocation.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; preview lifetime
-    and presentation are interaction concepts, not new domain entities.
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; preview
+    lifetime and presentation are interaction concepts, not new domain entities.
 acceptance:
 - Supported local preview information is available without waiting for a network response and remains
   attributed to the selected object.

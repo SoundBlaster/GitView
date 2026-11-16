@@ -18,6 +18,13 @@ sources:
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/pull-request-ontology-options.md
 specification:
+  ontology_refs:
+  - gitview:Repository
+  - gitview:pullRequestRepository
+  - gitview:PullRequest
+  - gitview:ReviewThread
+  - gitview:CIStatus
+  - gitview:Metric
   objective: Let the operator interpret check counts, review assessment and review-thread counts for a
     PR without mistaking one signal for another.
   authority_boundary: The owner selected counters and GitHub-like behavior as the direction. Actual source
@@ -69,8 +76,8 @@ specification:
     conclusions.
   - Exact native presentation for incomplete coverage, review requests and independently reported signals.
   - Any applicable higher-level readiness predicate and its source evidence.
-  ontology_status: PullRequest, ReviewThread and CIStatus use working draft vocabulary; counters and assessments
-    do not establish actor actions or a new domain entity.
+  ontology_status: PullRequest, ReviewThread and CIStatus use selected ontology vocabulary; counters and
+    assessments do not establish actor actions or a new domain entity.
 acceptance:
 - Supported current check counts retain the applicable PR, revision when known, observation time when
   known and collection coverage.

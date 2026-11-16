@@ -14,6 +14,8 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0040.yaml
   owner_requirements: conversation:gitview/excerpt-74
 specification:
+  ontology_refs:
+  - gitview:PullRequest
   objective: Make product behavior independently testable while preserving evidence of real integration.
   authority_boundary: The owner requested testability, DI, TDD and network and data mocks. Boundary placement,
     representative scenarios and the distinction between kinds of evidence are refinements, not evidence
@@ -52,7 +54,7 @@ specification:
   - Concrete Swift test tools, dependency composition and continuous-integration topology.
   - Appropriate real integration and device evidence for each implemented behavior.
   - Any further TDD trace format and retention, including the separate 0079 proposal.
-  ontology_status: Existing domain vocabulary remains draft; test boundaries do not add domain entities.
+  ontology_status: The selected local ontology is owner-approved; test boundaries do not add domain entities.
 acceptance:
 - Relevant external effects are replaceable for deterministic behavior tests without live GitHub or personal
   data mutation.

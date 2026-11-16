@@ -20,6 +20,13 @@ sources:
   predecessor_revision: 9c598dd
   owner_selection: docs/drafts/project-summary-proposal.md
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:Issue
+  - gitview:Metric
+  - gitview:issueBlockedBy
+  - gitview:issueBlocks
   objective: Make supported blocked-Issue attention visible without confusing blocker links, source state
     or counts.
   authority_boundary: The selected Project summary includes attention for Issues with open blockers. The
@@ -67,8 +74,8 @@ specification:
     predicate.
   - Native presentation of partial blocker evidence and navigation across Project or source boundaries.
   - Account isolation and source-access behavior for unavailable blocker details.
-  ontology_status: Issue, Repository and Project use working draft vocabulary; a source dependency link
-    does not by itself establish an actor's motive or a new domain entity.
+  ontology_status: Issue, Repository and Project use selected ontology vocabulary; a source dependency
+    link does not by itself establish an actor's motive or a new domain entity.
 acceptance:
 - A supported blocked-Issue attention count uses distinct affected open Issues, not the number of blocker
   links.

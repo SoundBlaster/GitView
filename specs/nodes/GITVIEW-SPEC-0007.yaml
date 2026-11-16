@@ -15,12 +15,17 @@ sources:
   all_states_and_filters: conversation_memory/sketches/gitview/revisions/ed322706b55a4798a4328a69982fcbae/notes.hc
   calendar_day_decision: conversation_memory/sketches/gitview/revisions/cc419cb9283f471b88b6f4b66e56c5ad/notes.hc
   timezone_decision: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Let the operator see current work and today's completed work together in a compact Project
     grid and narrow it explicitly.
   authority_boundary: This node records the selected Today and lifecycle-filter outcomes, not the complete
-    predecessor draft, an accepted ontology, source integration, storage mechanism or implementation readiness.
+    predecessor draft, ontology approval, source integration, storage mechanism or implementation readiness.
   requirements:
     scope: Today provides an overview of applicable PRs and Issues in the selected Project and their source
       Repository context. Membership and access eligibility remain subject to their respective contracts.
@@ -60,8 +65,8 @@ specification:
   - How local time zone is determined and what happens when the zone or calendar day changes during interaction.
   - Exact filter scope, controls, reset behavior, and cross-device synchronization if any.
   - Source identity and coverage evidence, access policy, uncertainty presentation and navigation details.
-  ontology_status: Project, Repository, PullRequest and Issue use the working draft vocabulary; this node
-    does not establish semantic approval or infer actor actions from observations.
+  ontology_status: Project, Repository, PullRequest and Issue use the selected ontology vocabulary; this
+    node does not establish semantic approval or infer actor actions from observations.
 acceptance:
 - Earlier unfinished work and work completed on the current local calendar day remain eligible in Today.
 - A change of lifecycle state updates the same object's cell; a linked PR and Issue remain distinct.

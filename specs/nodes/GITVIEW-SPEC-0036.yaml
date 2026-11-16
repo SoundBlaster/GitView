@@ -15,6 +15,10 @@ sources:
   predecessor_revision: fef38bd
   visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:GitHub
+  - gitview:Repository
   objective: Help the operator understand connection problems while retaining access to information already
     saved locally.
   authority_boundary: This node describes product outcomes and does not choose an authorization mechanism,
@@ -61,7 +65,7 @@ specification:
     is unavailable after interruption.
   - Account identity, cross-account isolation, credential lifecycle and exact disconnect recovery flow.
   - Native presentation and supported recovery controls for each connection state.
-  ontology_status: Repository and User use working draft vocabulary; connection and observation states
+  ontology_status: Repository and User use selected ontology vocabulary; connection and observation states
     are product behavior rather than newly asserted domain entities.
 acceptance:
 - A temporary failure is not presented as a confirmed Repository deletion, revocation, empty result or

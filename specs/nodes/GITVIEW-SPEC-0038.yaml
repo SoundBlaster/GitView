@@ -16,6 +16,12 @@ sources:
   owner_decision: ontology/review/repository-identity.md
   owner_source_identity_decision: conversation:gitview/excerpt-60-reply
 specification:
+  ontology_refs:
+  - gitview:GitHub
+  - gitview:GitHubRepository
+  - gitview:Repository
+  - gitview:Project
+  - gitview:projectIncludesRepository
   objective: Preserve Repository identity, history and Project memberships without guessing when source
     observations are incomplete or conflicting.
   authority_boundary: The owner selected continuity for a source-confirmed same object and accepted the
@@ -66,8 +72,8 @@ specification:
     representation changes.
   - Cross-instance identity, address and alias retention, and exact reconciliation presentation.
   - Source deletion and access recovery rules beyond the selected 404 and revocation behavior.
-  ontology_status: Repository, GitHubRepository and Project use working draft vocabulary; identity continuity
-    alone does not establish an actor action, motive or uninterrupted management interval.
+  ontology_status: Repository, GitHubRepository and Project use selected ontology vocabulary; identity
+    continuity alone does not establish an actor action, motive or uninterrupted management interval.
 acceptance:
 - Source-confirmed same Repository identity across rename or transfer preserves existing history and Project
   memberships.

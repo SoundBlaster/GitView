@@ -18,6 +18,12 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0075.yaml
   preview_proposal: docs/drafts/ux-preview-interactions.md
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Keep scrolling, density changes, static preview and explicit navigation understandable and
     bound to the intended object.
   authority_boundary: Pinch-to-change density and first-version static long-press preview are selected.
@@ -67,8 +73,8 @@ specification:
   - Platform gesture competition, cancellation, timing and anchor geometry.
   - Exact density levels, native animation and feasible accessible alternatives.
   - Whether and how a deliberate zoom across scopes and later sliding preview should work.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; gesture and
-    focus are interaction concepts, not new domain entities.
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; gesture
+    and focus are interaction concepts, not new domain entities.
 acceptance:
 - Scroll, density change, static preview and explicit object opening have distinguishable outcomes without
   substituting another object.

@@ -17,6 +17,11 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0064.yaml
   membership_decision: conversation_memory/sketches/gitview/revisions/a55f271ca16f4283bfaf67095616ee7a/notes.hc
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:Metric
+  - gitview:projectIncludesRepository
   objective: Keep historical Project graphs interpretable when Project Repository membership changes.
   authority_boundary: The owner selected current Project Repository composition as the basis for historical
     graphs over the selected period. Exact evaluation lifetime, chart behavior, buckets, source evidence
@@ -70,7 +75,7 @@ specification:
   - Metric-specific source history, periods, buckets, coverage and attribution evidence.
   - Native behavior for recalculation and membership changes while a graph is visible.
   - Account-change and external-sharing policy beyond selected local revocation behavior.
-  ontology_status: Project, Repository and Metric use working draft vocabulary; graph scope and membership
+  ontology_status: Project, Repository and Metric use selected ontology vocabulary; graph scope and membership
     basis are measurement context, not new domain entities.
 acceptance:
 - Historical Project graphs identify actual current saved Repository composition as their basis without

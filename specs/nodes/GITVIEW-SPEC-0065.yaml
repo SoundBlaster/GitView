@@ -16,6 +16,13 @@ sources:
   metric_catalog: docs/drafts/GITVIEW-SPEC-0057.yaml
   source_research_candidate: docs/drafts/github-history-evidence-20261114.md
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:Metric
+  - gitview:projectIncludesRepository
   objective: Make historical metrics explain what their evidence supports without assuming complete source
     history.
   authority_boundary: The owner selected metrics and graphs when history is available. Evidence criteria
@@ -66,8 +73,8 @@ specification:
   - Source-specific history coverage, identity, ordering and permissions for each selected metric.
   - Appropriate snapshot and reconstruction evidence, sampling and retention per metric.
   - Native presentation of partial historical values and gaps.
-  ontology_status: Project, Repository, PullRequest, Issue and Metric use working draft vocabulary; historical
-    evidence and measurement are not new domain entities.
+  ontology_status: Project, Repository, PullRequest, Issue and Metric use selected ontology vocabulary;
+    historical evidence and measurement are not new domain entities.
 acceptance:
 - Historical event, distinct-object and state-snapshot measurements keep their units and evidence distinct.
 - A known event is not by itself proof of complete event or Project population coverage.

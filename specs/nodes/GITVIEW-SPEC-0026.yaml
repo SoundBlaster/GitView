@@ -15,6 +15,10 @@ sources:
   predecessor_revision: 33fb739
   root_intent: .specgraph/root_intent.md
 specification:
+  ontology_refs:
+  - gitview:GitHub
+  - gitview:Project
+  - gitview:Repository
   objective: Preserve the meaning and scope of observed information when GitHub refresh succeeds, partially
     succeeds or fails.
   authority_boundary: This node specifies user-visible data and freshness outcomes. It does not choose
@@ -60,7 +64,7 @@ specification:
   - Evidence sufficient to establish completeness, ordering and scope for each selected GitHub operation.
   - Exact refresh prioritization, retry behavior, source budgets and native presentation of coverage.
   - Recovery, account isolation and treatment of source data when access evidence is incomplete.
-  ontology_status: Project and Repository use working draft vocabulary; observation scope and refresh
+  ontology_status: Project and Repository use selected ontology vocabulary; observation scope and refresh
     outcome are specification concepts rather than newly asserted domain entities.
 acceptance:
 - Observation scope, supported time, coverage and latest refresh outcome remain distinguishable.

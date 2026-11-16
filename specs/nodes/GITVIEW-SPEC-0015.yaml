@@ -15,8 +15,13 @@ sources:
   predecessor_revision: 852649f
   owner_direction: docs/drafts/ux-preview-interactions.md
   revoked_private_data_decision: conversation_memory/sketches/gitview/revisions/b0795ae580e94ba0be8c59cefcbd3a97/notes.hc
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Let the operator inspect an object without losing the surrounding bird's-eye overview.
   authority_boundary: The owner requested long-press preview in the first version and described a later
     sliding rich preview. Exact native components, activation of sliding, arbitration and access policy
@@ -63,8 +68,8 @@ specification:
   - Native preview and context-menu behavior, gesture coordination, cancellation and changed-origin fallback.
   - Sliding activation, release and edge behavior; applicability of pointer hover.
   - Display, accessibility, freshness and access details for each object kind.
-  ontology_status: Project, Repository, PullRequest and Issue use draft vocabulary; preview is an interaction,
-    not a new domain entity.
+  ontology_status: Project, Repository, PullRequest and Issue use the selected ontology vocabulary; preview
+    is an interaction, not a new domain entity.
 acceptance:
 - First-version preview presents readable additional available permitted details for the same eligible
   object on recognized long press without leaving the overview, and offers explicit open and dismissal.

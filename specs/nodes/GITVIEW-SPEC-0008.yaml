@@ -14,8 +14,16 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0008.yaml
   predecessor_revision: 05c27259cd47f1967ec871802579414dac47301e
   owner_selection: docs/drafts/pull-request-ontology-options.md
-  ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
+  ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:PullRequest
+  - gitview:Repository
+  - gitview:Issue
+  - gitview:pullRequestRepository
+  - gitview:pullRequestIssueLink
+  - gitview:ReviewThread
+  - gitview:CIStatus
   objective: Provide a compact, source-linked overview of a selected PR and its independently meaningful
     signals.
   authority_boundary: The owner selected these categories and the GitHub-oriented checks direction. Exact
@@ -58,8 +66,8 @@ specification:
   open_questions:
   - Source mappings, evidence and current-check revision and special-outcome rules.
   - Field priority, truncation, freshness, access, sharing payload and exact display.
-  ontology_status: PullRequest and related terms use working draft vocabulary; links do not prove actor
-    actions or semantic approval.
+  ontology_status: PullRequest and related terms use selected ontology vocabulary; links do not prove
+    actor actions or semantic approval.
 acceptance:
 - The selected PR retains its identity and source Repository context, with supported permitted identifying
   fields.

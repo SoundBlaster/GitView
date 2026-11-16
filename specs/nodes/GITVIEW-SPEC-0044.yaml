@@ -18,6 +18,11 @@ sources:
   predecessor_revision: 33fb739
   root_intent: .specgraph/root_intent.md
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Keep observed values, source coverage and refresh outcomes independently understandable for
     the scope they describe.
   authority_boundary: This node refines product-visible interpretation of observations. It does not select
@@ -67,8 +72,8 @@ specification:
   - Source evidence sufficient for completeness and ordering for each selected category.
   - Exact native status layout, wording, persistence and recovery controls.
   - Source mapping and account-isolation details needed to interpret individual values.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; refresh outcome
-    and coverage are observation concepts, not newly asserted domain entities.
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; refresh
+    outcome and coverage are observation concepts, not newly asserted domain entities.
 acceptance:
 - Observed values, supported scope and time, coverage and the outcome of a refresh remain distinguishable.
 - An unobserved collection or failed first request is not presented as confirmed empty or given an invented

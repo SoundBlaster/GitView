@@ -20,6 +20,19 @@ sources:
   selected_fields: docs/drafts/issue-ontology-options.md
   ontology_boundary: ontology/review/issue-pr-meaning-candidate.md
 specification:
+  ontology_refs:
+  - gitview:Issue
+  - gitview:PullRequest
+  - gitview:Repository
+  - gitview:Project
+  - gitview:Metric
+  - gitview:issueRepository
+  - gitview:issueClosingPullRequest
+  - gitview:issueMentionedPullRequest
+  - gitview:issueParent
+  - gitview:issueSubIssue
+  - gitview:issueBlockedBy
+  - gitview:issueBlocks
   objective: Preserve the meaning, direction and limitations of selected Issue links and direct-child
     counts without treating an observed link as an actor's motive.
   authority_boundary: The owner selected Issue relationship categories and an overview with source handoff.
@@ -76,8 +89,8 @@ specification:
   - Source-specific link types, access, pagination and evidence for direction and current coverage.
   - Native presentation and navigation for partial links and linked objects outside a Project.
   - Disclosure after account change outside confirmed private Repository revocation.
-  ontology_status: Issue, PullRequest, Repository and Project use working draft vocabulary. Source links
-    do not establish the actor-action-derived relation or motivation without supporting evidence.
+  ontology_status: Issue, PullRequest, Repository and Project use selected ontology vocabulary. Source
+    links do not establish the actor-action-derived relation or motivation without supporting evidence.
 acceptance:
 - Supported Issue links retain type, direction, identities and their observation limitations without asserting
   motive or completion.

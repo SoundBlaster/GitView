@@ -37,6 +37,18 @@ sources:
     node: revoked-private-display-decision
   ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
 specification:
+  ontology_refs:
+  - gitview:User
+  - gitview:Project
+  - gitview:Repository
+  - gitview:GitHubRepository
+  - gitview:projectIncludesRepository
+  - gitview:GitHub
+  - gitview:PullRequest
+  - gitview:Issue
+  - gitview:ReviewThread
+  - gitview:CIStatus
+  - gitview:Metric
   objective: Give a person managing many GitHub repositories a compact native iOS overview of current
     PR and Issue work, including work produced by coding agents, attention and outcomes, with a path to
     the original GitHub objects.

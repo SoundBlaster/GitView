@@ -19,6 +19,11 @@ sources:
   owner_day_decision: conversation_memory/sketches/gitview/revisions/cc419cb9283f471b88b6f4b66e56c5ad/notes.hc
   owner_timezone_decision: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:PullRequest
+  - gitview:Issue
   objective: Keep the selected Today view understandable when the user's local calendar day changes while
     preserving navigation and filter context.
   authority_boundary: The owner selected the user's local time zone for the day and approved retaining
@@ -66,7 +71,7 @@ specification:
   - Native timing, focus and reordering while a gesture, preview or filter control is active.
   - Historical-period interpretation across time-zone changes and evidence needed to claim complete Today
     coverage.
-  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; day boundaries
+  ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; day boundaries
     and navigation state are specification and interaction concepts.
 acceptance:
 - Today uses the user's local calendar day, retaining earlier unfinished work and work completed on that

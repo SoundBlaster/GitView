@@ -20,6 +20,16 @@ sources:
   owner_selection: docs/drafts/project-summary-proposal.md
   default_mechanism_review: docs/drafts/project-default-association-review-20261115.md
 specification:
+  ontology_refs:
+  - gitview:Project
+  - gitview:Repository
+  - gitview:GitHubRepository
+  - gitview:User
+  - gitview:projectIncludesRepository
+  - gitview:AddRepository
+  - gitview:addsRepositoryTo
+  - gitview:RemoveRepository
+  - gitview:removesRepositoryFrom
   objective: Let the operator create and manage local Projects without confusing their identities or changing
     the source Repositories.
   authority_boundary: The owner selected Project composition, shared Repository membership and one-Repository
@@ -73,8 +83,8 @@ specification:
   - Exact creation, editing, name validation, deletion confirmation and local observation-retention behavior.
   - Account and access evidence required for admitting a new Repository and handling an indeterminate
     operation.
-  ontology_status: Project, Repository and membership use working draft vocabulary; the existence of a
-    membership does not prove a particular action, actor or motive.
+  ontology_status: Project, Repository and membership use selected ontology vocabulary; the existence
+    of a membership does not prove a particular action, actor or motive.
 acceptance:
 - A saved Project has a stable local identity, name and at least one Repository, and is distinct from
   its members and GitHub organizations.
