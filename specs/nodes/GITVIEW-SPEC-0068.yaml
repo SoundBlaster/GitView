@@ -1,0 +1,93 @@
+id: GITVIEW-SPEC-0068
+title: GitView - Metric history presentation and navigation
+kind: spec
+created_at: '2026-11-16T08:52:00Z'
+updated_at: '2026-11-16T08:52:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0013
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0030
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0047
+- GITVIEW-SPEC-0056
+- GITVIEW-SPEC-0057
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0068.yaml
+  predecessor_revision: 9c598dd
+  owner_selection: docs/drafts/project-summary-proposal.md
+specification:
+  objective: Let the operator inspect available Project metric history and move to supported related work
+    without losing the measurement context.
+  authority_boundary: Project graphs and supported signal navigation follow the owner-selected direction.
+    Exact chart design, available historical ranges, gestures, source history and implementation remain
+    open; this node does not establish implementation readiness or a formal burn-down metric.
+  requirements:
+    entry: Make available supported metric history from its actual Project context. Preserve the selected
+      Project, measurement, period and source scope; do not silently substitute another Project that shares
+      a Repository.
+    measurement: Identify the supported series subject, unit, condition, period, observation context and
+      coverage. When values are bucketed, make their supported boundaries and time-zone interpretation
+      discoverable when known; unknown context remains a limitation. A Project historical graph identifies
+      current Project membership as its basis under 0030 and 0047; it does not claim to reconstruct Project
+      membership at the historical time.
+    membership_change: If Project membership changes while a graph remains open, preserve and identify
+      the basis of the existing graph without calling it the new current composition. Recalculate against
+      the newly current membership when supported or expose the applicable limitation; exact timing remains
+      open.
+    gaps: Keep a confirmed zero distinguishable from unobserved history and incomplete coverage in both
+      visual and accessible representations. Do not fabricate a complete total, an exact missing count
+      or a source event from a gap.
+    selected_point: If an available historical outcome offers navigation to related work, preserve its
+      supported event condition, object type, period boundaries and time-zone interpretation when known,
+      Repository basis and Project origin under 0056. When that selection cannot be supported, expose
+      the limitation rather than silently switching to Today or a different period.
+    units: Distinguish event counts, distinct PR or Issue counts, check counts and the number of resulting
+      object cards. One object can correspond to more than one historical event; a point and destination
+      observed at different times do not automatically have equal counts. A later selection with the same
+      count is not the exact original contributor set unless identity evidence supports that claim; otherwise
+      preserve its own observation context and coverage.
+    filters: The selected historical merged-PR counter transition temporarily overrides a conflicting
+      saved merged exclusion under 0047 and 0056 without rewriting the saved preference. Behavior for
+      other conflicting filters remains open.
+    saved_data: Confirmed GitHub revocation of a private Repository does not hide a previously saved supported
+      local series under 0019. Retain its actual scope, supported time when known, coverage and applicable
+      indication; do not present it as newly current.
+    return: Returning from metric history or its selection preserves valid originating Project context
+      under 0024. Displaying or leaving history does not itself change source objects, membership or saved
+      filter preferences.
+    accessibility: Provide a way to inspect supported values, scope, period, coverage and available navigation
+      without relying solely on color, chart position or a particular gesture under 0032.
+  scenarios:
+    partial_history: A selected Project metric has supported values for some periods and missing evidence
+      for another. Distinguish the gap from confirmed zero and keep the applicable coverage discoverable.
+    historical_transition: The operator opens a supported merged-PR outcome for a period while a saved
+      filter excludes merged PRs. Preserve the historical condition and temporarily override the conflicting
+      exclusion without rewriting the preference.
+    membership_basis: A Repository is added today with supported activity from an earlier month. The historical
+      graph uses current Project composition and identifies that basis without claiming that Repository
+      was a member in the earlier month.
+    changed_result: A graph point and the subsequently opened object selection come from independently
+      observed contexts with different supported coverage. Preserve both contexts rather than manufacturing
+      equality or asserting that either is complete.
+  open_questions:
+  - Exact native chart presentation, period controls, accessible interaction and field priorities.
+  - Supported source history, measurement predicates and evidence for each graph or outcome.
+  - Handling of origin or membership changes during an already open historical selection beyond the supported
+    captured context.
+  ontology_status: Project, Repository, PullRequest, Issue and Metric use working draft vocabulary; graph,
+    point and navigation are presentation and measurement concepts.
+acceptance:
+- Available metric history preserves its originating Project, supported measurement and selected period.
+- Series scope, unit, current-membership basis and applicable coverage are distinguishable; an unobserved
+  gap is not presented as a confirmed zero.
+- An actionable historical outcome preserves its supported origin and event condition or exposes a limitation
+  rather than silently becoming Today.
+- Event or check counts are not silently equated with distinct PR or Issue card counts.
+- The selected merged-counter transition preserves the limited temporary filter override without rewriting
+  the saved preference.
+- Supported history and limitations are accessible without reliance solely on color, chart position or
+  a particular gesture.

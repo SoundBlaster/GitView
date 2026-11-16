@@ -1,0 +1,86 @@
+id: GITVIEW-SPEC-0092
+title: GitView - Signal-origin selection and explicit filter changes
+kind: spec
+created_at: '2026-11-16T08:52:00Z'
+updated_at: '2026-11-16T08:52:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0047
+depends_on:
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0027
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0042
+- GITVIEW-SPEC-0056
+- GITVIEW-SPEC-0074
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0092.yaml
+  predecessor_revision: 9bbf79f
+  owner_selection: docs/drafts/project-summary-proposal.md
+specification:
+  objective: Preserve the meaning of an actionable summary signal when the operator opens and navigates
+    its associated work selection.
+  authority_boundary: Direct navigation from an actionable Project signal and the limited historical merged-counter
+    filter override are selected. Exact controls, edits to signal conditions, other filter overrides and
+    implementation remain open; this node does not establish source completeness or implementation readiness.
+  requirements:
+    origin: Retain the supported originating Project and, for a Repository-specific signal, the actual
+      Repository identity, condition, unit, period, membership basis, coverage and observation time when
+      known. The origin does not prove that every contributing object has been loaded or that its observation
+      is current.
+    destination: Open the supported corresponding work selection with its actual condition and scope.
+      If the condition, source identity or period cannot be represented with available evidence, make
+      the limitation discoverable instead of silently substituting Today, a different Project or unrelated
+      filter.
+    units: Distinguish the signal's measurement unit from the destination's distinct PR or Issue cards.
+      A count of checks, review threads or events is not automatically the number of PR or Issue cards;
+      the same object is not duplicated merely because multiple events qualify.
+    selected_override: For the selected transition from a historical merged-PR counter, temporarily override
+      a conflicting saved merged exclusion under 0047 and 0056 to show the counter result without rewriting
+      the saved preference. Do not apply that exception automatically to unrelated signals or filters.
+    explicit_changes: If the operator explicitly changes or clears an active condition, do not continue
+      to describe every displayed object as matching the original condition. Such a change does not alter
+      source objects or rewrite the earlier observed signal; persistence of ordinary user filters remains
+      governed by 0007 and its own supported save outcome.
+    coverage: Keep the origin measurement and destination's actual observation time, source scope and
+      coverage attributable to each. If refresh or incomplete source evidence yields a different count
+      or partial selection, do not fabricate equality, a missing object count or a confirmed empty result.
+    context_change: A confirmed membership, source identity or day change may require reevaluating the
+      applicable selection. Do not silently transfer an earlier observation to a different Project, Repository
+      or historical period; use the relevant supported context or disclose a limitation under 0024 and
+      0056.
+    saved_data: Confirmed private Repository revocation does not hide already saved supported local origin
+      details, counts or objects under 0019. Preserve their supported scope and time when known and the
+      applicable indication; local visibility is not a fresh source grant.
+    return: Return to the actual valid originating surface and context under 0024. A source error or absent
+      evidence does not prove that another Project is the correct replacement.
+    accessibility: Make the applicable signal meaning, active condition, scope, limitation and available
+      navigation understandable without relying solely on color or a particular gesture.
+  scenarios:
+    thread_unit: A signal reports three supported unresolved threads affecting one PR. The destination
+      can contain one distinct PR card while preserving that the origin measured threads, not three PRs.
+    merged_override: A saved filter excludes merged PRs. Opening a supported historical merged counter
+      temporarily shows its matching result without rewriting that saved preference.
+    changed_condition: After opening a failed-CI signal, the operator explicitly clears that condition.
+      Do not describe every subsequently displayed object as a failed-CI match or rewrite the earlier
+      signal observation.
+    changed_coverage: A signal reports supported partial data, and a later destination observation has
+      a different scope or time. Preserve the respective limitations rather than forcing the destination
+      count to equal the earlier signal.
+  open_questions:
+  - Native controls for changing signal conditions, return behavior and filter persistence scope.
+  - Behavior for conflicting saved filters beyond the selected merged-counter transition.
+  - Exact predicate and source evidence for each actionable signal and historical period.
+  ontology_status: Project, Repository, PullRequest, Issue and Metric use working draft vocabulary; signal
+    selection and navigation are interaction and measurement concepts, not new domain entities.
+acceptance:
+- An actionable signal preserves its supported origin, condition, scope, unit and period when opening
+  its corresponding work selection, or exposes a limitation.
+- Signal measurement units are not silently equated with counts of distinct destination cards.
+- The selected historical merged-counter transition temporarily overrides the conflicting saved merged
+  exclusion without rewriting the saved preference.
+- An explicitly changed or cleared condition is not still presented as applying to every displayed object.
+- Incomplete observations, changed context or confirmed private Repository revocation do not silently
+  substitute another Project or invent fresh source data.
