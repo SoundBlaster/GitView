@@ -14,6 +14,8 @@ sources:
   owner_decision: ontology/review/repository-identity.md
   owner_source_identity_decision: conversation:gitview/excerpt-60-reply
   ontology_context: ontology/packages/gitview/versions/0.2.0/composition-context.yaml
+  ontology_owner_acceptance: ontology/review/owner-acceptance-20261116.md
+  identity_evidence_review: ontology/review/repository-identity-ontology-tension-20261116.md
 specification:
   ontology_refs:
   - gitview:GitHub
@@ -22,11 +24,11 @@ specification:
   - gitview:Project
   - gitview:projectIncludesRepository
   objective: Preserve the identity and context of a GitHub Repository as its name or owner changes.
-  authority_boundary: The owner selected continuity when GitHub confirms the same object and accepted
-    the recorded same-GitHub numeric ID examples. Mapping those examples to a particular REST identifier
-    is an agent-authored source-mapping candidate requiring verification. This node does not establish
-    an integration, storage mechanism or proof of a source event. The predecessor detailed contracts require
-    their own review.
+  authority_boundary: The owner selected continuity for a source-confirmed same object and accepted numeric
+    ID examples; the later owner-approved GitView ontology 0.2.0 selects the numeric REST repository ID
+    as a same-instance comparison key. This is not evidence that a particular transfer, source response,
+    integration or storage implementation was observed. Source coverage, identifier availability and cross-instance
+    identity remain separately constrained.
   requirements:
     continuity: When GitHub confirms that a renamed or transferred repository is the same source object,
       GitView keeps one Repository with its existing history and all Project memberships. A change of
@@ -34,10 +36,12 @@ specification:
     address: A repository name, owner or address may change and alone does not establish identity. When
       a changed address is confirmed to be current, GitView updates the supported current source address;
       conflicting or insufficiently ordered observations do not establish which address is current.
-    selected_id_examples: For the recorded valid numeric ID examples on the same GitHub, the owner accepted
-      the same ID as the same Repository and a different ID as a different Repository. Mapping these examples
-      to a specific REST identifier and defining its valid scope require source verification; an ID match
-      alone does not establish the current ordering of conflicting addresses.
+    selected_id_examples: 'Within one GitHub instance, compare confirmed numeric REST repository IDs under
+      the selected ontology policy: the same ID identifies the same Repository, while a different ID identifies
+      a different Repository even at a reused address. The owner approved the recorded same/different
+      numeric examples, and later approved the ontology containing the REST mapping; those are distinct
+      decisions. An ID match alone does not order conflicting address observations or prove that a transfer
+      happened.'
     distinct_objects: If GitHub confirms that an object at a previously used address is a different repository,
       it does not inherit the earlier Repository's history or Project memberships merely through that
       address.
@@ -47,7 +51,8 @@ specification:
     history_scope: Preserving existing history does not promise that GitView possesses a complete source
       history or can recover information that was never available.
   open_questions:
-  - Valid source identity evidence and instance scope, including identifier changes and conflicting observations.
+  - Availability and reliability of identity evidence for each selected source operation, including transfer
+    observations, conflicting data and identifier representation changes.
   - Retention and presentation of prior addresses, alias resolution, and handling source access changes.
   - Storage, reconciliation and explicit deletion or removal behavior.
   ontology_status: Repository, GitHubRepository and Project use the selected ontology vocabulary; identity
@@ -70,5 +75,6 @@ acceptance:
 - Reuse of an address by a source-confirmed different repository does not transfer history or memberships.
 - An unavailable or ambiguous observation remains uncertain and does not alone establish deletion or identity.
 - The current address is not asserted from conflicting observations without sufficient ordering evidence.
-- The owner-accepted same-GitHub numeric ID examples and the 404 outcome are retained; a specific REST
-  mapping remains a source-verification candidate rather than an independently owner-selected representation.
+- The same-instance numeric REST repository ID comparison selected in the approved ontology, the owner-accepted
+  numeric examples and the 404 outcome are distinguishable from unverified source observations and an
+  implementation.

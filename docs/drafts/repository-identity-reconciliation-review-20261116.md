@@ -1,0 +1,8 @@
+# Repository identity: независимая проверка согласования
+
+Основание: ранее принятая ontology 0.2.0 выбирает numeric REST repository ID внутри одного GitHub instance; узлы 0002 и 0038 продолжали называть конкретный mapping кандидатом. Сверены исходная таблица и ответ владельца, последующее принятие package и публичные источники GitHub: [предметный разбор](../../ontology/review/repository-identity-ontology-tension-20261116.md).
+
+- Объект review: `GITVIEW-SPEC-0002` SHA-256 `b64c4603f2aa00351cb5cb747e0d216578b8c412ccde143adce9025cad14db60`; `GITVIEW-SPEC-0038` SHA-256 `6bb9fc84b65c8b0ada49083468f182460a54c317470b4cd10072d7f09a341696`.
+- Задача независимого read-only reviewer `/root/identity_reconciliation_review`: проверить исправление относительно предыдущего HEAD и принятого package; разграничить два решения владельца и source evidence; сохранить обработку 42/99, 404, неоднозначности, конфликтующих адресов, transfer и revocation.
+- Результат: блокирующих замечаний к узлам нет; GitHub Blog подтверждает numeric ID и rename, а transfer documentation не содержит в рассматриваемом месте явной гарантии неизменности numeric ID. Конкретные API responses и поведение приложения не проверены. Историческая формулировка в связанном review-документе сначала была неоднозначной; исправлена на прошедшее время и повторно проверена тем же reviewer без замечаний.
+- `lint` обоих узлов passed; `next-move` candidate checked, target ok для каждого. Advisory `domain_vocabulary` на изолированной копии TB5: оба checked, по 5 structural bindings, gaps 0. Отчёты: `/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/repository-id-reconcile-e0z01mzf/`. Это не проверка семантики всех требований, реальные API-тесты или readiness реализации.
