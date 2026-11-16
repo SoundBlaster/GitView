@@ -35,8 +35,11 @@ specification:
       with another object.
     lifecycle: Distinguish open, closed without merge and merged from the draft flag, labels, review and
       CI. Show supported labels when available and permitted.
-    context: Show supported target Repository, source and target branches, observed revision, author,
-      requested reviewers and related Issues. A related Issue does not itself prove an actor's motive.
+    context: Show the supported permitted target Repository, source and target branches, observed revision,
+      author, requested reviewers and related Issues. Keep the supported PR-associated Repository distinct
+      from separately supported base or target and head or source Repository contexts; an unavailable
+      context remains unknown rather than being inferred from another. This does not require a separate
+      head Repository field in the overview. A related Issue does not itself prove an actor’s motive.
     review: Show supported source review assessment and separate counts of total and unresolved review
       threads. Individual thread content is outside the selected overview; unavailable counts or assessment
       are not zero or approval. Where supported, distinguish unavailable assessment, absence of reviews,
@@ -63,6 +66,9 @@ specification:
       unknown is not approval.
     retry: A failed check is retried and its current applicable outcome changes. Do not count the old
       attempt as a second current check.
+    fork_context: A PR is associated with Repository A and its supported head Repository is fork B. Preserve
+      both contexts; do not attribute the PR to B merely because B contains the head branch. If the head
+      context is unavailable, do not invent it from A.
   open_questions:
   - Source mappings, evidence and current-check revision and special-outcome rules.
   - Field priority, truncation, freshness, access, sharing payload and exact display.
@@ -71,6 +77,8 @@ specification:
 acceptance:
 - The selected PR retains its identity and source Repository context, with supported permitted identifying
   fields.
+- The supported permitted target Repository is inspectable; supported PR-associated and base or head Repository
+  contexts remain distinguishable, and an unavailable context is not invented.
 - Lifecycle, draft, review assessment, thread counts, check counts and change counts remain distinct and
   unknown values are not zero.
 - The overview offers the source route when an eligible link is available and indicates unavailability

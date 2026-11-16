@@ -1,0 +1,7 @@
+# PR Repository context: сверка с принятой онтологией
+
+Ontology `local.gitview.domain@0.2.0` связывает PullRequest с source-associated Repository отдельно от base/head Repository; их значения нельзя выводить друг из друга без evidence. `0041` уже отражает это различие, но в верхнем `0008` контекст был описан только как target Repository. Сохранено выбранное владельцем требование делать поддержанный разрешённый target Repository доступным для обзора; уточнены отдельно поддержанные PR-associated/base/head contexts и поведение при отсутствии evidence. Отдельное поле head в обзор не навязано. Гипотетический fork-сценарий различает Repository A с PR и head fork B без вывода о Project membership или конкретном GitHub API ответе.
+
+Independent read-only reviewer `/root/review_pr_repository_alignment` сравнил `0008` с HEAD, `0041`, принятым package и owner C1. Первичная версия могла ослабить требование показывать target и ссылалась из родителя на child `0041`; исправлены оба замечания, повторное review точного SHA-256 `1e9f131927a10a2bf4c84597468fa7421faecd2ee8e187c42db91499b141a505` прошло без замечаний.
+
+Installed runtime 3a7f176a: lint passed, candidate checked; advisory domain_vocabulary checked, 7 bindings и 0 gaps. Отчёт: `/Volumes/TB5/Developer/Builds/GitHub/GitView-a40d73ccf162f8d8/pr-context-final-j3j3p54b/GITVIEW-SPEC-0008.json`. Ни реальная source mapping, ни runtime приложения, ни implementation readiness этими проверками не установлены.
