@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0023
 title: GitView - Project overview observation states
 kind: spec
 created_at: '2026-11-16T07:08:00Z'
-updated_at: '2026-11-16T07:08:00Z'
-status: outlined
+updated_at: '2026-11-16T19:55:33Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0004
 depends_on:
@@ -41,7 +41,7 @@ specification:
     revoked_private: If GitHub explicitly confirms access revocation for a private Repository, previously
       saved local information remains visible with the revocation indication and supported last update
       time when known under 0019. Synchronization of that Repository stops while revocation applies. Keep
-      a discoverable entry point to understand the limitation, pursue access recovery or explicitly delete
+      a discoverable entry point to understand the limitation, pursue access recovery and explicitly delete
       local data; do not imply a restored GitHub grant.
     accessibility: Make meaningful values and loading, coverage, failure and access distinctions available
       to assistive technologies and without relying on color alone, including accessible paths to the
@@ -57,7 +57,7 @@ specification:
     revoked_with_saved_data: The relevant account remains active throughout this scenario. A private Repository
       has previously saved data and its access revocation is confirmed. Keep the saved data and Project
       visible with the revoked indication and supported time when known; stop synchronization and offer
-      an accessible route to recovery or explicit local deletion.
+      accessible routes to both recovery and explicit local deletion.
     unknown_time: Saved data remains readable after confirmed revocation but no reliable update time is
       available. Show the data and revocation indication without inventing a time; exact wording is open.
   open_questions:
@@ -72,8 +72,8 @@ acceptance:
 - Available saved observations remain visible with their supported scope and time when known, and a refresh
   failure does not silently turn them into a confirmed empty result or a fresh observation.
 - Confirmed private Repository revocation keeps saved local data visible with its indication and supported
-  update time when known, stops synchronization and preserves an accessible recovery or explicit local
-  deletion entry point under 0019. Visibility and local access follow the active-account and A-to-B boundary
-  in 0019.
+  update time when known, stops synchronization and preserves accessible recovery and explicit local deletion
+  entry points under 0019. Visibility and local access follow the active-account and A-to-B boundary in
+  0019.
 - Meaningful observation and access distinctions and the applicable actions are available without relying
   on color alone.

@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0024
 title: GitView - Navigation context and restoration
 kind: spec
 created_at: '2026-11-15T22:00:00Z'
-updated_at: '2026-11-15T22:00:00Z'
-status: outlined
+updated_at: '2026-11-16T19:55:33Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0006
 depends_on:
@@ -49,7 +49,9 @@ specification:
       level follows 0014 while retaining the intended target and applicable context.
     filters: Explicitly selected lifecycle filters persist and restore when applicable under 0007. The
       selected historical merged counter exception under 0047 is a temporary transition override and does
-      not itself rewrite the saved preference.
+      not itself rewrite the saved preference. Other signal-origin transitions retain the actual applicable
+      source filter context under 0092 without rewriting saved preferences; unrelated filters do not narrow
+      a signal produced outside their scope.
     access: Revalidate current applicability and independently applicable disclosure restrictions before
       showing retained content; a saved navigation context is not a GitHub access grant. For confirmed
       revocation of a private Repository, saved data remains visible under 0019 with revocation and last-update
@@ -67,7 +69,8 @@ specification:
       available route to another scope.
   open_questions:
   - Cold-launch and retained-session behavior, position and focus fallback, and time-zone-change interaction.
-  - Persistence scope and reset of filters, and non-merged historical counter overrides.
+  - Exact filter hierarchy, persistence scope, reset, presentation and return behavior beyond the selected
+    signal-origin rule in 0092.
   - Access and disclosure policy after disconnect or other account changes beyond 0019, exact revocation
     evidence and recovery, and behavior of an open overview in other access cases remain to be decided.
   ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; navigation

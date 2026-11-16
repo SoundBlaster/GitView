@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0030
 title: GitView - Time series, coverage and observed outcomes
 kind: spec
 created_at: '2026-11-16T08:26:00Z'
-updated_at: '2026-11-16T08:26:00Z'
-status: outlined
+updated_at: '2026-11-16T19:55:33Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0013
 depends_on:

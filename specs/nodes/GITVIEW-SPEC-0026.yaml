@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0026
 title: GitView - Scoped observations and incomplete refresh
 kind: spec
 created_at: '2026-11-16T07:15:00Z'
-updated_at: '2026-11-16T07:15:00Z'
-status: outlined
+updated_at: '2026-11-16T19:55:33Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0003
 depends_on:
@@ -41,8 +41,8 @@ specification:
       time when known and a discoverable scoped failure. Do not invent an unknown time. A failed attempt
       does not advance the last successful observation time or establish source deletion, denial or emptiness
       by itself.
-    freshness: Refresh the displayed information from GitHub; do not present older saved information as
-      a successful new update when the latest refresh could not establish it.
+    freshness: Request a refresh of displayed information from GitHub when applicable; do not present
+      older saved information as a successful new update when the latest refresh could not establish it.
     revoked_private: Confirmed GitHub revocation of a private Repository retains the saved local data
       and shows its revocation indication and supported time when known under 0019. Stop synchronization
       for the affected Repository while revocation applies; a late in-flight response is not presented

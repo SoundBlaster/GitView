@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0064
 title: GitView - Project membership basis for historical metrics
 kind: spec
 created_at: '2026-11-16T11:35:00Z'
-updated_at: '2026-11-16T11:35:00Z'
-status: outlined
+updated_at: '2026-11-16T19:55:33Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0030
 depends_on:

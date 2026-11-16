@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0029
 title: GitView - Scope and uniqueness of work summaries
 kind: spec
 created_at: '2026-11-16T08:17:00Z'
-updated_at: '2026-11-16T08:17:00Z'
-status: outlined
+updated_at: '2026-11-16T19:55:33Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0012
 depends_on:
