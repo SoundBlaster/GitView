@@ -1,0 +1,82 @@
+id: GITVIEW-SPEC-0089
+title: GitView - Temporal context of Today and filter evidence
+kind: spec
+created_at: '2026-11-16T11:44:00Z'
+updated_at: '2026-11-16T11:44:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0027
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0028
+- GITVIEW-SPEC-0037
+- GITVIEW-SPEC-0042
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0049
+- GITVIEW-SPEC-0053
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0089.yaml
+  owner_local_day: conversation_memory/sketches/gitview/revisions/3077fdcd9a8247769def8d6403c2e61c/notes.hc
+specification:
+  objective: Preserve the meaning of Today inclusion and active filters when their source observations
+    refer to different times or revisions.
+  authority_boundary: Today includes earlier unfinished work and work completed during the user's current
+    local calendar day under 0027. Other inclusion alternatives, source freshness evidence, time-zone
+    change mechanics and native presentation remain open; no arbitrary validity duration is selected.
+  requirements:
+    day: Dynamic Today follows the user's applicable current local calendar day under 0049. A completed
+      object does not qualify for a new day solely because it completed on the previous day; other independently
+      applicable inclusion conditions may qualify it.
+    fact_context: Preserve each supported fact's object, source scope, event time where applicable and
+      observation time when supported, plus revision where applicable and coverage. The time an observation
+      was retrieved is not automatically the time a source event occurred; refreshing one field does not
+      refresh omitted fields.
+    inclusion_and_filters: Today inclusion, current lifecycle and each active filter are separate claims.
+      A supported inclusion alternative can establish base eligibility without proving a separate active
+      filter. An unknown required filter remains uncertain unless another independently applicable false
+      required condition decides exclusion under 0027.
+    applicability: Do not represent an earlier observation as confirmed for a later requested context
+      solely because it was locally read, another field refreshed or no later event is known. Retain its
+      supported last-known context and expose applicable uncertainty; source-specific evidence for current
+      applicability remains open rather than assuming a universal time-to-live or permanent uncertainty.
+    revision: A source-confirmed newer PR revision does not automatically inherit checks or review observations
+      from an older revision. Preserve their original context and use independently supported evidence
+      when evaluating the current revision under 0028.
+    combined: Facts observed at different times are not presented as one confirmed simultaneous snapshot
+      without sufficient supporting evidence. Preserving a selected filter or period does not establish
+      complete source coverage.
+    revoked_private: Confirmed GitHub revocation of private Repository access for the relevant account
+      does not hide supported saved facts and values; retain them as last known with indication and supported
+      time when known under 0019, and stop synchronization. A late earlier response does not restore access
+      or become a newly accepted update.
+    accessibility: Make active filters, uncertainty, relevant observation context and incomplete coverage
+      discoverable without relying solely on color or transient feedback.
+  scenarios:
+    event_received_tomorrow: A PR merged yesterday at 23:55 in the user's local time and GitView first
+      observes that event today at 00:05. The merge alone does not qualify it for today's completed work;
+      retain both supported times and evaluate current lifecycle and filters separately.
+    today_and_filter: A supported merge event places a PR in Today, but the active failed-CI filter lacks
+      applicable CI evidence. Base eligibility is supported while filter outcome remains uncertain.
+    prior_revision: A failed check was observed for PR revision R1; revision R2 is confirmed without applicable
+      R2 check evidence. Keep R1 as last known in its context and do not claim a current R2 failure or
+      exclusion.
+    mixed_time: A PR lifecycle was observed at T1 and a review fact at T2 without evidence of simultaneity.
+      Preserve both contexts rather than inventing a shared snapshot time.
+    late_revocation: A saved PR and earlier CI observation remain visible as last known when GitHub confirms
+      private Repository revocation; a response initiated earlier does not establish fresh access.
+  open_questions:
+  - Source-specific ordering, revision applicability and evidence for current filter claims.
+  - Other Today inclusion alternatives and behavior when the user local time zone changes.
+  - Native presentation of uncertain candidates and per-field observation context.
+  ontology_status: Project, Repository, PullRequest, Issue and CIStatus use working draft vocabulary;
+    temporal applicability and filtering are not new domain entities.
+acceptance:
+- Today retains the selected local-day behavior and does not treat yesterday's completion alone as today's
+  work.
+- Inclusion, active filter inputs and displayed lifecycle retain their own supported context and limitations.
+- Old revision checks and mixed-time observations do not silently become confirmed current or simultaneous
+  facts.
+- Confirmed private Repository revocation retains supported saved values with indication and supported
+  time when known; synchronization stops.
+- Filter state and uncertainty are discoverable without color or transient feedback alone.
