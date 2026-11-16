@@ -22,7 +22,6 @@ specification:
   ontology_refs:
   - gitview:pullRequestRepository
   - gitview:issueRepository
-  - gitview:CIStatus
   - gitview:Project
   - gitview:Repository
   - gitview:PullRequest
