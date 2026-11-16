@@ -7,6 +7,7 @@ draft_status: pre_canonical
 refines:
 - GITVIEW-SPEC-0029
 depends_on:
+- GITVIEW-SPEC-0019
 - GITVIEW-SPEC-0023
 - GITVIEW-SPEC-0025
 - GITVIEW-SPEC-0026
@@ -20,7 +21,7 @@ sources:
 acceptance:
 - Each displayed aggregate identifies its metric, source scope, coverage and relevant observation time or times.
 - Partial and stale observations are not presented as a confirmed current total or an automatic lower bound on current work.
-- Inaccessible private observations do not leak through a derived count when the access policy restricts them.
+- Confirmed private Repository revocation keeps saved observations and supported derived counts visible as last known under 0019; other disclosure contexts remain open.
 - Portfolio-wide aggregation deduplicates source identities without removing a shared Repository from an individual Project summary.
 specification:
   objective: Describe what an aggregate may assert when its constituent observations have different completeness, freshness or access.
@@ -43,7 +44,7 @@ specification:
     attention_predicate: For a named attention condition, a confirmed positive observation on an identified permitted PR may contribute that PR once to an observed affected-PR subset even if the Project or the PR's check or thread collection is incomplete. A missing positive observation is not evidence of a negative predicate when the relevant inputs are incomplete or unmapped. Any subset is attributed to its revision and observation context and is not automatically a current lower bound or a complete Project total.
     compound_inputs: If a metric combines independently observed lifecycle, CI or review facts, its claim must preserve the relevant time, revision and coverage of each input. A recently refreshed title or lifecycle does not refresh earlier CI or review facts. Unless supported by source evidence, the combined result is not represented as a single simultaneous current snapshot, even if each separate input was once confirmed.
     stale: A past observation records a fact at its observation time, not a guaranteed present fact. A partial sum containing stale open-work observations is not automatically a lower bound on the number currently open; a previously open PR may have closed or an unseen one may have opened. Show relevant times or stale indication instead of using arithmetic to imply freshness.
-    private: If an input becomes restricted under 0036, do not display its restricted private content or a derived private count that reveals it. An aggregate spanning allowed and restricted inputs can represent the allowed subset as incomplete or unavailable only when its disclosure and other concurrently offered app-controlled values do not reveal the restricted contribution. In particular, do not expose a restricted-input total together with a permitted subset if subtraction would reveal the restricted value. Do not silently treat the restricted input as zero or claim full coverage. This governs later app-controlled presentation, not values already observed or shared before restriction; historical and presentation refinements apply their own disclosure rules.
+    private: Confirmed revocation of a private Repository does not hide its already saved local observations or supported derived counts. Show them as last known with the revocation indication and supported update time when known, and stop synchronization under 0019. Do not present retained values as freshly observed, treat unavailable inputs as zero or claim unsupported coverage. Other account-change and disclosure contexts remain open; no separate access policy is selected here.
     deduplication: Deduplicate confirmed Repository and object identities for a unique portfolio total as in 0029. If identity is insufficient to deduplicate, report the affected uniqueness or coverage as uncertain instead of silently merging by a display name.
     time: A snapshot count and a period outcome count have different input requirements. A current accepted snapshot does not prove a historical event series or fill missing historical buckets; 0030 governs those claims.
     provenance: The owner requested summaries and visible update errors; propagation of coverage, stale counts and restricted derived values is an agent-authored refinement.
@@ -57,13 +58,13 @@ specification:
       when: Its current-work summary is displayed.
       then: The time and staleness remain visible and the app does not assert that at least three PRs are open now.
     restricted_total_and_subset:
-      given: A previously visible aggregate combines independently supported values for permitted Repository A and Repository B, and B's contributing private data is now restricted.
+      given: A previously saved aggregate combines independently supported values for Repository A and private Repository B, and B's access is confirmed revoked.
       when: The current Project summary and an A-only view are prepared.
-      then: The independently permitted A-only value may be displayed with its own scope when safe, but app-controlled presentation does not also disclose the old mixed total or equivalent values that would reveal B's restricted contribution. The policy does not claim to retract information seen before the restriction.
+      then: The supported saved aggregate and its constituent local values remain visible as last known with B's revocation indication and supported update time when known; the mixed value is not claimed as a freshly confirmed total.
     denied_member:
-      given: A Project contains one accessible Repository and one private Repository whose access has been explicitly denied.
+      given: A Project contains one accessible Repository and one private Repository whose access has been explicitly revoked.
       when: The Project summary is displayed.
-      then: Restricted private counts are not exposed; any aggregate of allowed data indicates incomplete or unavailable coverage rather than claiming the restricted Repository has zero work.
+      then: Previously saved private counts remain visible as last known with the revocation indication and supported time when known; a current aggregate without fresh B data indicates the applicable limitation rather than treating B as zero.
     overlap:
       given: The same confirmed Repository and its one observed PR are members of two Projects.
       when: Both Project summaries and a unique portfolio total are computed with sufficient coverage.
@@ -99,4 +100,4 @@ specification:
   unresolved:
   - Exact representation of coverage and multiple observation times at each density.
   - Per-metric rules establishing sufficiently complete and current source evidence.
-  - Policy for aggregating mixed public and restricted data beyond the non-disclosure boundary.
+  - Presentation and disclosure in account-change or other contexts beyond confirmed private Repository revocation.

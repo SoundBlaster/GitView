@@ -1,0 +1,7 @@
+# Aggregates with incomplete observations: outlined node
+
+Baseline `58c263f`. Node 0046 refines scope, coverage, membership and last-known counts without choosing exact source mappings or presentation. The predecessor was corrected to preserve saved private inputs and supported derived counts after confirmed revocation under 0019. Ontology vocabulary remains draft.
+
+Independent read-only review examined initial node SHA `496a468bd829fe1d95dfd461ff5311f2e4c65d5184ae68b52f7bed3607e06149` and draft SHA `5582e5975820623daec5b61d3b87c832b0340b1ee8c3491be359e5fcf25688a7`. It identified a leftover non-disclosure implication in the draft, an acceptance criterion that did not qualify update time as known when available, and insufficient explicit coverage of combined facts observed at different times. The author corrected these; focused rereview confirmed final node SHA `f95ff5a35d859a3a280a93228a71667a2203e5d1b1b8b60a4a32b4871c1a790d` and draft SHA `4814f23ce1a8890ca51d0cdc8c0b77c46523df6c05826e0fa7c42f81cfd714ef` without further findings in scope.
+
+Byte-identical node and draft candidate checks returned `checked`; target next-move and runtime lint passed for the node. Draft lint had the same two pre-existing findings as the baseline: missing `updated_at` and noncanonical formatting. These structural checks and review do not prove live source behavior, ontology acceptance or implementation readiness.
