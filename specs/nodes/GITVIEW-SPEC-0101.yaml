@@ -1,0 +1,92 @@
+id: GITVIEW-SPEC-0101
+title: GitView - Work object identity in Today
+kind: spec
+created_at: '2026-11-16T12:26:00Z'
+updated_at: '2026-11-16T12:26:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0027
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0039
+- GITVIEW-SPEC-0041
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0089
+- GITVIEW-SPEC-0102
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0101.yaml
+  selected_fields: docs/drafts/pr-issue-selected-fields-coverage-20261114.md
+specification:
+  objective: Preserve distinct source-supported PR and Issue identities when constructing a Today work
+    selection from potentially overlapping or incomplete observations.
+  authority_boundary: Today presents each eligible PR or Issue once per selection and retains distinct
+    linked objects. Exact source representation mappings, queries and identifier association evidence
+    remain open; this node does not establish GitHub integration or source population completeness.
+  requirements:
+    typing: Before treating an observation as a PR or Issue, use supported object-type evidence. An untyped
+      or identity-ambiguous representation remains unresolved; do not silently classify it or fabricate
+      a confirmed match, exclusion or exact population count.
+    same_object: Multiple source observations or inclusion conditions for a source-confirmed same PR or
+      Issue do not create multiple cells for that object in the same selection. An Issues-source representation
+      confirmed as a PR is not an additional independent Issue under 0039. The same Repository can belong
+      to different Projects; its eligible object can appear once in each applicable Project selection,
+      without changing membership or globally suppressing it across Projects.
+    distinct_objects: A separately identified Issue and PR remain distinct even when linked or describing
+      related work. Same-number PRs or Issues in different Repositories do not become one object. A link
+      is not proof of motive or of independent task count.
+    identifiers: Preserve identifier type, source instance and Repository context. Do not equate or interchange
+      source representation identifiers solely because their numbers, names or addresses resemble one
+      another. Repository identity follows 0038; associating work-object representations requires its
+      own supported evidence under 0039, and the source-specific association method remains open.
+    fields: Keep supported lifecycle, event time, observation time, scope and coverage distinct per fact.
+      Missing, unrecognized, conflicting or omitted facts are not invented from another field or from
+      retrieval time. A closed PR is not automatically merged; a PR closure is not an Issue closure.
+    incomplete: An unresolved representation or missing type evidence can limit the completeness of a
+      materialized work selection. Independently supported counts retain their own scope and evidence;
+      a count alone does not create object identities or establish that all cards are present under 0102.
+    revoked_private: On GitHub-confirmed private Repository revocation for the relevant account, previously
+      saved supported work remains visible locally as last known with revocation indication and supported
+      time when known under 0019; synchronization stops. An earlier response does not silently become
+      a fresh update or restore access. Account-change disclosure remains open.
+    accessibility: Make known object type, identity context and applicable uncertainty understandable
+      without relying only on color or a transient cue.
+  scenarios:
+    issue_representation_of_pr: A source-confirmed PR has an Issues-source representation and a separately
+      associated PR representation. Show the PR once as a PR; the first representation is not another
+      Issue.
+    linked_issue: A source-confirmed PR and a separately identified linked Issue both meet all applicable
+      Today conditions and active filters. Each appears once in that selection; their link neither merges
+      them nor proves actor motive.
+    unknown_type: A partial source response lacks the evidence needed to tell whether a record is a PR
+      representation or an Issue. Preserve uncertainty rather than defaulting it to either type.
+    cross_repository: Repository A and Repository B each contain a confirmed PR numbered 42. They remain
+      distinct objects in their own source and Repository contexts.
+    shared_repository: Repository R belongs to Projects P and Q; its confirmed PR meets each selection's
+      applicable conditions and filters. The same PR appears once in each applicable Project selection,
+      without a change to either membership.
+    revoked_late_response: A saved private PR remains visible as last known after confirmed revocation;
+      a response initiated before revocation arrives later. Do not use it to claim fresh data or restored
+      access.
+    closed_without_merge_evidence: A PR is supported as closed but merge evidence is unavailable. Preserve
+      closed state and uncertainty about merge; do not fabricate a merge time from retrieval time.
+  open_questions:
+  - Source-specific type, object and Repository identity mapping and association evidence.
+  - Partial population, access and source ordering semantics for selected operations.
+  - Native presentation for unresolved records and their selection limitations.
+  ontology_status: GitHub, Repository, PullRequest and Issue use working draft vocabulary; normalization
+    is an observation operation, not a new domain entity or proof of actor motive.
+acceptance:
+- Confirmed PRs and Issues retain supported identity and type; unresolved representations are not silently
+  classified.
+- A source-confirmed PR represented through an Issues source is not counted as a separate Issue, and an
+  independently linked Issue remains distinct.
+- Equal local numbers or display names do not merge different Repository objects or substitute unsupported
+  source identifiers.
+- Missing source facts do not become a fabricated lifecycle transition, event time or complete work population.
+- Saved supported work remains visible after confirmed private Repository revocation with indication and
+  supported time when known.
