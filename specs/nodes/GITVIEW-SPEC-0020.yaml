@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0020
 title: GitView - Product journey and acceptance direction
 kind: spec
 created_at: '2026-11-15T22:03:00Z'
-updated_at: '2026-11-16T12:46:00Z'
-status: outlined
+updated_at: '2026-11-16T20:05:42Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0001
 depends_on:
@@ -66,7 +66,8 @@ specification:
       Explicit filters persist, and the selected historical merged-counter transition temporarily overrides
       its conflicting saved merged exclusion without rewriting that preference. The historical destination
       retains the counter's own period and scope rather than becoming ordinary Today; access and coverage
-      limitations remain applicable.
+      limitations remain applicable. Other signal-origin transitions preserve filters belonging to the
+      signal’s originating scope; unrelated filters do not narrow a signal outside that scope under 0092.
     inspection: A Photos-inspired grid changes density with pinch and accessible alternatives. Each eligible
       confirmed PR or Issue in the selection has one cell. First-version long-press preview of an eligible
       Project, Repository, PR or Issue reveals permitted detail and offers explicit opening of the same
@@ -115,7 +116,8 @@ specification:
   open_questions:
   - Exact revocation evidence, in-flight and recovery handling; private-data access after disconnect,
     ordinary offline use and other account changes beyond 0019, and exact disconnect outcome.
-  - Historical metric measurement units; treatment of other signal-filter conflicts and exact return behavior.
+  - Historical metric measurement units; exact filter hierarchy, persistence and return behavior beyond
+    the selected origin-context rule under 0092.
   - Actual first-launch interaction, source coverage and selected account/authorization model.
   - Each product branch needs further refinement and evidence appropriate to its eventual transition;
     this node is not a release gate.

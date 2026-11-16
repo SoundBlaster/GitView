@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0049
 title: GitView - Today boundary and active navigation
 kind: spec
 created_at: '2026-11-16T08:39:00Z'
-updated_at: '2026-11-16T08:39:00Z'
-status: outlined
+updated_at: '2026-11-16T20:05:42Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0027
 depends_on:
@@ -45,9 +45,10 @@ specification:
     open_object: A preview or overview already open for a PR or Issue remains associated with that same
       source object when Today changes. If its prior cell no longer belongs to the selection, returning
       uses a supported current-context fallback under 0024 rather than substituting another object.
-    private_data: Confirmed private Repository revocation does not hide already saved local data under
-      0019; keep the indication and supported time when known and stop synchronization for that Repository.
-      A day change does not itself prove revocation or restoration of GitHub access.
+    private_data: Confirmed private Repository revocation alone does not hide already saved local data;
+      visibility follows the active-account and A-to-B boundary under 0019; keep the indication and supported
+      time when known and stop synchronization for that Repository. A day change does not itself prove
+      revocation or restoration of GitHub access.
     historical_period: Do not silently relabel a separately selected historical period as the new dynamic
       Today. Exact historical-period boundaries and behavior after a time-zone change remain open.
     accessibility: Make an applicable changed day, incomplete coverage or recovery limitation discoverable

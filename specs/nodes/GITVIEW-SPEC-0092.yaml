@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0092
 title: GitView - Signal-origin selection and explicit filter changes
 kind: spec
 created_at: '2026-11-16T08:52:00Z'
-updated_at: '2026-11-16T08:52:00Z'
-status: outlined
+updated_at: '2026-11-16T20:05:42Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0047
 depends_on:
