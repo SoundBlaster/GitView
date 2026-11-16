@@ -2,7 +2,7 @@ id: GITVIEW-SPEC-0020
 title: GitView - Product journey and acceptance direction
 kind: spec
 created_at: '2026-11-15T22:03:00Z'
-updated_at: '2026-11-15T22:03:00Z'
+updated_at: '2026-11-16T12:46:00Z'
 status: outlined
 refines:
 - GITVIEW-SPEC-0001
@@ -78,6 +78,27 @@ specification:
     missing_data: A Project has a supported prior observation for one scope and another scope fails to
       refresh. The permitted last-known facts retain their own time and the affected failure is visible
       without claiming complete current data.
+    setup_with_partial_discovery: A first-time operator connects GitHub. Discovery returns Repository
+      A but does not establish whether the remaining scope is complete. A is independently eligible and
+      the required setup operations succeed. The operator can identify the limitation, choose A and complete
+      the supported default setup. A saved Project is distinct from the selection, and its work can still
+      be loading or unobserved rather than confirmed empty.
+    today_preview_return: An eligible PR in a selected Project is confirmed merged during the user's local
+      day and no saved lifecycle exclusion hides it. The same PR remains in Today; the operator can change
+      density, preview and explicitly open it, then return to the valid Project, Repository scope, period,
+      filter and density context without replacing the PR by another object. An explicit unfinished-only
+      filter may hide it without modifying the source PR.
+    revoked_after_observation: A private Repository already has saved Project and work observations when
+      GitHub confirms revocation for the relevant account. The operator can still find and inspect the
+      saved local information with the revocation indication and supported last-update time when known,
+      and reach recovery or explicit local deletion. Synchronization of the affected Repository stops
+      while revocation applies, and an earlier in-flight response does not become a newly accepted update;
+      opening locally does not establish source access or change other Projects.
+    shared_repository_signal: Projects P and Q share Repository R. Opening a supported Project-wide attention
+      signal from P preserves P, the signal condition, applicable period and each supported Repository
+      context; returning does not silently switch to Q. R remains a member of both Projects and an asserted
+      unique portfolio total does not count the same confirmed identity twice. Incomplete coverage stays
+      distinguishable.
   open_questions:
   - Exact revocation evidence, in-flight and recovery handling; private-data access after disconnect,
     ordinary offline use and account change, and exact disconnect outcome.
