@@ -1,0 +1,62 @@
+id: GITVIEW-SPEC-0040
+title: GitView - Testable behavior and injected dependencies
+kind: spec
+created_at: '2026-11-16T08:57:00Z'
+updated_at: '2026-11-16T08:57:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0021
+depends_on:
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0036
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0040.yaml
+  owner_requirements: conversation:gitview/excerpt-74
+specification:
+  objective: Make product behavior independently testable while preserving evidence of real integration.
+  authority_boundary: The owner requested testability, DI, TDD and network and data mocks. Boundary placement,
+    representative scenarios and the distinction between kinds of evidence are refinements, not evidence
+    of implementation. Exact frameworks, wiring and verification infrastructure remain open.
+  requirements:
+    replaceable_dependencies: Supply network and persistence dependencies at replaceable boundaries; control
+      time, scheduling and other nondeterministic inputs where they affect the scenario. This does not
+      require a DI framework or a protocol for every value.
+    isolated_decisions: Exercise suitable named domain decisions with supplied facts, source evidence
+      and time without a live GitHub request or mutation of personal data. Evaluation itself does not
+      read the network or persistence, or perform UI actions. Preserve unknown as distinct from confirmed
+      positive and negative results where the product contract requires it, under 0021.
+    doubles: Use scenario-appropriate network and data fakes, stubs or mocks for reproducible success,
+      partial results, failures and relevant ordering. Verify interactions where they are part of behavior;
+      a single kind of double is not mandatory for every test.
+    tdd: For a behavioral change, first express the intended observable behavior in a failing automated
+      test, implement the minimum to pass, then refactor while retaining passing tests. A behavioral failure
+      is distinct from an unavailable environment or compiler error. Tests should verify meaningful outcomes
+      rather than reproduce every private helper.
+    integration_evidence: Isolated tests establish only behavior under their supplied conditions. Verify
+      real adapter, source, system and native interaction boundaries separately when their contracts need
+      such evidence; do not present an unperformed integration or device check as passed.
+    test_data: Test fixtures and logs exclude credentials and unapproved private source content. Isolated
+      tests do not change the user's actual GitHub state.
+    evidence: Identify the tested specification, scenario, conditions and observed result; distinguish
+      proposed tests from executed tests and behavioral failures from environment failures. A separate
+      draft 0079 proposes further TDD review detail but is not established by this node.
+  scenarios:
+    offline_refresh: Given a saved PR observation and known successful time, a deterministic network failure
+      leaves the supported saved observation and time visible with a scoped failure, without a live GitHub
+      request, when no independent observation or access change occurs.
+    uncertainty: A named filter decision with unavailable CI input and no independently false condition
+      retains uncertainty rather than inventing a confirmed match or non-match.
+    integration: Passing network-double tests without a real adapter check does not prove GitHub compatibility.
+  open_questions:
+  - Concrete Swift test tools, dependency composition and continuous-integration topology.
+  - Appropriate real integration and device evidence for each implemented behavior.
+  - Any further TDD trace format and retention, including the separate 0079 proposal.
+  ontology_status: Existing domain vocabulary remains draft; test boundaries do not add domain entities.
+acceptance:
+- Relevant external effects are replaceable for deterministic behavior tests without live GitHub or personal
+  data mutation.
+- TDD starts with a behavioral failure, implements the minimum to pass, and refactors with tests passing;
+  an environment failure is not substituted for the initial behavioral failure.
+- Appropriate doubles exercise supported failure and uncertainty without claiming real integration works.
+- Verification reports distinguish performed observations from proposed or unperformed checks.
