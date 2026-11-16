@@ -32,10 +32,10 @@ specification:
   - gitview:removesRepositoryFrom
   objective: Let the operator create and manage local Projects without confusing their identities or changing
     the source Repositories.
-  authority_boundary: The owner selected Project composition, shared Repository membership and one-Repository
-    default. Persistent default association, its reuse and exact setup or deletion interactions remain
-    agent-authored candidates; this node does not choose a storage mechanism or establish implementation
-    readiness.
+  authority_boundary: The owner selected Project composition, shared Repository membership and the default
+    of one Project per Repository. Persistent default association, its reuse and exact setup or deletion
+    interactions remain agent-authored candidates; this node does not choose a storage mechanism or establish
+    implementation readiness.
   requirements:
     identity: A saved Project has a stable local identity, name, optional description and one or more
       source-identified GitHub Repositories. Project identity is distinct from its name, a Repository
@@ -43,9 +43,9 @@ specification:
     shared_membership: A Repository can belong to several Projects, and a Project can contain Repositories
       from different GitHub organizations. A membership change in one Project does not itself alter another
       Project or mutate the GitHub Repository.
-    default: By default one Project corresponds to one Repository under 0005. How an existing default
-      is identified, reused or recovered remains open; do not assume an arbitrary Project containing that
-      Repository is its default.
+    default: By default there is one Project per Repository under 0005. How an existing default is identified,
+      reused or recovered remains open; do not assume an arbitrary Project containing that Repository
+      is its default.
     edit: The operator can create, rename and edit a Project and select its members. A valid saved Project
       contains at least one Repository; an invalid attempt to remove the final member does not become
       a confirmed empty Project. Exact controls, name validation and intermediate editing behavior remain
@@ -90,7 +90,8 @@ acceptance:
   its members and GitHub organizations.
 - A Repository may belong to multiple Projects; a valid edit to one does not change another Project or
   the GitHub Repository.
-- The default one-Repository direction does not by itself select a persistent default-association mechanism.
+- The default of one Project per Repository does not by itself select a persistent default-association
+  mechanism.
 - Rename or transfer with confirmed same Repository identity preserves history and Project memberships.
 - Unavailable configuration or an indeterminate save is not treated as confirmed absence, success or a
   safe duplicate.

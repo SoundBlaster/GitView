@@ -35,9 +35,9 @@ specification:
       source-identified GitHub repositories. A Project and its repositories remain distinct objects.
     membership: A repository may belong to more than one Project. Repositories from different GitHub organizations
       may belong to the same Project; organization is source metadata, not the Project boundary.
-    default: By default one Project corresponds to one repository. Persistent association with reuse is
-      an agent-authored working candidate, not a selected owner requirement; its recovery protocol and
-      alternative mechanisms require separate refinement.
+    default: By default there is one Project per repository. Persistent association with reuse is an agent-authored
+      working candidate, not a selected owner requirement; its recovery protocol and alternative mechanisms
+      require separate refinement.
     editing: The operator can create, rename and edit a Project and select its repositories. Removing
       membership from one Project does not delete the source repository or alter membership in another
       Project. A saved Project must not become an invalid empty Project; exact editing and recovery interaction
@@ -65,7 +65,7 @@ acceptance:
   organizations.
 - A valid membership change affects its selected Project without changing GitHub or another Project's
   membership.
-- Default one-Repository composition is distinguished from the persistent-association mechanism not selected
-  by the owner.
+- The default of one Project per Repository is distinguished from the persistent-association mechanism
+  not selected by the owner.
 - Unknown identity, unavailable configuration and an indeterminate save do not become a confirmed absence
   or safe duplicate.

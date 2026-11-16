@@ -58,7 +58,7 @@ specification:
     owner decisions, proposals and open questions.
   product_scope:
     organization: GitView Projects each contain one or more GitHub repositories. A repository may belong
-      to more than one Project; by default one Project corresponds to one repository. A Project can include
+      to more than one Project; by default there is one Project per repository. A Project can include
       repositories from different GitHub organizations.
     repository_identity: A source-confirmed rename or transfer of the same GitHub repository preserves
       its identity, history and Project membership. A reused address or name does not itself establish

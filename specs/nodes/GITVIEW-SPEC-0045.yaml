@@ -40,11 +40,12 @@ specification:
     identity: Interpret a selected entry using supported Repository identity under 0002 and 0038. Equal
       names or positions alone do not prove two Repositories identical; an unresolved identity remains
       unresolved instead of silently being matched to another Project.
-    default: A supported default Project corresponds to one eligible Repository under 0005 and 0022. If
-      a multi-Repository default selection is supported, its default is a separate Project for each Repository
-      rather than one silently combined Project; this does not require multi-selection. How an existing
-      default is recognized, offered or reused when the Repository appears in several Projects remains
-      open; do not silently treat an arbitrary containing Project as the selected default.
+    default: Support a default of one Project per eligible Repository under 0005 and 0022; this does not
+      limit the later composition of a Project. If a multi-Repository default selection is supported,
+      its default is a separate Project for each Repository rather than one silently combined Project;
+      this does not require multi-selection. How an existing default is recognized, offered or reused
+      when the Repository appears in several Projects remains open; do not silently treat an arbitrary
+      containing Project as the selected default.
     outcome: Distinguish a supported successful local save from confirmed non-application, pending work
       and an indeterminate outcome. When multiple setup effects are supported, keep their actual outcomes
       and Repository identities attributable rather than claiming all succeeded or treating one result
@@ -85,7 +86,8 @@ specification:
     membership does not itself prove an actor's motive or a particular ontology action.
 acceptance:
 - Repository selection is distinguishable from a successfully saved Project and from a loaded work collection.
-- Default one-Repository composition remains distinct from the unselected persistent-association mechanism.
+- The default of one Project per Repository remains distinct from the unselected persistent-association
+  mechanism.
 - Confirmed saved, failed or indeterminate setup effects are not silently conflated; an uncertain effect
   is not blindly duplicated.
 - Partial source discovery is not reported as a confirmed empty inventory, and cancellation or failure

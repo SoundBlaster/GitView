@@ -43,11 +43,11 @@ specification:
       where available. A confirmed zero matches only its actual search and access scope; no search match
       does not prove an empty account. Choosing a Repository does not by itself prove that a Project was
       saved or that all work was observed.
-    setup: Support a default Project corresponding to one eligible Repository while keeping Project and
-      Repository distinct. A Project may contain more Repositories or share one with another Project under
-      0005; the exact setup mechanism is open. If a multi-Repository default selection is supported, its
-      default corresponds to one Project per Repository, not an implicitly combined Project; this does
-      not mandate multi-selection or a specific association.
+    setup: Support one default Project per eligible Repository while keeping Project and Repository distinct.
+      A Project may contain more Repositories or share one with another Project under 0005; the exact
+      setup mechanism is open. If a multi-Repository default selection is supported, its default corresponds
+      to one Project per Repository, not an implicitly combined Project; this does not mandate multi-selection
+      or a specific association.
     outcomes: Distinguish a supported successful Project save from failure or indeterminate result. Do
       not silently create a duplicate while an earlier possible creation effect remains unresolved; recovery
       depends on available evidence and is not guaranteed.
