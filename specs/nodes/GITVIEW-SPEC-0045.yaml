@@ -2,7 +2,7 @@ id: GITVIEW-SPEC-0045
 title: GitView - Repository selection and setup outcomes
 kind: spec
 created_at: '2026-11-16T08:41:00Z'
-updated_at: '2026-11-16T08:41:00Z'
+updated_at: '2026-11-16T12:48:00Z'
 status: outlined
 refines:
 - GITVIEW-SPEC-0022
@@ -21,10 +21,11 @@ sources:
 specification:
   objective: Keep Repository selection and the outcome of creating or reusing Project configuration understandable
     when source or save evidence is incomplete.
-  authority_boundary: The owner selected one Repository per Project as the default and allowed shared
-    membership. Explicit-confirmation batch setup, persistent default association and detailed reuse behavior
-    are agent-authored candidates rather than selected mechanisms. This node does not require multi-selection
-    or choose exact native setup controls, transaction architecture or implementation readiness.
+  authority_boundary: The owner selected one Project per Repository as the default and allowed a Project
+    to contain multiple Repositories and a Repository to belong to multiple Projects. Explicit-confirmation
+    batch setup, persistent default association and detailed reuse behavior are agent-authored candidates
+    rather than selected mechanisms. This node does not require multi-selection or choose exact native
+    setup controls, transaction architecture or implementation readiness.
   requirements:
     pending: A selection or intended setup is distinct from a successfully saved Project and does not
       by itself establish source access or observed PR and Issue work. An empty selection does not become
