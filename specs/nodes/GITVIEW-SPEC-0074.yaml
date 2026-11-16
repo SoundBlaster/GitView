@@ -1,0 +1,92 @@
+id: GITVIEW-SPEC-0074
+title: GitView - Overview levels and scope transitions
+kind: spec
+created_at: '2026-11-16T08:44:00Z'
+updated_at: '2026-11-16T08:44:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0006
+depends_on:
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0014
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0035
+- GITVIEW-SPEC-0047
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0074.yaml
+  predecessor_revision: 9bbf79f
+  owner_selection: docs/drafts/project-summary-proposal.md
+  ux_candidate: docs/drafts/ux-zoom-levels-proposal.md
+specification:
+  objective: Let the operator move from an overview of Projects into the relevant Repository or work scope
+    without losing identity or navigation context.
+  authority_boundary: Single-Repository entry, member inspection and direct actionable Project-signal
+    navigation follow the selected direction. The default ordinary entry for a multi-Repository Project,
+    exact transition gestures and platform layout remain open; this node does not establish implementation
+    readiness.
+  requirements:
+    single_repository: A Project with one Repository reaches that Repository's work without a redundant
+      intermediate Repository screen. Project and Repository remain distinct, with their supported identities
+      and context available.
+    multiple_repositories: A Project with several Repositories allows the operator to inspect its members
+      and reach the work of each. Repositories can come from different GitHub organizations; organization
+      is metadata, not an implicit Project boundary.
+    signal: An actionable Project summary signal can open its corresponding work across the applicable
+      member scope without requiring a Repository-by-Repository detour. Preserve the originating Project,
+      signal condition, applicable period and each object supported Repository context; incomplete evidence
+      does not establish an exhaustive selection. For the selected historical merged-PR counter transition,
+      apply the temporary conflicting merged-filter override under 0047 without rewriting the saved preference;
+      this does not select overrides for other signals.
+    ordinary_entry: A direct ordinary entry to a Project-wide collection is a working candidate, not a
+      selected default for multi-Repository Projects. If later chosen, it must preserve the existing member
+      and signal routes and actual Project scope rather than silently selecting an arbitrary Repository.
+    density: Pinch or an accessible equivalent can change density within the current scope under 0035.
+      A density change does not itself select another Project or Repository, change the explicit filters
+      or establish a different period.
+    identity: A Repository shared by several Projects retains the actual Project origin from which it
+      was opened. The same name or position does not justify silently substituting another Project or
+      Repository.
+    saved_data: Confirmed GitHub revocation alone does not hide an already saved local Project, member
+      or supported work under 0019. Present the applicable revocation indication and supported time when
+      known without claiming restored source access; account isolation and external handoff remain separate
+      questions.
+    return: Preserve valid originating scope, applicable period, filters and density on return where possible
+      under 0024. If an origin or selected object is no longer supported, provide a meaningful applicable
+      fallback without silently representing a different Project as the original.
+    accessibility: The operator can navigate and inspect applicable Projects, members and work without
+      relying solely on pinch, color or a precise tiny target under 0032.
+  scenarios:
+    single_member: A Project contains one Repository. The operator reaches its PR and Issue work without
+      a duplicate intermediate Repository screen and can still identify both Project and source Repository.
+    multi_member: A Project contains two Repositories from different organizations. The operator can inspect
+      both supported members and reach each one's work without treating the organizations as separate
+      Projects.
+    shared_repository: A Repository belongs to Projects A and B and is opened from A. Returning preserves
+      A as the originating Project rather than silently switching to B.
+    signal_selection: A supported Project failed-CI signal is opened. The destination covers its applicable
+      member scope, identifies each supported source Repository and retains the actual condition and coverage
+      limitation.
+    revoked_member: GitHub confirms revocation for a private member with saved local information. The
+      supported saved member remains accessible with its revocation indication and supported time when
+      known; its local visibility is not a GitHub grant.
+  open_questions:
+  - Default ordinary entry for multi-Repository Projects and any direct Project-wide collection.
+  - Native scope transitions, focus or position restoration, and gesture interaction across levels.
+  - Exact signal predicates, source coverage and response to Project membership changes during an open
+    route.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; visual levels
+    and navigation actions are interaction concepts, not newly asserted domain entities.
+acceptance:
+- A single-Repository Project reaches its work without a redundant intermediate Repository screen while
+  retaining both identities.
+- A multi-Repository Project permits member inspection and a route to each member's work; organizations
+  do not silently redefine Project membership.
+- An actionable Project signal reaches its corresponding work across the applicable scope without an individual
+  Repository detour and retains its supported condition and source context.
+- Density changes and return navigation do not silently switch Project, Repository scope, period or explicit
+  filters.
+- Confirmed private Repository revocation does not hide already saved local Project or member information
+  under 0019.
