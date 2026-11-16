@@ -1,0 +1,7 @@
+# Compact preview content: outlined node
+
+Baseline `b8a4740`. Node 0050 refines preview content without choosing an exact layout, source mapping or sliding-preview implementation. The preceding draft's Project revocation scenario was corrected: saved source-derived names and counts remain visible with the revocation indication and supported update time under 0019. Ontology vocabulary remains draft.
+
+An independent read-only first-draft review covered node SHA `c254cd876aa6f3cfe47fdd248d09602656808f8ed45ed8d93796d9da33705fef` and revised predecessor SHA `60dcaba692be54ded209891e652e75099f5794bfbf342634c8b6ea5e22dc8fd6`. It found that the node needed an explicit requirement for additional readable detail beyond the cell, a non-color route to understand known special or unclassified check outcomes, and clearer attribution of owner content examples as non-exhaustive. The author corrected all three; focused rereview confirmed final node SHA `bb368ac1fe8237bebf7026b59876441e7978a1ff682e2ecbdb16d85bcb61944c` and found no new issue in the reviewed scope, including retained-data behavior.
+
+Byte-identical candidate copies of the node and the corrected draft returned `checked`; target next-move and runtime YAML lint passed for the node. The draft lint reports two pre-existing issues, missing `updated_at` and noncanonical formatting; the same two appear when linting the baseline copy. These structural checks and text review do not establish actual native accessibility, source behavior, ontology acceptance or implementation readiness.

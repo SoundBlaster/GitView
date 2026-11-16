@@ -36,7 +36,7 @@ specification:
   - gitview:Issue
   contract:
     common: Present the object type and enough allowed identity to disambiguate it in the originating scope where disclosure is permitted. Show a known permitted title or name, source Repository context and number where applicable, and relevant available state. Show a short excerpt of source text when available and permitted; lack of excerpt is not proof the source description is empty. Restricted identity or details are not exposed visually or through assistive representations merely to distinguish objects.
-    project: Present the permitted local Project name, member count and available summary signals with their relevant scope and coverage. If the name or values are restricted source-derived private data, follow 0047 and 0046 rather than exposing them to identify the preview.
+    project: Present the available local Project name, member count and summary signals with their relevant scope and coverage. Confirmed private Repository revocation does not hide already saved local source-derived names or counts; indicate revocation and the supported update time when known under 0019. Other account and disclosure contexts remain open.
     repository: Present the permitted Repository name and source context plus available PR and Issue summary signals. A changed or unavailable source address retains its observation context; do not identify another Repository solely by a reused name.
     pull_request: Present Repository context, PR number, known title and lifecycle, with draft flag, CI summary, review assessment and unresolved-thread count where available. Keep CI, review and threads independent and do not expose individual run or thread content as part of these counters.
     review_independence: Under 0062, requested-review information, review assessment and unresolved-thread count retain separate meanings and observation context. A zero or missing thread count does not by itself justify an approval or completed-review mark. Compact visual treatment has an accessible path to distinguish available signals and unknowns without requiring individual thread content.
@@ -62,9 +62,9 @@ specification:
       when: The preview is shown.
       then: The closed state is available without calling the Issue successfully completed or fabricating a reason.
     project_denied:
-      given: A Project preview would otherwise include a default name derived from a private Repository whose access is explicitly denied.
+      given: A Project preview includes a saved default name and counts derived from a private Repository whose access is explicitly revoked.
       when: The preview is displayed.
-      then: Restricted source-derived details and private counts are not exposed; an access problem and safe route remain available.
+      then: The saved name and counts remain visible as last known with a revocation indication and supported update time when known; an entry point for recovery or explicit local deletion remains available under 0019.
     mixed_freshness:
       given: An Issue preview has a title observed recently and related-PR data only from an earlier observation.
       when: The preview summarizes available information.

@@ -1,0 +1,96 @@
+id: GITVIEW-SPEC-0050
+title: GitView - Compact preview content by object type
+kind: spec
+created_at: '2026-11-16T11:07:00Z'
+updated_at: '2026-11-16T11:07:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0031
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0028
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0039
+- GITVIEW-SPEC-0041
+- GITVIEW-SPEC-0047
+- GITVIEW-SPEC-0062
+- GITVIEW-SPEC-0063
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0050.yaml
+  discovery: docs/product-discovery.md
+  revoked_private_visibility: specs/nodes/GITVIEW-SPEC-0019.yaml
+specification:
+  objective: Support inspection of a selected object from the overview with a compact, type-aware preview.
+  authority_boundary: The owner requested a minimal overview with examples including name, ID, badges
+    and text, and selected a first-version long-press preview. Those examples are not an exhaustive field
+    list. Type-specific content is a refinement; exact field priority, layout, source mapping and native
+    presentation remain open. This node does not select a sliding-preview implementation.
+  requirements:
+    common: Show the selected object's type and enough available identity and summary to distinguish it
+      in its actual scope; include an available title or name, Repository context and source number where
+      applicable. A short available source-text excerpt can assist identification; its absence does not
+      establish that the source description is empty. Provide readable additional available detail beyond
+      the originating cell under 0031. Opening and dismissal retain the same object's identity and origin.
+    project: Show the local Project name and supported member count and summary signals with their actual
+      scope and coverage where available. Membership and source observations are distinct; a Project can
+      include more than one Repository.
+    repository: Show the supported Repository identity and available PR and Issue summaries in their observation
+      context. An unavailable or changed source address does not identify another Repository merely because
+      it has the same name.
+    pull_request: Show supported Repository context, PR number, title and lifecycle, with available draft,
+      CI, review and unresolved-thread signals. Retain CI, review assessment, requested reviews and thread
+      counts as distinct observations; zero or unknown threads alone do not prove approval or a completed
+      review. Counters do not require displaying individual check or thread content.
+    check_specials: When known special or unclassified check outcomes are present, make their presence
+      and available meaning or limitation discoverable through a non-color accessible path, without representing
+      them as success. Exact source classification and presentation remain open under 0028.
+    issue: Show supported Repository context, Issue number, title and open or closed state, with source
+      closure reason when available. Do not assign PR-only review or CI status to an Issue or equate a
+      closed Issue with successful completion. A blocker indication follows 0063 and its actual evidence.
+    observation_context: Unknown, stale or incomplete fields do not become confirmed empty, zero or successful.
+      A recently observed title or lifecycle does not establish equally recent review, CI, thread, related-object
+      or counter data; keep applicable limitations available in preview or the accessible path to object
+      overview.
+    revoked_private: After confirmed private Repository access revocation, saved local preview details,
+      including saved source-derived names and counts, remain visible as last known with revocation indication
+      and supported last update time when known. Preserve a local route to recovery or explicit deletion
+      under 0019; local visibility does not restore source access and synchronization remains stopped.
+      Do not invent a missing update time. Other account-change or offline disclosure cases remain open.
+    actions: Offer an accessible way to open the same object locally and dismiss the preview under 0031;
+      eligible source and sharing actions follow 0033. A source link does not guarantee renewed access.
+    accessibility: Provide an accessible path to identify and open the selected object, inspect supported
+      signals and their limitations, and distinguish them without color alone. Adapt presentation to available
+      space and accessibility settings without making eight columns or an exact layout mandatory.
+  scenarios:
+    additional_detail: A dense cell shows a PR number and status; its preview supplies additional readable
+      available information for the same PR rather than repeating only the cell's content.
+    special_check: A complete observation contains one skipped check and no success, failure or pending
+      entries. The total may be one while the three counts are zero; the skipped outcome is discoverable
+      without color alone and is not described as an executed success.
+    unavailable_review: A PR has a known title, failed CI and unavailable review assessment. The preview
+      identifies it and distinguishes failed CI without presenting review as approved or known zero.
+    revoked_project: A Project's saved default name and counts come from a private Repository whose access
+      is explicitly revoked. They remain visible as last known with an indication and supported time if
+      known; a local route to recovery or explicit deletion remains available.
+    mixed_freshness: An Issue title is recently observed while related PR data is older. Do not imply
+      that the related data was refreshed with the title; retain its applicable limitation.
+    unknown_closure: A closed Issue has an unknown closure reason. Show closure without inventing a reason
+      or describing it as successful completion.
+  open_questions:
+  - Exact field priorities at each density, layout, truncation and excerpt length.
+  - Source-specific evidence for individual fields and handling of account-change disclosure.
+  - Treatment of special or unclassified CI checks in compact representations, beyond the parent signal
+    contract.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; preview is
+    an interaction, not a new domain entity.
+acceptance:
+- Preview identifies the selected object in its supported scope, provides readable additional available
+  detail beyond the cell and offers local open and dismissal without retargeting it.
+- PR and Issue previews distinguish their supported state and type-specific signals without fabricating
+  missing facts.
+- Project and Repository summaries retain their supported scope, coverage and observation limitations.
+- Saved preview details remain visible after confirmed private Repository access revocation with the indication
+  and supported time when known.
+- The same object and applicable limitations are accessible without relying on color or long press alone.
