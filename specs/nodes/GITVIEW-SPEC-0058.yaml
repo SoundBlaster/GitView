@@ -1,0 +1,89 @@
+id: GITVIEW-SPEC-0058
+title: GitView - Connection and authorization outcomes
+kind: spec
+created_at: '2026-11-16T12:51:00Z'
+updated_at: '2026-11-16T12:51:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0019
+depends_on:
+- GITVIEW-SPEC-0022
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0037
+- GITVIEW-SPEC-0045
+- GITVIEW-SPEC-0059
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0058.yaml
+specification:
+  objective: Let the operator understand whether a GitHub connection attempt succeeded, was cancelled,
+    failed or remains unresolved without mistaking any one step for the whole outcome.
+  authority_boundary: Connecting GitHub and protecting credentials are selected. Authorization method,
+    account model, exact disconnect and credential-removal behavior, and other account-change disclosure
+    rules remain open. Attempt and recovery distinctions are refinements, not evidence of an implementation.
+  requirements:
+    attempt: Distinguish an in-progress authorization attempt, explicit cancellation, supported failure,
+      confirmed connection and an indeterminate result. A callback, attempted authorization or locally
+      supplied account label alone does not prove a connected source identity or current Repository access.
+    confirmation: Report a new connection as confirmed only when supported successful authorization for
+      that attempt and identity, the relevant source identity and locally required secure credential handling
+      are established under 0019. If an outcome cannot be established, show the limitation and an applicable
+      recovery route rather than inventing success or a definite failure.
+    prior_state: Starting, cancelling or failing a new authorization does not by itself erase saved Projects
+      or prior observations, prove source deletion, or replace an independently supported existing connection.
+      A prior local connection does not alone prove current remote access.
+    late_result: A result from a cancelled, superseded or disconnected attempt cannot establish a new
+      local connection, regardless of the outcome of any newer attempt. A separately initiated active
+      attempt can establish its own outcome. Keep source and attempt context; local cancellation does
+      not prove an independently completed source effect was undone. Actual identity and access evidence
+      remain separate under 0036.
+    setup_boundary: A connected account does not by itself establish a selected Repository, a saved Project
+      or observed PR and Issue work. Partial discovery and uncertain setup outcomes retain their independent
+      scope and recovery under 0022, 0045 and 0059.
+    revoked_private: Confirmed GitHub revocation of private Repository access for the relevant account
+      leaves previously saved local data visible as last known with indication and supported update time
+      when known under 0019. Stop synchronization for the affected Repository while revocation applies;
+      the local view does not prove source access was restored.
+    secrecy: Credentials and secret authorization-response material must not be exposed in ordinary diagnostics,
+      sharing or user-facing errors. An error may describe an applicable recoverable outcome without displaying
+      secret material.
+    accessibility: Connection status, applicable failure or limitation and available continuation or recovery
+      are understandable without relying on color or transient feedback alone.
+  scenarios:
+    cancelled_attempt: A supported existing connection and saved Projects exist; the operator cancels
+      a new authorization attempt. Cancellation alone does not replace the prior connection or erase Projects,
+      and a later result of that cancelled attempt does not reconnect or replace it.
+    connection_without_work: Authorization succeeds and the source account is identified, but no Repository
+      has been selected and no work observed. Do not present a saved Project or empty work result as a
+      consequence of connection alone.
+    indeterminate_local_result: The source response is received but the necessary local connection outcome
+      cannot be established. Keep the outcome unresolved and offer an applicable recovery route; do not
+      claim confirmed connection or definite failure solely from the incomplete result.
+    confirmed_failure: A source identity is known but authorization for that attempt is confirmed rejected,
+      or required secure credential storage is confirmed to fail. Do not report a new confirmed connection;
+      provide an applicable understandable continuation or recovery route.
+    superseded_attempt: Attempt A is superseded by B, which remains pending or fails. A's later result
+      does not establish a local connection. Preserve any independently confirmed source outcome without
+      claiming that superseding A necessarily undid it.
+    revoked_repository: A connected account loses confirmed access to a private Repository with saved
+      data. The supported local view stays available with indication and supported time when known, while
+      ordinary synchronization for that Repository stops.
+  open_questions:
+  - Authorization method, permissions, account count and source identity evidence.
+  - Exact disconnect, credential removal and recovery behavior, including other account-change disclosure.
+  - Native presentation of connection outcomes and continuation or recovery.
+  ontology_status: User, GitHub and Repository use working draft vocabulary; authorization attempts and
+    presentation states do not establish an actor's motive or create new domain entities.
+acceptance:
+- Authorization attempt outcomes remain distinguishable without reporting a callback or unverified account
+  label as a confirmed connection.
+- Confirmed connection requires supported successful authorization for that attempt and identity, plus
+  established required secure credential handling.
+- A cancelled, superseded or disconnected attempt does not establish a new local connection, regardless
+  of the later attempt's outcome; source effects are not claimed undone without evidence.
+- Connection success does not by itself establish Project creation, Repository access or an observed work
+  collection.
+- Confirmed private Repository revocation retains previously saved local data with indication and supported
+  time when known; synchronization stops.
+- Connection limitations and available recovery are understandable without color or transient feedback
+  alone, and credentials are not exposed.

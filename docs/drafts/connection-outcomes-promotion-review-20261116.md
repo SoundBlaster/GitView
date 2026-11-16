@@ -1,0 +1,7 @@
+# Connection and authorization outcomes: outlined node
+
+Baseline `74d97bf`. Node 0058 refines the operator-visible connection attempt, outcome and recovery without selecting an authorization protocol, account count or other account-change disclosure policy. Ontology vocabulary remains draft.
+
+Independent read-only review of initial SHA `74048f606c32ccd0c141607c17ba4c12bfee62d514d80a8082b06ac2c9325ad4` found that successful authorization must be independently supported for the same attempt and identity, and that a cancelled or superseded result must not establish a local connection regardless of a newer attempt's outcome. It also requested clarity for secret authorization-response material. The author corrected these; focused review of SHA `5058d3f97c6bce6110a9bbca46ddaa19f636a3601736f00e21c189ffab6ad26f` identified that `silently` weakened the invalidated-attempt prohibition. After correction, focused review of SHA `df034e990efbaff5ceb8bf0cf345319f1184b80af3d0fe816841bbfa0384e755` found the same weak wording in one scenario. The author corrected it; focused rereview confirmed final SHA `04a53c0e1bbc059d2236d2a6b3ef65a617f7bd86ba2ec17b02dbea76fb870bfc` without further findings in scope.
+
+A byte-identical candidate returned `checked`; target next-move and runtime YAML lint passed. Semantic and structural review do not establish actual source authorization, credential behavior, ontology acceptance or implementation readiness.
