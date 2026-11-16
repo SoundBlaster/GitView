@@ -1,0 +1,71 @@
+id: GITVIEW-SPEC-0031
+title: GitView - Static preview and object identity
+kind: spec
+created_at: '2026-11-16T07:11:00Z'
+updated_at: '2026-11-16T07:11:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0015
+depends_on:
+- GITVIEW-SPEC-0017
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0032
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0031.yaml
+  predecessor_revision: fef38bd
+  root_intent: .specgraph/root_intent.md
+  visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
+specification:
+  objective: Let the operator inspect a selected object without losing its identity or the originating
+    overview.
+  authority_boundary: This node refines the selected first-version static preview. It does not select
+    a native menu implementation, gesture timing, exact transition animation, source-access recovery mechanism
+    or later sliding-preview behavior, and does not establish implementation readiness.
+  requirements:
+    preview: A recognized long press previews the selected eligible Project, Repository, PR or Issue without
+      leaving the overview. It provides readable additional available details beyond the cell and offers
+      explicit local open or dismissal. Details retain their supported source context and limitations;
+      unavailable values are not invented.
+    identity: The preview and an explicit local open remain bound to the selected object's supported identity
+      and originating context. A reordered cell or another object with the same number or name is not
+      substituted. Refresh or filter changes do not silently retarget an already open preview.
+    return: Dismissal or return preserves the valid origin, Project, applicable period, filters and density
+      under 0024, with meaningful position or focus where possible. If the origin cannot be restored,
+      expose an appropriate supported fallback rather than implying a different scope is the original.
+    revoked_private: When GitHub explicitly confirms access revocation for a private Repository, already
+      saved local preview details remain available with the revocation indication and supported last update
+      time when known under 0019. A local open of the same saved object does not establish restored GitHub
+      access. Synchronization stops and applicable recovery or explicit local deletion remains reachable.
+    accessibility: Preview, dismissal, explicit opening and return have accessible paths without requiring
+      long press or color alone, with object identity and observation limitations available to assistive
+      technologies under 0032.
+    future: Sliding inspection across cells remains a later product direction; its activation and gesture
+      arbitration are not required by this node.
+  scenarios:
+    same_object: The operator previews PR 42 in Repository A. If the grid reorders while preview remains
+      open, it continues to describe that same PR; opening does not select PR 42 from another Repository.
+    filter_change: An open previewed object no longer matches the active filter. It is not silently replaced
+      by a different card; dismissal returns to the current valid selection.
+    revocation_while_open: A saved private PR preview is open when Repository access revocation is confirmed.
+      Keep available local details accessible with the indication and supported time when known, stop
+      synchronization and retain a local route to recovery or explicit deletion; do not claim a new source
+      grant.
+  open_questions:
+  - Exact native preview and menu behavior, gesture arbitration and cancellation.
+  - Fallback position and focus after changes to the original scope.
+  - Source evidence for revocation and the mechanics of access recovery.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; preview and
+    presentation identity are interaction concepts.
+acceptance:
+- First-version preview provides readable additional available details for the selected object without
+  navigating away and offers explicit local open and dismissal; opening preserves its identity and origin.
+- Grid reordering, refresh or filter change does not silently retarget an open preview or substitute an
+  unrelated object.
+- Dismissal and return retain valid origin and selection context or provide a supported fallback without
+  presenting a different object as the original.
+- Available saved preview details remain locally accessible after confirmed private Repository revocation
+  with the applicable indication and supported time when known under 0019.
+- Preview, dismissal, opening and return have accessible paths that do not require long press or color
+  alone.

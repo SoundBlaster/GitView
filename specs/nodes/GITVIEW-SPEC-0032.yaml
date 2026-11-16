@@ -1,0 +1,72 @@
+id: GITVIEW-SPEC-0032
+title: GitView - Accessible grid and navigation
+kind: spec
+created_at: '2026-11-16T07:10:00Z'
+updated_at: '2026-11-16T07:10:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0017
+depends_on:
+- GITVIEW-SPEC-0014
+- GITVIEW-SPEC-0015
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0024
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0032.yaml
+  predecessor_revision: 33fb739
+  root_intent: .specgraph/root_intent.md
+  visibility_rationale: conversation_memory/sketches/gitview/revisions/ef1c2f72ef08420980a423cd63c6d34a/notes.hc
+specification:
+  objective: Keep the scalable overview, inspection and navigation understandable and operable without
+    relying on sight, color or a particular gesture.
+  authority_boundary: This node describes product outcomes for accessibility. It does not select a native
+    layout, focus algorithm, platform API, exact announcement timing or supported OS range, and is not
+    evidence of implementation or device validation.
+  requirements:
+    identity: An accessible representation identifies an object's type and enough supported identity and
+      source context to distinguish it in the current scope. It communicates available relevant status
+      without converting unknown or stale information into a current success.
+    actions: Provide accessible paths to connect or recover access, select Repositories, manage and navigate
+      Projects, inspect and open work, change grid density, reach filters and available refresh, source
+      or sharing actions, and dismiss or return from preview. These paths do not depend solely on pinch,
+      long press, hover, a particular visual position or color.
+    focus: When preview is dismissed or an object is closed, restore meaningful focus to the same available
+      object or an appropriate valid context. Do not identify a different object as the original when
+      the selection changed; exact fallback mechanics remain open under 0024.
+    observations: Make meaningful values, loading, incomplete coverage, failure and source-access state
+      available to assistive technologies and without reliance on color alone. Preserve each supported
+      observation time and scope; do not claim a category refreshed simply because another did.
+    revoked_private: After confirmed GitHub access revocation for a private Repository, already saved
+      local content remains accessible with the revocation indication and supported last update time when
+      known under 0019. Applicable recovery or explicit local deletion remains accessible; retained local
+      visibility does not imply a GitHub grant.
+    adaptation: Larger text, display preferences and reduced motion retain access to essential content
+      and navigation. Exact density and visual transition may adapt; example grid column counts are not
+      accessibility requirements.
+  scenarios:
+    dense_inspection: The operator uses an accessible path to identify and preview a PR in a dense grid
+      without a long press, then returns to meaningful context without silently selecting another PR.
+    unavailable_signal: A CI value is unobserved or stale. Its accessible representation communicates
+      the supported limitation rather than announcing an unqualified successful current check.
+    revocation_during_preview: A saved private PR preview is being inspected when GitHub revocation is
+      confirmed. Keep its available local details accessible with revocation indication and supported
+      time when known; stop synchronization and expose the applicable recovery or local deletion path.
+    larger_text: A larger text setting changes the layout or number of columns while the operator can
+      still reach the same available objects and essential actions.
+  open_questions:
+  - Native traversal, grouping, focus fallback and announcement behavior, subject to device evaluation.
+  - Exact controls and visual adaptations across supported devices and display preferences.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; accessibility
+    representations and focus are interaction concepts, not new domain entities.
+acceptance:
+- Essential overview navigation, density changes, inspection, preview and available refresh or recovery
+  actions have accessible paths without requiring a particular gesture or color.
+- Accessible representations distinguish object identity and source context and do not present unknown
+  or stale values as confirmed current success.
+- Dismissal and return preserve meaningful context without silently identifying a different object as
+  the original.
+- Saved local content remains accessible with the applicable indication and known observation time after
+  confirmed private Repository revocation under 0019.
+- Larger text and reduced motion preserve access to essential information and navigation without a fixed
+  grid density.
