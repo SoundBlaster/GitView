@@ -16,10 +16,11 @@ sources:
   ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
 specification:
   objective: Preserve the identity and context of a GitHub Repository as its name or owner changes.
-  authority_boundary: The owner selected continuity when GitHub confirms the same object and the recorded
-    same-instance numeric REST ID examples. This node does not establish an integration, a storage mechanism
-    or proof of a source event. The draft ontology and the predecessor's detailed contracts require their
-    own review.
+  authority_boundary: The owner selected continuity when GitHub confirms the same object and accepted
+    the recorded same-GitHub numeric ID examples. Mapping those examples to a particular REST identifier
+    is an agent-authored source-mapping candidate requiring verification. This node does not establish
+    an integration, storage mechanism or proof of a source event. The draft ontology and predecessor detailed
+    contracts require their own review.
   requirements:
     continuity: When GitHub confirms that a renamed or transferred repository is the same source object,
       GitView keeps one Repository with its existing history and all Project memberships. A change of
@@ -27,10 +28,10 @@ specification:
     address: A repository name, owner or address may change and alone does not establish identity. When
       a changed address is confirmed to be current, GitView updates the supported current source address;
       conflicting or insufficiently ordered observations do not establish which address is current.
-    selected_id_examples: For valid numeric REST repository IDs observed on the same GitHub instance,
-      the owner selected the same ID as the same Repository and a different ID as a different Repository.
-      The precise evidence, scope and handling of identifier changes require refinement and source verification;
-      an ID match alone does not establish the current ordering of conflicting addresses.
+    selected_id_examples: For the recorded valid numeric ID examples on the same GitHub, the owner accepted
+      the same ID as the same Repository and a different ID as a different Repository. Mapping these examples
+      to a specific REST identifier and defining its valid scope require source verification; an ID match
+      alone does not establish the current ordering of conflicting addresses.
     distinct_objects: If GitHub confirms that an object at a previously used address is a different repository,
       it does not inherit the earlier Repository's history or Project memberships merely through that
       address.
@@ -63,5 +64,5 @@ acceptance:
 - Reuse of an address by a source-confirmed different repository does not transfer history or memberships.
 - An unavailable or ambiguous observation remains uncertain and does not alone establish deletion or identity.
 - The current address is not asserted from conflicting observations without sufficient ordering evidence.
-- The selected same-instance numeric REST ID examples and the 404 outcome are retained, without treating
-  unverified source behavior, complete history or unrestricted disclosure as established.
+- The owner-accepted same-GitHub numeric ID examples and the 404 outcome are retained; a specific REST
+  mapping remains a source-verification candidate rather than an independently owner-selected representation.

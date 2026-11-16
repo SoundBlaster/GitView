@@ -1,0 +1,84 @@
+id: GITVIEW-SPEC-0033
+title: GitView - Open and share the original source
+kind: spec
+created_at: '2026-11-16T08:28:00Z'
+updated_at: '2026-11-16T08:28:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0016
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0038
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0033.yaml
+  predecessor_revision: 9c598dd
+  owner_direction: docs/drafts/product-foundation.md
+specification:
+  objective: Let the operator reach a selected object's original GitHub source and share useful context
+    without confusing the object or implying external access.
+  authority_boundary: Source navigation and lightweight sharing are selected. The default sharing payload,
+    private-data handoff policy, exact native controls and delivery semantics remain open; no external
+    delivery or implementation is established.
+  requirements:
+    association: Associate an offered source link with the selected Repository, PR or Issue and its supported
+      source context. Equal local object numbers in different Repositories do not establish identical
+      objects; do not substitute a link belonging to another object.
+    observed_link: A previously observed address may remain available as last known where applicable and
+      no contradicting identity evidence exists, with its actual observation context and uncertainty.
+      An old association alone does not establish that the address still resolves to the same object.
+      If source evidence confirms that the address now identifies another object, do not offer it for
+      source opening or sharing as the earlier object; rename, transfer and address reuse are evaluated
+      under 0002 and 0038.
+    unavailable: If no eligible association for a source action is supported, provide an understandable
+      unavailable or uncertain state rather than inventing a URL from a name or number or silently navigating
+      to another object.
+    open: When an eligible source link is known, offer an action to request opening the source through
+      the platform. Starting or accepting a handoff does not by itself prove the external application
+      loaded the intended object or that GitHub granted access.
+    share: Offer lightweight platform sharing when applicable, subject to the separately selected content
+      and disclosure policy. A link-only default is an agent-authored candidate rather than a selected
+      owner requirement; do not assume private text, screenshots or another payload are included or excluded
+      without the applicable decision.
+    external_boundary: Sharing does not grant a recipient GitHub access, prove delivery or prove that
+      the recipient opened the object. Credentials must not be included in shared material or ordinary
+      diagnostics, including credentials already embedded in an observed URL. Information already handed
+      outside GitView cannot be assumed retractable.
+    handoff: Apply the currently supported object identity, link eligibility and independently applicable
+      disclosure evidence when GitView actually hands the source link or payload to the platform, including
+      a later app-controlled provision if used. Do not claim an earlier render alone proves current eligibility;
+      a previously completed external handoff cannot be assumed retractable.
+    revocation: Confirmed private Repository revocation does not hide an already saved local object or
+      its supported last-known information under 0019. Local visibility does not by itself establish that
+      an external source action or share is eligible; that handoff follows its own policy and must not
+      be reported as successful without evidence.
+    return: A failed or cancelled source action does not itself establish source deletion. Preserve an
+      available way back to valid GitView context under 0024.
+  scenarios:
+    unknown_link: A saved Issue is visible but no eligible source-associated URL is supported. Keep the
+      object accessible and indicate the source-link action is unavailable or uncertain rather than inventing
+      a URL.
+    reused_address: An earlier address is confirmed to identify a different Repository. Do not offer that
+      address for source opening or sharing as the earlier Repository, including as a last-known link;
+      keep the earlier object accessible locally when supported.
+    private_source: The operator initiates sharing for an eligible PR in a private Repository. The share
+      flow does not by itself grant a recipient access or prove delivery.
+    revoked_local: A private Repository's access is confirmed revoked while its saved PR remains visible.
+      Local inspection remains possible under 0019; do not claim a successful external open or restored
+      GitHub grant.
+  open_questions:
+  - Sharing payload, optional added context and disclosure policy for private data.
+  - Supported evidence and native behavior for current and last-known source links, handoff and cancellation.
+  - Exact link eligibility and source access recovery after a confirmed revocation.
+  ontology_status: Repository, PullRequest and Issue use working draft vocabulary; a source link or handoff
+    does not establish an actor motive or a new domain entity.
+acceptance:
+- An offered source link remains associated with the correct selected object and Repository context.
+- A source-opening action and lightweight platform sharing are available when their applicable eligibility
+  is supported, without asserting external success or delivery.
+- Missing or conflicting link evidence is not replaced by a fabricated or misdirected source URL.
+- Local visibility after confirmed private Repository revocation remains distinct from eligibility and
+  outcome of an external handoff.
+- Sharing does not itself grant a recipient GitHub access or establish delivery. Credentials, including
+  those already embedded in an observed URL, are not included in shared material or ordinary diagnostics.
