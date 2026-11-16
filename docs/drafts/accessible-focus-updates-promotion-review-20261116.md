@@ -1,0 +1,7 @@
+# Accessible focus during updates: outlined node
+
+Baseline `6f0d0ed`. Node 0073 refines identity, focus, uncertainty and status across changes without choosing platform APIs. The preceding draft was reconciled with the selected revocation behavior and leaves account-change disclosure open. Ontology vocabulary remains draft.
+
+Independent read-only review of initial node SHA `b937cb4d9fd5b4b233a30fea9529bdfe1da5193df17f1afe8524710d925cf017` and draft SHA `151972fd0b31bde131bbab0fc1453d3667122631960d3f8d8587808134ce3307` identified two incorrect attributions to 0024 and 0042, and ambiguous disclosure of uncertain objects after account change. The author corrected these. Focused rereview confirmed node SHA `6494de5a685bbb8c0a6b5070ba9b489341d104afaa4d6a3cbdf0f7f26a1e1fc7` and identified a remaining draft ambiguity; the author corrected it and focused rereview confirmed draft SHA `05be5a2d69209807b47d64c4123603aa9d9380d964ad9b2b2ddf62a2d5346c2a`. Subsequent canonical formatting only yielded draft SHA `6e72d9057c39287579e60065bffecdc57e0be00e86a3f54b8a548956ad3a9d6a`.
+
+Byte-identical candidate checks returned `checked`; target next-move and runtime YAML lint passed for the node. The draft's existing missing `updated_at` lint issue remains identical to baseline. These checks and text review do not establish device accessibility, source behavior, ontology acceptance or implementation readiness.

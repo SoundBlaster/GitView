@@ -43,18 +43,20 @@ specification:
   contract:
     identity: Associate the active focus or inspection target with the appropriate stable Project or source
       object identity and originating scope. Equal local numbers, a reused cell position and a changed
-      label do not imply the same object. An unresolved source identity retains the limitations in 0042;
-      a temporary presentation token is not proof of source identity.
+      label do not imply the same object. An unresolved source identity is not established merely by a
+      temporary presentation token; this is a draft refinement rather than a claim about 0042.
     live_reorder: Source refresh can change work order under 0042, while the Project order follows 0072.
       When the focused object remains present and permitted, maintain an accessible path to that same
       object across a reorder or density reflow. Do not programmatically move focus to the item that inherits
       its old position or falsely announce that the target changed. Exact focus APIs and platform scheduling
       remain open.
     candidate_transition: When a confirmed match becomes uncertain because a required value is unavailable,
-      preserve its known object identity and provide access through the uncertain portion or equivalent
-      path under 0042. If it remains represented there and access is permitted, maintain or restore focus
-      to that object where feasible; disclose that its selection status is uncertain. Do not call the
-      changed grouping a confirmed exclusion or leave focus on a stale claim of a confirmed match.
+      preserve its known object identity and, in the applicable disclosure context, provide access to
+      an available object through the uncertain portion or equivalent path under 0042. Confirmed private
+      revocation does not hide saved data under 0019; account-change disclosure remains open. If it remains
+      represented there and access is permitted, maintain or restore focus to that object where feasible;
+      disclose that its selection status is uncertain. Do not call the changed grouping a confirmed exclusion
+      or leave focus on a stale claim of a confirmed match.
     section_and_status: Distinguish confirmed matches and uncertain candidates accessibly under 0042;
       if its optional two-portion presentation is selected, label each portion perceptibly. Coverage status
       remains reachable even when no known cell is available. An assistive user can navigate to a permitted
@@ -62,11 +64,11 @@ specification:
       eligible preview without requiring a precise gesture. A collection-wide unknown population is not
       announced as a specific number of hidden objects or as an empty source.
     removed_or_unavailable: If a selected object no longer matches or is unavailable in the active collection,
-      use the last known ordered collection and the successor, predecessor and collection-state fallback
-      in 0024. With no reliable prior order or when the collection is incomplete, do not assert that the
-      fallback is the next source object or imply an exhaustive selection. When an object overview or
-      preview remains open, preserve its identity under 0031 and apply fallback on return rather than
-      immediately switching it to another object.
+      use a supported surviving anchor or collection-state fallback under 0024. With no reliable prior
+      order or when the collection is incomplete, do not assert that the fallback is the next source object
+      or imply an exhaustive selection. When an object overview or preview remains open, preserve its
+      identity under 0031 and apply fallback on return rather than immediately switching it to another
+      object.
     active_interaction: Defer disruptive ordering or collection changes during an active pinch, scroll
       or discrete assistive interaction when a coherent presentation is possible, while making incomplete
       data or pending updates discoverable. After the interaction reconcile the eligible selection without
@@ -81,12 +83,10 @@ specification:
       accessible labels and equivalent visual content under 0019, adding an accessible revocation indication
       and supported update time when known without waiting for deferred ordering. Offer accessible recovery
       or explicit local deletion. Do not claim source access or promise to retract already announced information.
-    identity_change: When the active source identity changes, apply its current access policy to focused
-      objects, app-controlled accessible labels and pending announcements before restoring or announcing
-      them. An anchor retained for navigation is not evidence that a newly active identity may inspect
-      the object. If it is not eligible, provide a permitted collection or recovery context without exposing
-      the restricted identity or attributing its focus to a different object. This does not prescribe
-      a platform speech-interruption mechanism.
+    identity_change: When the active source identity changes, an anchor retained for navigation is not
+      evidence that the newly active identity has GitHub access to the object. Preserve the actual source
+      context and do not attribute focus to a different object. Disclosure of already saved local data
+      after account change remains open under 0019; confirmed revocation retains its selected visibility.
     user_control: The operator can continue through permitted content, open a surviving object, reach
       status and filters, and leave the affected scope without relying solely on a gesture, color or timed
       announcement. These are user outcomes, not a mandate to create custom controls.
@@ -140,8 +140,8 @@ specification:
       given: A private PR is focused under identity A and identity B becomes active without confirmed
         access to that Repository.
       when: The collection or object route is restored for B.
-      then: Restricted app-controlled labels and pending announcements are not exposed, the old anchor
-        is not announced as another object, and a permitted recovery context is reachable.
+      then: The old anchor is not announced as another object or as proof of B's GitHub access. Local
+        disclosure after identity change remains an open question, distinct from confirmed revocation.
   unresolved:
   - Supported assistive technologies, focus APIs, announcement policy and timing require implementation-independent
     platform design and device evaluation.
