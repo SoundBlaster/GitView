@@ -1,0 +1,82 @@
+id: GITVIEW-SPEC-0029
+title: GitView - Scope and uniqueness of work summaries
+kind: spec
+created_at: '2026-11-16T08:17:00Z'
+updated_at: '2026-11-16T08:17:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0012
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0026
+relates_to:
+- GITVIEW-SPEC-0047
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0029.yaml
+  predecessor_revision: 9bbf79f
+  project_summary: docs/drafts/project-summary-proposal.md
+  repository_summary: docs/drafts/repository-summary-proposal.md
+specification:
+  objective: Keep Repository, Project and unique portfolio work summaries interpretable when Repositories
+    and attention signals overlap.
+  authority_boundary: This node refines scope, identity and units of supported summaries. It does not
+    select every metric predicate, exact visual layout, GitHub query or implementation, and it does not
+    establish readiness for implementation.
+  requirements:
+    repository: A Repository summary concerns its own supported source objects for the specified category
+      and period where applicable. Rename or transfer does not create a second Repository when the source
+      confirms the same identity under 0002.
+    project: A Project summary uses its applicable member Repositories. A Repository shared by two Projects
+      contributes to each Project in its own scope; one Project's membership is not another's.
+    portfolio: When a unique portfolio-wide count is presented, count confirmed Repository and source
+      object identities once across overlapping Projects. A linked PR and Issue remain distinct object
+      types; equal local numbers in different Repositories do not prove the same object.
+    units: Distinguish individual failed checks from affected PRs and affected Repositories, and distinguish
+      current work from outcomes over a stated period. A single PR may contribute to several independently
+      supported attention signals without becoming several PRs or independent tasks.
+    coverage: Preserve each summary's supported scope, coverage and observation time when known under
+      0026. Partial coverage may support an explicitly partial result; it is not a confirmed full total
+      and unavailable inputs are not automatically zero. If membership changes, reassess the new scope
+      without rewriting the provenance of an earlier observation.
+    access: Confirmed GitHub revocation alone does not hide an already saved supported local summary under
+      0019; retain its actual scope, coverage, supported time when known and revocation indication. Do
+      not treat it as a newly refreshed source result.
+    navigation: If a summary signal opens a work selection, preserve the originating Project and applicable
+      Repository, condition and period under 0047. A count of checks, threads or events is not automatically
+      the count of resulting PR or Issue cards. If observations changed or coverage is incomplete, keep
+      that limitation visible rather than forcing equality.
+    historical_boundary: Project historical graphs use the current Project composition for the selected
+      period under 0047 and identify that current-membership basis to the operator with applicable coverage.
+      This does not assert which Repositories belonged to the Project in the past; exact historical counter
+      and event semantics remain subject to their own specifications.
+  scenarios:
+    shared_repository: Repository R belongs to Projects A and B. R contributes within each Project; a
+      unique portfolio total counts R and each confirmed source object once.
+    overlapping_signals: One PR has a supported failed check and an unresolved review thread. It can contribute
+      to each applicable signal without becoming two distinct PRs.
+    missing_observation: A Project contains five Repositories, but one lacks the needed observation. Show
+      supported values only with their incomplete coverage; do not silently count the missing Repository
+      as zero.
+    identity_scope: Two distinct Repositories each contain an Issue numbered 42. They remain distinct
+      objects; an Issue and a linked PR also remain separate source objects.
+  open_questions:
+  - Exact predicates and source evidence for individual summary measurements and their current or period
+    scope.
+  - Native presentation of incomplete coverage and differences between a signal and its destination selection.
+  - Counting of historical events, reopened objects and unknown identity when source evidence is incomplete.
+  ontology_status: Project, Repository, PullRequest, Issue and Metric use the working draft vocabulary;
+    a summary or counter is not a new ontology entity.
+acceptance:
+- Supported summaries identify their actual Repository, Project or portfolio scope, unit, applicable period
+  and coverage.
+- Shared Repositories contribute within each applicable Project, while any asserted unique portfolio total
+  counts confirmed Repository and source object identities once.
+- Distinct units and overlapping attention signals are not silently added as separate work items or substituted
+  for destination card counts.
+- Incomplete source coverage remains identifiable and is not silently treated as zero or as a complete
+  total.
+- An available saved summary remains local and visible after confirmed GitHub revocation with its supported
+  time when known and applicable limitation under 0019.

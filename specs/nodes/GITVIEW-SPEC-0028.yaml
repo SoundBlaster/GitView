@@ -1,0 +1,82 @@
+id: GITVIEW-SPEC-0028
+title: GitView - PR check counters and independent review signals
+kind: spec
+created_at: '2026-11-16T08:18:00Z'
+updated_at: '2026-11-16T08:18:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0011
+depends_on:
+- GITVIEW-SPEC-0008
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0026
+relates_to:
+- GITVIEW-SPEC-0012
+- GITVIEW-SPEC-0029
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0028.yaml
+  predecessor_revision: 9c598dd
+  owner_selection: docs/drafts/pull-request-ontology-options.md
+specification:
+  objective: Let the operator interpret check counts, review assessment and review-thread counts for a
+    PR without mistaking one signal for another.
+  authority_boundary: The owner selected counters and GitHub-like behavior as the direction. Actual source
+    mapping, check equivalence and special conclusions require verification; this node does not establish
+    GitHub API behavior, merge readiness or implementation readiness.
+  requirements:
+    checks: Show supported current individual check counts as red, yellow, green and total for the applicable
+      PR, preserving observed revision when known, time and coverage. A workflow run or historical attempt
+      is not automatically another current check; identify current equivalence only where supported by
+      source evidence.
+    unknown: Distinguish a supported zero checks from an unobserved or incomplete collection. Partial
+      observations may support partial counts with visible limitations; an unknown, pending, special or
+      unmapped result is not silently treated as success. The three colored counts are not assumed to
+      sum to total until the applicable mapping supports it.
+    revision: Keep each check result and review observation associated with its supported revision and
+      observation time when known. An earlier result is not silently presented as current for a newer
+      revision without evidence; unavailable revision or time remains uncertain and is not invented.
+    review: Keep the supported source review assessment, review requests, total review threads and unresolved
+      review-thread count independently interpretable. Where supported, distinguish unavailable assessment,
+      absence of reviews and a source-reported review requirement. A request for changes may coexist with
+      zero unresolved threads; zero unresolved threads alone is not approval or merge readiness.
+    incomplete_evidence: A confirmed current failed check or unresolved thread can support its corresponding
+      positive signal even if the remaining collection is incomplete. Absence of failures or unresolved
+      threads requires adequate evidence for the applicable scope; no observed item alone is not proof
+      of absence.
+    unit: Count check entries, affected PRs and affected Repositories as different units under 0012 and
+      0029. Overlapping checks, review and thread signals do not create additional PR identities or independent
+      tasks.
+    saved_data: When GitHub revocation of a private Repository is confirmed, previously saved supported
+      observations remain locally accessible with the revocation indication and supported time when known
+      under 0019. Do not represent them as newly refreshed or current for a newer revision without evidence.
+    scope: This is a compact overview of counters and signals. It does not require showing individual
+      CI runs or review-thread content inside GitView.
+  scenarios:
+    current_retry: A failed check has a later result that source evidence confirms as its current equivalent
+      for the applicable revision. Count the current check once; without supported equivalence do not
+      claim a complete distinct total.
+    no_open_threads: The source reports changes requested and sufficiently covered thread evidence reports
+      zero unresolved threads. Present the two supported facts independently; do not infer approval or
+      readiness.
+    partial_failure: One confirmed current check failed but other checks have not been fully observed.
+      The failure signal is supported, while total coverage remains incomplete and absence of other failures
+      is not asserted.
+    prior_revision: An earlier revision had green CI or approval and the current revision lacks corresponding
+      evidence. Keep the old observation in its context rather than reporting a current green or approved
+      result.
+  open_questions:
+  - GitHub source representations, revision linkage, current check identity, retry equivalence and special
+    conclusions.
+  - Exact native presentation for incomplete coverage, review requests and independently reported signals.
+  - Any applicable higher-level readiness predicate and its source evidence.
+  ontology_status: PullRequest, ReviewThread and CIStatus use working draft vocabulary; counters and assessments
+    do not establish actor actions or a new domain entity.
+acceptance:
+- Supported current check counts retain the applicable PR, revision when known, observation time when
+  known and collection coverage.
+- Known zero checks, unobserved checks and incomplete observations remain distinguishable; unknown or
+  special conclusions do not silently become successful checks.
+- Review assessment, requests and total and unresolved thread counts remain independently interpretable;
+  one does not imply another.
+- Check counts, affected PR counts and affected Repository counts are not conflated.
+- No isolated check, review or thread count is presented as a confirmed merge decision.

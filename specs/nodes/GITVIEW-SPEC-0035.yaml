@@ -1,0 +1,75 @@
+id: GITVIEW-SPEC-0035
+title: GitView - Density changes within an overview
+kind: spec
+created_at: '2026-11-16T08:17:00Z'
+updated_at: '2026-11-16T08:17:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0014
+depends_on:
+- GITVIEW-SPEC-0007
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0031
+- GITVIEW-SPEC-0032
+- GITVIEW-SPEC-0047
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0035.yaml
+  predecessor_revision: 9c598dd
+  dense_prototype: docs/drafts/dense-overview-prototype.md
+specification:
+  objective: Let the operator move between a dense overview and more detailed cards without losing the
+    meaning or scope of the selected work.
+  authority_boundary: This node refines the selected Photos-inspired in-scope density change. Exact column
+    counts, animation, gesture arbitration, visual cues and native performance remain to be evaluated;
+    this node does not establish implementation readiness.
+  requirements:
+    scale: During pinch, provide interactive visual feedback as the operator changes density between a
+      denser overview and more detailed cards. Exact layout interpolation, animation and native feasibility
+      require evaluation. Approximate examples of eight columns and a hundred objects express the desired
+      scale, not a fixed device-independent count or performance guarantee.
+    selection: Changing density alone does not change the selected Project or Repository, period, explicit
+      filters, object identity, lifecycle state, source observation or collection coverage. An independent
+      refresh or membership change may still alter the collection and retains its own explanation.
+    detail: Smaller cells can display less detail while preserving an accessible way to distinguish PR
+      from Issue, identify and inspect objects without relying on color alone. Larger cells can reveal
+      more supported information. A detail omitted for lack of space is not an assertion that it is zero,
+      current, complete or healthy.
+    project_overview: At the Projects overview, changing density does not change a Project or its actual
+      summary scope. Preserve an available route to the applicable Project summary even when not all values
+      fit in a compact cell.
+    focus: Preserve the identity of an available focused or anchored object and a meaningful position
+      where possible as density changes. If an independent data or scope change makes it unavailable,
+      use a supported fallback under 0024 without presenting another object as the original.
+    navigation: Inspecting or opening an object is distinguishable from changing density. The same scope
+      can be viewed at several densities; entering another scope follows the navigation contract and is
+      not silently inferred from an ambiguous target.
+    accessibility: Provide an accessible alternative to pinch and a way to identify and inspect objects
+      without relying on color or tiny targets alone under 0032. Large text or screen size can change
+      the layout rather than forcing an illustrative column count.
+    preview: The first-version static preview remains available for an eligible object under 0031. Sliding
+      inspection is a later direction and its activation is not selected here.
+  scenarios:
+    stable_selection: A Project grid contains 100 identified objects and no independent data change occurs.
+      Changing density retains the same selected objects, Project, period and filters.
+    focused_object: A PR remains in the selection while the number of visible columns changes. Preserve
+      its supported identity and a meaningful position where possible rather than selecting the object
+      now occupying its former cell.
+    larger_text: A larger system text setting makes the illustrative eight-column layout unsuitable. Adapt
+      the layout while retaining access to objects and essential actions.
+    concurrent_refresh: A source refresh changes the selection during a density gesture. Attribute the
+      new data to the refresh, not to pinch; do not silently clear saved filters or claim complete coverage
+      without evidence.
+  open_questions:
+  - Native collection layout, animation, anchoring and gesture coordination across density levels.
+  - Exact visual and accessible cues at each scale and the treatment of independent changes during interaction.
+  - How intentional navigation between scopes relates to zoom beyond the agreed in-scope density change.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; density and
+    visual position are presentation concepts rather than new domain entities.
+acceptance:
+- Changing density alone preserves the applicable collection scope, period, filters and object identities.
+- Dense and spacious presentations retain accessible identification and inspection of available objects
+  without relying solely on color or pinch.
+- A focused object remains the same object where it is available; an unavailable origin is not silently
+  replaced by another object.
+- Larger text can alter the number of columns without removing access to essential content and actions.
+- Independently observed data changes remain distinguishable from the effect of changing density.
