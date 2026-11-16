@@ -1,0 +1,89 @@
+id: GITVIEW-SPEC-0078
+title: GitView - Issue links, hierarchy and partial observations
+kind: spec
+created_at: '2026-11-16T11:30:00Z'
+updated_at: '2026-11-16T11:30:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0039
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0053
+- GITVIEW-SPEC-0063
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0078.yaml
+  selected_fields: docs/drafts/issue-ontology-options.md
+  ontology_boundary: ontology/review/issue-pr-meaning-candidate.md
+specification:
+  objective: Preserve the meaning, direction and limitations of selected Issue links and direct-child
+    counts without treating an observed link as an actor's motive.
+  authority_boundary: The owner selected Issue relationship categories and an overview with source handoff.
+    Exact GitHub mappings, coverage, presentation and broader relationship history require separate evidence.
+    This node does not establish an actor action, motive or source implementation.
+  requirements:
+    distinct_links: Preserve supported PR mentions, closing references, parent, direct child, blocked-by
+      and blocking connections as distinct directional source facts. A mention does not alone prove a
+      closing reference, completion, actor's motive or causal history. The same confirmed target can retain
+      multiple supported link meanings without becoming multiple target identities under 0039.
+    observed_context: Associate each link with supported source and target identity, type, direction,
+      scope, observation time and coverage when known. Absence from a partial or inaccessible collection
+      is not confirmed absence; a refreshed title does not automatically refresh previously observed links.
+    children: Count supported distinct direct sub-Issues and their closed subset separately. A grandchild
+      is not a direct child solely through its parent; a closed child is not necessarily completed work.
+      Evaluate evidence for the total and closed subset separately. A complete list of distinct direct
+      children can establish total even when one child's state is unknown, but cannot by itself establish
+      an exact closed count. An independently supported source aggregate may establish a count only for
+      the compatible population, state, access and time it actually covers. Incomplete evidence for a
+      particular count is not an exact total or zero.
+    dependency: A supported blocked-by link and the linked Issue's current lifecycle are separate facts.
+      A link alone does not prove a blocker is currently open; preserve uncertain coverage under 0063.
+    navigation: A supported linked object retains its own Repository identity and originating context.
+      Opening it does not silently add its Repository to the originating Project or substitute a same-number
+      object in another Repository. Returning preserves the valid origin under 0024; source handoff follows
+      0033.
+    changing_links: If an observed link changes or disappears, retain its supported observation context;
+      do not present an earlier link as current without sufficient evidence. A link change does not by
+      itself prove that either object was deleted or change Project membership.
+    saved_data: Confirmed GitHub revocation of private Repository access for the relevant account does
+      not hide already saved local Issue, linked-object or relationship data under 0019. Show supported
+      saved information as last known with revocation indication and supported update time when known;
+      stop syncing the affected Repository. Local visibility does not restore source access. Other account-change
+      disclosure conditions remain open.
+    accessible: Make supported link meaning, direction, partial coverage and available navigation understandable
+      without relying only on color or a transient cue.
+  scenarios:
+    dual_meaning: The same confirmed PR is both mentioned and identified by a closing reference. Show
+      one target with both supported meanings, without inferring an actor's motive or that it merged.
+    incomplete_children: Two direct children are observed, one closed and one with unknown state, while
+      relationship coverage is incomplete. The partial list alone does not establish two as the exact
+      total; do not present the unknown state as open. Neither observed closure alone proves completion.
+    complete_children_unknown_state: A complete identity-supported list contains two direct children,
+      one closed and one with unknown state. Total may be two while the exact closed count remains unknown;
+      an independently supported source aggregate may establish a closed count within its own scope.
+    outside_project: An Issue in Project P has a supported link to an object in Repository B outside P.
+      Retain B's identity and the origin when navigating; do not add B to P merely by following the link.
+    revoked_target: A linked private target is already saved locally and GitHub confirms access revocation
+      for its Repository and relevant account. The saved target remains locally available with indication
+      and supported update time when known, without claiming a fresh grant or substituting another target.
+    stale_links: A link was observed at T1; a later response at T2 updates only the Issue title. Retain
+      the link's own T1 context rather than calling it refreshed or removed at T2.
+  open_questions:
+  - Source-specific link types, access, pagination and evidence for direction and current coverage.
+  - Native presentation and navigation for partial links and linked objects outside a Project.
+  - Disclosure after account change outside confirmed private Repository revocation.
+  ontology_status: Issue, PullRequest, Repository and Project use working draft vocabulary. Source links
+    do not establish the actor-action-derived relation or motivation without supporting evidence.
+acceptance:
+- Supported Issue links retain type, direction, identities and their observation limitations without asserting
+  motive or completion.
+- Direct-child totals do not include grandchildren by implication or convert closed counts into completion.
+- Partial coverage is not treated as a confirmed empty or complete relationship set.
+- Navigating to a supported linked target does not silently change Project membership or substitute another
+  object.
+- Saved supported linked data stays visible after confirmed private Repository revocation with indication
+  and supported time when known.
