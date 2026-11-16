@@ -1,0 +1,81 @@
+id: GITVIEW-SPEC-0077
+title: GitView - Issue discussion counts and latest comment time
+kind: spec
+created_at: '2026-11-16T11:33:00Z'
+updated_at: '2026-11-16T11:33:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0039
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+- GITVIEW-SPEC-0044
+- GITVIEW-SPEC-0053
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0077.yaml
+  selected_fields: docs/drafts/issue-ontology-options.md
+specification:
+  objective: Make Issue comment and participant counts and the time of the latest comment interpretable
+    with their actual scope and evidence.
+  authority_boundary: The owner selected comment and discussion-participant counts and the latest comment
+    time when available. Exact source mapping and participant population, additional comment-author metrics,
+    source permissions and native presentation remain open. This node does not require showing individual
+    comments or participants or establish live GitHub behavior.
+  requirements:
+    separate_units: Keep comment count, participant count and latest-comment time distinct with their
+      supported Issue identity, source, population, scope and observation context. Issue comments are
+      not PR review threads, and comment count does not by itself establish participant count.
+    population: An observed current population is not automatically a complete history of deleted, hidden
+      or otherwise unobserved discussion. A source-provided aggregate can support a count only when its
+      documented population, scope, time and available evidence match that claim. A partial enumerated
+      subset is not added to an aggregate as if independently disjoint.
+    participant_semantics: Preserve the actual source-supported meaning of a participant count; do not
+      present a narrower source population as every person, agent or actor without evidence of equivalence.
+      Whether a separate distinct comment-author count is useful remains open.
+    incomplete: Unknown, unavailable or incomplete discussion data is not a confirmed zero. Sufficient
+      evidence for one count does not by itself establish the other count or a latest-comment time; retain
+      each available observation and its own limitation.
+    latest: An exact latest-comment time is the maximum supported comment creation instant in the stated
+      sufficiently covered population, not the Issue's update time, GitView observation time or the time
+      an older comment was edited. A maximum observed in an incomplete subset is not automatically the
+      latest in the whole Issue and retains its subset limitation.
+    freshness: A new title or unrelated Issue update does not refresh an earlier discussion count or latest-comment
+      time. Retain each supported value's own time and context under 0044 and 0053.
+    saved_data: When GitHub explicitly confirms private Repository access revocation for the relevant
+      account, previously saved discussion values remain locally visible as last known with revocation
+      indication and supported update time when known; synchronization stops under 0019. No live source
+      access is implied, and an unknown time is not invented.
+    accessibility: Make selected counts and latest-comment time, their distinct meanings, applicable limitations
+      and known absence versus unknown understandable to assistive technology and without color or transient
+      feedback alone.
+  scenarios:
+    separate_counts: A supported Issue comment count is three while participant data is unavailable. Show
+      three with its context and the participant count as unknown, not three or zero.
+    edited_comment: Comment A was created at T1 and edited at T3; comment B was created at T2 between
+      them. A's edit does not become a new comment at T3; B establishes latest creation only if the applicable
+      population and evidence are sufficient.
+    partial_latest: One observed comment was created at T1 but remaining discussion is unobserved. T1
+      may be described as latest within the observed subset, not confirmed latest for the whole Issue.
+    known_empty: A sufficiently supported current comment population is empty. Comment count can be zero
+      and latest-comment time known absent; this does not establish that no comments ever existed.
+    revoked: Previously saved private Issue counts remain visible as last known after confirmed revocation
+      with indication and supported time when known, without implying fresh synchronization.
+  open_questions:
+  - Participant population and exact GitHub source mapping, permissions, pagination and evidence of coverage.
+  - Whether to show a separate count of distinct comment authors and its population.
+  - Native representation of unavailable, partial and last-known values.
+  ontology_status: Issue, Repository and Metric use working draft vocabulary; counts do not introduce
+    a new domain entity or identify an actor's motive.
+acceptance:
+- Issue comments, participants and latest-comment time retain distinct units, supported context and limitations.
+- Missing or incomplete evidence for one value is not silently turned into zero or inferred from another
+  value.
+- Exact latest-comment time is the supported maximum creation instant in its sufficiently covered population,
+  distinguished from Issue update, observation and later comment edit times.
+- Saved discussion values remain visible after confirmed private Repository revocation with indication
+  and supported update time when known.
+- Counts, latest-comment time, known absence and uncertainty remain accessible without color or transient
+  feedback alone.
