@@ -25,7 +25,10 @@ specification:
     access to already observed work.
   authority_boundary: This node specifies product-visible outcomes. It does not select a separate uncertainty
     section, ordering algorithm, exact label or native component, and does not establish implementation
-    readiness.
+    readiness. When GitHub externally revokes access to a private Repository, the retained-data visibility
+    and local access described here apply while the relevant account remains active. Independently of
+    revocation, while account B is active, the account-switch boundary in 0019 applies. Behavior after
+    returning to A is not selected.
   requirements:
     distinction: Distinguish a confirmed match from an available identified object whose applicable selection
       condition remains uncertain, whether its observation is already durably saved or only available
@@ -52,9 +55,10 @@ specification:
       filter.
     no_individual_candidate: A source observation is incomplete but no additional object is identified.
       Make incomplete coverage discoverable without fabricating a cell or count.
-    revocation_while_inspecting: A saved private PR is being inspected when GitHub revocation is confirmed.
-      Keep available local details and their identity accessible with the revocation indication and supported
-      time when known; a later response does not establish a fresh successful update.
+    revocation_while_inspecting: The relevant account remains active throughout this scenario. A saved
+      private PR is being inspected when GitHub revocation is confirmed. Keep available local details
+      and their identity accessible with the revocation indication and supported time when known; a later
+      response does not establish a fresh successful update.
   open_questions:
   - Exact native treatment and ordering for individually uncertain objects, including behavior at different
     grid densities.
@@ -71,6 +75,7 @@ acceptance:
   missing object is identified; an unknown time is not invented.
 - Updates and reordering do not silently retarget inspection to a different object.
 - Saved local private content remains accessible after confirmed GitHub revocation with its indication
-  and supported time when known under 0019.
+  and supported time when known under 0019. Visibility and local access follow the active-account and
+  A-to-B boundary in 0019.
 - Uncertainty, coverage and applicable actions are understandable without relying solely on color or a
   specific gesture.

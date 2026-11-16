@@ -26,7 +26,10 @@ specification:
   objective: Keep Projects identifiable and the overview position understandable across updates and navigation.
   authority_boundary: Project overview and identity-preserving navigation are selected. Stable relative
     order across ordinary refresh and density changes is an agent-authored refinement; initial sort, insertion
-    order, manual ordering and cross-device synchronization are not selected.
+    order, manual ordering and cross-device synchronization are not selected. When GitHub externally revokes
+    access to a private Repository, the retained-data visibility and local access described here apply
+    while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     identity: Represent each supported saved Project by its identity, not a Repository name or cell position.
       A source refresh, Repository rename or membership edit does not by itself create a different Project.
@@ -59,9 +62,10 @@ specification:
     partial_read: Q was opened from the overview, but only P is readable when returning and the collection
       read is incomplete. P may be navigable, while Q is not declared deleted or replaced by P; the limitation
       and recovery remain discoverable.
-    revoked_during_gesture: A saved Project name derived from a private Repository is visible during a
-      gesture when revocation is confirmed. Keep the name available with indication and supported time
-      when known without claiming restored source access.
+    revoked_during_gesture: The relevant account remains active throughout this scenario. A saved Project
+      name derived from a private Repository is visible during a gesture when revocation is confirmed.
+      Keep the name available with indication and supported time when known without claiming restored
+      source access.
     shared_repository: Projects P and Q share private Repository R. A valid edit of P's membership does
       not reidentify or delete Q; if GitHub confirms revocation of access to R for the relevant account,
       the affected saved R data stays visible as last known and both Projects retain their own identities,
@@ -69,7 +73,7 @@ specification:
   open_questions:
   - Initial order, deterministic fallback policy, user-controlled sorting and cross-device ordering.
   - Platform-specific layout, focus and transition behavior.
-  - Account-change disclosure outside confirmed private Repository revocation.
+  - Other account-change disclosure beyond the selected A-to-B rule in 0019.
   ontology_status: Project and Repository use selected ontology vocabulary; position and ordering are
     interface concepts, not new domain entities.
 acceptance:
@@ -81,5 +85,6 @@ acceptance:
   Project.
 - Saved Project and affected Repository details remain visible as last known after GitHub-confirmed private
   Repository revocation for the relevant account with indication and supported update time when known;
-  synchronization stops while revocation applies.
+  synchronization stops while revocation applies. Visibility and local access follow the active-account
+  and A-to-B boundary in 0019.
 - Overview navigation and its limitations remain accessible without depending only on gesture or color.

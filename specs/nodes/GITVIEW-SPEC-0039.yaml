@@ -33,7 +33,10 @@ specification:
     discussion and inferred intent.
   authority_boundary: The owner selected the Issue field categories and a compact source-linked overview.
     Exact source mappings, field priority, native presentation and data availability remain to be verified;
-    this node does not establish implementation readiness or an actor's motive.
+    this node does not establish implementation readiness or an actor's motive. When GitHub externally
+    revokes access to a private Repository, the retained-data visibility and local access described here
+    apply while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     identity: Keep the selected Issue associated with its supported source identity, Repository context
       and repository-local number. Same-number Issues in different Repositories remain distinct. Present
@@ -100,4 +103,5 @@ acceptance:
 - Selected available Issue fields and relationships are inspectable without requiring them all to fit
   in the cell or preview.
 - Previously saved supported Issue information remains locally accessible after confirmed private Repository
-  revocation under 0019 with the applicable limitation.
+  revocation under 0019 with the applicable limitation. Visibility and local access follow the active-account
+  and A-to-B boundary in 0019.

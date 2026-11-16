@@ -24,7 +24,10 @@ specification:
     previously observed information was updated.
   authority_boundary: This node records product-visible distinctions and the selected local visibility
     behavior. It does not select a storage implementation, authorization method, exact native controls,
-    backup design or source refresh schedule, and does not establish implementation readiness.
+    backup design or source refresh schedule, and does not establish implementation readiness. When GitHub
+    externally revokes access to a private Repository, the retained-data visibility and local access described
+    here apply while the relevant account remains active. Independently of revocation, while account B
+    is active, the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     configuration: Distinguish a confirmed absence of locally configured Projects from an unreadable or
       not-yet-observed configuration. Neither alone establishes that GitHub has no repositories or work.
@@ -51,10 +54,10 @@ specification:
     refresh_failed: A Project has saved observations and refresh fails. Keep the supported last-known
       data visible with its observation time when known and a discoverable failure; the failed attempt
       does not advance the successful-update time.
-    revoked_with_saved_data: A private Repository has previously saved data and its access revocation
-      is confirmed. Keep the saved data and Project visible with the revoked indication and supported
-      time when known; stop synchronization and offer an accessible route to recovery or explicit local
-      deletion.
+    revoked_with_saved_data: The relevant account remains active throughout this scenario. A private Repository
+      has previously saved data and its access revocation is confirmed. Keep the saved data and Project
+      visible with the revoked indication and supported time when known; stop synchronization and offer
+      an accessible route to recovery or explicit local deletion.
     unknown_time: Saved data remains readable after confirmed revocation but no reliable update time is
       available. Show the data and revocation indication without inventing a time; exact wording is open.
   open_questions:
@@ -70,6 +73,7 @@ acceptance:
   failure does not silently turn them into a confirmed empty result or a fresh observation.
 - Confirmed private Repository revocation keeps saved local data visible with its indication and supported
   update time when known, stops synchronization and preserves an accessible recovery or explicit local
-  deletion entry point under 0019.
+  deletion entry point under 0019. Visibility and local access follow the active-account and A-to-B boundary
+  in 0019.
 - Meaningful observation and access distinctions and the applicable actions are available without relying
   on color alone.

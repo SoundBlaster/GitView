@@ -24,8 +24,11 @@ specification:
     understandable.
   authority_boundary: The owner proposed app-owned persisted data and requested visible refresh failure,
     opportunistic background updates, stale-on-open and manual refresh. This node does not select a database,
-    exact API limits or a background schedule, select private-data display policy beyond the explicit
-    revocation decision in 0019, or claim implementation readiness.
+    exact API limits or a background schedule, select private-data display policy beyond the selected
+    revocation and A-to-B decisions in 0019, or claim implementation readiness. When GitHub externally
+    revokes access to a private Repository, the retained-data visibility and local access described here
+    apply while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     stored: Store accepted observations for reuse across launches; storage failure and actual recoverability
       do not imply unconditional preservation. When stored observations are recoverable and eligible for
@@ -70,8 +73,9 @@ specification:
     first_load: The first Issue-list refresh fails with no prior accepted observation. Show the failure
       and unobserved state, not a zero count or a fabricated last-success time.
   open_questions:
-  - Access and disclosure policy for retained private observations, including disconnect and account changes;
-    evidence, recovery and missing-time presentation for explicit revocation remain open.
+  - Access and disclosure policy for retained private observations, including disconnect and other account
+    changes beyond the selected A-to-B rule in 0019; evidence, recovery and missing-time presentation
+    for explicit revocation remain open.
   - Storage schema and durability, staleness, prioritization, pagination, retries and exact source budget.
   - Presentation of partial data and exact refresh controls in each interaction context.
   ontology_status: GitHub, Repository, PullRequest and Issue use the selected ontology vocabulary; an

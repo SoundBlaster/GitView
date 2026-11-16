@@ -43,9 +43,13 @@ specification:
   objective: Describe a coherent product journey and observable outcomes without declaring the specification
     graph or implementation complete.
   authority_boundary: These outcomes combine selected directions and conditional scenarios from child
-    nodes. They do not select an account count, private-data policies beyond the explicit revocation decision
-    in 0019, cold-launch layout, technical implementation or timing of a pilot. All dependent contracts
-    and unresolved product decisions need review before any implementation readiness assessment.
+    nodes. They do not select an account count, private-data policies beyond the selected revocation and
+    A-to-B decisions in 0019, cold-launch layout, technical implementation or timing of a pilot. All dependent
+    contracts and unresolved product decisions need review before any implementation readiness assessment.
+    When GitHub externally revokes access to a private Repository, the retained-data visibility and local
+    access described here apply while the relevant account remains active. Independently of revocation,
+    while account B is active, the account-switch boundary in 0019 applies. Behavior after returning to
+    A is not selected.
   journey:
     setup: An operator can connect GitHub, select eligible Repositories and establish Projects. One Project
       per Repository is the default; Projects may contain multiple Repositories and share them. Selection
@@ -96,12 +100,13 @@ specification:
       density, preview and explicitly open it, then return to the valid Project, Repository scope, period,
       filter and density context without replacing the PR by another object. An explicit unfinished-only
       filter may hide it without modifying the source PR.
-    revoked_after_observation: A private Repository already has saved Project and work observations when
-      GitHub confirms revocation for the relevant account. The operator can still find and inspect the
-      saved local information with the revocation indication and supported last-update time when known,
-      and reach recovery or explicit local deletion. Synchronization of the affected Repository stops
-      while revocation applies, and an earlier in-flight response does not become a newly accepted update;
-      opening locally does not establish source access or change other Projects.
+    revoked_after_observation: The relevant account remains active throughout this scenario. A private
+      Repository already has saved Project and work observations when GitHub confirms revocation for the
+      relevant account. The operator can still find and inspect the saved local information with the revocation
+      indication and supported last-update time when known, and reach recovery or explicit local deletion.
+      Synchronization of the affected Repository stops while revocation applies, and an earlier in-flight
+      response does not become a newly accepted update; opening locally does not establish source access
+      or change other Projects.
     shared_repository_signal: Projects P and Q share Repository R. Opening a supported Project-wide attention
       signal from P preserves P, the signal condition, applicable period and each supported Repository
       context; returning does not silently switch to Q. R remains a member of both Projects and an asserted
@@ -109,7 +114,7 @@ specification:
       distinguishable.
   open_questions:
   - Exact revocation evidence, in-flight and recovery handling; private-data access after disconnect,
-    ordinary offline use and account change, and exact disconnect outcome.
+    ordinary offline use and other account changes beyond 0019, and exact disconnect outcome.
   - Historical metric measurement units; treatment of other signal-filter conflicts and exact return behavior.
   - Actual first-launch interaction, source coverage and selected account/authorization model.
   - Each product branch needs further refinement and evidence appropriate to its eventual transition;

@@ -30,7 +30,11 @@ specification:
     a long time for a response, without leaving the work overview.
   authority_boundary: The owner requested visibility of long or problematic review threads and selected
     counters rather than individual thread content. What makes a discussion long or problematic, its threshold,
-    source mapping and native presentation remain open; no specific signal or threshold is selected.
+    source mapping and native presentation remain open; no specific signal or threshold is selected. When
+    GitHub externally revokes access to a private Repository, the retained-data visibility and local access
+    described here apply while the relevant account remains active. Independently of revocation, while
+    account B is active, the account-switch boundary in 0019 applies. Behavior after returning to A is
+    not selected.
   requirements:
     attention: Make it possible to notice a lengthy or problematic review discussion, including a thread
       that has waited a long time for a response, when its meaning has been defined and the necessary
@@ -54,9 +58,10 @@ specification:
       can show two threads and one affected PR without presenting them as three work items.
     unavailable_evidence: Some review information is unavailable. Keep supported information and its applicable
       limitation rather than reporting a confirmed zero or asserting that no discussion needs attention.
-    revoked_private: A private Repository has saved review information when GitHub confirms access revocation.
-      Keep the saved information visible with the revocation indication and supported update time when
-      known under 0019; synchronization stops.
+    revoked_private: The relevant account remains active throughout this scenario. A private Repository
+      has saved review information when GitHub confirms access revocation. Keep the saved information
+      visible with the revocation indication and supported update time when known under 0019; synchronization
+      stops.
   open_questions:
   - What makes a long or problematic review discussion useful to notice, including how to identify a long
     wait for a response and any threshold.
@@ -71,5 +76,6 @@ acceptance:
 - Thread counts and affected PR counts remain distinguishable, and actionable navigation keeps the applicable
   scope.
 - Saved private review information remains visible after confirmed access revocation with its indication
-  and supported update time when known under 0019.
+  and supported update time when known under 0019. Visibility and local access follow the active-account
+  and A-to-B boundary in 0019.
 - Signal meaning and available actions do not rely solely on color or transient feedback.

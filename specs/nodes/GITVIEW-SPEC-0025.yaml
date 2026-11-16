@@ -35,7 +35,10 @@ specification:
   authority_boundary: The owner selected Project composition, shared Repository membership and the default
     of one Project per Repository. Persistent default association, its reuse and exact setup or deletion
     interactions remain agent-authored candidates; this node does not choose a storage mechanism or establish
-    implementation readiness.
+    implementation readiness. When GitHub externally revokes access to a private Repository, the retained-data
+    visibility and local access described here apply while the relevant account remains active. Independently
+    of revocation, while account B is active, the account-switch boundary in 0019 applies. Behavior after
+    returning to A is not selected.
   requirements:
     identity: A saved Project has a stable local identity, name, optional description and one or more
       source-identified GitHub Repositories. Project identity is distinct from its name, a Repository

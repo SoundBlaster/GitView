@@ -26,7 +26,11 @@ specification:
   objective: Help the operator understand whether the available Project overview is current and complete
     enough to use.
   authority_boundary: This node describes the visible meaning of freshness, missing information and counts.
-    Exact native presentation, source acquisition, storage and synchronization design remain open.
+    Exact native presentation, source acquisition, storage and synchronization design remain open. When
+    GitHub externally revokes access to a private Repository, the retained-data visibility and local access
+    described here apply while the relevant account remains active. Independently of revocation, while
+    account B is active, the account-switch boundary in 0019 applies. Behavior after returning to A is
+    not selected.
   requirements:
     freshness: Show available information with its supported update time when known. When an update fails,
       retain saved data and make the failure discoverable; do not present the failed attempt as a successful
@@ -56,9 +60,10 @@ specification:
     count_and_cards: A supported count and the visible cards differ because a saved filter applies or
       work is not fully loaded. Preserve their meaning and make the applicable limitation or filter discoverable
       rather than inventing missing cards.
-    revoked_private: GitHub confirms private Repository access revocation while saved work exists. Keep
-      that work accessible with the revocation indication and supported time when known; stop synchronization
-      and preserve recovery or local deletion under 0019.
+    revoked_private: The relevant account remains active throughout this scenario. GitHub confirms private
+      Repository access revocation while saved work exists. Keep that work accessible with the revocation
+      indication and supported time when known; stop synchronization and preserve recovery or local deletion
+      under 0019.
   open_questions:
   - How native UI presents freshness, partial coverage and recovery without overwhelming the overview.
   - Source coverage and technical approach to synchronization, ordering, persistence and account isolation.
@@ -70,6 +75,7 @@ acceptance:
 - Incomplete or unavailable information is distinguishable from a confirmed empty result or zero.
 - Displayed counts and visible cards retain their actual meaning, applicable scope and relevant limitations.
 - Confirmed private Repository revocation preserves saved data and its indication, stops synchronization
-  and retains recovery or explicit local deletion under 0019.
+  and retains recovery or explicit local deletion under 0019. Visibility and local access follow the active-account
+  and A-to-B boundary in 0019.
 - Status, limitations and available actions are understandable without relying solely on color or transient
   feedback.

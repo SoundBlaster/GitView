@@ -27,7 +27,10 @@ specification:
     overview.
   authority_boundary: This node refines the selected first-version static preview. It does not select
     a native menu implementation, gesture timing, exact transition animation, source-access recovery mechanism
-    or later sliding-preview behavior, and does not establish implementation readiness.
+    or later sliding-preview behavior, and does not establish implementation readiness. When GitHub externally
+    revokes access to a private Repository, the retained-data visibility and local access described here
+    apply while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     preview: A recognized long press previews the selected eligible Project, Repository, PR or Issue without
       leaving the overview. It provides readable additional available details beyond the cell and offers
@@ -53,10 +56,10 @@ specification:
       open, it continues to describe that same PR; opening does not select PR 42 from another Repository.
     filter_change: An open previewed object no longer matches the active filter. It is not silently replaced
       by a different card; dismissal returns to the current valid selection.
-    revocation_while_open: A saved private PR preview is open when Repository access revocation is confirmed.
-      Keep available local details accessible with the indication and supported time when known, stop
-      synchronization and retain a local route to recovery or explicit deletion; do not claim a new source
-      grant.
+    revocation_while_open: The relevant account remains active throughout this scenario. A saved private
+      PR preview is open when Repository access revocation is confirmed. Keep available local details
+      accessible with the indication and supported time when known, stop synchronization and retain a
+      local route to recovery or explicit deletion; do not claim a new source grant.
   open_questions:
   - Exact native preview and menu behavior, gesture arbitration and cancellation.
   - Fallback position and focus after changes to the original scope.
@@ -71,6 +74,7 @@ acceptance:
 - Dismissal and return retain valid origin and selection context or provide a supported fallback without
   presenting a different object as the original.
 - Available saved preview details remain locally accessible after confirmed private Repository revocation
-  with the applicable indication and supported time when known under 0019.
+  with the applicable indication and supported time when known under 0019. Visibility and local access
+  follow the active-account and A-to-B boundary in 0019.
 - Preview, dismissal, opening and return have accessible paths that do not require long press or color
   alone.

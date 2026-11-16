@@ -31,7 +31,10 @@ specification:
     time or Project membership.
   authority_boundary: Project summaries, current membership for historical Project graphs and retained
     local data after confirmed revocation are selected. Detailed evidence and calculation rules are refinements;
-    exact source mappings, representation and other account disclosure cases remain open.
+    exact source mappings, representation and other account disclosure cases remain open. When GitHub
+    externally revokes access to a private Repository, the retained-data visibility and local access described
+    here apply while the relevant account remains active. Independently of revocation, while account B
+    is active, the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     context: Attribute a displayed aggregate to its supported metric, unit, object type, source scope,
       membership basis, period where applicable, relevant observation times and coverage. Different observation
@@ -59,7 +62,8 @@ specification:
     revoked_private: Confirmed private Repository access revocation preserves saved local observations
       and supported derived counts as last known, with revocation indication and supported update time
       when known under 0019; synchronization stops. Do not label the retained data freshly observed, invent
-      a time or replace an unavailable input with zero. Account-change disclosure remains open.
+      a time or replace an unavailable input with zero. Other account-change disclosure beyond the selected
+      A-to-B rule in 0019 remains open.
     snapshot_and_period: A present snapshot alone does not prove a historical event count or fill a missing
       historical bucket; maintain the actual period and coverage under 0030.
   scenarios:
@@ -68,11 +72,13 @@ specification:
       as a complete Project total.
     stale_count: Three PRs were observed open yesterday and have not been refreshed. Keep the supported
       time and do not claim at least three PRs are open now.
-    revoked_member: An aggregate includes supported saved data from private Repository B. After explicit
-      revocation, keep its supported saved value visible with the indication and known time, without claiming
-      it is freshly observed or treating B as zero.
-    revoked_without_time: A saved private count has no reliable update time when access is explicitly
-      revoked. It remains visible with the revocation indication and no fabricated timestamp.
+    revoked_member: The relevant account remains active throughout this scenario. An aggregate includes
+      supported saved data from private Repository B. After explicit revocation, keep its supported saved
+      value visible with the indication and known time, without claiming it is freshly observed or treating
+      B as zero.
+    revoked_without_time: The relevant account remains active throughout this scenario. A saved private
+      count has no reliable update time when access is explicitly revoked. It remains visible with the
+      revocation indication and no fabricated timestamp.
     mixed_time_attention: CI failed at T1 and lifecycle was observed open at T2; no evidence establishes
       that the CI result still applied at T2. Do not claim the combined open-and-failed predicate at T2.
     changed_members: An A-and-B calculation completes after the Project changes to A and unobserved C.
@@ -82,7 +88,8 @@ specification:
   open_questions:
   - Per-metric source evidence for coverage, comparable times and identity.
   - Native representation of partial, mixed-time and last-known aggregates.
-  - Account-change and other disclosure conditions beyond confirmed private Repository revocation.
+  - Other account-change and disclosure conditions beyond the selected A-to-B rule and confirmed private
+    Repository revocation in 0019.
   ontology_status: Project, Repository, PullRequest, Issue and Metric use selected ontology vocabulary;
     coverage and aggregation are observation properties rather than new domain entities.
 acceptance:
@@ -92,6 +99,7 @@ acceptance:
   lower bound.
 - A late count for prior Project membership is not represented as a complete count for changed membership.
 - Saved private observations and supported derived counts remain visible after confirmed revocation with
-  an indication and supported update time when known; an unknown time is not invented.
+  an indication and supported update time when known; an unknown time is not invented. Visibility and
+  local access follow the active-account and A-to-B boundary in 0019.
 - Shared Repository membership is preserved per Project while supported unique portfolio totals deduplicate
   confirmed identities.

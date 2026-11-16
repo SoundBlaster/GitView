@@ -37,7 +37,10 @@ specification:
     counts without treating an observed link as an actor's motive.
   authority_boundary: The owner selected Issue relationship categories and an overview with source handoff.
     Exact GitHub mappings, coverage, presentation and broader relationship history require separate evidence.
-    This node does not establish an actor action, motive or source implementation.
+    This node does not establish an actor action, motive or source implementation. When GitHub externally
+    revokes access to a private Repository, the retained-data visibility and local access described here
+    apply while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     distinct_links: Preserve supported PR mentions, closing references, parent, direct child, blocked-by
       and blocking connections as distinct directional source facts. A mention does not alone prove a
@@ -80,15 +83,16 @@ specification:
       an independently supported source aggregate may establish a closed count within its own scope.
     outside_project: An Issue in Project P has a supported link to an object in Repository B outside P.
       Retain B's identity and the origin when navigating; do not add B to P merely by following the link.
-    revoked_target: A linked private target is already saved locally and GitHub confirms access revocation
-      for its Repository and relevant account. The saved target remains locally available with indication
-      and supported update time when known, without claiming a fresh grant or substituting another target.
+    revoked_target: The relevant account remains active throughout this scenario. A linked private target
+      is already saved locally and GitHub confirms access revocation for its Repository and relevant account.
+      The saved target remains locally available with indication and supported update time when known,
+      without claiming a fresh grant or substituting another target.
     stale_links: A link was observed at T1; a later response at T2 updates only the Issue title. Retain
       the link's own T1 context rather than calling it refreshed or removed at T2.
   open_questions:
   - Source-specific link types, access, pagination and evidence for direction and current coverage.
   - Native presentation and navigation for partial links and linked objects outside a Project.
-  - Disclosure after account change outside confirmed private Repository revocation.
+  - Other disclosure after account change beyond the selected A-to-B rule in 0019.
   ontology_status: Issue, PullRequest, Repository and Project use selected ontology vocabulary. Source
     links do not establish the actor-action-derived relation or motivation without supporting evidence.
 acceptance:
@@ -99,4 +103,5 @@ acceptance:
 - Navigating to a supported linked target does not silently change Project membership or substitute another
   object.
 - Saved supported linked data stays visible after confirmed private Repository revocation with indication
-  and supported time when known.
+  and supported time when known. Visibility and local access follow the active-account and A-to-B boundary
+  in 0019.

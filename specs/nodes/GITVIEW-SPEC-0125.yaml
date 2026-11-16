@@ -33,6 +33,10 @@ specification:
   authority_boundary: The owner asked to see what is ready and approved showing completed and unfinished
     work together in Today. A combined ready predicate, an open non-draft filter, exact source mappings
     and any merge-eligibility decision remain open; this node does not claim to resolve the broader need.
+    When GitHub externally revokes access to a private Repository, the retained-data visibility and local
+    access described here apply while the relevant account remains active. Independently of revocation,
+    while account B is active, the account-switch boundary in 0019 applies. Behavior after returning to
+    A is not selected.
   requirements:
     product_need: Keep the question of what is ready as an explicit product need even while the definition
       and evidence of a combined ready state remain unresolved. Do not use a single convenient source
@@ -89,4 +93,5 @@ acceptance:
   excludes them.
 - Unknown or incomplete evidence does not become a confirmed ready state, completed outcome or exact count.
 - Saved supported facts remain visible after confirmed private Repository revocation with indication and
-  supported time when known.
+  supported time when known. Visibility and local access follow the active-account and A-to-B boundary
+  in 0019.

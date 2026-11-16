@@ -27,7 +27,10 @@ specification:
   objective: Make overview, preview and object access usable with platform accessibility features.
   authority_boundary: Accessible alternatives and Apple system appearance are selected directions. Exact
     native controls, supported platform versions and device behavior require refinement and validation;
-    no accessibility testing is claimed.
+    no accessibility testing is claimed. When GitHub externally revokes access to a private Repository,
+    the retained-data visibility and local access described here apply while the relevant account remains
+    active. Independently of revocation, while account B is active, the account-switch boundary in 0019
+    applies. Behavior after returning to A is not selected.
   requirements:
     alternatives: Essential navigation, density, preview, dismissal and opening must not rely exclusively
       on pinch, long press, pointer hover, precise tiny targets or color. Direct object opening does not
@@ -53,10 +56,11 @@ specification:
       provided without silently substituting a different object.
     adaptive_layout: With large text and Reduce Motion enabled, the grid can become more spacious while
       content and navigation remain understandable.
-    revoked_saved_preview: A saved private PR preview is open when GitHub confirms access revocation for
-      the relevant account. Its saved details remain available visually and through assistive technology
-      as last known with indication and supported time when known; synchronization stops, and local routes
-      to recovery and explicit deletion remain accessible under 0019 without guaranteeing recovery succeeds.
+    revoked_saved_preview: The relevant account remains active throughout this scenario. A saved private
+      PR preview is open when GitHub confirms access revocation for the relevant account. Its saved details
+      remain available visually and through assistive technology as last known with indication and supported
+      time when known; synchronization stops, and local routes to recovery and explicit deletion remain
+      accessible under 0019 without guaranteeing recovery succeeds.
   open_questions:
   - Exact native accessibility actions, focus fallback, minimum platform support and device verification.
   - Access-safe labels and treatment of unavailable or changing data in each view.

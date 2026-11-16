@@ -29,8 +29,11 @@ specification:
   objective: Keep the selected object's preview useful and correctly attributed as data availability and
     source observations change.
   authority_boundary: The first-version static preview and local retention after confirmed private Repository
-    revocation are selected. Optional refresh timing, platform presentation and account-change disclosure
-    remain open; the later sliding preview is not established here.
+    revocation are selected. Optional refresh timing, platform presentation and other account-change disclosure
+    beyond 0019 remain open; the later sliding preview is not established here. When GitHub externally
+    revokes access to a private Repository, the retained-data visibility and local access described here
+    apply while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     local_availability: Open a preview of already available supported local data where eligible for local
       display under 0019 without waiting for a network response. Identify the same selected object and
@@ -67,16 +70,17 @@ specification:
       same object's preview and makes its supported details and limitations available without color alone.
     cancelled_navigation: An in-progress local open is explicitly cancelled, then its delayed result arrives.
       It does not later navigate or interrupt the operator's current context.
-    revoked_during_preview: A saved private PR is previewed while a request is in flight and access is
-      explicitly revoked before the response arrives. Keep saved details visible with indication and supported
-      time when known; do not present the old response as fresh access or update.
+    revoked_during_preview: The relevant account remains active throughout this scenario. A saved private
+      PR is previewed while a request is in flight and access is explicitly revoked before the response
+      arrives. Keep saved details visible with indication and supported time when known; do not present
+      the old response as fresh access or update.
     partial_refresh: A refresh supports a new title but fails to establish CI. Show the title with its
       own context and keep supported earlier CI as last known with its own context; do not report it as
       newly observed or successful.
   open_questions:
   - Whether and when preview initiates a separate refresh and its platform cancellation behavior.
   - Native presentation, precise field priorities and accessibility announcements.
-  - Handling retained data in account-change contexts other than confirmed private Repository revocation.
+  - Handling retained data in other account-change contexts beyond 0019.
   ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; preview
     lifetime and presentation are interaction concepts, not new domain entities.
 acceptance:
@@ -85,6 +89,7 @@ acceptance:
 - Late or partial observations do not silently retarget a preview, reopen a dismissed preview or make
   unsupported fields current.
 - Confirmed private Repository revocation leaves saved details visible with indication and supported update
-  time when known; synchronization stops.
+  time when known; synchronization stops. Visibility and local access follow the active-account and A-to-B
+  boundary in 0019.
 - Local open, source handoff and sharing remain distinct. Preview invocation, dismissal, identity and
   limitations have accessible paths without long press or color alone.

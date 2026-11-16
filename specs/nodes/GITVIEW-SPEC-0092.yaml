@@ -19,6 +19,7 @@ sources:
   predecessor_draft: docs/drafts/GITVIEW-SPEC-0092.yaml
   predecessor_revision: 9bbf79f
   owner_selection: docs/drafts/project-summary-proposal.md
+  signal_filter_context_decision: conversation_memory/sketches/gitview/revisions/9544eaa87e5b4afcb48910299d60c520/metadata.json
 specification:
   ontology_refs:
   - gitview:projectIncludesRepository
@@ -34,8 +35,12 @@ specification:
   objective: Preserve the meaning of an actionable summary signal when the operator opens and navigates
     its associated work selection.
   authority_boundary: Direct navigation from an actionable Project signal and the limited historical merged-counter
-    filter override are selected. Exact controls, edits to signal conditions, other filter overrides and
-    implementation remain open; this node does not establish source completeness or implementation readiness.
+    filter override are selected. Edits to signal conditions, the detailed filter hierarchy, controls
+    and implementation remain open; this node does not establish source completeness or implementation
+    readiness. When GitHub externally revokes access to a private Repository, the retained-data visibility
+    and local access described here apply while the relevant account remains active. Independently of
+    revocation, while account B is active, the account-switch boundary in 0019 applies. Behavior after
+    returning to A is not selected.
   requirements:
     origin: Retain the supported originating Project and, for a Repository-specific signal, the actual
       Repository identity, condition, unit, period, membership basis, coverage and observation time when
@@ -50,7 +55,8 @@ specification:
       the same object is not duplicated merely because multiple events qualify.
     selected_override: For the selected transition from a historical merged-PR counter, temporarily override
       a conflicting saved merged exclusion under 0047 and 0056 to show the counter result without rewriting
-      the saved preference. Do not apply that exception automatically to unrelated signals or filters.
+      the saved preference. Other transitions follow their actual origin context, not an assumed universal
+      override.
     explicit_changes: If the operator explicitly changes or clears an active condition, do not continue
       to describe every displayed object as matching the original condition. Such a change does not alter
       source objects or rewrite the earlier observed signal; persistence of ordinary user filters remains
@@ -69,20 +75,36 @@ specification:
       evidence does not prove that another Project is the correct replacement.
     accessibility: Make the applicable signal meaning, active condition, scope, limitation and available
       navigation understandable without relying solely on color or a particular gesture.
+    filter_origin: When the originating signal belongs to a filtered scope, preserve that scope and its
+      applicable filters in the destination. A signal outside a filter context opens its corresponding
+      selection without being narrowed by that unrelated filter. Preserve actual access, Project, period
+      and coverage; this does not rewrite a saved preference or imply full source coverage. The detailed
+      hierarchy, inheritance and controls remain open. The previously selected historical merged-counter
+      case concerns a counter whose originating scope includes merged PRs; a saved exclusion outside that
+      origin does not narrow its destination. A counter defined inside a merged-excluding scope instead
+      retains that origin scope.
   scenarios:
     thread_unit: A signal reports three supported unresolved threads affecting one PR. The destination
       can contain one distinct PR card while preserving that the origin measured threads, not three PRs.
-    merged_override: A saved filter excludes merged PRs. Opening a supported historical merged counter
-      temporarily shows its matching result without rewriting that saved preference.
+    merged_override: In the selected counter case, its originating scope includes merged PRs and the saved
+      merged exclusion is outside that scope. A saved filter excludes merged PRs. Opening a supported
+      historical merged counter temporarily shows its matching result without rewriting that saved preference.
     changed_condition: After opening a failed-CI signal, the operator explicitly clears that condition.
       Do not describe every subsequently displayed object as a failed-CI match or rewrite the earlier
       signal observation.
     changed_coverage: A signal reports supported partial data, and a later destination observation has
       a different scope or time. Preserve the respective limitations rather than forcing the destination
       count to equal the earlier signal.
+    filtered_origin: In a complete, unchanged Project dataset, three PRs have failed CI, including one
+      draft. A view whose active filter excludes drafts shows a failed-CI signal for the two PRs inside
+      that filtered scope. Opening it retains that filter context and failed-CI condition, showing those
+      two PRs.
+    outside_filter: In the same complete, unchanged dataset, a failed-CI signal produced outside the saved
+      draft-excluding filter context covers all three PRs. Opening it shows its supported three-PR selection
+      without applying that unrelated exclusion; the saved preference is not rewritten.
   open_questions:
   - Native controls for changing signal conditions, return behavior and filter persistence scope.
-  - Behavior for conflicting saved filters beyond the selected merged-counter transition.
+  - Exact hierarchy, scope and inheritance of filters; how their context is presented during navigation.
   - Exact predicate and source evidence for each actionable signal and historical period.
   ontology_status: Project, Repository, PullRequest, Issue and Metric use selected ontology vocabulary;
     signal selection and navigation are interaction and measurement concepts, not new domain entities.
@@ -90,8 +112,11 @@ acceptance:
 - An actionable signal preserves its supported origin, condition, scope, unit and period when opening
   its corresponding work selection, or exposes a limitation.
 - Signal measurement units are not silently equated with counts of distinct destination cards.
-- The selected historical merged-counter transition temporarily overrides the conflicting saved merged
-  exclusion without rewriting the saved preference.
+- 'For the selected counter whose originating scope includes merged PRs and whose saved merged exclusion
+  is outside that scope: The selected historical merged-counter transition temporarily overrides the conflicting
+  saved merged exclusion without rewriting the saved preference.'
 - An explicitly changed or cleared condition is not still presented as applying to every displayed object.
 - Incomplete observations, changed context or confirmed private Repository revocation do not silently
   substitute another Project or invent fresh source data.
+- A signal from a filtered scope retains its applicable filter context; an unrelated filter outside the
+  signal context does not narrow its destination or rewrite saved preferences.

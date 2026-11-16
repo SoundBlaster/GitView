@@ -32,7 +32,10 @@ specification:
     to contain multiple Repositories and a Repository to belong to multiple Projects. Explicit-confirmation
     batch setup, persistent default association and detailed reuse behavior are agent-authored candidates
     rather than selected mechanisms. This node does not require multi-selection or choose exact native
-    setup controls, transaction architecture or implementation readiness.
+    setup controls, transaction architecture or implementation readiness. When GitHub externally revokes
+    access to a private Repository, the retained-data visibility and local access described here apply
+    while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     pending: A selection or intended setup is distinct from a successfully saved Project and does not
       by itself establish source access or observed PR and Issue work. An empty selection does not become
@@ -93,4 +96,5 @@ acceptance:
 - Partial source discovery is not reported as a confirmed empty inventory, and cancellation or failure
   does not erase already saved Projects.
 - Saved local Project and Repository information remains accessible after confirmed GitHub revocation
-  under 0019, without implying a source grant for a new operation.
+  under 0019, without implying a source grant for a new operation. Visibility and local access follow
+  the active-account and A-to-B boundary in 0019.

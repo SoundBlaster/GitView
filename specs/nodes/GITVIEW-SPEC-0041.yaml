@@ -34,7 +34,10 @@ specification:
   authority_boundary: The owner selected the field categories and compact source-linked overview. Exact
     source mapping, check equivalence, field priority, native presentation and data availability require
     refinement; this node does not establish implementation readiness, complete source coverage or an
-    actor's motive.
+    actor's motive. When GitHub externally revokes access to a private Repository, the retained-data visibility
+    and local access described here apply while the relevant account remains active. Independently of
+    revocation, while account B is active, the account-switch boundary in 0019 applies. Behavior after
+    returning to A is not selected.
   requirements:
     identity: Retain the selected PR's supported source identity, Repository context and repository-local
       number. Present available title, original description and source link without replacing missing
@@ -75,9 +78,9 @@ specification:
     partial_refresh: A new observation provides the PR title but no usable CI or review fact. Do not advance
       the observation time of those omitted facts or announce them as current merely because the title
       changed.
-    saved_after_revocation: GitHub confirms private Repository revocation while saved PR data exists locally.
-      Keep those supported details available with their indication and time when known; do not claim a
-      new source grant.
+    saved_after_revocation: The relevant account remains active throughout this scenario. GitHub confirms
+      private Repository revocation while saved PR data exists locally. Keep those supported details available
+      with their indication and time when known; do not claim a new source grant.
   open_questions:
   - Source evidence and mapping for PR counts, branches, revisions, requested reviewers and related Issues.
   - Exact field priority, truncation, native presentation and behavior of partial or stale observations.
@@ -94,4 +97,5 @@ acceptance:
 - Supported additions, deletions, changed-file count and commit count do not require in-app diff, file,
   commit or run details.
 - Previously saved supported PR information remains locally accessible after confirmed private Repository
-  revocation under 0019 with its applicable limitation.
+  revocation under 0019 with its applicable limitation. Visibility and local access follow the active-account
+  and A-to-B boundary in 0019.

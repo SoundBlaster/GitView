@@ -31,6 +31,10 @@ specification:
   authority_boundary: Today includes earlier unfinished work and work completed during the user's current
     local calendar day under 0027. Other inclusion alternatives, source freshness evidence, time-zone
     change mechanics and native presentation remain open; no arbitrary validity duration is selected.
+    When GitHub externally revokes access to a private Repository, the retained-data visibility and local
+    access described here apply while the relevant account remains active. Independently of revocation,
+    while account B is active, the account-switch boundary in 0019 applies. Behavior after returning to
+    A is not selected.
   requirements:
     day: Dynamic Today follows the user's applicable current local calendar day under 0049. A completed
       object does not qualify for a new day solely because it completed on the previous day; other independently
@@ -70,8 +74,9 @@ specification:
       exclusion.
     mixed_time: A PR lifecycle was observed at T1 and a review fact at T2 without evidence of simultaneity.
       Preserve both contexts rather than inventing a shared snapshot time.
-    late_revocation: A saved PR and earlier CI observation remain visible as last known when GitHub confirms
-      private Repository revocation; a response initiated earlier does not establish fresh access.
+    late_revocation: The relevant account remains active throughout this scenario. A saved PR and earlier
+      CI observation remain visible as last known when GitHub confirms private Repository revocation;
+      a response initiated earlier does not establish fresh access.
   open_questions:
   - Source-specific ordering, revision applicability and evidence for current filter claims.
   - Other Today inclusion alternatives and behavior when the user local time zone changes.
@@ -85,5 +90,6 @@ acceptance:
 - Old revision checks and mixed-time observations do not silently become confirmed current or simultaneous
   facts.
 - Confirmed private Repository revocation retains supported saved values with indication and supported
-  time when known; synchronization stops.
+  time when known; synchronization stops. Visibility and local access follow the active-account and A-to-B
+  boundary in 0019.
 - Filter state and uncertainty are discoverable without color or transient feedback alone.

@@ -26,7 +26,10 @@ specification:
   authority_boundary: The owner selected current Project Repository composition as the basis for historical
     graphs over the selected period. Exact evaluation lifetime, chart behavior, buckets, source evidence
     and historical counters beyond that decision remain open. This does not establish past Project membership
-    or a complete source history.
+    or a complete source history. When GitHub externally revokes access to a private Repository, the retained-data
+    visibility and local access described here apply while the relevant account remains active. Independently
+    of revocation, while account B is active, the account-switch boundary in 0019 applies. Behavior after
+    returning to A is not selected.
   requirements:
     current_basis: Recalculate a Project historical graph over the selected period using its actual current
       saved Repository composition under 0030. If membership cannot be established, report that limitation
@@ -54,7 +57,7 @@ specification:
       indication and supported observation times when known under 0019; synchronization stops. Missing
       attribution or lineage remains a visible limitation and does not justify inventing a scope, zero
       or current access. An in-flight response from before revocation is not accepted as a fresh update.
-      Account-change disclosure and external sharing remain separate open questions.
+      Other account-change disclosure beyond 0019 and external sharing remain separate open questions.
     accessibility: Make membership basis, period, known coverage and changes understandable without color
       or transient feedback alone.
   scenarios:
@@ -67,14 +70,14 @@ specification:
       the difference as a same-scope decline of four without independently comparable evidence.
     unknown_past_membership: No record establishes whether B belonged to P last week. A claim about last
       week's actual Project membership remains unknown; today's composition does not prove it.
-    revoked_with_missing_lineage: A supported saved graph value remains readable but its retained lineage
-      cannot establish whether it included the now-revoked private Repository. Keep the value locally
-      visible as last known with its supported context and lineage limitation; do not invent an A-only
-      scope or assert current source access.
+    revoked_with_missing_lineage: The relevant account remains active throughout this scenario. A supported
+      saved graph value remains readable but its retained lineage cannot establish whether it included
+      the now-revoked private Repository. Keep the value locally visible as last known with its supported
+      context and lineage limitation; do not invent an A-only scope or assert current source access.
   open_questions:
   - Metric-specific source history, periods, buckets, coverage and attribution evidence.
   - Native behavior for recalculation and membership changes while a graph is visible.
-  - Account-change and external-sharing policy beyond selected local revocation behavior.
+  - Other account-change disclosure beyond 0019 and external-sharing policy.
   ontology_status: Project, Repository and Metric use selected ontology vocabulary; graph scope and membership
     basis are measurement context, not new domain entities.
 acceptance:
@@ -83,5 +86,6 @@ acceptance:
 - Membership changes do not silently relabel an earlier result or turn missing input history into zero.
 - An earlier late result does not replace a separately selected result for a different membership basis.
 - Saved supported graph values remain visible as last known after confirmed private Repository revocation
-  with indication and supported time when known.
+  with indication and supported time when known. Visibility and local access follow the active-account
+  and A-to-B boundary in 0019.
 - Basis, scope and limitations remain accessible without color or transient feedback alone.

@@ -27,7 +27,11 @@ specification:
     and object overviews.
   authority_boundary: This node refines context and return outcomes without selecting a cold-launch destination,
     specific default-association model, retention mechanism, anchor algorithm or private-data policy beyond
-    the explicit revocation decision in 0019. It does not claim implementation readiness.
+    the selected revocation and A-to-B decisions in 0019. It does not claim implementation readiness.
+    When GitHub externally revokes access to a private Repository, the retained-data visibility and local
+    access described here apply while the relevant account remains active. Independently of revocation,
+    while account B is active, the account-switch boundary in 0019 applies. Behavior after returning to
+    A is not selected.
   requirements:
     context: Applicable navigation context includes Project identity, Repository scope, period, filters,
       density and position or focused object when available. These are presentation state, not new domain
@@ -64,8 +68,8 @@ specification:
   open_questions:
   - Cold-launch and retained-session behavior, position and focus fallback, and time-zone-change interaction.
   - Persistence scope and reset of filters, and non-merged historical counter overrides.
-  - Access and disclosure policy after disconnect or account changes, exact revocation evidence and recovery,
-    and behavior of an open overview in other access cases remain to be decided.
+  - Access and disclosure policy after disconnect or other account changes beyond 0019, exact revocation
+    evidence and recovery, and behavior of an open overview in other access cases remain to be decided.
   ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; navigation
     context is not a domain entity.
 acceptance:

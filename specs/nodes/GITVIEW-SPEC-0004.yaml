@@ -31,7 +31,11 @@ specification:
     and open the relevant work.
   authority_boundary: This node records the selected Project overview and its relation to work. Exact
     cold-launch navigation, restoration, layout and access behavior remain to be refined; the current-work
-    Today mode is not itself a required historical viewer. No native implementation is established.
+    Today mode is not itself a required historical viewer. No native implementation is established. When
+    GitHub externally revokes access to a private Repository, the retained-data visibility and local access
+    described here apply while the relevant account remains active. Independently of revocation, while
+    account B is active, the account-switch boundary in 0019 applies. Behavior after returning to A is
+    not selected.
   requirements:
     projects: Provide an overview of saved GitView Projects whose representation is permitted, identifiable
       where their information is permitted, with available work and attention signals inspectable. Project
@@ -81,4 +85,5 @@ acceptance:
 - The overview remains operable without reliance on color or a single gesture.
 - Confirmed private Repository revocation keeps the saved Project and available local information for
   the affected Repository visible with its indication and supported time when known, and preserves recovery
-  or explicit local deletion under 0019.
+  or explicit local deletion under 0019. Visibility and local access follow the active-account and A-to-B
+  boundary in 0019.

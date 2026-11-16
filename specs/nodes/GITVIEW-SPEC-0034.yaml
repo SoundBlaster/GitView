@@ -23,7 +23,10 @@ specification:
     as authored statements.
   authority_boundary: The owner selected description formats for the participating process. Exact parsing
     syntax, rendering, deployment and enforcement require further refinement; this node does not claim
-    that a template is installed or that an authored statement is true.
+    that a template is installed or that an authored statement is true. When GitHub externally revokes
+    access to a private Repository, the retained-data visibility and local access described here apply
+    while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     formats: The selected Issue format contains Problem, Motivation, Expected outcome and References.
       The selected PR format contains those sections plus Changes and Validation under 0010.
@@ -74,4 +77,5 @@ acceptance:
 - Empty, unavailable, missing and ambiguous content are not silently conflated or fabricated.
 - A differently formatted legacy or external description is not sufficient reason to hide its PR or Issue.
 - Previously saved local text remains accessible after confirmed private Repository revocation under 0019
-  with its applicable indication and supported time when known.
+  with its applicable indication and supported time when known. Visibility and local access follow the
+  active-account and A-to-B boundary in 0019.

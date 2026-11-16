@@ -33,7 +33,10 @@ specification:
   objective: Preserve the operator's actual Project or Repository work scope as Project membership changes.
   authority_boundary: A Project contains one or more Repositories, and a Repository may belong to several
     Projects. Ordinary entry to a multi-Repository Project is Project-wide; this node distinguishes it
-    from an explicitly selected Repository route.
+    from an explicitly selected Repository route. When GitHub externally revokes access to a private Repository,
+    the retained-data visibility and local access described here apply while the relevant account remains
+    active. Independently of revocation, while account B is active, the account-switch boundary in 0019
+    applies. Behavior after returning to A is not selected.
   requirements:
     scope_intent: Distinguish a Project-wide work selection from an explicitly selected Repository within
       a Project, even if the Project currently has only one member. Density or source refresh does not
@@ -97,5 +100,6 @@ acceptance:
 - Removed or uncertain origin does not silently substitute another Repository or Project or imply source
   deletion.
 - An open object's identity is retained through membership changes; saved private data remains visible
-  after confirmed revocation under 0019.
+  after confirmed revocation under 0019. Visibility and local access follow the active-account and A-to-B
+  boundary in 0019.
 - Scope limitations and recovery are understandable without color or transient feedback alone.

@@ -28,7 +28,10 @@ specification:
     updated.
   authority_boundary: Manual refresh, stale-on-open and opportunistic background updates follow the owner
     direction. This node does not select a numerical staleness threshold, GitHub endpoint, request budget,
-    polling frequency, background schedule, native control or implementation readiness.
+    polling frequency, background schedule, native control or implementation readiness. When GitHub externally
+    revokes access to a private Repository, the retained-data visibility and local access described here
+    apply while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     manual: Offer pull-to-refresh where appropriate or an equivalent explicit and accessible action for
       the current view or selected scope. A manual request is not rejected solely because the observation
@@ -76,9 +79,10 @@ specification:
       incomplete coverage.
     background_not_granted: No background opportunity is granted by iOS. Do not present a successful refresh
       or an application failure solely because the opportunity did not occur.
-    revoked_repository: A Project contains a Repository with confirmed GitHub revocation and saved local
-      data. Keep the saved data visible with the applicable indication and supported time when known,
-      and do not dispatch ordinary refresh for that Repository while revocation applies.
+    revoked_repository: The relevant account remains active throughout this scenario. A Project contains
+      a Repository with confirmed GitHub revocation and saved local data. Keep the saved data visible
+      with the applicable indication and supported time when known, and do not dispatch ordinary refresh
+      for that Repository while revocation applies.
   open_questions:
   - Staleness thresholds, prioritization, exact refresh scope, coalescing and outcome presentation.
   - GitHub operations, rate-limit interpretation, request budgets, retry and background scheduling appropriate

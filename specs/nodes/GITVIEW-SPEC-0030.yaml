@@ -33,7 +33,10 @@ specification:
     from missing information.
   authority_boundary: The owner chose historical graphs and current Project composition as their membership
     basis. This node does not select every metric, source operation, bucket layout, burn-down formula
-    or implementation, and does not establish that history is available from GitHub.
+    or implementation, and does not establish that history is available from GitHub. When GitHub externally
+    revokes access to a private Repository, the retained-data visibility and local access described here
+    apply while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     measurement: Identify a series by its supported subject, unit, source or observation basis, selected
       scope, time period and coverage. When values are aggregated into buckets, identify the applicable
@@ -76,9 +79,10 @@ specification:
     repeated_closure: An Issue has two separately supported closure events in the same period. An event-count
       series can represent two events while a distinct-Issue series counts the Issue at most once for
       that period; do not conflate the units.
-    revoked_repository: A previously saved supported series includes a private Repository whose GitHub
-      access is confirmed revoked. Keep the supported local series accessible with its original scope,
-      time and revocation indication, without implying a new successful refresh.
+    revoked_repository: The relevant account remains active throughout this scenario. A previously saved
+      supported series includes a private Repository whose GitHub access is confirmed revoked. Keep the
+      supported local series accessible with its original scope, time and revocation indication, without
+      implying a new successful refresh.
   open_questions:
   - Exact selected metrics, event and object units, source evidence, time-zone and bucket rules.
   - Treatment and native presentation of partial coverage, gaps and changed composition.
@@ -93,4 +97,5 @@ acceptance:
 - Open-work snapshots, PR merge outcomes, Issue closure outcomes and event-versus-distinct-object counts
   are not silently conflated.
 - Previously saved supported history remains locally accessible after confirmed private Repository revocation
-  under 0019 with its applicable limitation and supported time when known.
+  under 0019 with its applicable limitation and supported time when known. Visibility and local access
+  follow the active-account and A-to-B boundary in 0019.

@@ -28,7 +28,10 @@ specification:
     work observations.
   authority_boundary: This node refines product-visible selection and uncertainty. It does not select
     GitHub queries, source history limits, filter control design, exact native presentation or implementation
-    readiness.
+    readiness. When GitHub externally revokes access to a private Repository, the retained-data visibility
+    and local access described here apply while the relevant account remains active. Independently of
+    revocation, while account B is active, the account-switch boundary in 0019 applies. Behavior after
+    returning to A is not selected.
   requirements:
     today: Apply the owner-selected Today meaning under 0007 in the selected Project and user local calendar
       day; earlier unfinished work remains eligible and work completed today remains eligible. Completion
@@ -71,9 +74,10 @@ specification:
       alternative is unknown, and every applicable required condition and active filter is supported as
       satisfied or does not apply. The known alternative can establish the match without claiming the
       unknown alternative is known.
-    revoked_repository: Previously saved private work is available locally when GitHub revocation is confirmed.
-      Preserve its local visibility and applicable selection context with the revocation indication and
-      supported time when known; do not claim current source access.
+    revoked_repository: The relevant account remains active throughout this scenario. Previously saved
+      private work is available locally when GitHub revocation is confirmed. Preserve its local visibility
+      and applicable selection context with the revocation indication and supported time when known; do
+      not claim current source access.
   open_questions:
   - Other possible Today inclusion conditions and the source history needed to evaluate them.
   - Exact treatment and native presentation of individually uncertain candidates and incomplete population

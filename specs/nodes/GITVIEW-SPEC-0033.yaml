@@ -25,7 +25,10 @@ specification:
     without confusing the object or implying external access.
   authority_boundary: Source navigation and lightweight sharing are selected. The default sharing payload,
     private-data handoff policy, exact native controls and delivery semantics remain open; no external
-    delivery or implementation is established.
+    delivery or implementation is established. When GitHub externally revokes access to a private Repository,
+    the retained-data visibility and local access described here apply while the relevant account remains
+    active. Independently of revocation, while account B is active, the account-switch boundary in 0019
+    applies. Behavior after returning to A is not selected.
   requirements:
     association: Associate an offered source link with the selected Repository, PR or Issue and its supported
       source context. Equal local object numbers in different Repositories do not establish identical
@@ -69,9 +72,9 @@ specification:
       keep the earlier object accessible locally when supported.
     private_source: The operator initiates sharing for an eligible PR in a private Repository. The share
       flow does not by itself grant a recipient access or prove delivery.
-    revoked_local: A private Repository's access is confirmed revoked while its saved PR remains visible.
-      Local inspection remains possible under 0019; do not claim a successful external open or restored
-      GitHub grant.
+    revoked_local: The relevant account remains active throughout this scenario. A private Repository's
+      access is confirmed revoked while its saved PR remains visible. Local inspection remains possible
+      under 0019; do not claim a successful external open or restored GitHub grant.
   open_questions:
   - Sharing payload, optional added context and disclosure policy for private data.
   - Supported evidence and native behavior for current and last-known source links, handoff and cancellation.
@@ -84,6 +87,7 @@ acceptance:
   is supported, without asserting external success or delivery.
 - Missing or conflicting link evidence is not replaced by a fabricated or misdirected source URL.
 - Local visibility after confirmed private Repository revocation remains distinct from eligibility and
-  outcome of an external handoff.
+  outcome of an external handoff. Visibility and local access follow the active-account and A-to-B boundary
+  in 0019.
 - Sharing does not itself grant a recipient GitHub access or establish delivery. Credentials, including
   those already embedded in an observed URL, are not included in shared material or ordinary diagnostics.

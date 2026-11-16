@@ -33,7 +33,10 @@ specification:
   authority_boundary: The owner requested a minimal overview with examples including name, ID, badges
     and text, and selected a first-version long-press preview. Those examples are not an exhaustive field
     list. Type-specific content is a refinement; exact field priority, layout, source mapping and native
-    presentation remain open. This node does not select a sliding-preview implementation.
+    presentation remain open. This node does not select a sliding-preview implementation. When GitHub
+    externally revokes access to a private Repository, the retained-data visibility and local access described
+    here apply while the relevant account remains active. Independently of revocation, while account B
+    is active, the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     common: Show the selected object's type and enough available identity and summary to distinguish it
       in its actual scope; include an available title or name, Repository context and source number where
@@ -78,16 +81,17 @@ specification:
       without color alone and is not described as an executed success.
     unavailable_review: A PR has a known title, failed CI and unavailable review assessment. The preview
       identifies it and distinguishes failed CI without presenting review as approved or known zero.
-    revoked_project: A Project's saved default name and counts come from a private Repository whose access
-      is explicitly revoked. They remain visible as last known with an indication and supported time if
-      known; a local route to recovery or explicit deletion remains available.
+    revoked_project: The relevant account remains active throughout this scenario. A Project's saved default
+      name and counts come from a private Repository whose access is explicitly revoked. They remain visible
+      as last known with an indication and supported time if known; a local route to recovery or explicit
+      deletion remains available.
     mixed_freshness: An Issue title is recently observed while related PR data is older. Do not imply
       that the related data was refreshed with the title; retain its applicable limitation.
     unknown_closure: A closed Issue has an unknown closure reason. Show closure without inventing a reason
       or describing it as successful completion.
   open_questions:
   - Exact field priorities at each density, layout, truncation and excerpt length.
-  - Source-specific evidence for individual fields and handling of account-change disclosure.
+  - Source-specific evidence for individual fields and other account-change disclosure beyond 0019.
   - Treatment of special or unclassified CI checks in compact representations, beyond the parent signal
     contract.
   ontology_status: Project, Repository, PullRequest and Issue use selected ontology vocabulary; preview
@@ -99,5 +103,6 @@ acceptance:
   missing facts.
 - Project and Repository summaries retain their supported scope, coverage and observation limitations.
 - Saved preview details remain visible after confirmed private Repository access revocation with the indication
-  and supported time when known.
+  and supported time when known. Visibility and local access follow the active-account and A-to-B boundary
+  in 0019.
 - The same object and applicable limitations are accessible without relying on color or long press alone.

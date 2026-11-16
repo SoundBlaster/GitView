@@ -25,6 +25,10 @@ specification:
   authority_boundary: Connecting GitHub and protecting credentials are selected. Authorization method,
     account model, exact disconnect and credential-removal behavior, and other account-change disclosure
     rules remain open. Attempt and recovery distinctions are refinements, not evidence of an implementation.
+    When GitHub externally revokes access to a private Repository, the retained-data visibility and local
+    access described here apply while the relevant account remains active. Independently of revocation,
+    while account B is active, the account-switch boundary in 0019 applies. Behavior after returning to
+    A is not selected.
   requirements:
     attempt: Distinguish an in-progress authorization attempt, explicit cancellation, supported failure,
       confirmed connection and an indeterminate result. A callback, attempted authorization or locally
@@ -69,9 +73,10 @@ specification:
     superseded_attempt: Attempt A is superseded by B, which remains pending or fails. A's later result
       does not establish a local connection. Preserve any independently confirmed source outcome without
       claiming that superseding A necessarily undid it.
-    revoked_repository: A connected account loses confirmed access to a private Repository with saved
-      data. The supported local view stays available with indication and supported time when known, while
-      ordinary synchronization for that Repository stops.
+    revoked_repository: The relevant account remains active throughout this scenario. A connected account
+      loses confirmed access to a private Repository with saved data. The supported local view stays available
+      with indication and supported time when known, while ordinary synchronization for that Repository
+      stops.
   open_questions:
   - Authorization method, permissions, account count and source identity evidence.
   - Exact disconnect, credential removal and recovery behavior, including other account-change disclosure.
@@ -88,6 +93,7 @@ acceptance:
 - Connection success does not by itself establish Project creation, Repository access or an observed work
   collection.
 - Confirmed private Repository revocation retains previously saved local data with indication and supported
-  time when known; synchronization stops.
+  time when known; synchronization stops. Visibility and local access follow the active-account and A-to-B
+  boundary in 0019.
 - Connection limitations and available recovery are understandable without color or transient feedback
   alone, and credentials are not exposed.

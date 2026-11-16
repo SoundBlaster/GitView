@@ -34,7 +34,11 @@ specification:
     selection from potentially overlapping or incomplete observations.
   authority_boundary: Today presents each eligible PR or Issue once per selection and retains distinct
     linked objects. Exact source representation mappings, queries and identifier association evidence
-    remain open; this node does not establish GitHub integration or source population completeness.
+    remain open; this node does not establish GitHub integration or source population completeness. When
+    GitHub externally revokes access to a private Repository, the retained-data visibility and local access
+    described here apply while the relevant account remains active. Independently of revocation, while
+    account B is active, the account-switch boundary in 0019 applies. Behavior after returning to A is
+    not selected.
   requirements:
     typing: Before treating an observation as a PR or Issue, use supported object-type evidence. An untyped
       or identity-ambiguous representation remains unresolved; do not silently classify it or fabricate
@@ -60,7 +64,8 @@ specification:
     revoked_private: On GitHub-confirmed private Repository revocation for the relevant account, previously
       saved supported work remains visible locally as last known with revocation indication and supported
       time when known under 0019; synchronization stops. An earlier response does not silently become
-      a fresh update or restore access. Account-change disclosure remains open.
+      a fresh update or restore access. Other account-change disclosure beyond the selected A-to-B rule
+      in 0019 remains open.
     accessibility: Make known object type, identity context and applicable uncertainty understandable
       without relying only on color or a transient cue.
   scenarios:
@@ -77,9 +82,9 @@ specification:
     shared_repository: Repository R belongs to Projects P and Q; its confirmed PR meets each selection's
       applicable conditions and filters. The same PR appears once in each applicable Project selection,
       without a change to either membership.
-    revoked_late_response: A saved private PR remains visible as last known after confirmed revocation;
-      a response initiated before revocation arrives later. Do not use it to claim fresh data or restored
-      access.
+    revoked_late_response: The relevant account remains active throughout this scenario. A saved private
+      PR remains visible as last known after confirmed revocation; a response initiated before revocation
+      arrives later. Do not use it to claim fresh data or restored access.
     closed_without_merge_evidence: A PR is supported as closed but merge evidence is unavailable. Preserve
       closed state and uncertainty about merge; do not fabricate a merge time from retrieval time.
   open_questions:
@@ -97,4 +102,5 @@ acceptance:
   source identifiers.
 - Missing source facts do not become a fabricated lifecycle transition, event time or complete work population.
 - Saved supported work remains visible after confirmed private Repository revocation with indication and
-  supported time when known.
+  supported time when known. Visibility and local access follow the active-account and A-to-B boundary
+  in 0019.

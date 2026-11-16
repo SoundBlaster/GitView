@@ -29,7 +29,10 @@ specification:
     bound to the intended object.
   authority_boundary: Pinch-to-change density and first-version static long-press preview are selected.
     Gesture arbitration, anchoring and interruption are refinements; exact native gestures, timings, thresholds
-    and animation remain open. Sliding preview is a later direction, not required here.
+    and animation remain open. Sliding preview is a later direction, not required here. When GitHub externally
+    revokes access to a private Repository, the retained-data visibility and local access described here
+    apply while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     scroll: An ordinary recognized scroll moves the collection without also opening an object or activating
       its preview solely from that interaction.
@@ -68,9 +71,10 @@ specification:
       interaction may continue for A when valid or cancel; it does not preview B by position.
     interrupted: A density interaction is cancelled before an object-open action. The collection remains
       usable in its valid scope and no object is opened by cancellation.
-    revoked_during_gesture: A saved private PR is visible while a density interaction is active. On confirmed
-      GitHub revocation for the relevant account, retain the saved cell with indication and supported
-      time when known, stop synchronization and retain a local route to recovery or deletion.
+    revoked_during_gesture: The relevant account remains active throughout this scenario. A saved private
+      PR is visible while a density interaction is active. On confirmed GitHub revocation for the relevant
+      account, retain the saved cell with indication and supported time when known, stop synchronization
+      and retain a local route to recovery or deletion.
     boundary: An expanding cell reaches its maximum size and its intended target is available and unambiguous.
       The transition to the next level occurs; if the target becomes unavailable or ambiguous, the view
       uses a meaningful fallback without substituting another object.
@@ -86,7 +90,8 @@ acceptance:
 - An in-scope pinch preserves the applicable Project, Repository scope, period and filters.
 - Cancellation or independent collection changes do not silently open or retarget a different object.
 - Saved cells remain visible after confirmed private Repository revocation with indication and supported
-  time when known; synchronization stops.
+  time when known; synchronization stops. Visibility and local access follow the active-account and A-to-B
+  boundary in 0019.
 - Density changes, preview and object opening have accessible alternatives to pinch, long press and color
   alone.
 - Pinch moves through discrete detail levels and enters the intended next level at the maximum cell-size

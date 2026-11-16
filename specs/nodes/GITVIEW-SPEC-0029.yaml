@@ -36,7 +36,10 @@ specification:
     and attention signals overlap.
   authority_boundary: This node refines scope, identity and units of supported summaries. It does not
     select every metric predicate, exact visual layout, GitHub query or implementation, and it does not
-    establish readiness for implementation.
+    establish readiness for implementation. When GitHub externally revokes access to a private Repository,
+    the retained-data visibility and local access described here apply while the relevant account remains
+    active. Independently of revocation, while account B is active, the account-switch boundary in 0019
+    applies. Behavior after returning to A is not selected.
   requirements:
     repository: A Repository summary concerns its own supported source objects for the specified category
       and period where applicable. Rename or transfer does not create a second Repository when the source
@@ -91,4 +94,5 @@ acceptance:
 - Incomplete source coverage remains identifiable and is not silently treated as zero or as a complete
   total.
 - An available saved summary remains local and visible after confirmed GitHub revocation with its supported
-  time when known and applicable limitation under 0019.
+  time when known and applicable limitation under 0019. Visibility and local access follow the active-account
+  and A-to-B boundary in 0019.

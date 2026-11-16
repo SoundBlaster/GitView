@@ -26,16 +26,19 @@ specification:
   objective: Preserve meaningful accessible navigation when overview content, scope or data status changes.
   authority_boundary: Accessible navigation and saved-data visibility after confirmed private Repository
     revocation are selected. Specific focus APIs, ordering mechanics and announcement timing remain open;
-    this node does not establish actual device accessibility.
+    this node does not establish actual device accessibility. When GitHub externally revokes access to
+    a private Repository, the retained-data visibility and local access described here apply while the
+    relevant account remains active. Independently of revocation, while account B is active, the account-switch
+    boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     identity: Keep the inspected object's supported identity and scope distinct from a cell position,
       reused name or Repository-local number. If it remains in the collection after reorder or density
       change, maintain or restore an accessible path to that same object where feasible.
     uncertainty: When selection evidence becomes uncertain, keep an available object inspectable through
       the uncertain selection or an equivalent path under 0042, subject to applicable disclosure context.
-      Confirmed private Repository revocation does not hide saved data under 0019; account-change disclosure
-      remains open. Disclose uncertainty rather than announcing a confirmed match or exclusion solely
-      from missing evidence.
+      Confirmed private Repository revocation does not hide saved data under 0019; other account-change
+      disclosure beyond the selected A-to-B rule in 0019 remains open. Disclose uncertainty rather than
+      announcing a confirmed match or exclusion solely from missing evidence.
     removal: If the object no longer belongs to the active collection, use an appropriate surviving anchor
       or collection-state fallback under 0024 without describing a different object as the original. An
       already open preview retains its identity under 0031; apply fallback on return.
@@ -49,22 +52,23 @@ specification:
       revocation indication and supported update time when known under 0019, without waiting for a reordered
       collection. Stop synchronization and keep recovery or explicit local deletion reachable.
     source_context: A retained focus anchor does not prove that a newly active source account has access.
-      Do not silently attribute it to another object. Local disclosure after account change remains open
-      under 0019; confirmed revocation retains its selected visibility.
+      Do not silently attribute it to another object. Other local disclosure after account change beyond
+      the selected A-to-B rule remains open under 0019; confirmed revocation retains its selected visibility.
   scenarios:
     reordered_pr: A user inspecting PR 42 in Repository B encounters a reorder while Repository A also
       contains PR 42. Preserve a route to B's same PR, not the item now occupying its old position.
     uncertain_filter: A focused PR's previously confirmed CI selection becomes uncertain. Keep its identity
       inspectable with the uncertainty, without claiming a confirmed inclusion or exclusion.
-    revoked_during_interaction: A saved private PR is focused while collection rearrangement is deferred.
-      When revocation is confirmed, retain saved content and make the indication and known time available
-      without waiting for rearrangement; provide recovery or explicit local deletion.
+    revoked_during_interaction: The relevant account remains active throughout this scenario. A saved
+      private PR is focused while collection rearrangement is deferred. When revocation is confirmed,
+      retain saved content and make the indication and known time available without waiting for rearrangement;
+      provide recovery or explicit local deletion.
     status_after_cue: After a transient refresh-error cue disappears, the affected scope, failure and
       supported last successful observation remain discoverable through the accessible status route.
   open_questions:
   - Platform focus restoration, announcement timing and behavior under assistive technologies.
   - Presentation and grouping of uncertain selections.
-  - Local disclosure after account changes outside confirmed private Repository revocation.
+  - Other local disclosure after account changes beyond the selected A-to-B rule in 0019.
   ontology_status: Project, Repository, PullRequest and Issue use the selected ontology vocabulary; focus
     and announcements are interaction concerns rather than new domain entities.
 acceptance:
@@ -73,5 +77,5 @@ acceptance:
 - When the focused object leaves the collection, a supported fallback does not misidentify another object
   as it.
 - Confirmed revocation leaves saved content accessible with the indication and supported update time when
-  known.
+  known. Visibility and local access follow the active-account and A-to-B boundary in 0019.
 - Relevant errors and period changes remain discoverable without requiring transient feedback or color.

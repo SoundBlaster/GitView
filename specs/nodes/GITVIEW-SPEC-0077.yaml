@@ -27,7 +27,10 @@ specification:
   authority_boundary: The owner selected comment and discussion-participant counts and the latest comment
     time when available. Exact source mapping and participant population, additional comment-author metrics,
     source permissions and native presentation remain open. This node does not require showing individual
-    comments or participants or establish live GitHub behavior.
+    comments or participants or establish live GitHub behavior. When GitHub externally revokes access
+    to a private Repository, the retained-data visibility and local access described here apply while
+    the relevant account remains active. Independently of revocation, while account B is active, the account-switch
+    boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     separate_units: Keep comment count, participant count and latest-comment time distinct with their
       supported Issue identity, source, population, scope and observation context. Issue comments are
@@ -65,8 +68,9 @@ specification:
       may be described as latest within the observed subset, not confirmed latest for the whole Issue.
     known_empty: A sufficiently supported current comment population is empty. Comment count can be zero
       and latest-comment time known absent; this does not establish that no comments ever existed.
-    revoked: Previously saved private Issue counts remain visible as last known after confirmed revocation
-      with indication and supported time when known, without implying fresh synchronization.
+    revoked: The relevant account remains active throughout this scenario. Previously saved private Issue
+      counts remain visible as last known after confirmed revocation with indication and supported time
+      when known, without implying fresh synchronization.
   open_questions:
   - Participant population and exact GitHub source mapping, permissions, pagination and evidence of coverage.
   - Whether to show a separate count of distinct comment authors and its population.
@@ -80,6 +84,7 @@ acceptance:
 - Exact latest-comment time is the supported maximum creation instant in its sufficiently covered population,
   distinguished from Issue update, observation and later comment edit times.
 - Saved discussion values remain visible after confirmed private Repository revocation with indication
-  and supported update time when known.
+  and supported update time when known. Visibility and local access follow the active-account and A-to-B
+  boundary in 0019.
 - Counts, latest-comment time, known absence and uncertainty remain accessible without color or transient
   feedback alone.

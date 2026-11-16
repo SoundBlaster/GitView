@@ -29,7 +29,10 @@ specification:
     default setup, it corresponds to a separate Project for each Repository under 0045. Search and continuity
     requirements are refinements; the default-association and reuse mechanisms, exact search controls,
     multi-selection, source pagination, authorization method and admission mechanism remain open. This
-    node does not establish actual source permissions or a live GitHub integration.
+    node does not establish actual source permissions or a live GitHub integration. When GitHub externally
+    revokes access to a private Repository, the retained-data visibility and local access described here
+    apply while the relevant account remains active. Independently of revocation, while account B is active,
+    the account-switch boundary in 0019 applies. Behavior after returning to A is not selected.
   requirements:
     scope: Attribute results to their supported source account, query or selection scope, access context
       and coverage. Independently available choices remain usable when the result is partial, with the
@@ -61,8 +64,8 @@ specification:
       relevant account, already saved local Repository data remains visible as last known with a revocation
       indication and supported update time when known; synchronization stops under 0019. An earlier in-flight
       response cannot silently restart sync or become a newly accepted update. Retained local visibility
-      is not renewed source access or sufficient admission for a new operation. Account-change disclosure
-      and treatment of unsaved pending data in other circumstances remain open.
+      is not renewed source access or sufficient admission for a new operation. Other account-change disclosure
+      beyond 0019 and treatment of unsaved pending data in other circumstances remain open.
     accessibility: Make search scope, available choices, incomplete discovery and applicable errors understandable
       without relying solely on color or transient feedback.
   scenarios:
@@ -77,19 +80,20 @@ specification:
     same_query_retry: A retry for the same query yields incomplete eligibility evidence; an earlier attempt's
       response arrives later. Preserve the attempt contexts and do not replace the newer supported outcome
       solely due to arrival order.
-    revoked_before_processing: If the chosen flow supports multiple pending choices, two independently
-      selected Repositories have different access outcomes. GitHub confirms private access revocation
-      for one relevant account. Its already saved local data remains visible as last known with indication
-      and supported time when known, while its old grant does not authorize a new operation; the other
-      entry retains its own supported outcome.
+    revoked_before_processing: The relevant account remains active throughout this scenario. If the chosen
+      flow supports multiple pending choices, two independently selected Repositories have different access
+      outcomes. GitHub confirms private access revocation for one relevant account. Its already saved
+      local data remains visible as last known with indication and supported time when known, while its
+      old grant does not authorize a new operation; the other entry retains its own supported outcome.
     partial_recheck: If multiple choices are supported, A is independently eligible while B is absent
       from a partial response. B remains selected and unresolved rather than denied or deleted; A may
       proceed where the selected operation supports it, with the limitation and available recovery visible.
     account_change: A choice made for an operation under account A is not silently relabeled or submitted
       under account B or a different operation after account change. Its local disclosure remains open.
-    late_revocation: After explicit private Repository revocation for the relevant account, a response
-      from an earlier discovery attempt arrives. It does not silently restart synchronization or become
-      a fresh accepted update, while supported saved data remains visible under 0019.
+    late_revocation: The relevant account remains active throughout this scenario. After explicit private
+      Repository revocation for the relevant account, a response from an earlier discovery attempt arrives.
+      It does not silently restart synchronization or become a fresh accepted update, while supported
+      saved data remains visible under 0019.
   open_questions:
   - Discovery source, search and pagination semantics, permission scope and per-entry admission evidence.
   - Multi-selection, confirmation flow and pending-selection behavior after account changes.
@@ -107,6 +111,7 @@ acceptance:
   intent.
 - Saved private data stays visible as last known after confirmed revocation with indication and supported
   time when known; sync stops, an earlier response does not silently restart it, and visibility does not
-  authorize a new operation.
+  authorize a new operation. Visibility and local access follow the active-account and A-to-B boundary
+  in 0019.
 - Search, available choices and discovery limitations are accessible without color or transient feedback
   alone.
