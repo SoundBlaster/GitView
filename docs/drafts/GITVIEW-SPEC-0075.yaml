@@ -21,13 +21,17 @@ sources:
   owner_direction: conversation:gitview/excerpt-46
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- An ordinary scroll, a recognized density change and a preview or open action have distinguishable outcomes and cannot accidentally activate a different object.
-- A pinch recognized as an in-scope density change preserves that scope and a meaningful identity-based anchor when available.
+- An ordinary scroll, a recognized density change and a preview or open action have distinguishable outcomes
+  and cannot accidentally activate a different object.
+- A pinch recognized as an in-scope density change preserves that scope and a meaningful identity-based
+  anchor when available.
 - First-version long press can preview the intended cell without requiring the later sliding-preview mode.
-- An interrupted gesture or platform cancellation leaves a coherent overview and does not imply an object was opened or an action committed.
+- An interrupted gesture or platform cancellation leaves a coherent overview and does not imply an object
+  was opened or an action committed.
 - Privacy restrictions, changed selection and accessible alternatives remain effective throughout interactions.
 specification:
-  objective: Define user-visible boundaries among scrolling, in-scope density changes, static preview and explicit navigation without prescribing native gesture recognizers.
+  objective: Define user-visible boundaries among scrolling, in-scope density changes, static preview
+    and explicit navigation without prescribing native gesture recognizers.
   ontology_refs:
   - gitview:User
   - gitview:Project
@@ -35,51 +39,108 @@ specification:
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    scope: The first-version interactions covered here are ordinary scroll, in-scope pinch density, explicit object entry and static long-press preview. Candidate 0120 proposes a separately distinguishable targeted zoom gesture across scopes; its usability and native feasibility remain unverified and are not resolved by this density-only contract. Sliding rich preview is a separately deferred interaction under 0015; these rules do not claim it exists or decide its gesture lifecycle.
-    scroll: Movement recognized as an ordinary scroll moves the current collection and does not also open a cell or activate its preview. An unfinished press candidate that becomes a scroll is cancelled as a preview candidate; scroll and tap recognition details follow native behavior and require evaluation.
-    pinch: A pinch recognized as an in-scope density interaction changes presentation density in the current overview under 0035. That density interaction does not change Project, Repository scope, period or explicit filters, activate a cell, or navigate into an object. If a still-pending press competes with such a pinch, the recognized pinch cancels that pending preview candidate rather than triggering both actions. A separately designed deliberate scope transition must not be silently inferred from this rule; target evidence, arbitration and thresholds remain open.
-    anchor: When the pinch has an unambiguous permitted cell focus near its interaction point, use that object's identity as the preferred position anchor through reflow. Where there is no such cell or the focus is ambiguous, preserve an existing valid focus or a meaningful visible position without selecting an arbitrary object. If the anchor moves out of the selected set, use the fallback in 0024 and 0073; matching the former cell coordinate is not object identity.
-    pending_target: When a touch sequence first becomes a candidate for an object action, bind that candidate to the permitted stable object identity and originating scope established for that interaction, not merely a cell index or screen coordinate. Before recognizing a static preview or open, recheck that same identity and current access; if identity or eligibility is no longer supported, cancel the candidate or present a safe limitation. A newly restored object or reordered cell under the same finger cannot inherit a pending gesture that began on another object or on empty or restricted space. A platform cancellation is an acceptable outcome rather than a promise to preserve a recognizer through reflow. This rule does not implement the separately deferred sliding-preview gesture.
-    static_preview: A recognized long press on an eligible cell presents that same object's static preview under 0031. A movement across other cells does not by itself retarget that preview, enter another object, or imply the later sliding mode is active. Explicit open or dismissal follows the presented native-compatible interaction and retains its established identity and access constraints.
-    preview_and_density: When a static preview is already presented, a new density interaction must not silently retarget the preview or commit an object. The system may keep the preview or dismiss it without opening; a density change can be performed after returning to the overview. Which native behavior occurs and whether the same touch sequence can subsequently begin a new gesture require device evaluation.
-    interruption: If the system cancels an uncommitted touch sequence or the app loses the interaction, do not treat it as an object open, share or source mutation. Restore a coherent overview in its valid scope; the resulting density may retain the last presented value or return to its pre-gesture value, but must be identifiable and usable. Preview dismissal and focus recovery follow 0031 and 0073. A previously explicit completed open is not retroactively cancelled by an unrelated later interruption.
-    concurrent_changes: A source refresh, local day transition or membership edit can independently change the available selection during a gesture. Reconcile it using 0024, 0049 and 0073; never attribute it to pinch alone or present an old selection as a complete current one. Explicit denial immediately removes restricted content under 0036 even when reordering is deferred.
-    alternative: Provide accessible ways to change density and inspect or open an object without requiring pinch, long press, hover, a timed gesture or color. Pointer behavior where supported is supplementary; it does not alter the first-version static-preview requirement.
-    provenance: Pinch and static long-press preview follow the owner's requested interaction direction. Conflict handling and anchoring here are agent-authored proposals that require native and accessibility evaluation.
+    scope: The first-version interactions covered here are ordinary scroll, in-scope pinch density, explicit
+      object entry and static long-press preview. Candidate 0120 proposes a separately distinguishable
+      targeted zoom gesture across scopes; its usability and native feasibility remain unverified and
+      are not resolved by this density-only contract. Sliding rich preview is a separately deferred interaction
+      under 0015; these rules do not claim it exists or decide its gesture lifecycle.
+    scroll: Movement recognized as an ordinary scroll moves the current collection and does not also open
+      a cell or activate its preview. An unfinished press candidate that becomes a scroll is cancelled
+      as a preview candidate; scroll and tap recognition details follow native behavior and require evaluation.
+    pinch: A pinch recognized as an in-scope density interaction changes presentation density in the current
+      overview under 0035. That density interaction does not change Project, Repository scope, period
+      or explicit filters, activate a cell, or navigate into an object. If a still-pending press competes
+      with such a pinch, the recognized pinch cancels that pending preview candidate rather than triggering
+      both actions. A separately designed deliberate scope transition must not be silently inferred from
+      this rule; target evidence, arbitration and thresholds remain open.
+    anchor: When the pinch has an unambiguous permitted cell focus near its interaction point, use that
+      object's identity as the preferred position anchor through reflow. Where there is no such cell or
+      the focus is ambiguous, preserve an existing valid focus or a meaningful visible position without
+      selecting an arbitrary object. If the anchor moves out of the selected set, use the fallback in
+      0024 and 0073; matching the former cell coordinate is not object identity.
+    pending_target: When a touch sequence becomes a candidate for an object action, bind it to the stable
+      object identity and originating scope, not merely a cell index or screen coordinate. Recheck the
+      same identity and local eligibility before preview or opening. Confirmed source revocation alone
+      does not remove the local eligibility of an already saved card under 0019. If identity or other
+      eligibility cannot be supported, use a safe limitation; never retarget a pending gesture to a reordered
+      or newly restored object. Platform cancellation remains possible.
+    static_preview: A recognized long press on an eligible cell presents that same object's static preview
+      under 0031. A movement across other cells does not by itself retarget that preview, enter another
+      object, or imply the later sliding mode is active. Explicit open or dismissal follows the presented
+      native-compatible interaction and retains its established identity and access constraints.
+    preview_and_density: When a static preview is already presented, a new density interaction must not
+      silently retarget the preview or commit an object. The system may keep the preview or dismiss it
+      without opening; a density change can be performed after returning to the overview. Which native
+      behavior occurs and whether the same touch sequence can subsequently begin a new gesture require
+      device evaluation.
+    interruption: If the system cancels an uncommitted touch sequence or the app loses the interaction,
+      do not treat it as an object open, share or source mutation. Restore a coherent overview in its
+      valid scope; the resulting density may retain the last presented value or return to its pre-gesture
+      value, but must be identifiable and usable. Preview dismissal and focus recovery follow 0031 and
+      0073. A previously explicit completed open is not retroactively cancelled by an unrelated later
+      interruption.
+    concurrent_changes: A source refresh, local day transition or membership edit can independently change
+      the available selection during a gesture. Reconcile it using 0024, 0049 and 0073; never attribute
+      it to pinch alone or present an old selection as a complete current one. On confirmed private Repository
+      revocation retain saved cells and show the revocation indication and supported update time when
+      known under 0019; stop synchronization without waiting for gesture completion.
+    alternative: Provide accessible ways to change density and inspect or open an object without requiring
+      pinch, long press, hover, a timed gesture or color. Pointer behavior where supported is supplementary;
+      it does not alter the first-version static-preview requirement.
+    provenance: Pinch and static long-press preview follow the owner's requested interaction direction.
+      Conflict handling and anchoring here are agent-authored proposals that require native and accessibility
+      evaluation.
   scenarios:
     scroll_instead_of_press:
-      given: The operator touches a PR cell and starts a movement recognized as ordinary vertical scroll before preview activation.
+      given: The operator touches a PR cell and starts a movement recognized as ordinary vertical scroll
+        before preview activation.
       when: The collection scrolls and the touch ends.
-      then: No PR preview or object overview opens solely from that sequence and the selection remains in its existing scope.
+      then: No PR preview or object overview opens solely from that sequence and the selection remains
+        in its existing scope.
     pinch_competes_with_pending_press:
-      given: A cell press is pending and a second contact leads to a recognized density pinch before preview activation.
+      given: A cell press is pending and a second contact leads to a recognized density pinch before preview
+        activation.
       when: The pinch changes density and ends.
-      then: The pending preview is not presented as a result of that sequence; no object opens and the same scope and filters remain.
+      then: The pending preview is not presented as a result of that sequence; no object opens and the
+        same scope and filters remain.
     pinch_between_cells:
-      given: The pinch focus falls between two different PR cells and no previously focused object is available.
+      given: The pinch focus falls between two different PR cells and no previously focused object is
+        available.
       when: Density changes.
-      then: The overview retains a meaningful visible position without selecting or opening either PR as if it had been chosen.
+      then: The overview retains a meaningful visible position without selecting or opening either PR
+        as if it had been chosen.
     restored_cell_under_pending_press:
-      given: A press candidate began on permitted PR A in a dense grid; during that pending sequence an access restoration and reflow place a different PR B at A's former coordinate.
+      given: A press candidate began on permitted PR A in a dense grid; during that pending sequence an
+        access restoration and reflow place a different PR B at A's former coordinate.
       when: The original touch reaches the long-press recognition boundary.
-      then: GitView may preview A only if the same candidate and current eligibility remain valid, or cancel safely; it does not preview B merely because B now occupies that coordinate.
+      then: GitView may preview A only if the same candidate and current eligibility remain valid, or
+        cancel safely; it does not preview B merely because B now occupies that coordinate.
     restored_cell_under_empty_touch:
-      given: A touch begins on empty or restricted space with no eligible identified preview candidate, and a newly permitted PR appears under that finger during reflow.
+      given: A touch begins on empty or restricted space with no eligible identified preview candidate,
+        and a newly permitted PR appears under that finger during reflow.
       when: The original touch continues.
-      then: The new PR is not previewed or opened by inheriting the already-started touch; a later deliberate eligible interaction can target it.
+      then: The new PR is not previewed or opened by inheriting the already-started touch; a later deliberate
+        eligible interaction can target it.
     preview_already_open:
       given: A static preview identifies PR 42 in Repository B and another Repository has PR 42.
       when: A new multi-touch interaction occurs while the preview is presented.
-      then: The preview either remains associated with B's PR or is dismissed without opening; it is not retargeted to the other PR or committed merely by the interaction.
+      then: The preview either remains associated with B's PR or is dismissed without opening; it is not
+        retargeted to the other PR or committed merely by the interaction.
     interrupted_pinch:
       given: The operator is changing density in a filtered Project work collection.
       when: The platform cancels the touch sequence before an object-entry action.
-      then: The collection remains usable in its valid scope with a coherent density and active filters; no object is opened by the cancellation.
+      then: The collection remains usable in its valid scope with a coherent density and active filters;
+        no object is opened by the cancellation.
     access_denial_during_interaction:
       given: A private PR cell is visible while a density gesture is active.
       when: Explicit source access denial takes effect before the gesture ends.
-      then: Restricted content is removed according to access policy without waiting for the animation or gesture to finish, and the remaining permitted overview remains recoverable.
+      then: For confirmed revocation, the saved cell remains visible with the revocation indication and
+        supported update time when known; synchronization stops without waiting for the gesture or animation.
+        The operator retains a point of access to recovery or explicit local deletion.
   unresolved:
-  - Native gesture competition, preview dismissal, anchor geometry, cancellation handling and platform accessibility actions require device evaluation.
-  - Exact density levels, timings and animation remain open; 0074 proposes an adaptive compact initial work-grid density. Candidate 0120 explores targeted zoom across scopes; first-version inclusion and native feasibility remain open.
+  - Native gesture competition, preview dismissal, anchor geometry, cancellation handling and platform
+    accessibility actions require device evaluation.
+  - Exact density levels, timings and animation remain open; 0074 proposes an adaptive compact initial
+    work-grid density. Candidate 0120 explores targeted zoom across scopes; first-version inclusion and
+    native feasibility remain open.
   - Future sliding preview, hover and edge autoscroll remain separate design work.

@@ -6,7 +6,8 @@ updated_at: '2026-11-10T07:33:00Z'
 status: idea
 draft_status: pre_canonical
 canonical_successor: specs/nodes/GITVIEW-SPEC-0019.yaml
-successor_scope: The successor records bounded connection and discovery outcomes; account model, offline access policy, setup, credentials lifecycle and source integration remain candidates.
+successor_scope: The successor records bounded connection and discovery outcomes; account model, offline
+  access policy, setup, credentials lifecycle and source integration remain candidates.
 refines:
 - GITVIEW-SPEC-0001
 depends_on:
@@ -15,7 +16,8 @@ depends_on:
 - GITVIEW-SPEC-0005
 sources:
   working_ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
-  ontology_selection_scope: The draft.5 ontology_selection records an earlier source context; draft.13 is the current working composition. Neither is semantically approved by this reference.
+  ontology_selection_scope: The draft.5 ontology_selection records an earlier source context; draft.13
+    is the current working composition. Neither is semantically approved by this reference.
   root_intent: .specgraph/root_intent.md
   discovery: docs/product-discovery.md
   autonomous_pilot: conversation:gitview/excerpt-72
@@ -26,7 +28,9 @@ acceptance:
   discovery distinctly.
 - Credentials are protected using platform-provided secure storage and are not included in shared content
   or ordinary diagnostic logs.
-- A network failure does not itself erase previously accepted observations; eligible last-known data and the affected refresh failure remain distinguishable. Explicit authentication or permission denial is distinguished from a successful empty result.
+- A network failure does not itself erase previously accepted observations; eligible last-known data and
+  the affected refresh failure remain distinguishable. Explicit authentication or permission denial is
+  distinguished from a successful empty result.
 - The operator can reconnect or disconnect the account; disconnection does not issue GitHub mutations
   or silently delete source repositories.
 acceptance_evidence:
@@ -48,10 +52,10 @@ specification:
       '
     access: 'Request only access needed for the selected repositories and supported read-only overview.
       Distinguish the app''s read-only behavior from permissions actually granted to a credential; any
-      broader grant needs explicit justification and disclosure under 0087. Candidate 0098 proposes a GitHub
-      App public-client flow; exact permission names and GitHub API mapping require further research. The app does not create, review, merge or otherwise
-      mutate source work objects in this pilot; user-mediated authorization or installation is a separate
-      provider-side access decision.
+      broader grant needs explicit justification and disclosure under 0087. Candidate 0098 proposes a
+      GitHub App public-client flow; exact permission names and GitHub API mapping require further research.
+      The app does not create, review, merge or otherwise mutate source work objects in this pilot; user-mediated
+      authorization or installation is a separate provider-side access decision.
 
       '
     discovery: 'Once authorized, let the operator find and select accessible GitHub repositories. Source
@@ -64,37 +68,49 @@ specification:
 
       '
     failure: Distinguish temporary network or rate failures from observed authentication and authorization
-      failures. Temporary failures follow the last-known-data contract in GITVIEW-SPEC-0003. A 404 alone
-      cannot prove deletion or revocation. Under the agent-authored candidate offline policy, while an explicit access denial remains applicable and known to the process or recoverable from durable evidence, lock affected private cached
-      content from display but retain records until the user clears them. The candidate offline policy does not guarantee recovery of a denial lost before persistence or absent from an older backup; this product tradeoff remains open under 0036. Successful reauthorization for
-      the same source identity may restore access only when supported under 0036 and 0112. A temporary network failure alone does not establish a new
-      access denial; independently applicable restrictions and unknown restriction state still govern disclosure.
+      failures. A 404 alone cannot prove deletion or revocation. For confirmed access revocation of a
+      private Repository, preserve and show the saved local observations, identify the revocation and
+      supported update time when known, and stop synchronization under canonical 0019. Offer a point of
+      access for recovery or explicit local deletion without asserting restored GitHub access. Other access
+      and account cases require separate refinement.
     disconnect: Provide a deliberate local disconnect action that stops new refresh for that account and
-      attempts to remove the app's credential. Confirm local credential removal only when established;
-      an unsuccessful or uncertain removal remains a visible recovery problem under 0058. Lock its private cached content while disconnected and retain records
-      until the user explicitly clears local data under the agent-authored candidate offline policy in 0036. Reconnecting the same source identity and re-establishing
-      access may unlock content. No GitHub object is deleted.
+      attempts to remove the app credential. Confirm local credential removal only when established; unsuccessful
+      or uncertain removal remains a visible recovery problem under 0058. Preserve locally saved data
+      and a user-visible point of access for understanding and recovery or explicit deletion; detailed
+      account isolation and presentation remain to be refined. No GitHub object is deleted.
   scenarios:
     first_connection:
       given: No GitHub account is connected and the operator begins the proposed setup route.
-      when: The source identity is independently confirmed, a Repository is discovered with applicable eligibility, and the operator explicitly confirms default setup.
-      then: After a valid Project is established or reused, the operator can enter it even while PR and Issue observations are unobserved or loading. Authorization or selection alone does not establish a Repository grant, save a Project or prove work data is observed; unresolved setup remains recoverable under 0022 and 0045.
+      when: The source identity is independently confirmed, a Repository is discovered with applicable
+        eligibility, and the operator explicitly confirms default setup.
+      then: After a valid Project is established or reused, the operator can enter it even while PR and
+        Issue observations are unobserved or loading. Authorization or selection alone does not establish
+        a Repository grant, save a Project or prove work data is observed; unresolved setup remains recoverable
+        under 0022 and 0045.
     temporary_offline:
-      given: A connected account has stored observations and supported observation times eligible for display under the current access policy.
-      when: A refresh fails because the network is unavailable, with no independently accepted newer observation or change in access.
-      then: The eligible last-known data and its supported observation time remain available with a visible refresh failure for the affected scope.
+      given: A connected account has stored observations and supported observation times eligible for
+        display under the current access policy.
+      when: A refresh fails because the network is unavailable, with no independently accepted newer observation
+        or change in access.
+      then: The eligible last-known data and its supported observation time remain available with a visible
+        refresh failure for the affected scope.
     explicit_access_denial:
-      given: A previously observed private repository is explicitly denied by the source, and the candidate offline policy is selected.
-      when: Its refresh is attempted.
-      then: The app distinguishes denial from an empty repository, locks the affected private cache and
-        preserves it for reauthorization or explicit clearing.
+      given: A previously observed private Repository has saved data and the source explicitly confirms
+        its access revocation.
+      when: The operator requests refresh after the revocation has been confirmed; no synchronization
+        request is sent for that Repository while revocation applies.
+      then: The app distinguishes revocation from an empty Repository, retains and shows saved data with
+        the access indication and supported update time when known, stops synchronization and offers access
+        to recovery or explicit local deletion.
     disconnected:
       given: One GitHub account is connected and the candidate offline policy is selected.
       when: The operator disconnects it.
-      then: New refresh stops and private cached content is locked. Credential removal is reported as complete
-        only if confirmed; otherwise the local removal problem remains visible. No repository is deleted from GitHub.
+      then: The account stops refreshing, and local credential removal is confirmed only if established.
+        Saved data is not silently removed or hidden as an assumed default; a path to recovery or explicit
+        local deletion remains. No source Repository is deleted and account isolation details remain open.
   unresolved:
-  - Validate candidate 0098's authorization method and rotation; determine least-required GitHub permissions and concrete account recovery.
+  - Validate candidate 0098's authorization method and rotation; determine least-required GitHub permissions
+    and concrete account recovery.
   - Exact local clear-data interaction and behavior after device change.
   - Repository discovery pagination and first-launch layout.
   provenance_boundary: 'Single-account scope and the default privacy posture are pilot choices made under

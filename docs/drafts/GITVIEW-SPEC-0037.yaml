@@ -13,46 +13,82 @@ sources:
   access: docs/drafts/GITVIEW-SPEC-0036.yaml
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- An older source observation cannot silently replace a confirmed newer observation for the same fact and scope.
-- When freshness or coverage of competing observations cannot be ordered, the application does not report the combined result as a confirmed newer complete snapshot.
-- A response from a refresh begun before explicit denial or local disconnect cannot make newly restricted private content visible without re-established access.
-- A conflict or interrupted refresh does not erase previously retained observations or silently advance the complete-observation time.
+- An older source observation cannot silently replace a confirmed newer observation for the same fact
+  and scope.
+- When freshness or coverage of competing observations cannot be ordered, the application does not report
+  the combined result as a confirmed newer complete snapshot.
+- A late response from a refresh begun before confirmed revocation cannot itself become a new accepted
+  update or establish restored source access; already saved private data remains visible under 0019.
+- A conflict or interrupted refresh does not erase previously retained observations or silently advance
+  the complete-observation time.
 specification:
-  objective: Define observable safety boundaries when refreshes overlap or access changes before a response is applied.
+  objective: Define observable safety boundaries when refreshes overlap or access changes before a response
+    is applied.
   ontology_refs:
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    identity: Compare observations only for the same source identity, object or collection scope and relevant fact. A request for one category or Repository cannot establish freshness for another.
-    ordering: When source evidence establishes that an incoming value is older than an accepted value for the same fact, retain the newer accepted value. Request start order or response completion order alone does not establish source freshness. Reliable source revision, observation evidence or a separately specified comparison rule is required.
-    unordered: If two overlapping results cannot be ordered for the same fact, retain enough previously accepted information to avoid silently asserting that either is newer. Mark the affected fact or scope uncertain or incomplete, and do not advance the last complete observation time as though a coherent newer full result were established. The exact conflict-resolution mechanism remains open.
-    partial_scope: A result can improve the observed facts in a subset without proving the entire collection complete. Absence from a partial result does not delete other records; a complete observation time applies only to a sufficiently covered scope.
-    denial_during_refresh: Apply current access restrictions before presenting response data. If explicit denial or disconnect was established after a request began, completion of that request alone does not restore authorization or unlock previously restricted private observations, even if it arrives after a later reconnection. A later authorized connection must re-establish the relevant source identity, and applicable post-restriction evidence must support each restored scope and fact under 0036 and 0112. A pending local write is reconciled under its original operation and access context; its completion does not override the restriction.
-    identity_during_refresh: Bind a request and its observations to the source identity and access context under which they were initiated. If identity B becomes active before a request started under A completes, its response cannot be presented as an observation made under B or establish B's Repository access. Apply current access policy before any display, sharing or derived count; preserve any retained result only under its actual provenance and the applicable storage policy. Completion of that response does not itself establish current B coverage, even if both identities can access the same Repository. Whether the request is cancelled, retained or reconciled is a lower-level design decision.
-    failure: An interrupted, cancelled or failed request does not manufacture a success time. Its visible failure or incomplete outcome is scoped separately from other successful observations.
-    provenance: These concurrency and access-ordering guarantees are agent-authored refinements of the user's requirements for cached observations and visible refresh failure.
+    identity: Compare observations only for the same source identity, object or collection scope and relevant
+      fact. A request for one category or Repository cannot establish freshness for another.
+    ordering: When source evidence establishes that an incoming value is older than an accepted value
+      for the same fact, retain the newer accepted value. Request start order or response completion order
+      alone does not establish source freshness. Reliable source revision, observation evidence or a separately
+      specified comparison rule is required.
+    unordered: If two overlapping results cannot be ordered for the same fact, retain enough previously
+      accepted information to avoid silently asserting that either is newer. Mark the affected fact or
+      scope uncertain or incomplete, and do not advance the last complete observation time as though a
+      coherent newer full result were established. The exact conflict-resolution mechanism remains open.
+    partial_scope: A result can improve the observed facts in a subset without proving the entire collection
+      complete. Absence from a partial result does not delete other records; a complete observation time
+      applies only to a sufficiently covered scope.
+    denial_during_refresh: For confirmed private Repository revocation, stop synchronization and retain
+      and show previously saved observations under 0019. An in-flight response does not become a new accepted
+      update or establish restored source access merely by arriving later. Reconnection and the evidence
+      needed to resume synchronization remain open. A pending local write is reconciled under its original
+      operation and access context and does not override the restriction.
+    identity_during_refresh: Bind a request and its observations to the source identity and access context
+      under which they were initiated. If identity B becomes active before a request started under A completes,
+      its response cannot be presented as an observation made under B or establish B's Repository access.
+      Apply current access policy before any display, sharing or derived count; preserve any retained
+      result only under its actual provenance and the applicable storage policy. Completion of that response
+      does not itself establish current B coverage, even if both identities can access the same Repository.
+      Whether the request is cancelled, retained or reconciled is a lower-level design decision.
+    failure: An interrupted, cancelled or failed request does not manufacture a success time. Its visible
+      failure or incomplete outcome is scoped separately from other successful observations.
+    provenance: These concurrency and access-ordering guarantees are agent-authored refinements of the
+      user's requirements for cached observations and visible refresh failure.
   scenarios:
     later_completion_older_value:
-      given: Two observations concern the same PR and source evidence confirms B represents a newer revision than A.
+      given: Two observations concern the same PR and source evidence confirms B represents a newer revision
+        than A.
       when: B is accepted before A's response arrives.
       then: A does not replace B or make A's older value appear newer merely because it completed later.
     unordered_results:
-      given: Two overlapping partial responses contain conflicting values for a PR without reliable freshness ordering.
+      given: Two overlapping partial responses contain conflicting values for a PR without reliable freshness
+        ordering.
       when: Both are processed.
-      then: The conflict or affected coverage remains uncertain and no complete newer scope is asserted solely from response arrival order.
+      then: The conflict or affected coverage remains uncertain and no complete newer scope is asserted
+        solely from response arrival order.
     denied_mid_request:
       given: A refresh for a previously accessible private Repository is in flight.
       when: Explicit access denial is established before its response is applied.
-      then: The response alone does not unlock or display restricted private content and the denial remains visible.
+      then: For confirmed revocation, saved local content remains visible with the revocation indication
+        and supported update time when known; the late response does not become a new accepted update
+        or establish restored source access.
     disjoint_scopes:
       given: A PR refresh and an Issue refresh address distinct scopes for the same Repository.
       when: The Issue refresh succeeds and the PR refresh is interrupted.
-      then: The Issue success is retained while the PR scope keeps its own prior observation time and incomplete outcome.
+      then: The Issue success is retained while the PR scope keeps its own prior observation time and
+        incomplete outcome.
     identity_changes_during_request:
-      given: A refresh of a private Repository starts under identity A; identity B becomes active before the response, with no confirmed access to that Repository.
+      given: A refresh of a private Repository starts under identity A; identity B becomes active before
+        the response, with no confirmed access to that Repository.
       when: The A response arrives.
-      then: Its private content is not displayed or counted for B, it does not establish B's access or current coverage, and it cannot erase the saved Project or membership.
+      then: Its private content is not displayed or counted for B, it does not establish B's access or
+        current coverage, and it cannot erase the saved Project or membership.
   unresolved:
-  - Concrete source freshness evidence, conflict storage and eventual reconciliation policy require source-specific design.
-  - Exact execution, cancellation and reconciliation mechanisms when account identity changes during a request require authorization design.
+  - Concrete source freshness evidence, conflict storage and eventual reconciliation policy require source-specific
+    design.
+  - Exact execution, cancellation and reconciliation mechanisms when account identity changes during a
+    request require authorization design.

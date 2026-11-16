@@ -14,74 +14,157 @@ sources:
   observations: docs/drafts/GITVIEW-SPEC-0003.yaml
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Temporary connectivity failure, explicit authorization denial and deliberate local disconnection have distinguishable effects on access to prior observations.
-- Under the agent-proposed offline policy, an applicable denial or disconnection known to the current process or recoverable from durable evidence prevents affected private cached content from being displayed while retaining local records until an explicit clear operation. This candidate cannot guarantee detection of a restriction lost before it became durable or missing from an older restored snapshot; the privacy and availability tradeoff remains a product decision.
+- Temporary connectivity failure, explicit authorization denial and deliberate local disconnection have
+  distinguishable effects on access to prior observations.
+- On confirmed revocation of a private Repository, retain and show saved local data with the revoked indication
+  and supported update time when known, stop synchronization, and provide access to recovery or explicit
+  local deletion. Other access and account cases require separate refinement.
 - A source 404 or an incomplete discovery result alone is not treated as a confirmed deletion or revocation.
-- Reconnection does not silently change the identity of existing Projects or treat a different source identity as proof of restored access.
+- Reconnection does not silently change the identity of existing Projects or treat a different source
+  identity as proof of restored access.
 specification:
-  objective: Describe how connection and source access affect visibility and recovery of stored observations without choosing an authorization implementation.
+  objective: Describe how connection and source access affect visibility and recovery of stored observations
+    without choosing an authorization implementation.
   ontology_refs:
   - gitview:User
   - gitview:GitHub
   - gitview:Repository
   - gitview:Project
   contract:
-    scope: The initial product slice concerns one connected source identity. The GitView User is its operator and is not inferred to be the author or reviewer of a particular PR.
-    no_account: An unconnected state provides a route to connect and is not evidence that GitHub contains no repositories. Cancellation leaves connection incomplete and preserves existing local Projects and observations.
-    network_failure: A temporary network or rate failure does not itself establish a new restriction or repository deletion. Previously permitted cached observations may remain eligible with their own observation time, coverage and scoped refresh failure under 0003 when the applicable account and restriction context remains sufficiently supported. An independently known denial, disconnect or indeterminate restriction context continues to govern affected private content.
-    offline_after_restart: As an agent-authored working policy, after restart previously permitted cached observations remain eligible offline when the last confirmed local account context and relevant saved access restrictions are sufficiently readable and consistent, and no applicable durable denial, disconnect or unresolved access-changing operation is known. A locked or locally expired credential alone need not hide that content when the earlier account binding and absence of an unresolved replacement are independently supported. Show the prior observation time and that current access has not been reverified; do not present last-known evidence as a current grant. If the account or relevant restriction state is unreadable, inconsistent or known indeterminate, restrict only the affected private scope until recovery. This candidate exposes the limitation that an event known only in a terminated process may be absent from durable evidence; it does not establish that the owner accepted the resulting privacy risk or that no such event occurred.
-    missing_credential_cache_policy: Under the same working offline policy, a confirmed missing secure credential makes the current connection unusable, but alone is not an explicit source denial, local disconnect, evidence of an older restore or proof that prior permitted observations are false. If the historical account association, relevant restriction records and absence of an unresolved access-changing operation are independently recoverable and consistent, affected cached observations may remain eligible as last known, with connection recovery and unverified current source access made discoverable. This historical association is not a usable current binding and cannot authorize an authenticated request. If any prerequisite is unreadable, inconsistent or indeterminate, or a later applicable restriction or rollback is established, withhold the affected private content according to its actual context. Do not imply the missing item has been recovered or that a backup contains the latest access changes.
-    known_restored_rollback: If independent reliable evidence establishes that the local snapshot predates a subsequent restriction, disconnect or other relevant access change, do not treat the older apparently consistent binding as current authority. Restrict the affected scope and pending work until the applicable recovery and post-restriction source evidence are established. A missing credential alone is not proof of rollback. If no independent evidence identifies a restored older snapshot, this offline policy cannot rule out later actions missing from it; last-known content may remain eligible with its original observation time and no claim of current access.
-    explicit_denial: An explicit authentication or authorization denial is distinct from offline. Under the working private-cache policy from 0019, restrict display of affected private observations and their sensitive derived details until applicable post-restriction evidence supports disclosure under 0112. An explicit clear may remove retained records but does not itself restore source access. The denial is not represented as an empty collection.
-    source_404: A 404 alone does not prove deletion or access revocation and does not erase Repository identity, Project membership or previously saved observations. It leaves current source state uncertain; access to cached private content remains subject to the other applicable access evidence, not to a fabricated confirmed denial.
-    ambiguous_status: Interpret source errors using the applicable operation, response evidence and connection context. An HTTP status alone is not a universal reason classifier; for example GitHub may return 403 for a rate limit as well as other failures. Do not report a confirmed repository-level denial, deletion or empty result without sufficient evidence. The particular source mapping remains to be specified.
-    disconnect: A deliberate local disconnect stops new refresh for that identity, restricts private cached content and attempts local credential removal. Removal is confirmed only when established; an unsuccessful or uncertain result remains a recoverable local-security problem under 0058. Records remain until an explicit clear operation; source Repositories and unrelated local Project memberships are not removed.
-    reconnect: Successful reconnection identifies the source identity but does not alone establish access to every Repository, category, object or field. Under 0112, applicable post-restriction evidence can restore the specific facts and scopes it supports; a successful Repository metadata read is not by itself permission to display earlier PRs, Issues, checks or derived historical metrics. A different identity or a connection with only partial access does not automatically unlock prior private observations, and a pre-restriction response arriving late cannot restore them merely by arriving after reconnection.
-    discovery: Partial discovery records its incomplete scope and does not treat unreturned repositories as deleted or denied. Complete-discovery interpretation is subject to source and permission rules that remain to be specified.
-    provenance: Offline behavior and visible update failure follow the owner's direction; private-cache restriction, local disconnect and restoration policy are agent-authored working decisions.
+    scope: The initial product slice concerns one connected source identity. The GitView User is its operator
+      and is not inferred to be the author or reviewer of a particular PR.
+    no_account: An unconnected state provides a route to connect and is not evidence that GitHub contains
+      no repositories. Cancellation leaves connection incomplete and preserves existing local Projects
+      and observations.
+    network_failure: A temporary network or rate failure does not itself establish a new restriction or
+      repository deletion. Previously permitted cached observations may remain eligible with their own
+      observation time, coverage and scoped refresh failure under 0003 when the applicable account and
+      restriction context remains sufficiently supported. An independently known denial, disconnect or
+      indeterminate restriction context continues to govern affected private content.
+    offline_after_restart: After restart, previously saved private Repository observations remain visible
+      when their confirmed revocation is known and the saved data is locally available, with revocation
+      indication and supported update time when known under 0019. Do not claim a current GitHub grant.
+      Other account, disconnect and incomplete local-context cases require separate refinement; do not
+      assume an event missing from durable evidence did not occur.
+    missing_credential_cache_policy: A missing secure credential makes the current connection unusable
+      but alone is not proof of source denial, disconnect, rollback or false prior observations. For a
+      locally available saved Repository with confirmed revocation, retain and show the data under 0019
+      and provide recovery or explicit local deletion. Account association and other unreadable or inconsistent
+      local-context cases require separate refinement; do not invent a recovered credential or current
+      source access.
+    known_restored_rollback: If reliable evidence establishes that a restored local snapshot predates
+      an access change, do not describe the older binding as current source authority. When confirmed
+      revocation and prior saved data are both known, show the available data under 0019 with appropriate
+      limitation and do not treat pending work as synchronized. The treatment of other access changes
+      and missing evidence requires refinement; a missing credential alone does not prove rollback.
+    explicit_denial: Explicit source denial differs from offline. When revocation of a private Repository
+      is confirmed, follow canonical 0019 and retain and show saved local observations with a revocation
+      indication and supported update time when known, stop synchronization, and provide access to recovery
+      or explicit local deletion. Local visibility does not establish GitHub access. Other denial and
+      local account cases remain subject to refinement.
+    source_404: A 404 alone does not prove deletion or access revocation and does not erase Repository
+      identity, Project membership or previously saved observations. It leaves current source state uncertain;
+      access to cached private content remains subject to the other applicable access evidence, not to
+      a fabricated confirmed denial.
+    ambiguous_status: Interpret source errors using the applicable operation, response evidence and connection
+      context. An HTTP status alone is not a universal reason classifier; for example GitHub may return
+      403 for a rate limit as well as other failures. Do not report a confirmed repository-level denial,
+      deletion or empty result without sufficient evidence. The particular source mapping remains to be
+      specified.
+    disconnect: A deliberate local disconnect stops new refresh for that identity and attempts local credential
+      removal. Removal is confirmed only when established; an unsuccessful or uncertain result remains
+      a recoverable problem under 0058. Preserve saved data and a user-visible point of access for recovery
+      or explicit local deletion. Detailed account isolation and presentation remain open; source Repositories
+      and unrelated local Project memberships are not removed.
+    reconnect: Successful reconnection identifies the source identity but does not alone establish access
+      to every Repository, category, object or field. Already saved local data remains visible for a confirmed
+      revoked Repository under 0019. The scope and evidence required to resume synchronization remain
+      to be specified; neither partial access nor a late pre-revocation response establishes full source
+      access.
+    discovery: Partial discovery records its incomplete scope and does not treat unreturned repositories
+      as deleted or denied. Complete-discovery interpretation is subject to source and permission rules
+      that remain to be specified.
+    provenance: Offline behavior and visible update failure follow the owner direction. The owner chose
+      retention and continued local display after confirmed private Repository revocation; policies for
+      other access, local disconnect and restoration cases remain under refinement.
   scenarios:
     offline:
-      given: A previously permitted private Repository has saved observations, its applicable account and restriction context remains readable and consistent, and no independently established restriction or pending access change applies.
+      given: A previously permitted private Repository has saved observations, its applicable account
+        and restriction context remains readable and consistent, and no independently established restriction
+        or pending access change applies.
       when: A refresh fails due to network unavailability.
-      then: Previously permitted data can remain visible with the last-success time and a visible failure, without claiming current source access was reverified.
+      then: Previously permitted data can remain visible with the last-success time and a visible failure,
+        without claiming current source access was reverified.
     explicit_denial:
       given: A private Repository has saved observations.
-      when: The source explicitly denies access to that Repository.
-      then: Affected private data is not displayed, the problem is visible and the saved records and Project membership are not silently erased.
+      when: The source explicitly confirms that access to that Repository was revoked.
+      then: For confirmed revocation, saved private data and Project membership remain visible locally
+        with the access indication and supported update time when known; synchronization stops and recovery
+        or explicit local deletion is available.
     different_identity:
-      given: A local disconnect restricted previously observed private data for source identity A.
+      given: A local disconnect occurred after private data for source identity A was saved.
       when: A different source identity B connects.
       then: B's connection alone does not automatically unlock A's prior restricted private observations.
     partial_reconnect_after_late_response:
-      given: Private PR and Issue observations were restricted after an explicit denial, an earlier background request remains unresolved, and the same account reconnects with a new successful Repository-name observation only.
+      given: A private Repository has saved PR and Issue observations after confirmed revocation, an earlier
+        background request remains unresolved, and the same account reconnects with a new successful Repository-name
+        observation only.
       when: The old request delivers a PR response after reconnection and the operator opens the Project.
-      then: The newly supported Repository name may be presented where permitted; the earlier PR response does not independently lift the restriction, and older PR, Issue and derived metric facts remain restricted or unknown until separately supported under 0112. The Project is not represented as empty merely because those facts cannot be shown.
+      then: Already saved local PR and Issue data remains visible with the revocation indication and supported
+        update times when known. The earlier response does not become a fresh accepted update or establish
+        restored source access merely by arriving late; a successful Repository-name observation alone
+        does not establish access to every fact.
     not_found:
       given: A saved Repository is referenced by an old source address.
       when: A source request returns 404.
-      then: GitView records an uncertain source result and retains the Repository and membership instead of asserting deletion.
+      then: GitView records an uncertain source result and retains the Repository and membership instead
+        of asserting deletion.
     restart_offline_known_binding:
-      given: A terminated process left a readable consistent last confirmed account and previously permitted private observations, with no applicable durable denial or unresolved access-changing operation, and GitView is now offline.
+      given: A terminated process left a readable consistent last confirmed account and previously permitted
+        private observations, with no applicable durable denial or unresolved access-changing operation,
+        and GitView is now offline.
       when: The operator opens the Project.
-      then: Eligible last-known data can appear with its own observation time and unverified current access; a local credential that cannot currently be read does not itself establish denial or a new successful refresh.
+      then: Eligible last-known data can appear with its own observation time and unverified current access;
+        a local credential that cannot currently be read does not itself establish denial or a new successful
+        refresh.
     restart_known_pending_disconnect:
-      given: A previously permitted private Repository has a durable record of a disconnect or access-changing operation whose outcome is not yet resolved.
+      given: A previously permitted private Repository has a durable record of a disconnect or access-changing
+        operation whose outcome is not yet resolved.
       when: GitView restarts offline.
-      then: The affected private scope remains restricted pending recovery while independently permitted unrelated data may remain available; the app does not assert that disconnect succeeded or failed without evidence.
+      then: The app does not assert that disconnect succeeded or failed without evidence. The user retains
+        a visible point of access to locally available saved data and recovery; exact account isolation
+        and presentation require refinement.
     restart_missing_credential_but_recoverable_context:
-      given: After restart a previously confirmed account association and its restriction records are consistently readable, no applicable denial or unresolved access-changing operation is known, and the corresponding secure credential slot is confirmed missing.
+      given: After restart a previously confirmed account association and its restriction records are
+        consistently readable, no applicable denial or unresolved access-changing operation is known,
+        and the corresponding secure credential slot is confirmed missing.
       when: The operator opens previously permitted private observations.
-      then: They may be shown as last-known data with their own observation times and unverified current access; connection recovery is available and no authenticated refresh is claimed usable. A missing slot alone is not labeled a source denial or a proven rollback.
+      then: They may be shown as last-known data with their own observation times and unverified current
+        access; connection recovery is available and no authenticated refresh is claimed usable. A missing
+        slot alone is not labeled a source denial or a proven rollback.
     denial_lost_before_restart:
-      given: A process observed an explicit denial, then terminated before its restriction became durable; after restart GitView is offline and the recovered records independently appear consistent with the earlier permitted account context and contain no evidence of the denial or an unresolved access change.
-      when: The operator requests the previously permitted private observation under the candidate offline policy.
-      then: The earlier observation may be eligible as last known with its own time and unverified current access. The recovered state cannot establish that no denial occurred; this scenario exposes a privacy limitation of the candidate, not an owner-approved guarantee or proof that the actual denial was undone.
+      given: A process observed an explicit denial, then terminated before its restriction became durable;
+        after restart GitView is offline and the recovered records independently appear consistent with
+        the earlier permitted account context and contain no evidence of the denial or an unresolved access
+        change.
+      when: The operator requests the previously permitted private observation under the candidate offline
+        policy.
+      then: The earlier observation may be eligible as last known with its own time and unverified current
+        access. The recovered state cannot establish that no denial occurred; this scenario exposes a
+        privacy limitation of the candidate, not an owner-approved guarantee or proof that the actual
+        denial was undone.
     missing_credential_and_unreadable_restriction:
-      given: The saved account association is readable and the secure credential is confirmed missing, but the applicable private restriction or disconnect state cannot be recovered consistently.
+      given: The saved account association is readable and the secure credential is confirmed missing,
+        but the applicable private restriction or disconnect state cannot be recovered consistently.
       when: The operator opens the affected Project.
-      then: The affected private content remains withheld pending recovery rather than assuming that no denial occurred; the local Project is not presented as deleted or an empty source.
+      then: The app does not assume a successful GitHub connection or invent the missing restriction state.
+        Locally available saved data and a route to recovery remain discoverable; exact account isolation
+        and presentation require refinement.
   unresolved:
-  - Decide the product tradeoff for private cached content when a denial or disconnect may have been lost across interruption or backup restore; the current candidate favors eligible last-known access and does not guarantee revocation detection.
-  - Distinguish source signals that prove an explicit repository-level denial from ambiguous HTTP or API failures.
+  - Decide the product tradeoff for private cached content when a denial or disconnect may have been lost
+    across interruption or backup restore; the current candidate favors eligible last-known access and
+    does not guarantee revocation detection.
+  - Distinguish source signals that prove an explicit repository-level denial from ambiguous HTTP or API
+    failures.
   - Concurrent refresh and revocation ordering, exact authorization flow and secure credential lifecycle.
   - Explicit clear-data UX, retention scope and behavior after device migration.

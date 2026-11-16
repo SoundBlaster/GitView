@@ -18,87 +18,202 @@ sources:
   authorization: conversation:gitview/excerpt-68
 acceptance:
 - The overview distinguishes no configured Projects from unobserved work and a failed or partial observation.
-- Prior values eligible for display remain scoped and accompanied by their freshness and failure or coverage indication when a temporary refresh fails; explicit denial follows the private-cache policy.
+- Prior values eligible for display remain scoped and accompanied by their freshness and failure or coverage
+  indication when a temporary refresh fails; explicit denial follows the private-cache policy.
 - Explicit source access denial follows 0019's private-cache policy; temporary offline failure is distinct.
 - Necessary state distinctions are available without relying solely on color.
-- A reliably established restoration of an older local snapshot is presented as a recovery limitation without inventing later changes or replaying pending work.
+- A reliably established restoration of an older local snapshot is presented as a recovery limitation
+  without inventing later changes or replaying pending work.
 specification:
-  objective: Define how the portfolio overview communicates the state and limitations of observed project data.
+  objective: Define how the portfolio overview communicates the state and limitations of observed project
+    data.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    empty_projects: A confirmed local Project collection with no entries offers setup; it is not a statement about GitHub having no repositories or work.
-    configuration_unknown: A failed, incomplete or inconsistent local configuration read is not a confirmed empty Project collection. Surface a local-data recovery state without silently resetting saved configuration or conflating it with a GitHub refresh failure. Once a successful read establishes saved Projects, show their permitted identities and applicable source observation states.
-    startup_reconciliation: A GitHub response completing while the saved Project configuration is unreadable or incomplete can establish only its independently supported source facts under the applicable identity and access policy. It cannot establish the local Project collection, Project membership or a first-run empty state, or automatically create a Project. On a later successful local read, reconcile permitted observations to confirmed Project identities and membership with their original scope and times; do not attribute a successful response for one Repository or category to the entire portfolio. If the operator has explicitly navigated elsewhere during recovery, updating the overview must not silently replace that active route; apply 0024 to its validity and return context.
-    known_older_snapshot: When independent reliable evidence establishes that the readable local store was restored from an older snapshot, make the limitation and recovery route discoverable from the overview until resolved under the applicable recovery policy. Explain that saved local Projects or other data may omit later changes; do not claim which changes were lost, that a later state is recoverable, or that the displayed snapshot is the latest configuration. Show a snapshot time only if its meaning and provenance are established; restore time alone is not the snapshot time. This is distinct from an unreadable local store and from a GitHub refresh failure. Do not infer a restore or claim the absence of rollback when evidence is insufficient.
-    snapshot_recovery_actions: As an agent-authored presentation proposal, offer a non-destructive route to review the readable saved Projects and a connection recovery route when applicable. Apply current disclosure rules before showing any cached private details; an accessible connection does not itself establish current source access or a safe restored binding. Keep the saved configuration intact and identify separately what is unavailable or uncertain. Do not silently replay a pending operation or replace saved state with a guessed newer state. A subsequent edit requires an explicit reviewed action against an eligible confirmed base, and an earlier write that may still commit must first be reconciled under 0103 and 0083. A non-sensitive explanation remains available even when details cannot be shown.
-    unobserved: A configured Project with an unobserved scope remains present. An unavailable count or signal is unknown, not zero, clear or healthy.
-    partial: If some members or requested categories are missing, show available values only with a visible indication of incomplete scope. Unique portfolio totals follow 0012 and must not imply complete coverage.
-    recovered_incomplete_portion: After restart, a readable saved Project and independently recoverable permitted observations can be represented with their original source scope and times under 0102 and 0123. If only terminal traversal progress remains for a portion and the evidence needed to establish its coverage or earlier limitation is missing, mark the affected work or summary as incomplete or unproven; do not infer a specific GitHub error or say the source returned an empty collection. If a local read or retention failure is independently established, expose it as a separate local recovery limitation; if its cause or outcome is unavailable, report only the supported uncertainty. A separately recoverable GitHub failure may be displayed for its actual scope and attempt context, but neither it nor the local limitation implies the other. Show a successful observation time only when its meaning and scope are independently supported, and retain an applicable retry or recovery route without implying a request already ran. Recheck current disclosure before showing the Project, facts or affected scope.
-    stale_or_failed: Previously authorized data that remains eligible under the current private-cache policy can be shown through temporary failures, with the affected scope, a supported permitted successful observation time when available, and an explicit indication of failure. If the time is unavailable, do not invent it. Prior authorization alone does not override an applicable restriction or unreadable restriction state. Refresh does not silently reset the successful timestamp.
-    missing_credential_recovery: If the locally required credential is confirmed missing, show a discoverable connection-recovery state distinct from a failed GitHub request; an unavailable secure store is not automatically a confirmed missing item. Under 0036, eligible last-known data may remain visible with its actual observation time and unverified current access only when the required historical account and restriction evidence is independently recoverable. If that evidence is indeterminate, withhold affected private details and retain a non-sensitive explanation and recovery route where permitted. Make the relevant state and recovery action available without color alone or a transient notice. Do not claim source access, successful refresh, source deletion or an empty Project because the credential is absent; do not erase saved Projects or cached observations. The exact system control and wording are left to native design.
-    access_denied: An explicit access denial or local disconnect follows the private-cache rules in 0019. Temporary network failure and HTTP 404 alone are not proof of revocation or deletion.
-    mixed: Each scope retains its own state and freshness; a successful Issue observation does not make a failed PR observation current. The interface may summarize the condition only if the affected scope remains discoverable.
-    portfolio_status_access: As an agent-authored first-version presentation proposal, provide a persistent, discoverable system-styled status or recovery action on the Projects overview, including when no Project cards can be shown. It exposes the currently supported local configuration limitation, source refresh outcome, applicable last-success context and coverage limitations as separate items where relevant and safe. Multiple simultaneous limitations do not overwrite one another or become a single unexplained GitHub error. The operator can inspect an eligible recovery or refresh action for its actual scope; if the action is deferred or cannot safely proceed, explain the supported limitation without claiming an attempted request. A confirmed empty portfolio still offers setup under 0022, while unreadable configuration does not. Use text and accessible labels in addition to any color or symbol. Opening or dismissing status does not itself refresh, reset saved data or change the active route; a deliberate action follows 0048, 0103 and current access policy. Exact placement, wording, native control and focus behavior remain subject to platform evaluation.
-    action: Refresh is offered using an interaction appropriate to the screen; no success is implied until an observation succeeds. Platform scheduling and network policy are defined elsewhere.
-    boundary: Presentation placement and precise freshness thresholds are open; these proposals do not prescribe a system control or introduce domain entities for UI state.
+    empty_projects: A confirmed local Project collection with no entries offers setup; it is not a statement
+      about GitHub having no repositories or work.
+    configuration_unknown: A failed, incomplete or inconsistent local configuration read is not a confirmed
+      empty Project collection. Surface a local-data recovery state without silently resetting saved configuration
+      or conflating it with a GitHub refresh failure. Once a successful read establishes saved Projects,
+      show their permitted identities and applicable source observation states.
+    startup_reconciliation: A GitHub response completing while the saved Project configuration is unreadable
+      or incomplete can establish only its independently supported source facts under the applicable identity
+      and access policy. It cannot establish the local Project collection, Project membership or a first-run
+      empty state, or automatically create a Project. On a later successful local read, reconcile permitted
+      observations to confirmed Project identities and membership with their original scope and times;
+      do not attribute a successful response for one Repository or category to the entire portfolio. If
+      the operator has explicitly navigated elsewhere during recovery, updating the overview must not
+      silently replace that active route; apply 0024 to its validity and return context.
+    known_older_snapshot: When independent reliable evidence establishes that the readable local store
+      was restored from an older snapshot, make the limitation and recovery route discoverable from the
+      overview until resolved under the applicable recovery policy. Explain that saved local Projects
+      or other data may omit later changes; do not claim which changes were lost, that a later state is
+      recoverable, or that the displayed snapshot is the latest configuration. Show a snapshot time only
+      if its meaning and provenance are established; restore time alone is not the snapshot time. This
+      is distinct from an unreadable local store and from a GitHub refresh failure. Do not infer a restore
+      or claim the absence of rollback when evidence is insufficient.
+    snapshot_recovery_actions: As an agent-authored presentation proposal, offer a non-destructive route
+      to review the readable saved Projects and a connection recovery route when applicable. Apply current
+      disclosure rules before showing any cached private details; an accessible connection does not itself
+      establish current source access or a safe restored binding. Keep the saved configuration intact
+      and identify separately what is unavailable or uncertain. Do not silently replay a pending operation
+      or replace saved state with a guessed newer state. A subsequent edit requires an explicit reviewed
+      action against an eligible confirmed base, and an earlier write that may still commit must first
+      be reconciled under 0103 and 0083. A non-sensitive explanation remains available even when details
+      cannot be shown.
+    unobserved: A configured Project with an unobserved scope remains present. An unavailable count or
+      signal is unknown, not zero, clear or healthy.
+    partial: If some members or requested categories are missing, show available values only with a visible
+      indication of incomplete scope. Unique portfolio totals follow 0012 and must not imply complete
+      coverage.
+    recovered_incomplete_portion: After restart, a readable saved Project and independently recoverable
+      permitted observations can be represented with their original source scope and times under 0102
+      and 0123. If only terminal traversal progress remains for a portion and the evidence needed to establish
+      its coverage or earlier limitation is missing, mark the affected work or summary as incomplete or
+      unproven; do not infer a specific GitHub error or say the source returned an empty collection. If
+      a local read or retention failure is independently established, expose it as a separate local recovery
+      limitation; if its cause or outcome is unavailable, report only the supported uncertainty. A separately
+      recoverable GitHub failure may be displayed for its actual scope and attempt context, but neither
+      it nor the local limitation implies the other. Show a successful observation time only when its
+      meaning and scope are independently supported, and retain an applicable retry or recovery route
+      without implying a request already ran. Recheck current disclosure before showing the Project, facts
+      or affected scope.
+    stale_or_failed: Previously authorized data that remains eligible under the current private-cache
+      policy can be shown through temporary failures, with the affected scope, a supported permitted successful
+      observation time when available, and an explicit indication of failure. If the time is unavailable,
+      do not invent it. Prior authorization alone does not override an applicable restriction or unreadable
+      restriction state. Refresh does not silently reset the successful timestamp.
+    missing_credential_recovery: If the locally required credential is confirmed missing, present connection
+      recovery and distinguish an unavailable secure store from a confirmed missing item. Locally available
+      saved data remains a discoverable point of access; for confirmed private Repository revocation show
+      saved observations with the revocation indication and supported update time when known under 0019.
+      Do not claim source access, successful refresh, source deletion or an empty Project because the
+      credential is absent. Account isolation and exact presentation remain open.
+    access_denied: An explicit access denial or local disconnect follows the private-cache rules in 0019.
+      Temporary network failure and HTTP 404 alone are not proof of revocation or deletion.
+    mixed: Each scope retains its own state and freshness; a successful Issue observation does not make
+      a failed PR observation current. The interface may summarize the condition only if the affected
+      scope remains discoverable.
+    portfolio_status_access: As an agent-authored first-version presentation proposal, provide a persistent,
+      discoverable system-styled status or recovery action on the Projects overview, including when no
+      Project cards can be shown. It exposes the currently supported local configuration limitation, source
+      refresh outcome, applicable last-success context and coverage limitations as separate items where
+      relevant and safe. Multiple simultaneous limitations do not overwrite one another or become a single
+      unexplained GitHub error. The operator can inspect an eligible recovery or refresh action for its
+      actual scope; if the action is deferred or cannot safely proceed, explain the supported limitation
+      without claiming an attempted request. A confirmed empty portfolio still offers setup under 0022,
+      while unreadable configuration does not. Use text and accessible labels in addition to any color
+      or symbol. Opening or dismissing status does not itself refresh, reset saved data or change the
+      active route; a deliberate action follows 0048, 0103 and current access policy. Exact placement,
+      wording, native control and focus behavior remain subject to platform evaluation.
+    action: Refresh is offered using an interaction appropriate to the screen; no success is implied until
+      an observation succeeds. Platform scheduling and network policy are defined elsewhere.
+    boundary: Presentation placement and precise freshness thresholds are open; these proposals do not
+      prescribe a system control or introduce domain entities for UI state.
   scenarios:
     simultaneous_recovery_conditions:
-      given: The Projects overview has an independently readable local Project, an eligible last-known PR observation at T1, a confirmed source refresh failure for a permitted Issue scope, and an indeterminate local retention operation for a newer PR fact. A different private scope is restricted, and no Project-wide last-success time is supported.
-      when: The operator opens the portfolio status and inspects available recovery actions with visual or assistive navigation.
-      then: The Issue source failure and uncertain PR save are separately identifiable without revealing restricted identities or inventing a Project-wide timestamp. Eligible prior facts retain T1 and their scope. An allowed source retry and same-operation local reconciliation remain distinct, with deferral explained where applicable; opening or closing status does not start either action or erase the Project.
+      given: The Projects overview has an independently readable local Project, an eligible last-known
+        PR observation at T1, a confirmed source refresh failure for a permitted Issue scope, and an indeterminate
+        local retention operation for a newer PR fact. A different private scope is restricted, and no
+        Project-wide last-success time is supported.
+      when: The operator opens the portfolio status and inspects available recovery actions with visual
+        or assistive navigation.
+      then: The Issue source failure and uncertain PR save are separately identifiable without revealing
+        restricted identities or inventing a Project-wide timestamp. Eligible prior facts retain T1 and
+        their scope. An allowed source retry and same-operation local reconciliation remain distinct,
+        with deferral explained where applicable; opening or closing status does not start either action
+        or erase the Project.
     mixed_observations:
       given: The Issue scope succeeds while the PR scope fails after a previous success.
       when: The Project overview is displayed.
-      then: Issues carry their own latest successful observation time and coverage; retained PR values show their earlier time and failure without presenting the overall Project as fully current.
+      then: Issues carry their own latest successful observation time and coverage; retained PR values
+        show their earlier time and failure without presenting the overall Project as fully current.
     recovered_partial_without_error_reason:
-      given: A saved Project and one permitted PR observation at T1 are recoverable after restart. Terminal progress for its PR discovery is readable, but the earlier page limitation and evidence needed to establish complete population are not; no GitHub failure is independently recoverable. A separate local read of another observation is confirmed failed.
+      given: A saved Project and one permitted PR observation at T1 are recoverable after restart. Terminal
+        progress for its PR discovery is readable, but the earlier page limitation and evidence needed
+        to establish complete population are not; no GitHub failure is independently recoverable. A separate
+        local read of another observation is confirmed failed.
       when: The operator inspects the Project in the portfolio and opens its status or recovery details.
-      then: The PR fact may be used with its T1 context and a safe incomplete or unproven coverage indication; the separately established local read failure and recovery are distinguishable. The interface does not invent a GitHub error, claim source success or complete coverage from the terminal progress, assign an observation time to unobserved work, or report the Project empty.
+      then: The PR fact may be used with its T1 context and a safe incomplete or unproven coverage indication;
+        the separately established local read failure and recovery are distinguishable. The interface
+        does not invent a GitHub error, claim source success or complete coverage from the terminal progress,
+        assign an observation time to unobserved work, or report the Project empty.
     no_observation:
       given: A configured Project has never received Issue data.
       when: Its summary appears.
       then: The Issue count is unknown or loading rather than zero.
     denied_private:
-      given: A private repository was previously observed and source access is explicitly denied.
+      given: A private Repository has saved local observations and its source access revocation has been
+        explicitly confirmed.
       when: Its status is presented.
-      then: An access problem is identifiable and restricted cached content is not shown, consistent with 0019.
+      then: For confirmed revocation, saved data remains visible with an access-revoked indication and
+        supported update time when known, and provides a point of access for recovery or explicit local
+        deletion under 0019.
     unreadable_configuration:
       given: GitHub is connected but the local Project configuration cannot be read.
       when: The operator opens the overview.
-      then: The overview identifies the local-data problem without claiming there are no Projects or that GitHub has returned an empty result.
+      then: The overview identifies the local-data problem without claiming there are no Projects or that
+        GitHub has returned an empty result.
     late_source_success_during_local_recovery:
-      given: A cold launch cannot read the saved Project configuration, while an independently authorized request for Repository R's Issues completes successfully; the response does not establish the local membership of R.
-      when: The local read later confirms Projects P and Q, only P contains R, and no other category has been refreshed.
-      then: The earlier local failure is not treated as an empty portfolio; the permitted Issue observation retains its own scope and time and can contribute to P under the summary rules, without being attributed to Q or making all of P's categories current. The source response alone creates no Project or membership.
+      given: A cold launch cannot read the saved Project configuration, while an independently authorized
+        request for Repository R's Issues completes successfully; the response does not establish the
+        local membership of R.
+      when: The local read later confirms Projects P and Q, only P contains R, and no other category has
+        been refreshed.
+      then: The earlier local failure is not treated as an empty portfolio; the permitted Issue observation
+        retains its own scope and time and can contribute to P under the summary rules, without being
+        attributed to Q or making all of P's categories current. The source response alone creates no
+        Project or membership.
     recovery_while_navigated_away:
-      given: The overview reports unreadable local configuration and the operator explicitly opens an available recovery or settings route before a retry finishes.
+      given: The overview reports unreadable local configuration and the operator explicitly opens an
+        available recovery or settings route before a retry finishes.
       when: A later valid read confirms saved Projects.
-      then: The confirmed overview can be updated without silently displacing the operator's active route; returning to it shows the permitted saved Projects and their independently supported observation states.
+      then: The confirmed overview can be updated without silently displacing the operator's active route;
+        returning to it shows the permitted saved Projects and their independently supported observation
+        states.
     independently_established_older_snapshot:
-      given: Reliable independent evidence identifies a readable restored local snapshot as older, but neither its exact snapshot time nor the content of any later changes is established; an old pending Project edit also has an unreconciled outcome.
+      given: Reliable independent evidence identifies a readable restored local snapshot as older, but
+        neither its exact snapshot time nor the content of any later changes is established; an old pending
+        Project edit also has an unreconciled outcome.
       when: The operator opens the overview and chooses to review the saved Projects.
-      then: A persistent discoverable recovery indication explains the potential omission without fabricating a time or missing edits. Only permitted saved details appear, the earlier edit is not replayed, and a replacement cannot bypass reconciliation of a write that might still commit.
+      then: A persistent discoverable recovery indication explains the potential omission without fabricating
+        a time or missing edits. Only permitted saved details appear, the earlier edit is not replayed,
+        and a replacement cannot bypass reconciliation of a write that might still commit.
     unrecognized_rollback:
-      given: A readable local store has in fact been restored from an older snapshot but no reliable evidence available to GitView establishes that fact.
+      given: A readable local store has in fact been restored from an older snapshot but no reliable evidence
+        available to GitView establishes that fact.
       when: The overview is opened.
-      then: GitView does not present a fabricated restoration warning or certify that the data is the latest; normal observation, access and freshness rules apply within the known evidence limits.
+      then: GitView does not present a fabricated restoration warning or certify that the data is the
+        latest; normal observation, access and freshness rules apply within the known evidence limits.
     restored_store_missing_credential:
-      given: A readable restored Project configuration exists but its required secure credential is confirmed missing.
+      given: A readable restored Project configuration exists but its required secure credential is confirmed
+        missing.
       when: The overview offers recovery.
-      then: The connection problem is distinct from an empty Project collection or a failed GitHub refresh; Projects remain intact and only details permitted by current private-cache rules are shown, with a route to recover the connection where supported.
+      then: The connection problem is distinct from an empty Project collection or a failed GitHub refresh;
+        Projects remain intact and only details permitted by current private-cache rules are shown, with
+        a route to recover the connection where supported.
     missing_credential_cancel_recovery:
-      given: A saved Project and its prior permitted observations are recoverable, the secure credential is confirmed missing, and the account and restriction context supports the 0036 last-known policy.
+      given: A saved Project and its prior permitted observations are recoverable, the secure credential
+        is confirmed missing, and the account and restriction context supports the 0036 last-known policy.
       when: The operator opens the overview, begins connection recovery and cancels it.
-      then: The saved Project and eligible observations remain available with their original times and unverified current access; the connection problem and a recovery route remain discoverable without color alone. No new GitHub success, empty Project or source denial is asserted, and cancellation does not change the access outcome.
+      then: The saved Project and eligible observations remain available with their original times and
+        unverified current access; the connection problem and a recovery route remain discoverable without
+        color alone. No new GitHub success, empty Project or source denial is asserted, and cancellation
+        does not change the access outcome.
     missing_credential_unknown_access_context:
-      given: A saved Project is readable and the secure credential is confirmed missing, but the restriction records needed to establish eligibility of private observations cannot be read.
+      given: A saved Project is readable and the secure credential is confirmed missing, but the restriction
+        records needed to establish eligibility of private observations cannot be read.
       when: The overview is presented.
-      then: The Project remains available in a non-sensitive form where permitted, affected private facts and revealing counts are withheld, and a local recovery limitation is distinguishable from an empty source or a GitHub denial.
+      then: The Project remains available in a non-sensitive form where permitted, affected private facts
+        and revealing counts are withheld, and a local recovery limitation is distinguishable from an
+        empty source or a GitHub denial.
   unresolved:
-  - The working foreground refresh eligibility threshold and category-specific coverage follow 0048 and 0057; evaluate their presentation and actual behavior during implementation.
-  - Candidates 0037 and 0112 propose access-change and in-flight refresh handling; exact source-to-field mapping, local recovery presentation and actual ordering remain to be established.
-  - The placement, lifetime and resolution criteria of the older-snapshot recovery indication require UX and recovery-policy review; no universal rollback detection is assumed.
+  - The working foreground refresh eligibility threshold and category-specific coverage follow 0048 and
+    0057; evaluate their presentation and actual behavior during implementation.
+  - Candidates 0037 and 0112 propose access-change and in-flight refresh handling; exact source-to-field
+    mapping, local recovery presentation and actual ordering remain to be established.
+  - The placement, lifetime and resolution criteria of the older-snapshot recovery indication require
+    UX and recovery-policy review; no universal rollback detection is assumed.

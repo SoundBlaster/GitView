@@ -18,37 +18,109 @@ sources:
   autonomy: conversation:gitview/excerpt-77
   native_preview_candidate: docs/drafts/native-preview-candidate-20261115.md
 acceptance:
-- A first-version long press previews the selected object and opening from that preview preserves its identity and source context.
-- Dismissal returns to the originating scope, filters and density when valid, or exposes an available fallback when the origin has changed, without opening a different object.
-- Refresh or changed filter membership while preview is visible cannot silently retarget it to another object.
-- Eligible preview invocation and dismissal, and direct object opening, remain available without requiring long press or color.
+- A first-version long press previews the selected object and opening from that preview preserves its
+  identity and source context.
+- Dismissal returns to the originating scope, filters and density when valid, or exposes an available
+  fallback when the origin has changed, without opening a different object.
+- Refresh or changed filter membership while preview is visible cannot silently retarget it to another
+  object.
+- Eligible preview invocation and dismissal, and direct object opening, remain available without requiring
+  long press or color.
 specification:
-  objective: Allow the operator to inspect a selected cell without losing its identity or originating overview.
+  objective: Allow the operator to inspect a selected cell without losing its identity or originating
+    overview.
   ontology_refs:
   - gitview:Project
   - gitview:Repository
   - gitview:PullRequest
   - gitview:Issue
   contract:
-    activation: A long press on a Project, Repository, PR or Issue cell can present its preview. Ordinary scrolling remains available when the preview gesture is not activated; the precise gesture implementation is subject to native evaluation.
-    direct_tap_candidate: As an agent-authored first-version interaction proposal, a committed ordinary tap on one identifiable eligible cell opens that same Project, Repository, PR or Issue through its normal in-app route under 0074 and the relevant object overview. The tap is an explicit navigation action, not a source handoff, Share, density change or an implicit long-press preview. A committed long press instead presents the static preview and does not also open the cell merely because the press ends; an explicit Open from that preview follows pending_open_lifetime. Gesture cancellation, ambiguous targeting, a recognized scroll or pinch, and the access changes in 0075 do not create an unintended tap or preview. A non-gesture accessible Open action reaches the same eligible object and preserves the same origin. Exact native recognizer ordering and behavior of the chosen system preview require platform validation.
-    identity: A preview refers to the selected object's stable identity in its source context rather than just the visible cell index, display name or repository-local number. An explicit open operation navigates to the same object if it remains accessible.
-    content: Preview identifies object type and sufficient permitted source context to disambiguate it; show permitted known title and relevant state when available. Unknown or stale facts retain their limitations; full detail is governed by object overview specs. The preview does not require a network request to display previously permitted saved data while it remains eligible under current access policy.
-    dismissal: Dismissing returns to the originating overview without performing open, share or a source mutation when that origin remains valid. Preserve valid scope, period, explicit filters and density and restore the prior object or fallback position under 0024. If the originating Project was deleted or the Repository is no longer its member, expose the changed scope and an available route rather than silently switching Projects or claiming the old scope is valid.
-    refresh: A refresh may update the selected object's observed facts while preview is visible. It must not retarget the preview to another object merely because cells move or disappear. If the object no longer matches the originating filter, preview may remain until dismissed; the collection on return reflects the filter. If access is explicitly denied, restricted cached content follows 0019 and open is not represented as successful.
-    open_transition: An explicit open uses the previewed object's established identity and origin, subject to current access and destination validity at presentation. If denial or an unresolved identity change occurs between activation and presentation, do not briefly render restricted content, substitute another object, or report a successful open; present an access-safe limitation or recovery route. A confirmed filter or membership change alone does not retarget an already opened permitted object, and changed-origin behavior on return remains separate.
-    pending_open_lifetime: Bind each explicit Open intent to the active preview instance, selected object and actual origin. As an agent-authored first-version proposal, while an Open is pending, repeated activation for that same preview does not create duplicate destination routes. If the operator explicitly cancels that pending intent or closes its originating route before an Open is committed, invalidate the pending presentation attempt; a later callback cannot navigate from a different or newly opened preview, even of the same object. A system preview disappearing as part of accepting Open is not by itself cancellation of that Open; the attempt persists until committed, explicitly cancelled or invalidated by its context. Cancellation does not assert that an independent fetch or durable retention was undone. Once a destination route is committed, a later dismissal or system interruption does not retroactively prove that route was never opened; ordinary navigation and current access rules apply. The exact native interaction and commit event require platform evaluation.
-    platform_preview_boundary: A native preview callback indicating that an action begins is evidence of an interaction, not proof that a GitView destination was committed or that access and origin remain valid. Associate the callback with its actual preview instance and apply pending_open_lifetime and open_origin_revalidation before admitting any destination. A menu dismissal associated with that action is evaluated separately from explicit cancellation. The system interaction candidates and their unverified limits are recorded in native_preview_candidate; neither a UIKit collection view nor a particular callback is mandated by this product contract.
-    open_origin_revalidation: Before committing a pending destination, revalidate the same object identity, origin Project and applicable Repository membership under 0024, and current disclosure under 0036. A filter mismatch alone is not an invalid origin. A confirmed deletion of the originating Project or removal of the Repository, an unreadable origin, or an unresolved identity cannot be turned into a valid open merely because another Project contains the Repository. Keep an access-safe changed-origin or recovery route without claiming the object itself was deleted. Once a permitted destination was already committed, a later membership change follows the separate open-object and return rules of 0024; it does not retarget the route.
-    filtered_preview_open: If the previewed PR or Issue no longer matches the active filter, that mismatch alone does not prevent an explicit open of the same object when its originating Project and Repository scope and current access remain valid. Opening does not silently change or restore a previous filter. Returning uses the current valid collection and the anchor fallback under 0024; it does not claim a different cell is the opened object. An invalid or unverifiable origin, identity or access is handled by its own limitations and is not resolved by the filter rule.
-    alternatives: Provide discoverable accessible paths to invoke and dismiss an eligible preview and to identify and open the object directly without relying on long press, hover or color. Direct opening does not substitute for preview access under 0093. Assistive focus returns to the original object where still available, otherwise a meaningful fallback under 0017 and 0024.
-    later_scope: Sliding a single rich preview across cells is a later interaction; long-press activation, edge behavior and gesture arbitration require separate refinement and native evaluation. A static long-press preview does not establish that later interaction.
-    provenance: Static long-press preview and the later sliding idea were discussed with the owner; the state and identity rules here are agent-authored refinements.
+    activation: A long press on a Project, Repository, PR or Issue cell can present its preview. Ordinary
+      scrolling remains available when the preview gesture is not activated; the precise gesture implementation
+      is subject to native evaluation.
+    direct_tap_candidate: As an agent-authored first-version interaction proposal, a committed ordinary
+      tap on one identifiable eligible cell opens that same Project, Repository, PR or Issue through its
+      normal in-app route under 0074 and the relevant object overview. The tap is an explicit navigation
+      action, not a source handoff, Share, density change or an implicit long-press preview. A committed
+      long press instead presents the static preview and does not also open the cell merely because the
+      press ends; an explicit Open from that preview follows pending_open_lifetime. Gesture cancellation,
+      ambiguous targeting, a recognized scroll or pinch, and the access changes in 0075 do not create
+      an unintended tap or preview. A non-gesture accessible Open action reaches the same eligible object
+      and preserves the same origin. Exact native recognizer ordering and behavior of the chosen system
+      preview require platform validation.
+    identity: A preview refers to the selected object's stable identity in its source context rather than
+      just the visible cell index, display name or repository-local number. An explicit open operation
+      navigates to the same object if it remains accessible.
+    content: Preview identifies object type and sufficient permitted source context to disambiguate it;
+      show permitted known title and relevant state when available. Unknown or stale facts retain their
+      limitations; full detail is governed by object overview specs. The preview does not require a network
+      request to display previously permitted saved data while it remains eligible under current access
+      policy.
+    dismissal: Dismissing returns to the originating overview without performing open, share or a source
+      mutation when that origin remains valid. Preserve valid scope, period, explicit filters and density
+      and restore the prior object or fallback position under 0024. If the originating Project was deleted
+      or the Repository is no longer its member, expose the changed scope and an available route rather
+      than silently switching Projects or claiming the old scope is valid.
+    refresh: A refresh may update the selected object while preview is visible but must not retarget it
+      when cells move or disappear. If it no longer matches the originating filter, preview may remain
+      until dismissed. On confirmed private Repository revocation, saved local content remains available
+      under 0019 and the same object may open locally; no successful GitHub access is asserted.
+    open_transition: An explicit open uses the previewed object identity and origin without substituting
+      another object. If private Repository revocation is confirmed, preserve access to already saved
+      local details with the revoked indication and supported update time when known under 0019; a local
+      open does not assert successful GitHub access. An unresolved identity change or independent applicable
+      restriction remains subject to its own policy. A confirmed filter or membership change alone does
+      not retarget an already opened object.
+    pending_open_lifetime: Bind each explicit Open intent to the active preview instance, selected object
+      and actual origin. As an agent-authored first-version proposal, while an Open is pending, repeated
+      activation for that same preview does not create duplicate destination routes. If the operator explicitly
+      cancels that pending intent or closes its originating route before an Open is committed, invalidate
+      the pending presentation attempt; a later callback cannot navigate from a different or newly opened
+      preview, even of the same object. A system preview disappearing as part of accepting Open is not
+      by itself cancellation of that Open; the attempt persists until committed, explicitly cancelled
+      or invalidated by its context. Cancellation does not assert that an independent fetch or durable
+      retention was undone. Once a destination route is committed, a later dismissal or system interruption
+      does not retroactively prove that route was never opened; ordinary navigation and current access
+      rules apply. The exact native interaction and commit event require platform evaluation.
+    platform_preview_boundary: A native preview callback indicating that an action begins is evidence
+      of an interaction, not proof that a GitView destination was committed or that access and origin
+      remain valid. Associate the callback with its actual preview instance and apply pending_open_lifetime
+      and open_origin_revalidation before admitting any destination. A menu dismissal associated with
+      that action is evaluated separately from explicit cancellation. The system interaction candidates
+      and their unverified limits are recorded in native_preview_candidate; neither a UIKit collection
+      view nor a particular callback is mandated by this product contract.
+    open_origin_revalidation: Before committing a pending destination, revalidate the same object identity,
+      origin Project and applicable Repository membership under 0024, and current disclosure under 0036.
+      A filter mismatch alone is not an invalid origin. A confirmed deletion of the originating Project
+      or removal of the Repository, an unreadable origin, or an unresolved identity cannot be turned into
+      a valid open merely because another Project contains the Repository. Keep an access-safe changed-origin
+      or recovery route without claiming the object itself was deleted. Once a permitted destination was
+      already committed, a later membership change follows the separate open-object and return rules of
+      0024; it does not retarget the route.
+    filtered_preview_open: If the previewed PR or Issue no longer matches the active filter, that mismatch
+      alone does not prevent an explicit local open of the same object when its originating scope and
+      local identity remain valid. Confirmed GitHub revocation alone does not remove local eligibility
+      for saved content under 0019. Opening does not silently change the filter or claim source access.
+      Returning uses the current valid collection and anchor fallback under 0024; an invalid origin or
+      identity is handled by its own limitations.
+    alternatives: Provide discoverable accessible paths to invoke and dismiss an eligible preview and
+      to identify and open the object directly without relying on long press, hover or color. Direct opening
+      does not substitute for preview access under 0093. Assistive focus returns to the original object
+      where still available, otherwise a meaningful fallback under 0017 and 0024.
+    later_scope: Sliding a single rich preview across cells is a later interaction; long-press activation,
+      edge behavior and gesture arbitration require separate refinement and native evaluation. A static
+      long-press preview does not establish that later interaction.
+    provenance: Static long-press preview and the later sliding idea were discussed with the owner; the
+      state and identity rules here are agent-authored refinements.
   scenarios:
     tap_and_long_press_are_distinct:
-      given: A permitted PR cell is identifiable in a Project work grid, with both its in-app overview and eligible GitHub source link available.
-      when: The operator first commits an ordinary tap, returns, and separately commits a long press on that same cell.
-      then: The tap opens the same PR's in-app overview without handing a link to GitHub or invoking Share. The long press presents its static preview without also opening the overview on release; explicit preview actions retain their own meanings.
+      given: A permitted PR cell is identifiable in a Project work grid, with both its in-app overview
+        and eligible GitHub source link available.
+      when: The operator first commits an ordinary tap, returns, and separately commits a long press on
+        that same cell.
+      then: The tap opens the same PR's in-app overview without handing a link to GitHub or invoking Share.
+        The long press presents its static preview without also opening the overview on release; explicit
+        preview actions retain their own meanings.
     same_number:
       given: Repositories R1 and R2 each contain PR 42, and the operator previews R2's PR.
       when: The operator opens the previewed object.
@@ -56,47 +128,69 @@ specification:
     moved_cell:
       given: A preview is open while its originating grid is sorted and refreshed.
       when: Other cells move and the selected object moves to a different position.
-      then: The preview continues to identify the original object and does not switch to the cell that inherited its position.
+      then: The preview continues to identify the original object and does not switch to the cell that
+        inherited its position.
     no_long_press:
       given: The operator cannot use long press and an identified object is eligible for preview and opening.
       when: They use accessible paths to invoke and dismiss its preview, then directly open the object.
-      then: Both paths remain available without long press or a color-only cue, refer to the same eligible identity and preserve the valid origin; direct opening is not treated as a substitute for preview access.
+      then: Both paths remain available without long press or a color-only cue, refer to the same eligible
+        identity and preserve the valid origin; direct opening is not treated as a substitute for preview
+        access.
     revoked_access:
       given: A private PR preview is open and source access is explicitly denied.
       when: The updated access condition is applied.
-      then: Restricted cached content follows the private-cache policy and the preview is not silently replaced with another object.
+      then: On confirmed revocation, the same saved local content remains visible with the access indication
+        and supported update time when known; local open remains available without claiming GitHub access,
+        and no other object is substituted.
     origin_deleted:
-      given: A PR preview was opened through Project P, which is then durably deleted while the PR remains accessible in Project Q.
+      given: A PR preview was opened through Project P, which is then durably deleted while the PR remains
+        accessible in Project Q.
       when: The operator dismisses the preview.
-      then: GitView identifies the unavailable origin and offers a valid route without silently returning to Q or treating the PR as deleted.
+      then: GitView identifies the unavailable origin and offers a valid route without silently returning
+        to Q or treating the PR as deleted.
     denial_during_open_transition:
       given: A permitted private PR preview is visible and the operator explicitly opens it.
       when: Access is explicitly denied before the destination presents its source-derived content.
-      then: Restricted visual and app-controlled accessible content is not presented, a safe limitation or recovery route is available, and no other object is substituted.
+      then: For confirmed revocation, the destination can present the same saved local content with the
+        revocation indication and supported update time when known, including accessible content, and
+        a route to recovery or explicit local deletion; it does not claim source access or substitute
+        another object.
     no_longer_matches_filter:
-      given: A preview of PR B is open in a valid Project collection filtered to open PRs, and an applicable observation confirms B was merged while access remains permitted.
+      given: A preview of PR B is open in a valid Project collection filtered to open PRs, and an applicable
+        observation confirms B was merged while access remains permitted.
       when: The operator explicitly opens B from the preview and then returns to the collection.
-      then: The overview opens B without changing the filter; on return the collection still filters to open PRs and uses the applicable fallback rather than identifying a different cell as B.
+      then: The overview opens B without changing the filter; on return the collection still filters to
+        open PRs and uses the applicable fallback rather than identifying a different cell as B.
     dismissed_before_open_commit:
-      given: Preview instance A offers Open for a permitted PR, its destination is still pending, and the operator explicitly cancels that attempt and opens preview instance B for a different Issue.
+      given: Preview instance A offers Open for a permitted PR, its destination is still pending, and
+        the operator explicitly cancels that attempt and opens preview instance B for a different Issue.
       when: A's old open callback arrives after the cancellation but before any destination was committed.
-      then: The callback does not navigate to the PR, replace B or open the Issue on A's behalf; any independently completed fetch or retention remains attributable to its own context.
+      then: The callback does not navigate to the PR, replace B or open the Issue on A's behalf; any independently
+        completed fetch or retention remains attributable to its own context.
     origin_removed_during_pending_open:
-      given: A permitted PR preview was opened through Project P and its Open is pending; P and Q both contain the Repository.
+      given: A permitted PR preview was opened through Project P and its Open is pending; P and Q both
+        contain the Repository.
       when: P is durably deleted before the destination commits while Q and the PR remain accessible.
-      then: The pending action does not open the PR as though it still originated from P or silently switch to Q; a permitted changed-origin route is offered and the PR is not claimed deleted.
+      then: The pending action does not open the PR as though it still originated from P or silently switch
+        to Q; a permitted changed-origin route is offered and the PR is not claimed deleted.
     repeated_open:
       given: One eligible preview instance has an explicit Open pending for its selected PR.
       when: The operator invokes the same Open again before a destination is committed.
-      then: The pending intent is not duplicated into two destination routes, and any eventual allowed destination retains the original PR and Project context.
+      then: The pending intent is not duplicated into two destination routes, and any eventual allowed
+        destination retains the original PR and Project context.
     system_dismissal_as_part_of_open:
-      given: An eligible preview has accepted an explicit Open and the platform dismisses its menu as part of that action, with no explicit cancellation or context invalidation.
+      given: An eligible preview has accepted an explicit Open and the platform dismisses its menu as
+        part of that action, with no explicit cancellation or context invalidation.
       when: The app-controlled destination admission is evaluated.
-      then: Menu disappearance alone does not cancel the intent; the same eligible object may open once after the required current origin and access checks.
+      then: Menu disappearance alone does not cancel the intent; the same eligible object may open once
+        after the required current origin and access checks.
     platform_action_begins_before_denial:
-      given: A system preview action begins for a permitted private PR and is associated with the current preview instance; the destination has not yet committed.
+      given: A system preview action begins for a permitted private PR and is associated with the current
+        preview instance; the destination has not yet committed.
       when: The menu ends and access is explicitly denied before destination admission.
-      then: The action callback and menu dismissal do not establish a successful open; GitView applies current disclosure and origin checks and exposes only an access-safe limitation or recovery route without substituting another object.
+      then: For confirmed revocation, the action remains associated with the same object and may present
+        already saved local content with the revoked indication and supported update time when known.
+        It does not establish live GitHub access; recovery or explicit local deletion remains available.
   unresolved:
   - Exact preview content priorities by object type and density.
   - Native gesture arbitration, focus behavior and iOS device evidence.
