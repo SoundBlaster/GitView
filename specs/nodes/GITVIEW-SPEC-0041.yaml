@@ -1,0 +1,87 @@
+id: GITVIEW-SPEC-0041
+title: GitView - PR overview facts and change counters
+kind: spec
+created_at: '2026-11-16T08:33:00Z'
+updated_at: '2026-11-16T08:33:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0008
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0010
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0028
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0034
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0041.yaml
+  predecessor_revision: 9c598dd
+  owner_selection: docs/drafts/pull-request-ontology-options.md
+specification:
+  objective: Make the selected PR's compact facts, change counters and independent signals inspectable
+    in the correct source context.
+  authority_boundary: The owner selected the field categories and compact source-linked overview. Exact
+    source mapping, check equivalence, field priority, native presentation and data availability require
+    refinement; this node does not establish implementation readiness, complete source coverage or an
+    actor's motive.
+  requirements:
+    identity: Retain the selected PR's supported source identity, Repository context and repository-local
+      number. Present available title, original description and source link without replacing missing
+      values or selecting another same-number PR in a different Repository.
+    state: Distinguish open, closed without merge and merged from the separately supported draft flag,
+      labels, review assessment and CI. An unavailable lifecycle or signal remains unknown rather than
+      being inferred from another field.
+    context: Present supported source and target branches, the PR-associated Repository, separately supported
+      base or target and head or source Repositories, observed revision, author, requested reviewers and
+      related Issues in their actual source contexts. An unavailable base or head Repository is not automatically
+      replaced with the PR-associated Repository. Preserve supported mention and closing-reference meanings
+      independently; a related Issue alone does not prove an actor motive or causal history.
+    changes: Present supported additions and deletions separately, changed-file count and commit count
+      with their applicable observation context. Unavailable counts are not zero; these counts do not
+      require a diff, file browser or commit-by-commit view inside GitView.
+    checks_and_review: Present current check counters under 0028 and independently supported review assessment,
+      requested-review information and total and unresolved review-thread counts. Incomplete or stale
+      observations retain their limitations; individual run or review-thread content is not required by
+      this overview.
+    revision: Attribute values to their supported source revision, scope, observation time and observation
+      source when known. Distinguish supported PR creation, update, closure and merge times from the time
+      GitView observed them; unavailable values are not invented. A newly observed title, branch or revision
+      does not automatically refresh omitted review, CI, thread or change-count facts; an earlier value
+      is not silently represented as current for a newer revision.
+    authored_text: Preserve available original authored text and reliably supported sections under 0034.
+      An authored validation statement is distinct from independently observed CI and test evidence.
+    inspection: Make the selected available PR facts and their limitations inspectable in the PR overview
+      without requiring all fields to fit simultaneously in a cell or preview. The source route and lightweight
+      sharing follow 0033.
+    saved_data: After confirmed GitHub revocation of a private Repository, previously saved supported
+      PR information remains locally accessible under 0019 with the revocation indication and supported
+      update time when known; it is not thereby newly current or evidence of restored source access.
+  scenarios:
+    same_number: Repositories A and B each have PR 42. Opening B’s PR retains its own Repository context,
+      supported facts and source link rather than substituting A’s PR.
+    independent_signals: An open draft PR has a failed check and unavailable review assessment. Present
+      those supported facts independently; unavailable review is not approval.
+    partial_refresh: A new observation provides the PR title but no usable CI or review fact. Do not advance
+      the observation time of those omitted facts or announce them as current merely because the title
+      changed.
+    saved_after_revocation: GitHub confirms private Repository revocation while saved PR data exists locally.
+      Keep those supported details available with their indication and time when known; do not claim a
+      new source grant.
+  open_questions:
+  - Source evidence and mapping for PR counts, branches, revisions, requested reviewers and related Issues.
+  - Exact field priority, truncation, native presentation and behavior of partial or stale observations.
+  - Current-check identity, retries, special conclusions and source permissions needed by selected operations.
+  ontology_status: PullRequest, Issue and Repository use working draft vocabulary; observed links and
+    authored text do not establish an actor's motive or a new domain entity.
+acceptance:
+- The selected PR retains its supported identity, PR-associated Repository and separately supported base
+  or head Repository context, including when another Repository contains a same-number PR.
+- Lifecycle, draft status, review assessment, requested review, check counts, thread counts and change
+  counts remain independently interpretable and unknowns are not presented as zero or approval.
+- Selected available facts, source event times, observation context and limitations are inspectable without
+  requiring every field to fit in a grid cell or preview; unavailable values are not invented.
+- Supported additions, deletions, changed-file count and commit count do not require in-app diff, file,
+  commit or run details.
+- Previously saved supported PR information remains locally accessible after confirmed private Repository
+  revocation under 0019 with its applicable limitation.

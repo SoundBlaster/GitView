@@ -1,0 +1,92 @@
+id: GITVIEW-SPEC-0039
+title: GitView - Issue state, links and discussion counters
+kind: spec
+created_at: '2026-11-16T08:32:00Z'
+updated_at: '2026-11-16T08:32:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0009
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0010
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0033
+- GITVIEW-SPEC-0034
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0039.yaml
+  predecessor_revision: 9c598dd
+  owner_selection: docs/drafts/issue-ontology-options.md
+specification:
+  objective: Make the selected Issue facts and relationships inspectable without conflating source state,
+    discussion and inferred intent.
+  authority_boundary: The owner selected the Issue field categories and a compact source-linked overview.
+    Exact source mappings, field priority, native presentation and data availability remain to be verified;
+    this node does not establish implementation readiness or an actor's motive.
+  requirements:
+    identity: Keep the selected Issue associated with its supported source identity, Repository context
+      and repository-local number. Same-number Issues in different Repositories remain distinct. Present
+      available title, original description and source link without inventing missing values.
+    state: Distinguish the source open or closed state, supported closure reason, labels and Issue type.
+      A closed Issue is not automatically completed; an unavailable reason remains unknown. A GitView
+      Project is not a GitHub Projects status.
+    roles: Present supported author, assignees and milestone as source context. An assignee does not by
+      itself establish that work began; author or assignee does not automatically identify the GitView
+      operator or the actor behind a change.
+    relationships: Preserve supported meanings and direction of linked PRs, mentions, closing references,
+      parent and direct sub-Issues, blocked-by and blocking relationships. A mention is not automatically
+      a closing reference; a relationship alone does not prove completion, an actor's motive or causal
+      history. Incomplete relationship coverage is not a confirmed absence.
+    dual_link: If the same source-confirmed PR has both a mention and a closing-reference meaning, identify
+      it once in its Repository context while retaining both supported meanings.
+    source_representation: A source-confirmed PR represented in an Issue collection is not presented or
+      counted as an independent Issue even if its correspondence to a separately observed PR remains unresolved.
+      Where source evidence identifies both representations as the same PR, do not double count it. If
+      type or identity correspondence is insufficiently supported, preserve uncertainty rather than guessing
+      from IDs. A genuinely separate Issue linked to a PR remains distinct.
+    discussion: Show supported comment and discussion-participant counts as distinct units and distinguish
+      a known zero from unavailable or partial data. Issue comments are not PR review threads; individual
+      comments and participant lists are not required by this overview. Exact source mapping for the selected
+      participant meaning remains open.
+    direct_children: Show supported counts of total and closed direct sub-Issues separately. Do not treat
+      those counts as all transitive descendants or as a percentage of completed work; a closed child
+      may have an unknown or non-completion reason.
+    times: Distinguish supported source creation, update, closure and last-comment times from the time
+      GitView observed them, retaining the observation source when supported. A fresh observation of one
+      field does not automatically refresh another.
+    inspection: Make the selected available Issue facts and relationships inspectable in the Issue overview
+      without requiring every field to fit in a grid cell or preview. Where an excerpt is presented, retain
+      access to the available original authored body under 0034; source opening and sharing follow 0033.
+    saved_data: After confirmed GitHub revocation of a private Repository, keep previously saved supported
+      Issue information locally accessible under 0019 with the indication and supported update time when
+      known; do not present it as a newly refreshed result or a source grant.
+  scenarios:
+    closure_reason: An Issue is closed with an unknown or non-completion reason. Present the supported
+      state and reason without automatically calling it completed.
+    link_meanings: One PR is both mentioned and identified by a supported closing reference. Show one
+      source-confirmed target while preserving both meanings; do not infer that it merged or motivated
+      a particular actor.
+    directed_dependencies: An Issue is blocked by A and blocks B. Preserve the supported direction and
+      any incomplete relationship coverage rather than reversing or assuming missing links.
+    partial_counts: One supported comment count is known, while participant coverage is unavailable. Present
+      the known count with its context and the other as unknown, not zero.
+  open_questions:
+  - Source evidence and mapping for Issue types, closure reasons, selected participant counts, direct
+    sub-Issues and relationship directions.
+  - Exact field priority, truncation, native presentation and behavior of partial or unavailable source
+    facts.
+  - Source and access handling for linked objects outside the originating Project and historical event
+    coverage.
+  ontology_status: Issue, PullRequest and Repository use working draft vocabulary; source links and author
+    text do not establish actor motives or additional domain entities.
+acceptance:
+- The selected Issue retains its supported identity and Repository context; state, closure reason, type
+  and labels are not silently conflated.
+- Supported closing references, mentions, hierarchy and dependency directions remain distinguishable,
+  and links do not prove an actor's motive or completion.
+- Comment, discussion-participant and direct-sub-Issue counts retain distinct units; unknown or partial
+  values are not presented as zero or completion percentage.
+- Selected available Issue fields and relationships are inspectable without requiring them all to fit
+  in the cell or preview.
+- Previously saved supported Issue information remains locally accessible after confirmed private Repository
+  revocation under 0019 with the applicable limitation.

@@ -23,8 +23,9 @@ sources:
   github_global_id_migration: https://docs.github.com/en/graphql/guides/migrating-graphql-global-node-ids
   autonomy: conversation:gitview/excerpt-77
 acceptance:
-- Valid source-confirmed GitHub REST Repository numeric IDs are compared exactly within a confirmed GitHub
-  instance without reducing their precision.
+- If the agent-authored REST mapping candidate is selected and source-verified, valid source-confirmed
+  GitHub REST Repository numeric IDs are compared exactly within a confirmed GitHub instance without reducing
+  their precision.
 - Missing, malformed, unverified or incompatible identifiers do not create a confirmed match or a confirmed
   distinct Repository solely from a name, address or differently typed ID.
 - Same Repository identity and current source address are separate claims; unordered conflicting addresses
@@ -41,11 +42,11 @@ specification:
   - gitview:Repository
   - gitview:Project
   contract:
-    identity_scope: Apply the owner-selected comparison only to valid source-confirmed GitHub REST Repository
-      numeric IDs in the same confirmed GitHub instance. Matching IDs establish the same Repository for
-      this rule; different IDs establish different Repositories within that scope. The initial product
-      targets one connected GitHub identity, but a source-instance context is still necessary to interpret
-      evidence and future imports without treating unrelated instances as identical.
+    identity_scope: The owner accepted the recorded numeric ID examples for the same GitHub under 0002.
+      Applying that comparison specifically to valid source-confirmed GitHub REST Repository numeric IDs
+      within a confirmed instance is an agent-authored source-mapping candidate and requires verification.
+      Under that candidate, matching IDs identify the same Repository and different IDs distinguish objects
+      in that scope. Do not assume unrelated source instances share identity.
     exactness: Preserve the full exact integer value supplied as a valid source ID throughout observation,
       persistence, comparison and recovery. Do not round, truncate, reinterpret a display value, or collapse
       different integers through a lower-precision representation. This is an information-preservation

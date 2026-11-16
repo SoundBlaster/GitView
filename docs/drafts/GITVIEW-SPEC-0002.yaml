@@ -6,7 +6,9 @@ updated_at: '2026-11-09T19:30:21Z'
 status: idea
 draft_status: pre_canonical
 canonical_successor: specs/nodes/GITVIEW-SPEC-0002.yaml
-successor_scope: The successor records the owner's identity continuity decision and scoped product outcomes. This draft remains noncanonical source material; detailed source contracts and ontology bindings require separate review.
+successor_scope: The successor records the owner's identity continuity decision and scoped product outcomes.
+  This draft remains noncanonical source material; detailed source contracts and ontology bindings require
+  separate review.
 refines:
 - GITVIEW-SPEC-0001
 sources:
@@ -16,13 +18,14 @@ sources:
     sha256: bb52a1c5bdaf61402b7dfe5ae8b3759178dfaf5e6114634da29dfa7609653833
     ref: conversation:gitview/excerpt-54-reply
   management_decision: conversation:gitview/excerpt-58-reply
-  rest_identity_decision: conversation:gitview/excerpt-60-reply
+  numeric_identity_decision: conversation:gitview/excerpt-60-reply
   ontology_selection:
     path: ontology/candidates/domain-v0.2.0-draft.4/composition-context.yaml
     sha256: f346b1a369cc491606d7da5731eeb0f3cba948ddb8a769315787e8c14b0bc221
     package: local.gitview.domain@0.2.0-draft-composition.4
   current_working_ontology_context: ontology/candidates/domain-v0.2.0-draft.13/composition-context.yaml
-  ontology_selection_scope: The draft.4 selection above records the earlier source context; draft.13 is the current working composition and does not itself establish semantic approval.
+  ontology_selection_scope: The draft.4 selection above records the earlier source context; draft.13 is
+    the current working composition and does not itself establish semantic approval.
 acceptance:
 - Matching numeric repository IDs from the same GitHub instance preserve one Repository, its history and
   every Project membership across rename or transfer.
@@ -53,7 +56,8 @@ specification:
     has changed name or owner.
   scope:
     in:
-    - Comparing the numeric REST repository id within one GitHub instance.
+    - The owner-accepted same-GitHub numeric ID examples; a specific REST ID mapping remains an agent-authored
+      candidate requiring source verification.
     - Rename, transfer, reuse of a previous address, and HTTP 404 for a previously observed repository.
     - Current address, previously recorded observations and Project memberships across that change.
     out:
@@ -67,35 +71,43 @@ specification:
   - gitview:Project
   - gitview:managesRepository
   - gitview:projectIncludesRepository
-  identity_rule: Two valid GitHub REST repository observations with the same numeric id from the same
-    GitHub instance identify one Repository. A different numeric id in that scope identifies a different
-    object. The GitHubRepository context and every Project membership follow the Repository identity.
+  identity_rule: The owner accepted the recorded same-GitHub numeric ID examples under canonical 0002.
+    As an agent-authored source-mapping candidate, valid GitHub REST Repository numeric IDs could be compared
+    within a confirmed source instance; this mapping requires source verification. The GitHubRepository
+    context and each Project membership follow supported Repository identity, not a name alone.
   version_control_boundary: The owner's working Repository meaning is Code in which a version control
-    system acts; Code is described as essentially a folder of files. This is a conceptual boundary, not a
-    requirement for GitView to possess a local folder or execute Git. A source-confirmed Repository identity,
-    rename or PR commit count does not alone establish a specific Code identity, recorded revision action,
-    actor, action time or uninterrupted management interval. The package's versionControlsCode link and
-    managesRepository vocabulary do not independently prove a concrete action; preserve the source facts
-    and their scope without constructing missing events. The applicable action and its evidence remain open.
+    system acts; Code is described as essentially a folder of files. This is a conceptual boundary, not
+    a requirement for GitView to possess a local folder or execute Git. A source-confirmed Repository
+    identity, rename or PR commit count does not alone establish a specific Code identity, recorded revision
+    action, actor, action time or uninterrupted management interval. The package's versionControlsCode
+    link and managesRepository vocabulary do not independently prove a concrete action; preserve the source
+    facts and their scope without constructing missing events. The applicable action and its evidence
+    remain open.
   address_rule: Owner, name and URL describe the source address. GitView compares the source identity
     before applying an address change or associating history and memberships with a repository. Matching
-    identity alone does not establish which conflicting address is newer; 0038 and 0053 describe the
-    additional ordering evidence and uncertainty.
+    identity alone does not establish which conflicting address is newer; 0038 and 0053 describe the additional
+    ordering evidence and uncertainty.
   unavailable_rule: HTTP 404 supplies no current repository object. Keep the last known record and distinguish
     unknown current state from a confirmed change.
   scenarios:
     continuity_without_vcs_event:
-      given: GitHub confirms that Repository R has the same source identity after a rename, and a PR in R reports an increased commit count; GitView has no independently supported revision-action record.
+      given: GitHub confirms that Repository R has the same source identity after a rename, and a PR in
+        R reports an increased commit count; GitView has no independently supported revision-action record.
       when: GitView updates R and its permitted PR overview.
-      then: R retains its confirmed identity and Project memberships and the PR count keeps its own observation context. GitView does not invent a local Code folder, a specific revision action, its actor or a time solely from the rename and count.
+      then: R retains its confirmed identity and Project memberships and the PR count keeps its own observation
+        context. GitView does not invent a local Code folder, a specific revision action, its actor or
+        a time solely from the rename and count.
     confirmed_rename:
-      given: Repository R with REST id 42 is tracked in Projects P and Q at egor/OldName.
-      when: The same GitHub instance returns id 42 at egor/NewName and sufficient source evidence confirms the change is current.
+      given: Repository R with supported id 42 on the same GitHub is tracked in Projects P and Q at egor/OldName.
+        Mapping this example specifically to a REST ID is a separate source-verification candidate.
+      when: The same GitHub instance returns id 42 at egor/NewName and sufficient source evidence confirms
+        the change is current.
       then: R remains in P and Q with its existing history. The current address becomes egor/NewName.
         Prior observations keep egor/OldName.
     confirmed_transfer:
       given: The same R is tracked in P and Q at egor/NewName.
-      when: The same GitHub instance returns id 42 at team/NewName after transfer and sufficient source evidence confirms the change is current.
+      when: The same GitHub instance returns id 42 at team/NewName after transfer and sufficient source
+        evidence confirms the change is current.
       then: R remains in P and Q with its history and GitHub management context. The current owner and
         address become team and team/NewName. Prior observations keep their recorded owners and addresses.
     reused_address:
@@ -110,6 +122,8 @@ specification:
   unresolved:
   - How to persist identity, resolve aliases and distinguish outdated observations in the UI.
   - How to handle other lookup failures, conflicting source observations or migration between API ID schemes.
-  provenance_boundary: The owner selected continuity, the REST id comparison, separate history on address
-    reuse and unknown current state on HTTP 404. Retaining historical addresses verbatim remains a draft
-    requirement for review. The examples are specification scenarios awaiting execution.
+  provenance_boundary: The owner accepted continuity, same-GitHub numeric ID examples, separate history
+    on address reuse and unknown current state on HTTP 404. Interpreting the examples specifically as
+    a REST ID comparison is an agent-authored source-mapping candidate requiring verification, not an
+    independently owner-selected identifier representation. Retaining historical addresses verbatim remains
+    a draft requirement; scenarios await execution.
