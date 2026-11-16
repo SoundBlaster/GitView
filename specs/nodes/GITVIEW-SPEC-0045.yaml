@@ -1,0 +1,86 @@
+id: GITVIEW-SPEC-0045
+title: GitView - Repository selection and setup outcomes
+kind: spec
+created_at: '2026-11-16T08:41:00Z'
+updated_at: '2026-11-16T08:41:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0022
+depends_on:
+- GITVIEW-SPEC-0002
+- GITVIEW-SPEC-0005
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0025
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0038
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0045.yaml
+  predecessor_revision: 9c598dd
+  default_mechanism_review: docs/drafts/project-default-association-review-20261115.md
+specification:
+  objective: Keep Repository selection and the outcome of creating or reusing Project configuration understandable
+    when source or save evidence is incomplete.
+  authority_boundary: The owner selected one Repository per Project as the default and allowed shared
+    membership. Explicit-confirmation batch setup, persistent default association and detailed reuse behavior
+    are agent-authored candidates rather than selected mechanisms. This node does not require multi-selection
+    or choose exact native setup controls, transaction architecture or implementation readiness.
+  requirements:
+    pending: A selection or intended setup is distinct from a successfully saved Project and does not
+      by itself establish source access or observed PR and Issue work. An empty selection does not become
+      a confirmed saved Project with no members.
+    identity: Interpret a selected entry using supported Repository identity under 0002 and 0038. Equal
+      names or positions alone do not prove two Repositories identical; an unresolved identity remains
+      unresolved instead of silently being matched to another Project.
+    default: A supported default Project corresponds to one eligible Repository under 0005 and 0022. If
+      a multi-Repository default selection is supported, its default is a separate Project for each Repository
+      rather than one silently combined Project; this does not require multi-selection. How an existing
+      default is recognized, offered or reused when the Repository appears in several Projects remains
+      open; do not silently treat an arbitrary containing Project as the selected default.
+    outcome: Distinguish a supported successful local save from confirmed non-application, pending work
+      and an indeterminate outcome. When multiple setup effects are supported, keep their actual outcomes
+      and Repository identities attributable rather than claiming all succeeded or treating one result
+      as another.
+    uncertainty: An uncertain save does not prove that no Project was created or that retry is safe. Reconcile
+      against available evidence before repeating a potentially duplicating effect; when the necessary
+      evidence is unavailable, keep the outcome uncertain and offer an applicable recovery path without
+      promising recovery.
+    cancellation: Cancellation or failure does not by itself erase previously saved Projects or establish
+      successful source authorization. An unsubmitted selection cancelled by the operator is not subsequently
+      submitted as an effect of that cancelled attempt. Already submitted or independently completed effects
+      retain their supported outcomes and are not claimed undone merely by cancellation.
+    discovery: A partial or failed Repository discovery remains incomplete or failed rather than a confirmed
+      empty source. Keep available supported choices distinguishable from a complete inventory and offer
+      an applicable retry where available.
+    access: Confirmed GitHub revocation alone does not hide previously saved local Projects or Repository
+      information under 0019, but local visibility is not a source grant or sufficient evidence to admit
+      a new Project operation.
+    accessibility: Provide a way to understand available selection, incomplete discovery and supported
+      save or recovery outcomes without relying solely on color or a transient notification. Exact controls
+      and grouping remain open.
+  scenarios:
+    selected_not_saved: The operator selects a Repository but no Project save is supported yet. Do not
+      announce a saved Project or a loaded PR and Issue collection merely from selection.
+    partial_outcome: A setup path has one confirmed saved Project and another outcome remains indeterminate.
+      Keep the confirmed Project available and the other outcome uncertain; do not silently repeat a potentially
+      duplicating effect or claim that cancellation undid the confirmed save.
+    unresolved_identity: A source entry has a familiar name but insufficient identity evidence. Do not
+      attach it to an existing Project merely from that name; preserve the unresolved state.
+    shared_membership: One Repository already belongs to two Projects. Its presence in either Project
+      alone does not establish which one is a default association.
+  open_questions:
+  - Setup and confirmation interaction, whether multi-selection is supported, and default-association
+    or alternative reuse design.
+  - Evidence and recovery for a submitted operation whose outcome cannot be confirmed.
+  - Native feedback and accessibility details for partial discovery, cancellation and per-effect outcomes.
+  ontology_status: Project, Repository and User use working draft vocabulary; a selection or saved membership
+    does not itself prove an actor's motive or a particular ontology action.
+acceptance:
+- Repository selection is distinguishable from a successfully saved Project and from a loaded work collection.
+- Default one-Repository composition remains distinct from the unselected persistent-association mechanism.
+- Confirmed saved, failed or indeterminate setup effects are not silently conflated; an uncertain effect
+  is not blindly duplicated.
+- Partial source discovery is not reported as a confirmed empty inventory, and cancellation or failure
+  does not erase already saved Projects.
+- Saved local Project and Repository information remains accessible after confirmed GitHub revocation
+  under 0019, without implying a source grant for a new operation.

@@ -1,0 +1,93 @@
+id: GITVIEW-SPEC-0056
+title: GitView - Historical outcome selection
+kind: spec
+created_at: '2026-11-16T08:41:00Z'
+updated_at: '2026-11-16T08:41:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0007
+depends_on:
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0024
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0030
+- GITVIEW-SPEC-0047
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0056.yaml
+  predecessor_revision: 9c598dd
+  project_summary: docs/drafts/project-summary-proposal.md
+specification:
+  objective: Let the operator inspect work associated with a supported historical outcome without confusing
+    that event with the object's current state.
+  authority_boundary: Project historical graphs and the selected merged-counter transition follow 0047.
+    This node refines interpretation of a historical outcome selection; it does not mandate a full historical
+    timeline, calendar mode, a source API, historical membership reconstruction or implementation readiness.
+  requirements:
+    origin: Preserve the originating Project, supported event condition, object category, period and Repository
+      basis when opening a historical outcome selection. Retain the supported period boundaries and time-zone
+      interpretation when known; if unavailable, expose the limitation rather than inventing a different
+      interval. Do not silently relabel that period as dynamic Today or replace it with an unrelated current-state
+      filter.
+    evidence: A supported matching historical event must belong to the selected object and period. An
+      object's current closed or merged state without sufficient event-time evidence does not establish
+      that the event occurred in that period; missing history or unknown identity does not prove a non-match
+      or complete empty selection.
+    identity: Represent each source-confirmed matching PR or Issue at most once in the destination selection,
+      even if it has several qualifying events. An event count and a count of distinct object cards are
+      different units; a linked PR and Issue remain distinct objects.
+    current_state: When supported, display the object's latest observed lifecycle with its own observation
+      context separately from the historical event condition. A reopened Issue can still match a prior
+      supported closure event; its later current state alone does not reconstruct its earlier state or
+      reason.
+    filters: Keep explicit current-state filters distinct from the historical event condition. For the
+      selected transition from a historical merged-PR counter, temporarily override a conflicting saved
+      merged exclusion to show the counter result without rewriting the saved preference under 0047. Behavior
+      for other conflicting filters remains open.
+    coverage: Preserve actual source scope, observation times and incomplete event coverage. A supported
+      partial selection is not a complete total or a confirmed zero for unobserved work. The originating
+      metric and destination can have different observation contexts; do not fabricate equality or infer
+      unseen objects.
+    membership: Project historical graphs use current Project composition at evaluation under 0030 and
+      0047, with that basis identified. If Project membership changes while an existing historical selection
+      is open, preserve its actual captured origin or disclose a limitation; do not silently claim an
+      old captured scope is the new current composition.
+    access: Confirmed private Repository revocation does not hide already saved supported local historical
+      information under 0019. Preserve its supported scope, time and applicable indication; do not claim
+      newly current source access or fabricate missing event history.
+    navigation: Preserve valid originating context on return under 0024. If the originating Project or
+      period cannot be supported, offer an appropriate limitation or fallback without silently substituting
+      another Project or unrelated period.
+  scenarios:
+    reopened_issue: A source-supported Issue closure occurred in the selected period and the Issue was
+      later reopened. It remains a historical closure match while its latest supported current state can
+      be shown separately.
+    merged_filter: A saved lifecycle preference excludes merged PRs. Opening a supported historical merged
+      counter temporarily shows its matching merged result without rewriting that saved preference.
+    event_vs_object: A single Issue has two supported closure events within the period. A destination
+      of distinct objects contains that Issue once even if the originating event counter measures two
+      events.
+    incomplete_history: The app lacks sufficient event evidence for part of the selected Repository scope.
+      Make the limitation discoverable without presenting an exhaustive empty result or inventing missing
+      objects.
+  open_questions:
+  - Exact source evidence, event-versus-object metric choice and handling of uncertain identity or event
+    time.
+  - Native presentation, supported historical ranges and behavior when Project membership changes during
+    an active selection.
+  - Behavior of historical transitions conflicting with saved filters other than the selected merged-counter
+    case.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; selection
+    predicates and chart navigation are specification and interaction concepts.
+acceptance:
+- A historical outcome selection preserves its originating Project, supported condition, category, period,
+  supported boundaries and time-zone interpretation when known, and Repository basis rather than silently
+  becoming Today.
+- A confirmed historical event remains distinct from the object's latest supported state; missing event
+  evidence is not a confirmed non-match or complete zero.
+- Event counts and distinct object-card counts remain separate; the same confirmed object appears at most
+  once in the destination.
+- The selected historical merged-counter transition temporarily overrides a conflicting saved merged exclusion
+  without rewriting the saved preference.
+- Incomplete coverage remains visible, and confirmed private Repository revocation does not hide saved
+  supported local history under 0019.
