@@ -1,0 +1,91 @@
+id: GITVIEW-SPEC-0048
+title: GitView - Refresh triggers and visible outcomes
+kind: spec
+created_at: '2026-11-16T08:36:00Z'
+updated_at: '2026-11-16T08:36:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0003
+depends_on:
+- GITVIEW-SPEC-0017
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0026
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0037
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0048.yaml
+  predecessor_revision: 33fb739
+  root_intent: .specgraph/root_intent.md
+specification:
+  objective: Let the operator request or benefit from bounded refresh while understanding what has actually
+    updated.
+  authority_boundary: Manual refresh, stale-on-open and opportunistic background updates follow the owner
+    direction. This node does not select a numerical staleness threshold, GitHub endpoint, request budget,
+    polling frequency, background schedule, native control or implementation readiness.
+  requirements:
+    manual: Offer pull-to-refresh where appropriate or an equivalent explicit and accessible action for
+      the current view or selected scope. A manual request is not rejected solely because the observation
+      is younger than an eventual staleness threshold; applicable access, source-directed waits and execution
+      constraints still apply. Requesting refresh does not itself establish that it started, completed
+      or succeeded.
+    foreground: Make recoverable saved data available without waiting for a GitHub response. When a relevant
+      scope is opened with stale data, request a bounded update when the applicable access and source
+      constraints permit. Exact staleness, prioritization and scheduling remain open.
+    background: The app can request or use a system-granted background opportunity for bounded refresh.
+      iOS controls whether and when the opportunity is granted; no fixed frequency or successful refresh
+      is implied by requesting it.
+    scope: Preserve the scope and observation context of each actual refresh outcome. A successful Repository
+      metadata or Issue observation does not refresh an unrelated PR scope; a partial response does not
+      establish complete Project coverage.
+    outcomes: Make loading, deferred, partial, successful and failed outcomes distinguishable when supported
+      for the affected scope. A request deferred before any source attempt is not described as a completed
+      refresh or a fabricated GitHub failure. For an actual GitHub failure, make the supported error or
+      reason discoverable with the scope and last supported successful time when known; do not invent
+      a source cause or describe a local failure as a GitHub error. Observation and attempt retain their
+      own supported times and scope.
+    saved_data: During refresh or failure, previously saved supported data remains available with its
+      own observation time when known and applicable limitation under 0003. An unobserved collection does
+      not become a confirmed empty result or an invented success time.
+    source_limits: Account for shared applicable GitHub rate limits and request cost across manual, foreground
+      and background work; apply supported source retry constraints and avoid unbounded retry loops. An
+      explicit manual request does not bypass an applicable source-directed wait. Exact cost, pagination,
+      concurrency and retry timing remain open.
+    revoked_private: After confirmed GitHub revocation of a private Repository, keep its saved local data
+      visible with the revocation indication and supported time when known under 0019; do not dispatch
+      ordinary synchronization for that Repository while revocation applies. Other eligible scopes retain
+      their own context.
+    accessibility: The operator can discover applicable refresh state, failure or limitation and available
+      recovery without relying solely on color or transient feedback.
+  scenarios:
+    manual_refresh: The operator requests an update from a Project view. The request remains attributed
+      to its actual selected scope, and the UI does not claim success merely because the action was activated.
+    deferred_request: A source-supported retry constraint prevents a requested update from starting. Show
+      the applicable deferred state without inventing a new success time or reporting an unattempted source
+      request as a GitHub failure.
+    partial_project: An Issue portion is successfully observed while the corresponding PR portion fails
+      or remains unobserved. Update only supported facts with their own times and retain the Project's
+      incomplete coverage.
+    background_not_granted: No background opportunity is granted by iOS. Do not present a successful refresh
+      or an application failure solely because the opportunity did not occur.
+    revoked_repository: A Project contains a Repository with confirmed GitHub revocation and saved local
+      data. Keep the saved data visible with the applicable indication and supported time when known,
+      and do not dispatch ordinary refresh for that Repository while revocation applies.
+  open_questions:
+  - Staleness thresholds, prioritization, exact refresh scope, coalescing and outcome presentation.
+  - GitHub operations, rate-limit interpretation, request budgets, retry and background scheduling appropriate
+    to the implementation.
+  - Source evidence and explicit recovery path after access revocation or uncertain local retention.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; refresh triggers
+    and request outcomes are interaction and specification concepts, not new domain entities.
+acceptance:
+- The operator can request refresh using pull-to-refresh where appropriate or an equivalent accessible
+  action.
+- Saved supported data can remain visible while refresh is requested or in progress; stale-on-open and
+  system-granted background refresh do not imply guaranteed source access or execution frequency.
+- Partial, deferred and failed outcomes remain distinct from a successful complete observation and are
+  attributed to their actual scopes.
+- A failed or unattempted request does not invent a successful observation time, confirmed empty source
+  or unsupported GitHub error.
+- Confirmed private Repository revocation retains previously saved local data under 0019 and prevents
+  ordinary synchronization for that Repository while the revocation applies.

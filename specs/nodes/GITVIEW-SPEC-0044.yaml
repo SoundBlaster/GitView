@@ -1,0 +1,81 @@
+id: GITVIEW-SPEC-0044
+title: GitView - Observation status and coverage interpretation
+kind: spec
+created_at: '2026-11-16T08:36:00Z'
+updated_at: '2026-11-16T08:36:00Z'
+status: outlined
+refines:
+- GITVIEW-SPEC-0026
+depends_on:
+- GITVIEW-SPEC-0012
+- GITVIEW-SPEC-0019
+- GITVIEW-SPEC-0023
+- GITVIEW-SPEC-0029
+- GITVIEW-SPEC-0036
+- GITVIEW-SPEC-0037
+sources:
+  predecessor_draft: docs/drafts/GITVIEW-SPEC-0044.yaml
+  predecessor_revision: 33fb739
+  root_intent: .specgraph/root_intent.md
+specification:
+  objective: Keep observed values, source coverage and refresh outcomes independently understandable for
+    the scope they describe.
+  authority_boundary: This node refines product-visible interpretation of observations. It does not select
+    data structures, a persistence provider, exact GitHub query or native status presentation, and does
+    not establish implementation readiness.
+  requirements:
+    separate: Preserve the distinction among available observed facts, supported scope and time, coverage,
+      in-flight attempts and the latest reliably established terminal refresh outcome. If terminal outcomes
+      cannot be ordered, retain uncertainty rather than claiming one is latest. A later failure does not
+      erase prior accepted observations or turn their success time into the failed attempt time.
+    field_scope: An observed field retains its supported object, Repository, source and time context.
+      An omitted, unrequested, errored or ambiguously null field is not automatically a confirmed empty
+      value or absence; interpret it only as source evidence permits. A later response that observes a
+      title or metadata does not by itself refresh omitted CI, review, Issue or PR facts.
+    unobserved: An unobserved collection remains unknown. A failed first request does not make it a confirmed
+      empty collection or establish a last-success time.
+    confirmed_empty: A zero or empty collection is confirmed only when the supported observation and coverage
+      are sufficient for the actual category and scope. Complete evidence for one scope does not establish
+      emptiness in another.
+    partial: A supported subset can have its own successful observation time while the wider requested
+      scope remains incomplete. A successful page or partial result alone is not proof that the full population
+      was observed.
+    failed_after_success: A failed refresh identifies its actual affected scope and outcome while previously
+      accepted observations and their supported times remain available. An independent successful observation
+      may update its own scope; do not falsely roll it back because a different attempt failed.
+    access: Confirmed private Repository revocation preserves previously saved local observations with
+      the revocation indication and supported time when known under 0019; stop synchronization while it
+      applies. A temporary network failure or 404 alone does not establish revocation or deletion.
+    summary: A Project or portfolio summary preserves the scope, time and coverage of its inputs under
+      0012 and 0029. Success for one Repository or category does not make all inputs current, complete
+      or healthy.
+    ordering: Apply supported source ordering under 0037. Request completion time alone is not proof that
+      its source facts are newer than another observation.
+    accessibility: The operator can discover the meaningful difference between stale, incomplete, unobserved
+      and failed data without relying solely on color or a transient message.
+  scenarios:
+    first_failure: The first PR-list request fails and no prior PR observation exists. Show the applicable
+      failure and unobserved state, not a confirmed zero or fabricated successful time.
+    title_only: A new response updates an Issue title but contains no review or CI observation for a related
+      PR. Preserve each unrelated fact's own supported context and time.
+    partial_success: A Project refresh obtains supported Issue facts while the PR scope is incomplete.
+      The Issue observations can carry their own time; the wider Project is not described as fully refreshed.
+    failed_after_success: An earlier supported PR observation exists and a later refresh fails. Keep the
+      earlier data and its supported time when known available alongside the applicable failure; do not
+      invent an unknown time.
+  open_questions:
+  - Source evidence sufficient for completeness and ordering for each selected category.
+  - Exact native status layout, wording, persistence and recovery controls.
+  - Source mapping and account-isolation details needed to interpret individual values.
+  ontology_status: Project, Repository, PullRequest and Issue use working draft vocabulary; refresh outcome
+    and coverage are observation concepts, not newly asserted domain entities.
+acceptance:
+- Observed values, supported scope and time, coverage and the outcome of a refresh remain distinguishable.
+- An unobserved collection or failed first request is not presented as confirmed empty or given an invented
+  success time.
+- A partial success may update its supported subset without claiming that the wider scope is complete
+  or newly refreshed.
+- A failed refresh does not erase a prior accepted observation or advance its supported successful observation
+  time by itself.
+- Confirmed private Repository revocation preserves saved local observations under 0019 with their applicable
+  indication and supported time when known.
