@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0039
 title: GitView - Issue state, links and discussion counters
 kind: spec
 created_at: '2026-11-16T08:32:00Z'
-updated_at: '2026-11-16T08:32:00Z'
-status: outlined
+updated_at: '2026-11-16T19:59:36Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0009
 depends_on:

@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0093
 title: GitView - Preview availability and changing observations
 kind: spec
 created_at: '2026-11-16T11:12:00Z'
-updated_at: '2026-11-16T11:12:00Z'
-status: outlined
+updated_at: '2026-11-16T19:57:34Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0050
 depends_on:

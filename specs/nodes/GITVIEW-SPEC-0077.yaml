@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0077
 title: GitView - Issue discussion counts and latest comment time
 kind: spec
 created_at: '2026-11-16T11:33:00Z'
-updated_at: '2026-11-16T11:33:00Z'
-status: outlined
+updated_at: '2026-11-16T19:59:36Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0039
 depends_on:

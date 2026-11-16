@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0078
 title: GitView - Issue links, hierarchy and partial observations
 kind: spec
 created_at: '2026-11-16T11:30:00Z'
-updated_at: '2026-11-16T11:30:00Z'
-status: outlined
+updated_at: '2026-11-16T19:59:36Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0039
 depends_on:

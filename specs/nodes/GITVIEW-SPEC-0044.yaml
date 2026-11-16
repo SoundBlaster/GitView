@@ -2,8 +2,8 @@ id: GITVIEW-SPEC-0044
 title: GitView - Understand freshness and incomplete overview
 kind: spec
 created_at: '2026-11-16T08:36:00Z'
-updated_at: '2026-11-16T08:36:00Z'
-status: outlined
+updated_at: '2026-11-16T19:57:34Z'
+status: specified
 refines:
 - GITVIEW-SPEC-0026
 depends_on:
@@ -47,7 +47,8 @@ specification:
       object is shown.
     private_access: After GitHub confirms access revocation for a private Repository, keep saved data
       visible as last known with the revocation indication and supported update time when known; stop
-      synchronization and retain a discoverable route to recovery or explicit local deletion under 0019.
+      synchronization and retain discoverable routes to both recovery and explicit local deletion under
+      0019.
     accessibility: Make update status, relevant limitations and available actions understandable without
       relying on color or transient feedback alone.
     selected_context: When the operator changes Project, day or filters, show results in their actual
@@ -62,8 +63,8 @@ specification:
       rather than inventing missing cards.
     revoked_private: The relevant account remains active throughout this scenario. GitHub confirms private
       Repository access revocation while saved work exists. Keep that work accessible with the revocation
-      indication and supported time when known; stop synchronization and preserve recovery or local deletion
-      under 0019.
+      indication and supported time when known; stop synchronization and preserve both recovery and local
+      deletion under 0019.
   open_questions:
   - How native UI presents freshness, partial coverage and recovery without overwhelming the overview.
   - Source coverage and technical approach to synchronization, ordering, persistence and account isolation.
@@ -75,7 +76,7 @@ acceptance:
 - Incomplete or unavailable information is distinguishable from a confirmed empty result or zero.
 - Displayed counts and visible cards retain their actual meaning, applicable scope and relevant limitations.
 - Confirmed private Repository revocation preserves saved data and its indication, stops synchronization
-  and retains recovery or explicit local deletion under 0019. Visibility and local access follow the active-account
-  and A-to-B boundary in 0019.
+  and retains both recovery and explicit local deletion under 0019. Visibility and local access follow
+  the active-account and A-to-B boundary in 0019.
 - Status, limitations and available actions are understandable without relying solely on color or transient
   feedback.
