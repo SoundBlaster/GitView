@@ -10,9 +10,12 @@ for governed specification artifacts.
 Use the project-local skill
 `.codex/skills/specgraph-conversation-notes/SKILL.md` when discussing product
 or design ideas. The local runtime installed for this pilot is
+`/Users/egor/.local/share/specgraph/runtime-aa9f6cb9-py313/specgraph-runtime`
+(SpecGraph v0.2.0, commit `aa9f6cb9010a003b8d09b1b4773498c07d1395ba`).
+The previous installation at
 `/Users/egor/.local/share/specgraph/runtime-3a7f176a/specgraph-runtime`
-(SpecGraph v0.2.0, commit `3a7f176a5524569f46a048a3fa673a1663304142`).
-For its standalone `specgraph` CLI, use the executable in the same installation
+is retained for rollback; select it explicitly when testing the old version.
+For the selected runtime's standalone `specgraph` CLI, use its executable
 at `venv/bin/specgraph`, or invoke the runtime's `draft` subcommand. If that
 installation is unavailable, report it and choose or install a compatible
 runtime before writing; do not silently switch to a developer checkout.
@@ -37,7 +40,7 @@ Other sketches and local `runs/` remain excluded from this repository.
 
 For a single YAML proposal under `docs/drafts/`, use the read-only candidate
 check directly in this workspace:
-`/Users/egor/.local/share/specgraph/runtime-3a7f176a/specgraph-runtime --workspace "$PWD" next-move -- --candidate-file docs/drafts/GITVIEW-SPEC-0004.yaml`.
+`/Users/egor/.local/share/specgraph/runtime-aa9f6cb9-py313/specgraph-runtime --workspace "$PWD" next-move -- --candidate-file docs/drafts/GITVIEW-SPEC-0004.yaml`.
 The report checks YAML mapping, spec kind and filename/ID consistency; it does
 not validate ontology, dependencies, acceptance or maturity and does not
 materialize the draft into `specs/nodes/`.
@@ -46,7 +49,7 @@ Lint specification YAML with the installed runtime, passing explicit
 workspace-relative paths. For all current canonical nodes from the project root:
 
 ```sh
-/Users/egor/.local/share/specgraph/runtime-3a7f176a/specgraph-runtime \
+/Users/egor/.local/share/specgraph/runtime-aa9f6cb9-py313/specgraph-runtime \
   --workspace "$PWD" lint -- specs/nodes/*.yaml
 ```
 
@@ -67,9 +70,18 @@ Run the installed runtime's `domain_vocabulary` context check for each changed
 node and inspect inventory, resolved candidates and gaps, not only `checked`.
 Record a no-input result separately from a successful binding. A structural
 binding does not establish semantic correctness or implementation behavior.
-When the installed runtime supports `ontology-ref-diff`, use it for the
-predecessor/successor comparison and explicitly explain intentional removals;
-until then retain a reviewable manual comparison.
+Use `ontology-ref-diff` for the predecessor/successor comparison and explicitly
+explain intentional removals, for example:
+
+```sh
+/Users/egor/.local/share/specgraph/runtime-aa9f6cb9-py313/specgraph-runtime \
+  --workspace "$PWD" ontology-ref-diff -- \
+  docs/drafts/GITVIEW-SPEC-0001.yaml specs/nodes/GITVIEW-SPEC-0001.yaml
+```
+
+It compares exact declarations; renamed or qualified terms require separate
+semantic review. Use `--explain-removal TERM REASON` for each intentional
+removal rather than treating an explanation as proof of equivalence.
 
 ## Independent specification review
 
