@@ -14,6 +14,7 @@ scope:
   includes:
     - Persist snapshot data, observation time and completeness by account and project.
     - Prevent incomplete or older observations from replacing an existing snapshot.
+    - Enrich an unchanged snapshot while retaining its original time and completeness.
   excludes:
     - Fetching source data, merging partial snapshots and source access verification.
 provides:

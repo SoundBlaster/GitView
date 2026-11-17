@@ -102,7 +102,7 @@ struct ProjectWorkPage: View {
             }
         }
         .sheet(item: $selectedItem) { item in
-            WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID)
+            WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID, onThreads: persistThreads)
         }
         .task { restore(); await load() }
         .refreshable { await load() }
@@ -193,6 +193,24 @@ struct ProjectWorkPage: View {
         }
     }
 
+    @MainActor private func persistThreads(_ item: GitHubWorkItem, _ threads: GitHubReviewThreads, _ observedAt: Date) -> Bool {
+        guard let cache, let head = item.headRevision else { return false }
+        do {
+            guard let snapshot = try cache.load(accountID: project.accountID, projectID: project.id) else { return false }
+            var stored = try JSONDecoder().decode([GitHubWorkItem].self, from: snapshot.payload)
+            guard let index = stored.firstIndex(where: { $0.id == item.id }),
+                  let enriched = stored[index].withReviewThreads(threads, forHead: head, observedAt: observedAt) else { return false }
+            stored[index] = enriched
+            let payload = try JSONEncoder().encode(stored)
+            guard try cache.replacePayload(accountID: project.accountID, projectID: project.id, expected: snapshot, payload: payload) else { return false }
+            if let visible = items.firstIndex(where: { $0.id == item.id && $0.headRevision == head }),
+               let updated = items[visible].withReviewThreads(threads, forHead: head, observedAt: observedAt) {
+                items[visible] = updated
+            }
+            return true
+        } catch { return false }
+    }
+
     @MainActor private func present(_ collected: [GitHubWorkItem], now: Date) {
         let calendar = Calendar.current
         let policy = TodayEligibility(now: now, calendar: calendar)
@@ -262,11 +280,14 @@ private struct WorkDetailSheet: View {
     let item: GitHubWorkItem
     let sessionManager: GitHubSessionManager
     let accountID: Int64
+    let onThreads: @MainActor (GitHubWorkItem, GitHubReviewThreads, Date) -> Bool
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     @State private var expandedThreads: GitHubReviewThreads?
     @State private var threadError = false
     @State private var loadingThreads = false
+    @State private var threadObservedAt: Date?
+    @State private var storageError = false
 
     var body: some View {
         NavigationStack {
@@ -276,9 +297,10 @@ private struct WorkDetailSheet: View {
                     LabeledContent("Number", value: "#\(item.number)")
                     LabeledContent("State", value: item.state)
                     if item.kind == .pullRequest {
-                        WorkSignalDetails(item: item, threadsOverride: expandedThreads)
+                        WorkSignalDetails(item: item, threadsOverride: expandedThreads, observedAtOverride: threadObservedAt)
                         if loadingThreads { ProgressView("Loading review threads") }
                         if threadError { Text("Could not complete the thread count. Refresh the project and try again.").foregroundStyle(.secondary) }
+                        if storageError { Text("Updated thread count could not be saved locally.").foregroundStyle(.secondary) }
                     }
                 }
                 Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
@@ -299,7 +321,10 @@ private struct WorkDetailSheet: View {
             let credential = try await sessionManager.usableSession(for: accountID)
             let result = try await GitHubReviewThreadsClient().load(token: credential.accessToken, pullRequestID: item.id, expectedHead: head)
             try Task.checkCancellation()
+            let now = Date()
             expandedThreads = result
+            threadObservedAt = now
+            storageError = !onThreads(item, result, now)
         } catch is CancellationError {
         } catch {
             threadError = true
@@ -310,10 +335,12 @@ private struct WorkDetailSheet: View {
 private struct WorkSignalDetails: View {
     let item: GitHubWorkItem
     let threadsOverride: GitHubReviewThreads?
+    let observedAtOverride: Date?
 
-    init(item: GitHubWorkItem, threadsOverride: GitHubReviewThreads? = nil) {
+    init(item: GitHubWorkItem, threadsOverride: GitHubReviewThreads? = nil, observedAtOverride: Date? = nil) {
         self.item = item
         self.threadsOverride = threadsOverride
+        self.observedAtOverride = observedAtOverride
     }
 
     var body: some View {
@@ -330,6 +357,9 @@ private struct WorkSignalDetails: View {
         if let threads = threadsOverride ?? item.reviewThreads {
             LabeledContent("Review threads", value: "\(threads.total)")
             LabeledContent(threads.isComplete ? "Unresolved" : "Unresolved observed (partial)", value: "\(threads.observedUnresolved)")
+            if let date = observedAtOverride ?? item.reviewThreadObservedAt {
+                Text("Threads observed \(date.formatted(date: .abbreviated, time: .shortened))").font(.footnote).foregroundStyle(.secondary)
+            }
         } else {
             Text("Review thread counts unavailable.").foregroundStyle(.secondary)
         }

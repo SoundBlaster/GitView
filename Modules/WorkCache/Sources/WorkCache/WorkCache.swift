@@ -56,6 +56,19 @@ public enum WorkCacheError: Error, Equatable { case invalidAccount, invalidStore
         return WorkSnapshot(payload: payload, observedAt: date, complete: complete)
     }
 
+    /// Enriches an unchanged snapshot without changing its original coverage or observation time.
+    @discardableResult
+    public func replacePayload(accountID: Int64, projectID: UUID, expected: WorkSnapshot, payload: Data) throws -> Bool {
+        guard accountID > 0 else { throw WorkCacheError.invalidAccount }
+        guard let entry = try object(accountID: accountID, projectID: projectID) else { return false }
+        container.viewContext.refresh(entry, mergeChanges: false)
+        guard let current = try load(accountID: accountID, projectID: projectID), current == expected else { return false }
+        entry.setValue(payload, forKey: "payload")
+        do { try container.viewContext.save() }
+        catch { container.viewContext.rollback(); throw error }
+        return true
+    }
+
     private func object(accountID: Int64, projectID: UUID) throws -> NSManagedObject? {
         let request = NSFetchRequest<NSManagedObject>(entityName: "WorkSnapshot")
         request.predicate = NSPredicate(format: "accountID == %lld AND projectID == %@", accountID, projectID as CVarArg)

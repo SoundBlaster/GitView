@@ -21,6 +21,11 @@ struct WorkItemsTests {
         #expect(item.reviewRequestCount == 1)
         let restored = try JSONDecoder().decode(GitHubWorkItem.self, from: JSONEncoder().encode(item))
         #expect(restored.reviewThreads?.isComplete == false)
+        let observedAt = Date().addingTimeInterval(60)
+        let enriched = try #require(item.withReviewThreads(threads, forHead: "abc", observedAt: observedAt))
+        #expect(enriched.reviewThreadObservedAt == observedAt)
+        #expect(item.withReviewThreads(threads, forHead: "different", observedAt: observedAt) == nil)
+        #expect(item.withReviewThreads(threads, forHead: "abc", observedAt: .distantPast) == nil)
     }
 
     @Test func doesNotPresentMissingCheckBucketsAsComplete() async throws {
