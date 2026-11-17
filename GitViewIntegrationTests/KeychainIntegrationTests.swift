@@ -327,15 +327,18 @@ private enum BackgroundPreparationTestError: Error { case rejected }
         throw XCTSkip("BGTaskScheduler is unavailable on Simulator; verify registration on a device.")
         #else
         let identifier = BackgroundRefreshRuntime.identifier
-        BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: identifier)
-        defer { BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: identifier) }
-        do { try BGTaskScheduler.shared.submit(BGAppRefreshTaskRequest(identifier: identifier)) }
-        catch { XCTFail("Could not schedule background refresh: \(error)"); return }
-        let isPending = await withCheckedContinuation { continuation in
-            BGTaskScheduler.shared.getPendingTaskRequests { requests in
-                continuation.resume(returning: requests.contains { $0.identifier == identifier })
+        func pending() async -> Bool {
+            await withCheckedContinuation { continuation in
+                BGTaskScheduler.shared.getPendingTaskRequests { requests in
+                    continuation.resume(returning: requests.contains { $0.identifier == identifier })
+                }
             }
         }
+        if await pending() { return }
+        do { try BGTaskScheduler.shared.submit(BGAppRefreshTaskRequest(identifier: identifier)) }
+        catch { XCTFail("Could not schedule background refresh: \(error)"); return }
+        defer { BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: identifier) }
+        let isPending = await pending()
         XCTAssertTrue(isPending)
         #endif
     }
