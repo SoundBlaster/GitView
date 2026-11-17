@@ -111,7 +111,8 @@ private struct ProjectTestFixture: View {
     private static let fixtureDiscovery: GitHubDiscovery = {
         let arguments = ProcessInfo.processInfo.arguments
         let transport = DiscoveryFixtureTransport(failFirst: arguments.contains("--gitgrid-ui-test-discovery-retry"),
-                                                  emptyFirst: arguments.contains("--gitgrid-ui-test-discovery-empty"))
+                                                  emptyFirst: arguments.contains("--gitgrid-ui-test-discovery-empty"),
+                                                  partialRefresh: arguments.contains("--gitgrid-ui-test-discovery-partial"))
         return GitHubDiscovery(client: GitHubDiscoveryClient { request in await transport.send(request) })
     }()
 
@@ -142,7 +143,11 @@ private struct ProjectTestFixture: View {
 private actor DiscoveryFixtureTransport {
     private var failFirst: Bool
     private var emptyFirst: Bool
-    init(failFirst: Bool, emptyFirst: Bool) { self.failFirst = failFirst; self.emptyFirst = emptyFirst }
+    private let partialRefresh: Bool
+    private var cycle = 0
+    init(failFirst: Bool, emptyFirst: Bool, partialRefresh: Bool) {
+        self.failFirst = failFirst; self.emptyFirst = emptyFirst; self.partialRefresh = partialRefresh
+    }
     func send(_ request: URLRequest) -> (Data, HTTPURLResponse) {
         if failFirst {
             failFirst = false
@@ -152,6 +157,21 @@ private actor DiscoveryFixtureTransport {
             emptyFirst = false
             let body = #"{"total_count":0,"installations":[]}"#
             return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        if partialRefresh {
+            if request.url?.path == "/user/installations" {
+                cycle += 1
+                let body = #"{"total_count":1,"installations":[{"id":1}]}"#
+                return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+            }
+            let page = URLComponents(url: request.url!, resolvingAgainstBaseURL: false)?.queryItems?.first { $0.name == "page" }?.value
+            if cycle == 2 && page == "2" {
+                return (Data(), HTTPURLResponse(url: request.url!, statusCode: 503, httpVersion: nil, headerFields: nil)!)
+            }
+            let second = cycle == 2 ? #"{"id":103,"full_name":"fixture/three","private":false}"# : #"{"id":102,"full_name":"fixture/two","private":false}"#
+            let body = #"{"total_count":2,"repositories":[{"id":101,"full_name":"fixture/one","private":false},\#(second)]}"#
+            let header = cycle == 2 ? ["Link": "<https://api.github.com/user/installations/1/repositories?page=2>; rel=\"next\""] : [:]
+            return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: header)!)
         }
         let body = request.url?.path == "/user/installations"
             ? #"{"total_count":1,"installations":[{"id":1}]}"#

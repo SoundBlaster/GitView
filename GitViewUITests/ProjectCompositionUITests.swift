@@ -1,6 +1,33 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testPartialDiscoveryKeepsPriorRepositoriesAndAllowsFreshOnes() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-empty-projects", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-discovery-partial"]
+        app.launch()
+        let choose = app.buttons["projects.chooseRepository"]
+        XCTAssertTrue(choose.waitForExistence(timeout: 10))
+        choose.tap()
+        let existing = app.buttons["discovery.repository.102"]
+        XCTAssertTrue(existing.waitForExistence(timeout: 10))
+        app.buttons["discovery.toolbarRefresh"].tap()
+        let added = app.buttons["discovery.repository.103"]
+        XCTAssertTrue(added.waitForExistence(timeout: 10))
+        XCTAssertTrue(existing.exists)
+        XCTAssertFalse(existing.isEnabled)
+        XCTAssertTrue(added.isEnabled)
+        XCTAssertTrue(existing.label.contains("Not refreshed"))
+        added.tap()
+        XCTAssertTrue(app.navigationBars["Add Repository"].waitForExistence(timeout: 5))
+        app.buttons["Cancel"].tap()
+        let retry = app.buttons["discovery.retry"]
+        XCTAssertTrue(retry.waitForExistence(timeout: 5))
+        retry.tap()
+        let enabled = NSPredicate(format: "isEnabled == true")
+        expectation(for: enabled, evaluatedWith: existing)
+        waitForExpectations(timeout: 10)
+        XCTAssertFalse(added.exists)
+    }
     func testEmptyRepositoryDiscoveryCanRefreshAfterInstallation() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-empty-projects", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-discovery-empty"]

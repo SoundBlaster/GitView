@@ -11,11 +11,12 @@ struct RepositoryDiscoveryPage: View {
     var preferredProjectID: UUID? = nil
     var discovery: GitHubDiscovery = GitHubDiscovery()
     @State private var result: DiscoveryResult?
+    @State private var repositories: [GitHubRepository] = []
+    @State private var freshRepositoryIDs = Set<Int64>()
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var query = ""
     @State private var selected: GitHubRepository?
-    @State private var isFresh = false
 
     var body: some View {
         List {
@@ -24,15 +25,21 @@ struct RepositoryDiscoveryPage: View {
                     Label("Some repositories could not be loaded. Pull to retry.", systemImage: "exclamationmark.triangle")
                         .foregroundStyle(.secondary)
                 }
-                ForEach(result.repositories.filter { query.isEmpty || $0.fullName.localizedCaseInsensitiveContains(query) }) { repository in
+                ForEach(repositories.filter { query.isEmpty || $0.fullName.localizedCaseInsensitiveContains(query) }) { repository in
                     Button {
                         selected = repository
                     } label: {
-                        Label(repository.fullName, systemImage: repository.isPrivate ? "lock" : "book.closed")
+                        VStack(alignment: .leading) {
+                            Label(repository.fullName, systemImage: repository.isPrivate ? "lock" : "book.closed")
+                            if !freshRepositoryIDs.contains(repository.id) {
+                                Text("Not refreshed").font(.caption).foregroundStyle(.secondary)
+                            }
+                        }
                     }
-                    .disabled(!isFresh || isLoading || library == nil)
+                    .disabled(!freshRepositoryIDs.contains(repository.id) || isLoading || library == nil)
+                    .accessibilityIdentifier("discovery.repository.\(repository.id)")
                 }
-                if result.repositories.isEmpty && result.isComplete {
+                if repositories.isEmpty && result.isComplete {
                     ContentUnavailableView("No accessible repositories", systemImage: "tray", description: Text("Install the GitHub App for repositories you want to view."))
                 }
             } else if isLoading {
@@ -45,7 +52,7 @@ struct RepositoryDiscoveryPage: View {
                 Button("Retry") { Task { await load() } }
                     .disabled(isLoading)
                     .accessibilityIdentifier("discovery.retry")
-            } else if result?.repositories.isEmpty == true {
+            } else if result?.isComplete == true && repositories.isEmpty {
                 Button("Refresh") { Task { await load() } }
                     .disabled(isLoading)
                     .accessibilityIdentifier("discovery.refresh")
@@ -60,12 +67,17 @@ struct RepositoryDiscoveryPage: View {
             }
         }
         .navigationTitle("Repositories")
+        .toolbar {
+            Button("Refresh", systemImage: "arrow.clockwise") { Task { await load() } }
+                .disabled(isLoading)
+                .accessibilityIdentifier("discovery.toolbarRefresh")
+        }
         .searchable(text: $query)
         .task { await load() }
         .refreshable { await load() }
         .sheet(item: $selected) { repository in
             if let library {
-                ProjectCreationSheet(repository: repository, library: library, canSave: isFresh && !isLoading, preferredProjectID: preferredProjectID)
+                ProjectCreationSheet(repository: repository, library: library, canSave: freshRepositoryIDs.contains(repository.id) && !isLoading, preferredProjectID: preferredProjectID)
             }
         }
     }
@@ -73,7 +85,7 @@ struct RepositoryDiscoveryPage: View {
     @MainActor private func load() async {
         guard !isLoading else { return }
         isLoading = true
-        isFresh = false
+        freshRepositoryIDs = []
         defer { isLoading = false }
         do {
             let session = try await sessionManager.usableSession(for: accountID)
@@ -92,13 +104,20 @@ struct RepositoryDiscoveryPage: View {
                     })
                 } catch { metadataProblem = true }
             }
-            if !updated.isComplete, result != nil {
-                errorMessage = metadataProblem ? "Refresh was incomplete and saved repository metadata could not be updated." : "Refresh was incomplete. Showing the previous results."
+            if updated.isComplete {
+                repositories = updated.repositories
             } else {
-                result = updated
-                isFresh = true
-                errorMessage = metadataProblem ? "Saved repository metadata could not be updated." : nil
+                var merged = repositories
+                var indices = Dictionary(merged.enumerated().map { ($0.element.id, $0.offset) }, uniquingKeysWith: { first, _ in first })
+                for repository in updated.repositories {
+                    if let index = indices[repository.id] { merged[index] = repository }
+                    else { indices[repository.id] = merged.count; merged.append(repository) }
+                }
+                repositories = merged
             }
+            result = updated
+            freshRepositoryIDs = Set(updated.repositories.map(\.id))
+            errorMessage = metadataProblem ? "Saved repository metadata could not be updated." : nil
             if let until = updated.rateLimitUntil {
                 let limitMessage = "GitHub rate limit. Retry after \(until.formatted(date: .abbreviated, time: .shortened))."
                 errorMessage = [errorMessage, limitMessage].compactMap { $0 }.joined(separator: " ")
