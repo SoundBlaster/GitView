@@ -25,6 +25,44 @@ import WorkCache
     }()
 }
 
+/// Local diagnostic for the latest background invocation; no account or work data is retained.
+@MainActor struct BackgroundRunRecorder {
+    enum Result: String { case running, savedBatch, noWork, superseded, cancelled, failed }
+    enum BatchQuality: String { case complete, partial, failed }
+    static let key = "GitGrid.background.lastRun"
+    let defaults: UserDefaults
+
+    func start(at date: Date = .now) -> UUID {
+        let id = UUID()
+        defaults.set(["id": id.uuidString, "started": date, "result": Result.running.rawValue], forKey: Self.key)
+        return id
+    }
+
+    static func quality(of observations: [RepositoryWorkRefresh]) -> BatchQuality {
+        var received = 0
+        var incomplete = observations.isEmpty
+        for observation in observations {
+            switch observation.outcome {
+            case .received(_, let complete):
+                received += 1
+                if !complete || observation.refreshProblem != nil { incomplete = true }
+            case .failed:
+                incomplete = true
+            }
+        }
+        if received == 0 { return .failed }
+        return incomplete ? .partial : .complete
+    }
+
+    func finish(_ id: UUID, result: Result, batch: BatchQuality? = nil, at date: Date = .now) {
+        guard var record = defaults.dictionary(forKey: Self.key), record["id"] as? String == id.uuidString else { return }
+        record["finished"] = date
+        record["result"] = result.rawValue
+        if let batch { record["batch"] = batch.rawValue }
+        defaults.set(record, forKey: Self.key)
+    }
+}
+
 @MainActor enum BackgroundRefreshRuntime {
     static let identifier = "ru.egormerkushev.gitview.refresh"
     private static let lastProjectKey = "GitGrid.background.lastProject"
@@ -43,6 +81,10 @@ import WorkCache
         defer { schedule() }
         let store = KeychainCredentialStore(service: "ru.egormerkushev.gitview.github", account: "current")
         let defaults = UserDefaults.standard
+        let recorder = BackgroundRunRecorder(defaults: defaults)
+        let runID = recorder.start()
+        var batchQuality: BackgroundRunRecorder.BatchQuality?
+        Logger(subsystem: "ru.egormerkushev.gitview", category: "refresh").notice("Background refresh started")
         let coordinator = BackgroundRefreshCoordinator(session: {
             guard let value = try store.load() else { return nil }
             return BackgroundRefreshSession(accountID: value.identity.id, token: value.accessToken, expiresAt: value.accessTokenExpiresAt)
@@ -58,9 +100,11 @@ import WorkCache
                 try await GitHubWorkClient().load(token: token, repositoryID: repository.id, fullName: repository.fullName,
                                                   nodeID: repository.nodeID, maxRequests: 2, openContinuation: continuations[repository.id])
             }
-            return try await service.fetch(token: token, repositories: repositories.map {
+            let observations = try await service.fetch(token: token, repositories: repositories.map {
                 RefreshRepository(id: $0.id, fullName: $0.fullName, nodeID: $0.nodeID)
             }).observations
+            batchQuality = BackgroundRunRecorder.quality(of: observations)
+            return observations
         }, save: { project, observations in
             let base = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             let directory = base.appendingPathComponent("GitGrid", isDirectory: true)
@@ -80,8 +124,16 @@ import WorkCache
                 defaults.set(projectID.uuidString, forKey: lastProjectKey)
                 defaults.set(repositoryID, forKey: "GitGrid.background.repository.\(projectID.uuidString)")
             }
-        } catch is CancellationError { }
-        catch { Logger(subsystem: "ru.egormerkushev.gitview", category: "refresh").debug("Background refresh failed: \(error.localizedDescription, privacy: .public)") }
+            switch result {
+            case .updated: recorder.finish(runID, result: .savedBatch, batch: batchQuality)
+            case .unavailable: recorder.finish(runID, result: .noWork)
+            case .superseded: recorder.finish(runID, result: .superseded)
+            }
+        } catch is CancellationError { recorder.finish(runID, result: .cancelled) }
+        catch {
+            recorder.finish(runID, result: .failed)
+            Logger(subsystem: "ru.egormerkushev.gitview", category: "refresh").debug("Background refresh failed: \(error.localizedDescription, privacy: .public)")
+        }
     }
 }
 

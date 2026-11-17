@@ -15,6 +15,44 @@ private actor BackgroundTokenRefreshCounter {
 private enum BackgroundPreparationTestError: Error { case rejected }
 
 @MainActor final class ProjectRefreshPersistenceTests: XCTestCase {
+    func testBackgroundRunRecordKeepsOnlyLatestInvocation() throws {
+        let suite = "gitgrid.background.test.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let recorder = BackgroundRunRecorder(defaults: defaults)
+        let start = Date(timeIntervalSince1970: 1_000)
+        let older = recorder.start(at: start)
+        let newer = recorder.start(at: start.addingTimeInterval(1))
+        recorder.finish(older, result: .savedBatch, at: start.addingTimeInterval(2))
+        var record = try XCTUnwrap(defaults.dictionary(forKey: BackgroundRunRecorder.key))
+        XCTAssertEqual(record["id"] as? String, newer.uuidString)
+        XCTAssertEqual(record["result"] as? String, "running")
+        XCTAssertNil(record["finished"])
+        recorder.finish(newer, result: .failed, at: start.addingTimeInterval(3))
+        record = try XCTUnwrap(defaults.dictionary(forKey: BackgroundRunRecorder.key))
+        XCTAssertEqual(Set(record.keys), ["id", "started", "finished", "result"])
+        XCTAssertEqual(record["result"] as? String, "failed")
+        XCTAssertEqual(record["started"] as? Date, start.addingTimeInterval(1))
+        XCTAssertEqual(record["finished"] as? Date, start.addingTimeInterval(3))
+        let batch = recorder.start(at: start.addingTimeInterval(4))
+        recorder.finish(batch, result: .savedBatch, batch: .partial, at: start.addingTimeInterval(5))
+        record = try XCTUnwrap(defaults.dictionary(forKey: BackgroundRunRecorder.key))
+        XCTAssertEqual(Set(record.keys), ["id", "started", "finished", "result", "batch"])
+        XCTAssertEqual(record["result"] as? String, "savedBatch")
+        XCTAssertEqual(record["batch"] as? String, "partial")
+    }
+    func testBackgroundRunQualityDistinguishesFailuresFromObservedData() {
+        let good = RepositoryWorkRefresh(id: 1, name: "a/b", outcome: .received([], complete: true))
+        let partial = RepositoryWorkRefresh(id: 2, name: "a/c", outcome: .received([], complete: false))
+        let failed = RepositoryWorkRefresh(id: 3, name: "a/d", outcome: .failed("offline"))
+        let failedPage = RepositoryWorkRefresh(id: 4, name: "a/e", outcome: .received([], complete: true), refreshProblem: "later page failed")
+        XCTAssertEqual(BackgroundRunRecorder.quality(of: [good]), .complete)
+        XCTAssertEqual(BackgroundRunRecorder.quality(of: [good, partial]), .partial)
+        XCTAssertEqual(BackgroundRunRecorder.quality(of: [good, failed]), .partial)
+        XCTAssertEqual(BackgroundRunRecorder.quality(of: [failedPage]), .partial)
+        XCTAssertEqual(BackgroundRunRecorder.quality(of: [failed]), .failed)
+        XCTAssertEqual(BackgroundRunRecorder.quality(of: []), .failed)
+    }
     func testBackgroundAndForegroundShareExpiredSessionRotation() async throws {
         let store = KeychainCredentialStore(service: "gitgrid.integration.\(UUID().uuidString)", account: "test")
         defer { try? store.remove() }
