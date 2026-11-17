@@ -14,6 +14,13 @@ public struct GitHubIssueRelationPage: Codable, Sendable {
     public let total: Int
     public let isComplete: Bool
     public let observedAt: Date?
+
+    /// A complete count of closed objects, or nil if the observation cannot support it.
+    public var closedCount: Int? {
+        guard isComplete, total >= 0, items.count == total, Set(items.map(\.id)).count == total,
+              items.allSatisfy({ $0.state == "OPEN" || $0.state == "CLOSED" }) else { return nil }
+        return items.filter { $0.state == "CLOSED" }.count
+    }
 }
 
 public enum GitHubIssueRelationKind: String, Hashable, Sendable {

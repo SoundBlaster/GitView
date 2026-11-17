@@ -107,6 +107,10 @@ import XCTest
         XCTAssertTrue(moreBlockers.waitForExistence(timeout: 5))
         moreBlockers.tap()
         XCTAssertTrue(app.staticTexts["Could not load more related issues. Showing saved results."].waitForExistence(timeout: 10))
+        let closedSubIssues = app.descendants(matching: .any)["issue.closedSubIssues"]
+        for _ in 0..<4 where !closedSubIssues.isHittable { app.swipeUp() }
+        XCTAssertTrue(closedSubIssues.waitForExistence(timeout: 5))
+        XCTAssertTrue((closedSubIssues.label + String(describing: closedSubIssues.value)).contains("0"))
         let linked = app.staticTexts["Linked PR fixture"]
         for _ in 0..<4 where !linked.isHittable { app.swipeUp() }
         XCTAssertTrue(linked.waitForExistence(timeout: 5))

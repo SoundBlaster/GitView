@@ -24,6 +24,7 @@ scope:
     - Preserve Issue repository, type, assignees, milestone and independent comment and participant counts when available.
     - Fetch direct Issue parent, blockers, blocked Issues and sub-issues, retaining direction and partial coverage.
     - Page each Issue relationship independently, detect cursor and changing-count inconsistencies, and retain observation time.
+    - Derive a closed sub-issue count only from a complete set of distinct Issues with known states.
     - Preserve distinct PR cross-references and GitHub's closing-on-merge indication with timeline coverage.
     - Combine manually linked PRs with cross-references by source identity, retaining each source's coverage.
     - Page PR link sources independently with bounded requests and reject invalid cursors.

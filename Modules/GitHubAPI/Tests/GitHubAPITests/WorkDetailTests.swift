@@ -3,6 +3,17 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkDetailTests {
+    @Test func closedSubIssueCountRequiresCompleteKnownStates() {
+        let open = GitHubIssueReference(id: "I1", number: 1, title: "Open", url: URL(string: "https://github.com/a/b/issues/1")!, state: "OPEN", repository: "a/b")
+        let closed = GitHubIssueReference(id: "I2", number: 2, title: "Closed", url: URL(string: "https://github.com/a/b/issues/2")!, state: "CLOSED", repository: "a/b")
+        let unknown = GitHubIssueReference(id: "I3", number: 3, title: "Unknown", url: URL(string: "https://github.com/a/b/issues/3")!, state: "FUTURE_STATE", repository: "a/b")
+        let complete = GitHubIssueRelationPage(items: [open, closed], total: 2, isComplete: true, observedAt: nil)
+        #expect(complete.closedCount == 1)
+        #expect(GitHubIssueRelationPage(items: [closed], total: 2, isComplete: false, observedAt: nil).closedCount == nil)
+        #expect(GitHubIssueRelationPage(items: [closed, unknown], total: 2, isComplete: true, observedAt: nil).closedCount == nil)
+        #expect(GitHubIssueRelationPage(items: [], total: 0, isComplete: true, observedAt: nil).closedCount == 0)
+        #expect(GitHubIssueRelationPage(items: [closed], total: 2, isComplete: true, observedAt: nil).closedCount == nil)
+    }
     @Test func issueContextSeparatesCountsAndPartialAssignees() async throws {
         let client = GitHubWorkDetailClient { request in
             let json = #"{"data":{"node":{"__typename":"Issue","id":"I1","repository":{"nameWithOwner":"a/b"},"issueType":{"name":"Bug"},"assignees":{"totalCount":2,"nodes":[{"login":"alice"}],"pageInfo":{"hasNextPage":true}},"milestone":{"title":"First release"},"participants":{"totalCount":7},"comments":{"totalCount":4,"nodes":[{"createdAt":"2026-11-17T10:00:00Z"}]}}}}"#

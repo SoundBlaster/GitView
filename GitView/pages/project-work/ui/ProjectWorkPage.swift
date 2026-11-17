@@ -862,6 +862,10 @@ private struct IssueRelationshipDetails: View {
         Section(title) {
             if let page {
                 LabeledContent("Reported total", value: "\(page.total)")
+                if kind == .subIssues {
+                    if let closed = page.closedCount { LabeledContent("Closed sub-issues", value: "\(closed)").accessibilityIdentifier("issue.closedSubIssues") }
+                    else { Text("Closed sub-issue count unavailable.").foregroundStyle(.secondary) }
+                }
                 ForEach(page.items) { issue in issueLink(issue) }
                 if !page.isComplete {
                     Text("Some related issues are not shown.").foregroundStyle(.secondary)
