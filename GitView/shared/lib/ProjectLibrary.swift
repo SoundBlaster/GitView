@@ -68,6 +68,41 @@ struct BackgroundRefreshSession: Equatable {
     let expiresAt: Date?
 }
 
+/// Refreshes the visible project overview sequentially, sharing a repository observation
+/// between projects during one pass. Stale account or membership results are discarded.
+@MainActor struct ForegroundOverviewRefreshCoordinator {
+    let projects: () -> [StoredProject]
+    let isCurrent: () async throws -> Bool
+    let needsRefresh: (StoredProject) throws -> Bool
+    let fetch: (RepositoryReference) async throws -> RepositoryWorkRefresh
+    let save: (StoredProject, [RepositoryWorkRefresh]) throws -> Void
+
+    func run() async throws {
+        let initial = projects()
+        var observations: [Int64: RepositoryWorkRefresh] = [:]
+        for project in initial where !project.repositories.isEmpty {
+            try Task.checkCancellation()
+            guard try await isCurrent() else { return }
+            guard try needsRefresh(project) else { continue }
+            var batch: [RepositoryWorkRefresh] = []
+            for repository in project.repositories {
+                try Task.checkCancellation()
+                let observation: RepositoryWorkRefresh
+                if let existing = observations[repository.id] { observation = existing }
+                else {
+                    observation = try await fetch(repository)
+                    observations[repository.id] = observation
+                }
+                batch.append(observation)
+            }
+            try Task.checkCancellation()
+            guard try await isCurrent() else { return }
+            guard projects().contains(where: { $0.id == project.id && $0.repositories == project.repositories }) else { continue }
+            try save(project, batch)
+        }
+    }
+}
+
 @MainActor struct BackgroundRefreshCoordinator {
     enum Outcome: Equatable { case updated(UUID, lastRepository: Int64), unavailable, superseded }
     enum Failure: Error { case inconsistentObservations, couldNotSave }

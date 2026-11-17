@@ -16,6 +16,8 @@ struct ProjectsPage: View {
     @State private var zoomHint = false
     @State private var overviews: [UUID: ProjectOverview] = [:]
     @State private var cacheError = false
+    @State private var isRefreshing = false
+    @State private var refreshError: String?
     private var effectiveColumns: Int { dynamicTypeSize.isAccessibilitySize ? min(columns, 2) : columns }
     private var gridColumns: [GridItem] { Array(repeating: GridItem(.flexible(), spacing: 6), count: effectiveColumns) }
 
@@ -29,6 +31,11 @@ struct ProjectsPage: View {
                     Label("Some saved summaries could not be read.", systemImage: "exclamationmark.triangle")
                         .font(.footnote).foregroundStyle(.secondary)
                 }
+                if let refreshError {
+                    Label(refreshError, systemImage: "exclamationmark.triangle")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
+                if isRefreshing { ProgressView("Updating projects").font(.footnote) }
                 if zoomHint { Text("Choose a project to open it.").font(.footnote).foregroundStyle(.secondary) }
                 LazyVGrid(columns: gridColumns, spacing: 6) {
                     ForEach(library.projects) { project in
@@ -74,8 +81,11 @@ struct ProjectsPage: View {
             ProjectWorkPage(project: library.projects.first(where: { $0.id == route.project.id }) ?? route.project,
                 sessionManager: sessionManager, library: library, initialAttention: route.attention)
         }
-        .onAppear { loadOverviews() }
-        .onChange(of: scenePhase) { if scenePhase == .active { loadOverviews() } }
+        .task { loadOverviews(); await refreshOverviews(force: false) }
+        .refreshable { await refreshOverviews(force: true) }
+        .onChange(of: scenePhase) {
+            if scenePhase == .active { loadOverviews(); Task { await refreshOverviews(force: false) } }
+        }
         .onChange(of: library.projects) { loadOverviews() }
     }
 
@@ -121,7 +131,52 @@ struct ProjectsPage: View {
             cacheError = failures
         } catch { cacheError = true }
     }
+
+    @MainActor private func refreshOverviews(force: Bool) async {
+        guard !isRefreshing, !library.projects.isEmpty else { return }
+        isRefreshing = true
+        refreshError = nil
+        defer { isRefreshing = false }
+        do {
+            let credential = try await sessionManager.usableSession(for: library.accountID)
+            let base = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let directory = base.appendingPathComponent("GitGrid", isDirectory: true)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            let cache = try WorkCache(url: directory.appendingPathComponent("WorkCache.sqlite"))
+            let service = GitHubProjectRefresh { token, repository in
+                try await GitHubWorkClient().load(token: token, repositoryID: repository.id, fullName: repository.fullName,
+                                                  nodeID: repository.nodeID, maxRequests: 2)
+            }
+            let coordinator = ForegroundOverviewRefreshCoordinator(projects: { library.projects },
+                isCurrent: { try await sessionManager.isCurrent(accountID: library.accountID, accessToken: credential.accessToken) },
+                needsRefresh: { project in
+                    guard !force, let snapshot = try cache.load(accountID: library.accountID, projectID: project.id),
+                          snapshot.complete, snapshot.observedAt <= .now,
+                          Date.now.timeIntervalSince(snapshot.observedAt) < 15 * 60 else { return true }
+                    let archive = try ProjectWorkArchive.decode(snapshot.payload)
+                    return archive.hasRefreshProblems || !archive.hasCompleteObservation(for: Set(project.repositories.map(\.id)))
+                }, fetch: { repository in
+                    let batch = try await service.fetch(token: credential.accessToken, repositories: [
+                        RefreshRepository(id: repository.id, fullName: repository.fullName, nodeID: repository.nodeID)
+                    ])
+                    guard let observation = batch.observations.first else { throw OverviewRefreshError.invalidResponse }
+                    return observation
+                }, save: { project, observations in
+                    let result = try ProjectRefreshPersistence.commit(cache: cache, accountID: library.accountID, projectID: project.id,
+                        observations: observations, fallback: nil, at: .now)
+                    guard result.saved else { throw OverviewRefreshError.couldNotSave }
+                    if !result.complete { refreshError = "Some project summaries are incomplete. Open a project for details." }
+                    loadOverviews()
+                })
+            try await coordinator.run()
+        } catch is CancellationError {
+        } catch {
+            refreshError = "Could not update all projects. Showing saved summaries."
+        }
+    }
 }
+
+private enum OverviewRefreshError: Error { case invalidResponse, couldNotSave }
 
 private struct ProjectOverview {
     let summary: ProjectWorkSummary

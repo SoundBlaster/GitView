@@ -9,6 +9,53 @@ import XCTest
 @testable import GitView
 
 @MainActor final class ProjectRefreshPersistenceTests: XCTestCase {
+    func testOverviewRefreshReusesRepositoryAcrossProjects() async throws {
+        let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+        let repo = RepositoryReference(id: 1, fullName: "owner/repo", isPrivate: false)
+        try library.create(name: "First", repository: repo)
+        try library.create(name: "Second", repository: repo)
+        var fetched: [Int64] = []
+        var saved: [UUID] = []
+        let coordinator = ForegroundOverviewRefreshCoordinator(
+            projects: { library.projects }, isCurrent: { true }, needsRefresh: { _ in true },
+            fetch: { repository in
+                fetched.append(repository.id)
+                return .init(id: repository.id, name: repository.fullName, outcome: .received([], complete: true))
+            }, save: { project, _ in saved.append(project.id) })
+        try await coordinator.run()
+        XCTAssertEqual(fetched, [1])
+        XCTAssertEqual(Set(saved), Set(library.projects.map(\.id)))
+    }
+
+    func testOverviewRefreshDoesNotSaveAfterAccountChange() async throws {
+        let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+        try library.create(name: "First", repository: RepositoryReference(id: 1, fullName: "owner/repo", isPrivate: true))
+        var current = true
+        var saved = false
+        let coordinator = ForegroundOverviewRefreshCoordinator(
+            projects: { library.projects }, isCurrent: { current }, needsRefresh: { _ in true },
+            fetch: { repository in
+                current = false
+                return .init(id: repository.id, name: repository.fullName, outcome: .received([], complete: true))
+            }, save: { _, _ in saved = true })
+        try await coordinator.run()
+        XCTAssertFalse(saved)
+    }
+
+    func testOverviewRefreshDoesNotSaveForChangedMembership() async throws {
+        let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+        try library.create(name: "First", repository: RepositoryReference(id: 1, fullName: "owner/one", isPrivate: false))
+        let id = try XCTUnwrap(library.projects.first?.id)
+        var saved = false
+        let coordinator = ForegroundOverviewRefreshCoordinator(
+            projects: { library.projects }, isCurrent: { true }, needsRefresh: { _ in true },
+            fetch: { repository in
+                try library.add(repository: RepositoryReference(id: 2, fullName: "owner/two", isPrivate: false), to: id)
+                return .init(id: repository.id, name: repository.fullName, outcome: .received([], complete: true))
+            }, save: { _, _ in saved = true })
+        try await coordinator.run()
+        XCTAssertFalse(saved)
+    }
     func testBackgroundRefreshConfiguration() {
         let modes = Bundle.main.object(forInfoDictionaryKey: "UIBackgroundModes") as? [String] ?? []
         let identifiers = Bundle.main.object(forInfoDictionaryKey: "BGTaskSchedulerPermittedIdentifiers") as? [String] ?? []

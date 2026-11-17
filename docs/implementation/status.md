@@ -12,7 +12,7 @@ This is a code-progress record, not a claim that a product specification is full
 | GITVIEW-SPEC-0023 | Account and project-scoped local work snapshot, per-repository merge and freshness | WorkCache and ProjectWorkArchive tests, simulator integration tests | Live revocation attribution, real integration and on-device verification |
 | GITVIEW-SPEC-0048 | Manual and foreground refresh, bounded background task request and rate-limit deferral | GitHubAPI and WorkDomain tests; simulator integration tests for batching, account-change cancellation and preserved observations; plist configuration check | Physical-device BGTaskScheduler registration and execution, live GitHub rate-limit behavior and further orchestration verification |
 | GITVIEW-SPEC-0014 | Discrete density steps, zoom menu, tap detail, long-press preview and ambiguous-target fallback | GridDensityTests; iPhone Air Simulator UI tests for pinch in both directions, preview and selection preservation | Transition anchoring, physical-device performance and broader accessibility verification |
-| GITVIEW-SPEC-0004 | Project grid with cached summaries, attention signals and scoped navigation | Simulator UI tests for project preview, signal navigation and zoom | Live refresh and revocation status, physical-device review |
+| GITVIEW-SPEC-0004 | Project grid with cached summaries, attention signals, scoped navigation, bounded foreground refresh and pull to refresh | Simulator UI tests for project preview, signal navigation and zoom; refresh coordination tests | Live GitHub App refresh and revocation status, physical-device review |
 | GITVIEW-SPEC-0005 | Project work grid and separate labeled demo grid | Simulator UI tests with synthetic project data, pinch, previews and filters | Live GitHub data and full grid behavior |
 
 The demo data is deliberately labeled and is not a GitHub integration. SpecGraph `next-move` and `lint` describe graph structure; they are not implementation evidence. Module boundaries are recorded in SpecPM packages next to their code.
@@ -35,6 +35,8 @@ The same `--build-implementation-delta-snapshot` command was run for `GITVIEW-SP
 
 The delta snapshot for `GITVIEW-SPEC-0049` likewise returned `ready_for_planning` and `tracked_artifacts_written: false`; the day-boundary slice above is not a complete implementation or a verified trace binding.
 
+The delta snapshot for `GITVIEW-SPEC-0004` returned the same planning status without tracked artifacts. The foreground overview coordinator is covered by tests for shared repositories and changes to account or membership; it does not establish live GitHub App access.
+
 ## Initial delivery sequence
 
 1. Today eligibility, FSD application shell and demo grid (in progress).
@@ -48,6 +50,8 @@ Order within later slices may change with the dependency and product decisions; 
 OAuth decision: web authorization with PKCE, no backend; a bundled GitHub client secret is extractable and is not treated as proof of client identity. A development GitHub App has been registered and installed on one account, and its credentials configured locally. This does not establish a successful user authorization.
 
 A native connection screen invokes the system web authentication session. A signed Simulator UI test confirmed the GitGrid system prompt; a separate live probe found GitHub's sign-in accessibility element, although its screenshot was still loading. No live authorization, callback, token exchange, or repository access has been verified.
+
+Read-only GraphQL probes using the separate GitHub CLI session accepted the exact work, PR detail, review thread, Issue detail, Issue link and Issue relation query shapes against public repositories. This checks the source schema, not GitGrid authorization, transport decoding, or the user's installation permissions.
 
 Simulator startup comparison: on the same clean iPhone Air simulator, the ad-hoc signed app started without the Keychain read error, while the linker-signed build displayed it. This is a signing-dependent observation, not verification of saving a token or real GitHub authorization. The connection screen now distinguishes Keychain errors from project-store errors and logs only a Keychain status code.
 
