@@ -9,6 +9,7 @@ struct RepositoryDiscoveryPage: View {
     let account: String
     let library: ProjectLibrary?
     var preferredProjectID: UUID? = nil
+    var discovery: GitHubDiscovery = GitHubDiscovery()
     @State private var result: DiscoveryResult?
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -67,7 +68,7 @@ struct RepositoryDiscoveryPage: View {
         defer { isLoading = false }
         do {
             let session = try await sessionManager.usableSession(for: accountID)
-            let updated = try await GitHubDiscovery().load(token: session.accessToken)
+            let updated = try await discovery.load(token: session.accessToken)
             try Task.checkCancellation()
             guard try await sessionManager.isCurrent(accountID: accountID, accessToken: session.accessToken) else {
                 errorMessage = "The GitHub session changed. Refresh repositories for the active account."

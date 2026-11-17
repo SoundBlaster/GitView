@@ -8,6 +8,8 @@ import WorkDomain
 struct ProjectsPage: View {
     let library: ProjectLibrary
     let sessionManager: GitHubSessionManager
+    var discovery: GitHubDiscovery = GitHubDiscovery()
+    var workClient: GitHubWorkClient = GitHubWorkClient()
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.scenePhase) private var scenePhase
     @State private var columns = 4
@@ -95,7 +97,7 @@ struct ProjectsPage: View {
         }
         .navigationDestination(item: $selectedRoute) { route in
             ProjectWorkPage(project: library.projects.first(where: { $0.id == route.project.id }) ?? route.project,
-                sessionManager: sessionManager, library: library, initialAttention: route.attention)
+                sessionManager: sessionManager, library: library, initialAttention: route.attention, workClient: workClient)
         }
         .task { loadOverviews(); await refreshOverviews(force: false) }
         .refreshable { await refreshOverviews(force: true) }
@@ -107,7 +109,7 @@ struct ProjectsPage: View {
 
     private var repositoryDiscovery: some View {
         RepositoryDiscoveryPage(sessionManager: sessionManager, accountID: library.accountID,
-                                account: "connected account", library: library)
+                                account: "connected account", library: library, discovery: discovery)
     }
 
     @MainActor private func changeZoom(_ direction: GridZoomDirection) {
@@ -175,8 +177,9 @@ struct ProjectsPage: View {
             let directory = base.appendingPathComponent("GitGrid", isDirectory: true)
             try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
             let cache = try WorkCache(url: directory.appendingPathComponent("WorkCache.sqlite"))
+            let client = workClient
             let service = GitHubProjectRefresh { token, repository in
-                try await GitHubWorkClient().load(token: token, repositoryID: repository.id, fullName: repository.fullName,
+                try await client.load(token: token, repositoryID: repository.id, fullName: repository.fullName,
                                                   nodeID: repository.nodeID, maxRequests: 2)
             }
             let coordinator = ForegroundOverviewRefreshCoordinator(projects: { library.projects },

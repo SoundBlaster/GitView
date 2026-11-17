@@ -1,6 +1,27 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testCreatesFirstProjectFromDiscoveredRepository() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-empty-projects", "--gitgrid-ui-test-mock-discovery"]
+        app.launch()
+        let choose = app.buttons["projects.chooseRepository"]
+        XCTAssertTrue(choose.waitForExistence(timeout: 10))
+        choose.tap()
+        let repository = app.buttons["fixture/one"]
+        XCTAssertTrue(repository.waitForExistence(timeout: 10))
+        repository.tap()
+        XCTAssertTrue(app.navigationBars["Add Repository"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.textFields["Project name"].value as? String, "one")
+        app.buttons["Save"].tap()
+        XCTAssertTrue(app.navigationBars["Repositories"].waitForExistence(timeout: 5))
+        app.navigationBars["Repositories"].buttons.firstMatch.tap()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 5))
+        XCTAssertTrue(project.label.contains("one"))
+        project.tap()
+        XCTAssertTrue(app.buttons["work.fixture-issue"].waitForExistence(timeout: 10))
+    }
     func testEmptyProjectsCanOpenRepositoryDiscoveryAndReturn() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-empty-projects")

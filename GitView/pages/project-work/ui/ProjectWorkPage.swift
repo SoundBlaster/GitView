@@ -11,6 +11,7 @@ struct ProjectWorkPage: View {
     let project: StoredProject
     let sessionManager: GitHubSessionManager
     let library: ProjectLibrary
+    let workClient: GitHubWorkClient
     @State private var items: [GitHubWorkItem] = []
     @State private var hasLoaded = false
     @State private var isLoading = false
@@ -41,10 +42,12 @@ struct ProjectWorkPage: View {
     @AppStorage private var showIssues: Bool
     @AppStorage private var showPullRequests: Bool
 
-    init(project: StoredProject, sessionManager: GitHubSessionManager, library: ProjectLibrary, initialAttention: ProjectAttentionOrigin? = nil) {
+    init(project: StoredProject, sessionManager: GitHubSessionManager, library: ProjectLibrary, initialAttention: ProjectAttentionOrigin? = nil,
+         workClient: GitHubWorkClient = GitHubWorkClient()) {
         self.project = project
         self.sessionManager = sessionManager
         self.library = library
+        self.workClient = workClient
         _pendingAttention = State(initialValue: initialAttention)
         _showMetrics = State(initialValue: initialAttention != nil)
         let prefix = "project.\(project.id.uuidString).filters."
@@ -280,8 +283,9 @@ struct ProjectWorkPage: View {
             observation.openContinuation.map { (observation.id, $0) }
         }, uniquingKeysWith: { first, _ in first })
         do {
+            let client = workClient
             let service = GitHubProjectRefresh(tracksOpenContinuation: true, continuations: continuations) { token, repository in
-                try await GitHubWorkClient().load(token: token, repositoryID: repository.id, fullName: repository.fullName,
+                try await client.load(token: token, repositoryID: repository.id, fullName: repository.fullName,
                     nodeID: repository.nodeID, openContinuation: continuations[repository.id])
             }
             batch = try await service.fetch(token: accessToken, repositories: activeRepositories.map {

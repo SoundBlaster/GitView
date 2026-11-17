@@ -39,7 +39,11 @@ private struct ProjectTestFixture: View {
     var body: some View {
         NavigationStack {
             if let library {
-                ProjectsPage(library: library, sessionManager: GitHubSessionManager(load: { nil }, save: { _, _, _ in }, refresh: { _ in throw SessionRefreshError.missingSession }))
+                if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-mock-discovery") {
+                    ProjectsPage(library: library, sessionManager: Self.fixtureSession, discovery: Self.fixtureDiscovery, workClient: Self.fixtureWorkClient)
+                } else {
+                    ProjectsPage(library: library, sessionManager: GitHubSessionManager(load: { nil }, save: { _, _, _ in }, refresh: { _ in throw SessionRefreshError.missingSession }))
+                }
             } else { ProgressView() }
         }
         .task {
@@ -96,6 +100,24 @@ private struct ProjectTestFixture: View {
                 try cache.save(accountID: project.accountID, projectID: project.id, payload: JSONEncoder().encode(archive), observedAt: now, complete: true)
             } catch { assertionFailure("Could not update UI test overview: \(error)") }
         }
+    }
+
+    private static let fixtureSession: GitHubSessionManager = {
+        let json = #"{"identity":{"id":1,"login":"fixture"},"accessToken":"synthetic"}"#
+        let credential = try! JSONDecoder().decode(SavedGitHubCredential.self, from: Data(json.utf8))
+        return GitHubSessionManager(load: { credential }, save: { _, _, _ in }, refresh: { _ in throw SessionRefreshError.missingSession })
+    }()
+
+    private static let fixtureDiscovery = GitHubDiscovery(client: GitHubDiscoveryClient { request in
+        let body = request.url?.path == "/user/installations"
+            ? #"{"total_count":1,"installations":[{"id":1}]}"#
+            : #"{"total_count":1,"repositories":[{"id":101,"full_name":"fixture/one","private":false,"node_id":"fixture-node"}]}"#
+        return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+    })
+
+    private static let fixtureWorkClient = GitHubWorkClient { request in
+        let body = #"{"data":{"node":{"id":"fixture-node","fullDatabaseId":"101","nameWithOwner":"fixture/one","isPrivate":false,"issues":{"nodes":[{"id":"fixture-issue","number":7,"title":"Synthetic issue","url":"https://github.com/fixture/one/issues/7","state":"OPEN","updatedAt":"2026-01-01T00:00:00Z"}],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[],"pageInfo":{"hasNextPage":false}}}}}"#
+        return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
     }
 
     private func denseItems(stamp: TimeInterval) throws -> [GitHubWorkItem] {
