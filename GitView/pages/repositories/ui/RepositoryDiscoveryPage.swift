@@ -65,7 +65,7 @@ struct RepositoryDiscoveryPage: View {
             if let library {
                 do {
                     try library.reconcile(observed: updated.repositories.map {
-                        RepositoryReference(id: $0.id, fullName: $0.fullName, isPrivate: $0.isPrivate)
+                        RepositoryReference(id: $0.id, fullName: $0.fullName, isPrivate: $0.isPrivate, nodeID: $0.nodeID)
                     })
                 } catch { metadataProblem = true }
             }

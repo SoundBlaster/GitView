@@ -31,7 +31,10 @@ import ProjectStore
     func add(repository: RepositoryReference, to projectID: UUID) throws {
         guard let project = projects.first(where: { $0.id == projectID }) else { throw ProjectStoreError.invalidProject }
         var repositories = project.repositories
-        if let index = repositories.firstIndex(where: { $0.id == repository.id }) { repositories[index] = repository }
+        if let index = repositories.firstIndex(where: { $0.id == repository.id }) {
+            let current = repositories[index]
+            repositories[index] = RepositoryReference(id: repository.id, fullName: repository.fullName, isPrivate: repository.isPrivate, nodeID: repository.nodeID ?? current.nodeID)
+        }
         else { repositories.append(repository) }
         _ = try store.updateRepositories(accountID: accountID, projectID: projectID, repositories: repositories)
         try reload()

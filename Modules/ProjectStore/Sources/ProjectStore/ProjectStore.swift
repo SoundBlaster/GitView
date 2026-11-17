@@ -5,8 +5,9 @@ public struct RepositoryReference: Codable, Hashable, Sendable {
     public let id: Int64
     public let fullName: String
     public let isPrivate: Bool
-    public init(id: Int64, fullName: String, isPrivate: Bool) {
-        self.id = id; self.fullName = fullName; self.isPrivate = isPrivate
+    public let nodeID: String?
+    public init(id: Int64, fullName: String, isPrivate: Bool, nodeID: String? = nil) {
+        self.id = id; self.fullName = fullName; self.isPrivate = isPrivate; self.nodeID = nodeID
     }
 }
 
@@ -111,7 +112,10 @@ public enum ProjectStoreError: Error, Equatable {
                   let current = try? JSONDecoder().decode([RepositoryReference].self, from: data) else {
                 throw ProjectStoreError.invalidStoredData
             }
-            let updated = current.map { byID[$0.id] ?? $0 }
+            let updated = current.map { reference -> RepositoryReference in
+                guard let source = byID[reference.id] else { return reference }
+                return RepositoryReference(id: source.id, fullName: source.fullName, isPrivate: source.isPrivate, nodeID: source.nodeID ?? reference.nodeID)
+            }
             if updated != current { updates.append((record, try JSONEncoder().encode(updated))) }
         }
         for (record, data) in updates { record.setValue(data, forKey: "repositories") }

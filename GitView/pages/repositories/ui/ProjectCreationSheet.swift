@@ -46,7 +46,7 @@ struct ProjectCreationSheet: View {
 
     @MainActor private func save() {
         do {
-            let reference = RepositoryReference(id: repository.id, fullName: repository.fullName, isPrivate: repository.isPrivate)
+            let reference = RepositoryReference(id: repository.id, fullName: repository.fullName, isPrivate: repository.isPrivate, nodeID: repository.nodeID)
             if let destination { try library.add(repository: reference, to: destination) }
             else { try library.create(name: name, repository: reference) }
             dismiss()

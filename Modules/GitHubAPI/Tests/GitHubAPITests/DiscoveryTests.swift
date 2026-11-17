@@ -19,11 +19,12 @@ struct DiscoveryTests {
     @Test func repositoriesAreScopedToInstallation() async throws {
         let client = GitHubDiscoveryClient { request in
             #expect(request.url?.path == "/user/installations/42/repositories")
-            return (Data(#"{"total_count":1,"repositories":[{"id":123,"full_name":"user/repo","private":true}]}"#.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+            return (Data(#"{"total_count":1,"repositories":[{"id":123,"node_id":"R_node","full_name":"user/repo","private":true}]}"#.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
         }
         let result = try await client.repositories(token: "token", installationID: 42, page: 1)
         #expect(result.items.first?.fullName == "user/repo")
         #expect(result.items.first?.isPrivate == true)
+        #expect(result.items.first?.nodeID == "R_node")
         #expect(result.nextPage == nil)
     }
 

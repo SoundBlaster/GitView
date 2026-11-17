@@ -14,6 +14,7 @@ scope:
   includes:
     - Decode a page from the authenticated GitHub App installations endpoints.
     - Fetch bounded pages of issues and pull requests for an identity-checked repository.
+    - Use a known GitHub node ID to resolve the current repository address and verify its 64-bit numeric identity.
     - Preserve the source head revision, aggregate CI status and review decision when available.
     - Decode GitHub check rollup buckets and bounded review thread observations with explicit coverage.
     - Page through one pull request's review threads while checking revision and collection consistency.

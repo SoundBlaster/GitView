@@ -49,6 +49,7 @@ public struct GitHubWorkItem: Codable, Identifiable, Sendable {
 public struct GitHubWorkPage: Sendable {
     public let items: [GitHubWorkItem]
     public let isIncomplete: Bool
+    public let observedRepository: GitHubRepository?
     let issueCursor: String?
     let pullCursor: String?
 }
@@ -66,21 +67,23 @@ public struct GitHubWorkClient: Sendable {
     private let transport: GitHubDiscoveryClient.Transport
     public init(transport: @escaping GitHubDiscoveryClient.Transport = GitHubDiscoveryClient.send) { self.transport = transport }
 
-    public func firstPage(token: String, repositoryID: Int64, fullName: String) async throws -> GitHubWorkPage {
-        try await page(token: token, repositoryID: repositoryID, fullName: fullName, issueAfter: nil, pullAfter: nil, loadIssues: true, loadPulls: true)
+    public func firstPage(token: String, repositoryID: Int64, fullName: String, nodeID: String? = nil) async throws -> GitHubWorkPage {
+        try await page(token: token, repositoryID: repositoryID, fullName: fullName, nodeID: nodeID, issueAfter: nil, pullAfter: nil, loadIssues: true, loadPulls: true)
     }
 
     /// Limits requests per repository; truncated results are explicitly incomplete.
-    public func load(token: String, repositoryID: Int64, fullName: String, maxRequests: Int = 20) async throws -> GitHubWorkPage {
+    public func load(token: String, repositoryID: Int64, fullName: String, nodeID: String? = nil, maxRequests: Int = 20) async throws -> GitHubWorkPage {
         guard maxRequests > 0 else { throw WorkFetchError.invalidRequest }
         var issueAfter: String?, pullAfter: String?
         var loadIssues = true, loadPulls = true
         var items: [GitHubWorkItem] = []
         var seen: Set<String> = []
         var issueCursors: Set<String> = [], pullCursors: Set<String> = []
+        var observedRepository: GitHubRepository?
         for _ in 0..<maxRequests {
             try Task.checkCancellation()
-            let result = try await page(token: token, repositoryID: repositoryID, fullName: fullName, issueAfter: issueAfter, pullAfter: pullAfter, loadIssues: loadIssues, loadPulls: loadPulls)
+            let result = try await page(token: token, repositoryID: repositoryID, fullName: fullName, nodeID: nodeID, issueAfter: issueAfter, pullAfter: pullAfter, loadIssues: loadIssues, loadPulls: loadPulls)
+            observedRepository = result.observedRepository ?? observedRepository
             for item in result.items where seen.insert(item.id).inserted { items.append(item) }
             issueAfter = result.issueCursor
             pullAfter = result.pullCursor
@@ -88,19 +91,23 @@ public struct GitHubWorkClient: Sendable {
             if let pullAfter, !pullCursors.insert(pullAfter).inserted { throw WorkFetchError.invalidResponse }
             loadIssues = issueAfter != nil
             loadPulls = pullAfter != nil
-            if !loadIssues && !loadPulls { return GitHubWorkPage(items: items, isIncomplete: false, issueCursor: nil, pullCursor: nil) }
+            if !loadIssues && !loadPulls { return GitHubWorkPage(items: items, isIncomplete: false, observedRepository: observedRepository, issueCursor: nil, pullCursor: nil) }
         }
-        return GitHubWorkPage(items: items, isIncomplete: true, issueCursor: issueAfter, pullCursor: pullAfter)
+        return GitHubWorkPage(items: items, isIncomplete: true, observedRepository: observedRepository, issueCursor: issueAfter, pullCursor: pullAfter)
     }
 
-    private func page(token: String, repositoryID: Int64, fullName: String, issueAfter: String?, pullAfter: String?, loadIssues: Bool, loadPulls: Bool) async throws -> GitHubWorkPage {
+    private func page(token: String, repositoryID: Int64, fullName: String, nodeID: String?, issueAfter: String?, pullAfter: String?, loadIssues: Bool, loadPulls: Bool) async throws -> GitHubWorkPage {
         let names = fullName.split(separator: "/", omittingEmptySubsequences: false)
         guard names.count == 2, names.allSatisfy({ !$0.isEmpty }), repositoryID > 0,
               !token.isEmpty, !token.contains("\n"), !token.contains("\r") else { throw WorkFetchError.invalidRequest }
+        guard nodeID.map({ !$0.isEmpty }) ?? true else { throw WorkFetchError.invalidRequest }
+        let locationArguments = nodeID == nil ? "$owner:String!, $name:String!" : "$nodeID:ID!"
+        let selector = nodeID == nil ? "repository(owner:$owner, name:$name)" : "node(id:$nodeID) { ... on Repository"
+        let selectorClose = nodeID == nil ? "}" : "} }"
         let query = """
-        query Work($owner:String!, $name:String!, $issueAfter:String, $pullAfter:String, $loadIssues:Boolean!, $loadPulls:Boolean!) {
-          repository(owner:$owner, name:$name) {
-            databaseId
+        query Work(\(locationArguments), $issueAfter:String, $pullAfter:String, $loadIssues:Boolean!, $loadPulls:Boolean!) {
+          \(selector) {
+            id fullDatabaseId nameWithOwner isPrivate
             issues(first:100, after:$issueAfter, orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadIssues) {
               nodes { id number title url state updatedAt closedAt }
               pageInfo { hasNextPage endCursor }
@@ -114,7 +121,7 @@ public struct GitHubWorkClient: Sendable {
               }
               pageInfo { hasNextPage endCursor }
             }
-          }
+          \(selectorClose)
         }
         """
         var request = URLRequest(url: URL(string: "https://api.github.com/graphql")!)
@@ -122,20 +129,25 @@ public struct GitHubWorkClient: Sendable {
         request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
-        request.httpBody = try JSONEncoder().encode(Query(query: query, variables: Variables(owner: String(names[0]), name: String(names[1]), issueAfter: issueAfter, pullAfter: pullAfter, loadIssues: loadIssues, loadPulls: loadPulls)))
+        request.httpBody = try JSONEncoder().encode(Query(query: query, variables: Variables(owner: nodeID == nil ? String(names[0]) : nil, name: nodeID == nil ? String(names[1]) : nil, nodeID: nodeID, issueAfter: issueAfter, pullAfter: pullAfter, loadIssues: loadIssues, loadPulls: loadPulls)))
         let (data, response) = try await transport(request)
         guard (200..<300).contains(response.statusCode) else { throw WorkFetchError.httpStatus(response.statusCode) }
         let decoder = JSONDecoder(); decoder.dateDecodingStrategy = .iso8601
         guard let envelope = try? decoder.decode(Envelope.self, from: data) else { throw WorkFetchError.invalidResponse }
         guard envelope.errors?.isEmpty != false else { throw WorkFetchError.graphQLFailure }
-        guard let repository = envelope.data?.repository else { throw WorkFetchError.invalidResponse }
-        guard repository.databaseId == repositoryID else { throw WorkFetchError.repositoryIdentityMismatch }
+        guard let repository = nodeID == nil ? envelope.data?.repository : envelope.data?.node else { throw WorkFetchError.invalidResponse }
+        let numericID = repository.fullDatabaseId.flatMap(Int64.init) ?? repository.databaseId
+        guard numericID == repositoryID else { throw WorkFetchError.repositoryIdentityMismatch }
         guard (!loadIssues || repository.issues != nil), (!loadPulls || repository.pullRequests != nil) else { throw WorkFetchError.invalidResponse }
         let issues = repository.issues?.nodes.map { $0.item(kind: .issue) } ?? []
         let pulls = repository.pullRequests?.nodes.map { $0.item(kind: .pullRequest) } ?? []
         let issueCursor = try cursor(repository.issues?.pageInfo)
         let pullCursor = try cursor(repository.pullRequests?.pageInfo)
-        return GitHubWorkPage(items: issues + pulls, isIncomplete: issueCursor != nil || pullCursor != nil, issueCursor: issueCursor, pullCursor: pullCursor)
+        let observed: GitHubRepository?
+        if let name = repository.nameWithOwner, let isPrivate = repository.isPrivate, let sourceNodeID = repository.id {
+            observed = GitHubRepository(id: repositoryID, fullName: name, isPrivate: isPrivate, nodeID: sourceNodeID)
+        } else { observed = nil }
+        return GitHubWorkPage(items: issues + pulls, isIncomplete: issueCursor != nil || pullCursor != nil, observedRepository: observed, issueCursor: issueCursor, pullCursor: pullCursor)
     }
 
     private func cursor(_ info: PageInfo?) throws -> String? {
@@ -145,11 +157,11 @@ public struct GitHubWorkClient: Sendable {
     }
 
     private struct Query: Encodable { let query: String; let variables: Variables }
-    private struct Variables: Encodable { let owner: String; let name: String; let issueAfter: String?; let pullAfter: String?; let loadIssues: Bool; let loadPulls: Bool }
+    private struct Variables: Encodable { let owner: String?; let name: String?; let nodeID: String?; let issueAfter: String?; let pullAfter: String?; let loadIssues: Bool; let loadPulls: Bool }
     private struct Envelope: Decodable { let data: DataValue?; let errors: [GraphError]? }
     private struct GraphError: Decodable { let message: String }
-    private struct DataValue: Decodable { let repository: Repository? }
-    private struct Repository: Decodable { let databaseId: Int64?; let issues: Connection?; let pullRequests: Connection? }
+    private struct DataValue: Decodable { let repository: Repository?; let node: Repository? }
+    private struct Repository: Decodable { let id: String?; let databaseId: Int64?; let fullDatabaseId: String?; let nameWithOwner: String?; let isPrivate: Bool?; let issues: Connection?; let pullRequests: Connection? }
     private struct Connection: Decodable { let nodes: [Node]; let pageInfo: PageInfo }
     private struct PageInfo: Decodable { let hasNextPage: Bool; let endCursor: String? }
     private struct Node: Decodable {

@@ -3,6 +3,31 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkItemsTests {
+    @Test func looksUpRepositoryByNodeAndPreserves64BitIdentity() async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let query = body["query"] as! String
+            let variables = body["variables"] as! [String: Any]
+            #expect(query.contains("node(id:$nodeID)"))
+            #expect(query.contains("fullDatabaseId"))
+            #expect(variables["nodeID"] as? String == "R_node")
+            let json = #"{"data":{"node":{"id":"R_node","fullDatabaseId":"3000000001","nameWithOwner":"new/name","isPrivate":true,"issues":{"nodes":[],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[],"pageInfo":{"hasNextPage":false}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let result = try await client.firstPage(token: "token", repositoryID: 3000000001, fullName: "old/name", nodeID: "R_node")
+        #expect(result.observedRepository?.fullName == "new/name")
+        #expect(result.observedRepository?.id == 3000000001)
+    }
+
+    @Test func nodeLookupCannotTransferWorkToDifferentNumericIdentity() async throws {
+        let client = GitHubWorkClient { request in
+            let json = #"{"data":{"node":{"id":"R_node","fullDatabaseId":"99","nameWithOwner":"old/name","isPrivate":false,"issues":{"nodes":[],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[],"pageInfo":{"hasNextPage":false}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        await #expect(throws: WorkFetchError.repositoryIdentityMismatch) {
+            try await client.firstPage(token: "token", repositoryID: 42, fullName: "old/name", nodeID: "R_node")
+        }
+    }
     @Test func distinguishesPartialThreadsAndSpecialChecks() async throws {
         let client = GitHubWorkClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]

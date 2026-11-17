@@ -14,6 +14,7 @@ scope:
   includes:
     - Create nonempty projects and query them by account.
     - Persist repository identity and last observed name and privacy.
+    - Preserve a known GitHub node ID when a later source observation omits it.
     - Update repository membership within a specified account and project.
     - Reconcile observed repository metadata by numeric identity across an account's projects without treating absence as deletion.
   excludes:

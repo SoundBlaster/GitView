@@ -129,7 +129,7 @@ struct ProjectWorkPage: View {
         }
         .task { restore(); await load() }
         .refreshable { await load() }
-        .onChange(of: project.repositories) {
+        .onChange(of: project.repositories.map(\.id)) {
             warning = "Project membership changed; updating its overview."
             observedAt = nil
             if let archive {
@@ -169,10 +169,14 @@ struct ProjectWorkPage: View {
             return
         }
         var results: [RepositoryWorkRefresh] = []
+        var observedRepositories: [RepositoryReference] = []
         for repository in requestedRepositories {
             do {
-                let page = try await GitHubWorkClient().load(token: accessToken, repositoryID: repository.id, fullName: repository.fullName)
-                results.append(.init(id: repository.id, name: repository.fullName, outcome: .received(page.items, complete: !page.isIncomplete)))
+                let page = try await GitHubWorkClient().load(token: accessToken, repositoryID: repository.id, fullName: repository.fullName, nodeID: repository.nodeID)
+                if let source = page.observedRepository {
+                    observedRepositories.append(RepositoryReference(id: source.id, fullName: source.fullName, isPrivate: source.isPrivate, nodeID: source.nodeID))
+                }
+                results.append(.init(id: repository.id, name: page.observedRepository?.fullName ?? repository.fullName, outcome: .received(page.items, complete: !page.isIncomplete)))
             } catch is CancellationError { return }
             catch let WorkFetchError.httpStatus(code) {
                 results.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub HTTP \(code)")))
@@ -181,7 +185,12 @@ struct ProjectWorkPage: View {
             }
         }
         guard !Task.isCancelled else { return }
-        guard library.projects.first(where: { $0.id == project.id })?.repositories == requestedRepositories else { return }
+        guard library.projects.first(where: { $0.id == project.id })?.repositories.map(\.id) == requestedRepositories.map(\.id) else { return }
+        var metadataProblem = false
+        if !observedRepositories.isEmpty {
+            do { try library.reconcile(observed: observedRepositories) }
+            catch { metadataProblem = true }
+        }
         let now = Date()
         let snapshot: WorkSnapshot?
         do {
@@ -213,7 +222,10 @@ struct ProjectWorkPage: View {
         present(updated.items, now: now)
         if saved && complete { observedAt = now }
         hasLoaded = true
-        warning = !saved ? "Updated data could not be saved locally." : (complete ? nil : "Some repositories could not be fully refreshed.")
+        if !saved { warning = "Updated data could not be saved locally." }
+        else if !complete { warning = "Some repositories could not be fully refreshed." }
+        else if metadataProblem { warning = "Work updated, but repository metadata could not be saved." }
+        else { warning = nil }
     }
 
     @MainActor private func restore() {

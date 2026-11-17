@@ -8,7 +8,8 @@ public struct GitHubRepository: Decodable, Sendable, Identifiable {
     public let id: Int64
     public let fullName: String
     public let isPrivate: Bool
-    enum CodingKeys: String, CodingKey { case id, fullName = "full_name", isPrivate = "private" }
+    public let nodeID: String?
+    enum CodingKeys: String, CodingKey { case id, fullName = "full_name", isPrivate = "private", nodeID = "node_id" }
 }
 
 public struct DiscoveryPage<Item: Sendable>: Sendable {
