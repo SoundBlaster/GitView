@@ -21,6 +21,7 @@ struct TodayPage: View {
                             WorkCell(item: item, expanded: effectiveColumns <= 2)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("demo.work.\(item.id)")
                         .contextMenu {
                             Button("View demo details") { selected = item }
                         } preview: {
@@ -29,12 +30,12 @@ struct TodayPage: View {
                     }
                 }
                 .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width = $0 }
-                .simultaneousGesture(MagnifyGesture().onEnded { value in
-                    if value.magnification > 1.15 { changeZoom(.larger) }
-                    else if value.magnification < 0.85 { changeZoom(.smaller) }
-                })
             }.padding()
         }
+        .highPriorityGesture(MagnifyGesture().onEnded { value in
+            if value.magnification > 1.15 { changeZoom(.larger) }
+            else if value.magnification < 0.85 { changeZoom(.smaller) }
+        })
         .navigationTitle("Today · Demo")
         .toolbar {
             Menu("Zoom", systemImage: "plus.magnifyingglass") {

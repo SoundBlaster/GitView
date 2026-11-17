@@ -1,6 +1,23 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testDemoGridPinchDoesNotOpenDetails() throws {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["View demo"].tap()
+        let item = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "demo.work.")).firstMatch
+        XCTAssertTrue(item.waitForExistence(timeout: 10))
+        let initialWidth = item.frame.width
+        app.scrollViews.firstMatch.pinch(withScale: 1.6, velocity: 1)
+        XCTAssertGreaterThan(item.frame.width, initialWidth)
+        XCTAssertFalse(app.navigationBars["Demo details"].exists)
+        let expandedWidth = item.frame.width
+        app.scrollViews.firstMatch.pinch(withScale: 0.6, velocity: -1)
+        XCTAssertLessThan(item.frame.width, expandedWidth)
+        XCTAssertFalse(app.navigationBars["Demo details"].exists)
+        item.tap()
+        XCTAssertTrue(app.navigationBars["Demo details"].waitForExistence(timeout: 10))
+    }
     func testProjectGridPinchDoesNotOpenProject() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project-grid")
