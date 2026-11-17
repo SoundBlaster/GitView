@@ -36,4 +36,12 @@ import ProjectStore
         _ = try store.updateRepositories(accountID: accountID, projectID: projectID, repositories: repositories)
         try reload()
     }
+
+    func remove(repositoryID: Int64, from projectID: UUID) throws {
+        guard let project = projects.first(where: { $0.id == projectID }),
+              project.repositories.contains(where: { $0.id == repositoryID }) else { throw ProjectStoreError.invalidProject }
+        let remaining = project.repositories.filter { $0.id != repositoryID }
+        _ = try store.updateRepositories(accountID: accountID, projectID: projectID, repositories: remaining)
+        try reload()
+    }
 }

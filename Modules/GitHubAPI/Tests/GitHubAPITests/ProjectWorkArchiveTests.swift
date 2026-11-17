@@ -43,6 +43,26 @@ struct ProjectWorkArchiveTests {
         #expect(incomplete.repositories[0].refreshProblem != nil)
     }
 
+    @Test func removedRepositoryIsRetainedAndCanBeRestoredOffline() throws {
+        let date = Date(timeIntervalSince1970: 10)
+        let initial = ProjectWorkArchive().applying([
+            .init(id: 1, name: "a", outcome: .received([try item("a")], complete: true)),
+            .init(id: 2, name: "b", outcome: .received([try item("b")], complete: true))
+        ], at: date)
+        let removed = initial.restricting(to: [1])
+        #expect(!removed.hasCompleteObservation(for: [1]))
+        #expect(removed.items.map(\.id) == ["a"])
+        #expect(removed.detachedRepositories?.first?.items.first?.id == "b")
+        let persisted = try ProjectWorkArchive.decode(JSONEncoder().encode(removed))
+        let refreshed = persisted.applying([.init(id: 1, name: "a", outcome: .received([try item("new-a")], complete: true))], at: .now)
+        #expect(refreshed.hasCompleteObservation(for: [1]))
+        #expect(refreshed.detachedRepositories?.first?.items.first?.id == "b")
+        let restored = refreshed.restricting(to: [1, 2])
+        #expect(restored.items.map(\.id) == ["new-a", "b"])
+        #expect(!restored.hasCompleteObservation(for: [1, 2]))
+        #expect(restored.repositories[1].observedAt == date)
+    }
+
     @Test func legacyDataSurvivesPartialAndGoesAwayAfterCompleteRefresh() throws {
         let legacy = try ProjectWorkArchive.decode(JSONEncoder().encode([try item("old")]))
         #expect(!legacy.coversRepositories([1]))
@@ -50,5 +70,6 @@ struct ProjectWorkArchiveTests {
         #expect(partial.items.map(\.id) == ["old"])
         let complete = partial.applying([.init(id: 1, name: "a", outcome: .received([try item("new")], complete: true))], at: .now)
         #expect(complete.items.map(\.id) == ["new"] && complete.legacyItems.isEmpty)
+        #expect(complete.retainedLegacyItems?.first?.id == "old")
     }
 }

@@ -25,17 +25,27 @@ public struct ProjectWorkArchive: Codable, Sendable {
     public var repositories: [RepositoryWorkObservation]
     public var legacyItems: [GitHubWorkItem]
     public var lastAttemptAt: Date?
-    public init(repositories: [RepositoryWorkObservation] = [], legacyItems: [GitHubWorkItem] = [], lastAttemptAt: Date? = nil) {
+    public var detachedRepositories: [RepositoryWorkObservation]?
+    public var retainedLegacyItems: [GitHubWorkItem]?
+    public var completeScopeIDs: [Int64]?
+    public init(repositories: [RepositoryWorkObservation] = [], legacyItems: [GitHubWorkItem] = [], lastAttemptAt: Date? = nil,
+                detachedRepositories: [RepositoryWorkObservation]? = nil, retainedLegacyItems: [GitHubWorkItem]? = nil,
+                completeScopeIDs: [Int64]? = nil) {
         self.repositories = repositories; self.legacyItems = legacyItems; self.lastAttemptAt = lastAttemptAt
+        self.detachedRepositories = detachedRepositories; self.retainedLegacyItems = retainedLegacyItems
+        self.completeScopeIDs = completeScopeIDs
     }
     public var items: [GitHubWorkItem] { repositories.flatMap(\.items) + legacyItems }
     public var hasRefreshProblems: Bool { repositories.contains { $0.refreshProblem != nil } }
     public func coversRepositories(_ ids: Set<Int64>) -> Bool {
         legacyItems.isEmpty && Set(repositories.map(\.id)) == ids
     }
+    public func hasCompleteObservation(for ids: Set<Int64>) -> Bool {
+        coversRepositories(ids) && completeScopeIDs.map { Set($0) == ids } == true
+    }
 
     public func applying(_ results: [RepositoryWorkRefresh], at date: Date) -> ProjectWorkArchive {
-        let previous = Dictionary(repositories.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+        let previous = Dictionary((repositories + (detachedRepositories ?? [])).map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let updated = results.map { result -> RepositoryWorkObservation in
             let old = previous[result.id]
             switch result.outcome {
@@ -53,7 +63,20 @@ public struct ProjectWorkArchive: Codable, Sendable {
             if case .received(_, complete: true) = result.outcome { return true }
             return false
         }
-        return ProjectWorkArchive(repositories: updated, legacyItems: allComplete ? [] : legacyItems, lastAttemptAt: date)
+        let selected = Set(results.map(\.id))
+        let detached = previous.values.filter { !selected.contains($0.id) }.sorted { $0.id < $1.id }
+        let retainedLegacy = (retainedLegacyItems ?? []) + (allComplete ? legacyItems : [])
+        return ProjectWorkArchive(repositories: updated, legacyItems: allComplete ? [] : legacyItems, lastAttemptAt: date,
+            detachedRepositories: detached, retainedLegacyItems: retainedLegacy,
+            completeScopeIDs: allComplete ? selected.sorted() : completeScopeIDs)
+    }
+
+    public func restricting(to ids: Set<Int64>) -> ProjectWorkArchive {
+        let all = Dictionary((repositories + (detachedRepositories ?? [])).map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+        let selected = all.values.filter { ids.contains($0.id) }.sorted { $0.id < $1.id }
+        let retained = all.values.filter { !ids.contains($0.id) }.sorted { $0.id < $1.id }
+        return ProjectWorkArchive(repositories: selected, legacyItems: legacyItems, lastAttemptAt: lastAttemptAt,
+            detachedRepositories: retained, retainedLegacyItems: retainedLegacyItems, completeScopeIDs: completeScopeIDs)
     }
 
     public static func decode(_ data: Data) throws -> ProjectWorkArchive {

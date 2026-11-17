@@ -82,10 +82,10 @@ struct ProjectsPage: View {
             for project in library.projects {
                 do {
                     if let snapshot = try cache.load(accountID: library.accountID, projectID: project.id) {
-                        let archive = try ProjectWorkArchive.decode(snapshot.payload)
+                        let archive = try ProjectWorkArchive.decode(snapshot.payload).restricting(to: Set(project.repositories.map(\.id)))
                         var seen = Set<String>()
                         let items = archive.items.filter { seen.insert($0.id).inserted }
-                        let coversProject = archive.coversRepositories(Set(project.repositories.map(\.id)))
+                        let coversProject = archive.hasCompleteObservation(for: Set(project.repositories.map(\.id)))
                         results[project.id] = ProjectOverview(openPulls: items.filter { $0.kind == .pullRequest && $0.state == "OPEN" }.count, openIssues: items.filter { $0.kind == .issue && $0.state == "OPEN" }.count, date: snapshot.observedAt, complete: snapshot.complete && !archive.hasRefreshProblems && coversProject)
                     }
                 } catch { failures = true }

@@ -15,6 +15,9 @@ import Testing
         #expect(throws: ProjectStoreError.invalidProject) { try store.updateRepositories(accountID: 2, projectID: project.id, repositories: [b]) }
         #expect(throws: ProjectStoreError.invalidProject) { try store.updateRepositories(accountID: 1, projectID: project.id, repositories: []) }
         #expect(try store.projects(accountID: 1).first(where: { $0.id == project.id })?.repositories == [a, b])
+        _ = try store.updateRepositories(accountID: 1, projectID: project.id, repositories: [b])
+        #expect(try store.projects(accountID: 1).first(where: { $0.id == other.id })?.repositories == [a])
+        #expect(try store.projects(accountID: 1).first(where: { $0.id == project.id })?.repositories == [b])
     }
     @Test func savesAProjectAndKeepsAccountsSeparate() throws {
         let store = try ProjectStore(inMemory: true)

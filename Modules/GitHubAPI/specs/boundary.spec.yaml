@@ -20,6 +20,7 @@ scope:
     - Attach a thread observation time to the same pull request head revision.
     - Retain per-repository refresh outcomes and preserve prior data for failed or incomplete sources.
     - Read previous unscoped work snapshots until a complete refresh replaces them.
+    - Retain observations for repositories removed from a project and restore them if re-added.
     - Validate next-page links and report HTTP failures.
     - Aggregate pages while preserving partial independent results.
   excludes:

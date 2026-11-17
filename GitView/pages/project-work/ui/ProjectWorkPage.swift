@@ -69,7 +69,7 @@ struct ProjectWorkPage: View {
                         .font(.footnote).foregroundStyle(.secondary)
                 }
                 if let archive {
-                    if !archive.legacyItems.isEmpty && archive.hasRefreshProblems {
+                    if !archive.legacyItems.isEmpty {
                         Text("Some older saved work could not yet be attributed to a repository.")
                             .font(.footnote).foregroundStyle(.secondary)
                     }
@@ -132,6 +132,11 @@ struct ProjectWorkPage: View {
         .onChange(of: project.repositories) {
             warning = "Project membership changed; updating its overview."
             observedAt = nil
+            if let archive {
+                let scoped = archive.restricting(to: Set(project.repositories.map(\.id)))
+                self.archive = scoped
+                present(scoped.items, now: .now)
+            }
             if isLoading { refreshPending = true } else { Task { await load() } }
         }
         .onChange(of: isLoading) {
@@ -219,10 +224,10 @@ struct ProjectWorkPage: View {
             let store = try WorkCache(url: directory.appendingPathComponent("WorkCache.sqlite"))
             cache = store
             if let snapshot = try store.load(accountID: project.accountID, projectID: project.id) {
-                let saved = try ProjectWorkArchive.decode(snapshot.payload)
+                let saved = try ProjectWorkArchive.decode(snapshot.payload).restricting(to: Set(project.repositories.map(\.id)))
                 archive = saved
                 present(saved.items, now: .now)
-                let coversProject = saved.coversRepositories(Set(project.repositories.map(\.id)))
+                let coversProject = saved.hasCompleteObservation(for: Set(project.repositories.map(\.id)))
                 if snapshot.complete && coversProject { observedAt = snapshot.observedAt }
                 hasLoaded = true
                 if !snapshot.complete || saved.hasRefreshProblems || !coversProject { warning = "Saved work includes incomplete or unsuccessful updates." }
@@ -268,14 +273,21 @@ private struct ProjectSettingsSheet: View {
     let library: ProjectLibrary
     let sessionManager: GitHubSessionManager
     @Environment(\.dismiss) private var dismiss
+    @State private var pendingRemoval: RepositoryReference?
+    @State private var showRemovalConfirmation = false
+    @State private var removalError = false
     private var currentProject: StoredProject { library.projects.first(where: { $0.id == project.id }) ?? project }
 
     var body: some View {
         NavigationStack {
             List {
-                Section("Repositories") {
+                Section {
                     ForEach(currentProject.repositories, id: \.id) { repository in
                         Label(repository.fullName, systemImage: repository.isPrivate ? "lock" : "book.closed")
+                            .swipeActions {
+                                Button("Remove", role: .destructive) { pendingRemoval = repository; showRemovalConfirmation = true }
+                                    .disabled(currentProject.repositories.count <= 1)
+                            }
                     }
                     NavigationLink {
                         RepositoryDiscoveryPage(sessionManager: sessionManager, accountID: library.accountID,
@@ -283,10 +295,25 @@ private struct ProjectSettingsSheet: View {
                     } label: {
                         Label("Add Repository", systemImage: "plus")
                     }
+                } header: {
+                    Text("Repositories")
+                } footer: {
+                    Text("A Project must contain at least one Repository.")
                 }
+                if removalError { Text("Could not update the Project.").foregroundStyle(.secondary) }
             }
             .navigationTitle(project.name)
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+            .confirmationDialog("Remove Repository from this Project?", isPresented: $showRemovalConfirmation, titleVisibility: .visible) {
+                Button("Remove from Project", role: .destructive) {
+                    guard let repository = pendingRemoval else { return }
+                    do { try library.remove(repositoryID: repository.id, from: project.id); removalError = false }
+                    catch { removalError = true }
+                    pendingRemoval = nil
+                }
+            } message: {
+                Text("The Repository stays on GitHub and in any other Projects.")
+            }
         }
     }
 }
