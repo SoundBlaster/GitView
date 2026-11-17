@@ -56,12 +56,12 @@ struct ProjectsPage: View {
                     }
                 }
                 .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width = $0 }
-                .simultaneousGesture(MagnifyGesture().onEnded { value in
-                    if value.magnification > 1.15 { changeZoom(.larger) }
-                    else if value.magnification < 0.85 { changeZoom(.smaller) }
-                })
             }.padding()
         }
+        .highPriorityGesture(MagnifyGesture().onEnded { value in
+            if value.magnification > 1.15 { changeZoom(.larger) }
+            else if value.magnification < 0.85 { changeZoom(.smaller) }
+        })
         .navigationTitle("Projects")
         .toolbar {
             Menu("Zoom", systemImage: "plus.magnifyingglass") {
