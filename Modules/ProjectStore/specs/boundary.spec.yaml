@@ -15,6 +15,7 @@ scope:
     - Create nonempty projects and query them by account.
     - Persist repository identity and last observed name and privacy.
     - Update repository membership within a specified account and project.
+    - Reconcile observed repository metadata by numeric identity across an account's projects without treating absence as deletion.
   excludes:
     - Repository access verification, synchronization, project renaming and migration.
 provides:

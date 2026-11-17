@@ -44,4 +44,9 @@ import ProjectStore
         _ = try store.updateRepositories(accountID: accountID, projectID: projectID, repositories: remaining)
         try reload()
     }
+
+    func reconcile(observed: [RepositoryReference]) throws {
+        try store.reconcile(accountID: accountID, observed: observed)
+        try reload()
+    }
 }

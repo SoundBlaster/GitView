@@ -60,12 +60,21 @@ struct RepositoryDiscoveryPage: View {
         do {
             let session = try await sessionManager.usableSession(for: accountID)
             let updated = try await GitHubDiscovery().load(token: session.accessToken)
+            try Task.checkCancellation()
+            var metadataProblem = false
+            if let library {
+                do {
+                    try library.reconcile(observed: updated.repositories.map {
+                        RepositoryReference(id: $0.id, fullName: $0.fullName, isPrivate: $0.isPrivate)
+                    })
+                } catch { metadataProblem = true }
+            }
             if !updated.isComplete, result != nil {
-                errorMessage = "Refresh was incomplete. Showing the previous results."
+                errorMessage = metadataProblem ? "Refresh was incomplete and saved repository metadata could not be updated." : "Refresh was incomplete. Showing the previous results."
             } else {
                 result = updated
                 isFresh = true
-                errorMessage = nil
+                errorMessage = metadataProblem ? "Saved repository metadata could not be updated." : nil
             }
         } catch is CancellationError {
         } catch {

@@ -97,6 +97,29 @@ public enum ProjectStoreError: Error, Equatable {
         return StoredProject(id: projectID, accountID: accountID, name: name, repositories: repositories)
     }
 
+    /// Applies positive source observations by numeric ID without inferring anything from missing IDs.
+    public func reconcile(accountID: Int64, observed: [RepositoryReference]) throws {
+        guard accountID > 0, observed.allSatisfy({ $0.id > 0 && !$0.fullName.isEmpty }),
+              Set(observed.map(\.id)).count == observed.count else { throw ProjectStoreError.invalidProject }
+        let byID = Dictionary(uniqueKeysWithValues: observed.map { ($0.id, $0) })
+        let request = NSFetchRequest<NSManagedObject>(entityName: "ProjectRecord")
+        request.predicate = NSPredicate(format: "accountID == %lld", accountID)
+        let records = try container.viewContext.fetch(request)
+        var updates: [(NSManagedObject, Data)] = []
+        for record in records {
+            guard let data = record.value(forKey: "repositories") as? Data,
+                  let current = try? JSONDecoder().decode([RepositoryReference].self, from: data) else {
+                throw ProjectStoreError.invalidStoredData
+            }
+            let updated = current.map { byID[$0.id] ?? $0 }
+            if updated != current { updates.append((record, try JSONEncoder().encode(updated))) }
+        }
+        for (record, data) in updates { record.setValue(data, forKey: "repositories") }
+        guard !updates.isEmpty else { return }
+        do { try container.viewContext.save() }
+        catch { container.viewContext.rollback(); throw error }
+    }
+
     private static func attribute(_ name: String, _ type: NSAttributeType) -> NSAttributeDescription {
         let attribute = NSAttributeDescription()
         attribute.name = name; attribute.attributeType = type; attribute.isOptional = false

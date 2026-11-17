@@ -3,6 +3,22 @@ import Testing
 @testable import ProjectStore
 
 @MainActor struct ProjectStoreTests {
+    @Test func reconcilesOnlyMatchingIdentitiesAcrossProjects() throws {
+        let store = try ProjectStore(inMemory: true)
+        let old = RepositoryReference(id: 11, fullName: "owner/old", isPrivate: true)
+        let reused = RepositoryReference(id: 99, fullName: "owner/old", isPrivate: false)
+        let transferred = RepositoryReference(id: 11, fullName: "team/new", isPrivate: false)
+        let first = try store.create(accountID: 1, name: "First", repositories: [old])
+        let second = try store.create(accountID: 1, name: "Second", repositories: [old, reused])
+        let otherAccount = try store.create(accountID: 2, name: "Other", repositories: [old])
+        try store.reconcile(accountID: 1, observed: [transferred])
+        let projects = try store.projects(accountID: 1)
+        #expect(projects.first(where: { $0.id == first.id })?.repositories == [transferred])
+        #expect(projects.first(where: { $0.id == second.id })?.repositories == [transferred, reused])
+        #expect(try store.projects(accountID: 2) == [otherAccount])
+        #expect(throws: ProjectStoreError.invalidProject) { try store.reconcile(accountID: 1, observed: [old, transferred]) }
+        #expect(try store.projects(accountID: 1).first(where: { $0.id == first.id })?.repositories == [transferred])
+    }
     @Test func updatesMembershipWithoutAffectingOtherProjectsOrAccounts() throws {
         let store = try ProjectStore(inMemory: true)
         let a = RepositoryReference(id: 11, fullName: "org/a", isPrivate: false)
