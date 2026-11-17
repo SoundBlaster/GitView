@@ -8,7 +8,77 @@ import WorkCache
 import XCTest
 @testable import GitView
 
+private actor BackgroundTokenRefreshCounter {
+    private(set) var count = 0
+    func record() { count += 1 }
+}
+private enum BackgroundPreparationTestError: Error { case rejected }
+
 @MainActor final class ProjectRefreshPersistenceTests: XCTestCase {
+    func testBackgroundAndForegroundShareExpiredSessionRotation() async throws {
+        let store = KeychainCredentialStore(service: "gitgrid.integration.\(UUID().uuidString)", account: "test")
+        defer { try? store.remove() }
+        let identity = GitHubIdentity(id: 1, login: "fixture")
+        try store.save(identity: identity, token: OAuthToken(accessToken: "expired", refreshToken: "refresh", expiresIn: 60, refreshTokenExpiresIn: 20_000), now: Date().addingTimeInterval(-3_600))
+        let counter = BackgroundTokenRefreshCounter()
+        let manager = GitHubSessionManager(load: { try store.load() }, save: { try store.save(identity: $0, token: $1, now: $2) }, refresh: { _ in
+            await counter.record()
+            try await Task.sleep(for: .milliseconds(50))
+            return OAuthToken(accessToken: "rotated", refreshToken: "rotated-refresh", expiresIn: 3_600, refreshTokenExpiresIn: 20_000)
+        })
+        let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+        try library.create(name: "Project", repository: .init(id: 1, fullName: "owner/repo", isPrivate: false))
+        let project = try XCTUnwrap(library.projects.first)
+        var fetchedToken: String?
+        var saved = false
+        let coordinator = BackgroundRefreshCoordinator(session: {
+            try store.load().map { .init(accountID: $0.identity.id, token: $0.accessToken, expiresAt: $0.accessTokenExpiresAt) }
+        }, projects: { _ in [project] }, fetch: { token, _, repositories in
+            fetchedToken = token
+            return repositories.map { .init(id: $0.id, name: $0.fullName, outcome: .received([], complete: true)) }
+        }, save: { _, _ in saved = true }, prepare: { _ = try await manager.usableSession() })
+        async let foreground = manager.usableSession(for: 1)
+        async let background = coordinator.run(after: nil)
+        let (foregroundResult, backgroundResult) = try await (foreground, background)
+        XCTAssertEqual(foregroundResult.accessToken, "rotated")
+        XCTAssertEqual(backgroundResult, .updated(project.id, lastRepository: 1))
+        XCTAssertEqual(fetchedToken, "rotated")
+        XCTAssertTrue(saved)
+        let rotations = await counter.count
+        XCTAssertEqual(rotations, 1)
+    }
+
+    func testBackgroundDoesNotFetchOrSaveWhenSessionPreparationFails() async throws {
+        let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+        try library.create(name: "Project", repository: .init(id: 1, fullName: "owner/repo", isPrivate: false))
+        var fetched = false
+        var saved = false
+        let coordinator = BackgroundRefreshCoordinator(session: { .init(accountID: 1, token: "expired", expiresAt: .distantPast) },
+            projects: { _ in library.projects }, fetch: { _, _, _ in fetched = true; return [] },
+            save: { _, _ in saved = true }, prepare: { throw BackgroundPreparationTestError.rejected })
+        do {
+            _ = try await coordinator.run(after: nil)
+            XCTFail("Expected session preparation failure")
+        } catch BackgroundPreparationTestError.rejected { }
+        XCTAssertFalse(fetched)
+        XCTAssertFalse(saved)
+    }
+
+    func testBackgroundCancellationAfterPreparationDoesNotFetch() async throws {
+        let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+        try library.create(name: "Project", repository: .init(id: 1, fullName: "owner/repo", isPrivate: false))
+        var fetched = false
+        let coordinator = BackgroundRefreshCoordinator(session: { .init(accountID: 1, token: "valid", expiresAt: nil) },
+            projects: { _ in library.projects }, fetch: { _, _, _ in fetched = true; return [] },
+            save: { _, _ in XCTFail("Cancelled refresh must not save") },
+            prepare: { withUnsafeCurrentTask { $0?.cancel() } })
+        let task = Task { try await coordinator.run(after: nil) }
+        do {
+            _ = try await task.value
+            XCTFail("Expected cancellation")
+        } catch is CancellationError { }
+        XCTAssertFalse(fetched)
+    }
     func testHistorySurvivesSQLiteReopenAndAdvancesAfterRecovery() throws {
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)

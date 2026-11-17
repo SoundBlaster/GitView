@@ -4,7 +4,7 @@ metadata:
   id: gitview.ios-app
   name: GitView iOS app
   version: 0.1.0
-  summary: Display an explicitly labeled Today grid with demo work.
+  summary: Compose the GitGrid iOS project overview, source access and locally retained work.
   license: Apache-2.0
   authors:
     - name: GitView
@@ -14,6 +14,8 @@ index:
   provides:
     capabilities:
       - gitview.ios.demo_grid
+      - gitview.ios.project_overview
+      - gitview.ios.session_orchestration
   requires:
     capabilities: []
 compatibility:

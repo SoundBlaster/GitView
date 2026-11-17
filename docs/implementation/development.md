@@ -16,7 +16,7 @@ The copied FSD linter is from FSD iOS commit `21731b9dd7d5008b832af5caca6d19f7a3
 
 See [implementation status](status.md) for the scope and product-spec links.
 
-For a locally registered GitHub App, configure its callback URL as `gitview://oauth/callback` and create an untracked `Config/Local.xcconfig` with `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` build settings. These values become part of the app; the client secret is extractable and must not be treated as a confidential credential. Do not commit the local file. A development GitHub App is registered, but real OAuth and repository access through it remain to be verified.
+For a locally registered GitHub App, configure its callback URL as `gitview://oauth/callback` and create an untracked `Config/Local.xcconfig` with `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` build settings. These values become part of the app; the client secret is extractable and must not be treated as a confidential credential. Do not commit the local file. The user has reported connecting the development GitHub App on iPhone Air and supplied screenshots of a real repository and PR; session renewal and background execution on the device remain unverified.
 
 `LiveGitHubTests` in `Modules/GitHubAPI` are disabled by default. To run the read-only probes deliberately, supply `GITGRID_LIVE_PROBE=1`, a short-lived `GITGRID_LIVE_TOKEN`, the numeric and node IDs for `SoundBlaster/GitView` as `GITGRID_LIVE_REPOSITORY_ID` and `GITGRID_LIVE_REPOSITORY_NODE_ID`, and a public Issue node ID as `GITGRID_LIVE_ISSUE_ID`. Supply credentials through a controlled process environment; do not put them in tracked files or logs. A probe using a separate CLI token does not verify GitGrid's OAuth or GitHub App permissions.
 

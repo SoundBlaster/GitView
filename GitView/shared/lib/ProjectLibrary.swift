@@ -7,6 +7,24 @@ import OSLog
 import ProjectStore
 import WorkCache
 
+/// One coordinator owns token rotation for all in-process consumers.
+@MainActor enum GitHubSessionRuntime {
+    static let manager: GitHubSessionManager = {
+        let store = KeychainCredentialStore(service: "ru.egormerkushev.gitview.github", account: "current")
+        let id = Bundle.main.object(forInfoDictionaryKey: "GitHubClientID") as? String ?? ""
+        let secret = Bundle.main.object(forInfoDictionaryKey: "GitHubClientSecret") as? String ?? ""
+        let client = OAuthClient(clientID: id, clientSecret: secret, redirectURI: URL(string: "gitview://oauth/callback")!)
+        return GitHubSessionManager(load: { try store.load() },
+            save: { identity, token, date in try store.save(identity: identity, token: token, now: date) },
+            refresh: { token in
+                guard !id.isEmpty, !secret.isEmpty, !id.contains("$("), !secret.contains("$(") else {
+                    throw SessionRefreshError.reauthorizationRequired
+                }
+                return try await client.refresh(token)
+            })
+    }()
+}
+
 @MainActor enum BackgroundRefreshRuntime {
     static let identifier = "ru.egormerkushev.gitview.refresh"
     private static let lastProjectKey = "GitGrid.background.lastProject"
@@ -51,7 +69,7 @@ import WorkCache
             let result = try ProjectRefreshPersistence.commit(cache: cache, accountID: project.accountID, projectID: project.id,
                 observations: observations, fallback: nil, at: .now, scope: Set(project.repositories.map(\.id)))
             guard result.saved else { throw BackgroundRefreshCoordinator.Failure.couldNotSave }
-        })
+        }, prepare: { _ = try await GitHubSessionRuntime.manager.usableSession() })
         do {
             let previous = defaults.string(forKey: lastProjectKey).flatMap(UUID.init(uuidString:))
             let result = try await coordinator.run(after: previous, repositoryAfter: { projectID in
@@ -116,8 +134,12 @@ struct BackgroundRefreshSession: Equatable {
     let projects: (Int64) throws -> [StoredProject]
     let fetch: (String, StoredProject, [RepositoryReference]) async throws -> [RepositoryWorkRefresh]
     let save: (StoredProject, [RepositoryWorkRefresh]) throws -> Void
+    var prepare: () async throws -> Void = {}
 
     func run(after previous: UUID?, repositoryAfter: (UUID) -> Int64? = { _ in nil }, now: Date = .now) async throws -> Outcome {
+        try Task.checkCancellation()
+        try await prepare()
+        try Task.checkCancellation()
         guard let initial = try session(), initial.expiresAt.map({ $0 > now }) ?? true else { return .unavailable }
         let candidates = try projects(initial.accountID).filter { $0.repositories.contains(where: { !$0.syncPaused }) }
             .sorted { $0.id.uuidString < $1.id.uuidString }

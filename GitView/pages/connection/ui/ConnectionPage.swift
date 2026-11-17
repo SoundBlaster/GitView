@@ -109,17 +109,7 @@ struct ConnectionPage: View {
     }
 
     private func makeSessionManager() -> GitHubSessionManager {
-        let id = Bundle.main.object(forInfoDictionaryKey: "GitHubClientID") as? String ?? ""
-        let secret = Bundle.main.object(forInfoDictionaryKey: "GitHubClientSecret") as? String ?? ""
-        let client = OAuthClient(clientID: id, clientSecret: secret, redirectURI: redirectURI)
-        return GitHubSessionManager(load: { try store.load() },
-            save: { identity, token, date in try store.save(identity: identity, token: token, now: date) },
-            refresh: { token in
-                guard !id.isEmpty, !secret.isEmpty, !id.contains("$("), !secret.contains("$(") else {
-                    throw SessionRefreshError.reauthorizationRequired
-                }
-                return try await client.refresh(token)
-            })
+        GitHubSessionRuntime.manager
     }
 
     @MainActor private func openLibrary(accountID: Int64) {

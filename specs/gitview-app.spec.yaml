@@ -8,18 +8,29 @@ metadata:
   authors:
     - name: GitView
 intent:
-  summary: Display an explicitly labeled Today grid with demo work.
+  summary: Compose the GitGrid iOS project overview, source access and locally retained work.
 scope:
   boundedContext: GitView
   includes:
     - SwiftUI app composition and demo grid.
+    - Present Projects and their saved work, refresh outcomes and observation limitations.
+    - Compose source discovery, Keychain-backed sessions, project storage and cached work through their modules.
+    - Share one in-process session manager between foreground and background consumers to coordinate token rotation.
+    - Prepare a usable session before a bounded background refresh; abort fetching and saving if preparation fails or is cancelled.
   excludes:
-    - Authentication, network and persisted application data.
+    - Implement the authentication, network and storage adapters owned by the respective modules.
+    - Guarantee when iOS schedules or executes a background refresh.
 provides:
   capabilities:
     - id: gitview.ios.demo_grid
-      role: primary
+      role: secondary
       summary: Display an explicitly labeled Today grid with demo work.
+    - id: gitview.ios.project_overview
+      role: primary
+      summary: Present Projects and their retained GitHub work and refresh limitations.
+    - id: gitview.ios.session_orchestration
+      role: secondary
+      summary: Coordinate source sessions across foreground and background consumers.
 requires:
   capabilities: []
 interfaces:
