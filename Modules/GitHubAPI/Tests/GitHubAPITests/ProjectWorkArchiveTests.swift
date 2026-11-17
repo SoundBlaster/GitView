@@ -76,9 +76,37 @@ struct ProjectWorkArchiveTests {
         let oldDate = Date(timeIntervalSince1970: 10), next = Date(timeIntervalSince1970: 20)
         let old = ProjectWorkArchive().applying([.init(id: 1, name: "a", outcome: .received([try item("old")], complete: true))], at: oldDate)
         let incomplete = old.applying([.init(id: 1, name: "a", outcome: .received([try item("partial")], complete: false))], at: next)
-        #expect(incomplete.items.map(\.id) == ["old"])
+        #expect(Set(incomplete.items.map(\.id)) == ["old", "partial"])
         #expect(incomplete.repositories[0].observedAt == oldDate)
         #expect(incomplete.repositories[0].refreshProblem != nil)
+    }
+
+    @Test func incompletePageUpdatesKnownWorkWithoutDiscardingUnobservedWork() throws {
+        func issue(_ id: String, state: String, updated: Int) throws -> GitHubWorkItem {
+            let json = #"{"id":"\#(id)","number":1,"title":"work","url":"https://github.com/a/b/issues/1","state":"\#(state)","updatedAt":\#(updated),"isDraft":false,"kind":"issue"}"#
+            return try JSONDecoder().decode(GitHubWorkItem.self, from: Data(json.utf8))
+        }
+        let first = Date(timeIntervalSince1970: 100), second = Date(timeIntervalSince1970: 200)
+        let previous = ProjectWorkArchive().applying([.init(id: 1, name: "a", outcome: .received([
+            try issue("updated", state: "OPEN", updated: 10), try issue("unseen", state: "OPEN", updated: 10)
+        ], complete: true))], at: first)
+        let refreshed = previous.applying([.init(id: 1, name: "a", outcome: .received([
+            try issue("updated", state: "CLOSED", updated: 20), try issue("new", state: "OPEN", updated: 20)
+        ], complete: false))], at: second)
+        #expect(Set(refreshed.items.map(\.id)) == ["updated", "unseen", "new"])
+        #expect(refreshed.items.first { $0.id == "updated" }?.state == "CLOSED")
+        #expect(refreshed.repositories[0].observedAt == first)
+        #expect(refreshed.repositories[0].refreshProblem != nil)
+    }
+
+    @Test func incompletePageDoesNotRegressNewerKnownObject() throws {
+        func issue(state: String, updated: Int) throws -> GitHubWorkItem {
+            let json = #"{"id":"I1","number":1,"title":"work","url":"https://github.com/a/b/issues/1","state":"\#(state)","updatedAt":\#(updated),"isDraft":false,"kind":"issue"}"#
+            return try JSONDecoder().decode(GitHubWorkItem.self, from: Data(json.utf8))
+        }
+        let old = ProjectWorkArchive().applying([.init(id: 1, name: "a", outcome: .received([try issue(state: "CLOSED", updated: 20)], complete: true))], at: .now)
+        let partial = old.applying([.init(id: 1, name: "a", outcome: .received([try issue(state: "OPEN", updated: 10)], complete: false))], at: .now)
+        #expect(partial.items.first?.state == "CLOSED")
     }
 
     @Test func removedRepositoryIsRetainedAndCanBeRestoredOffline() throws {
@@ -115,6 +143,10 @@ struct ProjectWorkArchiveTests {
         let sameHead = archive.applying([.init(id: 1, name: "a", outcome: .received([try pull("abc")], complete: true))], at: .now)
         let persisted = try ProjectWorkArchive.decode(JSONEncoder().encode(sameHead))
         #expect(persisted.items.first?.details?.body == "Description")
+        let partialSameHead = persisted.applying([.init(id: 1, name: "a", outcome: .received([try pull("abc")], complete: false))], at: .now)
+        #expect(partialSameHead.items.first?.details?.body == "Description")
+        let partialNewHead = persisted.applying([.init(id: 1, name: "a", outcome: .received([try pull("def")], complete: false))], at: .now)
+        #expect(partialNewHead.items.first?.details == nil)
         let newHead = persisted.applying([.init(id: 1, name: "a", outcome: .received([try pull("def")], complete: true))], at: .now)
         #expect(newHead.items.first?.details == nil)
     }

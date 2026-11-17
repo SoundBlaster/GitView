@@ -30,6 +30,7 @@ scope:
     - Page PR link sources independently with bounded requests and reject invalid cursors.
     - Preserve previously observed details across refreshes when the PR head remains the same.
     - Retain per-repository refresh outcomes and preserve prior data for failed or incomplete sources.
+    - Merge work from incomplete pages into saved repository observations without erasing unseen objects, regressing newer source updates, or presenting the partial page as a complete observation.
     - Apply a bounded subset of repository observations without removing or refreshing unvisited repositories.
     - Collect independent repository refresh outcomes sequentially through an injectable loader; cancellation stops the batch without returning partial results.
     - Read previous unscoped work snapshots until a complete refresh replaces them.

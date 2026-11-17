@@ -74,7 +74,21 @@ public struct ProjectWorkArchive: Codable, Sendable {
                 }
                 return RepositoryWorkObservation(id: result.id, name: result.name, items: enriched, observedAt: result.observedAt ?? date, complete: true, refreshProblem: nil)
             case let .received(items, complete: false):
-                return RepositoryWorkObservation(id: result.id, name: result.name, items: old?.items ?? items,
+                var merged = old?.items ?? []
+                var indices = Dictionary(merged.enumerated().map { ($0.element.id, $0.offset) }, uniquingKeysWith: { first, _ in first })
+                for item in items {
+                    if let index = indices[item.id] {
+                        let previous = merged[index]
+                        guard item.updatedAt >= previous.updatedAt else { continue }
+                        if let details = previous.details {
+                            merged[index] = item.withDetails(details, forHead: previous.headRevision) ?? item
+                        } else { merged[index] = item }
+                    } else {
+                        indices[item.id] = merged.count
+                        merged.append(item)
+                    }
+                }
+                return RepositoryWorkObservation(id: result.id, name: result.name, items: merged,
                     observedAt: old?.observedAt ?? result.observedAt ?? date, complete: old?.complete ?? false, refreshProblem: "Incomplete GitHub response")
             case let .failed(problem):
                 return RepositoryWorkObservation(id: result.id, name: result.name, items: old?.items ?? [],

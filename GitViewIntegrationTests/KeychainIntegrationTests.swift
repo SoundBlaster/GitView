@@ -157,6 +157,29 @@ import XCTest
         XCTAssertEqual(archive.repositories.first?.refreshProblem, "Offline")
         XCTAssertEqual(archive.repositories.first?.observedAt, originalTime)
     }
+
+    func testPartialPagePersistsNewWorkAlongsideSavedWork() throws {
+        func issue(_ id: String) throws -> GitHubWorkItem {
+            let json = #"{"id":"\#(id)","number":1,"title":"work","url":"https://github.com/a/b/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue"}"#
+            return try JSONDecoder().decode(GitHubWorkItem.self, from: Data(json.utf8))
+        }
+        let cache = try WorkCache(inMemory: true)
+        let project = UUID(), originalTime = Date(timeIntervalSince1970: 1_000)
+        let original = ProjectWorkArchive().applying([
+            .init(id: 1, name: "owner/repo", outcome: .received([try issue("old")], complete: true))
+        ], at: originalTime)
+        try cache.save(accountID: 1, projectID: project, payload: JSONEncoder().encode(original), observedAt: originalTime, complete: true)
+        let result = try ProjectRefreshPersistence.commit(cache: cache, accountID: 1, projectID: project,
+            observations: [.init(id: 1, name: "owner/repo", outcome: .received([try issue("new")], complete: false))],
+            fallback: nil, at: originalTime.addingTimeInterval(10))
+        XCTAssertTrue(result.saved)
+        XCTAssertFalse(result.complete)
+        let snapshot = try XCTUnwrap(cache.load(accountID: 1, projectID: project))
+        XCTAssertEqual(snapshot.observedAt, originalTime)
+        let restored = try ProjectWorkArchive.decode(snapshot.payload)
+        XCTAssertEqual(Set(restored.items.map(\.id)), ["old", "new"])
+        XCTAssertNotNil(restored.repositories.first?.refreshProblem)
+    }
 }
 
 final class KeychainIntegrationTests: XCTestCase {

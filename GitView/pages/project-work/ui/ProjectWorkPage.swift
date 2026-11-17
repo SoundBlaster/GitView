@@ -85,7 +85,11 @@ struct ProjectWorkPage: View {
                         VStack(alignment: .leading) {
                             Text("\(repository.name): \(repository.refreshProblem ?? "")")
                             if let date = repository.observedAt {
-                                Text("Last observed \(date.formatted(date: .abbreviated, time: .shortened))")
+                                if repository.complete {
+                                    Text("Last complete observation \(date.formatted(date: .abbreviated, time: .shortened))")
+                                } else {
+                                    Text("Partial observation \(date.formatted(date: .abbreviated, time: .shortened))")
+                                }
                             } else { Text("No saved observation") }
                         }.font(.footnote).foregroundStyle(.secondary)
                     }

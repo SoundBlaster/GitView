@@ -9,7 +9,7 @@ This is a code-progress record, not a claim that a product specification is full
 | GITVIEW-SPEC-0058 | PKCE attempt, token exchange, identity lookup and Keychain adapter | GitHubAuth tests; synthetic Keychain write/read/update and system GitHub sign-in prompt on signed iOS 27.0 simulator | Live GitHub authorization, callback, token refresh and saved session lifecycle |
 | GITVIEW-SPEC-0059 | GitHub App installation and repository page fetch, partial-result aggregation and repository selection | GitHubAPI DiscoveryTests and DiscoveryAggregateTests; simulator UI flows | Live GitHub App integration and broader error recovery |
 | GITVIEW-SPEC-0045 | Account-scoped Core Data project creation, retrieval and repository membership editing | ProjectStoreTests including SQLite reopen; simulator UI tests | Live source admission and broader recovery verification |
-| GITVIEW-SPEC-0023 | Account and project-scoped local work snapshot, per-repository merge and freshness | WorkCache and ProjectWorkArchive tests, simulator integration tests | Live revocation attribution, real integration and on-device verification |
+| GITVIEW-SPEC-0023 | Account and project-scoped local work snapshot, per-repository merge and freshness; incomplete pages add and update observed objects while retaining unobserved work | WorkCache and ProjectWorkArchive tests, simulator integration tests | Per-object observation timestamps, live revocation attribution, real integration and on-device verification |
 | GITVIEW-SPEC-0048 | Manual and foreground refresh, bounded background task request and rate-limit deferral | GitHubAPI and WorkDomain tests; simulator integration tests for batching, account-change cancellation and preserved observations; plist configuration check | Physical-device BGTaskScheduler registration and execution, live GitHub rate-limit behavior and further orchestration verification |
 | GITVIEW-SPEC-0014 | Discrete density steps, zoom menu, tap detail, long-press preview and ambiguous-target fallback | GridDensityTests; iPhone Air Simulator UI tests for pinch in both directions, preview and selection preservation | Transition anchoring, physical-device performance and broader accessibility verification |
 | GITVIEW-SPEC-0004 | Project grid with cached summaries, attention signals, scoped navigation, bounded foreground refresh and pull to refresh | Simulator UI tests for project preview, signal navigation and zoom; refresh coordination tests | Live GitHub App refresh and revocation status, physical-device review |
@@ -36,6 +36,8 @@ The same `--build-implementation-delta-snapshot` command was run for `GITVIEW-SP
 The delta snapshot for `GITVIEW-SPEC-0049` likewise returned `ready_for_planning` and `tracked_artifacts_written: false`; the day-boundary slice above is not a complete implementation or a verified trace binding.
 
 The delta snapshot for `GITVIEW-SPEC-0004` returned the same planning status without tracked artifacts. The foreground overview coordinator is covered by tests for shared repositories and changes to account or membership; it does not establish live GitHub App access.
+
+The delta snapshot for `GITVIEW-SPEC-0023` also returned planning status without tracked artifacts. An incomplete page preserves the last complete observation time; individual merged objects do not yet carry separate source-observation timestamps.
 
 ## Initial delivery sequence
 
