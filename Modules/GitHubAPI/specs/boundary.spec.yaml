@@ -16,6 +16,7 @@ scope:
     - Fetch bounded pages of issues and pull requests for an identity-checked repository.
     - Preserve the source head revision, aggregate CI status and review decision when available.
     - Decode GitHub check rollup buckets and bounded review thread observations with explicit coverage.
+    - Page through one pull request's review threads while checking revision and collection consistency.
     - Validate next-page links and report HTTP failures.
     - Aggregate pages while preserving partial independent results.
   excludes:

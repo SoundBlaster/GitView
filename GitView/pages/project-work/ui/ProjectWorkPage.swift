@@ -101,7 +101,9 @@ struct ProjectWorkPage: View {
                 Toggle("Pull requests", isOn: $showPullRequests)
             }
         }
-        .sheet(item: $selectedItem) { item in WorkDetailSheet(item: item) }
+        .sheet(item: $selectedItem) { item in
+            WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID)
+        }
         .task { restore(); await load() }
         .refreshable { await load() }
     }
@@ -258,8 +260,13 @@ private struct WorkGridCell: View {
 
 private struct WorkDetailSheet: View {
     let item: GitHubWorkItem
+    let sessionManager: GitHubSessionManager
+    let accountID: Int64
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
+    @State private var expandedThreads: GitHubReviewThreads?
+    @State private var threadError = false
+    @State private var loadingThreads = false
 
     var body: some View {
         NavigationStack {
@@ -269,7 +276,9 @@ private struct WorkDetailSheet: View {
                     LabeledContent("Number", value: "#\(item.number)")
                     LabeledContent("State", value: item.state)
                     if item.kind == .pullRequest {
-                        WorkSignalDetails(item: item)
+                        WorkSignalDetails(item: item, threadsOverride: expandedThreads)
+                        if loadingThreads { ProgressView("Loading review threads") }
+                        if threadError { Text("Could not complete the thread count. Refresh the project and try again.").foregroundStyle(.secondary) }
                     }
                 }
                 Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
@@ -277,12 +286,35 @@ private struct WorkDetailSheet: View {
             }
             .navigationTitle(item.kind == .pullRequest ? "Pull Request" : "Issue")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+            .task { await loadThreadsIfNeeded() }
+        }
+    }
+
+    @MainActor private func loadThreadsIfNeeded() async {
+        guard item.kind == .pullRequest, item.reviewThreads?.isComplete == false,
+              let head = item.headRevision else { return }
+        loadingThreads = true
+        defer { loadingThreads = false }
+        do {
+            let credential = try await sessionManager.usableSession(for: accountID)
+            let result = try await GitHubReviewThreadsClient().load(token: credential.accessToken, pullRequestID: item.id, expectedHead: head)
+            try Task.checkCancellation()
+            expandedThreads = result
+        } catch is CancellationError {
+        } catch {
+            threadError = true
         }
     }
 }
 
 private struct WorkSignalDetails: View {
     let item: GitHubWorkItem
+    let threadsOverride: GitHubReviewThreads?
+
+    init(item: GitHubWorkItem, threadsOverride: GitHubReviewThreads? = nil) {
+        self.item = item
+        self.threadsOverride = threadsOverride
+    }
 
     var body: some View {
         LabeledContent("CI", value: item.checkStatus ?? "Unavailable")
@@ -295,7 +327,7 @@ private struct WorkSignalDetails: View {
         }
         LabeledContent("Review", value: item.reviewDecision ?? "Unavailable")
         if let count = item.reviewRequestCount { LabeledContent("Review requests", value: "\(count)") }
-        if let threads = item.reviewThreads {
+        if let threads = threadsOverride ?? item.reviewThreads {
             LabeledContent("Review threads", value: "\(threads.total)")
             LabeledContent(threads.isComplete ? "Unresolved" : "Unresolved observed (partial)", value: "\(threads.observedUnresolved)")
         } else {
