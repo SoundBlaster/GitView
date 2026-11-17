@@ -1,6 +1,34 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testAttentionSelectionPreservesOriginAndDistinctUnits() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        XCTAssertTrue(app.buttons["work.P2"].waitForExistence(timeout: 10))
+        app.buttons["project.filters"].tap()
+        app.buttons["Open"].tap()
+        XCTAssertTrue(app.buttons["work.P2"].waitForNonExistence(timeout: 5))
+        app.buttons["project.metrics"].tap()
+        let failed = app.buttons["metrics.failedCI"]
+        for _ in 0..<3 where !failed.isHittable { app.swipeUp() }
+        XCTAssertTrue(failed.waitForExistence(timeout: 5))
+        failed.tap()
+        XCTAssertTrue(app.staticTexts["Failed fixture"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Origin: 1 pull requests")).firstMatch.exists)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        let threads = app.buttons["metrics.unresolvedThreads"]
+        for _ in 0..<3 where !threads.isHittable { app.swipeUp() }
+        XCTAssertTrue(threads.waitForExistence(timeout: 5))
+        threads.tap()
+        XCTAssertTrue(app.staticTexts["Failed fixture"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Origin: 2 threads")).firstMatch.exists)
+        XCTAssertEqual(app.staticTexts.matching(identifier: "Failed fixture").count, 1)
+    }
+
     func testMergedMetricOpensItsOwnSelectionDespiteSavedGridFilter() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")

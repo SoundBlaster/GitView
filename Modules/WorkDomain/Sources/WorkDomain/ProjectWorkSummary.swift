@@ -27,6 +27,46 @@ public struct ObservedMetric: Sendable {
     public let unavailable: Int
 }
 
+public enum AttentionSignal: Sendable {
+    case failedCI, changesRequested, reviewRequested, unresolvedThreads
+}
+
+public enum AttentionAssessment: Sendable, Equatable {
+    case matches, doesNotMatch, unknown
+}
+
+public struct AttentionSignalSpecification: Specification {
+    public let signal: AttentionSignal
+    public init(signal: AttentionSignal) { self.signal = signal }
+    public func isSatisfiedBy(_ candidate: WorkMetricRecord) -> Bool { evaluate(candidate) == .matches }
+    public func evaluate(_ candidate: WorkMetricRecord) -> AttentionAssessment {
+        guard candidate.kind == .pullRequest else { return .doesNotMatch }
+        guard candidate.state != .unknown else { return .unknown }
+        guard candidate.state == .open else { return .doesNotMatch }
+        switch signal {
+        case .failedCI:
+            switch candidate.checkStatus {
+            case "ERROR", "FAILURE": return .matches
+            case "SUCCESS", "PENDING", "EXPECTED": return .doesNotMatch
+            default: return .unknown
+            }
+        case .changesRequested:
+            switch candidate.reviewDecision {
+            case "CHANGES_REQUESTED": return .matches
+            case "APPROVED", "REVIEW_REQUIRED": return .doesNotMatch
+            default: return .unknown
+            }
+        case .reviewRequested:
+            guard let count = candidate.reviewRequestCount, count >= 0 else { return .unknown }
+            return count > 0 ? .matches : .doesNotMatch
+        case .unresolvedThreads:
+            guard let count = candidate.unresolvedThreads, count >= 0 else { return .unknown }
+            if count > 0 { return .matches }
+            return candidate.threadsComplete == true ? .doesNotMatch : .unknown
+        }
+    }
+}
+
 public struct MergedDay: Identifiable, Sendable {
     public let day: Date
     public let count: Int
@@ -55,32 +95,17 @@ public struct ProjectWorkSummary: Sendable {
         openPullRequests = openPR.count
         draftPullRequests = openPR.filter(\.isDraft).count
         openIssues = unique.filter { $0.kind == .issue && $0.state == .open }.count
-        func metric(_ predicate: (WorkMetricRecord) -> Bool?) -> ObservedMetric {
-            let values = openPR.map(predicate)
-            return ObservedMetric(count: values.filter { $0 == true }.count, unavailable: values.filter { $0 == nil }.count)
+        func metric(_ signal: AttentionSignal) -> ObservedMetric {
+            let rule = AttentionSignalSpecification(signal: signal)
+            let values = openPR.map(rule.evaluate)
+            return ObservedMetric(count: values.filter { $0 == .matches }.count, unavailable: values.filter { $0 == .unknown }.count)
         }
-        failedCI = metric { record in
-            switch record.checkStatus {
-            case "ERROR", "FAILURE": true
-            case "SUCCESS", "PENDING", "EXPECTED": false
-            default: nil
-            }
-        }
-        changesRequested = metric { record in
-            switch record.reviewDecision {
-            case "CHANGES_REQUESTED": true
-            case "APPROVED", "REVIEW_REQUIRED": false
-            default: nil
-            }
-        }
-        waitingForReview = metric { $0.reviewRequestCount.map { $0 > 0 } }
-        affectedByThreads = metric { record in
-            guard let count = record.unresolvedThreads else { return nil }
-            if count > 0 { return true }
-            return record.threadsComplete == true ? false : nil
-        }
-        unresolvedThreads = ObservedMetric(count: openPR.compactMap(\.unresolvedThreads).reduce(0, +),
-            unavailable: openPR.filter { $0.unresolvedThreads == nil || $0.threadsComplete != true }.count)
+        failedCI = metric(.failedCI)
+        changesRequested = metric(.changesRequested)
+        waitingForReview = metric(.reviewRequested)
+        affectedByThreads = metric(.unresolvedThreads)
+        unresolvedThreads = ObservedMetric(count: openPR.compactMap { $0.unresolvedThreads.flatMap { $0 >= 0 ? $0 : nil } }.reduce(0, +),
+            unavailable: openPR.filter { ($0.unresolvedThreads ?? -1) < 0 || $0.threadsComplete != true }.count)
         let missingMergeTime = unique.contains { $0.kind == .pullRequest && $0.state == .merged && $0.mergedAt == nil }
         if observedComplete && !missingMergeTime {
             let today = calendar.startOfDay(for: now)

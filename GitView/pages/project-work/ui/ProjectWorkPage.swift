@@ -136,7 +136,7 @@ struct ProjectWorkPage: View {
         }
         .sheet(isPresented: $showMetrics) {
             if let archive {
-                ProjectMetricsSheet(project: project, archive: archive, sessionManager: sessionManager,
+                ProjectMetricsSheet(project: project, archive: archive, sessionManager: sessionManager, refreshWarning: warning,
                     onThreads: persistThreads, onDetails: persistDetails)
             }
         }
@@ -308,10 +308,26 @@ struct ProjectWorkPage: View {
     }
 }
 
+private extension GitHubWorkItem {
+    var metricRecord: WorkMetricRecord {
+        let kind: WorkKind = self.kind == .pullRequest ? .pullRequest : .issue
+        let state: WorkState = switch self.state {
+        case "OPEN": .open
+        case "MERGED": .merged
+        case "CLOSED": .closed
+        default: .unknown
+        }
+        return WorkMetricRecord(id: id, kind: kind, state: state, isDraft: isDraft,
+            checkStatus: checkStatus, reviewDecision: reviewDecision, reviewRequestCount: reviewRequestCount,
+            unresolvedThreads: reviewThreads?.observedUnresolved, threadsComplete: reviewThreads?.isComplete, mergedAt: mergedAt)
+    }
+}
+
 private struct ProjectMetricsSheet: View {
     let project: StoredProject
     let archive: ProjectWorkArchive
     let sessionManager: GitHubSessionManager
+    let refreshWarning: String?
     let onThreads: @MainActor (GitHubWorkItem, GitHubReviewThreads, Date) -> Bool
     let onDetails: @MainActor (GitHubWorkItem, GitHubWorkDetails) -> Bool
     @Environment(\.dismiss) private var dismiss
@@ -319,24 +335,13 @@ private struct ProjectMetricsSheet: View {
     @State private var selectedItem: GitHubWorkItem?
 
     private var summary: ProjectWorkSummary {
-        let records = archive.items.map { item in
-            let kind: WorkKind = item.kind == .pullRequest ? .pullRequest : .issue
-            let state: WorkState = switch item.state {
-            case "OPEN": .open
-            case "MERGED": .merged
-            case "CLOSED": .closed
-            default: .unknown
-            }
-            return WorkMetricRecord(id: item.id, kind: kind, state: state, isDraft: item.isDraft,
-                checkStatus: item.checkStatus, reviewDecision: item.reviewDecision, reviewRequestCount: item.reviewRequestCount,
-                unresolvedThreads: item.reviewThreads?.observedUnresolved, threadsComplete: item.reviewThreads?.isComplete, mergedAt: item.mergedAt)
-        }
+        let records = archive.items.map(\.metricRecord)
         let complete = archive.hasCompleteObservation(for: Set(project.repositories.map(\.id))) && !archive.hasRefreshProblems
         return ProjectWorkSummary(records: records, coverageComplete: complete, now: now, calendar: .current)
     }
 
     private func metricValue(_ metric: ObservedMetric) -> String {
-        metric.unavailable == 0 ? "\(metric.count)" : "\(metric.count) · \(metric.unavailable) unknown or partial"
+        metric.unavailable == 0 ? "\(metric.count)" : "\(metric.count) · \(metric.unavailable) PRs unknown or partial"
     }
 
     var body: some View {
@@ -345,6 +350,9 @@ private struct ProjectMetricsSheet: View {
                 Section {
                     Text("Current Project membership · saved grid filters do not apply")
                         .font(.footnote).foregroundStyle(.secondary)
+                    if let refreshWarning {
+                        Label(refreshWarning, systemImage: "exclamationmark.triangle").foregroundStyle(.secondary)
+                    }
                     if !summary.coverageComplete {
                         Label("Incomplete repository coverage; counts are observed values.", systemImage: "exclamationmark.triangle")
                             .foregroundStyle(.secondary)
@@ -362,11 +370,13 @@ private struct ProjectMetricsSheet: View {
                     LabeledContent("Open issues", value: "\(summary.openIssues)")
                 }
                 Section("Attention · open PRs") {
-                    LabeledContent("Failed CI · PRs", value: metricValue(summary.failedCI))
-                    LabeledContent("Changes requested · PRs", value: metricValue(summary.changesRequested))
-                    LabeledContent("Review requested · PRs", value: metricValue(summary.waitingForReview))
-                    LabeledContent("Unresolved threads", value: metricValue(summary.unresolvedThreads))
-                    LabeledContent("PRs with unresolved threads", value: metricValue(summary.affectedByThreads))
+                    attentionLink("Failed CI · PRs", metric: summary.failedCI, signal: .failedCI, unit: "pull requests")
+                        .accessibilityIdentifier("metrics.failedCI")
+                    attentionLink("Changes requested · PRs", metric: summary.changesRequested, signal: .changesRequested, unit: "pull requests")
+                    attentionLink("Review requested · PRs", metric: summary.waitingForReview, signal: .reviewRequested, unit: "pull requests")
+                    attentionLink("Unresolved threads", metric: summary.unresolvedThreads, signal: .unresolvedThreads, unit: "threads")
+                        .accessibilityIdentifier("metrics.unresolvedThreads")
+                    attentionLink("PRs with unresolved threads", metric: summary.affectedByThreads, signal: .unresolvedThreads, unit: "pull requests")
                 }
                 Section("Merged pull requests · last 7 local days") {
                     if let days = summary.mergedByDay {
@@ -400,6 +410,52 @@ private struct ProjectMetricsSheet: View {
         }
     }
 
+    private func attentionLink(_ title: String, metric: ObservedMetric, signal: AttentionSignal, unit: String) -> some View {
+        NavigationLink {
+            attentionSelection(title: title, signal: signal, origin: metric, unit: unit)
+        } label: {
+            LabeledContent(title, value: metricValue(metric))
+        }
+    }
+
+    private func attentionSelection(title: String, signal: AttentionSignal, origin: ObservedMetric, unit: String) -> some View {
+        let rule = AttentionSignalSpecification(signal: signal)
+        var seen = Set<String>()
+        let unique = archive.items.filter { seen.insert($0.id).inserted }
+        let selected = unique.filter { rule.isSatisfiedBy($0.metricRecord) }
+        let unknown = unique.filter { rule.evaluate($0.metricRecord) == .unknown }.count
+        return List {
+            Section {
+                Text("\(project.name) · current membership · open pull requests")
+                Text("Origin: \(origin.count) \(unit). Selection contains distinct pull requests; saved grid filters do not apply.")
+                if let refreshWarning { Text(refreshWarning) }
+                if !summary.coverageComplete || unknown > 0 || origin.unavailable > 0 {
+                    Label("Evidence is incomplete: \(unknown) PRs cannot be classified; \(origin.unavailable) PRs have unavailable or partial source data, or repository coverage is incomplete.", systemImage: "exclamationmark.triangle")
+                }
+                ForEach(archive.repositories.filter { $0.observedAt != nil }, id: \.id) { repository in
+                    if let date = repository.observedAt {
+                        Text("\(repository.name): observed \(date.formatted(date: .abbreviated, time: .shortened))")
+                    }
+                }
+            }.font(.footnote).foregroundStyle(.secondary)
+            if selected.isEmpty {
+                Text(unknown > 0 || origin.unavailable > 0 || !summary.coverageComplete ? "No confirmed matches in the observed data." : "No matching pull requests.")
+                    .foregroundStyle(.secondary)
+            }
+            ForEach(selected) { item in
+                Button { selectedItem = item } label: {
+                    VStack(alignment: .leading) {
+                        Text(item.title)
+                        if let repository = archive.repositories.first(where: { $0.items.contains(where: { $0.id == item.id }) }) {
+                            Text("\(repository.name) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
+                        } else { Text("#\(item.number)").font(.caption).foregroundStyle(.secondary) }
+                    }
+                }
+            }
+        }
+        .navigationTitle(title)
+    }
+
     private func mergedSelection(days: [MergedDay]) -> some View {
         let firstDay = days.first?.day ?? now
         var seen = Set<String>()
@@ -407,14 +463,26 @@ private struct ProjectMetricsSheet: View {
             guard seen.insert(item.id).inserted, item.kind == .pullRequest, item.state == "MERGED", let date = item.mergedAt else { return false }
             return date >= firstDay && date <= now
         }.sorted { ($0.mergedAt ?? .distantPast) > ($1.mergedAt ?? .distantPast) }
-        return List(selected) { item in
-            Button { selectedItem = item } label: {
-                VStack(alignment: .leading) {
-                    Text(item.title)
-                    if let repository = archive.repositories.first(where: { $0.items.contains(where: { $0.id == item.id }) }) {
-                        Text("\(repository.name) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
-                    } else {
-                        Text("#\(item.number)").font(.caption).foregroundStyle(.secondary)
+        return List {
+            Section {
+                Text("\(project.name) · current membership · \(firstDay.formatted(date: .abbreviated, time: .omitted))–\(now.formatted(date: .abbreviated, time: .omitted))")
+                Text("Saved grid filters do not apply to this historical selection.")
+                if let refreshWarning { Text(refreshWarning) }
+                ForEach(archive.repositories.filter { $0.observedAt != nil }, id: \.id) { repository in
+                    if let date = repository.observedAt {
+                        Text("\(repository.name): observed \(date.formatted(date: .abbreviated, time: .shortened))")
+                    }
+                }
+            }.font(.footnote).foregroundStyle(.secondary)
+            ForEach(selected) { item in
+                Button { selectedItem = item } label: {
+                    VStack(alignment: .leading) {
+                        Text(item.title)
+                        if let repository = archive.repositories.first(where: { $0.items.contains(where: { $0.id == item.id }) }) {
+                            Text("\(repository.name) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
+                        } else {
+                            Text("#\(item.number)").font(.caption).foregroundStyle(.secondary)
+                        }
                     }
                 }
             }

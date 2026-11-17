@@ -3,6 +3,21 @@ import Testing
 @testable import WorkDomain
 
 struct WorkSummaryTests {
+    @Test func attentionSelectionKeepsUnknownSeparateFromNonmatch() {
+        let unknown = WorkMetricRecord(id: "P1", kind: .pullRequest, state: .open, isDraft: false,
+            unresolvedThreads: 0, threadsComplete: false)
+        let confirmed = WorkMetricRecord(id: "P2", kind: .pullRequest, state: .open, isDraft: false,
+            unresolvedThreads: 2, threadsComplete: false)
+        let closed = WorkMetricRecord(id: "P3", kind: .pullRequest, state: .merged, isDraft: false,
+            unresolvedThreads: 3, threadsComplete: true)
+        let rule = AttentionSignalSpecification(signal: .unresolvedThreads)
+        #expect(rule.evaluate(unknown) == .unknown)
+        #expect(rule.evaluate(confirmed) == .matches)
+        #expect(rule.evaluate(closed) == .doesNotMatch)
+        let summary = ProjectWorkSummary(records: [unknown, confirmed, closed], coverageComplete: true, now: now, calendar: calendar)
+        #expect(summary.affectedByThreads.count == 1 && summary.affectedByThreads.unavailable == 1)
+        #expect([unknown, confirmed, closed].filter(rule.isSatisfiedBy).map(\.id) == ["P2"])
+    }
     private let now = Date(timeIntervalSince1970: 1_700_000_000)
     private var calendar: Calendar {
         var calendar = Calendar(identifier: .gregorian)
