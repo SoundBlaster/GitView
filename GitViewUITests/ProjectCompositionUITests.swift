@@ -1,6 +1,34 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testSavedHistoryRemainsVisibleAfterAppRelaunch() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-preview-failure", "--gitgrid-ui-test-history-relaunch"]
+        app.launchEnvironment["GITGRID_UI_FIXTURE_ID"] = UUID().uuidString
+        func openSavedHistory() -> String {
+            let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+            XCTAssertTrue(project.waitForExistence(timeout: 10))
+            project.tap()
+            let metrics = app.buttons["project.metrics"]
+            XCTAssertTrue(metrics.waitForExistence(timeout: 10))
+            metrics.tap()
+            let observed = app.staticTexts["metrics.history.observedThrough"]
+            for _ in 0..<5 where !observed.exists { app.swipeUp() }
+            XCTAssertTrue(observed.waitForExistence(timeout: 5))
+            XCTAssertTrue(observed.label.contains("Saved snapshot"))
+            let label = observed.label
+            let merged = app.buttons["metrics.merged.selection"]
+            XCTAssertTrue(merged.waitForExistence(timeout: 5))
+            merged.tap()
+            XCTAssertTrue(app.staticTexts["Merged fixture"].waitForExistence(timeout: 5))
+            return label
+        }
+        app.launch()
+        let firstLabel = openSavedHistory()
+        app.terminate()
+        app.launch()
+        XCTAssertEqual(openSavedHistory(), firstLabel)
+    }
     func testMetricsKeepCompleteHistoricalSnapshotAfterSourceFailure() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-preview-failure"]

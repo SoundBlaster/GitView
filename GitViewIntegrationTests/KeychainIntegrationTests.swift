@@ -9,6 +9,47 @@ import XCTest
 @testable import GitView
 
 @MainActor final class ProjectRefreshPersistenceTests: XCTestCase {
+    func testHistorySurvivesSQLiteReopenAndAdvancesAfterRecovery() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let url = directory.appendingPathComponent("history.sqlite")
+        let projectID = UUID(), initialTime = Date(timeIntervalSince1970: 1_000), recoveryTime = Date(timeIntervalSince1970: 2_000)
+        func issue(_ id: String) throws -> GitHubWorkItem {
+            let json = #"{"id":"\#(id)","number":1,"title":"work","url":"https://github.com/a/b/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue"}"#
+            return try JSONDecoder().decode(GitHubWorkItem.self, from: Data(json.utf8))
+        }
+        do {
+            let cache = try WorkCache(url: url)
+            let initial = try ProjectRefreshPersistence.commit(cache: cache, accountID: 1, projectID: projectID,
+                observations: [.init(id: 42, name: "a/b", outcome: .received([try issue("old")], complete: true), observedAt: initialTime)],
+                fallback: nil, at: initialTime, scope: [42])
+            XCTAssertTrue(initial.saved && initial.complete)
+            let failed = try ProjectRefreshPersistence.commit(cache: cache, accountID: 1, projectID: projectID,
+                observations: [.init(id: 42, name: "a/b", outcome: .failed("Offline"))],
+                fallback: nil, at: initialTime.addingTimeInterval(10), scope: [42])
+            XCTAssertTrue(failed.saved)
+            XCTAssertFalse(failed.complete)
+        }
+        do {
+            let cache = try WorkCache(url: url)
+            let snapshot = try XCTUnwrap(cache.load(accountID: 1, projectID: projectID))
+            let archive = try ProjectWorkArchive.decode(snapshot.payload)
+            let history = try XCTUnwrap(archive.lastCompleteHistory(for: [42]))
+            XCTAssertEqual(history.items.map(\.id), ["old"])
+            XCTAssertEqual(history.observedThrough, initialTime)
+            XCTAssertEqual(archive.repositories.first?.refreshProblem, "Offline")
+            let recovered = try ProjectRefreshPersistence.commit(cache: cache, accountID: 1, projectID: projectID,
+                observations: [.init(id: 42, name: "a/b", outcome: .received([try issue("new")], complete: true), observedAt: recoveryTime)],
+                fallback: nil, at: recoveryTime, scope: [42])
+            XCTAssertTrue(recovered.saved && recovered.complete)
+        }
+        let reopened = try WorkCache(url: url)
+        let archive = try ProjectWorkArchive.decode(XCTUnwrap(reopened.load(accountID: 1, projectID: projectID)).payload)
+        XCTAssertEqual(archive.lastCompleteHistory(for: [42])?.items.map(\.id), ["new"])
+        XCTAssertEqual(archive.lastCompleteHistory(for: [42])?.observedThrough, recoveryTime)
+        XCTAssertNil(archive.repositories.first?.refreshProblem)
+    }
     func testBackgroundContinuationLookupRespectsProjectMembership() throws {
         let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
         let first = RepositoryReference(id: 1, fullName: "owner/one", isPrivate: true)
@@ -59,7 +100,9 @@ import XCTest
         let firstSnapshot = try XCTUnwrap(cache.load(accountID: 1, projectID: first.id))
         let secondSnapshot = try XCTUnwrap(cache.load(accountID: 1, projectID: second.id))
         XCTAssertTrue(try ProjectWorkArchive.decode(firstSnapshot.payload).items.isEmpty)
+        XCTAssertNil(try ProjectWorkArchive.decode(firstSnapshot.payload).lastCompleteHistory(for: [1]))
         XCTAssertEqual(try ProjectWorkArchive.decode(secondSnapshot.payload).items.count, 1)
+        XCTAssertEqual(try ProjectWorkArchive.decode(secondSnapshot.payload).lastCompleteHistory(for: [1])?.items.count, 1)
         XCTAssertTrue(try XCTUnwrap(library.projects.first { $0.id == first.id }?.repositories.first).syncPaused)
         XCTAssertFalse(try XCTUnwrap(library.projects.first { $0.id == second.id }?.repositories.first).syncPaused)
         try library.setSyncPaused(false, repositoryID: 1, projectID: first.id)

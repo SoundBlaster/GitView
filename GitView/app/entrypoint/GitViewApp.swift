@@ -49,7 +49,17 @@ private struct ProjectTestFixture: View {
         }
         .task {
             do {
-                let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+                let persistentFixture = ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-history-relaunch")
+                let store: ProjectStore
+                if persistentFixture {
+                    let base = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                    let fixtureID = ProcessInfo.processInfo.environment["GITGRID_UI_FIXTURE_ID"].flatMap(UUID.init(uuidString:)) ?? UUID()
+                    let directory = base.appendingPathComponent("GitGridUITests/\(fixtureID.uuidString)", isDirectory: true)
+                    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+                    store = try ProjectStore(url: directory.appendingPathComponent("projects.sqlite"))
+                } else { store = try ProjectStore(inMemory: true) }
+                let library = try ProjectLibrary(accountID: 1, store: store)
+                if persistentFixture && !library.projects.isEmpty { self.library = library; return }
                 if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-empty-projects") { self.library = library; return }
                 try library.create(name: "Fixture Project", repository: RepositoryReference(id: 101, fullName: "fixture/one", isPrivate: false))
                 guard let id = library.projects.first?.id else { return }
