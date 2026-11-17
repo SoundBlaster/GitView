@@ -3,6 +3,34 @@ import Testing
 @testable import GitHubAPI
 
 struct ProjectWorkArchiveTests {
+    @Test func completeHistorySurvivesPartialRefreshAndRespectsCurrentScope() throws {
+        let first = Date(timeIntervalSince1970: 100), second = Date(timeIntervalSince1970: 200)
+        let initial = ProjectWorkArchive().applying([
+            .init(id: 1, name: "a", outcome: .received([try item("a-old")], complete: true), observedAt: first),
+            .init(id: 2, name: "b", outcome: .received([try item("b-old")], complete: true), observedAt: second)
+        ], at: second)
+        let partial = initial.applying([
+            .init(id: 1, name: "a", outcome: .received([try item("a-new")], complete: false)),
+            .init(id: 2, name: "b", outcome: .failed("Offline"))
+        ], at: second.addingTimeInterval(10))
+        let restored = try ProjectWorkArchive.decode(JSONEncoder().encode(partial))
+        let history = try #require(restored.lastCompleteHistory(for: [1, 2]))
+        #expect(Set(history.items.map(\.id)) == ["a-old", "b-old"])
+        #expect(history.observedThrough == first)
+        let subset = try #require(restored.lastCompleteHistory(for: [2]))
+        #expect(subset.items.map(\.id) == ["b-old"])
+        #expect(subset.observedThrough == second)
+        #expect(restored.lastCompleteHistory(for: [1, 2, 3]) == nil)
+        let partialBatch = restored.applyingPartial([.init(id: 1, name: "a", outcome: .received([], complete: true))], in: [1, 2], at: .now)
+        #expect(Set(try #require(partialBatch.lastCompleteHistory(for: [1, 2])).items.map(\.id)) == ["a-old", "b-old"])
+    }
+
+    @Test func forgettingRepositoryRemovesRetainedCompleteHistory() throws {
+        let archive = ProjectWorkArchive().applying([.init(id: 1, name: "a", outcome: .received([try item("secret")], complete: true))], at: .now)
+        let forgotten = try archive.forgetting(repositoryID: 1)
+        #expect(forgotten.lastCompleteSnapshot == nil)
+        #expect(forgotten.lastCompleteHistory(for: [1]) == nil)
+    }
     @Test func olderRefreshCannotOverwriteNewerContinuation() throws {
         let start = try #require(GitHubOpenContinuation(issueAfter: "one", pullAfter: nil))
         let later = try #require(GitHubOpenContinuation(issueAfter: "two", pullAfter: nil))

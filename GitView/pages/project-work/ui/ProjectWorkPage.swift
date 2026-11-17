@@ -396,6 +396,21 @@ struct ProjectWorkPage: View {
     }
 }
 
+private struct ProjectHistoryContext {
+    let summary: ProjectWorkSummary
+    let items: [GitHubWorkItem]
+    let repositories: [RepositoryWorkObservation]
+    let observedThrough: Date
+    let isSaved: Bool
+}
+
+private struct MetricSelection: Identifiable {
+    let item: GitHubWorkItem
+    let historicalRepositories: [RepositoryWorkObservation]?
+    let historicalTime: Date?
+    var id: String { item.id }
+}
+
 private struct ProjectMetricsSheet: View {
     let project: StoredProject
     let archive: ProjectWorkArchive
@@ -406,7 +421,7 @@ private struct ProjectMetricsSheet: View {
     let initialAttention: ProjectAttentionOrigin?
     @Environment(\.dismiss) private var dismiss
     @State private var now = Date()
-    @State private var selectedItem: GitHubWorkItem?
+    @State private var selectedMetricItem: MetricSelection?
     @State private var showInitialSelection = false
     @State private var initialSelectionOpened = false
 
@@ -414,6 +429,18 @@ private struct ProjectMetricsSheet: View {
         let records = archive.items.map(\.metricRecord)
         let complete = archive.hasCompleteObservation(for: Set(project.repositories.map(\.id))) && !archive.hasRefreshProblems
         return ProjectWorkSummary(records: records, coverageComplete: complete, now: now, calendar: .current)
+    }
+
+    private var history: ProjectHistoryContext? {
+        let scope = Set(project.repositories.map(\.id))
+        if summary.coverageComplete && refreshWarning == nil && !project.repositories.contains(where: \.syncPaused),
+           let through = archive.repositories.compactMap(\.observedAt).min(), archive.repositories.count == scope.count {
+            return ProjectHistoryContext(summary: ProjectWorkSummary(records: archive.items.map(\.metricRecord), coverageComplete: true,
+                now: through, calendar: .current), items: archive.items, repositories: archive.repositories, observedThrough: through, isSaved: false)
+        }
+        guard let saved = archive.lastCompleteHistory(for: scope), let through = saved.observedThrough else { return nil }
+        return ProjectHistoryContext(summary: ProjectWorkSummary(records: saved.items.map(\.metricRecord), coverageComplete: true,
+            now: through, calendar: .current), items: saved.items, repositories: saved.repositories, observedThrough: through, isSaved: true)
     }
 
     private func metricValue(_ metric: ObservedMetric) -> String {
@@ -464,8 +491,10 @@ private struct ProjectMetricsSheet: View {
                         .accessibilityIdentifier("metrics.unresolvedThreads")
                     attentionLink("PRs with unresolved threads", metric: summary.affectedByThreads, signal: .unresolvedThreads, unit: "pull requests")
                 }
-                Section("Merged pull requests · last 7 local days") {
-                    if let days = summary.mergedByDay {
+                Section("Merged pull requests · 7 local days") {
+                    if let history, let days = history.summary.mergedByDay {
+                        Text("\(history.isSaved ? "Saved snapshot" : "Observed") through \(history.observedThrough.formatted(date: .abbreviated, time: .shortened))")
+                            .font(.footnote).foregroundStyle(.secondary).accessibilityIdentifier("metrics.history.observedThrough")
                         Chart(days) { day in
                             BarMark(x: .value("Day", day.day, unit: .day), y: .value("Merged PRs", day.count))
                                 .accessibilityLabel(day.day.formatted(date: .abbreviated, time: .omitted))
@@ -474,7 +503,7 @@ private struct ProjectMetricsSheet: View {
                         .chartYScale(domain: 0...max(1, days.map(\.count).max() ?? 0))
                         .frame(height: 160)
                         NavigationLink {
-                            mergedSelection(days: days)
+                            mergedSelection(days: days, history: history)
                         } label: {
                             LabeledContent("View merged PRs", value: "\(days.reduce(0) { $0 + $1.count })")
                         }
@@ -486,16 +515,20 @@ private struct ProjectMetricsSheet: View {
                             .foregroundStyle(.secondary)
                     }
                 }
-                Section("Currently closed issues · last 7 local days") {
-                    if let closures = summary.issueClosures {
-                        issueClosureLink("All currently closed", count: closures.total, reason: nil)
-                        issueClosureLink("Completed", count: closures.completed, reason: .completed)
+                Section("Last observed closed issues · 7 local days") {
+                    if let history, let closures = history.summary.issueClosures {
+                        if history.isSaved {
+                            Text("Saved snapshot through \(history.observedThrough.formatted(date: .abbreviated, time: .shortened))")
+                                .font(.footnote).foregroundStyle(.secondary)
+                        }
+                        issueClosureLink("All currently closed", count: closures.total, reason: nil, history: history)
+                        issueClosureLink("Completed", count: closures.completed, reason: .completed, history: history)
                             .accessibilityIdentifier("metrics.issues.completed")
-                        issueClosureLink("Not planned", count: closures.notPlanned, reason: .notPlanned)
-                        issueClosureLink("Duplicate", count: closures.duplicate, reason: .duplicate)
-                        issueClosureLink("Other reason", count: closures.other, reason: .other)
-                        issueClosureLink("Reason unavailable", count: closures.unknown, reason: .unknown)
-                        Text("Last closure of issues still closed; reopened issues and earlier closure events are not included.")
+                        issueClosureLink("Not planned", count: closures.notPlanned, reason: .notPlanned, history: history)
+                        issueClosureLink("Duplicate", count: closures.duplicate, reason: .duplicate, history: history)
+                        issueClosureLink("Other reason", count: closures.other, reason: .other, history: history)
+                        issueClosureLink("Reason unavailable", count: closures.unknown, reason: .unknown, history: history)
+                        Text("Issues last observed closed, by latest closure in this period; reopened issues and earlier closure events are not included.")
                             .font(.footnote).foregroundStyle(.secondary)
                     } else {
                         Text("History is unavailable or incomplete; no zero values are assumed.")
@@ -517,12 +550,22 @@ private struct ProjectMetricsSheet: View {
                 }
             }
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
-            .sheet(item: $selectedItem) { item in
-                WorkDetailSheet(item: item, repositoryName: archive.repositoryNamesByWorkID[item.id], source: archive.repositoryObservationsByWorkID[item.id],
+            .sheet(item: $selectedMetricItem) { selection in
+                let item = selection.item
+                let sourceArchive = selection.historicalRepositories.map { ProjectWorkArchive(repositories: $0) } ?? archive
+                let historicalSource = sourceArchive.repositoryObservationsByWorkID[item.id]
+                let currentSource = historicalSource.flatMap { old in archive.repositories.first { $0.id == old.id } }
+                WorkDetailSheet(item: item, repositoryName: sourceArchive.repositoryNamesByWorkID[item.id], source: currentSource ?? historicalSource,
                     sessionManager: sessionManager, accountID: project.accountID,
-                    onThreads: onThreads, onDetails: onDetails)
+                    onThreads: onThreads, onDetails: onDetails, historicalSnapshotAt: selection.historicalTime)
             }
         }
+    }
+
+    @MainActor private func select(_ item: GitHubWorkItem, history: ProjectHistoryContext?) {
+        let source = history.flatMap { ProjectWorkArchive(repositories: $0.repositories).repositoryObservationsByWorkID[item.id] }
+        selectedMetricItem = MetricSelection(item: item, historicalRepositories: history?.repositories,
+            historicalTime: history.map { source?.observedAt ?? $0.observedThrough })
     }
 
     private func attentionLink(_ title: String, metric: ObservedMetric, signal: AttentionSignal, unit: String) -> some View {
@@ -533,26 +576,26 @@ private struct ProjectMetricsSheet: View {
         }
     }
 
-    private func issueClosureLink(_ title: String, count: Int, reason: IssueClosureReason?) -> some View {
+    private func issueClosureLink(_ title: String, count: Int, reason: IssueClosureReason?, history: ProjectHistoryContext) -> some View {
         NavigationLink {
-            issueClosureSelection(title: title, reason: reason)
+            issueClosureSelection(title: title, reason: reason, history: history)
         } label: {
             LabeledContent(title, value: "\(count)")
         }
     }
 
-    private func issueClosureSelection(title: String, reason: IssueClosureReason?) -> some View {
-        let rule = ClosedIssueInPeriodSpecification(reason: reason, now: now, calendar: .current)
+    private func issueClosureSelection(title: String, reason: IssueClosureReason?, history: ProjectHistoryContext) -> some View {
+        let rule = ClosedIssueInPeriodSpecification(reason: reason, now: history.observedThrough, calendar: .current)
         var seen = Set<String>()
-        let selected = archive.items.filter { seen.insert($0.id).inserted && rule.isSatisfiedBy($0.metricRecord) }
+        let selected = history.items.filter { seen.insert($0.id).inserted && rule.isSatisfiedBy($0.metricRecord) }
             .sorted { ($0.closedAt ?? .distantPast) > ($1.closedAt ?? .distantPast) }
-        let repositoryNames = archive.repositoryNamesByWorkID
+        let repositoryNames = ProjectWorkArchive(repositories: history.repositories).repositoryNamesByWorkID
         return List {
             Section {
-                Text("\(project.name) · current membership · last 7 local days")
-                Text("Currently closed issues by their latest closure. Saved grid filters do not apply.")
+                Text("\(project.name) · current membership · 7 local days through \(history.observedThrough.formatted(date: .abbreviated, time: .shortened))")
+                Text("Issues last observed closed, by their latest closure in this period. Saved grid filters do not apply.")
                 if let refreshWarning { Text(refreshWarning) }
-                ForEach(archive.repositories.filter { $0.observedAt != nil }, id: \.id) { repository in
+                ForEach(history.repositories.filter { $0.observedAt != nil }, id: \.id) { repository in
                     if let date = repository.observedAt {
                         Text("\(repository.name): observed \(date.formatted(date: .abbreviated, time: .shortened))")
                     }
@@ -560,7 +603,7 @@ private struct ProjectMetricsSheet: View {
             }.font(.footnote).foregroundStyle(.secondary)
             if selected.isEmpty { Text("No matching issues.").foregroundStyle(.secondary) }
             ForEach(selected) { item in
-                Button { selectedItem = item } label: {
+                Button { select(item, history: history) } label: {
                     VStack(alignment: .leading) {
                         Text(item.title)
                         if let repository = repositoryNames[item.id] {
@@ -616,7 +659,7 @@ private struct ProjectMetricsSheet: View {
                     .foregroundStyle(.secondary)
             }
             ForEach(selected) { item in
-                Button { selectedItem = item } label: {
+                Button { select(item, history: nil) } label: {
                     VStack(alignment: .leading) {
                         Text(item.title)
                         if let repository = repositoryNames[item.id] {
@@ -629,27 +672,28 @@ private struct ProjectMetricsSheet: View {
         .navigationTitle(title)
     }
 
-    private func mergedSelection(days: [MergedDay]) -> some View {
-        let firstDay = days.first?.day ?? now
+    private func mergedSelection(days: [MergedDay], history: ProjectHistoryContext) -> some View {
+        let firstDay = days.first?.day ?? history.observedThrough
         var seen = Set<String>()
-        let selected = archive.items.filter { item in
+        let selected = history.items.filter { item in
             guard seen.insert(item.id).inserted, item.kind == .pullRequest, item.state == "MERGED", let date = item.mergedAt else { return false }
-            return date >= firstDay && date <= now
+            return date >= firstDay && date <= history.observedThrough
         }.sorted { ($0.mergedAt ?? .distantPast) > ($1.mergedAt ?? .distantPast) }
-        let repositoryNames = archive.repositoryNamesByWorkID
+        let repositoryNames = ProjectWorkArchive(repositories: history.repositories).repositoryNamesByWorkID
         return List {
             Section {
-                Text("\(project.name) · current membership · \(firstDay.formatted(date: .abbreviated, time: .omitted))–\(now.formatted(date: .abbreviated, time: .omitted))")
+                Text("\(project.name) · current membership · \(firstDay.formatted(date: .abbreviated, time: .omitted))–\(history.observedThrough.formatted(date: .abbreviated, time: .omitted))")
+                Text("Observed through \(history.observedThrough.formatted(date: .abbreviated, time: .shortened)).")
                 Text("Saved grid filters do not apply to this historical selection.")
                 if let refreshWarning { Text(refreshWarning) }
-                ForEach(archive.repositories.filter { $0.observedAt != nil }, id: \.id) { repository in
+                ForEach(history.repositories.filter { $0.observedAt != nil }, id: \.id) { repository in
                     if let date = repository.observedAt {
                         Text("\(repository.name): observed \(date.formatted(date: .abbreviated, time: .shortened))")
                     }
                 }
             }.font(.footnote).foregroundStyle(.secondary)
             ForEach(selected) { item in
-                Button { selectedItem = item } label: {
+                Button { select(item, history: history) } label: {
                     VStack(alignment: .leading) {
                         Text(item.title)
                         if let repository = repositoryNames[item.id] {
@@ -899,6 +943,7 @@ private struct WorkDetailSheet: View {
     let accountID: Int64
     let onThreads: @MainActor (GitHubWorkItem, GitHubReviewThreads, Date) -> Bool
     let onDetails: @MainActor (GitHubWorkItem, GitHubWorkDetails) -> Bool
+    var historicalSnapshotAt: Date? = nil
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     @State private var expandedThreads: GitHubReviewThreads?
@@ -920,13 +965,17 @@ private struct WorkDetailSheet: View {
         NavigationStack {
             List {
                 Section {
+                    if let historicalSnapshotAt {
+                        Text("Saved observation through \(historicalSnapshotAt.formatted(date: .abbreviated, time: .shortened))")
+                            .font(.footnote).foregroundStyle(.secondary)
+                    }
                     Text(item.title).font(.headline)
                     LabeledContent("Number", value: "#\(item.number)")
                     LabeledContent("Repository", value: repositoryName ?? "Unavailable")
                         .accessibilityElement(children: .ignore)
                         .accessibilityLabel("Repository, \(repositoryName ?? "Unavailable")")
                         .accessibilityIdentifier("work.repository")
-                    LabeledContent("State", value: item.state)
+                    LabeledContent(historicalSnapshotAt == nil ? "State" : "State at observation", value: item.state)
                     LabeledContent("Updated", value: item.updatedAt.formatted(date: .abbreviated, time: .shortened))
                     WorkSourceStatus(source: source, identifierPrefix: "detail")
                     if source?.refreshProblem != nil {
@@ -949,7 +998,7 @@ private struct WorkDetailSheet: View {
                     WorkDescriptionDetails(details: details)
                     if item.kind == .issue {
                         IssueRelationshipDetails(relationships: details.issueRelationships, loading: loadingLinks,
-                            canLoad: !loadingDetails && loadingRelation == nil, loadError: linkError,
+                            canLoad: historicalSnapshotAt == nil && !loadingDetails && loadingRelation == nil, loadError: linkError,
                             loadingRelation: loadingRelation, relationError: relationError,
                             onLoadMore: { Task { await loadMoreLinks() } },
                             onLoadRelation: { kind in Task { await loadMoreRelation(kind) } })
@@ -969,6 +1018,7 @@ private struct WorkDetailSheet: View {
             .navigationTitle(item.kind == .pullRequest ? "Pull Request" : "Issue")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
             .task {
+                guard historicalSnapshotAt == nil else { return }
                 async let detail: Void = loadDetails()
                 async let threads: Void = loadThreadsIfNeeded()
                 _ = await (detail, threads)

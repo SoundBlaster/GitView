@@ -1,6 +1,31 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testMetricsKeepCompleteHistoricalSnapshotAfterSourceFailure() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-preview-failure"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let metrics = app.buttons["project.metrics"]
+        XCTAssertTrue(metrics.waitForExistence(timeout: 10))
+        metrics.tap()
+        let observed = app.staticTexts["metrics.history.observedThrough"]
+        for _ in 0..<5 where !observed.exists { app.swipeUp() }
+        XCTAssertTrue(observed.waitForExistence(timeout: 5))
+        XCTAssertTrue(observed.label.contains("Saved snapshot"))
+        let merged = app.buttons["metrics.merged.selection"]
+        XCTAssertTrue(merged.waitForExistence(timeout: 5))
+        merged.tap()
+        XCTAssertTrue(app.navigationBars["Merged PRs"].waitForExistence(timeout: 5))
+        let item = app.staticTexts["Merged fixture"]
+        XCTAssertTrue(item.waitForExistence(timeout: 5))
+        item.tap()
+        XCTAssertTrue(app.navigationBars["Pull Request"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Saved observation through")).firstMatch.exists)
+        XCTAssertTrue(app.staticTexts["detail.sourceProblem"].label.contains("GitHub HTTP 403"))
+    }
     func testMetricsIdentifyFailedRepositoryAndObservationTime() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-preview-failure"]

@@ -39,6 +39,14 @@ public struct RepositoryWorkRefresh: Sendable {
     }
 }
 
+/// A previously complete collection, kept separately from later partial observations.
+public struct CompleteWorkSnapshot: Codable, Sendable {
+    public let repositories: [RepositoryWorkObservation]
+    public var items: [GitHubWorkItem] { repositories.flatMap(\.items) }
+    /// The oldest source observation bounds the shared period supported by every repository.
+    public var observedThrough: Date? { repositories.compactMap(\.observedAt).min() }
+}
+
 /// Durable per-repository observations; legacy unscoped entries remain until a complete refresh.
 public struct ProjectWorkArchive: Codable, Sendable {
     public enum RemovalError: Error, Equatable { case unattributedData }
@@ -48,12 +56,14 @@ public struct ProjectWorkArchive: Codable, Sendable {
     public var detachedRepositories: [RepositoryWorkObservation]?
     public var retainedLegacyItems: [GitHubWorkItem]?
     public var completeScopeIDs: [Int64]?
+    public var lastCompleteSnapshot: CompleteWorkSnapshot?
     public init(repositories: [RepositoryWorkObservation] = [], legacyItems: [GitHubWorkItem] = [], lastAttemptAt: Date? = nil,
                 detachedRepositories: [RepositoryWorkObservation]? = nil, retainedLegacyItems: [GitHubWorkItem]? = nil,
-                completeScopeIDs: [Int64]? = nil) {
+                completeScopeIDs: [Int64]? = nil, lastCompleteSnapshot: CompleteWorkSnapshot? = nil) {
         self.repositories = repositories; self.legacyItems = legacyItems; self.lastAttemptAt = lastAttemptAt
         self.detachedRepositories = detachedRepositories; self.retainedLegacyItems = retainedLegacyItems
         self.completeScopeIDs = completeScopeIDs
+        self.lastCompleteSnapshot = lastCompleteSnapshot
     }
     public var items: [GitHubWorkItem] { repositories.flatMap(\.items) + legacyItems }
     /// Unambiguous source names for observed objects; conflicting ownership remains unavailable.
@@ -81,12 +91,20 @@ public struct ProjectWorkArchive: Codable, Sendable {
         coversRepositories(ids) && completeScopeIDs.map { Set($0) == ids } == true
     }
 
+    public func lastCompleteHistory(for ids: Set<Int64>) -> CompleteWorkSnapshot? {
+        guard !ids.isEmpty, let snapshot = lastCompleteSnapshot else { return nil }
+        let selected = snapshot.repositories.filter { ids.contains($0.id) }
+        guard Set(selected.map(\.id)) == ids, selected.allSatisfy({ $0.complete && $0.observedAt != nil }) else { return nil }
+        return CompleteWorkSnapshot(repositories: selected)
+    }
+
     /// Removes only observations attributable to this repository, including detached ones.
     public func forgetting(repositoryID: Int64) throws -> ProjectWorkArchive {
         guard legacyItems.isEmpty, retainedLegacyItems?.isEmpty ?? true else { throw RemovalError.unattributedData }
         return ProjectWorkArchive(repositories: repositories.filter { $0.id != repositoryID }, legacyItems: [],
             lastAttemptAt: lastAttemptAt, detachedRepositories: detachedRepositories?.filter { $0.id != repositoryID },
-            retainedLegacyItems: retainedLegacyItems, completeScopeIDs: nil)
+            retainedLegacyItems: retainedLegacyItems, completeScopeIDs: nil,
+            lastCompleteSnapshot: lastCompleteSnapshot?.repositories.contains(where: { $0.id == repositoryID }) == true ? nil : lastCompleteSnapshot)
     }
 
     public func applying(_ results: [RepositoryWorkRefresh], at date: Date) -> ProjectWorkArchive {
@@ -139,7 +157,8 @@ public struct ProjectWorkArchive: Codable, Sendable {
         let retainedLegacy = (retainedLegacyItems ?? []) + (allComplete ? legacyItems : [])
         return ProjectWorkArchive(repositories: updated, legacyItems: allComplete ? [] : legacyItems, lastAttemptAt: date,
             detachedRepositories: detached, retainedLegacyItems: retainedLegacy,
-            completeScopeIDs: allComplete ? selected.sorted() : completeScopeIDs)
+            completeScopeIDs: allComplete ? selected.sorted() : completeScopeIDs,
+            lastCompleteSnapshot: allComplete && !updated.isEmpty ? CompleteWorkSnapshot(repositories: updated) : lastCompleteSnapshot)
     }
 
     /// Updates only the supplied repositories without discarding unvisited observations.
@@ -151,7 +170,8 @@ public struct ProjectWorkArchive: Codable, Sendable {
         return ProjectWorkArchive(repositories: (refreshed.repositories + preserved).sorted { $0.id < $1.id },
             legacyItems: scoped.legacyItems, lastAttemptAt: date,
             detachedRepositories: detached.filter { !scope.contains($0.id) },
-            retainedLegacyItems: scoped.retainedLegacyItems, completeScopeIDs: scoped.completeScopeIDs)
+            retainedLegacyItems: scoped.retainedLegacyItems, completeScopeIDs: scoped.completeScopeIDs,
+            lastCompleteSnapshot: scoped.lastCompleteSnapshot)
     }
 
     public func restricting(to ids: Set<Int64>) -> ProjectWorkArchive {
@@ -159,7 +179,8 @@ public struct ProjectWorkArchive: Codable, Sendable {
         let selected = all.values.filter { ids.contains($0.id) }.sorted { $0.id < $1.id }
         let retained = all.values.filter { !ids.contains($0.id) }.sorted { $0.id < $1.id }
         return ProjectWorkArchive(repositories: selected, legacyItems: legacyItems, lastAttemptAt: lastAttemptAt,
-            detachedRepositories: retained, retainedLegacyItems: retainedLegacyItems, completeScopeIDs: completeScopeIDs)
+            detachedRepositories: retained, retainedLegacyItems: retainedLegacyItems, completeScopeIDs: completeScopeIDs,
+            lastCompleteSnapshot: lastCompleteSnapshot)
     }
 
     public static func decode(_ data: Data) throws -> ProjectWorkArchive {
