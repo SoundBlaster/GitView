@@ -11,7 +11,7 @@ struct GitViewApp: App {
     var body: some Scene {
         WindowGroup {
             #if DEBUG
-            if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project") {
+            if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-dense") {
                 ProjectTestFixture()
             } else {
                 ConnectionPage()
@@ -46,7 +46,12 @@ private struct ProjectTestFixture: View {
                 let now = Date()
                 let stamp = now.timeIntervalSinceReferenceDate
                 let json = #"[{"id":"I1","number":1,"title":"Offline fixture","url":"https://github.com/fixture/one/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue","details":{"body":"Saved synthetic description","issueContext":{"repository":"fixture/one","type":"Bug","assignees":["alice"],"assigneesTotal":2,"assigneesComplete":false,"milestone":"First release","participantCount":7,"commentCount":4},"issueRelationships":{"parent":{"id":"IP","number":8,"title":"Parent fixture","url":"https://github.com/fixture/one/issues/8","state":"OPEN","repository":"fixture/one"},"parentObserved":true,"blockedBy":{"items":[{"id":"IB","number":9,"title":"Blocker fixture","url":"https://github.com/fixture/one/issues/9","state":"OPEN","repository":"fixture/one"}],"total":2,"isComplete":false},"blocking":{"items":[],"total":0,"isComplete":true},"subIssues":{"items":[],"total":0,"isComplete":true},"pullRequests":{"items":[{"id":"PRLINK","number":12,"title":"Linked PR fixture","url":"https://github.com/fixture/one/pull/12","state":"OPEN","repository":"fixture/one","willCloseTarget":true,"crossReferenced":true,"manuallyLinked":true}],"isComplete":false,"manualLinksComplete":true}},"observedAt":0}},{"id":"I2","number":4,"title":"Completed fixture","url":"https://github.com/fixture/one/issues/4","state":"CLOSED","updatedAt":\#(stamp),"closedAt":\#(stamp),"closureReason":"COMPLETED","isDraft":false,"kind":"issue"},{"id":"I3","number":5,"title":"Not planned fixture","url":"https://github.com/fixture/one/issues/5","state":"CLOSED","updatedAt":\#(stamp),"closedAt":\#(stamp),"closureReason":"NOT_PLANNED","isDraft":false,"kind":"issue"},{"id":"P1","number":2,"title":"Merged fixture","url":"https://github.com/fixture/one/pull/2","state":"MERGED","updatedAt":\#(stamp),"mergedAt":\#(stamp),"isDraft":false,"kind":"pullRequest"},{"id":"P2","number":3,"title":"Failed fixture","url":"https://github.com/fixture/one/pull/3","state":"OPEN","updatedAt":\#(stamp),"isDraft":true,"kind":"pullRequest","checkStatus":"FAILURE","reviewDecision":"CHANGES_REQUESTED","reviewRequestCount":1,"reviewThreads":{"total":3,"observedUnresolved":2,"isComplete":false}}]"#
-                let items = try JSONDecoder().decode([GitHubWorkItem].self, from: Data(json.utf8))
+                let items: [GitHubWorkItem]
+                if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-dense") {
+                    items = try denseItems(stamp: stamp)
+                } else {
+                    items = try JSONDecoder().decode([GitHubWorkItem].self, from: Data(json.utf8))
+                }
                 let archive = ProjectWorkArchive().applying([
                     .init(id: 101, name: "fixture/one", outcome: .received(items, complete: true)),
                     .init(id: 102, name: "fixture/two", outcome: .received([], complete: true))
@@ -55,6 +60,24 @@ private struct ProjectTestFixture: View {
                 self.library = library
             } catch { assertionFailure("Could not create UI test fixture: \(error)") }
         }
+    }
+
+    private func denseItems(stamp: TimeInterval) throws -> [GitHubWorkItem] {
+        let values: [[String: Any]] = (1...100).map { index in
+            let issue = index.isMultiple(of: 3)
+            let state = issue ? (index.isMultiple(of: 2) ? "CLOSED" : "OPEN") :
+                (index % 4 == 2 ? "MERGED" : (index % 4 == 0 ? "CLOSED" : "OPEN"))
+            let updated = stamp - Double(index)
+            var item: [String: Any] = ["id": "D\(index)", "number": index, "title": "Synthetic work \(index)",
+                "url": "https://github.com/fixture/one/\(issue ? "issues" : "pull")/\(index)", "state": state,
+                "updatedAt": updated, "isDraft": !issue && state == "OPEN" && index.isMultiple(of: 5),
+                "kind": issue ? "issue" : "pullRequest"]
+            if state == "CLOSED" || state == "MERGED" { item["closedAt"] = stamp }
+            if state == "MERGED" { item["mergedAt"] = stamp }
+            if !issue && state == "OPEN" { item["checkStatus"] = ["FAILURE", "PENDING", "SUCCESS"][index % 5 % 3] }
+            return item
+        }
+        return try JSONDecoder().decode([GitHubWorkItem].self, from: JSONSerialization.data(withJSONObject: values))
     }
 }
 #endif

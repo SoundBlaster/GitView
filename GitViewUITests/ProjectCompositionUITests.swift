@@ -1,6 +1,34 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testHundredItemGridKeepsSelectionAcrossOpenAndFilter() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-dense")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        XCTAssertTrue(app.buttons["work.D1"].waitForExistence(timeout: 10))
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "100 synthetic work items"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+        let last = app.buttons["work.D100"]
+        for _ in 0..<8 where !last.isHittable { app.swipeUp() }
+        XCTAssertTrue(last.waitForExistence(timeout: 5))
+        XCTAssertTrue(last.isHittable)
+        last.tap()
+        XCTAssertTrue(app.staticTexts["Synthetic work 100"].waitForExistence(timeout: 10))
+        app.buttons["Done"].tap()
+        XCTAssertTrue(last.waitForExistence(timeout: 5))
+        XCTAssertTrue(last.isHittable)
+        app.buttons["project.filters"].tap()
+        app.buttons["Merged"].tap()
+        XCTAssertTrue(app.buttons["work.D98"].waitForNonExistence(timeout: 5))
+        app.buttons["project.filters"].tap()
+        app.buttons["Merged"].tap()
+        XCTAssertTrue(app.buttons["work.D98"].waitForExistence(timeout: 5))
+    }
     func testDenseGridExposesTypeStateAndDraft() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")
