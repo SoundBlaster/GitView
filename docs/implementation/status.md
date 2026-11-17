@@ -5,7 +5,7 @@ This is a code-progress record, not a claim that a product specification is full
 | Product specification | Implemented slice | Evidence | Remaining |
 | --- | --- | --- | --- |
 | GITVIEW-SPEC-0007 | Time eligibility, identity-checked paginated work grid and project-scoped filters | WorkDomain and GitHubWorkClient tests and iOS build | Live verification, full refresh recovery, accessibility and pinch interaction |
-| GITVIEW-SPEC-0058 | PKCE attempt, token exchange, identity lookup and Keychain adapter | GitHubAuth sources and tests; Keychain adapter itself is not yet integration-tested | Real GitHub and Keychain integration tests, token refresh, saved session restoration and lifecycle |
+| GITVIEW-SPEC-0058 | PKCE attempt, token exchange, identity lookup and Keychain adapter | GitHubAuth sources and tests; synthetic Keychain write/read/update passed on a signed iOS 27.0 simulator | Live GitHub authorization, token refresh, saved session restoration and lifecycle |
 | GITVIEW-SPEC-0059 | GitHub App installation and repository page fetch with partial-result aggregation | GitHubAPI DiscoveryTests and DiscoveryAggregateTests | UI, selection, persistence and live integration |
 | GITVIEW-SPEC-0045 | Account-scoped Core Data project creation and retrieval, explicit single-repository creation UI | ProjectStoreTests including SQLite reopen; iOS build | Live source admission, UI tests, editing, recovery and synchronization |
 | GITVIEW-SPEC-0023 | Account and project-scoped local work snapshot with freshness | WorkCacheTests, API Codable roundtrip, iOS build | Per-repository merge, revocation attribution, background refresh, real integration and UI tests |
@@ -44,3 +44,5 @@ OAuth decision: web authorization with PKCE, no backend; a bundled GitHub client
 A native connection screen now invokes the system web authentication session; it requires a separately registered GitHub App and local build configuration. No live authorization has been verified.
 
 Simulator startup comparison: on the same clean iPhone Air simulator, the ad-hoc signed app started without the Keychain read error, while the linker-signed build displayed it. This is a signing-dependent observation, not verification of saving a token or real GitHub authorization. The connection screen now distinguishes Keychain errors from project-store errors and logs only a Keychain status code.
+
+`GitViewIntegrationTests/KeychainIntegrationTests.swift` exercises a UUID-scoped synthetic credential on an ad-hoc signed iPhone Air simulator; the result is not evidence of a live GitHub authorization or physical-device behavior.

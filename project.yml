@@ -43,3 +43,25 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         SWIFT_VERSION: "6.0"
         TARGETED_DEVICE_FAMILY: "1,2"
+
+  GitViewIntegrationTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [GitViewIntegrationTests]
+    dependencies:
+      - target: GitView
+      - package: GitHubAuth
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ru.egormerkushev.gitview.integrationtests
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+schemes:
+  GitView:
+    build:
+      targets:
+        GitView: all
+        GitViewIntegrationTests: [test]
+    test:
+      targets:
+        - GitViewIntegrationTests

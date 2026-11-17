@@ -11,6 +11,10 @@ public struct OAuthToken: Sendable {
     public let refreshToken: String?
     public let expiresIn: Int?
     public let refreshTokenExpiresIn: Int?
+    public init(accessToken: String, refreshToken: String?, expiresIn: Int?, refreshTokenExpiresIn: Int?) {
+        self.accessToken = accessToken; self.refreshToken = refreshToken
+        self.expiresIn = expiresIn; self.refreshTokenExpiresIn = refreshTokenExpiresIn
+    }
 }
 
 /// Exchanges a validated one-time code; obtaining a token does not prove account identity.

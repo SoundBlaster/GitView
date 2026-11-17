@@ -3,6 +3,7 @@ import Foundation
 public struct GitHubIdentity: Codable, Equatable, Sendable {
     public let id: Int64
     public let login: String
+    public init(id: Int64, login: String) { self.id = id; self.login = login }
 }
 
 public enum GitHubIdentityError: Error, Equatable {
