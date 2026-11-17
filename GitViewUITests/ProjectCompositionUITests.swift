@@ -1,6 +1,21 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testOpenProjectLoadsChangedSnapshotAfterForegroundReturn() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-overview-refresh"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let oldItem = app.buttons["work.P2"]
+        XCTAssertTrue(oldItem.waitForExistence(timeout: 10))
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(oldItem.waitForNonExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["project.filters"].exists)
+    }
+
     func testProjectOverviewLoadsChangedSnapshotAfterForegroundReturn() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-overview-refresh"]
