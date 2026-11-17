@@ -148,7 +148,8 @@ struct ProjectWorkPage: View {
             .accessibilityIdentifier("project.filters")
         }
         .sheet(item: $selectedItem) { item in
-            WorkDetailSheet(item: item, repositoryName: repositoryNames[item.id], sessionManager: sessionManager, accountID: project.accountID, onThreads: persistThreads, onDetails: persistDetails)
+            WorkDetailSheet(item: item, repositoryName: repositoryNames[item.id], source: archive?.repositoryObservationsByWorkID[item.id],
+                sessionManager: sessionManager, accountID: project.accountID, onThreads: persistThreads, onDetails: persistDetails)
         }
         .sheet(item: $accessiblePreview, onDismiss: {
             if let item = previewToOpen {
@@ -467,7 +468,8 @@ private struct ProjectMetricsSheet: View {
             }
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
             .sheet(item: $selectedItem) { item in
-                WorkDetailSheet(item: item, repositoryName: archive.repositoryNamesByWorkID[item.id], sessionManager: sessionManager, accountID: project.accountID,
+                WorkDetailSheet(item: item, repositoryName: archive.repositoryNamesByWorkID[item.id], source: archive.repositoryObservationsByWorkID[item.id],
+                    sessionManager: sessionManager, accountID: project.accountID,
                     onThreads: onThreads, onDetails: onDetails)
             }
         }
@@ -745,17 +747,27 @@ private struct WorkPreviewContent: View {
                 Text("Details observed \(details.observedAt.formatted(date: .abbreviated, time: .shortened))")
                     .font(.footnote).foregroundStyle(.secondary)
             }
-            if let problem = source?.refreshProblem {
+            WorkSourceStatus(source: source, identifierPrefix: "preview")
+        }
+    }
+}
+
+private struct WorkSourceStatus: View {
+    let source: RepositoryWorkObservation?
+    let identifierPrefix: String
+    var body: some View {
+        if let source {
+            if let problem = source.refreshProblem {
                 Label(problem, systemImage: "exclamationmark.triangle").foregroundStyle(.secondary)
-                    .accessibilityIdentifier("preview.sourceProblem")
+                    .accessibilityIdentifier("\(identifierPrefix).sourceProblem")
             }
-            if let source, let date = source.observedAt {
+            if let date = source.observedAt {
                 if source.complete {
                     Text("Last complete observation \(date.formatted(date: .abbreviated, time: .shortened))")
-                        .font(.footnote).foregroundStyle(.secondary).accessibilityIdentifier("preview.sourceObservedAt")
+                        .font(.footnote).foregroundStyle(.secondary).accessibilityIdentifier("\(identifierPrefix).sourceObservedAt")
                 } else {
                     Text("Partial observation \(date.formatted(date: .abbreviated, time: .shortened))")
-                        .font(.footnote).foregroundStyle(.secondary).accessibilityIdentifier("preview.sourceObservedAt")
+                        .font(.footnote).foregroundStyle(.secondary).accessibilityIdentifier("\(identifierPrefix).sourceObservedAt")
                 }
             }
         }
@@ -765,6 +777,7 @@ private struct WorkPreviewContent: View {
 private struct WorkDetailSheet: View {
     let item: GitHubWorkItem
     let repositoryName: String?
+    let source: RepositoryWorkObservation?
     let sessionManager: GitHubSessionManager
     let accountID: Int64
     let onThreads: @MainActor (GitHubWorkItem, GitHubReviewThreads, Date) -> Bool
@@ -798,6 +811,7 @@ private struct WorkDetailSheet: View {
                         .accessibilityIdentifier("work.repository")
                     LabeledContent("State", value: item.state)
                     LabeledContent("Updated", value: item.updatedAt.formatted(date: .abbreviated, time: .shortened))
+                    WorkSourceStatus(source: source, identifierPrefix: "detail")
                     if item.state != "OPEN", let closedAt = item.closedAt { LabeledContent("Closed", value: closedAt.formatted(date: .abbreviated, time: .shortened)) }
                     if item.kind == .issue && item.state == "CLOSED" {
                         LabeledContent("Closure reason", value: issueClosureLabel(item.closureReason))

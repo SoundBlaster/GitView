@@ -16,6 +16,12 @@ import XCTest
         XCTAssertEqual(app.staticTexts["preview.description"].label, "Saved synthetic description")
         XCTAssertTrue(app.descendants(matching: .any)["preview.sourceProblem"].label.contains("GitHub HTTP 403"))
         XCTAssertTrue(app.staticTexts["preview.sourceObservedAt"].label.hasPrefix("Last complete observation"))
+        app.buttons["Open in GitGrid"].tap()
+        XCTAssertTrue(app.navigationBars["Issue"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["detail.sourceProblem"].label.contains("GitHub HTTP 403"))
+        XCTAssertTrue(app.staticTexts["detail.sourceObservedAt"].label.hasPrefix("Last complete observation"))
+        for _ in 0..<4 where !app.staticTexts["Saved synthetic description"].exists { app.swipeUp() }
+        XCTAssertTrue(app.staticTexts["Saved synthetic description"].exists)
     }
     func testPreviewActionKeepsTheSelectedWorkItem() throws {
         let app = XCUIApplication()
