@@ -10,6 +10,7 @@ struct ConnectionPage: View {
     @State private var identity: GitHubIdentity?
     @State private var credential: SavedGitHubCredential?
     @State private var library: ProjectLibrary?
+    @State private var sessionManager: GitHubSessionManager?
 
     private let redirectURI = URL(string: "gitview://oauth/callback")!
     private let store = KeychainCredentialStore(service: "ru.egormerkushev.gitview.github", account: "current")
@@ -41,8 +42,10 @@ struct ConnectionPage: View {
                         NavigationLink("Projects") { ProjectsPage(library: library, accessToken: credential.accessToken) }
                     }
                     if let expiry = credential.accessTokenExpiresAt, expiry <= .now {
-                        Text("Saved session expired. Connect again to refresh access.")
+                        Text("Saved session expired. Reconnect or retry to refresh access.")
                             .font(.footnote).foregroundStyle(.secondary)
+                        Button("Retry session refresh") { Task { await restoreSession() } }
+                            .disabled(isConnecting)
                     } else {
                         NavigationLink("Browse repositories") {
                             RepositoryDiscoveryPage(accessToken: credential.accessToken, account: credential.identity.login, library: library)
@@ -55,15 +58,40 @@ struct ConnectionPage: View {
             }
             .padding()
             .task {
-                do {
-                    credential = try store.load()
-                    if let credential { openLibrary(accountID: credential.identity.id) }
-                } catch let CredentialStoreError.keychain(code) {
-                    Logger(subsystem: "ru.egormerkushev.gitview", category: "credentials").error("Keychain read failed with status \(code, privacy: .public)")
-                    status = "Could not read the saved session."
-                } catch { status = "Could not read the saved session." }
+                await restoreSession()
             }
         }
+    }
+
+    @MainActor private func restoreSession() async {
+        guard !isConnecting else { return }
+        isConnecting = true
+        defer { isConnecting = false }
+        do {
+            credential = try store.load()
+            guard let saved = credential else { return }
+            identity = saved.identity
+            openLibrary(accountID: saved.identity.id)
+            guard let expiry = saved.accessTokenExpiresAt, expiry <= .now else { return }
+            guard let id = Bundle.main.object(forInfoDictionaryKey: "GitHubClientID") as? String,
+                  let secret = Bundle.main.object(forInfoDictionaryKey: "GitHubClientSecret") as? String,
+                  !id.isEmpty, !secret.isEmpty, !id.contains("$("), !secret.contains("$(") else { return }
+            if sessionManager == nil {
+                let client = OAuthClient(clientID: id, clientSecret: secret, redirectURI: redirectURI)
+                sessionManager = GitHubSessionManager(load: { try store.load() },
+                    save: { identity, token, date in try store.save(identity: identity, token: token, now: date) },
+                    refresh: { token in try await client.refresh(token) })
+            }
+            guard let sessionManager else { return }
+            do {
+                credential = try await sessionManager.usableSession()
+            } catch {
+                status = "Could not refresh the GitHub session. Saved projects remain available."
+            }
+        } catch let CredentialStoreError.keychain(code) {
+            Logger(subsystem: "ru.egormerkushev.gitview", category: "credentials").error("Keychain read failed with status \(code, privacy: .public)")
+            status = "Could not read the saved session."
+        } catch { status = "Could not read the saved session." }
     }
 
     @MainActor private func openLibrary(accountID: Int64) {
@@ -96,6 +124,7 @@ struct ConnectionPage: View {
                 let code = try attempt.receiveCallback(callback)
                 let token = try await OAuthClient(clientID: id, clientSecret: secret, redirectURI: redirectURI).exchange(code)
                 identity = try await coordinator.confirm(token, attempt: attemptID)
+                sessionManager = nil
                 do {
                     credential = try store.load()
                     if let credential { openLibrary(accountID: credential.identity.id) }

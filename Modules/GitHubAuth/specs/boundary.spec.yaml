@@ -15,8 +15,10 @@ scope:
     - Generate PKCE verifier and state and validate authorization callbacks.
     - Exchange a validated code for a GitHub token over an injected transport.
     - Read the authenticated user and store credentials in Keychain.
+    - Refresh an expired token with a single shared request and persist the rotated credential.
+    - Retry a failed credential write in the same session without another token rotation.
   excludes:
-    - Token refresh, authentication UI, attempt coordination and session lifecycle.
+    - Authentication UI and application-wide session lifecycle.
 provides:
   capabilities:
     - id: gitview.github_auth.oauth_attempt

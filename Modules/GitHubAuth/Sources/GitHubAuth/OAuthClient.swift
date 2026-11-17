@@ -33,6 +33,24 @@ public struct OAuthClient: Sendable {
     }
 
     public func exchange(_ authorization: OAuthAuthorizationCode) async throws -> OAuthToken {
+        try await requestToken([
+            URLQueryItem(name: "code", value: authorization.code),
+            URLQueryItem(name: "redirect_uri", value: redirectURI.absoluteString),
+            URLQueryItem(name: "code_verifier", value: authorization.codeVerifier)
+        ])
+    }
+
+    public func refresh(_ refreshToken: String) async throws -> OAuthToken {
+        guard !refreshToken.isEmpty else { throw OAuthExchangeError.invalidResponse }
+        let token = try await requestToken([
+            URLQueryItem(name: "grant_type", value: "refresh_token"),
+            URLQueryItem(name: "refresh_token", value: refreshToken)
+        ])
+        guard let rotated = token.refreshToken, !rotated.isEmpty else { throw OAuthExchangeError.invalidResponse }
+        return token
+    }
+
+    private func requestToken(_ parameters: [URLQueryItem]) async throws -> OAuthToken {
         var request = URLRequest(url: URL(string: "https://github.com/login/oauth/access_token")!)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -40,11 +58,8 @@ public struct OAuthClient: Sendable {
         var body = URLComponents()
         body.queryItems = [
             URLQueryItem(name: "client_id", value: clientID),
-            URLQueryItem(name: "client_secret", value: clientSecret),
-            URLQueryItem(name: "code", value: authorization.code),
-            URLQueryItem(name: "redirect_uri", value: redirectURI.absoluteString),
-            URLQueryItem(name: "code_verifier", value: authorization.codeVerifier)
-        ]
+            URLQueryItem(name: "client_secret", value: clientSecret)
+        ] + parameters
         // URLComponents does not escape '+' in query values; form decoding treats it as a space.
         request.httpBody = body.percentEncodedQuery?.replacingOccurrences(of: "+", with: "%2B").data(using: .utf8)
         let (data, response) = try await transport(request)
