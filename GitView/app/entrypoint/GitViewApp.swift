@@ -36,6 +36,7 @@ private struct ProjectTestFixture: View {
     @State private var library: ProjectLibrary?
     @State private var previewSourceTransitions = 0
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         NavigationStack {
@@ -47,6 +48,8 @@ private struct ProjectTestFixture: View {
                 }
             } else { ProgressView() }
         }
+        .preferredColorScheme(ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-dark-projects") ? .dark : nil)
+        .environment(\.dynamicTypeSize, ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-large-type") ? .accessibility3 : dynamicTypeSize)
         .task {
             do {
                 let persistentFixture = ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-history-relaunch")
@@ -171,7 +174,8 @@ private struct ProjectTestFixture: View {
     }
 
     private func denseItems(stamp: TimeInterval) throws -> [GitHubWorkItem] {
-        let values: [[String: Any]] = (1...100).map { index in
+        let count = ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-large-summary") ? 1_000 : 100
+        let values: [[String: Any]] = (1...count).map { index in
             let issue = index.isMultiple(of: 3)
             let state = issue ? (index.isMultiple(of: 2) ? "CLOSED" : "OPEN") :
                 (index % 4 == 2 ? "MERGED" : (index % 4 == 0 ? "CLOSED" : "OPEN"))

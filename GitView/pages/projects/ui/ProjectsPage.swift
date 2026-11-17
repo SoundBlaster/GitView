@@ -23,7 +23,7 @@ struct ProjectsPage: View {
     @State private var cacheError = false
     @State private var isRefreshing = false
     @State private var refreshError: String?
-    private var effectiveColumns: Int { dynamicTypeSize.isAccessibilitySize ? min(columns, 2) : columns }
+    private var effectiveColumns: Int { dynamicTypeSize.isAccessibilitySize ? 1 : columns }
     private var gridColumns: [GridItem] { Array(repeating: GridItem(.flexible(), spacing: 6), count: effectiveColumns) }
 
     var body: some View {
@@ -232,15 +232,23 @@ private struct ProjectCell: View {
     let project: StoredProject
     let overview: ProjectOverview?
     let expanded: Bool
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Image(systemName: "folder")
-            Text(project.name).font(.caption.weight(.semibold)).lineLimit(expanded ? 3 : 1)
+            Text(project.name).font(.caption.weight(.semibold))
+                .lineLimit(dynamicTypeSize.isAccessibilitySize ? nil : (expanded ? 3 : 1))
             if let overview {
-                HStack(spacing: 6) {
-                    Label("\(overview.summary.openPullRequests)", systemImage: "arrow.trianglehead.pull")
-                    Label("\(overview.summary.openIssues)", systemImage: "circle.dotted")
+                HStack(spacing: 4) {
+                    HStack(spacing: 2) {
+                        Image(systemName: "arrow.trianglehead.pull")
+                        Text("\(overview.summary.openPullRequests)").lineLimit(1).minimumScaleFactor(0.6)
+                    }
+                    HStack(spacing: 2) {
+                        Image(systemName: "circle.dotted")
+                        Text("\(overview.summary.openIssues)").lineLimit(1).minimumScaleFactor(0.6)
+                    }
                 }
                 .font(.caption2.monospacedDigit())
                 .foregroundStyle(.primary)
@@ -271,8 +279,10 @@ private struct ProjectCell: View {
                 if let overview {
                     Text("Observed: \(overview.summary.openPullRequests) open PR · \(overview.summary.openIssues) open issues")
                         .font(.caption2).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                     Text(overview.summary.coverageComplete ? "Snapshot \(overview.date.formatted(date: .abbreviated, time: .shortened))" : "Partial · \(overview.date.formatted(date: .abbreviated, time: .shortened))")
                         .font(.caption2).foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                     if overview.hasPausedRepositories { Text("Sync paused").font(.caption2).foregroundStyle(.secondary) }
                 } else {
                     Text("No cached work").font(.caption2).foregroundStyle(.secondary)
@@ -283,7 +293,7 @@ private struct ProjectCell: View {
         .frame(maxWidth: 320, maxHeight: .infinity, alignment: .topLeading)
         .padding(8)
         .frame(maxWidth: .infinity)
-        .aspectRatio(1, contentMode: .fit)
+        .aspectRatio(dynamicTypeSize.isAccessibilitySize ? nil : 1, contentMode: .fit)
         .background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilitySummary)

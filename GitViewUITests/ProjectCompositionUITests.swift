@@ -1,6 +1,28 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testLargeProjectSummaryInDarkAndAccessibilitySizes() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-dense", "--gitgrid-ui-test-large-summary", "--gitgrid-ui-test-dark-projects"]
+        func capture(_ name: String) {
+            let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+            XCTAssertTrue(project.waitForExistence(timeout: 15))
+            let loaded = NSPredicate(format: "label CONTAINS %@", "333 open pull requests")
+            expectation(for: loaded, evaluatedWith: project)
+            waitForExpectations(timeout: 15)
+            XCTAssertTrue(project.label.contains("167 open issues"))
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.name = name
+            screenshot.lifetime = .keepAlways
+            add(screenshot)
+        }
+        app.launch()
+        capture("Large project summary dark mode")
+        app.terminate()
+        app.launchArguments.append("--gitgrid-ui-test-large-type")
+        app.launch()
+        capture("Large project summary dark mode accessibility type")
+    }
     func testProjectGridShowsCurrentWorkSummary() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")
