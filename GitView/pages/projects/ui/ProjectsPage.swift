@@ -135,7 +135,7 @@ struct ProjectsPage: View {
         let threadPartial: Bool
         if case .unresolvedThreads = signal { threadPartial = overview.summary.unresolvedThreads.unavailable > 0 }
         else { threadPartial = false }
-        let partial = !overview.summary.coverageComplete || metric.unavailable > 0 || threadPartial
+        let partial = !overview.summary.coverageComplete || overview.hasPausedRepositories || metric.unavailable > 0 || threadPartial
         let attention = ProjectAttentionOrigin(signal: signal, metric: metric, snapshotAt: overview.date,
             repositoryIDs: Set(project.repositories.map(\.id)), partial: partial)
         selectedRoute = ProjectRoute(project: project, attention: attention)
@@ -157,7 +157,8 @@ struct ProjectsPage: View {
                         let summary = ProjectWorkSummary(records: archive.items.map(\.metricRecord),
                             coverageComplete: snapshot.complete && !archive.hasRefreshProblems && coversProject,
                             now: .now, calendar: .current)
-                        results[project.id] = ProjectOverview(summary: summary, date: snapshot.observedAt)
+                        results[project.id] = ProjectOverview(summary: summary, date: snapshot.observedAt,
+                            hasPausedRepositories: project.repositories.contains(where: \.syncPaused))
                     }
                 } catch { failures = true }
             }
@@ -216,6 +217,7 @@ private enum OverviewRefreshError: Error { case invalidResponse, couldNotSave }
 private struct ProjectOverview {
     let summary: ProjectWorkSummary
     let date: Date
+    let hasPausedRepositories: Bool
 }
 
 private struct ProjectRoute: Identifiable, Hashable {
@@ -243,10 +245,12 @@ private struct ProjectCell: View {
                     if overview.summary.affectedByThreads.count > 0 {
                         Label("\(overview.summary.affectedByThreads.count)", systemImage: "text.bubble.fill").foregroundStyle(.orange)
                     }
-                    if !overview.summary.coverageComplete || overview.summary.failedCI.unavailable > 0 || overview.summary.unresolvedThreads.unavailable > 0 {
+                    if !overview.summary.coverageComplete || overview.hasPausedRepositories || overview.summary.failedCI.unavailable > 0 || overview.summary.unresolvedThreads.unavailable > 0 {
                         Text("?").foregroundStyle(.secondary)
                     }
                 }.font(.caption2)
+            } else if project.repositories.contains(where: \.syncPaused) {
+                Image(systemName: "pause.circle").foregroundStyle(.secondary)
             }
             if expanded {
                 Text("\(project.repositories.count) repositories").font(.caption2).foregroundStyle(.secondary)
@@ -255,8 +259,10 @@ private struct ProjectCell: View {
                         .font(.caption2).foregroundStyle(.secondary)
                     Text(overview.summary.coverageComplete ? "Snapshot \(overview.date.formatted(date: .abbreviated, time: .shortened))" : "Partial · \(overview.date.formatted(date: .abbreviated, time: .shortened))")
                         .font(.caption2).foregroundStyle(.secondary)
+                    if overview.hasPausedRepositories { Text("Sync paused").font(.caption2).foregroundStyle(.secondary) }
                 } else {
                     Text("No cached work").font(.caption2).foregroundStyle(.secondary)
+                    if project.repositories.contains(where: \.syncPaused) { Text("Sync paused").font(.caption2).foregroundStyle(.secondary) }
                 }
             }
         }
@@ -270,9 +276,11 @@ private struct ProjectCell: View {
     }
 
     private var accessibilitySummary: String {
-        guard let overview else { return "\(project.name), no cached work" }
+        guard let overview else {
+            return "\(project.name), no cached work" + (project.repositories.contains(where: \.syncPaused) ? ", synchronization paused" : "")
+        }
         let summary = overview.summary
-        let uncertain = !summary.coverageComplete || summary.failedCI.unavailable > 0 || summary.unresolvedThreads.unavailable > 0
-        return "\(project.name), \(summary.openPullRequests) open pull requests, \(summary.openIssues) open issues, \(summary.failedCI.count) pull requests with failed CI, \(summary.affectedByThreads.count) pull requests with unresolved threads" + (uncertain ? ", some data unavailable or partial" : "") + ", snapshot saved \(overview.date.formatted(date: .abbreviated, time: .shortened))"
+        let uncertain = !summary.coverageComplete || overview.hasPausedRepositories || summary.failedCI.unavailable > 0 || summary.unresolvedThreads.unavailable > 0
+        return "\(project.name), \(summary.openPullRequests) open pull requests, \(summary.openIssues) open issues, \(summary.failedCI.count) pull requests with failed CI, \(summary.affectedByThreads.count) pull requests with unresolved threads" + (uncertain ? ", some data unavailable or partial" : "") + (overview.hasPausedRepositories ? ", synchronization paused" : "") + ", snapshot saved \(overview.date.formatted(date: .abbreviated, time: .shortened))"
     }
 }

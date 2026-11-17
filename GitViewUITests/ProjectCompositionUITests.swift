@@ -1,6 +1,38 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testMetricsIdentifyFailedRepositoryAndObservationTime() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-preview-failure"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let metrics = app.buttons["project.metrics"]
+        XCTAssertTrue(metrics.waitForExistence(timeout: 10))
+        metrics.tap()
+        let problem = app.staticTexts["metrics.repository.101.sourceProblem"]
+        XCTAssertTrue(problem.waitForExistence(timeout: 5))
+        XCTAssertTrue(problem.label.contains("GitHub HTTP 403"))
+        XCTAssertTrue(app.staticTexts["metrics.repository.101.sourceObservedAt"].label.hasPrefix("Last complete observation"))
+        XCTAssertTrue(app.staticTexts["fixture/one"].exists)
+        XCTAssertTrue(app.staticTexts["fixture/two"].exists)
+    }
+
+    func testPausedRepositoryIsVisibleInProjectSummaryAndMetrics() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-paused-repository"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        XCTAssertTrue(project.label.contains("synchronization paused"))
+        project.tap()
+        let metrics = app.buttons["project.metrics"]
+        XCTAssertTrue(metrics.waitForExistence(timeout: 10))
+        metrics.tap()
+        XCTAssertTrue(app.staticTexts["Some repositories are not synchronizing; counts use saved observations."].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Synchronization paused"].exists)
+    }
     func testPreviouslyAddedRepositoryRemainsVisibleWhenNotInCompleteDiscovery() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-mock-discovery"]

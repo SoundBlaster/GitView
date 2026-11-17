@@ -433,10 +433,20 @@ private struct ProjectMetricsSheet: View {
                         Label("Incomplete repository coverage; counts are observed values.", systemImage: "exclamationmark.triangle")
                             .foregroundStyle(.secondary)
                     }
-                    ForEach(archive.repositories.filter { $0.observedAt != nil }, id: \.id) { repository in
-                        if let date = repository.observedAt {
-                            Text("\(repository.name): observed \(date.formatted(date: .abbreviated, time: .shortened))")
-                                .font(.footnote).foregroundStyle(.secondary)
+                    if project.repositories.contains(where: \.syncPaused) {
+                        Label("Some repositories are not synchronizing; counts use saved observations.", systemImage: "pause.circle")
+                            .foregroundStyle(.secondary)
+                    }
+                    ForEach(project.repositories, id: \.id) { repository in
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(repository.fullName).font(.footnote.weight(.semibold))
+                            if repository.syncPaused { Text("Synchronization paused").font(.footnote).foregroundStyle(.secondary) }
+                            if let source = archive.repositories.first(where: { $0.id == repository.id }) {
+                                WorkSourceStatus(source: source, identifierPrefix: "metrics.repository.\(repository.id)")
+                                if source.observedAt == nil { Text("No saved observation").font(.footnote).foregroundStyle(.secondary) }
+                            } else {
+                                Text("No saved observation").font(.footnote).foregroundStyle(.secondary)
+                            }
                         }
                     }
                 }
