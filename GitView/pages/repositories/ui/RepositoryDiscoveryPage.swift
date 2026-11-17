@@ -41,7 +41,9 @@ struct RepositoryDiscoveryPage: View {
                 Text(errorMessage).foregroundStyle(.secondary)
             }
             Section {
-                Link("Manage GitHub App access", destination: URL(string: "https://github.com/apps/gitgrid-ios/installations/new")!)
+                Link("Install GitGrid on GitHub", destination: URL(string: "https://github.com/apps/gitgrid-ios/installations/new")!)
+                    .accessibilityIdentifier("discovery.installApp")
+                Link("Manage installed GitHub Apps", destination: URL(string: "https://github.com/settings/installations")!)
                     .accessibilityIdentifier("discovery.manageAccess")
             } footer: {
                 Text("Install GitGrid or change which repositories it can access on GitHub, then refresh this list.")

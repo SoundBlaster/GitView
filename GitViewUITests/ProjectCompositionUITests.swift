@@ -11,6 +11,7 @@ import XCTest
         XCTAssertTrue(app.buttons["project.settings"].waitForExistence(timeout: 10))
         app.buttons["project.settings"].tap()
         app.buttons["Add Repository"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["discovery.installApp"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.descendants(matching: .any)["discovery.manageAccess"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts["Could not refresh repositories for connected account."].waitForExistence(timeout: 10))
     }
