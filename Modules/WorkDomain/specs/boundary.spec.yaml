@@ -1,0 +1,39 @@
+apiVersion: specpm.dev/v0.1
+kind: BoundarySpec
+metadata:
+  id: gitview.work-domain
+  title: Work domain boundary
+  version: 0.1.0
+  status: draft
+  authors:
+    - name: GitView
+intent:
+  summary: Evaluate Today time eligibility against supplied work progress and local calendar.
+scope:
+  boundedContext: GitView
+  includes:
+    - Time-based Today eligibility for known progress and explicit unknown result.
+    - Filter work by object kind and lifecycle state.
+  excludes:
+    - GitHub integration, persistence, identity, UI and additional inclusion conditions.
+provides:
+  capabilities:
+    - id: gitview.today.time_eligibility
+      role: primary
+      summary: Evaluate Today time eligibility against supplied work progress and local calendar.
+    - id: gitview.today.visibility_filter
+      role: secondary
+      summary: Narrow work by lifecycle and kind while preserving unknown states.
+requires:
+  capabilities: []
+interfaces:
+  inbound: []
+  outbound: []
+constraints: []
+effects: {}
+evidence: []
+provenance:
+  confidence: medium
+  notes:
+    - GITVIEW-SPEC-0007 is the product specification for the Today time rule.
+implementationBindings: []

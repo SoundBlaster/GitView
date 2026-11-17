@@ -1,0 +1,41 @@
+apiVersion: specpm.dev/v0.1
+kind: BoundarySpec
+metadata:
+  id: gitview.github-api
+  title: GitHub API discovery boundary
+  version: 0.1.0
+  status: draft
+  authors:
+    - name: GitView
+intent:
+  summary: Fetch one installation or repository page with explicit pagination.
+scope:
+  boundedContext: GitHub discovery
+  includes:
+    - Decode a page from the authenticated GitHub App installations endpoints.
+    - Fetch bounded pages of issues and pull requests for an identity-checked repository.
+    - Validate next-page links and report HTTP failures.
+    - Aggregate pages while preserving partial independent results.
+  excludes:
+    - Persist selection, project creation and user interface.
+provides:
+  capabilities:
+    - id: gitview.github_api.discovery_page
+      role: primary
+      summary: Load an explicitly scoped discovery page.
+    - id: gitview.github_api.work_page
+      role: secondary
+      summary: Fetch source work objects with bounded coverage indicated.
+requires:
+  capabilities: []
+interfaces:
+  inbound: []
+  outbound: []
+constraints: []
+effects: {}
+evidence: []
+provenance:
+  confidence: medium
+  notes:
+    - GITVIEW-SPEC-0059 describes product discovery; this module supplies only source pages.
+implementationBindings: []

@@ -1,0 +1,26 @@
+apiVersion: specpm.dev/v0.1
+kind: SpecPackage
+metadata:
+  id: gitview.ios-app
+  name: GitView iOS app
+  version: 0.1.0
+  summary: Display an explicitly labeled Today grid with demo work.
+  license: Apache-2.0
+  authors:
+    - name: GitView
+specs:
+  - path: specs/gitview-app.spec.yaml
+index:
+  provides:
+    capabilities:
+      - gitview.ios.demo_grid
+  requires:
+    capabilities: []
+compatibility:
+  platforms:
+    - ios
+  languages:
+    - swift
+keywords:
+  - gitview
+foreignArtifacts: []

@@ -1,0 +1,265 @@
+import GitHubAPI
+import ProjectStore
+import SwiftUI
+import WorkDomain
+import WorkCache
+
+struct ProjectWorkPage: View {
+    let project: StoredProject
+    let accessToken: String
+    @State private var items: [GitHubWorkItem] = []
+    @State private var hasLoaded = false
+    @State private var isLoading = false
+    @State private var warning: String?
+    @State private var observedAt: Date?
+    @State private var cache: WorkCache?
+    @State private var columns = 8
+    @State private var gridWidth: CGFloat = 0
+    @State private var selectedItem: GitHubWorkItem?
+    @State private var zoomHint = false
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @AppStorage private var showOpen: Bool
+    @AppStorage private var showMerged: Bool
+    @AppStorage private var showClosed: Bool
+    @AppStorage private var showIssues: Bool
+    @AppStorage private var showPullRequests: Bool
+
+    init(project: StoredProject, accessToken: String) {
+        self.project = project
+        self.accessToken = accessToken
+        let prefix = "project.\(project.id.uuidString).filters."
+        _showOpen = AppStorage(wrappedValue: true, prefix + "open")
+        _showMerged = AppStorage(wrappedValue: true, prefix + "merged")
+        _showClosed = AppStorage(wrappedValue: true, prefix + "closed")
+        _showIssues = AppStorage(wrappedValue: true, prefix + "issues")
+        _showPullRequests = AppStorage(wrappedValue: true, prefix + "pullRequests")
+    }
+
+    private var visibleItems: [GitHubWorkItem] {
+        let rule = WorkVisibilitySpecification(filters: WorkFilters(showOpen: showOpen, showMerged: showMerged, showClosed: showClosed, showIssues: showIssues, showPullRequests: showPullRequests))
+        return items.filter { item in
+            let kind: WorkKind = item.kind == .issue ? .issue : .pullRequest
+            let state: WorkState = switch item.state {
+            case "OPEN": .open
+            case "MERGED": .merged
+            case "CLOSED": .closed
+            default: .unknown
+            }
+            return rule.isSatisfiedBy(WorkVisibilityContext(kind: kind, state: state))
+        }
+    }
+    private var effectiveColumns: Int { dynamicTypeSize.isAccessibilitySize ? min(columns, 2) : columns }
+    private var gridColumns: [GridItem] { Array(repeating: GridItem(.flexible(), spacing: 4), count: effectiveColumns) }
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                if let observedAt {
+                    Text("Last updated \(observedAt.formatted(date: .abbreviated, time: .shortened))")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
+                if let warning {
+                    Label(warning, systemImage: "exclamationmark.triangle")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
+                if isLoading && !hasLoaded { ProgressView("Loading work") }
+                if hasLoaded && items.isEmpty && warning == nil {
+                    ContentUnavailableView("No work in Today", systemImage: "checkmark.circle")
+                }
+                if hasLoaded && !items.isEmpty && visibleItems.isEmpty {
+                    ContentUnavailableView("No work matches filters", systemImage: "line.3.horizontal.decrease.circle")
+                }
+                if zoomHint {
+                    Text("Choose an item to open it.").font(.footnote).foregroundStyle(.secondary)
+                }
+                LazyVGrid(columns: gridColumns, spacing: 4) {
+                    ForEach(visibleItems) { item in
+                        WorkGridCell(item: item, showDetails: effectiveColumns <= 2) { selectedItem = item }
+                    }
+                }
+                .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { gridWidth = $0 }
+                .simultaneousGesture(MagnifyGesture().onEnded { value in
+                    if value.magnification > 1.15 { changeZoom(.larger) }
+                    else if value.magnification < 0.85 { changeZoom(.smaller) }
+                })
+            }
+            .padding()
+        }
+        .navigationTitle(project.name)
+        .toolbar {
+            Menu("Zoom", systemImage: "plus.magnifyingglass") {
+                Button("Larger", systemImage: "plus.magnifyingglass") { changeZoom(.larger) }
+                Button("Smaller", systemImage: "minus.magnifyingglass") { changeZoom(.smaller) }
+            }
+            Menu("Filters", systemImage: "line.3.horizontal.decrease.circle") {
+                Toggle("Open", isOn: $showOpen)
+                Toggle("Merged", isOn: $showMerged)
+                Toggle("Closed", isOn: $showClosed)
+                Divider()
+                Toggle("Issues", isOn: $showIssues)
+                Toggle("Pull requests", isOn: $showPullRequests)
+            }
+        }
+        .sheet(item: $selectedItem) { item in WorkDetailSheet(item: item) }
+        .task { restore(); await load() }
+        .refreshable { await load() }
+    }
+
+    @MainActor private func changeZoom(_ direction: GridZoomDirection) {
+        let next = GridDensity.next(current: effectiveColumns, direction: direction, width: Double(gridWidth), maxCellWidth: 320)
+        withAnimation(.easeInOut(duration: 0.2)) { columns = next }
+        guard direction == .larger, GridDensity.isAtMaximum(columns: next, width: Double(gridWidth), maxCellWidth: 320) else {
+            zoomHint = false
+            return
+        }
+        if visibleItems.count == 1 { selectedItem = visibleItems.first; zoomHint = false }
+        else if !visibleItems.isEmpty { zoomHint = true }
+    }
+
+    @MainActor private func load() async {
+        guard !isLoading else { return }
+        isLoading = true
+        defer { isLoading = false }
+        var collected: [GitHubWorkItem] = []
+        var incomplete = false
+        var failure: String?
+        for repository in project.repositories {
+            do {
+                let page = try await GitHubWorkClient().load(token: accessToken, repositoryID: repository.id, fullName: repository.fullName)
+                collected.append(contentsOf: page.items)
+                incomplete = incomplete || page.isIncomplete
+            } catch is CancellationError { return }
+            catch let WorkFetchError.httpStatus(code) {
+                incomplete = true
+                failure = "GitHub returned HTTP \(code)."
+            } catch {
+                incomplete = true
+                failure = "Could not update work from GitHub."
+            }
+        }
+        if incomplete && hasLoaded {
+            warning = (failure ?? "Refresh incomplete.") + " Showing previous results."
+            return
+        }
+        let now = Date()
+        guard let cache else {
+            warning = "Updated data could not be saved locally."
+            present(collected, now: now)
+            hasLoaded = true
+            return
+        }
+        do {
+            let data = try JSONEncoder().encode(collected)
+            try cache.save(accountID: project.accountID, projectID: project.id, payload: data, observedAt: now, complete: !incomplete)
+        } catch {
+            warning = "Updated data could not be saved locally."
+            present(collected, now: now)
+            hasLoaded = true
+            return
+        }
+        present(collected, now: now)
+        observedAt = now
+        hasLoaded = true
+        warning = incomplete ? (failure ?? "Some work could not be loaded or more pages are available.") : nil
+    }
+
+    @MainActor private func restore() {
+        do {
+            let base = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let directory = base.appendingPathComponent("GitGrid", isDirectory: true)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            let store = try WorkCache(url: directory.appendingPathComponent("WorkCache.sqlite"))
+            cache = store
+            if let snapshot = try store.load(accountID: project.accountID, projectID: project.id) {
+                let saved = try JSONDecoder().decode([GitHubWorkItem].self, from: snapshot.payload)
+                present(saved, now: .now)
+                observedAt = snapshot.observedAt
+                hasLoaded = true
+                if !snapshot.complete { warning = "Saved work is incomplete." }
+            }
+        } catch {
+            warning = "Saved work could not be read."
+        }
+    }
+
+    @MainActor private func present(_ collected: [GitHubWorkItem], now: Date) {
+        let calendar = Calendar.current
+        let policy = TodayEligibility(now: now, calendar: calendar)
+        var seen = Set<String>()
+        items = collected.filter { item in
+            guard seen.insert(item.id).inserted else { return false }
+            if item.state == "OPEN" { return policy.evaluate(.unfinished) == .eligible }
+            if item.state == "MERGED", let merged = item.mergedAt { return policy.evaluate(.completed(at: merged)) == .eligible }
+            if item.state == "CLOSED", let closed = item.closedAt { return calendar.isDate(closed, inSameDayAs: now) && closed <= now }
+            return true
+        }.sorted { $0.updatedAt > $1.updatedAt }
+    }
+}
+
+private struct WorkGridCell: View {
+    let item: GitHubWorkItem
+    let showDetails: Bool
+    let open: () -> Void
+    @Environment(\.openURL) private var openURL
+
+    private var tint: Color {
+        switch item.state {
+        case "OPEN": .green
+        case "MERGED": .purple
+        case "CLOSED": .gray
+        default: .secondary
+        }
+    }
+
+    var body: some View {
+        Button(action: open) {
+            RoundedRectangle(cornerRadius: 6)
+                .fill(tint.opacity(0.25))
+                .aspectRatio(1, contentMode: .fit)
+                .frame(maxWidth: 320)
+                .overlay {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Image(systemName: item.kind == .pullRequest ? "arrow.triangle.pull" : "circle.dotted")
+                        if showDetails {
+                            Text("#\(item.number) · \(item.state)").font(.caption)
+                            Text(item.title).font(.caption).lineLimit(3)
+                        }
+                    }.padding(6).foregroundStyle(tint)
+                }
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("\(item.kind == .pullRequest ? "Pull request" : "Issue") \(item.number), \(item.title), \(item.state)")
+        .contextMenu {
+            Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
+            ShareLink(item: item.url)
+        } preview: {
+            VStack(alignment: .leading, spacing: 10) {
+                Text(item.title).font(.headline)
+                Text("#\(item.number) · \(item.state)").foregroundStyle(.secondary)
+            }.padding()
+        }
+    }
+
+}
+
+private struct WorkDetailSheet: View {
+    let item: GitHubWorkItem
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.openURL) private var openURL
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    Text(item.title).font(.headline)
+                    LabeledContent("Number", value: "#\(item.number)")
+                    LabeledContent("State", value: item.state)
+                }
+                Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
+                ShareLink(item: item.url)
+            }
+            .navigationTitle(item.kind == .pullRequest ? "Pull Request" : "Issue")
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+        }
+    }
+}

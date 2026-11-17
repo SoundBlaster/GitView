@@ -1,0 +1,35 @@
+apiVersion: specpm.dev/v0.1
+kind: BoundarySpec
+metadata:
+  id: gitview.ios-app
+  title: GitView iOS app boundary
+  version: 0.1.0
+  status: draft
+  authors:
+    - name: GitView
+intent:
+  summary: Display an explicitly labeled Today grid with demo work.
+scope:
+  boundedContext: GitView
+  includes:
+    - SwiftUI app composition and demo grid.
+  excludes:
+    - Authentication, network and persisted application data.
+provides:
+  capabilities:
+    - id: gitview.ios.demo_grid
+      role: primary
+      summary: Display an explicitly labeled Today grid with demo work.
+requires:
+  capabilities: []
+interfaces:
+  inbound: []
+  outbound: []
+constraints: []
+effects: {}
+evidence: []
+provenance:
+  confidence: medium
+  notes:
+    - GITVIEW-SPEC-0007 is the product specification for the Today time rule.
+implementationBindings: []
