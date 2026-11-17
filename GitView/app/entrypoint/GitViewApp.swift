@@ -149,7 +149,8 @@ private struct ProjectTestFixture: View {
         let arguments = ProcessInfo.processInfo.arguments
         let transport = DiscoveryFixtureTransport(failFirst: arguments.contains("--gitgrid-ui-test-discovery-retry"),
                                                   emptyFirst: arguments.contains("--gitgrid-ui-test-discovery-empty"),
-                                                  partialRefresh: arguments.contains("--gitgrid-ui-test-discovery-partial"))
+                                                  partialRefresh: arguments.contains("--gitgrid-ui-test-discovery-partial"),
+                                                  historyMembership: arguments.contains("--gitgrid-ui-test-history-membership"))
         return GitHubDiscovery(client: GitHubDiscoveryClient { request in await transport.send(request) })
     }()
 
@@ -181,9 +182,11 @@ private actor DiscoveryFixtureTransport {
     private var failFirst: Bool
     private var emptyFirst: Bool
     private let partialRefresh: Bool
+    private let historyMembership: Bool
     private var cycle = 0
-    init(failFirst: Bool, emptyFirst: Bool, partialRefresh: Bool) {
+    init(failFirst: Bool, emptyFirst: Bool, partialRefresh: Bool, historyMembership: Bool) {
         self.failFirst = failFirst; self.emptyFirst = emptyFirst; self.partialRefresh = partialRefresh
+        self.historyMembership = historyMembership
     }
     func send(_ request: URLRequest) -> (Data, HTTPURLResponse) {
         if failFirst {
@@ -209,6 +212,10 @@ private actor DiscoveryFixtureTransport {
             let body = #"{"total_count":2,"repositories":[{"id":101,"full_name":"fixture/one","private":false},\#(second)]}"#
             let header = cycle == 2 ? ["Link": "<https://api.github.com/user/installations/1/repositories?page=2>; rel=\"next\""] : [:]
             return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: header)!)
+        }
+        if historyMembership && request.url?.path != "/user/installations" {
+            let body = #"{"total_count":2,"repositories":[{"id":101,"full_name":"fixture/one","private":false,"node_id":"fixture-node"},{"id":103,"full_name":"fixture/three","private":false,"node_id":"fixture-three"}]}"#
+            return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
         }
         let body = request.url?.path == "/user/installations"
             ? #"{"total_count":1,"installations":[{"id":1}]}"#

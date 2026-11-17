@@ -97,7 +97,7 @@ struct ProjectsPage: View {
         }
         .navigationDestination(item: $selectedRoute) { route in
             ProjectWorkPage(project: library.projects.first(where: { $0.id == route.project.id }) ?? route.project,
-                sessionManager: sessionManager, library: library, initialAttention: route.attention, workClient: workClient)
+                sessionManager: sessionManager, library: library, initialAttention: route.attention, workClient: workClient, discovery: discovery)
         }
         .task { loadOverviews(); await refreshOverviews(force: false) }
         .refreshable { await refreshOverviews(force: true) }

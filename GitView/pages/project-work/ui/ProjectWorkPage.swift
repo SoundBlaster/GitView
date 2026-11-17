@@ -12,6 +12,7 @@ struct ProjectWorkPage: View {
     let sessionManager: GitHubSessionManager
     let library: ProjectLibrary
     let workClient: GitHubWorkClient
+    let discovery: GitHubDiscovery
     @State private var items: [GitHubWorkItem] = []
     @State private var hasLoaded = false
     @State private var isLoading = false
@@ -43,11 +44,12 @@ struct ProjectWorkPage: View {
     @AppStorage private var showPullRequests: Bool
 
     init(project: StoredProject, sessionManager: GitHubSessionManager, library: ProjectLibrary, initialAttention: ProjectAttentionOrigin? = nil,
-         workClient: GitHubWorkClient = GitHubWorkClient()) {
+         workClient: GitHubWorkClient = GitHubWorkClient(), discovery: GitHubDiscovery = GitHubDiscovery()) {
         self.project = project
         self.sessionManager = sessionManager
         self.library = library
         self.workClient = workClient
+        self.discovery = discovery
         _pendingAttention = State(initialValue: initialAttention)
         _showMetrics = State(initialValue: initialAttention != nil)
         let prefix = "project.\(project.id.uuidString).filters."
@@ -192,7 +194,8 @@ struct ProjectWorkPage: View {
             }
         }
         .sheet(isPresented: $showProjectSettings) {
-            ProjectSettingsSheet(project: project, library: library, sessionManager: sessionManager, cache: cache)
+            ProjectSettingsSheet(project: project, library: library, sessionManager: sessionManager, cache: cache,
+                                 discovery: discovery, workClient: workClient)
         }
         .sheet(isPresented: $showMetrics) {
             if let archive {
@@ -714,6 +717,8 @@ private struct ProjectSettingsSheet: View {
     let library: ProjectLibrary
     let sessionManager: GitHubSessionManager
     let cache: WorkCache?
+    let discovery: GitHubDiscovery
+    let workClient: GitHubWorkClient
     @Environment(\.dismiss) private var dismiss
     @State private var pendingRemoval: RepositoryReference?
     @State private var showRemovalConfirmation = false
@@ -752,7 +757,8 @@ private struct ProjectSettingsSheet: View {
                     }
                     NavigationLink {
                         RepositoryDiscoveryPage(sessionManager: sessionManager, accountID: library.accountID,
-                            account: "connected account", library: library, preferredProjectID: project.id)
+                            account: "connected account", library: library, preferredProjectID: project.id,
+                            discovery: discovery, workClient: workClient)
                     } label: {
                         Label("Add Repository", systemImage: "plus")
                     }

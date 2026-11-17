@@ -63,7 +63,7 @@ struct RepositoryDiscoveryPage: View {
                             if let library {
                                 ForEach(library.projects.filter { project in project.repositories.contains { $0.id == repository.id } }) { project in
                                     NavigationLink {
-                                        ProjectWorkPage(project: project, sessionManager: sessionManager, library: library, workClient: workClient)
+                                        ProjectWorkPage(project: project, sessionManager: sessionManager, library: library, workClient: workClient, discovery: discovery)
                                     } label: {
                                         Label("Open \(project.name)", systemImage: "folder")
                                     }

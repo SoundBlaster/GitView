@@ -1,6 +1,60 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testHistoricalMetricFollowsChangedProjectMembership() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-history-membership"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let metrics = app.buttons["project.metrics"]
+        XCTAssertTrue(metrics.waitForExistence(timeout: 10))
+        metrics.tap()
+        let selection = app.buttons["metrics.merged.selection"]
+        for _ in 0..<5 where !selection.exists { app.swipeUp() }
+        XCTAssertTrue(selection.waitForExistence(timeout: 5))
+        selection.tap()
+        XCTAssertTrue(app.staticTexts["Merged fixture"].waitForExistence(timeout: 5))
+        app.navigationBars.buttons.firstMatch.tap()
+        app.buttons["Done"].tap()
+
+        app.buttons["project.settings"].tap()
+        let removed = app.staticTexts["fixture/one"]
+        XCTAssertTrue(removed.waitForExistence(timeout: 5))
+        removed.swipeLeft()
+        app.buttons["Remove"].tap()
+        app.buttons["Remove from Project"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["repository.101"].firstMatch.waitForNonExistence(timeout: 5))
+        app.buttons["Done"].tap()
+
+        metrics.tap()
+        for _ in 0..<5 where !selection.exists { app.swipeUp() }
+        XCTAssertTrue(selection.waitForExistence(timeout: 5))
+        selection.tap()
+        XCTAssertTrue(app.navigationBars["Merged PRs"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["Merged fixture"].exists)
+        app.navigationBars.buttons.firstMatch.tap()
+        app.buttons["Done"].tap()
+
+        app.buttons["project.settings"].tap()
+        app.buttons["Add Repository"].tap()
+        let added = app.buttons["discovery.repository.103"]
+        XCTAssertTrue(added.waitForExistence(timeout: 10))
+        added.tap()
+        XCTAssertTrue(app.navigationBars["Add Repository"].waitForExistence(timeout: 5))
+        app.buttons["Save"].tap()
+        XCTAssertTrue(app.navigationBars["Repositories"].waitForExistence(timeout: 5))
+        app.navigationBars["Repositories"].buttons.firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["fixture/three"].waitForExistence(timeout: 5))
+        app.buttons["Done"].tap()
+
+        metrics.tap()
+        let unavailable = app.staticTexts["History is unavailable or incomplete; no zero values are assumed."].firstMatch
+        for _ in 0..<5 where !unavailable.exists { app.swipeUp() }
+        XCTAssertTrue(unavailable.waitForExistence(timeout: 5))
+        XCTAssertFalse(selection.exists)
+    }
     func testSavedHistoryRemainsVisibleAfterAppRelaunch() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-preview-failure", "--gitgrid-ui-test-history-relaunch"]
