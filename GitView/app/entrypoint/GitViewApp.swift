@@ -48,6 +48,9 @@ private struct ProjectTestFixture: View {
                 try library.create(name: "Fixture Project", repository: RepositoryReference(id: 101, fullName: "fixture/one", isPrivate: false))
                 guard let id = library.projects.first?.id else { return }
                 try library.add(repository: RepositoryReference(id: 102, fullName: "fixture/two", isPrivate: true), to: id)
+                if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-paused-repository") {
+                    try library.setSyncPaused(true, repositoryID: 101, projectID: id)
+                }
                 if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project-grid") {
                     for index in 1...11 {
                         try library.create(name: "Fixture Project \(index)", repository: RepositoryReference(id: Int64(200 + index), fullName: "fixture/\(index)", isPrivate: false))

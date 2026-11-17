@@ -1,6 +1,21 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testPausedRepositoryCanResumeFromProjectSettings() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-paused-repository"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        XCTAssertTrue(app.buttons["project.settings"].waitForExistence(timeout: 10))
+        app.buttons["project.settings"].tap()
+        XCTAssertTrue(app.staticTexts["Synchronization paused"].waitForExistence(timeout: 5))
+        let resume = app.buttons["Resume sync"]
+        XCTAssertTrue(resume.waitForExistence(timeout: 5))
+        resume.tap()
+        XCTAssertTrue(app.staticTexts["Synchronization paused"].waitForNonExistence(timeout: 5))
+    }
     func testEraseSavedWorkPausesRepositoryAndKeepsProject() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")
@@ -22,6 +37,11 @@ import XCTest
         XCTAssertTrue(app.buttons["work.I1"].waitForNonExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "synchronization paused")).firstMatch.exists)
         XCTAssertFalse(app.staticTexts["No work in Today"].exists)
+        app.buttons["project.settings"].tap()
+        let resume = app.buttons["Resume sync"]
+        XCTAssertTrue(resume.waitForExistence(timeout: 5))
+        resume.tap()
+        XCTAssertTrue(app.staticTexts["Synchronization paused"].waitForNonExistence(timeout: 5))
     }
     func testIssuePreviewKeepsSavedDescriptionAndSourceLimitation() throws {
         let app = XCUIApplication()

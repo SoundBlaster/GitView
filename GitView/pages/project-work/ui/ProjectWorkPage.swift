@@ -647,7 +647,17 @@ private struct ProjectSettingsSheet: View {
                 Section {
                     ForEach(currentProject.repositories, id: \.id) { repository in
                         VStack(alignment: .leading) {
-                            Label(repository.fullName, systemImage: repository.isPrivate ? "lock" : "book.closed")
+                            HStack {
+                                Label(repository.fullName, systemImage: repository.isPrivate ? "lock" : "book.closed")
+                                Spacer()
+                                if repository.syncPaused {
+                                    Button("Resume sync") {
+                                        do { try library.setSyncPaused(false, repositoryID: repository.id, projectID: project.id); savedWorkError = nil }
+                                        catch { savedWorkError = "Could not resume synchronization." }
+                                    }
+                                    .buttonStyle(.borderless)
+                                }
+                            }
                             if repository.syncPaused { Text("Synchronization paused").font(.caption).foregroundStyle(.secondary) }
                         }
                             .accessibilityIdentifier("repository.\(repository.id)")
@@ -656,12 +666,6 @@ private struct ProjectSettingsSheet: View {
                                     .disabled(currentProject.repositories.count <= 1)
                                 Button("Erase saved work", role: .destructive) { pendingErase = repository; showEraseConfirmation = true }
                                     .disabled(cache == nil)
-                                if repository.syncPaused {
-                                    Button("Resume sync") {
-                                        do { try library.setSyncPaused(false, repositoryID: repository.id, projectID: project.id); savedWorkError = nil }
-                                        catch { savedWorkError = "Could not resume synchronization." }
-                                    }.tint(.blue)
-                                }
                             }
                     }
                     NavigationLink {
