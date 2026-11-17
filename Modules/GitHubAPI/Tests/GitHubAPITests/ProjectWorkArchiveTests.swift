@@ -3,6 +3,21 @@ import Testing
 @testable import GitHubAPI
 
 struct ProjectWorkArchiveTests {
+    @Test func boundedRefreshPreservesUnvisitedRepositoriesAndTheirObservationTimes() throws {
+        let start = Date(timeIntervalSince1970: 100)
+        let previous = ProjectWorkArchive().applying([
+            .init(id: 1, name: "a/one", outcome: .received([], complete: true), observedAt: start),
+            .init(id: 2, name: "a/two", outcome: .received([], complete: true), observedAt: start)
+        ], at: start)
+        let next = previous.applyingPartial([
+            .init(id: 1, name: "a/one", outcome: .failed("Offline"))
+        ], in: [1, 2], at: start.addingTimeInterval(10))
+        #expect(Set(next.repositories.map(\.id)) == [1, 2])
+        #expect(next.repositories.first(where: { $0.id == 1 })?.refreshProblem == "Offline")
+        #expect(next.repositories.first(where: { $0.id == 2 })?.observedAt == start)
+        #expect(next.repositories.first(where: { $0.id == 2 })?.refreshProblem == nil)
+        #expect(next.hasCompleteObservation(for: [1, 2]))
+    }
     private func item(_ id: String) throws -> GitHubWorkItem {
         let json = #"{"id":"\#(id)","number":1,"title":"work","url":"https://github.com/a/b/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue"}"#
         return try JSONDecoder().decode(GitHubWorkItem.self, from: Data(json.utf8))

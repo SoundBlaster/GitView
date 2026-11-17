@@ -79,6 +79,18 @@ public struct ProjectWorkArchive: Codable, Sendable {
             completeScopeIDs: allComplete ? selected.sorted() : completeScopeIDs)
     }
 
+    /// Updates only the supplied repositories without discarding unvisited observations.
+    public func applyingPartial(_ results: [RepositoryWorkRefresh], in scope: Set<Int64>, at date: Date) -> ProjectWorkArchive {
+        let scoped = restricting(to: scope)
+        let refreshed = scoped.applying(results.filter { scope.contains($0.id) }, at: date)
+        let detached = refreshed.detachedRepositories ?? []
+        let preserved = detached.filter { scope.contains($0.id) }
+        return ProjectWorkArchive(repositories: (refreshed.repositories + preserved).sorted { $0.id < $1.id },
+            legacyItems: scoped.legacyItems, lastAttemptAt: date,
+            detachedRepositories: detached.filter { !scope.contains($0.id) },
+            retainedLegacyItems: scoped.retainedLegacyItems, completeScopeIDs: scoped.completeScopeIDs)
+    }
+
     public func restricting(to ids: Set<Int64>) -> ProjectWorkArchive {
         let all = Dictionary((repositories + (detachedRepositories ?? [])).map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let selected = all.values.filter { ids.contains($0.id) }.sorted { $0.id < $1.id }

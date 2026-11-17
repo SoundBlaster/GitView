@@ -4,6 +4,42 @@ import Observation
 import ProjectStore
 import WorkCache
 
+struct BackgroundRefreshSession: Equatable {
+    let accountID: Int64
+    let token: String
+    let expiresAt: Date?
+}
+
+@MainActor struct BackgroundRefreshCoordinator {
+    enum Outcome: Equatable { case updated(UUID, lastRepository: Int64), unavailable, superseded }
+    enum Failure: Error { case inconsistentObservations }
+
+    let session: () throws -> BackgroundRefreshSession?
+    let projects: (Int64) throws -> [StoredProject]
+    let fetch: (String, [RepositoryReference]) async throws -> [RepositoryWorkRefresh]
+    let save: (StoredProject, [RepositoryWorkRefresh]) throws -> Void
+
+    func run(after previous: UUID?, repositoryAfter: (UUID) -> Int64? = { _ in nil }, now: Date = .now) async throws -> Outcome {
+        guard let initial = try session(), initial.expiresAt.map({ $0 > now }) ?? true else { return .unavailable }
+        let candidates = try projects(initial.accountID).filter { !$0.repositories.isEmpty }
+            .sorted { $0.id.uuidString < $1.id.uuidString }
+        guard !candidates.isEmpty else { return .unavailable }
+        let selected = candidates.first { candidate in previous.map { candidate.id.uuidString > $0.uuidString } ?? false } ?? candidates[0]
+        let sorted = selected.repositories.sorted { $0.id < $1.id }
+        let remaining = sorted.filter { repository in repositoryAfter(selected.id).map { repository.id > $0 } ?? true }
+        let batch = Array((remaining.isEmpty ? sorted : remaining).prefix(3))
+        let observations = try await fetch(initial.token, batch)
+        try Task.checkCancellation()
+        guard try session() == initial,
+              try projects(initial.accountID).contains(where: { $0.id == selected.id && $0.repositories == selected.repositories }) else { return .superseded }
+        guard Set(observations.map(\.id)) == Set(batch.map(\.id)), observations.count == batch.count else {
+            throw Failure.inconsistentObservations
+        }
+        try save(selected, observations)
+        return .updated(selected.id, lastRepository: batch[batch.count - 1].id)
+    }
+}
+
 @MainActor enum ProjectRefreshPersistence {
     struct Result {
         let archive: ProjectWorkArchive
@@ -12,11 +48,14 @@ import WorkCache
     }
 
     static func commit(cache: WorkCache?, accountID: Int64, projectID: UUID, observations: [RepositoryWorkRefresh],
-                       fallback: ProjectWorkArchive?, at date: Date) throws -> Result {
+                       fallback: ProjectWorkArchive?, at date: Date, scope: Set<Int64>? = nil) throws -> Result {
         let snapshot = try cache?.load(accountID: accountID, projectID: projectID)
         let previous = try snapshot.map { try ProjectWorkArchive.decode($0.payload) } ?? fallback ?? ProjectWorkArchive()
-        let updated = previous.applying(observations, at: date)
-        let complete = !updated.hasRefreshProblems
+        let partial = scope.map { Set(observations.map(\.id)) != $0 } ?? false
+        let updated: ProjectWorkArchive
+        if partial, let scope { updated = previous.applyingPartial(observations, in: scope, at: date) }
+        else { updated = previous.applying(observations, at: date) }
+        let complete = !partial && !updated.hasRefreshProblems
         var saved = false
         if let cache {
             do {
