@@ -16,6 +16,34 @@ import XCTest
         XCTAssertTrue(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch.waitForExistence(timeout: 5))
     }
 
+    func testPreviouslyAddedRepositoryOpensItsProjectAndSavedWork() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-missing-repository-work"]
+        app.launch()
+        let add = app.buttons["projects.addRepository"]
+        XCTAssertTrue(add.waitForExistence(timeout: 10))
+        add.tap()
+        let link = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "discovery.project.102.")).firstMatch
+        XCTAssertTrue(link.waitForExistence(timeout: 10))
+        link.tap()
+        XCTAssertTrue(app.navigationBars["Fixture Project"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["work.I102"].waitForExistence(timeout: 10))
+    }
+
+    func testPreviouslyAddedRepositoryShowsEveryContainingProject() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-missing-repository-multiple"]
+        app.launch()
+        let add = app.buttons["projects.addRepository"]
+        XCTAssertTrue(add.waitForExistence(timeout: 10))
+        add.tap()
+        let links = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "discovery.project.102."))
+        XCTAssertTrue(links.firstMatch.waitForExistence(timeout: 10))
+        XCTAssertEqual(links.count, 2)
+        XCTAssertTrue(links.allElementsBoundByIndex.contains { $0.label.contains("Fixture Project") })
+        XCTAssertTrue(links.allElementsBoundByIndex.contains { $0.label.contains("Another Project") })
+    }
+
     func testIncompleteDiscoveryDoesNotClaimPreviouslyAddedRepositoryIsUnlisted() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-discovery-partial"]

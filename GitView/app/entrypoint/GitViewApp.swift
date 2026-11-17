@@ -54,6 +54,9 @@ private struct ProjectTestFixture: View {
                 try library.create(name: "Fixture Project", repository: RepositoryReference(id: 101, fullName: "fixture/one", isPrivate: false))
                 guard let id = library.projects.first?.id else { return }
                 try library.add(repository: RepositoryReference(id: 102, fullName: "fixture/two", isPrivate: true), to: id)
+                if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-missing-repository-multiple") {
+                    try library.create(name: "Another Project", repository: RepositoryReference(id: 102, fullName: "fixture/two", isPrivate: true))
+                }
                 if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-paused-repository") {
                     try library.setSyncPaused(true, repositoryID: 101, projectID: id)
                 }
@@ -75,9 +78,14 @@ private struct ProjectTestFixture: View {
                 } else {
                     items = try JSONDecoder().decode([GitHubWorkItem].self, from: Data(json.utf8))
                 }
+                let secondItems: [GitHubWorkItem]
+                if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-missing-repository-work") {
+                    let saved = #"[{"id":"I102","number":9,"title":"Saved private work","url":"https://github.com/fixture/two/issues/9","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue"}]"#
+                    secondItems = try JSONDecoder().decode([GitHubWorkItem].self, from: Data(saved.utf8))
+                } else { secondItems = [] }
                 var archive = ProjectWorkArchive().applying([
                     .init(id: 101, name: "fixture/one", outcome: .received(items, complete: true)),
-                    .init(id: 102, name: "fixture/two", outcome: .received([], complete: true))
+                    .init(id: 102, name: "fixture/two", outcome: .received(secondItems, complete: true))
                 ], at: now)
                 if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-preview-failure") {
                     archive = archive.applyingPartial([

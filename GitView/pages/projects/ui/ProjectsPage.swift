@@ -109,7 +109,7 @@ struct ProjectsPage: View {
 
     private var repositoryDiscovery: some View {
         RepositoryDiscoveryPage(sessionManager: sessionManager, accountID: library.accountID,
-                                account: "connected account", library: library, discovery: discovery)
+                                account: "connected account", library: library, discovery: discovery, workClient: workClient)
     }
 
     @MainActor private func changeZoom(_ direction: GridZoomDirection) {

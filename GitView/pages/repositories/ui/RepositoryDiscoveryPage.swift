@@ -10,6 +10,7 @@ struct RepositoryDiscoveryPage: View {
     let library: ProjectLibrary?
     var preferredProjectID: UUID? = nil
     var discovery: GitHubDiscovery = GitHubDiscovery()
+    var workClient: GitHubWorkClient = GitHubWorkClient()
     @State private var result: DiscoveryResult?
     @State private var repositories: [GitHubRepository] = []
     @State private var freshRepositoryIDs = Set<Int64>()
@@ -59,6 +60,16 @@ struct RepositoryDiscoveryPage: View {
                                 Text("Not returned by the last complete GitHub App discovery. Saved Project data remains available.")
                                     .font(.caption).foregroundStyle(.secondary)
                             }.accessibilityIdentifier("discovery.previouslyAdded.\(repository.id)")
+                            if let library {
+                                ForEach(library.projects.filter { project in project.repositories.contains { $0.id == repository.id } }) { project in
+                                    NavigationLink {
+                                        ProjectWorkPage(project: project, sessionManager: sessionManager, library: library, workClient: workClient)
+                                    } label: {
+                                        Label("Open \(project.name)", systemImage: "folder")
+                                    }
+                                    .accessibilityIdentifier("discovery.project.\(repository.id).\(project.id.uuidString)")
+                                }
+                            }
                         }
                     } header: {
                         Text("Previously added")
