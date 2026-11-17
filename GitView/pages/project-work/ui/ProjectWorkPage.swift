@@ -614,7 +614,7 @@ private struct ProjectMetricsSheet: View {
                     VStack(alignment: .leading) {
                         Text(item.title)
                         if let repository = repositoryNames[item.id] {
-                            Text("\(repository) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
+                            Text("\(repository) · #\(String(item.number))").font(.caption).foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -670,8 +670,8 @@ private struct ProjectMetricsSheet: View {
                     VStack(alignment: .leading) {
                         Text(item.title)
                         if let repository = repositoryNames[item.id] {
-                            Text("\(repository) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
-                        } else { Text("#\(item.number)").font(.caption).foregroundStyle(.secondary) }
+                            Text("\(repository) · #\(String(item.number))").font(.caption).foregroundStyle(.secondary)
+                        } else { Text("#\(String(item.number))").font(.caption).foregroundStyle(.secondary) }
                     }
                 }
             }
@@ -704,9 +704,9 @@ private struct ProjectMetricsSheet: View {
                     VStack(alignment: .leading) {
                         Text(item.title)
                         if let repository = repositoryNames[item.id] {
-                            Text("\(repository) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
+                            Text("\(repository) · #\(String(item.number))").font(.caption).foregroundStyle(.secondary)
                         } else {
-                            Text("#\(item.number)").font(.caption).foregroundStyle(.secondary)
+                            Text("#\(String(item.number))").font(.caption).foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -858,27 +858,36 @@ private struct WorkGridCell: View {
                     VStack(alignment: .leading, spacing: 3) {
                         HStack(alignment: .top, spacing: 2) {
                             Image(systemName: item.kind == .pullRequest ? "arrow.trianglehead.pull" : "circle.dotted")
+                                .foregroundStyle(tint)
                             Spacer(minLength: 0)
                             if item.state == "MERGED" { Image(systemName: "arrow.trianglehead.merge") }
                             else if item.state == "CLOSED" { Image(systemName: "xmark.circle") }
                             else if item.state != "OPEN" { Text("?") }
+                            if !showDetails, let reviewSymbol {
+                                Image(systemName: reviewSymbol)
+                                    .foregroundStyle(reviewColor)
+                                    .accessibilityHidden(true)
+                            }
                         }
                         .font(.caption2)
                         Spacer(minLength: 0)
                         if showDetails {
-                            Text("#\(item.number) · \(item.state)").font(.caption)
+                            Text("#\(String(item.number)) · \(item.state)").font(.caption)
                             Text(item.title).font(.caption).lineLimit(3)
                         }
                         HStack(spacing: 2) {
-                            if let reviewSymbol {
+                            if showDetails, let reviewSymbol {
                                 Image(systemName: reviewSymbol)
                                     .foregroundStyle(reviewColor)
                                     .accessibilityHidden(true)
                             }
                             Spacer(minLength: 0)
-                            if !showDetails { Text("\(item.number)").font(.caption2.monospacedDigit()).lineLimit(1) }
+                            if !showDetails {
+                                Text(verbatim: String(item.number)).font(.caption2.monospacedDigit())
+                                    .lineLimit(1).minimumScaleFactor(0.55).allowsTightening(true)
+                            }
                         }.font(.caption2)
-                    }.padding(6).foregroundStyle(tint)
+                    }.padding(6).foregroundStyle(.primary)
                 }
         }
         .buttonStyle(.plain)
@@ -910,7 +919,7 @@ private struct WorkPreviewContent: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(item.title).font(.headline)
-            Text("\(item.kind == .issue ? "Issue" : "Pull request") #\(item.number) · \(item.state)").foregroundStyle(.secondary)
+            Text("\(item.kind == .issue ? "Issue" : "Pull request") #\(String(item.number)) · \(item.state)").foregroundStyle(.secondary)
             Text(repositoryName ?? "Repository unavailable").font(.subheadline).foregroundStyle(.secondary)
             if item.kind == .pullRequest { WorkSignalDetails(item: item) }
             if let details = item.details {
@@ -1231,14 +1240,14 @@ private struct IssueRelationshipDetails: View {
     private func issueDescription(_ issue: GitHubIssueReference) -> some View {
         VStack(alignment: .leading) {
             Text(issue.title)
-            Text("\(issue.repository) · #\(issue.number) · \(issue.state)").font(.caption).foregroundStyle(.secondary)
+            Text("\(issue.repository) · #\(String(issue.number)) · \(issue.state)").font(.caption).foregroundStyle(.secondary)
         }
     }
 
     private func pullDescription(_ pull: GitHubPullRequestReference) -> some View {
         VStack(alignment: .leading) {
             Text(pull.title)
-            Text("\(pull.repository) · #\(pull.number) · \(pull.state)").font(.caption).foregroundStyle(.secondary)
+            Text("\(pull.repository) · #\(String(pull.number)) · \(pull.state)").font(.caption).foregroundStyle(.secondary)
             if pull.crossReferenced ?? true {
                 Text(pull.willCloseTarget ? "Cross-reference · closes this issue on merge" : "Cross-reference")
                     .font(.caption).foregroundStyle(.secondary)

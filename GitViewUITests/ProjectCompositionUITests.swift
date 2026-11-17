@@ -1,6 +1,27 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testLargeWorkNumberOnGridAtBothScales() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-large-number"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let item = app.buttons["work.P2"]
+        XCTAssertTrue(item.waitForExistence(timeout: 10))
+        XCTAssertTrue(item.label.contains("1131"))
+        let compact = XCTAttachment(screenshot: app.screenshot())
+        compact.name = "Four-digit work number in compact grid"
+        compact.lifetime = .keepAlways
+        add(compact)
+        for _ in 0..<3 { app.buttons["Zoom"].tap(); app.buttons["Larger"].tap() }
+        let expanded = XCTAttachment(screenshot: app.screenshot())
+        expanded.name = "Four-digit work number in expanded grid"
+        expanded.lifetime = .keepAlways
+        add(expanded)
+        XCTAssertTrue(item.label.contains("1131"))
+    }
     func testKnownSourceLinkRemainsAvailable() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")

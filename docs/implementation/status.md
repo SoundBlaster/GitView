@@ -76,6 +76,8 @@ A native connection screen invokes the system web authentication session. A sign
 
 The user subsequently supplied Air screenshots showing the ISOInspector Project with PR #1131, zooming the work grid, and opening PR details with CI and review counters. The screenshots demonstrate that specific live path, not complete repository coverage or general session recovery.
 
+In response to that device observation, grid cells use ungrouped identifiers, readable primary text and a separate compact review icon; a simulator UI test and screenshots cover PR #1131 at compact and expanded scales. The revised layout has not yet been visually verified on the physical device.
+
 On 2026-11-17 the current app was built, installed, and launched on a physical iPhone Air via CoreDevice. That launch evidence alone does not establish visual behavior or GitHub authentication.
 
 The implementation delta snapshot for `GITVIEW-SPEC-0033` returned `ready_for_planning` and `tracked_artifacts_written: false`; the link validation slice above is not a complete trace binding or proof of external handoff.

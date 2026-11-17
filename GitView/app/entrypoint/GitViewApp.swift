@@ -86,9 +86,13 @@ private struct ProjectTestFixture: View {
                 if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-dense") {
                     items = try denseItems(stamp: stamp)
                 } else {
-                    let fixture = ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-unsafe-source-link")
+                    var fixture = ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-unsafe-source-link")
                         ? json.replacingOccurrences(of: "https://github.com/fixture/one/issues/1", with: "https://github.com/fixture/one/issues/1?token=synthetic")
                         : json
+                    if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-large-number") {
+                        fixture = fixture.replacingOccurrences(of: #""number":3,"title":"Failed fixture""#, with: #""number":1131,"title":"Failed fixture""#)
+                            .replacingOccurrences(of: "/pull/3", with: "/pull/1131")
+                    }
                     items = try JSONDecoder().decode([GitHubWorkItem].self, from: Data(fixture.utf8))
                 }
                 let secondItems: [GitHubWorkItem]
