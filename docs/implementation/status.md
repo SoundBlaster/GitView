@@ -42,3 +42,5 @@ Order within later slices may change with the dependency and product decisions; 
 OAuth decision: web authorization with PKCE, no backend; a bundled GitHub client secret is extractable and is not treated as proof of client identity. Actual GitHub registration and connection remain to be completed.
 
 A native connection screen now invokes the system web authentication session; it requires a separately registered GitHub App and local build configuration. No live authorization has been verified.
+
+Simulator startup comparison: on the same clean iPhone Air simulator, the ad-hoc signed app started without the Keychain read error, while the linker-signed build displayed it. This is a signing-dependent observation, not verification of saving a token or real GitHub authorization. The connection screen now distinguishes Keychain errors from project-store errors and logs only a Keychain status code.

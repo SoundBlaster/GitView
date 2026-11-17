@@ -1,5 +1,6 @@
 import AuthenticationServices
 import GitHubAuth
+import OSLog
 import SwiftUI
 
 struct ConnectionPage: View {
@@ -56,10 +57,22 @@ struct ConnectionPage: View {
             .task {
                 do {
                     credential = try store.load()
-                    if let credential { library = try ProjectLibrary.open(accountID: credential.identity.id) }
-                }
-                catch { status = "Could not read the saved session." }
+                    if let credential { openLibrary(accountID: credential.identity.id) }
+                } catch let CredentialStoreError.keychain(code) {
+                    Logger(subsystem: "ru.egormerkushev.gitview", category: "credentials").error("Keychain read failed with status \(code, privacy: .public)")
+                    status = "Could not read the saved session."
+                } catch { status = "Could not read the saved session." }
             }
+        }
+    }
+
+    @MainActor private func openLibrary(accountID: Int64) {
+        do {
+            library = try ProjectLibrary.open(accountID: accountID)
+            status = nil
+        } catch {
+            library = nil
+            status = "Could not open saved projects."
         }
     }
 
@@ -83,9 +96,13 @@ struct ConnectionPage: View {
                 let code = try attempt.receiveCallback(callback)
                 let token = try await OAuthClient(clientID: id, clientSecret: secret, redirectURI: redirectURI).exchange(code)
                 identity = try await coordinator.confirm(token, attempt: attemptID)
-                credential = try store.load()
-                if let credential { library = try ProjectLibrary.open(accountID: credential.identity.id) }
-                status = nil
+                do {
+                    credential = try store.load()
+                    if let credential { openLibrary(accountID: credential.identity.id) }
+                    else { status = "Connected, but the saved session could not be found." }
+                } catch {
+                    status = "Connected, but the saved session could not be read."
+                }
             } catch {
                 await coordinator.cancel(attemptID)
                 throw error
