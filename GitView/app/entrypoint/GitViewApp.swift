@@ -108,12 +108,12 @@ private struct ProjectTestFixture: View {
         return GitHubSessionManager(load: { credential }, save: { _, _, _ in }, refresh: { _ in throw SessionRefreshError.missingSession })
     }()
 
-    private static let fixtureDiscovery = GitHubDiscovery(client: GitHubDiscoveryClient { request in
-        let body = request.url?.path == "/user/installations"
-            ? #"{"total_count":1,"installations":[{"id":1}]}"#
-            : #"{"total_count":1,"repositories":[{"id":101,"full_name":"fixture/one","private":false,"node_id":"fixture-node"}]}"#
-        return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
-    })
+    private static let fixtureDiscovery: GitHubDiscovery = {
+        let arguments = ProcessInfo.processInfo.arguments
+        let transport = DiscoveryFixtureTransport(failFirst: arguments.contains("--gitgrid-ui-test-discovery-retry"),
+                                                  emptyFirst: arguments.contains("--gitgrid-ui-test-discovery-empty"))
+        return GitHubDiscovery(client: GitHubDiscoveryClient { request in await transport.send(request) })
+    }()
 
     private static let fixtureWorkClient = GitHubWorkClient { request in
         let body = #"{"data":{"node":{"id":"fixture-node","fullDatabaseId":"101","nameWithOwner":"fixture/one","isPrivate":false,"issues":{"nodes":[{"id":"fixture-issue","number":7,"title":"Synthetic issue","url":"https://github.com/fixture/one/issues/7","state":"OPEN","updatedAt":"2026-01-01T00:00:00Z"}],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[],"pageInfo":{"hasNextPage":false}}}}}"#
@@ -136,6 +136,27 @@ private struct ProjectTestFixture: View {
             return item
         }
         return try JSONDecoder().decode([GitHubWorkItem].self, from: JSONSerialization.data(withJSONObject: values))
+    }
+}
+
+private actor DiscoveryFixtureTransport {
+    private var failFirst: Bool
+    private var emptyFirst: Bool
+    init(failFirst: Bool, emptyFirst: Bool) { self.failFirst = failFirst; self.emptyFirst = emptyFirst }
+    func send(_ request: URLRequest) -> (Data, HTTPURLResponse) {
+        if failFirst {
+            failFirst = false
+            return (Data(), HTTPURLResponse(url: request.url!, statusCode: 503, httpVersion: nil, headerFields: nil)!)
+        }
+        if emptyFirst {
+            emptyFirst = false
+            let body = #"{"total_count":0,"installations":[]}"#
+            return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let body = request.url?.path == "/user/installations"
+            ? #"{"total_count":1,"installations":[{"id":1}]}"#
+            : #"{"total_count":1,"repositories":[{"id":101,"full_name":"fixture/one","private":false,"node_id":"fixture-node"}]}"#
+        return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
     }
 }
 #endif

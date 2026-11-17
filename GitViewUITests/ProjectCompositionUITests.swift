@@ -1,6 +1,34 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testEmptyRepositoryDiscoveryCanRefreshAfterInstallation() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-empty-projects", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-discovery-empty"]
+        app.launch()
+        let choose = app.buttons["projects.chooseRepository"]
+        XCTAssertTrue(choose.waitForExistence(timeout: 10))
+        choose.tap()
+        XCTAssertTrue(app.staticTexts["No accessible repositories"].waitForExistence(timeout: 10))
+        let refresh = app.buttons["discovery.refresh"]
+        XCTAssertTrue(refresh.waitForExistence(timeout: 5))
+        refresh.tap()
+        XCTAssertTrue(app.buttons["fixture/one"].waitForExistence(timeout: 10))
+    }
+    func testRepositoryDiscoveryShowsFailureAndRetries() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-empty-projects", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-discovery-retry"]
+        app.launch()
+        let choose = app.buttons["projects.chooseRepository"]
+        XCTAssertTrue(choose.waitForExistence(timeout: 10))
+        choose.tap()
+        XCTAssertTrue(app.staticTexts["GitHub HTTP 503"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["No accessible repositories"].exists)
+        let retry = app.buttons["discovery.retry"]
+        XCTAssertTrue(retry.waitForExistence(timeout: 5))
+        retry.tap()
+        XCTAssertTrue(app.buttons["fixture/one"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["GitHub HTTP 503"].exists)
+    }
     func testCreatesFirstProjectFromDiscoveredRepository() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-empty-projects", "--gitgrid-ui-test-mock-discovery"]

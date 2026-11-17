@@ -43,6 +43,7 @@ scope:
     - Provide repository context for work objects only when its source association is unambiguous.
     - Expose the unambiguous repository observation and its source limitation for each observed work object.
     - Validate next-page links and report HTTP failures.
+    - Preserve HTTP status codes for failed installation or repository discovery pages while retaining independent results.
     - Report an observed rate-limit failure on the triggering request and defer later default GitHub API transport requests until the source-directed deadline; retain the deadline across launches without discarding a successful final response.
     - Aggregate pages while preserving partial independent results.
     - Preserve the source retry deadline and earlier discoveries when a rate limit interrupts repository discovery.

@@ -41,6 +41,7 @@ struct DiscoveryAggregateTests {
         let result = try await GitHubDiscovery(client: client).load(token: "token")
         #expect(result.repositories.map(\.id) == [3])
         #expect(result.failures == [.repositoryPage(installationID: 2, page: 1)])
+        #expect(result.httpStatuses == [403])
         #expect(!result.isComplete)
     }
 
@@ -72,6 +73,7 @@ struct DiscoveryAggregateTests {
         }
         let result = try await GitHubDiscovery(client: client).load(token: "token")
         #expect(result.failures == [.installationPage(1)])
+        #expect(result.httpStatuses == [500])
         #expect(!result.isComplete)
     }
 }

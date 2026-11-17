@@ -41,6 +41,15 @@ struct RepositoryDiscoveryPage: View {
             if let errorMessage {
                 Text(errorMessage).foregroundStyle(.secondary)
             }
+            if errorMessage != nil || result?.isComplete == false {
+                Button("Retry") { Task { await load() } }
+                    .disabled(isLoading)
+                    .accessibilityIdentifier("discovery.retry")
+            } else if result?.repositories.isEmpty == true {
+                Button("Refresh") { Task { await load() } }
+                    .disabled(isLoading)
+                    .accessibilityIdentifier("discovery.refresh")
+            }
             Section {
                 Link("Install GitGrid on GitHub", destination: URL(string: "https://github.com/apps/gitgrid-ios/installations/new")!)
                     .accessibilityIdentifier("discovery.installApp")
@@ -93,6 +102,10 @@ struct RepositoryDiscoveryPage: View {
             if let until = updated.rateLimitUntil {
                 let limitMessage = "GitHub rate limit. Retry after \(until.formatted(date: .abbreviated, time: .shortened))."
                 errorMessage = [errorMessage, limitMessage].compactMap { $0 }.joined(separator: " ")
+            }
+            let statuses = Set(updated.httpStatuses).sorted().map(String.init).joined(separator: ", ")
+            if !statuses.isEmpty {
+                errorMessage = [errorMessage, "GitHub HTTP \(statuses)"].compactMap { $0 }.joined(separator: " ")
             }
         } catch is CancellationError {
         } catch {
