@@ -666,6 +666,9 @@ private struct WorkDetailSheet: View {
     @State private var details: GitHubWorkDetails?
     @State private var detailError = false
     @State private var loadingDetails = false
+    @State private var loadingLinks = false
+    @State private var linkError = false
+    @State private var linkPageLimit = 10
 
     var body: some View {
         NavigationStack {
@@ -688,7 +691,8 @@ private struct WorkDetailSheet: View {
                 if let details = details ?? item.details {
                     WorkDescriptionDetails(details: details)
                     if item.kind == .issue {
-                        IssueRelationshipDetails(relationships: details.issueRelationships)
+                        IssueRelationshipDetails(relationships: details.issueRelationships, loading: loadingLinks,
+                            canLoad: !loadingDetails, loadError: linkError, onLoadMore: { Task { await loadMoreLinks() } })
                     }
                 }
                 if loadingDetails { ProgressView("Loading details") }
@@ -750,10 +754,31 @@ private struct WorkDetailSheet: View {
             threadError = true
         }
     }
+
+    @MainActor private func loadMoreLinks() async {
+        guard !loadingLinks, !loadingDetails else { return }
+        loadingLinks = true
+        linkError = false
+        defer { loadingLinks = false }
+        do {
+            let credential = try await sessionManager.usableSession(for: accountID)
+            let links = try await GitHubWorkDetailClient().loadIssuePullRequestReferences(token: credential.accessToken, id: item.id, maxPages: linkPageLimit)
+            try Task.checkCancellation()
+            guard let updated = (details ?? item.details)?.replacingPullRequestReferences(links) else { linkError = true; return }
+            details = updated
+            if !links.isComplete || links.manualLinksComplete == false { linkPageLimit += 10 }
+            if !onDetails(item, updated) { storageError = true }
+        } catch is CancellationError {
+        } catch { linkError = true }
+    }
 }
 
 private struct IssueRelationshipDetails: View {
     let relationships: GitHubIssueRelationships?
+    let loading: Bool
+    let canLoad: Bool
+    let loadError: Bool
+    let onLoadMore: () -> Void
 
     var body: some View {
         Section("Parent issue") {
@@ -786,6 +811,17 @@ private struct IssueRelationshipDetails: View {
                 if !page.isComplete { Text("Some cross-references are not shown.").foregroundStyle(.secondary) }
                 if page.manualLinksComplete == false { Text("Some manually linked pull requests are not shown.").foregroundStyle(.secondary) }
                 if page.manualLinksComplete == nil { Text("Manual links unavailable.").foregroundStyle(.secondary) }
+                if !page.isComplete || page.manualLinksComplete != true {
+                    Button("Load more pull request links", action: onLoadMore)
+                        .disabled(loading || !canLoad)
+                        .accessibilityIdentifier("issue.loadMoreLinks")
+                }
+                if loading { ProgressView("Loading links") }
+                if loadError { Text("Could not load more links. Showing saved results.").foregroundStyle(.secondary) }
+                if let observedAt = page.observedAt {
+                    Text("Links observed \(observedAt.formatted(date: .abbreviated, time: .shortened))")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
                 if page.isComplete && page.manualLinksComplete == true && page.items.isEmpty {
                     Text("No linked pull requests observed.").foregroundStyle(.secondary)
                 }

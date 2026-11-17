@@ -98,6 +98,11 @@ import XCTest
         XCTAssertTrue(app.staticTexts["Cross-reference · closes this issue on merge"].exists)
         XCTAssertTrue(app.staticTexts["Manually linked on GitHub"].exists)
         XCTAssertTrue(app.staticTexts["Some cross-references are not shown."].exists)
+        let more = app.buttons["issue.loadMoreLinks"]
+        for _ in 0..<3 where !more.isHittable { app.swipeUp() }
+        XCTAssertTrue(more.waitForExistence(timeout: 5))
+        more.tap()
+        XCTAssertTrue(app.staticTexts["Could not load more links. Showing saved results."].waitForExistence(timeout: 10))
         for _ in 0..<6 where !app.staticTexts["Saved synthetic description"].isHittable { app.swipeDown() }
         XCTAssertTrue(app.staticTexts["Saved synthetic description"].waitForExistence(timeout: 10))
         for _ in 0..<8 where !app.staticTexts["Could not update details. Showing saved details."].isHittable { app.swipeUp() }

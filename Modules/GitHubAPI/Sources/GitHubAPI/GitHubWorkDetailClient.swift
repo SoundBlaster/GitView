@@ -32,6 +32,7 @@ public struct GitHubPullRequestReferences: Codable, Sendable {
     public let items: [GitHubPullRequestReference]
     public let isComplete: Bool
     public let manualLinksComplete: Bool?
+    public let observedAt: Date?
 }
 
 public struct GitHubIssueRelationships: Codable, Sendable {
@@ -59,6 +60,16 @@ public struct GitHubWorkDetails: Codable, Sendable {
     public let commits: Int?
     public let issueRelationships: GitHubIssueRelationships?
     public let observedAt: Date
+
+    public func replacingPullRequestReferences(_ references: GitHubPullRequestReferences) -> GitHubWorkDetails? {
+        guard let relations = issueRelationships else { return nil }
+        return GitHubWorkDetails(body: body, createdAt: createdAt, author: author, labels: labels, labelsComplete: labelsComplete,
+            headBranch: headBranch, baseBranch: baseBranch, headRepository: headRepository, baseRepository: baseRepository,
+            additions: additions, deletions: deletions, changedFiles: changedFiles, commits: commits,
+            issueRelationships: GitHubIssueRelationships(parent: relations.parent, parentObserved: relations.parentObserved,
+                blockedBy: relations.blockedBy, blocking: relations.blocking, subIssues: relations.subIssues, pullRequests: references),
+            observedAt: observedAt)
+    }
 }
 
 public enum WorkDetailError: Error, Equatable {
@@ -72,6 +83,74 @@ public enum WorkDetailError: Error, Equatable {
 public struct GitHubWorkDetailClient: Sendable {
     private let transport: GitHubDiscoveryClient.Transport
     public init(transport: @escaping GitHubDiscoveryClient.Transport = GitHubDiscoveryClient.send) { self.transport = transport }
+
+    public func loadIssuePullRequestReferences(token: String, id: String, maxPages: Int = 10) async throws -> GitHubPullRequestReferences {
+        guard !id.isEmpty, !token.isEmpty, !token.contains("\n"), !token.contains("\r"), maxPages > 0 else { throw WorkDetailError.invalidRequest }
+        let query = """
+        query IssueLinks($id:ID!, $crossAfter:String, $manualAfter:String, $loadCross:Boolean!, $loadManual:Boolean!) {
+          node(id:$id) { __typename ... on Issue { id
+            timelineItems(first:50, after:$crossAfter, itemTypes:[CROSS_REFERENCED_EVENT]) @include(if:$loadCross) {
+              nodes { __typename ... on CrossReferencedEvent { willCloseTarget source {
+                __typename ... on PullRequest { id number title url state repository { nameWithOwner } }
+              } } } pageInfo { hasNextPage endCursor }
+            }
+            closedByPullRequestsReferences(first:20, after:$manualAfter, includeClosedPrs:true, userLinkedOnly:true) @include(if:$loadManual) {
+              nodes { id number title url state repository { nameWithOwner } } pageInfo { hasNextPage endCursor }
+            }
+          } }
+        }
+        """
+        var crossAfter: String?, manualAfter: String?
+        var loadCross = true, loadManual = true, crossValid = true
+        var manualValid: Bool? = true
+        var crossCursors = Set<String>(), manualCursors = Set<String>()
+        var items: [GitHubPullRequestReference] = [], positions: [String: Int] = [:]
+        for _ in 0..<maxPages {
+            try Task.checkCancellation()
+            var request = URLRequest(url: URL(string: "https://api.github.com/graphql")!)
+            request.httpMethod = "POST"
+            request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try JSONEncoder().encode(LinkQuery(query: query, variables: LinkVariables(id: id, crossAfter: crossAfter,
+                manualAfter: manualAfter, loadCross: loadCross, loadManual: loadManual)))
+            let (data, response) = try await transport(request)
+            guard (200..<300).contains(response.statusCode) else { throw WorkDetailError.httpStatus(response.statusCode) }
+            guard let envelope = try? JSONDecoder().decode(Envelope.self, from: data) else { throw WorkDetailError.invalidResponse }
+            guard envelope.errors?.isEmpty != false else { throw WorkDetailError.graphQLFailure }
+            guard let node = envelope.data?.node, node.id == id, node.typename == "Issue" else { throw WorkDetailError.invalidResponse }
+            if loadCross {
+                guard let cross = node.timelineItems else { throw WorkDetailError.invalidResponse }
+                crossValid = crossValid && cross.contentComplete
+                crossAfter = try nextCursor(cross.pageInfo, seen: &crossCursors)
+                loadCross = crossAfter != nil
+            }
+            if loadManual {
+                if let manual = node.closedByPullRequestsReferences {
+                    manualValid = (manualValid == true) && manual.nodes.allSatisfy { $0 != nil }
+                    manualAfter = try nextCursor(manual.pageInfo, seen: &manualCursors)
+                    loadManual = manualAfter != nil
+                } else { manualValid = nil; loadManual = false }
+            }
+            for item in node.pullRequestReferences?.items ?? [] {
+                if let index = positions[item.id] {
+                    let old = items[index]
+                    items[index] = GitHubPullRequestReference(id: item.id, number: item.number, title: item.title, url: item.url,
+                        state: item.state, repository: item.repository, willCloseTarget: old.willCloseTarget || item.willCloseTarget,
+                        crossReferenced: old.crossReferenced == true || item.crossReferenced == true,
+                        manuallyLinked: old.manuallyLinked == true || item.manuallyLinked == true)
+                } else { positions[item.id] = items.count; items.append(item) }
+            }
+            if !loadCross && !loadManual { break }
+        }
+        return GitHubPullRequestReferences(items: items, isComplete: crossValid && !loadCross,
+            manualLinksComplete: manualValid.map { $0 && !loadManual }, observedAt: .now)
+    }
+
+    private func nextCursor(_ page: PageInfo, seen: inout Set<String>) throws -> String? {
+        guard page.hasNextPage else { return nil }
+        guard let cursor = page.endCursor, !cursor.isEmpty, seen.insert(cursor).inserted else { throw WorkDetailError.invalidResponse }
+        return cursor
+    }
 
     public func load(token: String, id: String, kind: GitHubWorkKind, expectedHead: String? = nil, observedAt: Date = .now) async throws -> GitHubWorkDetails {
         guard !token.isEmpty, !token.contains("\n"), !token.contains("\r"), !id.isEmpty,
@@ -132,6 +211,8 @@ public struct GitHubWorkDetailClient: Sendable {
     }
 
     private struct Query: Encodable { let query: String; let variables: Variables }
+    private struct LinkQuery: Encodable { let query: String; let variables: LinkVariables }
+    private struct LinkVariables: Encodable { let id: String; let crossAfter: String?; let manualAfter: String?; let loadCross: Bool; let loadManual: Bool }
     private struct Variables: Encodable { let id: String }
     private struct Envelope: Decodable { let data: DataValue?; let errors: [GraphError]? }
     private struct GraphError: Decodable { let message: String }
@@ -161,12 +242,19 @@ public struct GitHubWorkDetailClient: Sendable {
                 if let index { items[index] = value } else { positions[entry.id] = items.count; items.append(value) }
             }
             if let connection = closedByPullRequestsReferences, Set(connection.nodes.compactMap { $0?.id }).count != connection.nodes.count { manualComplete = false }
-            return .init(items: items, isComplete: cross?.isComplete ?? false, manualLinksComplete: manualComplete)
+            return .init(items: items, isComplete: cross?.isComplete ?? false, manualLinksComplete: manualComplete, observedAt: nil)
         }
     }
     private struct ManualPullRequests: Decodable { let nodes: [RelatedIssue?]; let pageInfo: PageInfo }
     private struct TimelineConnection: Decodable {
         let nodes: [CrossReference?]; let pageInfo: PageInfo
+        var contentComplete: Bool {
+            nodes.allSatisfy { event in
+                guard let event, event.typename == "CrossReferencedEvent", let source = event.source else { return false }
+                guard source.typename == "PullRequest" else { return true }
+                return source.id != nil && source.number != nil && source.title != nil && source.url != nil && source.state != nil && source.repository != nil && event.willCloseTarget != nil
+            }
+        }
         var references: GitHubPullRequestReferences {
             var positions: [String: Int] = [:]
             var items: [GitHubPullRequestReference] = []
@@ -183,7 +271,7 @@ public struct GitHubWorkDetailClient: Sendable {
                                                           repository: repository, willCloseTarget: combined, crossReferenced: true, manuallyLinked: nil)
                 if let index { items[index] = reference } else { positions[id] = items.count; items.append(reference) }
             }
-            return .init(items: items, isComplete: complete, manualLinksComplete: nil)
+            return .init(items: items, isComplete: complete, manualLinksComplete: nil, observedAt: nil)
         }
     }
     private struct CrossReference: Decodable {
@@ -210,7 +298,7 @@ public struct GitHubWorkDetailClient: Sendable {
     private struct Actor: Decodable { let login: String }
     private struct Labels: Decodable { let nodes: [Label?]; let pageInfo: PageInfo }
     private struct Label: Decodable { let name: String }
-    private struct PageInfo: Decodable { let hasNextPage: Bool }
+    private struct PageInfo: Decodable { let hasNextPage: Bool; let endCursor: String? }
     private struct Repository: Decodable { let nameWithOwner: String }
     private struct Count: Decodable { let totalCount: Int }
 }

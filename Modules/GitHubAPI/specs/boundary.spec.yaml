@@ -24,6 +24,7 @@ scope:
     - Fetch direct Issue parent, blockers, blocked Issues and sub-issues, retaining direction and partial coverage.
     - Preserve distinct PR cross-references and GitHub's closing-on-merge indication with timeline coverage.
     - Combine manually linked PRs with cross-references by source identity, retaining each source's coverage.
+    - Page PR link sources independently with bounded requests and reject invalid cursors.
     - Preserve previously observed details across refreshes when the PR head remains the same.
     - Retain per-repository refresh outcomes and preserve prior data for failed or incomplete sources.
     - Read previous unscoped work snapshots until a complete refresh replaces them.

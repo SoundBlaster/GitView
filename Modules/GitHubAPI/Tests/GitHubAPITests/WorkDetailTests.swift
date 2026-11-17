@@ -3,6 +3,42 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkDetailTests {
+    @Test func pagesIssueLinksIndependentlyAndCombinesEvidence() async throws {
+        let client = GitHubWorkDetailClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let vars = body["variables"] as! [String: Any]
+            let json: String
+            if vars["crossAfter"] as? String == "next" {
+                #expect(vars["loadManual"] as? Bool == false)
+                json = #"{"data":{"node":{"__typename":"Issue","id":"I1","timelineItems":{"nodes":[{"__typename":"CrossReferencedEvent","willCloseTarget":true,"source":{"__typename":"PullRequest","id":"P1","number":1,"title":"Shared","url":"https://github.com/a/b/pull/1","state":"OPEN","repository":{"nameWithOwner":"a/b"}}}],"pageInfo":{"hasNextPage":false}}}}}"#
+            } else {
+                json = #"{"data":{"node":{"__typename":"Issue","id":"I1","timelineItems":{"nodes":[],"pageInfo":{"hasNextPage":true,"endCursor":"next"}},"closedByPullRequestsReferences":{"nodes":[{"id":"P1","number":1,"title":"Shared","url":"https://github.com/a/b/pull/1","state":"OPEN","repository":{"nameWithOwner":"a/b"}}],"pageInfo":{"hasNextPage":false}}}}}"#
+            }
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let page = try await client.loadIssuePullRequestReferences(token: "token", id: "I1")
+        #expect(page.isComplete && page.manualLinksComplete == true && page.items.count == 1)
+        #expect(page.items[0].crossReferenced == true && page.items[0].manuallyLinked == true && page.items[0].willCloseTarget)
+    }
+
+    @Test func rejectsMissingPaginationCursor() async throws {
+        let client = GitHubWorkDetailClient { request in
+            let json = #"{"data":{"node":{"__typename":"Issue","id":"I1","timelineItems":{"nodes":[],"pageInfo":{"hasNextPage":true}},"closedByPullRequestsReferences":{"nodes":[],"pageInfo":{"hasNextPage":false}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        await #expect(throws: WorkDetailError.invalidResponse) { try await client.loadIssuePullRequestReferences(token: "token", id: "I1") }
+    }
+    @Test func boundedLinkPaginationReportsPartialAndRejectsRepeatedCursor() async throws {
+        let client = GitHubWorkDetailClient { request in
+            let json = #"{"data":{"node":{"__typename":"Issue","id":"I1","timelineItems":{"nodes":[],"pageInfo":{"hasNextPage":true,"endCursor":"same"}},"closedByPullRequestsReferences":{"nodes":[],"pageInfo":{"hasNextPage":false}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let partial = try await client.loadIssuePullRequestReferences(token: "token", id: "I1", maxPages: 1)
+        #expect(!partial.isComplete && partial.manualLinksComplete == true && partial.observedAt != nil)
+        await #expect(throws: WorkDetailError.invalidResponse) {
+            try await client.loadIssuePullRequestReferences(token: "token", id: "I1", maxPages: 3)
+        }
+    }
     @Test func mergesManualAndCrossReferenceWithoutCallingManualLinkAClosingReference() async throws {
         let client = GitHubWorkDetailClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
