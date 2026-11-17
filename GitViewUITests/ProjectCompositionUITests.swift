@@ -1,6 +1,23 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testPreviewCanOpenTheSameWorkItem() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-dense")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let item = app.buttons["work.D1"]
+        XCTAssertTrue(item.waitForExistence(timeout: 10))
+        item.press(forDuration: 1)
+        let preview = app.staticTexts["Synthetic work 1"]
+        XCTAssertTrue(preview.waitForExistence(timeout: 5))
+        app.buttons["Open in GitGrid"].tap()
+        XCTAssertTrue(app.navigationBars["Pull Request"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Synthetic work 1"].exists)
+    }
+
     func testOpenProjectLoadsChangedSnapshotAfterForegroundReturn() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-overview-refresh"]

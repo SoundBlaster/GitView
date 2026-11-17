@@ -660,6 +660,7 @@ private struct WorkGridCell: View {
             ? "Pull request \(item.number), \(item.title), \(item.state)\(item.isDraft ? ", draft" : ""), CI \(item.checkStatus ?? "unavailable")"
             : "Issue \(item.number), \(item.title), \(item.state)")
         .contextMenu {
+            Button("Open in GitGrid", systemImage: "doc.text") { open() }
             Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
             ShareLink(item: item.url)
         } preview: {
