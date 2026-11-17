@@ -5,6 +5,7 @@ This is a code-progress record, not a claim that a product specification is full
 | Product specification | Implemented slice | Evidence | Remaining |
 | --- | --- | --- | --- |
 | GITVIEW-SPEC-0007 | Time eligibility, identity-checked paginated work grid and project-scoped filters | WorkDomain and GitHubWorkClient tests; iPhone Air Simulator UI tests with 100 synthetic work items, filtering and foreground return | Live verification, full refresh recovery and accessibility review |
+| GITVIEW-SPEC-0049 | Reevaluate cached Today selection when the system reports a day, significant-time or time-zone change, preserving project, filter and selected-object state | WorkDomain day-boundary tests; iOS simulator build | System-notification behavior during an active gesture or preview and physical-device verification |
 | GITVIEW-SPEC-0058 | PKCE attempt, token exchange, identity lookup and Keychain adapter | GitHubAuth tests; synthetic Keychain write/read/update and system GitHub sign-in prompt on signed iOS 27.0 simulator | Live GitHub authorization, callback, token refresh and saved session lifecycle |
 | GITVIEW-SPEC-0059 | GitHub App installation and repository page fetch, partial-result aggregation and repository selection | GitHubAPI DiscoveryTests and DiscoveryAggregateTests; simulator UI flows | Live GitHub App integration and broader error recovery |
 | GITVIEW-SPEC-0045 | Account-scoped Core Data project creation, retrieval and repository membership editing | ProjectStoreTests including SQLite reopen; simulator UI tests | Live source admission and broader recovery verification |
@@ -31,6 +32,8 @@ SPECGRAPH=/Users/egor/.local/share/specgraph/runtime-aa9f6cb9-py313/specgraph-ru
 The resulting local `runs/implementation_work_index.json` is derived, ignored, and reproducible; it reports `blocked_by_trace_gap` with missing trace and evidence baselines. It does not establish that this whole spec has been implemented or tested. The implementation table above provides direct code/test links until a supported binding is established.
 
 The same `--build-implementation-delta-snapshot` command was run for `GITVIEW-SPEC-0048` on 2026-11-17. It returned `ready_for_planning` and `tracked_artifacts_written: false`: this is a planning result, not a trace binding or evidence that system background execution occurred. The simulator reports `BGTaskScheduler` unavailable; the scheduler registration test is therefore skipped there and remains a device check.
+
+The delta snapshot for `GITVIEW-SPEC-0049` likewise returned `ready_for_planning` and `tracked_artifacts_written: false`; the day-boundary slice above is not a complete implementation or a verified trace binding.
 
 ## Initial delivery sequence
 

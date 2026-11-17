@@ -3,6 +3,7 @@ import GitHubAuth
 import Charts
 import ProjectStore
 import SwiftUI
+import UIKit
 import WorkDomain
 import WorkCache
 
@@ -157,6 +158,9 @@ struct ProjectWorkPage: View {
         }
         .onChange(of: showMetrics) { if !showMetrics { pendingAttention = nil } }
         .refreshable { await load() }
+        .onReceive(NotificationCenter.default.publisher(for: .NSCalendarDayChanged)) { _ in updateToday() }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.significantTimeChangeNotification)) { _ in updateToday() }
+        .onReceive(NotificationCenter.default.publisher(for: .NSSystemTimeZoneDidChange)) { _ in updateToday() }
         .onChange(of: scenePhase) {
             guard scenePhase == .active else { return }
             restore()
@@ -188,6 +192,10 @@ struct ProjectWorkPage: View {
         }
         if visibleItems.count == 1 { selectedItem = visibleItems.first; zoomHint = false }
         else if !visibleItems.isEmpty { zoomHint = true }
+    }
+
+    @MainActor private func updateToday() {
+        if let archive { present(archive.items, now: .now) }
     }
 
     @MainActor private func load() async {

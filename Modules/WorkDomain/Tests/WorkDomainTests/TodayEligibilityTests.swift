@@ -40,6 +40,18 @@ struct TodayEligibilityTests {
         #expect(west.evaluate(.completed(at: completed)) == .eligible)
     }
 
+    @Test func dayChangeReevaluatesCompletionWithoutExcludingUnfinishedWork() {
+        let afterMidnight = Date(timeIntervalSince1970: 1_704_067_200)
+        let beforeMidnight = afterMidnight.addingTimeInterval(-1)
+        let completed = WorkProgress.completed(at: beforeMidnight.addingTimeInterval(-60))
+        let yesterday = TodayEligibility(now: beforeMidnight, calendar: calendar())
+        let today = TodayEligibility(now: afterMidnight, calendar: calendar())
+
+        #expect(yesterday.evaluate(completed) == .eligible)
+        #expect(today.evaluate(completed) == .notEstablishedByTime)
+        #expect(today.evaluate(.unfinished) == .eligible)
+    }
+
     @Test func finishedAndUnfinishedWorkStayInTheSameSelection() {
         let policy = TodayEligibility(now: now, calendar: calendar())
         let states: [WorkProgress] = Array(repeating: .completed(at: now), count: 95)
