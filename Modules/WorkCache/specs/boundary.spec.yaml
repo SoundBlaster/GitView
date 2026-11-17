@@ -1,0 +1,38 @@
+apiVersion: specpm.dev/v0.1
+kind: BoundarySpec
+metadata:
+  id: gitview.work-cache
+  title: Work snapshot cache boundary
+  version: 0.1.0
+  status: draft
+  authors:
+    - name: GitView
+intent:
+  summary: Retain a scoped work snapshot and its observation time and coverage.
+scope:
+  boundedContext: Cached work overview
+  includes:
+    - Persist snapshot data, observation time and completeness by account and project.
+    - Prevent incomplete or older observations from replacing an existing snapshot.
+    - Refresh a cached record before comparing its observation time and report when a save is declined.
+    - Enrich an unchanged snapshot while retaining its original time and completeness.
+  excludes:
+    - Fetching source data, merging partial snapshots and source access verification.
+provides:
+  capabilities:
+    - id: gitview.work.snapshot_cache
+      role: primary
+      summary: Save and retrieve a scoped snapshot with coverage information.
+requires:
+  capabilities: []
+interfaces:
+  inbound: []
+  outbound: []
+constraints: []
+effects: {}
+evidence: []
+provenance:
+  confidence: medium
+  notes:
+    - Snapshot behavior supports GITVIEW-SPEC-0023 without claiming full synchronization.
+implementationBindings: []

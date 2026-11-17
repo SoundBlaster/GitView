@@ -1,0 +1,27 @@
+apiVersion: specpm.dev/v0.1
+kind: SpecPackage
+metadata:
+  id: gitview.github-auth
+  name: GitHub authentication
+  version: 0.1.0
+  summary: Prepare and validate an OAuth authorization attempt for GitHub.
+  license: Apache-2.0
+  authors:
+    - name: GitView
+specs:
+  - path: specs/boundary.spec.yaml
+index:
+  provides:
+    capabilities:
+      - gitview.github_auth.oauth_attempt
+  requires:
+    capabilities: []
+compatibility:
+  platforms:
+    - ios
+  languages:
+    - swift
+keywords:
+  - oauth
+  - github
+foreignArtifacts: []

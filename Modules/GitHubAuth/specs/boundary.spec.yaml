@@ -1,0 +1,42 @@
+apiVersion: specpm.dev/v0.1
+kind: BoundarySpec
+metadata:
+  id: gitview.github-auth
+  title: GitHub authentication boundary
+  version: 0.1.0
+  status: draft
+  authors:
+    - name: GitView
+intent:
+  summary: Prepare and validate one GitHub OAuth web authorization attempt using PKCE.
+scope:
+  boundedContext: GitView GitHub connection
+  includes:
+    - Generate PKCE verifier and state and validate authorization callbacks.
+    - Exchange a validated code for a GitHub token over an injected transport.
+    - Read the authenticated user and store credentials in Keychain.
+    - Refresh an expired token with a single shared request and persist the rotated credential.
+    - Retry a failed credential write in the same session without another token rotation.
+    - Refuse to return a credential for a different requested GitHub account.
+    - Remove a local credential and prevent an in-flight refresh from restoring it after disconnect.
+    - Check whether a response still belongs to the currently stored account and access token.
+  excludes:
+    - Authentication UI and application-wide session lifecycle.
+provides:
+  capabilities:
+    - id: gitview.github_auth.oauth_attempt
+      role: primary
+      summary: Prepare and validate a single authorization callback without claiming a connection.
+requires:
+  capabilities: []
+interfaces:
+  inbound: []
+  outbound: []
+constraints: []
+effects: {}
+evidence: []
+provenance:
+  confidence: medium
+  notes:
+    - GITVIEW-SPEC-0058 defines product-level authorization outcomes; the module covers only a portion.
+implementationBindings: []

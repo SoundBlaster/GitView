@@ -1,0 +1,28 @@
+apiVersion: specpm.dev/v0.1
+kind: SpecPackage
+metadata:
+  id: gitview.work-domain
+  name: Work domain
+  version: 0.1.0
+  summary: Evaluate Today visibility and project work summaries from supplied observations.
+  license: Apache-2.0
+  authors:
+    - name: GitView
+specs:
+  - path: specs/boundary.spec.yaml
+index:
+  provides:
+    capabilities:
+      - gitview.today.time_eligibility
+      - gitview.today.visibility_filter
+      - gitview.work.project_summary
+  requires:
+    capabilities: []
+compatibility:
+  platforms:
+    - ios
+  languages:
+    - swift
+keywords:
+  - gitview
+foreignArtifacts: []

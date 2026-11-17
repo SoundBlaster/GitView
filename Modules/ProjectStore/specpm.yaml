@@ -1,0 +1,26 @@
+apiVersion: specpm.dev/v0.1
+kind: SpecPackage
+metadata:
+  id: gitview.project-store
+  name: Project Store
+  version: 0.1.0
+  summary: Store projects scoped to a GitHub account in Core Data.
+  license: Apache-2.0
+  authors:
+    - name: GitView
+specs:
+  - path: specs/boundary.spec.yaml
+index:
+  provides:
+    capabilities:
+      - gitview.projects.local_storage
+  requires:
+    capabilities: []
+compatibility:
+  platforms:
+    - ios
+  languages:
+    - swift
+keywords:
+  - coredata
+foreignArtifacts: []

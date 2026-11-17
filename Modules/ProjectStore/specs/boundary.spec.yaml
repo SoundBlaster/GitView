@@ -1,0 +1,40 @@
+apiVersion: specpm.dev/v0.1
+kind: BoundarySpec
+metadata:
+  id: gitview.project-store
+  title: Local project storage boundary
+  version: 0.1.0
+  status: draft
+  authors:
+    - name: GitView
+intent:
+  summary: Persist projects and repository references in an account-scoped local store.
+scope:
+  boundedContext: Project configuration
+  includes:
+    - Create nonempty projects and query them by account.
+    - Persist repository identity and last observed name and privacy.
+    - Preserve a known GitHub node ID when a later source observation omits it.
+    - Update repository membership within a specified account and project.
+    - Persist a project-scoped synchronization pause for each repository, defaulting legacy records to enabled.
+    - Reconcile observed repository metadata by numeric identity across an account's projects without treating absence as deletion.
+  excludes:
+    - Repository access verification, synchronization, project renaming and migration.
+provides:
+  capabilities:
+    - id: gitview.projects.local_storage
+      role: primary
+      summary: Save and load account-scoped project configuration.
+requires:
+  capabilities: []
+interfaces:
+  inbound: []
+  outbound: []
+constraints: []
+effects: {}
+evidence: []
+provenance:
+  confidence: medium
+  notes:
+    - GITVIEW-SPEC-0045 governs setup outcomes; this module implements only local project persistence.
+implementationBindings: []

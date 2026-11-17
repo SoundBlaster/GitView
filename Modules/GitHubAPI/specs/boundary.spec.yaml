@@ -1,0 +1,76 @@
+apiVersion: specpm.dev/v0.1
+kind: BoundarySpec
+metadata:
+  id: gitview.github-api
+  title: GitHub API discovery boundary
+  version: 0.1.0
+  status: draft
+  authors:
+    - name: GitView
+intent:
+  summary: Fetch one installation or repository page with explicit pagination.
+scope:
+  boundedContext: GitHub discovery
+  includes:
+    - Decode a page from the authenticated GitHub App installations endpoints.
+    - Fetch bounded pages of issues and pull requests for an identity-checked repository.
+    - With a multi-request budget, page open work and the general stream independently within the shared limit; keep coverage incomplete unless the general stream is exhausted.
+    - Persist an optional per-repository continuation for open work across project refreshes while restarting the general stream; cross-refresh pages do not establish complete coverage.
+    - Advance a tracked continuation only if its original value still matches the saved repository observation, preserving later progress against stale refreshes.
+    - Preserve the GitHub Issue closure reason when available and read older cached records without it.
+    - Use a known GitHub node ID to resolve the current repository address and verify its 64-bit numeric identity.
+    - Preserve the source head revision, aggregate CI status and review decision when available.
+    - Decode GitHub check rollup buckets and bounded review thread observations with explicit coverage.
+    - Page through one pull request's review threads while checking revision and collection consistency.
+    - Attach a thread observation time to the same pull request head revision.
+    - Fetch source-linked Issue and PR details, keeping fork context and unavailable values distinct.
+    - Preserve Issue repository, type, assignees, milestone and independent comment and participant counts when available.
+    - Fetch direct Issue parent, blockers, blocked Issues and sub-issues, retaining direction and partial coverage.
+    - Page each Issue relationship independently, detect cursor and changing-count inconsistencies, and retain observation time.
+    - Derive a closed sub-issue count only from a complete set of distinct Issues with known states.
+    - Preserve distinct PR cross-references and GitHub's closing-on-merge indication with timeline coverage.
+    - Combine manually linked PRs with cross-references by source identity, retaining each source's coverage.
+    - Page PR link sources independently with bounded requests and reject invalid cursors.
+    - Preserve previously observed details across refreshes when the PR head remains the same.
+    - Retain per-repository refresh outcomes and preserve prior data for failed or incomplete sources.
+    - Retain the last complete per-repository snapshot independently of partial updates, expose it only for covered current scopes, and remove it when its repository data is explicitly forgotten.
+    - Distinguish network loss, timeouts and GitHub HTTP status failures without treating a 403 or 404 alone as confirmed repository revocation.
+    - Merge work from incomplete pages into saved repository observations without erasing unseen objects, regressing newer source updates, or presenting the partial page as a complete observation.
+    - Preserve previously fetched pages and expose the failure when a later page cannot be loaded; cancellation and repository identity mismatch discard the partial operation.
+    - Apply a bounded subset of repository observations without removing or refreshing unvisited repositories.
+    - Collect independent repository refresh outcomes sequentially through an injectable loader; cancellation stops the batch without returning partial results.
+    - Read previous unscoped work snapshots until a complete refresh replaces them.
+    - Retain observations for repositories removed from a project and restore them if re-added.
+    - Forget attributable repository observations in one archive while rejecting deletion when retained legacy work is unattributed.
+    - Provide repository context for work objects only when its source association is unambiguous.
+    - Offer a GitHub Issue or PR URL only when its HTTPS host, repository, object type and number match the observed source context and it contains no user information, query or fragment.
+    - Expose the unambiguous repository observation and its source limitation for each observed work object.
+    - Validate next-page links and report HTTP failures.
+    - Preserve HTTP status codes for failed installation or repository discovery pages while retaining independent results.
+    - Report an observed rate-limit failure on the triggering request and defer later default GitHub API transport requests until the source-directed deadline; retain the deadline across launches without discarding a successful final response.
+    - Aggregate pages while preserving partial independent results.
+    - Preserve the source retry deadline and earlier discoveries when a rate limit interrupts repository discovery.
+    - Provide opt-in read-only live probes for public GitHub work and detail decoding; ordinary tests do not require credentials or network.
+  excludes:
+    - Persist selection, project creation and user interface.
+provides:
+  capabilities:
+    - id: gitview.github_api.discovery_page
+      role: primary
+      summary: Load an explicitly scoped discovery page.
+    - id: gitview.github_api.work_page
+      role: secondary
+      summary: Fetch source work objects with bounded coverage indicated.
+requires:
+  capabilities: []
+interfaces:
+  inbound: []
+  outbound: []
+constraints: []
+effects: {}
+evidence: []
+provenance:
+  confidence: medium
+  notes:
+    - GITVIEW-SPEC-0059 describes product discovery; this module supplies only source pages.
+implementationBindings: []

@@ -1,0 +1,48 @@
+apiVersion: specpm.dev/v0.1
+kind: BoundarySpec
+metadata:
+  id: gitview.ios-app
+  title: GitView iOS app boundary
+  version: 0.1.0
+  status: draft
+  authors:
+    - name: GitView
+intent:
+  summary: Compose the GitGrid iOS project overview, source access and locally retained work.
+scope:
+  boundedContext: GitView
+  includes:
+    - SwiftUI app composition and demo grid.
+    - Present Projects and their saved work, refresh outcomes and observation limitations.
+    - Restore the active account's Project overview at launch without waiting for a network refresh; keep the account screen reachable and do not navigate on a missing session or unreadable project store.
+    - Compose source discovery, Keychain-backed sessions, project storage and cached work through their modules.
+    - Share one in-process session manager between foreground and background consumers to coordinate token rotation.
+    - Prepare a usable session for the active account only when a Project has an unpaused Repository; abort fetching and saving if preparation fails, is cancelled or the account changes.
+    - Record the latest background invocation and whether its saved batch was complete, partial or failed, without account identifiers or work contents; a saved batch alone does not imply successful source access.
+  excludes:
+    - Implement the authentication, network and storage adapters owned by the respective modules.
+    - Guarantee when iOS schedules or executes a background refresh.
+provides:
+  capabilities:
+    - id: gitview.ios.demo_grid
+      role: secondary
+      summary: Display an explicitly labeled Today grid with demo work.
+    - id: gitview.ios.project_overview
+      role: primary
+      summary: Present Projects and their retained GitHub work and refresh limitations.
+    - id: gitview.ios.session_orchestration
+      role: secondary
+      summary: Coordinate source sessions across foreground and background consumers.
+requires:
+  capabilities: []
+interfaces:
+  inbound: []
+  outbound: []
+constraints: []
+effects: {}
+evidence: []
+provenance:
+  confidence: medium
+  notes:
+    - GITVIEW-SPEC-0007 is the product specification for the Today time rule.
+implementationBindings: []

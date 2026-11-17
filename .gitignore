@@ -10,3 +10,7 @@ runs/
 /conversation_memory/sketches/gitview/.lock
 /conversation_memory/sketches/gitview/.CURRENT-*
 /conversation_memory/sketches/gitview/revisions/.pending-*/
+
+/Config/Local.xcconfig
+
+xcuserdata/

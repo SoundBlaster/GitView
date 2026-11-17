@@ -1,0 +1,143 @@
+import CoreData
+import Foundation
+
+public struct RepositoryReference: Codable, Hashable, Sendable {
+    public let id: Int64
+    public let fullName: String
+    public let isPrivate: Bool
+    public let nodeID: String?
+    public let syncPaused: Bool
+    public init(id: Int64, fullName: String, isPrivate: Bool, nodeID: String? = nil, syncPaused: Bool = false) {
+        self.id = id; self.fullName = fullName; self.isPrivate = isPrivate; self.nodeID = nodeID; self.syncPaused = syncPaused
+    }
+    private enum CodingKeys: String, CodingKey { case id, fullName, isPrivate, nodeID, syncPaused }
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int64.self, forKey: .id)
+        fullName = try container.decode(String.self, forKey: .fullName)
+        isPrivate = try container.decode(Bool.self, forKey: .isPrivate)
+        nodeID = try container.decodeIfPresent(String.self, forKey: .nodeID)
+        syncPaused = try container.decodeIfPresent(Bool.self, forKey: .syncPaused) ?? false
+    }
+}
+
+public struct StoredProject: Hashable, Sendable, Identifiable {
+    public let id: UUID
+    public let accountID: Int64
+    public let name: String
+    public let repositories: [RepositoryReference]
+}
+
+public enum ProjectStoreError: Error, Equatable {
+    case invalidProject
+    case invalidStoredData
+}
+
+@MainActor public final class ProjectStore {
+    private let container: NSPersistentContainer
+
+    public convenience init(inMemory: Bool) throws {
+        precondition(inMemory)
+        try self.init(storeType: NSInMemoryStoreType, url: nil)
+    }
+
+    public convenience init(url: URL) throws {
+        try self.init(storeType: NSSQLiteStoreType, url: url)
+    }
+
+    private init(storeType: String, url: URL?) throws {
+        let model = NSManagedObjectModel()
+        let entity = NSEntityDescription()
+        entity.name = "ProjectRecord"
+        entity.managedObjectClassName = NSStringFromClass(NSManagedObject.self)
+        entity.properties = [
+            Self.attribute("id", .UUIDAttributeType),
+            Self.attribute("accountID", .integer64AttributeType),
+            Self.attribute("name", .stringAttributeType),
+            Self.attribute("repositories", .binaryDataAttributeType)
+        ]
+        entity.uniquenessConstraints = [["id"]]
+        model.entities = [entity]
+        container = NSPersistentContainer(name: "GitGridProjects", managedObjectModel: model)
+        try container.persistentStoreCoordinator.addPersistentStore(ofType: storeType, configurationName: nil, at: url)
+    }
+
+    public func create(accountID: Int64, name: String, repositories: [RepositoryReference]) throws -> StoredProject {
+        let name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard accountID > 0, !name.isEmpty, !repositories.isEmpty,
+              repositories.allSatisfy({ $0.id > 0 && !$0.fullName.isEmpty }),
+              Set(repositories.map(\.id)).count == repositories.count else { throw ProjectStoreError.invalidProject }
+        let record = StoredProject(id: UUID(), accountID: accountID, name: name, repositories: repositories)
+        let encodedRepositories = try JSONEncoder().encode(repositories)
+        let object = NSEntityDescription.insertNewObject(forEntityName: "ProjectRecord", into: container.viewContext)
+        object.setValue(record.id, forKey: "id")
+        object.setValue(accountID, forKey: "accountID")
+        object.setValue(name, forKey: "name")
+        object.setValue(encodedRepositories, forKey: "repositories")
+        do { try container.viewContext.save() }
+        catch { container.viewContext.rollback(); throw error }
+        return record
+    }
+
+    public func projects(accountID: Int64) throws -> [StoredProject] {
+        let request = NSFetchRequest<NSManagedObject>(entityName: "ProjectRecord")
+        request.predicate = NSPredicate(format: "accountID == %lld", accountID)
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true), NSSortDescriptor(key: "id", ascending: true)]
+        return try container.viewContext.fetch(request).map { object in
+            guard let id = object.value(forKey: "id") as? UUID,
+                  let account = object.value(forKey: "accountID") as? Int64,
+                  let name = object.value(forKey: "name") as? String,
+                  let data = object.value(forKey: "repositories") as? Data,
+                  let repositories = try? JSONDecoder().decode([RepositoryReference].self, from: data) else { throw ProjectStoreError.invalidStoredData }
+            return StoredProject(id: id, accountID: account, name: name, repositories: repositories)
+        }
+    }
+
+    public func updateRepositories(accountID: Int64, projectID: UUID, repositories: [RepositoryReference]) throws -> StoredProject {
+        guard accountID > 0, !repositories.isEmpty,
+              repositories.allSatisfy({ $0.id > 0 && !$0.fullName.isEmpty }),
+              Set(repositories.map(\.id)).count == repositories.count else { throw ProjectStoreError.invalidProject }
+        let request = NSFetchRequest<NSManagedObject>(entityName: "ProjectRecord")
+        request.predicate = NSPredicate(format: "id == %@ AND accountID == %lld", projectID as CVarArg, accountID)
+        request.fetchLimit = 1
+        guard let object = try container.viewContext.fetch(request).first,
+              let name = object.value(forKey: "name") as? String else { throw ProjectStoreError.invalidProject }
+        object.setValue(try JSONEncoder().encode(repositories), forKey: "repositories")
+        do { try container.viewContext.save() }
+        catch { container.viewContext.rollback(); throw error }
+        return StoredProject(id: projectID, accountID: accountID, name: name, repositories: repositories)
+    }
+
+    /// Applies positive source observations by numeric ID without inferring anything from missing IDs.
+    public func reconcile(accountID: Int64, observed: [RepositoryReference]) throws {
+        guard accountID > 0, observed.allSatisfy({ $0.id > 0 && !$0.fullName.isEmpty }),
+              Set(observed.map(\.id)).count == observed.count else { throw ProjectStoreError.invalidProject }
+        let byID = Dictionary(uniqueKeysWithValues: observed.map { ($0.id, $0) })
+        let request = NSFetchRequest<NSManagedObject>(entityName: "ProjectRecord")
+        request.predicate = NSPredicate(format: "accountID == %lld", accountID)
+        let records = try container.viewContext.fetch(request)
+        var updates: [(NSManagedObject, Data)] = []
+        for record in records {
+            guard let data = record.value(forKey: "repositories") as? Data,
+                  let current = try? JSONDecoder().decode([RepositoryReference].self, from: data) else {
+                throw ProjectStoreError.invalidStoredData
+            }
+            let updated = current.map { reference -> RepositoryReference in
+                guard let source = byID[reference.id] else { return reference }
+                return RepositoryReference(id: source.id, fullName: source.fullName, isPrivate: source.isPrivate,
+                                           nodeID: source.nodeID ?? reference.nodeID, syncPaused: reference.syncPaused)
+            }
+            if updated != current { updates.append((record, try JSONEncoder().encode(updated))) }
+        }
+        for (record, data) in updates { record.setValue(data, forKey: "repositories") }
+        guard !updates.isEmpty else { return }
+        do { try container.viewContext.save() }
+        catch { container.viewContext.rollback(); throw error }
+    }
+
+    private static func attribute(_ name: String, _ type: NSAttributeType) -> NSAttributeDescription {
+        let attribute = NSAttributeDescription()
+        attribute.name = name; attribute.attributeType = type; attribute.isOptional = false
+        return attribute
+    }
+}

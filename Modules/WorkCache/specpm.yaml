@@ -1,0 +1,26 @@
+apiVersion: specpm.dev/v0.1
+kind: SpecPackage
+metadata:
+  id: gitview.work-cache
+  name: Work Cache
+  version: 0.1.0
+  summary: Persist account-scoped snapshots of project work.
+  license: Apache-2.0
+  authors:
+    - name: GitView
+specs:
+  - path: specs/boundary.spec.yaml
+index:
+  provides:
+    capabilities:
+      - gitview.work.snapshot_cache
+  requires:
+    capabilities: []
+compatibility:
+  platforms:
+    - ios
+  languages:
+    - swift
+keywords:
+  - coredata
+foreignArtifacts: []

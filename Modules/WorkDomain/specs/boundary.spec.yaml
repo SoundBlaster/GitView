@@ -1,0 +1,48 @@
+apiVersion: specpm.dev/v0.1
+kind: BoundarySpec
+metadata:
+  id: gitview.work-domain
+  title: Work domain boundary
+  version: 0.1.0
+  status: draft
+  authors:
+    - name: GitView
+intent:
+  summary: Evaluate Today visibility and project work summaries from supplied observations.
+scope:
+  boundedContext: GitView
+  includes:
+    - Time-based Today eligibility for known progress and explicit unknown result.
+    - Filter work by object kind and lifecycle state.
+    - Decide whether a saved observation is stale for a caller-supplied foreground refresh age.
+    - Count unique observed work and independent attention signals with explicit unknowns.
+    - Use the same attention specification for summary counts and corresponding PR selections.
+    - Select a compact review indicator from independent source review requests, decisions and thread coverage without inferring merge readiness.
+    - Build local-calendar merged PR counts only when history coverage is sufficient.
+    - Count currently closed Issues by latest closure reason and reuse the same rule for selection.
+  excludes:
+    - GitHub integration, persistence, identity, UI and additional inclusion conditions.
+provides:
+  capabilities:
+    - id: gitview.today.time_eligibility
+      role: primary
+      summary: Evaluate Today time eligibility against supplied work progress and local calendar.
+    - id: gitview.today.visibility_filter
+      role: secondary
+      summary: Narrow work by lifecycle and kind while preserving unknown states.
+    - id: gitview.work.project_summary
+      role: secondary
+      summary: Summarize supplied work observations and coverage without fabricating history.
+requires:
+  capabilities: []
+interfaces:
+  inbound: []
+  outbound: []
+constraints: []
+effects: {}
+evidence: []
+provenance:
+  confidence: medium
+  notes:
+    - GITVIEW-SPEC-0007 is the product specification for the Today time rule.
+implementationBindings: []

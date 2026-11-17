@@ -1,0 +1,27 @@
+apiVersion: specpm.dev/v0.1
+kind: SpecPackage
+metadata:
+  id: gitview.github-api
+  name: GitHub API
+  version: 0.1.0
+  summary: Fetch pages of installations and repositories accessible to a user token.
+  license: Apache-2.0
+  authors:
+    - name: GitView
+specs:
+  - path: specs/boundary.spec.yaml
+index:
+  provides:
+    capabilities:
+      - gitview.github_api.discovery_page
+      - gitview.github_api.work_page
+  requires:
+    capabilities: []
+compatibility:
+  platforms:
+    - ios
+  languages:
+    - swift
+keywords:
+  - github
+foreignArtifacts: []

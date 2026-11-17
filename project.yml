@@ -1,0 +1,94 @@
+name: GitView
+options:
+  deploymentTarget:
+    iOS: "26.0"
+  generateEmptyDirectories: true
+packages:
+  WorkDomain:
+    path: Modules/WorkDomain
+  GitHubAuth:
+    path: Modules/GitHubAuth
+  GitHubAPI:
+    path: Modules/GitHubAPI
+  ProjectStore:
+    path: Modules/ProjectStore
+  WorkCache:
+    path: Modules/WorkCache
+targets:
+  GitView:
+    type: application
+    platform: iOS
+    sources: [GitView]
+    configFiles:
+      Debug: Config/Secrets.xcconfig
+      Release: Config/Secrets.xcconfig
+    info:
+      path: Config/Info.plist
+      properties:
+        CFBundleDisplayName: GitGrid
+        CFBundleName: GitGrid
+        BGTaskSchedulerPermittedIdentifiers:
+          - ru.egormerkushev.gitview.refresh
+        UIBackgroundModes:
+          - fetch
+        CFBundleURLTypes:
+          - CFBundleURLSchemes:
+              - gitview
+        GitHubClientID: $(GITHUB_CLIENT_ID)
+        GitHubClientSecret: $(GITHUB_CLIENT_SECRET)
+    dependencies:
+      - package: WorkDomain
+      - package: GitHubAuth
+      - package: GitHubAPI
+      - package: ProjectStore
+      - package: WorkCache
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ru.egormerkushev.gitview
+        PRODUCT_NAME: GitGrid
+        PRODUCT_MODULE_NAME: GitView
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+        TARGETED_DEVICE_FAMILY: "1,2"
+
+  GitViewIntegrationTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [GitViewIntegrationTests]
+    dependencies:
+      - target: GitView
+      - package: GitHubAuth
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ru.egormerkushev.gitview.integrationtests
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/GitGrid.app/GitGrid
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+  GitViewUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [GitViewUITests]
+    dependencies:
+      - target: GitView
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ru.egormerkushev.gitview.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+schemes:
+  GitView:
+    build:
+      targets:
+        GitView: all
+        GitViewIntegrationTests: [test]
+    test:
+      targets:
+        - GitViewIntegrationTests
+  GitViewUI:
+    build:
+      targets:
+        GitView: all
+        GitViewUITests: [test]
+    test:
+      targets:
+        - GitViewUITests
