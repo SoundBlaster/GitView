@@ -92,6 +92,11 @@ import XCTest
         for _ in 0..<4 where !blocker.isHittable { app.swipeUp() }
         XCTAssertTrue(blocker.waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Some related issues are not shown."].exists)
+        let moreBlockers = app.buttons["issue.loadRelation.blockedBy"]
+        for _ in 0..<3 where !moreBlockers.isHittable { app.swipeUp() }
+        XCTAssertTrue(moreBlockers.waitForExistence(timeout: 5))
+        moreBlockers.tap()
+        XCTAssertTrue(app.staticTexts["Could not load more related issues. Showing saved results."].waitForExistence(timeout: 10))
         let linked = app.staticTexts["Linked PR fixture"]
         for _ in 0..<4 where !linked.isHittable { app.swipeUp() }
         XCTAssertTrue(linked.waitForExistence(timeout: 5))

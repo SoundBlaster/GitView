@@ -3,6 +3,38 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkDetailTests {
+    @Test func pagesIssueDependenciesAndDetectsChangingCounts() async throws {
+        let client = GitHubWorkDetailClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let vars = body["variables"] as! [String: Any]
+            let second = vars["after"] as? String == "next"
+            let json: String
+            if second {
+                json = #"{"data":{"node":{"__typename":"Issue","id":"I1","blockedBy":{"totalCount":2,"nodes":[{"id":"I3","number":3,"title":"Second","url":"https://github.com/a/b/issues/3","state":"OPEN","repository":{"nameWithOwner":"a/b"}}],"pageInfo":{"hasNextPage":false}}}}}"#
+            } else {
+                #expect((body["query"] as! String).contains("blockedBy(first:50"))
+                json = #"{"data":{"node":{"__typename":"Issue","id":"I1","blockedBy":{"totalCount":2,"nodes":[{"id":"I2","number":2,"title":"First","url":"https://github.com/a/b/issues/2","state":"OPEN","repository":{"nameWithOwner":"a/b"}}],"pageInfo":{"hasNextPage":true,"endCursor":"next"}}}}}"#
+            }
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let result = try await client.loadIssueRelation(token: "token", id: "I1", kind: .blockedBy)
+        #expect(result.isComplete && result.total == 2 && result.items.map(\.id) == ["I2", "I3"] && result.observedAt != nil)
+        let limited = try await client.loadIssueRelation(token: "token", id: "I1", kind: .blockedBy, maxPages: 1)
+        #expect(!limited.isComplete && limited.items.count == 1)
+    }
+
+    @Test func changingIssueRelationCountDoesNotProduceCompleteResult() async throws {
+        let client = GitHubWorkDetailClient { request in
+            let vars = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let second = (vars["variables"] as! [String: Any])["after"] as? String == "next"
+            let json = second
+                ? #"{"data":{"node":{"__typename":"Issue","id":"I1","subIssues":{"totalCount":1,"nodes":[],"pageInfo":{"hasNextPage":false}}}}}"#
+                : #"{"data":{"node":{"__typename":"Issue","id":"I1","subIssues":{"totalCount":2,"nodes":[],"pageInfo":{"hasNextPage":true,"endCursor":"next"}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let result = try await client.loadIssueRelation(token: "token", id: "I1", kind: .subIssues)
+        #expect(!result.isComplete && result.total == 1)
+    }
     @Test func pagesIssueLinksIndependentlyAndCombinesEvidence() async throws {
         let client = GitHubWorkDetailClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]

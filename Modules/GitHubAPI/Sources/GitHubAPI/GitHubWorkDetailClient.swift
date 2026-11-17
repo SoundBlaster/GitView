@@ -13,6 +13,11 @@ public struct GitHubIssueRelationPage: Codable, Sendable {
     public let items: [GitHubIssueReference]
     public let total: Int
     public let isComplete: Bool
+    public let observedAt: Date?
+}
+
+public enum GitHubIssueRelationKind: String, Hashable, Sendable {
+    case blockedBy, blocking, subIssues
 }
 
 public struct GitHubPullRequestReference: Codable, Identifiable, Sendable {
@@ -70,6 +75,16 @@ public struct GitHubWorkDetails: Codable, Sendable {
                 blockedBy: relations.blockedBy, blocking: relations.blocking, subIssues: relations.subIssues, pullRequests: references),
             observedAt: observedAt)
     }
+
+    public func replacingIssueRelation(_ page: GitHubIssueRelationPage, kind: GitHubIssueRelationKind) -> GitHubWorkDetails? {
+        guard let relations = issueRelationships else { return nil }
+        return GitHubWorkDetails(body: body, createdAt: createdAt, author: author, labels: labels, labelsComplete: labelsComplete,
+            headBranch: headBranch, baseBranch: baseBranch, headRepository: headRepository, baseRepository: baseRepository,
+            additions: additions, deletions: deletions, changedFiles: changedFiles, commits: commits,
+            issueRelationships: GitHubIssueRelationships(parent: relations.parent, parentObserved: relations.parentObserved,
+                blockedBy: kind == .blockedBy ? page : relations.blockedBy, blocking: kind == .blocking ? page : relations.blocking,
+                subIssues: kind == .subIssues ? page : relations.subIssues, pullRequests: relations.pullRequests), observedAt: observedAt)
+    }
 }
 
 public enum WorkDetailError: Error, Equatable {
@@ -83,6 +98,50 @@ public enum WorkDetailError: Error, Equatable {
 public struct GitHubWorkDetailClient: Sendable {
     private let transport: GitHubDiscoveryClient.Transport
     public init(transport: @escaping GitHubDiscoveryClient.Transport = GitHubDiscoveryClient.send) { self.transport = transport }
+
+    public func loadIssueRelation(token: String, id: String, kind: GitHubIssueRelationKind, maxPages: Int = 10) async throws -> GitHubIssueRelationPage {
+        guard !id.isEmpty, !token.isEmpty, !token.contains("\n"), !token.contains("\r"), maxPages > 0 else { throw WorkDetailError.invalidRequest }
+        let query = """
+        query IssueRelation($id:ID!, $after:String) {
+          node(id:$id) { __typename ... on Issue { id
+            \(kind.rawValue)(first:50, after:$after) {
+              totalCount nodes { id number title url state repository { nameWithOwner } } pageInfo { hasNextPage endCursor }
+            }
+          } }
+        }
+        """
+        var after: String?, cursors = Set<String>(), seen = Set<String>()
+        var items: [GitHubIssueReference] = []
+        var initialTotal: Int?, currentTotal = 0, consistent = true, hasMore = true
+        for _ in 0..<maxPages {
+            try Task.checkCancellation()
+            var request = URLRequest(url: URL(string: "https://api.github.com/graphql")!)
+            request.httpMethod = "POST"
+            request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try JSONEncoder().encode(RelationQuery(query: query, variables: RelationVariables(id: id, after: after)))
+            let (data, response) = try await transport(request)
+            guard (200..<300).contains(response.statusCode) else { throw WorkDetailError.httpStatus(response.statusCode) }
+            guard let envelope = try? JSONDecoder().decode(Envelope.self, from: data) else { throw WorkDetailError.invalidResponse }
+            guard envelope.errors?.isEmpty != false else { throw WorkDetailError.graphQLFailure }
+            guard let node = envelope.data?.node, node.id == id, node.typename == "Issue" else { throw WorkDetailError.invalidResponse }
+            let connection: IssueConnection?
+            switch kind { case .blockedBy: connection = node.blockedBy; case .blocking: connection = node.blocking; case .subIssues: connection = node.subIssues }
+            guard let connection, connection.totalCount >= 0 else { throw WorkDetailError.invalidResponse }
+            if let initialTotal { consistent = consistent && initialTotal == connection.totalCount } else { initialTotal = connection.totalCount }
+            currentTotal = connection.totalCount
+            for node in connection.nodes {
+                guard let node else { consistent = false; continue }
+                guard seen.insert(node.id).inserted else { consistent = false; continue }
+                items.append(node.reference)
+            }
+            after = try nextCursor(connection.pageInfo, seen: &cursors)
+            hasMore = after != nil
+            if !hasMore { break }
+        }
+        return GitHubIssueRelationPage(items: items, total: currentTotal,
+            isComplete: consistent && !hasMore && items.count == currentTotal, observedAt: .now)
+    }
 
     public func loadIssuePullRequestReferences(token: String, id: String, maxPages: Int = 10) async throws -> GitHubPullRequestReferences {
         guard !id.isEmpty, !token.isEmpty, !token.contains("\n"), !token.contains("\r"), maxPages > 0 else { throw WorkDetailError.invalidRequest }
@@ -212,6 +271,8 @@ public struct GitHubWorkDetailClient: Sendable {
 
     private struct Query: Encodable { let query: String; let variables: Variables }
     private struct LinkQuery: Encodable { let query: String; let variables: LinkVariables }
+    private struct RelationQuery: Encodable { let query: String; let variables: RelationVariables }
+    private struct RelationVariables: Encodable { let id: String; let after: String? }
     private struct LinkVariables: Encodable { let id: String; let crossAfter: String?; let manualAfter: String?; let loadCross: Bool; let loadManual: Bool }
     private struct Variables: Encodable { let id: String }
     private struct Envelope: Decodable { let data: DataValue?; let errors: [GraphError]? }
@@ -292,7 +353,7 @@ public struct GitHubWorkDetailClient: Sendable {
             var seen = Set<String>()
             let items = nodes.compactMap { $0?.reference }.filter { seen.insert($0.id).inserted }
             return .init(items: items, total: totalCount,
-                         isComplete: totalCount >= 0 && !pageInfo.hasNextPage && items.count == totalCount && nodes.count == items.count)
+                         isComplete: totalCount >= 0 && !pageInfo.hasNextPage && items.count == totalCount && nodes.count == items.count, observedAt: nil)
         }
     }
     private struct Actor: Decodable { let login: String }

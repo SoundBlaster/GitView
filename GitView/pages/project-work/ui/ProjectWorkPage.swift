@@ -669,6 +669,9 @@ private struct WorkDetailSheet: View {
     @State private var loadingLinks = false
     @State private var linkError = false
     @State private var linkPageLimit = 10
+    @State private var loadingRelation: GitHubIssueRelationKind?
+    @State private var relationError: GitHubIssueRelationKind?
+    @State private var relationPageLimits: [GitHubIssueRelationKind: Int] = [:]
 
     var body: some View {
         NavigationStack {
@@ -692,7 +695,10 @@ private struct WorkDetailSheet: View {
                     WorkDescriptionDetails(details: details)
                     if item.kind == .issue {
                         IssueRelationshipDetails(relationships: details.issueRelationships, loading: loadingLinks,
-                            canLoad: !loadingDetails, loadError: linkError, onLoadMore: { Task { await loadMoreLinks() } })
+                            canLoad: !loadingDetails && loadingRelation == nil, loadError: linkError,
+                            loadingRelation: loadingRelation, relationError: relationError,
+                            onLoadMore: { Task { await loadMoreLinks() } },
+                            onLoadRelation: { kind in Task { await loadMoreRelation(kind) } })
                     }
                 }
                 if loadingDetails { ProgressView("Loading details") }
@@ -756,7 +762,7 @@ private struct WorkDetailSheet: View {
     }
 
     @MainActor private func loadMoreLinks() async {
-        guard !loadingLinks, !loadingDetails else { return }
+        guard !loadingLinks, !loadingDetails, loadingRelation == nil else { return }
         loadingLinks = true
         linkError = false
         defer { loadingLinks = false }
@@ -771,6 +777,24 @@ private struct WorkDetailSheet: View {
         } catch is CancellationError {
         } catch { linkError = true }
     }
+
+    @MainActor private func loadMoreRelation(_ kind: GitHubIssueRelationKind) async {
+        guard loadingRelation == nil, !loadingLinks, !loadingDetails else { return }
+        loadingRelation = kind
+        relationError = nil
+        defer { loadingRelation = nil }
+        do {
+            let credential = try await sessionManager.usableSession(for: accountID)
+            let limit = relationPageLimits[kind] ?? 10
+            let page = try await GitHubWorkDetailClient().loadIssueRelation(token: credential.accessToken, id: item.id, kind: kind, maxPages: limit)
+            try Task.checkCancellation()
+            guard let updated = (details ?? item.details)?.replacingIssueRelation(page, kind: kind) else { relationError = kind; return }
+            details = updated
+            if !page.isComplete { relationPageLimits[kind] = limit + 10 }
+            if !onDetails(item, updated) { storageError = true }
+        } catch is CancellationError {
+        } catch { relationError = kind }
+    }
 }
 
 private struct IssueRelationshipDetails: View {
@@ -778,7 +802,10 @@ private struct IssueRelationshipDetails: View {
     let loading: Bool
     let canLoad: Bool
     let loadError: Bool
+    let loadingRelation: GitHubIssueRelationKind?
+    let relationError: GitHubIssueRelationKind?
     let onLoadMore: () -> Void
+    let onLoadRelation: (GitHubIssueRelationKind) -> Void
 
     var body: some View {
         Section("Parent issue") {
@@ -790,9 +817,9 @@ private struct IssueRelationshipDetails: View {
                 Text("Parent issue unavailable").foregroundStyle(.secondary)
             }
         }
-        relationSection("Blocked by", page: relationships?.blockedBy)
-        relationSection("Blocking", page: relationships?.blocking)
-        relationSection("Direct sub-issues", page: relationships?.subIssues)
+        relationSection("Blocked by", page: relationships?.blockedBy, kind: .blockedBy)
+        relationSection("Blocking", page: relationships?.blocking, kind: .blocking)
+        relationSection("Direct sub-issues", page: relationships?.subIssues, kind: .subIssues)
         Section("Linked pull requests") {
             if let page = relationships?.pullRequests {
                 ForEach(page.items) { pull in
@@ -829,12 +856,23 @@ private struct IssueRelationshipDetails: View {
         }
     }
 
-    private func relationSection(_ title: String, page: GitHubIssueRelationPage?) -> some View {
+    private func relationSection(_ title: String, page: GitHubIssueRelationPage?, kind: GitHubIssueRelationKind) -> some View {
         Section(title) {
             if let page {
                 LabeledContent("Reported total", value: "\(page.total)")
                 ForEach(page.items) { issue in issueLink(issue) }
-                if !page.isComplete { Text("Some related issues are not shown.").foregroundStyle(.secondary) }
+                if !page.isComplete {
+                    Text("Some related issues are not shown.").foregroundStyle(.secondary)
+                    Button("Load more \(title)") { onLoadRelation(kind) }
+                        .disabled(!canLoad || loading || loadingRelation != nil)
+                        .accessibilityIdentifier("issue.loadRelation.\(kind.rawValue)")
+                }
+                if loadingRelation == kind { ProgressView("Loading related issues") }
+                if relationError == kind { Text("Could not load more related issues. Showing saved results.").foregroundStyle(.secondary) }
+                if let observedAt = page.observedAt {
+                    Text("Relations observed \(observedAt.formatted(date: .abbreviated, time: .shortened))")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
             } else {
                 Text("Relationships unavailable").foregroundStyle(.secondary)
             }
