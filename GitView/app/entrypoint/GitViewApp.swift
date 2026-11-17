@@ -34,6 +34,7 @@ struct GitViewApp: App {
 #if DEBUG
 private struct ProjectTestFixture: View {
     @State private var library: ProjectLibrary?
+    @State private var previewSourceTransitions = 0
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
@@ -88,6 +89,24 @@ private struct ProjectTestFixture: View {
             } catch { assertionFailure("Could not create UI test fixture: \(error)") }
         }
         .onChange(of: scenePhase) {
+            if scenePhase == .background, ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-preview-source-change"),
+               let project = library?.projects.first {
+                do {
+                    let base = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                    let cache = try WorkCache(url: base.appendingPathComponent("GitGrid/WorkCache.sqlite"))
+                    guard let snapshot = try cache.load(accountID: project.accountID, projectID: project.id) else { return }
+                    let archive = try ProjectWorkArchive.decode(snapshot.payload)
+                    guard let repository = archive.repositories.first(where: { $0.id == 101 }) else { return }
+                    previewSourceTransitions += 1
+                    let outcome: RepositoryWorkRefresh.Outcome = previewSourceTransitions == 1
+                        ? .failed("GitHub HTTP 403") : .received(repository.items, complete: true)
+                    let updated = archive.applyingPartial([.init(id: 101, name: repository.name, outcome: outcome)],
+                        in: Set(project.repositories.map(\.id)), at: .now)
+                    _ = try cache.replacePayload(accountID: project.accountID, projectID: project.id,
+                                                 expected: snapshot, payload: JSONEncoder().encode(updated))
+                } catch { assertionFailure("Could not update preview source fixture: \(error)") }
+                return
+            }
             guard scenePhase == .background, ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-overview-refresh"),
                   let project = library?.projects.first else { return }
             do {

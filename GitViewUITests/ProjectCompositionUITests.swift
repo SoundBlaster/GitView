@@ -217,6 +217,35 @@ import XCTest
         for _ in 0..<6 where !app.staticTexts["Saved synthetic description"].exists { app.swipeDown() }
         XCTAssertTrue(app.staticTexts["Saved synthetic description"].exists)
     }
+    func testOpenPreviewReflectsSourceFailureAndRecoveryAfterReturn() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-preview-source-change"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let issue = app.buttons["work.I1"]
+        XCTAssertTrue(issue.waitForExistence(timeout: 10))
+        issue.press(forDuration: 1)
+        app.buttons["Preview"].tap()
+        XCTAssertTrue(app.navigationBars["Preview"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["preview.description"].label, "Saved synthetic description")
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        let problem = app.descendants(matching: .any)["preview.sourceProblem"]
+        XCTAssertTrue(problem.waitForExistence(timeout: 10))
+        XCTAssertTrue(problem.label.contains("GitHub HTTP 403"))
+        XCTAssertEqual(app.staticTexts["preview.description"].label, "Saved synthetic description")
+        app.buttons["Open in GitGrid"].tap()
+        XCTAssertTrue(app.navigationBars["Issue"].waitForExistence(timeout: 10))
+        let detailProblem = app.descendants(matching: .any)["detail.sourceProblem"]
+        XCTAssertTrue(detailProblem.waitForExistence(timeout: 5))
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(detailProblem.waitForNonExistence(timeout: 10))
+        for _ in 0..<4 where !app.staticTexts["Saved synthetic description"].exists { app.swipeUp() }
+        XCTAssertTrue(app.staticTexts["Saved synthetic description"].exists)
+    }
     func testPreviewActionKeepsTheSelectedWorkItem() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")
