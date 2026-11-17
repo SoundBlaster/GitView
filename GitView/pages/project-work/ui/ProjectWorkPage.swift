@@ -648,11 +648,21 @@ private struct WorkGridCell: View {
                 .aspectRatio(1, contentMode: .fit)
                 .frame(maxWidth: 320)
                 .overlay {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Image(systemName: item.kind == .pullRequest ? "arrow.triangle.pull" : "circle.dotted")
+                    VStack(alignment: .leading, spacing: 3) {
+                        HStack(alignment: .top, spacing: 2) {
+                            Image(systemName: item.kind == .pullRequest ? "arrow.trianglehead.pull" : "circle.dotted")
+                            Spacer(minLength: 0)
+                            if item.state == "MERGED" { Image(systemName: "arrow.trianglehead.merge") }
+                            else if item.state == "CLOSED" { Image(systemName: "xmark.circle") }
+                            else if item.state != "OPEN" { Text("?") }
+                        }
+                        .font(.caption2)
+                        Spacer(minLength: 0)
                         if showDetails {
                             Text("#\(item.number) · \(item.state)").font(.caption)
                             Text(item.title).font(.caption).lineLimit(3)
+                        } else {
+                            Text("\(item.number)").font(.caption2.monospacedDigit()).lineLimit(1).frame(maxWidth: .infinity, alignment: .trailing)
                         }
                     }.padding(6).foregroundStyle(tint)
                 }
@@ -660,7 +670,7 @@ private struct WorkGridCell: View {
         .buttonStyle(.plain)
         .accessibilityIdentifier("work.\(item.id)")
         .accessibilityLabel(item.kind == .pullRequest
-            ? "Pull request \(item.number), \(item.title), \(item.state), CI \(item.checkStatus ?? "unavailable")"
+            ? "Pull request \(item.number), \(item.title), \(item.state)\(item.isDraft ? ", draft" : ""), CI \(item.checkStatus ?? "unavailable")"
             : "Issue \(item.number), \(item.title), \(item.state)")
         .contextMenu {
             Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }

@@ -1,6 +1,25 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testDenseGridExposesTypeStateAndDraft() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let merged = app.buttons["work.P1"]
+        let draft = app.buttons["work.P2"]
+        let issue = app.buttons["work.I3"]
+        XCTAssertTrue(merged.waitForExistence(timeout: 10))
+        XCTAssertTrue(merged.label.contains("Pull request 2") && merged.label.contains("MERGED"))
+        XCTAssertTrue(draft.label.contains("draft") && draft.label.contains("FAILURE"))
+        XCTAssertTrue(issue.label.contains("Issue 5") && issue.label.contains("CLOSED"))
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "Dense work grid"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+    }
     func testProjectThreadSignalKeepsItsPartialOrigin() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")

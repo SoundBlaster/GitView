@@ -69,7 +69,7 @@ private struct WorkCell: View {
             .frame(maxWidth: 320)
             .overlay {
                 VStack {
-                    Image(systemName: item.completed ? "checkmark" : "arrow.triangle.pull")
+                    Image(systemName: item.completed ? "checkmark" : "arrow.trianglehead.pull")
                     if expanded { Text("#\(item.id) · \(item.completed ? "Merged" : "Open")").font(.caption) }
                 }.foregroundStyle(item.completed ? .green : .blue)
             }
