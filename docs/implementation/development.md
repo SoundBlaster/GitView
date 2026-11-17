@@ -17,3 +17,5 @@ The copied FSD linter is from FSD iOS commit `21731b9dd7d5008b832af5caca6d19f7a3
 See [implementation status](status.md) for the scope and product-spec links.
 
 For a locally registered GitHub App, configure its callback URL as `gitview://oauth/callback` and create an untracked `Config/Local.xcconfig` with `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` build settings. These values become part of the app; the client secret is extractable and must not be treated as a confidential credential. Do not commit the local file. Registration, repository permissions and real OAuth behavior remain to be verified.
+
+See [GitHub App setup](github-app-setup.md) for the registration and installation steps.
