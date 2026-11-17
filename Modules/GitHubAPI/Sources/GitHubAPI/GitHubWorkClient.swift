@@ -13,6 +13,9 @@ public struct GitHubWorkItem: Codable, Identifiable, Sendable {
     public let mergedAt: Date?
     public let isDraft: Bool
     public let kind: GitHubWorkKind
+    public let headRevision: String?
+    public let checkStatus: String?
+    public let reviewDecision: String?
 }
 
 public struct GitHubWorkPage: Sendable {
@@ -75,7 +78,7 @@ public struct GitHubWorkClient: Sendable {
               pageInfo { hasNextPage endCursor }
             }
             pullRequests(first:100, after:$pullAfter, orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadPulls) {
-              nodes { id number title url state updatedAt closedAt mergedAt isDraft }
+              nodes { id number title url state updatedAt closedAt mergedAt isDraft headRefOid reviewDecision statusCheckRollup { state } }
               pageInfo { hasNextPage endCursor }
             }
           }
@@ -119,8 +122,10 @@ public struct GitHubWorkClient: Sendable {
     private struct Node: Decodable {
         let id: String; let number: Int; let title: String; let url: URL; let state: String
         let updatedAt: Date; let closedAt: Date?; let mergedAt: Date?; let isDraft: Bool?
+        let headRefOid: String?; let reviewDecision: String?; let statusCheckRollup: CheckRollup?
         func item(kind: GitHubWorkKind) -> GitHubWorkItem {
-            GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt, closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft ?? false, kind: kind)
+            GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt, closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft ?? false, kind: kind, headRevision: headRefOid, checkStatus: statusCheckRollup?.state, reviewDecision: reviewDecision)
         }
     }
+    private struct CheckRollup: Decodable { let state: String }
 }

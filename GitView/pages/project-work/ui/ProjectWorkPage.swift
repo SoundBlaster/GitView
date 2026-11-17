@@ -212,10 +212,10 @@ private struct WorkGridCell: View {
     @Environment(\.openURL) private var openURL
 
     private var tint: Color {
-        switch item.state {
-        case "OPEN": .green
-        case "MERGED": .purple
-        case "CLOSED": .gray
+        switch item.checkStatus {
+        case "ERROR", "FAILURE": .red
+        case "PENDING", "EXPECTED": .yellow
+        case "SUCCESS": .green
         default: .secondary
         }
     }
@@ -237,7 +237,9 @@ private struct WorkGridCell: View {
                 }
         }
         .buttonStyle(.plain)
-        .accessibilityLabel("\(item.kind == .pullRequest ? "Pull request" : "Issue") \(item.number), \(item.title), \(item.state)")
+        .accessibilityLabel(item.kind == .pullRequest
+            ? "Pull request \(item.number), \(item.title), \(item.state), CI \(item.checkStatus ?? "unavailable")"
+            : "Issue \(item.number), \(item.title), \(item.state)")
         .contextMenu {
             Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
             ShareLink(item: item.url)
@@ -245,6 +247,10 @@ private struct WorkGridCell: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text(item.title).font(.headline)
                 Text("#\(item.number) · \(item.state)").foregroundStyle(.secondary)
+                if item.kind == .pullRequest {
+                    Text("CI: \(item.checkStatus ?? "Unavailable")")
+                    Text("Review: \(item.reviewDecision ?? "Unavailable")")
+                }
             }.padding()
         }
     }
@@ -263,6 +269,10 @@ private struct WorkDetailSheet: View {
                     Text(item.title).font(.headline)
                     LabeledContent("Number", value: "#\(item.number)")
                     LabeledContent("State", value: item.state)
+                    if item.kind == .pullRequest {
+                        LabeledContent("CI", value: item.checkStatus ?? "Unavailable")
+                        LabeledContent("Review", value: item.reviewDecision ?? "Unavailable")
+                    }
                 }
                 Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
                 ShareLink(item: item.url)

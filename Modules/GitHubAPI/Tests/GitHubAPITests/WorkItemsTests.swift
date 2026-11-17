@@ -3,6 +3,29 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkItemsTests {
+    @Test func oldCachedItemWithoutSignalsRemainsReadable() throws {
+        let json = #"{"id":"P1","number":2,"title":"Fix","url":"https://github.com/a/b/pull/2","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"pullRequest"}"#
+        let item = try JSONDecoder().decode(GitHubWorkItem.self, from: Data(json.utf8))
+        #expect(item.checkStatus == nil)
+        #expect(item.reviewDecision == nil)
+        #expect(item.headRevision == nil)
+    }
+    @Test func preservesIndependentCurrentCheckAndReviewSignals() async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let query = body["query"] as! String
+            #expect(query.contains("statusCheckRollup"))
+            #expect(query.contains("reviewDecision"))
+            let json = #"{"data":{"repository":{"databaseId":42,"issues":{"nodes":[],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[{"id":"P1","number":2,"title":"Fix","url":"https://github.com/a/b/pull/2","state":"OPEN","closedAt":null,"mergedAt":null,"updatedAt":"2026-11-17T10:00:00Z","isDraft":false,"headRefOid":"abc","statusCheckRollup":{"state":"FAILURE"},"reviewDecision":"APPROVED"}],"pageInfo":{"hasNextPage":false}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let item = try #require(await client.firstPage(token: "token", repositoryID: 42, fullName: "a/b").items.first)
+        #expect(item.checkStatus == "FAILURE")
+        #expect(item.reviewDecision == "APPROVED")
+        #expect(item.headRevision == "abc")
+        let restored = try JSONDecoder().decode(GitHubWorkItem.self, from: JSONEncoder().encode(item))
+        #expect(restored.checkStatus == "FAILURE")
+    }
     @Test func decodesSeparatePullRequestsAndIssuesAndCoverage() async throws {
         let client = GitHubWorkClient { request in
             #expect(request.url?.absoluteString == "https://api.github.com/graphql")
