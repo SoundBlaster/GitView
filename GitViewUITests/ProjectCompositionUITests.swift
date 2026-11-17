@@ -1,6 +1,35 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testDenseProjectGridRetainsAttentionNavigation() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-dense", "--gitgrid-ui-test-large-summary", "--gitgrid-ui-test-project-grid"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Fixture Project, ")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 15))
+        let loaded = NSPredicate(format: "label CONTAINS %@", "333 open pull requests")
+        expectation(for: loaded, evaluatedWith: project)
+        waitForExpectations(timeout: 15)
+        app.buttons["Zoom"].tap(); app.buttons["Smaller"].tap()
+        let sixColumns = XCTAttachment(screenshot: app.screenshot())
+        sixColumns.name = "Six-column project grid with attention"
+        sixColumns.lifetime = .keepAlways
+        add(sixColumns)
+        app.buttons["Zoom"].tap(); app.buttons["Smaller"].tap()
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "Eight-column project grid with attention"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+        project.press(forDuration: 1)
+        let signal = app.buttons["Show failed CI"]
+        XCTAssertTrue(signal.waitForExistence(timeout: 5))
+        let preview = XCTAttachment(screenshot: app.screenshot())
+        preview.name = "Dense project preview"
+        preview.lifetime = .keepAlways
+        add(preview)
+        signal.tap()
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Origin: 133 pull requests")).firstMatch.waitForExistence(timeout: 10))
+    }
     func testLargeProjectSummaryInDarkAndAccessibilitySizes() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-dense", "--gitgrid-ui-test-large-summary", "--gitgrid-ui-test-dark-projects"]

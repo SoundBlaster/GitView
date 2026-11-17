@@ -53,7 +53,7 @@ struct ProjectsPage: View {
                 LazyVGrid(columns: gridColumns, spacing: 6) {
                     ForEach(library.projects) { project in
                         Button { selectedRoute = ProjectRoute(project: project, attention: nil) } label: {
-                            ProjectCell(project: project, overview: overviews[project.id], expanded: effectiveColumns <= 2)
+                            ProjectCell(project: project, overview: overviews[project.id], expanded: effectiveColumns <= 2, compact: effectiveColumns >= 6)
                         }
                         .buttonStyle(.plain)
                         .accessibilityIdentifier("project.\(project.id.uuidString)")
@@ -72,7 +72,7 @@ struct ProjectsPage: View {
                                 }
                             }
                         } preview: {
-                            ProjectCell(project: project, overview: overviews[project.id], expanded: true).padding()
+                            ProjectCell(project: project, overview: overviews[project.id], expanded: true, compact: false).padding()
                         }
                     }
                 }
@@ -232,9 +232,45 @@ private struct ProjectCell: View {
     let project: StoredProject
     let overview: ProjectOverview?
     let expanded: Bool
+    let compact: Bool
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     var body: some View {
+        Group {
+            if compact { compactCell } else { standardCell }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(accessibilitySummary)
+    }
+
+    private var compactCell: some View {
+        RoundedRectangle(cornerRadius: 6)
+            .fill(.quaternary)
+            .aspectRatio(1, contentMode: .fit)
+            .overlay {
+                VStack(alignment: .leading, spacing: 1) {
+                    HStack(spacing: 1) {
+                        Image(systemName: "folder")
+                        Spacer(minLength: 0)
+                        if let overview, overview.summary.failedCI.count > 0 {
+                            Image(systemName: "xmark.circle.fill").foregroundStyle(.red)
+                        } else if let overview, overview.summary.affectedByThreads.count > 0 {
+                            Image(systemName: "text.bubble.fill").foregroundStyle(.orange)
+                        } else if overview == nil || overview?.summary.coverageComplete == false || overview?.hasPausedRepositories == true ||
+                            (overview?.summary.failedCI.unavailable ?? 0) > 0 || (overview?.summary.unresolvedThreads.unavailable ?? 0) > 0 {
+                            Image(systemName: "questionmark.circle").foregroundStyle(.secondary)
+                        }
+                    }
+                    .font(.caption2)
+                    Spacer(minLength: 0)
+                    Text(project.name).font(.caption2.weight(.semibold)).lineLimit(2)
+                        .minimumScaleFactor(0.6).truncationMode(.middle)
+                }
+                .padding(3)
+            }
+    }
+
+    private var standardCell: some View {
         VStack(alignment: .leading, spacing: 6) {
             Image(systemName: "folder")
             Text(project.name).font(.caption.weight(.semibold))
@@ -295,8 +331,6 @@ private struct ProjectCell: View {
         .frame(maxWidth: .infinity)
         .aspectRatio(dynamicTypeSize.isAccessibilitySize ? nil : 1, contentMode: .fit)
         .background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(accessibilitySummary)
     }
 
     private var accessibilitySummary: String {
