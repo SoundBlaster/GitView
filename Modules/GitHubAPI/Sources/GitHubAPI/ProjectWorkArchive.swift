@@ -25,6 +25,7 @@ public struct RepositoryWorkRefresh: Sendable {
 
 /// Durable per-repository observations; legacy unscoped entries remain until a complete refresh.
 public struct ProjectWorkArchive: Codable, Sendable {
+    public enum RemovalError: Error, Equatable { case unattributedData }
     public var repositories: [RepositoryWorkObservation]
     public var legacyItems: [GitHubWorkItem]
     public var lastAttemptAt: Date?
@@ -62,6 +63,14 @@ public struct ProjectWorkArchive: Codable, Sendable {
     }
     public func hasCompleteObservation(for ids: Set<Int64>) -> Bool {
         coversRepositories(ids) && completeScopeIDs.map { Set($0) == ids } == true
+    }
+
+    /// Removes only observations attributable to this repository, including detached ones.
+    public func forgetting(repositoryID: Int64) throws -> ProjectWorkArchive {
+        guard legacyItems.isEmpty, retainedLegacyItems?.isEmpty ?? true else { throw RemovalError.unattributedData }
+        return ProjectWorkArchive(repositories: repositories.filter { $0.id != repositoryID }, legacyItems: [],
+            lastAttemptAt: lastAttemptAt, detachedRepositories: detachedRepositories?.filter { $0.id != repositoryID },
+            retainedLegacyItems: retainedLegacyItems, completeScopeIDs: nil)
     }
 
     public func applying(_ results: [RepositoryWorkRefresh], at date: Date) -> ProjectWorkArchive {

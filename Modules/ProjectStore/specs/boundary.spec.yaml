@@ -16,6 +16,7 @@ scope:
     - Persist repository identity and last observed name and privacy.
     - Preserve a known GitHub node ID when a later source observation omits it.
     - Update repository membership within a specified account and project.
+    - Persist a project-scoped synchronization pause for each repository, defaulting legacy records to enabled.
     - Reconcile observed repository metadata by numeric identity across an account's projects without treating absence as deletion.
   excludes:
     - Repository access verification, synchronization, project renaming and migration.

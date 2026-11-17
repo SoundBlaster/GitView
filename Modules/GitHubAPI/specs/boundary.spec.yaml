@@ -35,6 +35,7 @@ scope:
     - Collect independent repository refresh outcomes sequentially through an injectable loader; cancellation stops the batch without returning partial results.
     - Read previous unscoped work snapshots until a complete refresh replaces them.
     - Retain observations for repositories removed from a project and restore them if re-added.
+    - Forget attributable repository observations in one archive while rejecting deletion when retained legacy work is unattributed.
     - Provide repository context for work objects only when its source association is unambiguous.
     - Expose the unambiguous repository observation and its source limitation for each observed work object.
     - Validate next-page links and report HTTP failures.

@@ -3,6 +3,26 @@ import Testing
 @testable import GitHubAPI
 
 struct ProjectWorkArchiveTests {
+    @Test func forgettingOneRepositoryKeepsOtherRepositoryAndInvalidatesCoverage() throws {
+        let archive = ProjectWorkArchive().applying([
+            .init(id: 1, name: "a/one", outcome: .received([try item("one")], complete: true)),
+            .init(id: 2, name: "a/two", outcome: .received([try item("two")], complete: true))
+        ], at: .now)
+        let updated = try archive.forgetting(repositoryID: 1)
+        #expect(updated.items.map(\.id) == ["two"])
+        #expect(updated.detachedRepositories?.contains(where: { $0.id == 1 }) != true)
+        #expect(!updated.hasCompleteObservation(for: [1, 2]))
+        #expect(archive.items.count == 2)
+        let detached = archive.restricting(to: [2])
+        #expect(detached.detachedRepositories?.contains(where: { $0.id == 1 }) == true)
+        let forgotten = try detached.forgetting(repositoryID: 1)
+        #expect(forgotten.detachedRepositories?.contains(where: { $0.id == 1 }) != true)
+    }
+
+    @Test func forgettingRejectsUnattributedLegacyData() throws {
+        let legacy = try ProjectWorkArchive.decode(JSONEncoder().encode([try item("unknown")]))
+        #expect(throws: ProjectWorkArchive.RemovalError.unattributedData) { try legacy.forgetting(repositoryID: 1) }
+    }
     @Test func repositoryContextIsUnavailableWhenSourceIdentityIsAmbiguous() throws {
         let json = #"{"id":"I1","number":1,"title":"Issue","url":"https://github.com/a/one/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue"}"#
         let item = try JSONDecoder().decode(GitHubWorkItem.self, from: Data(json.utf8))

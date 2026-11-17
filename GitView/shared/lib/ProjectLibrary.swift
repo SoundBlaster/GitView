@@ -80,12 +80,12 @@ struct BackgroundRefreshSession: Equatable {
     func run() async throws {
         let initial = projects()
         var observations: [Int64: RepositoryWorkRefresh] = [:]
-        for project in initial where !project.repositories.isEmpty {
+        for project in initial where project.repositories.contains(where: { !$0.syncPaused }) {
             try Task.checkCancellation()
             guard try await isCurrent() else { return }
             guard try needsRefresh(project) else { continue }
             var batch: [RepositoryWorkRefresh] = []
-            for repository in project.repositories {
+            for repository in project.repositories where !repository.syncPaused {
                 try Task.checkCancellation()
                 let observation: RepositoryWorkRefresh
                 if let existing = observations[repository.id] { observation = existing }
@@ -114,11 +114,11 @@ struct BackgroundRefreshSession: Equatable {
 
     func run(after previous: UUID?, repositoryAfter: (UUID) -> Int64? = { _ in nil }, now: Date = .now) async throws -> Outcome {
         guard let initial = try session(), initial.expiresAt.map({ $0 > now }) ?? true else { return .unavailable }
-        let candidates = try projects(initial.accountID).filter { !$0.repositories.isEmpty }
+        let candidates = try projects(initial.accountID).filter { $0.repositories.contains(where: { !$0.syncPaused }) }
             .sorted { $0.id.uuidString < $1.id.uuidString }
         guard !candidates.isEmpty else { return .unavailable }
         let selected = candidates.first { candidate in previous.map { candidate.id.uuidString > $0.uuidString } ?? false } ?? candidates[0]
-        let sorted = selected.repositories.sorted { $0.id < $1.id }
+        let sorted = selected.repositories.filter { !$0.syncPaused }.sorted { $0.id < $1.id }
         let remaining = sorted.filter { repository in repositoryAfter(selected.id).map { repository.id > $0 } ?? true }
         let batch = Array((remaining.isEmpty ? sorted : remaining).prefix(3))
         let observations = try await fetch(initial.token, batch)
@@ -166,6 +166,7 @@ struct BackgroundRefreshSession: Equatable {
 }
 
 @MainActor @Observable final class ProjectLibrary {
+    enum SavedWorkError: Error { case cacheChanged }
     private let store: ProjectStore
     let accountID: Int64
     private(set) var projects: [StoredProject] = []
@@ -196,7 +197,8 @@ struct BackgroundRefreshSession: Equatable {
         var repositories = project.repositories
         if let index = repositories.firstIndex(where: { $0.id == repository.id }) {
             let current = repositories[index]
-            repositories[index] = RepositoryReference(id: repository.id, fullName: repository.fullName, isPrivate: repository.isPrivate, nodeID: repository.nodeID ?? current.nodeID)
+            repositories[index] = RepositoryReference(id: repository.id, fullName: repository.fullName, isPrivate: repository.isPrivate,
+                                                       nodeID: repository.nodeID ?? current.nodeID, syncPaused: current.syncPaused)
         }
         else { repositories.append(repository) }
         _ = try store.updateRepositories(accountID: accountID, projectID: projectID, repositories: repositories)
@@ -209,6 +211,32 @@ struct BackgroundRefreshSession: Equatable {
         let remaining = project.repositories.filter { $0.id != repositoryID }
         _ = try store.updateRepositories(accountID: accountID, projectID: projectID, repositories: remaining)
         try reload()
+    }
+
+    func setSyncPaused(_ paused: Bool, repositoryID: Int64, projectID: UUID) throws {
+        guard let project = projects.first(where: { $0.id == projectID }),
+              project.repositories.contains(where: { $0.id == repositoryID }) else { throw ProjectStoreError.invalidProject }
+        let updated = project.repositories.map { repository in
+            guard repository.id == repositoryID else { return repository }
+            return RepositoryReference(id: repository.id, fullName: repository.fullName, isPrivate: repository.isPrivate,
+                                       nodeID: repository.nodeID, syncPaused: paused)
+        }
+        _ = try store.updateRepositories(accountID: accountID, projectID: projectID, repositories: updated)
+        try reload()
+    }
+
+    /// Pauses first so an in-flight refresh cannot restore the deleted observation.
+    func eraseSavedWork(repositoryID: Int64, from projectID: UUID, cache: WorkCache) throws {
+        guard let project = projects.first(where: { $0.id == projectID }),
+              project.repositories.contains(where: { $0.id == repositoryID }) else { throw ProjectStoreError.invalidProject }
+        let snapshot = try cache.load(accountID: accountID, projectID: projectID)
+        let replacement = try snapshot.map { try JSONEncoder().encode(ProjectWorkArchive.decode($0.payload).forgetting(repositoryID: repositoryID)) }
+        try setSyncPaused(true, repositoryID: repositoryID, projectID: projectID)
+        if let snapshot, let replacement {
+            guard try cache.replacePayload(accountID: accountID, projectID: projectID, expected: snapshot, payload: replacement) else {
+                throw SavedWorkError.cacheChanged
+            }
+        }
     }
 
     func reconcile(observed: [RepositoryReference]) throws {

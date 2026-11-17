@@ -6,8 +6,18 @@ public struct RepositoryReference: Codable, Hashable, Sendable {
     public let fullName: String
     public let isPrivate: Bool
     public let nodeID: String?
-    public init(id: Int64, fullName: String, isPrivate: Bool, nodeID: String? = nil) {
-        self.id = id; self.fullName = fullName; self.isPrivate = isPrivate; self.nodeID = nodeID
+    public let syncPaused: Bool
+    public init(id: Int64, fullName: String, isPrivate: Bool, nodeID: String? = nil, syncPaused: Bool = false) {
+        self.id = id; self.fullName = fullName; self.isPrivate = isPrivate; self.nodeID = nodeID; self.syncPaused = syncPaused
+    }
+    private enum CodingKeys: String, CodingKey { case id, fullName, isPrivate, nodeID, syncPaused }
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(Int64.self, forKey: .id)
+        fullName = try container.decode(String.self, forKey: .fullName)
+        isPrivate = try container.decode(Bool.self, forKey: .isPrivate)
+        nodeID = try container.decodeIfPresent(String.self, forKey: .nodeID)
+        syncPaused = try container.decodeIfPresent(Bool.self, forKey: .syncPaused) ?? false
     }
 }
 
@@ -114,7 +124,8 @@ public enum ProjectStoreError: Error, Equatable {
             }
             let updated = current.map { reference -> RepositoryReference in
                 guard let source = byID[reference.id] else { return reference }
-                return RepositoryReference(id: source.id, fullName: source.fullName, isPrivate: source.isPrivate, nodeID: source.nodeID ?? reference.nodeID)
+                return RepositoryReference(id: source.id, fullName: source.fullName, isPrivate: source.isPrivate,
+                                           nodeID: source.nodeID ?? reference.nodeID, syncPaused: reference.syncPaused)
             }
             if updated != current { updates.append((record, try JSONEncoder().encode(updated))) }
         }

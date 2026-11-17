@@ -3,6 +3,27 @@ import Testing
 @testable import ProjectStore
 
 @MainActor struct ProjectStoreTests {
+    @Test func pauseIsProjectScopedAndSurvivesMetadataReconciliation() throws {
+        let store = try ProjectStore(inMemory: true)
+        let repo = RepositoryReference(id: 11, fullName: "owner/old", isPrivate: true)
+        let first = try store.create(accountID: 1, name: "First", repositories: [repo])
+        let second = try store.create(accountID: 1, name: "Second", repositories: [repo])
+        let paused = RepositoryReference(id: 11, fullName: "owner/old", isPrivate: true, syncPaused: true)
+        _ = try store.updateRepositories(accountID: 1, projectID: first.id, repositories: [paused])
+        try store.reconcile(accountID: 1, observed: [.init(id: 11, fullName: "team/new", isPrivate: false)])
+        let projects = try store.projects(accountID: 1)
+        let firstRepository = try #require(projects.first { $0.id == first.id }?.repositories.first)
+        let secondRepository = try #require(projects.first { $0.id == second.id }?.repositories.first)
+        #expect(firstRepository.syncPaused)
+        #expect(!secondRepository.syncPaused)
+        #expect(firstRepository.fullName == "team/new")
+    }
+
+    @Test func legacyRepositoryDefaultsToSyncEnabled() throws {
+        let old = #"{"id":11,"fullName":"owner/repo","isPrivate":true}"#
+        let repository = try JSONDecoder().decode(RepositoryReference.self, from: Data(old.utf8))
+        #expect(!repository.syncPaused)
+    }
     @Test func reconcilesOnlyMatchingIdentitiesAcrossProjects() throws {
         let store = try ProjectStore(inMemory: true)
         let old = RepositoryReference(id: 11, fullName: "owner/old", isPrivate: true, nodeID: "R_node")
@@ -71,5 +92,9 @@ import Testing
         let project = try first.create(accountID: 7, name: "Saved", repositories: [repo])
         let second = try ProjectStore(url: url)
         #expect(try second.projects(accountID: 7) == [project])
+        let paused = RepositoryReference(id: 12, fullName: "a/repo", isPrivate: true, syncPaused: true)
+        _ = try first.updateRepositories(accountID: 7, projectID: project.id, repositories: [paused])
+        let reopened = try ProjectStore(url: url)
+        #expect(try reopened.projects(accountID: 7).first?.repositories.first?.syncPaused == true)
     }
 }

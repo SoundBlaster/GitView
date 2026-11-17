@@ -163,7 +163,7 @@ struct ProjectsPage: View {
                     return observation
                 }, save: { project, observations in
                     let result = try ProjectRefreshPersistence.commit(cache: cache, accountID: library.accountID, projectID: project.id,
-                        observations: observations, fallback: nil, at: .now)
+                        observations: observations, fallback: nil, at: .now, scope: Set(project.repositories.map(\.id)))
                     guard result.saved else { throw OverviewRefreshError.couldNotSave }
                     if !result.complete { refreshError = "Some project summaries are incomplete. Open a project for details." }
                     loadOverviews()

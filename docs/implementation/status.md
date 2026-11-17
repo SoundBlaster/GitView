@@ -7,7 +7,7 @@ This is a code-progress record, not a claim that a product specification is full
 | GITVIEW-SPEC-0007 | Time eligibility, identity-checked paginated work grid and project-scoped filters | WorkDomain and GitHubWorkClient tests; iPhone Air Simulator UI tests with 100 synthetic work items, filtering and foreground return | Live verification, full refresh recovery and accessibility review |
 | GITVIEW-SPEC-0049 | Reevaluate cached Today selection when the system reports a day, significant-time or time-zone change, preserving project, filter and selected-object state | WorkDomain day-boundary tests; iOS simulator build | System-notification behavior during an active gesture or preview and physical-device verification |
 | GITVIEW-SPEC-0058 | PKCE attempt, token exchange, identity lookup and Keychain adapter | GitHubAuth tests; synthetic Keychain write/read/update and system GitHub sign-in prompt on signed iOS 27.0 simulator | Live GitHub authorization, callback, token refresh and saved session lifecycle |
-| GITVIEW-SPEC-0019 | Saved work remains visible on source failure; object detail offers retry and a GitHub access-management link | Simulator UI test with a synthetic HTTP 403 and unavailable session | Confirmed revocation, successful recovery and explicit local deletion across shared Projects |
+| GITVIEW-SPEC-0019 | Saved work remains visible on source failure; detail offers retry and access management; user can remove attributable saved work for one Project and pause its synchronization | Simulator UI and storage/coordinator integration tests; synthetic HTTP 403 | Confirmed revocation, successful recovery, resume-sync UI verification, unattributed legacy-data removal and physical-device verification |
 | GITVIEW-SPEC-0059 | GitHub App installation and repository page fetch, partial-result aggregation and repository selection | GitHubAPI DiscoveryTests and DiscoveryAggregateTests; simulator UI flows | Live GitHub App integration and broader error recovery |
 | GITVIEW-SPEC-0045 | Account-scoped Core Data project creation, retrieval and repository membership editing | ProjectStoreTests including SQLite reopen; simulator UI tests | Live source admission and broader recovery verification |
 | GITVIEW-SPEC-0023 | Account and project-scoped local work snapshot, per-repository merge and freshness; incomplete pages add and update observed objects while retaining unobserved work | WorkCache and ProjectWorkArchive tests, simulator integration tests | Per-object observation timestamps, live revocation attribution, real integration and on-device verification |
@@ -47,6 +47,8 @@ The delta snapshot for `GITVIEW-SPEC-0015` returned planning status without trac
 The delta snapshot for `GITVIEW-SPEC-0031` returned planning status without tracked artifacts. A synthetic HTTP 403 verifies disclosure of a known source problem; it does not establish that GitHub confirmed access revocation.
 
 The delta snapshot for `GITVIEW-SPEC-0019` returned planning status without tracked artifacts. Retrying a synthetic failed detail request leaves saved details visible; opening GitHub settings and successful access recovery have not been verified end to end.
+
+Project-scoped erasure removes attributable observations from the selected archive and pauses that repository in that Project; it does not modify other Projects or GitHub. If legacy work cannot be attributed to a repository, erasure is refused. This is logical removal through Core Data, not a claim of forensic erasure from SQLite pages or backups.
 
 ## Initial delivery sequence
 

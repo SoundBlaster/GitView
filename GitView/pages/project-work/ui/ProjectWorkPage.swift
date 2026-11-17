@@ -80,6 +80,10 @@ struct ProjectWorkPage: View {
                     Label(warning, systemImage: "exclamationmark.triangle")
                         .font(.footnote).foregroundStyle(.secondary)
                 }
+                ForEach(project.repositories.filter(\.syncPaused), id: \.id) { repository in
+                    Label("\(repository.fullName): synchronization paused", systemImage: "pause.circle")
+                        .font(.footnote).foregroundStyle(.secondary)
+                }
                 if let archive {
                     if !archive.legacyItems.isEmpty {
                         Text("Some older saved work could not yet be attributed to a repository.")
@@ -100,7 +104,12 @@ struct ProjectWorkPage: View {
                 }
                 if isLoading && !hasLoaded { ProgressView("Loading work") }
                 if hasLoaded && items.isEmpty && warning == nil {
-                    ContentUnavailableView("No work in Today", systemImage: "checkmark.circle")
+                    if project.repositories.contains(where: \.syncPaused) {
+                        ContentUnavailableView("Some saved work is unavailable", systemImage: "pause.circle",
+                            description: Text("Synchronization is paused for at least one repository."))
+                    } else {
+                        ContentUnavailableView("No work in Today", systemImage: "checkmark.circle")
+                    }
                 }
                 if hasLoaded && !items.isEmpty && visibleItems.isEmpty {
                     ContentUnavailableView("No work matches filters", systemImage: "line.3.horizontal.decrease.circle")
@@ -174,7 +183,7 @@ struct ProjectWorkPage: View {
             }
         }
         .sheet(isPresented: $showProjectSettings) {
-            ProjectSettingsSheet(project: project, library: library, sessionManager: sessionManager)
+            ProjectSettingsSheet(project: project, library: library, sessionManager: sessionManager, cache: cache)
         }
         .sheet(isPresented: $showMetrics) {
             if let archive {
@@ -203,7 +212,7 @@ struct ProjectWorkPage: View {
                 Task { await load() }
             }
         }
-        .onChange(of: project.repositories.map(\.id)) {
+        .onChange(of: project.repositories) {
             warning = "Project membership changed; updating its overview."
             observedAt = nil
             if let archive {
@@ -211,6 +220,7 @@ struct ProjectWorkPage: View {
                 self.archive = scoped
                 present(scoped.items, now: .now)
             }
+            restore()
             if isLoading { refreshPending = true } else { Task { await load() } }
         }
         .onChange(of: isLoading) {
@@ -236,6 +246,8 @@ struct ProjectWorkPage: View {
     @MainActor private func load() async {
         guard !isLoading else { return }
         let requestedRepositories = project.repositories
+        let activeRepositories = requestedRepositories.filter { !$0.syncPaused }
+        guard !activeRepositories.isEmpty else { hasLoaded = true; warning = nil; return }
         isLoading = true
         defer { isLoading = false }
         let accessToken: String
@@ -248,7 +260,7 @@ struct ProjectWorkPage: View {
         }
         let batch: ProjectRefreshResults
         do {
-            batch = try await GitHubProjectRefresh().fetch(token: accessToken, repositories: requestedRepositories.map {
+            batch = try await GitHubProjectRefresh().fetch(token: accessToken, repositories: activeRepositories.map {
                 RefreshRepository(id: $0.id, fullName: $0.fullName, nodeID: $0.nodeID)
             })
         } catch { return }
@@ -261,7 +273,7 @@ struct ProjectWorkPage: View {
             guard try await sessionManager.isCurrent(accountID: project.accountID, accessToken: accessToken) else { return }
         } catch { warning = "Could not verify the current GitHub session. Showing saved work."; return }
         guard !Task.isCancelled else { return }
-        guard library.projects.first(where: { $0.id == project.id })?.repositories.map(\.id) == requestedRepositories.map(\.id) else { return }
+        guard library.projects.first(where: { $0.id == project.id })?.repositories == requestedRepositories else { return }
         var metadataProblem = false
         if !observedRepositories.isEmpty {
             do { try library.reconcile(observed: observedRepositories) }
@@ -271,7 +283,7 @@ struct ProjectWorkPage: View {
         let result: ProjectRefreshPersistence.Result
         do {
             result = try ProjectRefreshPersistence.commit(cache: cache, accountID: project.accountID, projectID: project.id,
-                observations: results, fallback: archive, at: now)
+                observations: results, fallback: archive, at: now, scope: Set(requestedRepositories.map(\.id)))
         } catch {
             warning = "Saved work could not be read; the refresh was not saved."
             return
@@ -619,10 +631,14 @@ private struct ProjectSettingsSheet: View {
     let project: StoredProject
     let library: ProjectLibrary
     let sessionManager: GitHubSessionManager
+    let cache: WorkCache?
     @Environment(\.dismiss) private var dismiss
     @State private var pendingRemoval: RepositoryReference?
     @State private var showRemovalConfirmation = false
     @State private var removalError = false
+    @State private var pendingErase: RepositoryReference?
+    @State private var showEraseConfirmation = false
+    @State private var savedWorkError: String?
     private var currentProject: StoredProject { library.projects.first(where: { $0.id == project.id }) ?? project }
 
     var body: some View {
@@ -630,11 +646,22 @@ private struct ProjectSettingsSheet: View {
             List {
                 Section {
                     ForEach(currentProject.repositories, id: \.id) { repository in
-                        Label(repository.fullName, systemImage: repository.isPrivate ? "lock" : "book.closed")
+                        VStack(alignment: .leading) {
+                            Label(repository.fullName, systemImage: repository.isPrivate ? "lock" : "book.closed")
+                            if repository.syncPaused { Text("Synchronization paused").font(.caption).foregroundStyle(.secondary) }
+                        }
                             .accessibilityIdentifier("repository.\(repository.id)")
                             .swipeActions {
                                 Button("Remove", role: .destructive) { pendingRemoval = repository; showRemovalConfirmation = true }
                                     .disabled(currentProject.repositories.count <= 1)
+                                Button("Erase saved work", role: .destructive) { pendingErase = repository; showEraseConfirmation = true }
+                                    .disabled(cache == nil)
+                                if repository.syncPaused {
+                                    Button("Resume sync") {
+                                        do { try library.setSyncPaused(false, repositoryID: repository.id, projectID: project.id); savedWorkError = nil }
+                                        catch { savedWorkError = "Could not resume synchronization." }
+                                    }.tint(.blue)
+                                }
                             }
                     }
                     NavigationLink {
@@ -649,6 +676,7 @@ private struct ProjectSettingsSheet: View {
                     Text("A Project must contain at least one Repository.")
                 }
                 if removalError { Text("Could not update the Project.").foregroundStyle(.secondary) }
+                if let savedWorkError { Text(savedWorkError).foregroundStyle(.secondary) }
             }
             .navigationTitle(project.name)
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
@@ -661,6 +689,18 @@ private struct ProjectSettingsSheet: View {
                 }
             } message: {
                 Text("The Repository stays on GitHub and in any other Projects.")
+            }
+            .confirmationDialog("Erase saved work from this Project?", isPresented: $showEraseConfirmation, titleVisibility: .visible) {
+                Button("Erase saved work", role: .destructive) {
+                    guard let repository = pendingErase, let cache else { return }
+                    do { try library.eraseSavedWork(repositoryID: repository.id, from: project.id, cache: cache); savedWorkError = nil }
+                    catch ProjectWorkArchive.RemovalError.unattributedData {
+                        savedWorkError = "Some older saved work has no known repository. It was not removed."
+                    } catch { savedWorkError = "Could not erase saved work. Check whether synchronization is paused before retrying." }
+                    pendingErase = nil
+                }
+            } message: {
+                Text("This removes saved work for this Repository in this Project and pauses synchronization here. GitHub and other Projects are not changed. You can resume synchronization later.")
             }
         }
     }
