@@ -1,9 +1,11 @@
 import GitHubAPI
+import GitHubAuth
 import ProjectStore
 import SwiftUI
 
 struct RepositoryDiscoveryPage: View {
-    let accessToken: String
+    let sessionManager: GitHubSessionManager
+    let accountID: Int64
     let account: String
     let library: ProjectLibrary?
     @State private var result: DiscoveryResult?
@@ -55,7 +57,8 @@ struct RepositoryDiscoveryPage: View {
         isFresh = false
         defer { isLoading = false }
         do {
-            let updated = try await GitHubDiscovery().load(token: accessToken)
+            let session = try await sessionManager.usableSession(for: accountID)
+            let updated = try await GitHubDiscovery().load(token: session.accessToken)
             if !updated.isComplete, result != nil {
                 errorMessage = "Refresh was incomplete. Showing the previous results."
             } else {

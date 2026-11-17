@@ -79,6 +79,17 @@ struct SessionRefreshTests {
         #expect(fixture.load().identity.id == 2)
         #expect(fixture.load().accessToken == "other")
     }
+
+    @Test func screenCannotUseAnotherAccountsSession() async throws {
+        let now = Date(timeIntervalSince1970: 1000)
+        let fixture = RefreshFixture(now: now)
+        fixture.switchAccount(now: now)
+        let manager = GitHubSessionManager(load: { fixture.load() }, save: { fixture.save($0, $1, $2) }, refresh: { _ in
+            Issue.record("Must not refresh another account")
+            throw TestError.failed
+        })
+        await #expect(throws: SessionRefreshError.sessionChanged) { try await manager.usableSession(for: 1, now: now) }
+    }
 }
 private enum TestError: Error { case failed }
 

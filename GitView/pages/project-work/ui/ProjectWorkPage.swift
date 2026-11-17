@@ -1,4 +1,5 @@
 import GitHubAPI
+import GitHubAuth
 import ProjectStore
 import SwiftUI
 import WorkDomain
@@ -6,7 +7,7 @@ import WorkCache
 
 struct ProjectWorkPage: View {
     let project: StoredProject
-    let accessToken: String
+    let sessionManager: GitHubSessionManager
     @State private var items: [GitHubWorkItem] = []
     @State private var hasLoaded = false
     @State private var isLoading = false
@@ -24,9 +25,9 @@ struct ProjectWorkPage: View {
     @AppStorage private var showIssues: Bool
     @AppStorage private var showPullRequests: Bool
 
-    init(project: StoredProject, accessToken: String) {
+    init(project: StoredProject, sessionManager: GitHubSessionManager) {
         self.project = project
-        self.accessToken = accessToken
+        self.sessionManager = sessionManager
         let prefix = "project.\(project.id.uuidString).filters."
         _showOpen = AppStorage(wrappedValue: true, prefix + "open")
         _showMerged = AppStorage(wrappedValue: true, prefix + "merged")
@@ -120,6 +121,14 @@ struct ProjectWorkPage: View {
         guard !isLoading else { return }
         isLoading = true
         defer { isLoading = false }
+        let accessToken: String
+        do {
+            accessToken = try await sessionManager.usableSession(for: project.accountID).accessToken
+        } catch is CancellationError { return }
+        catch {
+            warning = "Could not refresh the GitHub session. Showing saved work."
+            return
+        }
         var collected: [GitHubWorkItem] = []
         var incomplete = false
         var failure: String?

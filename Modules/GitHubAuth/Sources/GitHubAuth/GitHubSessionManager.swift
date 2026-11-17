@@ -30,9 +30,13 @@ public actor GitHubSessionManager {
         self.refresh = refresh
     }
 
-    public func usableSession(now: Date = .now) async throws -> SavedGitHubCredential {
-        if let pending { return try persist(pending) }
+    public func usableSession(for accountID: Int64? = nil, now: Date = .now) async throws -> SavedGitHubCredential {
+        if let pending {
+            guard accountID == nil || pending.original.identity.id == accountID else { throw SessionRefreshError.sessionChanged }
+            return try persist(pending)
+        }
         guard let current = try load() else { throw SessionRefreshError.missingSession }
+        guard accountID == nil || current.identity.id == accountID else { throw SessionRefreshError.sessionChanged }
         guard let expiry = current.accessTokenExpiresAt, expiry <= now else { return current }
         guard let refreshToken = current.refreshToken, !refreshToken.isEmpty,
               current.refreshTokenExpiresAt.map({ $0 > now }) ?? true else {
@@ -61,6 +65,7 @@ public actor GitHubSessionManager {
         guard inFlight?.id == flight.id else {
             if let pending { return try persist(pending) }
             guard let saved = try load() else { throw SessionRefreshError.missingSession }
+            guard accountID == nil || saved.identity.id == accountID else { throw SessionRefreshError.sessionChanged }
             return saved
         }
         inFlight = nil

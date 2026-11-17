@@ -1,4 +1,5 @@
 import GitHubAPI
+import GitHubAuth
 import ProjectStore
 import SwiftUI
 import WorkCache
@@ -6,7 +7,7 @@ import WorkDomain
 
 struct ProjectsPage: View {
     let library: ProjectLibrary
-    let accessToken: String
+    let sessionManager: GitHubSessionManager
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var columns = 4
     @State private var width: CGFloat = 0
@@ -56,7 +57,7 @@ struct ProjectsPage: View {
             }
         }
         .navigationDestination(item: $selectedProject) { project in
-            ProjectWorkPage(project: project, accessToken: accessToken)
+            ProjectWorkPage(project: project, sessionManager: sessionManager)
         }
         .onAppear { loadOverviews() }
         .onChange(of: library.projects) { loadOverviews() }

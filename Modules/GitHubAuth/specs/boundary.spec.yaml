@@ -17,6 +17,7 @@ scope:
     - Read the authenticated user and store credentials in Keychain.
     - Refresh an expired token with a single shared request and persist the rotated credential.
     - Retry a failed credential write in the same session without another token rotation.
+    - Refuse to return a credential for a different requested GitHub account.
   excludes:
     - Authentication UI and application-wide session lifecycle.
 provides:
