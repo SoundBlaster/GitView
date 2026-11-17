@@ -90,8 +90,57 @@ struct SessionRefreshTests {
         })
         await #expect(throws: SessionRefreshError.sessionChanged) { try await manager.usableSession(for: 1, now: now) }
     }
+
+    @Test func disconnectPreventsLateRefreshFromRestoringSession() async throws {
+        let now = Date(timeIntervalSince1970: 1000)
+        let store = DisconnectStore(credential: RefreshFixture(now: now).load())
+        let gate = RefreshGate()
+        let manager = GitHubSessionManager(load: { store.load() }, save: { _, _, _ in Issue.record("Disconnected session was saved again") }, refresh: { _ in
+            await gate.pause()
+            return OAuthToken(accessToken: "new", refreshToken: "rotated", expiresIn: 3600, refreshTokenExpiresIn: 7200)
+        })
+        let task = Task { try await manager.usableSession(for: 1, now: now) }
+        await gate.waitUntilPaused()
+        try await manager.disconnect { store.clear() }
+        await gate.release()
+        await #expect(throws: SessionRefreshError.missingSession) { try await task.value }
+        #expect(store.load() == nil)
+    }
+
+    @Test func failedDisconnectDoesNotPretendSessionWasRemoved() async throws {
+        let now = Date(timeIntervalSince1970: 1000)
+        let credential = SavedGitHubCredential(identity: GitHubIdentity(id: 1, login: "a"), accessToken: "old", refreshToken: nil, accessTokenExpiresAt: nil, refreshTokenExpiresAt: nil)
+        let manager = GitHubSessionManager(load: { credential }, save: { _, _, _ in }, refresh: { _ in throw TestError.failed })
+        await #expect(throws: TestError.failed) { try await manager.disconnect { throw TestError.failed } }
+        #expect(try await manager.usableSession(for: 1, now: now).accessToken == "old")
+    }
 }
 private enum TestError: Error { case failed }
+
+private final class DisconnectStore: @unchecked Sendable {
+    private let lock = NSLock()
+    private var credential: SavedGitHubCredential?
+    init(credential: SavedGitHubCredential) { self.credential = credential }
+    func load() -> SavedGitHubCredential? { lock.withLock { credential } }
+    func clear() { lock.withLock { credential = nil } }
+}
+
+private actor RefreshGate {
+    private var continuation: CheckedContinuation<Void, Never>?
+    private var started: CheckedContinuation<Void, Never>?
+    func pause() async {
+        await withCheckedContinuation { continuation in
+            self.continuation = continuation
+            started?.resume()
+            started = nil
+        }
+    }
+    func waitUntilPaused() async {
+        if continuation != nil { return }
+        await withCheckedContinuation { started = $0 }
+    }
+    func release() { continuation?.resume(); continuation = nil }
+}
 
 private final class RefreshFixture: @unchecked Sendable {
     private let lock = NSLock()

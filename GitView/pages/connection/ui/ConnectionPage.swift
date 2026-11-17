@@ -51,6 +51,10 @@ struct ConnectionPage: View {
                             RepositoryDiscoveryPage(sessionManager: sessionManager, accountID: credential.identity.id, account: credential.identity.login, library: library)
                         }
                     }
+                    Button("Disconnect GitHub on this device", role: .destructive) {
+                        Task { await disconnect() }
+                    }
+                    .disabled(isConnecting)
                 }
                 NavigationLink("View demo") {
                     TodayPage(items: DemoWork.items())
@@ -58,6 +62,26 @@ struct ConnectionPage: View {
             }
             .padding()
             .onAppear { Task { await restoreSession() } }
+        }
+    }
+
+    @MainActor private func disconnect() async {
+        guard !isConnecting else { return }
+        isConnecting = true
+        defer { isConnecting = false }
+        do {
+            if let sessionManager {
+                try await sessionManager.disconnect { try store.remove() }
+            } else {
+                try store.remove()
+            }
+            credential = nil
+            identity = nil
+            library = nil
+            sessionManager = nil
+            status = "Disconnected on this device. Saved projects remain on this device."
+        } catch {
+            status = "Could not remove the saved GitHub session."
         }
     }
 

@@ -30,6 +30,14 @@ public actor GitHubSessionManager {
         self.refresh = refresh
     }
 
+    /// Removes the local credential and prevents a late refresh from saving it again.
+    public func disconnect(remove: @Sendable () throws -> Void) throws {
+        try remove()
+        inFlight?.task.cancel()
+        inFlight = nil
+        pending = nil
+    }
+
     public func usableSession(for accountID: Int64? = nil, now: Date = .now) async throws -> SavedGitHubCredential {
         if let pending {
             guard accountID == nil || pending.original.identity.id == accountID else { throw SessionRefreshError.sessionChanged }

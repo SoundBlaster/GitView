@@ -22,5 +22,8 @@ final class KeychainIntegrationTests: XCTestCase {
         let second = OAuthToken(accessToken: "synthetic-second", refreshToken: nil, expiresIn: nil, refreshTokenExpiresIn: nil)
         try store.save(identity: user, token: second, now: now)
         XCTAssertEqual(try store.load()?.accessToken, "synthetic-second")
+        try store.remove()
+        XCTAssertNil(try store.load())
+        try store.remove()
     }
 }

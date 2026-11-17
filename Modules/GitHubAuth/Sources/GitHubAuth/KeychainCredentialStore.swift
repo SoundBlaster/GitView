@@ -52,4 +52,10 @@ public struct KeychainCredentialStore: Sendable {
         guard let data = result as? Data, let credential = try? JSONDecoder().decode(SavedGitHubCredential.self, from: data) else { throw CredentialStoreError.invalidData }
         return credential
     }
+
+    public func remove() throws {
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: service, kSecAttrAccount as String: account]
+        let status = SecItemDelete(query as CFDictionary)
+        guard status == errSecSuccess || status == errSecItemNotFound else { throw CredentialStoreError.keychain(status) }
+    }
 }

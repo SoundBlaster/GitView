@@ -18,6 +18,7 @@ scope:
     - Refresh an expired token with a single shared request and persist the rotated credential.
     - Retry a failed credential write in the same session without another token rotation.
     - Refuse to return a credential for a different requested GitHub account.
+    - Remove a local credential and prevent an in-flight refresh from restoring it after disconnect.
   excludes:
     - Authentication UI and application-wide session lifecycle.
 provides:
