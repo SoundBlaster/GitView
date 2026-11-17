@@ -28,7 +28,15 @@ struct ProjectsPage: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 if library.projects.isEmpty {
-                    ContentUnavailableView("No projects yet", systemImage: "square.grid.2x2", description: Text("Choose a repository to create a project."))
+                    ContentUnavailableView {
+                        Label("No projects yet", systemImage: "square.grid.2x2")
+                    } description: {
+                        Text("Choose a repository to create a project.")
+                    } actions: {
+                        NavigationLink("Choose Repository") { repositoryDiscovery }
+                            .buttonStyle(.borderedProminent)
+                            .accessibilityIdentifier("projects.chooseRepository")
+                    }
                 }
                 if cacheError {
                     Label("Some saved summaries could not be read.", systemImage: "exclamationmark.triangle")
@@ -78,6 +86,8 @@ struct ProjectsPage: View {
         })
         .navigationTitle("Projects")
         .toolbar {
+            NavigationLink { repositoryDiscovery } label: { Label("Add Repository", systemImage: "plus") }
+                .accessibilityIdentifier("projects.addRepository")
             Menu("Zoom", systemImage: "plus.magnifyingglass") {
                 Button("Larger", systemImage: "plus.magnifyingglass") { changeZoom(.larger) }
                 Button("Smaller", systemImage: "minus.magnifyingglass") { changeZoom(.smaller) }
@@ -93,6 +103,11 @@ struct ProjectsPage: View {
             if scenePhase == .active { loadOverviews(); Task { await refreshOverviews(force: false) } }
         }
         .onChange(of: library.projects) { loadOverviews() }
+    }
+
+    private var repositoryDiscovery: some View {
+        RepositoryDiscoveryPage(sessionManager: sessionManager, accountID: library.accountID,
+                                account: "connected account", library: library)
     }
 
     @MainActor private func changeZoom(_ direction: GridZoomDirection) {

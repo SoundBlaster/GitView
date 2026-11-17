@@ -14,7 +14,7 @@ struct GitViewApp: App {
         WindowGroup {
             Group {
             #if DEBUG
-            if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-dense") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project-grid") {
+            if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-dense") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project-grid") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-empty-projects") {
                 ProjectTestFixture()
             } else {
                 ConnectionPage()
@@ -45,6 +45,7 @@ private struct ProjectTestFixture: View {
         .task {
             do {
                 let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+                if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-empty-projects") { self.library = library; return }
                 try library.create(name: "Fixture Project", repository: RepositoryReference(id: 101, fullName: "fixture/one", isPrivate: false))
                 guard let id = library.projects.first?.id else { return }
                 try library.add(repository: RepositoryReference(id: 102, fullName: "fixture/two", isPrivate: true), to: id)

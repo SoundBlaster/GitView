@@ -1,6 +1,19 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testEmptyProjectsCanOpenRepositoryDiscoveryAndReturn() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-empty-projects")
+        app.launch()
+        let choose = app.buttons["projects.chooseRepository"]
+        XCTAssertTrue(choose.waitForExistence(timeout: 10))
+        choose.tap()
+        XCTAssertTrue(app.navigationBars["Repositories"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any)["discovery.installApp"].waitForExistence(timeout: 5))
+        app.navigationBars.buttons.firstMatch.tap()
+        XCTAssertTrue(choose.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["projects.addRepository"].exists)
+    }
     func testProjectZoomKeepsVisibleProjectAfterScrolling() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project-grid")
