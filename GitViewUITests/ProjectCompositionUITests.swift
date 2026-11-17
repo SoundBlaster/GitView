@@ -305,6 +305,7 @@ import XCTest
         XCTAssertTrue(merged.waitForExistence(timeout: 10))
         XCTAssertTrue(merged.label.contains("Pull request 2") && merged.label.contains("MERGED"))
         XCTAssertTrue(draft.label.contains("draft") && draft.label.contains("FAILURE"))
+        XCTAssertTrue(draft.label.contains("review needs attention"))
         XCTAssertTrue(issue.label.contains("Issue 5") && issue.label.contains("CLOSED"))
         let screenshot = XCTAttachment(screenshot: app.screenshot())
         screenshot.name = "Dense work grid"

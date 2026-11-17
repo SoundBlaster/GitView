@@ -728,6 +728,34 @@ private struct WorkGridCell: View {
         }
     }
 
+    private var reviewIndicator: ReviewIndicator? { ReviewIndicatorDecision().decide(item.metricRecord) }
+
+    private var reviewSymbol: String? {
+        switch reviewIndicator {
+        case .attention: "exclamationmark.triangle.fill"
+        case .requested: "eye"
+        case .approved: "checkmark.circle.fill"
+        case nil: nil
+        }
+    }
+
+    private var reviewAccessibility: String {
+        switch reviewIndicator {
+        case .attention: ", review needs attention"
+        case .requested: ", review requested or required"
+        case .approved: ", approved with no unresolved review threads"
+        case nil: ""
+        }
+    }
+
+    private var reviewColor: Color {
+        switch reviewIndicator {
+        case .attention: .orange
+        case .approved: .green
+        case .requested, nil: .primary
+        }
+    }
+
     var body: some View {
         Button(action: open) {
             RoundedRectangle(cornerRadius: 6)
@@ -748,16 +776,23 @@ private struct WorkGridCell: View {
                         if showDetails {
                             Text("#\(item.number) · \(item.state)").font(.caption)
                             Text(item.title).font(.caption).lineLimit(3)
-                        } else {
-                            Text("\(item.number)").font(.caption2.monospacedDigit()).lineLimit(1).frame(maxWidth: .infinity, alignment: .trailing)
                         }
+                        HStack(spacing: 2) {
+                            if let reviewSymbol {
+                                Image(systemName: reviewSymbol)
+                                    .foregroundStyle(reviewColor)
+                                    .accessibilityHidden(true)
+                            }
+                            Spacer(minLength: 0)
+                            if !showDetails { Text("\(item.number)").font(.caption2.monospacedDigit()).lineLimit(1) }
+                        }.font(.caption2)
                     }.padding(6).foregroundStyle(tint)
                 }
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("work.\(item.id)")
         .accessibilityLabel((repositoryName.map { "\($0), " } ?? "Repository unavailable, ") + (item.kind == .pullRequest
-            ? "Pull request \(item.number), \(item.title), \(item.state)\(item.isDraft ? ", draft" : ""), CI \(item.checkStatus ?? "unavailable")"
+            ? "Pull request \(item.number), \(item.title), \(item.state)\(item.isDraft ? ", draft" : ""), CI \(item.checkStatus ?? "unavailable")\(reviewAccessibility)"
             : "Issue \(item.number), \(item.title), \(item.state)"))
         .accessibilityAction(named: Text("Preview"), preview)
         .contextMenu {

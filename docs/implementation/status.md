@@ -14,6 +14,7 @@ This is a code-progress record, not a claim that a product specification is full
 | GITVIEW-SPEC-0048 | Manual and foreground refresh, bounded background task request and rate-limit deferral | GitHubAPI and WorkDomain tests; simulator integration tests for batching, account-change cancellation and preserved observations; plist configuration check | Physical-device BGTaskScheduler registration and execution, live GitHub rate-limit behavior and further orchestration verification |
 | GITVIEW-SPEC-0014 | Discrete density steps, zoom menu, tap detail, long-press preview and ambiguous-target fallback | GridDensityTests; iPhone Air Simulator UI tests for pinch in both directions, preview and selection preservation | Transition anchoring, physical-device performance and broader accessibility verification |
 | GITVIEW-SPEC-0015 | Long-press preview plus named accessibility action and menu path to a preview sheet preserving work identity; saved description and unambiguous source limitation remain visible | Simulator UI tests for preview-sheet navigation and cached Issue with a synthetic source failure | VoiceOver action, focus restoration, active-preview revocation and day-change verification on device |
+| GITVIEW-SPEC-0011 | Independent CI and compact review indicators; attention takes precedence and approval requires complete zero-unresolved thread evidence | WorkDomain policy tests and dense-grid Simulator UI test | Full review source coverage, physical-device legibility and accessibility review |
 | GITVIEW-SPEC-0031 | Preserve known source limitation and last observation when locally opening a cached object from preview; pass source context for metric selection | Simulator UI test with a synthetic HTTP 403 and existing metric-navigation test | Confirmed revocation attribution and a source change while preview or detail is already open |
 | GITVIEW-SPEC-0004 | Project grid with cached summaries, attention signals, scoped navigation, bounded foreground refresh and pull to refresh | Simulator UI tests for project preview, signal navigation and zoom; refresh coordination tests | Live GitHub App refresh and revocation status, physical-device review |
 | GITVIEW-SPEC-0005 | Project work grid and separate labeled demo grid | Simulator UI tests with synthetic project data, pinch, previews and filters | Live GitHub data and full grid behavior |
@@ -45,6 +46,8 @@ The delta snapshot for `GITVIEW-SPEC-0023` also returned planning status without
 The delta snapshot for `GITVIEW-SPEC-0015` returned planning status without tracked artifacts. The preview UI tests exercise the menu and sheet path, not VoiceOver's custom-action rotor or focus behavior.
 
 The delta snapshot for `GITVIEW-SPEC-0031` returned planning status without tracked artifacts. A synthetic HTTP 403 verifies disclosure of a known source problem; it does not establish that GitHub confirmed access revocation.
+
+The delta snapshot for `GITVIEW-SPEC-0011` returned planning status without tracked artifacts. The compact review badge is a source-specific signal, not a readiness-to-merge decision.
 
 The delta snapshot for `GITVIEW-SPEC-0019` returned planning status without tracked artifacts. Retrying a synthetic failed detail request leaves saved details visible; opening GitHub settings and successful access recovery have not been verified end to end.
 
