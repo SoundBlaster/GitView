@@ -92,9 +92,14 @@ import XCTest
         for _ in 0..<4 where !blocker.isHittable { app.swipeUp() }
         XCTAssertTrue(blocker.waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Some related issues are not shown."].exists)
-        for _ in 0..<4 where !app.staticTexts["Saved synthetic description"].isHittable { app.swipeUp() }
+        let linked = app.staticTexts["Linked PR fixture"]
+        for _ in 0..<4 where !linked.isHittable { app.swipeUp() }
+        XCTAssertTrue(linked.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Cross-reference · closes this issue on merge"].exists)
+        XCTAssertTrue(app.staticTexts["Some cross-references are not shown."].exists)
+        for _ in 0..<6 where !app.staticTexts["Saved synthetic description"].isHittable { app.swipeDown() }
         XCTAssertTrue(app.staticTexts["Saved synthetic description"].waitForExistence(timeout: 10))
-        for _ in 0..<4 where !app.staticTexts["Could not update details. Showing saved details."].isHittable { app.swipeUp() }
+        for _ in 0..<8 where !app.staticTexts["Could not update details. Showing saved details."].isHittable { app.swipeUp() }
         XCTAssertTrue(app.staticTexts["Could not update details. Showing saved details."].waitForExistence(timeout: 10))
         let screenshot = XCTAttachment(screenshot: app.screenshot())
         screenshot.name = "Offline issue details"

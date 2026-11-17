@@ -3,6 +3,21 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkDetailTests {
+    @Test func issueCrossReferencesCombinePullRequestEvidenceWithoutInventingCoverage() async throws {
+        let client = GitHubWorkDetailClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            #expect((body["query"] as! String).contains("CROSS_REFERENCED_EVENT"))
+            let json = #"{"data":{"node":{"__typename":"Issue","id":"I1","timelineItems":{"nodes":[{"__typename":"CrossReferencedEvent","willCloseTarget":false,"source":{"__typename":"PullRequest","id":"P1","number":4,"title":"Change","url":"https://github.com/a/b/pull/4","state":"OPEN","repository":{"nameWithOwner":"a/b"}}},{"__typename":"CrossReferencedEvent","willCloseTarget":true,"source":{"__typename":"PullRequest","id":"P1","number":4,"title":"Change","url":"https://github.com/a/b/pull/4","state":"OPEN","repository":{"nameWithOwner":"a/b"}}},{"__typename":"CrossReferencedEvent","willCloseTarget":false,"source":{"__typename":"Issue"}},null],"pageInfo":{"hasNextPage":true}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let details = try await client.load(token: "token", id: "I1", kind: .issue)
+        let page = try #require(details.issueRelationships?.pullRequests)
+        #expect(page.items.count == 1)
+        #expect(page.items.first?.id == "P1" && page.items.first?.willCloseTarget == true)
+        #expect(page.isComplete == false)
+        let cached = try JSONDecoder().decode(GitHubWorkDetails.self, from: JSONEncoder().encode(details))
+        #expect(cached.issueRelationships?.pullRequests?.items.first?.repository == "a/b")
+    }
     @Test func issueRelationshipsPreserveDirectionCoverageAndCache() async throws {
         let client = GitHubWorkDetailClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
