@@ -8,8 +8,11 @@ import WorkCache
 
 @main
 struct GitViewApp: App {
+    @Environment(\.scenePhase) private var scenePhase
+
     var body: some Scene {
         WindowGroup {
+            Group {
             #if DEBUG
             if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-dense") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project-grid") {
                 ProjectTestFixture()
@@ -19,7 +22,12 @@ struct GitViewApp: App {
             #else
             ConnectionPage()
             #endif
+            }
+            .onChange(of: scenePhase) {
+                if scenePhase == .background { BackgroundRefreshRuntime.schedule() }
+            }
         }
+        .backgroundTask(.appRefresh(BackgroundRefreshRuntime.identifier)) { await BackgroundRefreshRuntime.run() }
     }
 }
 

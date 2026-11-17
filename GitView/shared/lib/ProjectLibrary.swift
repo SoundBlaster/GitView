@@ -1,8 +1,66 @@
 import Foundation
+import BackgroundTasks
 import GitHubAPI
+import GitHubAuth
 import Observation
+import OSLog
 import ProjectStore
 import WorkCache
+
+@MainActor enum BackgroundRefreshRuntime {
+    static let identifier = "ru.egormerkushev.gitview.refresh"
+    private static let lastProjectKey = "GitGrid.background.lastProject"
+
+    @discardableResult static func schedule() -> Bool {
+        do {
+            try BGTaskScheduler.shared.submit(BGAppRefreshTaskRequest(identifier: identifier))
+            return true
+        } catch {
+            Logger(subsystem: "ru.egormerkushev.gitview", category: "refresh").debug("Background refresh request not scheduled: \(error.localizedDescription, privacy: .public)")
+            return false
+        }
+    }
+
+    static func run() async {
+        defer { schedule() }
+        let store = KeychainCredentialStore(service: "ru.egormerkushev.gitview.github", account: "current")
+        let defaults = UserDefaults.standard
+        let coordinator = BackgroundRefreshCoordinator(session: {
+            guard let value = try store.load() else { return nil }
+            return BackgroundRefreshSession(accountID: value.identity.id, token: value.accessToken, expiresAt: value.accessTokenExpiresAt)
+        }, projects: { account in
+            try ProjectLibrary.open(accountID: account).projects
+        }, fetch: { token, repositories in
+            let service = GitHubProjectRefresh { token, repository in
+                try await GitHubWorkClient().load(token: token, repositoryID: repository.id, fullName: repository.fullName,
+                                                  nodeID: repository.nodeID, maxRequests: 2)
+            }
+            return try await service.fetch(token: token, repositories: repositories.map {
+                RefreshRepository(id: $0.id, fullName: $0.fullName, nodeID: $0.nodeID)
+            }).observations
+        }, save: { project, observations in
+            let base = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let directory = base.appendingPathComponent("GitGrid", isDirectory: true)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            let cache = try WorkCache(url: directory.appendingPathComponent("WorkCache.sqlite"))
+            let result = try ProjectRefreshPersistence.commit(cache: cache, accountID: project.accountID, projectID: project.id,
+                observations: observations, fallback: nil, at: .now, scope: Set(project.repositories.map(\.id)))
+            guard result.saved else { throw BackgroundRefreshCoordinator.Failure.couldNotSave }
+        })
+        do {
+            let previous = defaults.string(forKey: lastProjectKey).flatMap(UUID.init(uuidString:))
+            let result = try await coordinator.run(after: previous, repositoryAfter: { projectID in
+                let value = defaults.object(forKey: "GitGrid.background.repository.\(projectID.uuidString)") as? Int64
+                return value
+            })
+            if case let .updated(projectID, repositoryID) = result {
+                defaults.set(projectID.uuidString, forKey: lastProjectKey)
+                defaults.set(repositoryID, forKey: "GitGrid.background.repository.\(projectID.uuidString)")
+            }
+        } catch is CancellationError { }
+        catch { Logger(subsystem: "ru.egormerkushev.gitview", category: "refresh").debug("Background refresh failed: \(error.localizedDescription, privacy: .public)") }
+    }
+}
 
 struct BackgroundRefreshSession: Equatable {
     let accountID: Int64
@@ -12,7 +70,7 @@ struct BackgroundRefreshSession: Equatable {
 
 @MainActor struct BackgroundRefreshCoordinator {
     enum Outcome: Equatable { case updated(UUID, lastRepository: Int64), unavailable, superseded }
-    enum Failure: Error { case inconsistentObservations }
+    enum Failure: Error { case inconsistentObservations, couldNotSave }
 
     let session: () throws -> BackgroundRefreshSession?
     let projects: (Int64) throws -> [StoredProject]

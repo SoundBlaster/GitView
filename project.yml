@@ -26,6 +26,10 @@ targets:
       path: Config/Info.plist
       properties:
         CFBundleDisplayName: GitGrid
+        BGTaskSchedulerPermittedIdentifiers:
+          - ru.egormerkushev.gitview.refresh
+        UIBackgroundModes:
+          - fetch
         CFBundleURLTypes:
           - CFBundleURLSchemes:
               - gitview

@@ -1,4 +1,5 @@
 import Foundation
+import BackgroundTasks
 import GitHubAuth
 import GitHubAPI
 import ProjectStore
@@ -8,6 +9,31 @@ import XCTest
 @testable import GitView
 
 @MainActor final class ProjectRefreshPersistenceTests: XCTestCase {
+    func testBackgroundRefreshConfiguration() {
+        let modes = Bundle.main.object(forInfoDictionaryKey: "UIBackgroundModes") as? [String] ?? []
+        let identifiers = Bundle.main.object(forInfoDictionaryKey: "BGTaskSchedulerPermittedIdentifiers") as? [String] ?? []
+        XCTAssertTrue(modes.contains("fetch"))
+        XCTAssertTrue(identifiers.contains(BackgroundRefreshRuntime.identifier))
+    }
+
+    func testBackgroundRefreshRequestIsRegistered() async throws {
+        #if targetEnvironment(simulator)
+        throw XCTSkip("BGTaskScheduler is unavailable on Simulator; verify registration on a device.")
+        #else
+        let identifier = BackgroundRefreshRuntime.identifier
+        BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: identifier)
+        defer { BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: identifier) }
+        do { try BGTaskScheduler.shared.submit(BGAppRefreshTaskRequest(identifier: identifier)) }
+        catch { XCTFail("Could not schedule background refresh: \(error)"); return }
+        let isPending = await withCheckedContinuation { continuation in
+            BGTaskScheduler.shared.getPendingTaskRequests { requests in
+                continuation.resume(returning: requests.contains { $0.identifier == identifier })
+            }
+        }
+        XCTAssertTrue(isPending)
+        #endif
+    }
+
     func testBoundedRefreshKeepsUnvisitedRepositoryAndProjectTimestamp() throws {
         let cache = try WorkCache(inMemory: true)
         let projectID = UUID()
