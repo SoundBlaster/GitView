@@ -30,10 +30,15 @@ import WorkCache
             return BackgroundRefreshSession(accountID: value.identity.id, token: value.accessToken, expiresAt: value.accessTokenExpiresAt)
         }, projects: { account in
             try ProjectLibrary.open(accountID: account).projects
-        }, fetch: { token, repositories in
-            let service = GitHubProjectRefresh { token, repository in
+        }, fetch: { token, project, repositories in
+            let base = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let directory = base.appendingPathComponent("GitGrid", isDirectory: true)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            let cache = try WorkCache(url: directory.appendingPathComponent("WorkCache.sqlite"))
+            let continuations = try ProjectRefreshPersistence.continuations(cache: cache, project: project)
+            let service = GitHubProjectRefresh(tracksOpenContinuation: true, continuations: continuations) { token, repository in
                 try await GitHubWorkClient().load(token: token, repositoryID: repository.id, fullName: repository.fullName,
-                                                  nodeID: repository.nodeID, maxRequests: 2)
+                                                  nodeID: repository.nodeID, maxRequests: 2, openContinuation: continuations[repository.id])
             }
             return try await service.fetch(token: token, repositories: repositories.map {
                 RefreshRepository(id: $0.id, fullName: $0.fullName, nodeID: $0.nodeID)
@@ -109,7 +114,7 @@ struct BackgroundRefreshSession: Equatable {
 
     let session: () throws -> BackgroundRefreshSession?
     let projects: (Int64) throws -> [StoredProject]
-    let fetch: (String, [RepositoryReference]) async throws -> [RepositoryWorkRefresh]
+    let fetch: (String, StoredProject, [RepositoryReference]) async throws -> [RepositoryWorkRefresh]
     let save: (StoredProject, [RepositoryWorkRefresh]) throws -> Void
 
     func run(after previous: UUID?, repositoryAfter: (UUID) -> Int64? = { _ in nil }, now: Date = .now) async throws -> Outcome {
@@ -121,7 +126,7 @@ struct BackgroundRefreshSession: Equatable {
         let sorted = selected.repositories.filter { !$0.syncPaused }.sorted { $0.id < $1.id }
         let remaining = sorted.filter { repository in repositoryAfter(selected.id).map { repository.id > $0 } ?? true }
         let batch = Array((remaining.isEmpty ? sorted : remaining).prefix(3))
-        let observations = try await fetch(initial.token, batch)
+        let observations = try await fetch(initial.token, selected, batch)
         try Task.checkCancellation()
         guard try session() == initial,
               try projects(initial.accountID).contains(where: { $0.id == selected.id && $0.repositories == selected.repositories }) else { return .superseded }
@@ -138,6 +143,14 @@ struct BackgroundRefreshSession: Equatable {
         let archive: ProjectWorkArchive
         let saved: Bool
         let complete: Bool
+    }
+
+    static func continuations(cache: WorkCache, project: StoredProject) throws -> [Int64: GitHubOpenContinuation] {
+        guard let snapshot = try cache.load(accountID: project.accountID, projectID: project.id) else { return [:] }
+        let archive = try ProjectWorkArchive.decode(snapshot.payload).restricting(to: Set(project.repositories.map(\.id)))
+        return Dictionary(archive.repositories.compactMap { observation in
+            observation.openContinuation.map { (observation.id, $0) }
+        }, uniquingKeysWith: { first, _ in first })
     }
 
     static func commit(cache: WorkCache?, accountID: Int64, projectID: UUID, observations: [RepositoryWorkRefresh],

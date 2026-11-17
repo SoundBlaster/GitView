@@ -8,6 +8,21 @@ private actor RequestLog {
 }
 
 struct ProjectRefreshTests {
+    @Test func trackedRefreshAdvancesOnlyFromItsOwnStartingCursor() async throws {
+        let original = try #require(GitHubOpenContinuation(issueAfter: "old", pullAfter: nil))
+        let next = try #require(GitHubOpenContinuation(issueAfter: "next", pullAfter: nil))
+        let concurrent = try #require(GitHubOpenContinuation(issueAfter: "other", pullAfter: nil))
+        let service = GitHubProjectRefresh(tracksOpenContinuation: true, continuations: [1: original]) { _, _ in
+            GitHubWorkPage(items: [], isIncomplete: true, observedRepository: nil, issueCursor: nil, pullCursor: nil, openContinuation: next)
+        }
+        let result = try await service.fetch(token: "token", repositories: [.init(id: 1, fullName: "a/b", nodeID: nil)])
+        let initial = ProjectWorkArchive().applying([.init(id: 1, name: "a/b", outcome: .received([], complete: false),
+            continuationUpdate: .replace(original))], at: .now)
+        #expect(initial.applying(result.observations, at: .now).repositories.first?.openContinuation == next)
+        let newer = initial.applying([.init(id: 1, name: "a/b", outcome: .received([], complete: false),
+            continuationUpdate: .replace(concurrent))], at: .now)
+        #expect(newer.applying(result.observations, at: .now).repositories.first?.openContinuation == concurrent)
+    }
     @Test func laterPageFailureKeepsFetchedWorkAndExplainsTheFailure() async throws {
         let client = GitHubWorkClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]

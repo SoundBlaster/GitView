@@ -3,6 +3,31 @@ import Testing
 @testable import GitHubAPI
 
 struct ProjectWorkArchiveTests {
+    @Test func olderRefreshCannotOverwriteNewerContinuation() throws {
+        let start = try #require(GitHubOpenContinuation(issueAfter: "one", pullAfter: nil))
+        let later = try #require(GitHubOpenContinuation(issueAfter: "two", pullAfter: nil))
+        let stale = try #require(GitHubOpenContinuation(issueAfter: "stale", pullAfter: nil))
+        let initial = ProjectWorkArchive().applying([.init(id: 1, name: "a", outcome: .received([], complete: false),
+            continuationUpdate: .replace(start))], at: .now)
+        let afterNew = initial.applying([.init(id: 1, name: "a", outcome: .received([try item("new")], complete: false),
+            continuationUpdate: .advance(from: start, to: later))], at: .now)
+        let afterStale = afterNew.applying([.init(id: 1, name: "a", outcome: .received([try item("stale")], complete: false),
+            continuationUpdate: .advance(from: start, to: stale))], at: .now)
+        #expect(afterStale.repositories.first?.openContinuation == later)
+        #expect(Set(afterStale.items.map(\.id)) == ["new", "stale"])
+    }
+
+    @Test func continuationFollowsItsRepositoryThroughMembershipChanges() throws {
+        let cursor = try #require(GitHubOpenContinuation(issueAfter: nil, pullAfter: "next"))
+        let initial = ProjectWorkArchive().applying([.init(id: 1, name: "a", outcome: .received([], complete: false),
+            continuationUpdate: .replace(cursor)), .init(id: 2, name: "b", outcome: .received([], complete: false))], at: .now)
+        let removed = initial.restricting(to: [2])
+        #expect(removed.repositories.first?.openContinuation == nil)
+        #expect(removed.detachedRepositories?.first?.openContinuation == cursor)
+        let restored = try ProjectWorkArchive.decode(JSONEncoder().encode(removed)).restricting(to: [1, 2])
+        #expect(restored.repositories.first(where: { $0.id == 1 })?.openContinuation == cursor)
+        #expect(restored.repositories.first(where: { $0.id == 2 })?.openContinuation == nil)
+    }
     @Test func continuationSurvivesReopenAndUntrackedRefreshButIsClearedByCompleteRefresh() throws {
         let cursor = try #require(GitHubOpenContinuation(issueAfter: nil, pullAfter: "next"))
         let first = ProjectWorkArchive().applying([.init(id: 1, name: "a/b", outcome: .received([], complete: false),

@@ -9,6 +9,26 @@ import XCTest
 @testable import GitView
 
 @MainActor final class ProjectRefreshPersistenceTests: XCTestCase {
+    func testBackgroundContinuationLookupRespectsProjectMembership() throws {
+        let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+        let first = RepositoryReference(id: 1, fullName: "owner/one", isPrivate: true)
+        let second = RepositoryReference(id: 2, fullName: "owner/two", isPrivate: true)
+        try library.create(name: "Test", repository: first)
+        let id = try XCTUnwrap(library.projects.first?.id)
+        try library.add(repository: second, to: id)
+        let cursor = try XCTUnwrap(GitHubOpenContinuation(issueAfter: nil, pullAfter: "saved"))
+        let archive = ProjectWorkArchive().applying([
+            .init(id: 1, name: first.fullName, outcome: .received([], complete: false), continuationUpdate: .replace(cursor)),
+            .init(id: 2, name: second.fullName, outcome: .received([], complete: false))
+        ], at: .now).restricting(to: [2])
+        let cache = try WorkCache(inMemory: true)
+        try cache.save(accountID: 1, projectID: id, payload: JSONEncoder().encode(archive), observedAt: .now, complete: false)
+        XCTAssertEqual(try ProjectRefreshPersistence.continuations(cache: cache, project: XCTUnwrap(library.projects.first))[1], cursor)
+        try library.remove(repositoryID: 1, from: id)
+        XCTAssertNil(try ProjectRefreshPersistence.continuations(cache: cache, project: XCTUnwrap(library.projects.first))[1])
+        try library.add(repository: first, to: id)
+        XCTAssertEqual(try ProjectRefreshPersistence.continuations(cache: cache, project: XCTUnwrap(library.projects.first))[1], cursor)
+    }
     func testOpenPageProgressIsSavedPerProjectWithoutClaimingCompleteCoverage() throws {
         let cache = try WorkCache(inMemory: true)
         let project = UUID(), other = UUID()
@@ -144,7 +164,7 @@ import XCTest
         try library.setSyncPaused(true, repositoryID: 1, projectID: id)
         var fetched: [Int64] = []
         let coordinator = BackgroundRefreshCoordinator(session: { .init(accountID: 1, token: "token", expiresAt: nil) },
-            projects: { _ in library.projects }, fetch: { _, repositories in
+            projects: { _ in library.projects }, fetch: { _, _, repositories in
                 fetched = repositories.map(\.id)
                 return repositories.map { .init(id: $0.id, name: $0.fullName, outcome: .received([], complete: true)) }
             }, save: { _, _ in })
@@ -206,7 +226,7 @@ import XCTest
         let project = try XCTUnwrap(library.projects.first)
         var fetched: [[Int64]] = []
         let coordinator = BackgroundRefreshCoordinator(session: { .init(accountID: 1, token: "token", expiresAt: nil) },
-            projects: { _ in [project] }, fetch: { _, repositories in
+            projects: { _ in [project] }, fetch: { _, _, repositories in
                 fetched.append(repositories.map(\.id))
                 return repositories.map { .init(id: $0.id, name: $0.fullName, outcome: .received([], complete: true)) }
             }, save: { _, _ in })
@@ -224,9 +244,25 @@ import XCTest
         var session: BackgroundRefreshSession? = .init(accountID: 1, token: "first", expiresAt: nil)
         var saved = false
         let coordinator = BackgroundRefreshCoordinator(session: { session }, projects: { _ in [project] },
-            fetch: { _, _ in
+            fetch: { _, _, _ in
                 session = .init(accountID: 2, token: "second", expiresAt: nil)
                 return []
+            }, save: { _, _ in saved = true })
+        let result = try await coordinator.run(after: nil)
+        XCTAssertEqual(result, .superseded)
+        XCTAssertFalse(saved)
+    }
+
+    func testBackgroundRefreshUsesProjectScopeAndDiscardsChangedMembership() async throws {
+        let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+        try library.create(name: "Test", repository: RepositoryReference(id: 1, fullName: "owner/one", isPrivate: true))
+        let project = try XCTUnwrap(library.projects.first)
+        var saved = false
+        let coordinator = BackgroundRefreshCoordinator(session: { .init(accountID: 1, token: "token", expiresAt: nil) },
+            projects: { _ in library.projects }, fetch: { _, selected, repositories in
+                XCTAssertEqual(selected.id, project.id)
+                try library.add(repository: RepositoryReference(id: 2, fullName: "owner/two", isPrivate: true), to: selected.id)
+                return repositories.map { .init(id: $0.id, name: $0.fullName, outcome: .received([], complete: false)) }
             }, save: { _, _ in saved = true })
         let result = try await coordinator.run(after: nil)
         XCTAssertEqual(result, .superseded)

@@ -17,7 +17,11 @@ public struct RepositoryWorkObservation: Codable, Sendable {
 }
 
 public struct RepositoryWorkRefresh: Sendable {
-    public enum ContinuationUpdate: Sendable { case unchanged, replace(GitHubOpenContinuation?) }
+    public enum ContinuationUpdate: Sendable {
+        case unchanged
+        case replace(GitHubOpenContinuation?)
+        case advance(from: GitHubOpenContinuation?, to: GitHubOpenContinuation?)
+    }
     public enum Outcome: Sendable {
         case received([GitHubWorkItem], complete: Bool)
         case failed(String)
@@ -93,6 +97,7 @@ public struct ProjectWorkArchive: Codable, Sendable {
             switch result.continuationUpdate {
             case .unchanged: continuation = old?.openContinuation
             case .replace(let value): continuation = value
+            case let .advance(expected, value): continuation = old?.openContinuation == expected ? value : old?.openContinuation
             }
             switch result.outcome {
             case let .received(items, complete: true):

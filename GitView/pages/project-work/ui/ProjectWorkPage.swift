@@ -280,7 +280,7 @@ struct ProjectWorkPage: View {
             observation.openContinuation.map { (observation.id, $0) }
         }, uniquingKeysWith: { first, _ in first })
         do {
-            let service = GitHubProjectRefresh(tracksOpenContinuation: true) { token, repository in
+            let service = GitHubProjectRefresh(tracksOpenContinuation: true, continuations: continuations) { token, repository in
                 try await GitHubWorkClient().load(token: token, repositoryID: repository.id, fullName: repository.fullName,
                     nodeID: repository.nodeID, openContinuation: continuations[repository.id])
             }
