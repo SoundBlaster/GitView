@@ -66,7 +66,7 @@ OAuth decision: web authorization with PKCE, no backend; a bundled GitHub client
 
 A native connection screen invokes the system web authentication session. A signed Simulator UI test confirmed the GitGrid system prompt; a separate live probe found GitHub's sign-in accessibility element, although its screenshot was still loading. No live authorization, callback, token exchange, or repository access has been verified.
 
-Read-only GraphQL probes using the separate GitHub CLI session accepted the exact work, PR detail, review thread, Issue detail, Issue link and Issue relation query shapes against public repositories. This checks the source schema, not GitGrid authorization, transport decoding, or the user's installation permissions.
+Read-only GraphQL probes using the separate GitHub CLI session accepted the exact work, PR detail, review thread, Issue detail, Issue link and Issue relation query shapes against public repositories. On 2026-11-17, two opt-in Swift tests also decoded live GitView repository work and PR details, and a public Swift Issue with its links and relations. Both live tests skip without an explicit flag. These observations do not establish GitGrid authorization or the user's installation permissions.
 
 Simulator startup comparison: on the same clean iPhone Air simulator, the ad-hoc signed app started without the Keychain read error, while the linker-signed build displayed it. This is a signing-dependent observation, not verification of saving a token or real GitHub authorization. The connection screen now distinguishes Keychain errors from project-store errors and logs only a Keychain status code.
 

@@ -42,6 +42,7 @@ scope:
     - Report an observed rate-limit failure on the triggering request and defer later default GitHub API transport requests until the source-directed deadline; retain the deadline across launches without discarding a successful final response.
     - Aggregate pages while preserving partial independent results.
     - Preserve the source retry deadline and earlier discoveries when a rate limit interrupts repository discovery.
+    - Provide opt-in read-only live probes for public GitHub work and detail decoding; ordinary tests do not require credentials or network.
   excludes:
     - Persist selection, project creation and user interface.
 provides:
