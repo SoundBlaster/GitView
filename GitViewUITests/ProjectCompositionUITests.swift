@@ -1,6 +1,23 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testProjectOverviewReloadsAfterReturningFromUpdatedProject() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-return-overview"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        let before = NSPredicate(format: "label CONTAINS %@", "1 pull requests with failed CI")
+        expectation(for: before, evaluatedWith: project)
+        waitForExpectations(timeout: 10)
+        project.tap()
+        XCTAssertTrue(app.buttons["work.fixture-issue"].waitForExistence(timeout: 10))
+        app.navigationBars.buttons.firstMatch.tap()
+        XCTAssertTrue(project.waitForExistence(timeout: 5))
+        let after = NSPredicate(format: "label CONTAINS %@", "0 pull requests with failed CI")
+        expectation(for: after, evaluatedWith: project)
+        waitForExpectations(timeout: 10)
+    }
     func testLargeWorkNumberOnGridAtBothScales() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-large-number"]

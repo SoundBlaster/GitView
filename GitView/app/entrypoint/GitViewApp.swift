@@ -61,7 +61,8 @@ private struct ProjectTestFixture: View {
                 let library = try ProjectLibrary(accountID: 1, store: store)
                 if persistentFixture && !library.projects.isEmpty { self.library = library; return }
                 if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-empty-projects") { self.library = library; return }
-                try library.create(name: "Fixture Project", repository: RepositoryReference(id: 101, fullName: "fixture/one", isPrivate: false))
+                let fixtureNodeID = ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-return-overview") ? "fixture-node" : nil
+                try library.create(name: "Fixture Project", repository: RepositoryReference(id: 101, fullName: "fixture/one", isPrivate: false, nodeID: fixtureNodeID))
                 guard let id = library.projects.first?.id else { return }
                 try library.add(repository: RepositoryReference(id: 102, fullName: "fixture/two", isPrivate: true), to: id)
                 if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-missing-repository-multiple") {
@@ -163,7 +164,10 @@ private struct ProjectTestFixture: View {
 
     private static let fixtureWorkClient = GitHubWorkClient { request in
         let body = #"{"data":{"node":{"id":"fixture-node","fullDatabaseId":"101","nameWithOwner":"fixture/one","isPrivate":false,"issues":{"nodes":[{"id":"fixture-issue","number":7,"title":"Synthetic issue","url":"https://github.com/fixture/one/issues/7","state":"OPEN","updatedAt":"2026-01-01T00:00:00Z"}],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[],"pageInfo":{"hasNextPage":false}}}}}"#
-        return (Data(body.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        let responseBody = ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-return-overview")
+            ? body.replacingOccurrences(of: #","nameWithOwner":"fixture/one","isPrivate":false"#, with: "")
+            : body
+        return (Data(responseBody.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
     }
 
     private func denseItems(stamp: TimeInterval) throws -> [GitHubWorkItem] {
