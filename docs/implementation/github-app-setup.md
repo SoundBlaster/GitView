@@ -15,7 +15,8 @@ GitGrid uses a GitHub App user access token, web authorization with PKCE, and a 
    ```
 
    Do not commit the file or send the secret in chat. These build settings are bundled into the native app: the secret is extractable and cannot serve as proof that a client is trusted.
-7. Use **Install App** in the GitHub App settings to install it on the personal account and each intended organization, selecting the repositories to expose. Organization policies may require administrator approval.
-8. Build GitGrid using the local configuration and select **Connect GitHub**. Confirm that authorization returns to the app, then verify repository discovery and access to PRs, issues, checks, and statuses. Registration and these live checks are separate; neither is implied by passing mock tests.
+7. If GitHub requires a private key before installation, generate one from the app settings and store the downloaded `.pem` securely outside the repository. The current GitGrid user OAuth flow does not use this private key; do not commit it or send it in chat.
+8. Use **Install App** in the GitHub App settings to install it on the personal account and each intended organization, selecting the repositories to expose. Organization policies may require administrator approval.
+9. Build GitGrid using the local configuration and select **Connect GitHub**. Confirm that authorization returns to the app, then verify repository discovery and access to PRs, issues, checks, and statuses. Registration and these live checks are separate; neither is implied by passing mock tests.
 
 References: [GitHub App registration](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/registering-a-github-app), [permissions](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/choosing-permissions-for-a-github-app), and [user authorization callback](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/about-the-user-authorization-callback-url).
