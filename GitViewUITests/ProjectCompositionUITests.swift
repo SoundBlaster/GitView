@@ -20,7 +20,15 @@ import XCTest
         XCTAssertTrue(app.navigationBars["Issue"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts["detail.sourceProblem"].label.contains("GitHub HTTP 403"))
         XCTAssertTrue(app.staticTexts["detail.sourceObservedAt"].label.hasPrefix("Last complete observation"))
+        XCTAssertTrue(app.descendants(matching: .any)["detail.manageAccess"].exists)
         for _ in 0..<4 where !app.staticTexts["Saved synthetic description"].exists { app.swipeUp() }
+        XCTAssertTrue(app.staticTexts["Saved synthetic description"].exists)
+        for _ in 0..<6 where !app.buttons["detail.retry"].exists { app.swipeUp() }
+        let retry = app.buttons["detail.retry"]
+        XCTAssertTrue(retry.waitForExistence(timeout: 10))
+        retry.tap()
+        XCTAssertTrue(retry.waitForExistence(timeout: 10))
+        for _ in 0..<6 where !app.staticTexts["Saved synthetic description"].exists { app.swipeDown() }
         XCTAssertTrue(app.staticTexts["Saved synthetic description"].exists)
     }
     func testPreviewActionKeepsTheSelectedWorkItem() throws {

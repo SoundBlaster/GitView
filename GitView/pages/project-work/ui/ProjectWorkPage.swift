@@ -812,6 +812,10 @@ private struct WorkDetailSheet: View {
                     LabeledContent("State", value: item.state)
                     LabeledContent("Updated", value: item.updatedAt.formatted(date: .abbreviated, time: .shortened))
                     WorkSourceStatus(source: source, identifierPrefix: "detail")
+                    if source?.refreshProblem != nil {
+                        Link("Manage GitHub access", destination: URL(string: "https://github.com/settings/installations")!)
+                            .accessibilityIdentifier("detail.manageAccess")
+                    }
                     if item.state != "OPEN", let closedAt = item.closedAt { LabeledContent("Closed", value: closedAt.formatted(date: .abbreviated, time: .shortened)) }
                     if item.kind == .issue && item.state == "CLOSED" {
                         LabeledContent("Closure reason", value: issueClosureLabel(item.closureReason))
@@ -836,8 +840,11 @@ private struct WorkDetailSheet: View {
                 }
                 if loadingDetails { ProgressView("Loading details") }
                 if detailError {
-                    Text(item.details == nil ? "Details could not be loaded." : "Could not update details. Showing saved details.")
+                    Text((details ?? item.details) == nil ? "Details could not be loaded." : "Could not update details. Showing saved details.")
                         .foregroundStyle(.secondary)
+                    Button("Retry details", systemImage: "arrow.clockwise") { Task { await loadDetails() } }
+                        .disabled(loadingDetails)
+                        .accessibilityIdentifier("detail.retry")
                 }
                 Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
                 ShareLink(item: item.url)
@@ -863,7 +870,9 @@ private struct WorkDetailSheet: View {
     }
 
     @MainActor private func loadDetails() async {
+        guard !loadingDetails else { return }
         loadingDetails = true
+        detailError = false
         defer { loadingDetails = false }
         do {
             let credential = try await sessionManager.usableSession(for: accountID)
