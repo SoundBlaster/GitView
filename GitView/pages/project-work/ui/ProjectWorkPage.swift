@@ -319,7 +319,8 @@ private extension GitHubWorkItem {
         }
         return WorkMetricRecord(id: id, kind: kind, state: state, isDraft: isDraft,
             checkStatus: checkStatus, reviewDecision: reviewDecision, reviewRequestCount: reviewRequestCount,
-            unresolvedThreads: reviewThreads?.observedUnresolved, threadsComplete: reviewThreads?.isComplete, mergedAt: mergedAt)
+            unresolvedThreads: reviewThreads?.observedUnresolved, threadsComplete: reviewThreads?.isComplete,
+            mergedAt: mergedAt, closedAt: closedAt, closureReason: closureReason)
     }
 }
 
@@ -400,6 +401,22 @@ private struct ProjectMetricsSheet: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                Section("Currently closed issues · last 7 local days") {
+                    if let closures = summary.issueClosures {
+                        issueClosureLink("All currently closed", count: closures.total, reason: nil)
+                        issueClosureLink("Completed", count: closures.completed, reason: .completed)
+                            .accessibilityIdentifier("metrics.issues.completed")
+                        issueClosureLink("Not planned", count: closures.notPlanned, reason: .notPlanned)
+                        issueClosureLink("Duplicate", count: closures.duplicate, reason: .duplicate)
+                        issueClosureLink("Other reason", count: closures.other, reason: .other)
+                        issueClosureLink("Reason unavailable", count: closures.unknown, reason: .unknown)
+                        Text("Last closure of issues still closed; reopened issues and earlier closure events are not included.")
+                            .font(.footnote).foregroundStyle(.secondary)
+                    } else {
+                        Text("History is unavailable or incomplete; no zero values are assumed.")
+                            .foregroundStyle(.secondary)
+                    }
+                }
             }
             .navigationTitle("Project metrics")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
@@ -416,6 +433,45 @@ private struct ProjectMetricsSheet: View {
         } label: {
             LabeledContent(title, value: metricValue(metric))
         }
+    }
+
+    private func issueClosureLink(_ title: String, count: Int, reason: IssueClosureReason?) -> some View {
+        NavigationLink {
+            issueClosureSelection(title: title, reason: reason)
+        } label: {
+            LabeledContent(title, value: "\(count)")
+        }
+    }
+
+    private func issueClosureSelection(title: String, reason: IssueClosureReason?) -> some View {
+        let rule = ClosedIssueInPeriodSpecification(reason: reason, now: now, calendar: .current)
+        var seen = Set<String>()
+        let selected = archive.items.filter { seen.insert($0.id).inserted && rule.isSatisfiedBy($0.metricRecord) }
+            .sorted { ($0.closedAt ?? .distantPast) > ($1.closedAt ?? .distantPast) }
+        return List {
+            Section {
+                Text("\(project.name) · current membership · last 7 local days")
+                Text("Currently closed issues by their latest closure. Saved grid filters do not apply.")
+                if let refreshWarning { Text(refreshWarning) }
+                ForEach(archive.repositories.filter { $0.observedAt != nil }, id: \.id) { repository in
+                    if let date = repository.observedAt {
+                        Text("\(repository.name): observed \(date.formatted(date: .abbreviated, time: .shortened))")
+                    }
+                }
+            }.font(.footnote).foregroundStyle(.secondary)
+            if selected.isEmpty { Text("No matching issues.").foregroundStyle(.secondary) }
+            ForEach(selected) { item in
+                Button { selectedItem = item } label: {
+                    VStack(alignment: .leading) {
+                        Text(item.title)
+                        if let repository = archive.repositories.first(where: { $0.items.contains(where: { $0.id == item.id }) }) {
+                            Text("\(repository.name) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            }
+        }
+        .navigationTitle(title)
     }
 
     private func attentionSelection(title: String, signal: AttentionSignal, origin: ObservedMetric, unit: String) -> some View {

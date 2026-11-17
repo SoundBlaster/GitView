@@ -3,6 +3,26 @@ import Testing
 @testable import WorkDomain
 
 struct WorkSummaryTests {
+    @Test func issueOutcomesPreserveReasonsAndCurrentState() throws {
+        let firstDay = try #require(calendar.date(byAdding: .day, value: -6, to: calendar.startOfDay(for: now)))
+        let records = [
+            WorkMetricRecord(id: "I1", kind: .issue, state: .closed, isDraft: false, closedAt: firstDay, closureReason: "COMPLETED"),
+            WorkMetricRecord(id: "I2", kind: .issue, state: .closed, isDraft: false, closedAt: now, closureReason: "NOT_PLANNED"),
+            WorkMetricRecord(id: "I3", kind: .issue, state: .closed, isDraft: false, closedAt: now),
+            WorkMetricRecord(id: "I4", kind: .issue, state: .closed, isDraft: false, closedAt: now, closureReason: "DUPLICATE"),
+            WorkMetricRecord(id: "I5", kind: .issue, state: .open, isDraft: false, closedAt: now, closureReason: "COMPLETED"),
+            WorkMetricRecord(id: "I6", kind: .issue, state: .closed, isDraft: false, closedAt: firstDay.addingTimeInterval(-1), closureReason: "COMPLETED"),
+            WorkMetricRecord(id: "I7", kind: .issue, state: .closed, isDraft: false, closedAt: now.addingTimeInterval(1), closureReason: "COMPLETED")
+        ]
+        let summary = ProjectWorkSummary(records: records + [records[0]], coverageComplete: true, now: now, calendar: calendar)
+        let outcomes = try #require(summary.issueClosures)
+        #expect(outcomes.total == 4 && outcomes.completed == 1 && outcomes.notPlanned == 1 && outcomes.duplicate == 1 && outcomes.other == 0 && outcomes.unknown == 1)
+        let rule = ClosedIssueInPeriodSpecification(reason: .completed, now: now, calendar: calendar)
+        #expect(records.filter(rule.isSatisfiedBy).map(\.id) == ["I1"])
+        #expect(ProjectWorkSummary(records: records, coverageComplete: false, now: now, calendar: calendar).issueClosures == nil)
+        let missing = WorkMetricRecord(id: "I8", kind: .issue, state: .closed, isDraft: false)
+        #expect(ProjectWorkSummary(records: [missing], coverageComplete: true, now: now, calendar: calendar).issueClosures == nil)
+    }
     @Test func attentionSelectionKeepsUnknownSeparateFromNonmatch() {
         let unknown = WorkMetricRecord(id: "P1", kind: .pullRequest, state: .open, isDraft: false,
             unresolvedThreads: 0, threadsComplete: false)

@@ -17,6 +17,7 @@ scope:
     - Count unique observed work and independent attention signals with explicit unknowns.
     - Use the same attention specification for summary counts and corresponding PR selections.
     - Build local-calendar merged PR counts only when history coverage is sufficient.
+    - Count currently closed Issues by latest closure reason and reuse the same rule for selection.
   excludes:
     - GitHub integration, persistence, identity, UI and additional inclusion conditions.
 provides:

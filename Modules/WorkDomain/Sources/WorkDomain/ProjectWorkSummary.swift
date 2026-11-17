@@ -12,13 +12,16 @@ public struct WorkMetricRecord: Sendable {
     public let unresolvedThreads: Int?
     public let threadsComplete: Bool?
     public let mergedAt: Date?
+    public let closedAt: Date?
+    public let closureReason: String?
 
     public init(id: String, kind: WorkKind, state: WorkState, isDraft: Bool, checkStatus: String? = nil,
                 reviewDecision: String? = nil, reviewRequestCount: Int? = nil, unresolvedThreads: Int? = nil,
-                threadsComplete: Bool? = nil, mergedAt: Date? = nil) {
+                threadsComplete: Bool? = nil, mergedAt: Date? = nil, closedAt: Date? = nil, closureReason: String? = nil) {
         self.id = id; self.kind = kind; self.state = state; self.isDraft = isDraft
         self.checkStatus = checkStatus; self.reviewDecision = reviewDecision; self.reviewRequestCount = reviewRequestCount
         self.unresolvedThreads = unresolvedThreads; self.threadsComplete = threadsComplete; self.mergedAt = mergedAt
+        self.closedAt = closedAt; self.closureReason = closureReason
     }
 }
 
@@ -73,6 +76,44 @@ public struct MergedDay: Identifiable, Sendable {
     public var id: Date { day }
 }
 
+public enum IssueClosureReason: Sendable {
+    case completed, notPlanned, duplicate, other, unknown
+
+    public init(source: String?) {
+        switch source {
+        case "COMPLETED": self = .completed
+        case "NOT_PLANNED": self = .notPlanned
+        case "DUPLICATE": self = .duplicate
+        case nil, "": self = .unknown
+        default: self = .other
+        }
+    }
+}
+
+public struct ClosedIssueInPeriodSpecification: Specification {
+    public let reason: IssueClosureReason?
+    public let now: Date
+    public let calendar: Calendar
+    public init(reason: IssueClosureReason?, now: Date, calendar: Calendar) {
+        self.reason = reason; self.now = now; self.calendar = calendar
+    }
+    public func isSatisfiedBy(_ candidate: WorkMetricRecord) -> Bool {
+        guard candidate.kind == .issue, candidate.state == .closed, let date = candidate.closedAt,
+              let start = calendar.date(byAdding: .day, value: -6, to: calendar.startOfDay(for: now)),
+              date >= start, date <= now else { return false }
+        return reason == nil || IssueClosureReason(source: candidate.closureReason) == reason
+    }
+}
+
+public struct IssueClosures: Sendable {
+    public let total: Int
+    public let completed: Int
+    public let notPlanned: Int
+    public let duplicate: Int
+    public let other: Int
+    public let unknown: Int
+}
+
 public struct ProjectWorkSummary: Sendable {
     public let coverageComplete: Bool
     public let openPullRequests: Int
@@ -85,6 +126,8 @@ public struct ProjectWorkSummary: Sendable {
     public let unresolvedThreads: ObservedMetric
     /// Nil means history is unavailable or incomplete; it must not be rendered as zeros.
     public let mergedByDay: [MergedDay]?
+    /// Currently closed Issues by their latest closure, not a complete history of closure events.
+    public let issueClosures: IssueClosures?
 
     public init(records: [WorkMetricRecord], coverageComplete: Bool, now: Date, calendar: Calendar) {
         var seen = Set<String>()
@@ -117,6 +160,14 @@ public struct ProjectWorkSummary: Sendable {
                 }
             } else { mergedByDay = nil }
         } else { mergedByDay = nil }
+        let missingCloseTime = unique.contains { $0.kind == .issue && $0.state == .closed && $0.closedAt == nil }
+        if observedComplete && !missingCloseTime {
+            func count(_ reason: IssueClosureReason?) -> Int {
+                unique.filter(ClosedIssueInPeriodSpecification(reason: reason, now: now, calendar: calendar).isSatisfiedBy).count
+            }
+            issueClosures = IssueClosures(total: count(nil), completed: count(.completed), notPlanned: count(.notPlanned),
+                                          duplicate: count(.duplicate), other: count(.other), unknown: count(.unknown))
+        } else { issueClosures = nil }
     }
 }
 

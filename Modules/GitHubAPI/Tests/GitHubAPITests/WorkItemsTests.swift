@@ -3,6 +3,20 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkItemsTests {
+    @Test func preservesIssueClosureReasonAndReadsOldCache() async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            #expect((body["query"] as! String).contains("stateReason"))
+            let json = #"{"data":{"repository":{"databaseId":42,"issues":{"nodes":[{"id":"I1","number":1,"title":"Bug","url":"https://github.com/a/b/issues/1","state":"CLOSED","stateReason":"DUPLICATE","closedAt":"2026-11-17T09:00:00Z","updatedAt":"2026-11-17T09:00:00Z"}],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[],"pageInfo":{"hasNextPage":false}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let item = try #require(await client.firstPage(token: "token", repositoryID: 42, fullName: "a/b").items.first)
+        #expect(item.closureReason == "DUPLICATE")
+        let restored = try JSONDecoder().decode(GitHubWorkItem.self, from: JSONEncoder().encode(item))
+        #expect(restored.closureReason == "DUPLICATE")
+        let old = #"{"id":"I2","number":2,"title":"Old","url":"https://github.com/a/b/issues/2","state":"CLOSED","updatedAt":0,"isDraft":false,"kind":"issue"}"#
+        #expect(try JSONDecoder().decode(GitHubWorkItem.self, from: Data(old.utf8)).closureReason == nil)
+    }
     @Test func looksUpRepositoryByNodeAndPreserves64BitIdentity() async throws {
         let client = GitHubWorkClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]

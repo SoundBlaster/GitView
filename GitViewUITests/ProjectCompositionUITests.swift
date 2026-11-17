@@ -1,6 +1,28 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testIssueOutcomeSelectionIgnoresSavedGridFilter() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        XCTAssertTrue(app.buttons["work.I2"].waitForExistence(timeout: 10))
+        app.buttons["project.filters"].tap()
+        app.buttons["Closed"].tap()
+        XCTAssertTrue(app.buttons["work.I2"].waitForNonExistence(timeout: 5))
+        app.buttons["project.metrics"].tap()
+        let completed = app.buttons["metrics.issues.completed"]
+        for _ in 0..<6 where !completed.isHittable { app.swipeUp() }
+        XCTAssertTrue(completed.waitForExistence(timeout: 5))
+        completed.tap()
+        XCTAssertTrue(app.staticTexts["Completed fixture"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["Not planned fixture"].exists)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["Done"].tap()
+        XCTAssertTrue(app.buttons["work.I2"].waitForNonExistence(timeout: 5))
+    }
     func testAttentionSelectionPreservesOriginAndDistinctUnits() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")

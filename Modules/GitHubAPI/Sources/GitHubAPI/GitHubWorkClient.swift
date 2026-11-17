@@ -25,6 +25,7 @@ public struct GitHubWorkItem: Codable, Identifiable, Sendable {
     public let state: String
     public let updatedAt: Date
     public let closedAt: Date?
+    public let closureReason: String?
     public let mergedAt: Date?
     public let isDraft: Bool
     public let kind: GitHubWorkKind
@@ -41,7 +42,7 @@ public struct GitHubWorkItem: Codable, Identifiable, Sendable {
         guard kind == .pullRequest, headRevision == head,
               reviewThreadObservedAt.map({ $0 <= observedAt }) ?? true else { return nil }
         return GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt,
-            closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft, kind: kind, headRevision: headRevision,
+            closedAt: closedAt, closureReason: closureReason, mergedAt: mergedAt, isDraft: isDraft, kind: kind, headRevision: headRevision,
             checkStatus: checkStatus, reviewDecision: reviewDecision, checkCounts: checkCounts,
             reviewThreads: threads, reviewRequestCount: reviewRequestCount, reviewThreadObservedAt: observedAt, details: details)
     }
@@ -50,7 +51,7 @@ public struct GitHubWorkItem: Codable, Identifiable, Sendable {
         guard kind != .pullRequest || (head != nil && headRevision == head),
               self.details.map({ $0.observedAt <= details.observedAt }) ?? true else { return nil }
         return GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt,
-            closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft, kind: kind, headRevision: headRevision,
+            closedAt: closedAt, closureReason: closureReason, mergedAt: mergedAt, isDraft: isDraft, kind: kind, headRevision: headRevision,
             checkStatus: checkStatus, reviewDecision: reviewDecision, checkCounts: checkCounts,
             reviewThreads: reviewThreads, reviewRequestCount: reviewRequestCount, reviewThreadObservedAt: reviewThreadObservedAt, details: details)
     }
@@ -119,7 +120,7 @@ public struct GitHubWorkClient: Sendable {
           \(selector) {
             id fullDatabaseId nameWithOwner isPrivate
             issues(first:100, after:$issueAfter, states:[OPEN,CLOSED], orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadIssues) {
-              nodes { id number title url state updatedAt closedAt }
+              nodes { id number title url state updatedAt closedAt stateReason }
               pageInfo { hasNextPage endCursor }
             }
             pullRequests(first:100, after:$pullAfter, states:[OPEN,CLOSED,MERGED], orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadPulls) {
@@ -176,11 +177,11 @@ public struct GitHubWorkClient: Sendable {
     private struct PageInfo: Decodable { let hasNextPage: Bool; let endCursor: String? }
     private struct Node: Decodable {
         let id: String; let number: Int; let title: String; let url: URL; let state: String
-        let updatedAt: Date; let closedAt: Date?; let mergedAt: Date?; let isDraft: Bool?
+        let updatedAt: Date; let closedAt: Date?; let stateReason: String?; let mergedAt: Date?; let isDraft: Bool?
         let headRefOid: String?; let reviewDecision: String?; let statusCheckRollup: CheckRollup?
         let reviewThreads: ThreadConnection?; let reviewRequests: CountConnection?
         func item(kind: GitHubWorkKind) -> GitHubWorkItem {
-            GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt, closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft ?? false, kind: kind, headRevision: headRefOid, checkStatus: statusCheckRollup?.state, reviewDecision: reviewDecision, checkCounts: statusCheckRollup?.contexts?.counts, reviewThreads: reviewThreads?.summary, reviewRequestCount: reviewRequests?.totalCount, reviewThreadObservedAt: reviewThreads == nil ? nil : .now, details: nil)
+            GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt, closedAt: closedAt, closureReason: stateReason, mergedAt: mergedAt, isDraft: isDraft ?? false, kind: kind, headRevision: headRefOid, checkStatus: statusCheckRollup?.state, reviewDecision: reviewDecision, checkCounts: statusCheckRollup?.contexts?.counts, reviewThreads: reviewThreads?.summary, reviewRequestCount: reviewRequests?.totalCount, reviewThreadObservedAt: reviewThreads == nil ? nil : .now, details: nil)
         }
     }
     private struct CheckRollup: Decodable { let state: String; let contexts: CheckContexts? }
