@@ -8,6 +8,48 @@ private actor RequestLog {
 }
 
 struct ProjectRefreshTests {
+    @Test func laterPageFailureKeepsFetchedWorkAndExplainsTheFailure() async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let variables = body["variables"] as! [String: Any]
+            if variables["pullAfter"] != nil {
+                return (Data(), HTTPURLResponse(url: request.url!, statusCode: 503, httpVersion: nil, headerFields: nil)!)
+            }
+            let json = #"{"data":{"repository":{"databaseId":42,"issues":{"nodes":[],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[{"id":"P1","number":1,"title":"First","url":"https://github.com/a/b/pull/1","state":"OPEN","updatedAt":"2026-11-17T10:00:00Z"}],"pageInfo":{"hasNextPage":true,"endCursor":"next"}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let service = GitHubProjectRefresh { token, repository in
+            try await client.load(token: token, repositoryID: repository.id, fullName: repository.fullName)
+        }
+        let result = try await service.fetch(token: "token", repositories: [.init(id: 42, fullName: "a/b", nodeID: nil)])
+        let prior = #"{"id":"P0","number":2,"title":"Earlier","url":"https://github.com/a/b/pull/2","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"pullRequest"}"#
+        let saved = try JSONDecoder().decode(GitHubWorkItem.self, from: Data(prior.utf8))
+        let previous = ProjectWorkArchive().applying([.init(id: 42, name: "a/b", outcome: .received([saved], complete: true))], at: .distantPast)
+        let archive = previous.applying(result.observations, at: .now)
+        #expect(Set(archive.items.map(\.id)) == ["P0", "P1"])
+        #expect(archive.repositories.first?.refreshProblem?.contains("503") == true)
+        #expect(archive.repositories.first?.observedAt == .distantPast)
+        #expect(archive.hasRefreshProblems)
+    }
+
+    @Test(arguments: [true, false]) func laterPageCancellationOrIdentityMismatchDoesNotCommitPartialWork(cancelled: Bool) async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let variables = body["variables"] as! [String: Any]
+            if variables["pullAfter"] != nil {
+                if cancelled { throw CancellationError() }
+                let json = #"{"data":{"repository":{"databaseId":99,"pullRequests":{"nodes":[],"pageInfo":{"hasNextPage":false}}}}}"#
+                return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+            }
+            let json = #"{"data":{"repository":{"databaseId":42,"issues":{"nodes":[],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[],"pageInfo":{"hasNextPage":true,"endCursor":"next"}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        if cancelled {
+            await #expect(throws: CancellationError.self) { try await client.load(token: "token", repositoryID: 42, fullName: "a/b") }
+        } else {
+            await #expect(throws: WorkFetchError.repositoryIdentityMismatch) { try await client.load(token: "token", repositoryID: 42, fullName: "a/b") }
+        }
+    }
     @Test func collectsIndependentResultsAndKeepsFailuresVisible() async throws {
         let log = RequestLog()
         let service = GitHubProjectRefresh { _, repository in

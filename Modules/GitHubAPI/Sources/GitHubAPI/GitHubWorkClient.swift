@@ -61,8 +61,15 @@ public struct GitHubWorkPage: Sendable {
     public let items: [GitHubWorkItem]
     public let isIncomplete: Bool
     public let observedRepository: GitHubRepository?
+    public let refreshProblem: String?
     let issueCursor: String?
     let pullCursor: String?
+
+    init(items: [GitHubWorkItem], isIncomplete: Bool, observedRepository: GitHubRepository?,
+         issueCursor: String?, pullCursor: String?, refreshProblem: String? = nil) {
+        self.items = items; self.isIncomplete = isIncomplete; self.observedRepository = observedRepository
+        self.issueCursor = issueCursor; self.pullCursor = pullCursor; self.refreshProblem = refreshProblem
+    }
 }
 
 public enum WorkFetchError: Error, Equatable {
@@ -91,9 +98,27 @@ public struct GitHubWorkClient: Sendable {
         var seen: Set<String> = []
         var issueCursors: Set<String> = [], pullCursors: Set<String> = []
         var observedRepository: GitHubRepository?
+        var pagesLoaded = 0
         for _ in 0..<maxRequests {
             try Task.checkCancellation()
-            let result = try await page(token: token, repositoryID: repositoryID, fullName: fullName, nodeID: nodeID, issueAfter: issueAfter, pullAfter: pullAfter, loadIssues: loadIssues, loadPulls: loadPulls)
+            let result: GitHubWorkPage
+            do {
+                result = try await page(token: token, repositoryID: repositoryID, fullName: fullName, nodeID: nodeID, issueAfter: issueAfter, pullAfter: pullAfter, loadIssues: loadIssues, loadPulls: loadPulls)
+            } catch is CancellationError { throw CancellationError() }
+            catch WorkFetchError.repositoryIdentityMismatch { throw WorkFetchError.repositoryIdentityMismatch }
+            catch {
+                try Task.checkCancellation()
+                guard pagesLoaded > 0 else { throw error }
+                let problem: String
+                if case GitHubRateLimitError.deferred(let until) = error {
+                    problem = "GitHub rate limit; retry after \(until.formatted())"
+                } else if case WorkFetchError.httpStatus(let code) = error {
+                    problem = "GitHub HTTP \(code)"
+                } else { problem = "Could not load all GitHub pages" }
+                return GitHubWorkPage(items: items, isIncomplete: true, observedRepository: observedRepository,
+                                      issueCursor: issueAfter, pullCursor: pullAfter, refreshProblem: problem)
+            }
+            pagesLoaded += 1
             observedRepository = result.observedRepository ?? observedRepository
             for item in result.items where seen.insert(item.id).inserted { items.append(item) }
             issueAfter = result.issueCursor

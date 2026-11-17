@@ -18,8 +18,9 @@ public struct RepositoryWorkRefresh: Sendable {
     public let name: String
     public let outcome: Outcome
     public let observedAt: Date?
-    public init(id: Int64, name: String, outcome: Outcome, observedAt: Date? = nil) {
-        self.id = id; self.name = name; self.outcome = outcome; self.observedAt = observedAt
+    public let refreshProblem: String?
+    public init(id: Int64, name: String, outcome: Outcome, observedAt: Date? = nil, refreshProblem: String? = nil) {
+        self.id = id; self.name = name; self.outcome = outcome; self.observedAt = observedAt; self.refreshProblem = refreshProblem
     }
 }
 
@@ -101,7 +102,7 @@ public struct ProjectWorkArchive: Codable, Sendable {
                     }
                 }
                 return RepositoryWorkObservation(id: result.id, name: result.name, items: merged,
-                    observedAt: old?.observedAt ?? result.observedAt ?? date, complete: old?.complete ?? false, refreshProblem: "Incomplete GitHub response")
+                    observedAt: old?.observedAt ?? result.observedAt ?? date, complete: old?.complete ?? false, refreshProblem: result.refreshProblem ?? "Incomplete GitHub response")
             case let .failed(problem):
                 return RepositoryWorkObservation(id: result.id, name: result.name, items: old?.items ?? [],
                     observedAt: old?.observedAt, complete: old?.complete ?? false, refreshProblem: problem)
