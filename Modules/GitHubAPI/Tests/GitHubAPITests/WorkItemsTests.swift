@@ -3,6 +3,41 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkItemsTests {
+    @Test func boundedRefreshIncludesOldOpenWorkAlongsideRecentCompletions() async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let query = body["query"] as! String
+            let openOnly = query.contains("states:[OPEN]")
+            let nodes = openOnly
+                ? #"{"id":"old-open","number":1,"title":"Old open","url":"https://github.com/a/b/pull/1","state":"OPEN","updatedAt":"2026-01-01T00:00:00Z"}"#
+                : #"{"id":"recent-merged","number":2,"title":"Recent merged","url":"https://github.com/a/b/pull/2","state":"MERGED","updatedAt":"2026-11-17T10:00:00Z","mergedAt":"2026-11-17T10:00:00Z"}"#
+            let json = """
+            {"data":{"repository":{"databaseId":42,"issues":{"nodes":[],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[\(nodes)],"pageInfo":{"hasNextPage":true,"endCursor":"next"}}}}}
+            """
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let result = try await client.load(token: "token", repositoryID: 42, fullName: "a/b", maxRequests: 2)
+        #expect(Set(result.items.map(\.id)) == ["old-open", "recent-merged"])
+        #expect(result.isIncomplete)
+    }
+
+    @Test func fullRefreshUsesLaterSourceStateRatherThanPrioritySnapshot() async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let openOnly = (body["query"] as! String).contains("states:[OPEN]")
+            let nodes = openOnly
+                ? #"{"id":"P1","number":1,"title":"Open","url":"https://github.com/a/b/pull/1","state":"OPEN","updatedAt":"2026-11-17T09:00:00Z"},{"id":"P2","number":2,"title":"Removed","url":"https://github.com/a/b/pull/2","state":"OPEN","updatedAt":"2026-11-17T09:00:00Z"}"#
+                : #"{"id":"P1","number":1,"title":"Merged","url":"https://github.com/a/b/pull/1","state":"MERGED","updatedAt":"2026-11-17T10:00:00Z","mergedAt":"2026-11-17T10:00:00Z"}"#
+            let json = """
+            {"data":{"repository":{"databaseId":42,"issues":{"nodes":[],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[\(nodes)],"pageInfo":{"hasNextPage":false}}}}}
+            """
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let result = try await client.load(token: "token", repositoryID: 42, fullName: "a/b", maxRequests: 2)
+        #expect(result.items.map(\.id) == ["P1"])
+        #expect(result.items.first?.state == "MERGED")
+        #expect(!result.isIncomplete)
+    }
     @Test func preservesIssueClosureReasonAndReadsOldCache() async throws {
         let client = GitHubWorkClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]

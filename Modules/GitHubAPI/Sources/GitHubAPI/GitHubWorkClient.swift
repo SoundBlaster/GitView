@@ -99,7 +99,15 @@ public struct GitHubWorkClient: Sendable {
         var issueCursors: Set<String> = [], pullCursors: Set<String> = []
         var observedRepository: GitHubRepository?
         var pagesLoaded = 0
-        for _ in 0..<maxRequests {
+        var priorityItems: [GitHubWorkItem] = []
+        if maxRequests > 1 {
+            let priority = try await page(token: token, repositoryID: repositoryID, fullName: fullName, nodeID: nodeID,
+                                          issueAfter: nil, pullAfter: nil, loadIssues: true, loadPulls: true, openOnly: true)
+            priorityItems = priority.items
+            observedRepository = priority.observedRepository
+            pagesLoaded = 1
+        }
+        for _ in pagesLoaded..<maxRequests {
             try Task.checkCancellation()
             let result: GitHubWorkPage
             do {
@@ -115,7 +123,7 @@ public struct GitHubWorkClient: Sendable {
                 } else if case WorkFetchError.httpStatus(let code) = error {
                     problem = "GitHub HTTP \(code)"
                 } else { problem = "Could not load all GitHub pages" }
-                return GitHubWorkPage(items: items, isIncomplete: true, observedRepository: observedRepository,
+                return GitHubWorkPage(items: merging(priorityItems, with: items), isIncomplete: true, observedRepository: observedRepository,
                                       issueCursor: issueAfter, pullCursor: pullAfter, refreshProblem: problem)
             }
             pagesLoaded += 1
@@ -129,10 +137,21 @@ public struct GitHubWorkClient: Sendable {
             loadPulls = pullAfter != nil
             if !loadIssues && !loadPulls { return GitHubWorkPage(items: items, isIncomplete: false, observedRepository: observedRepository, issueCursor: nil, pullCursor: nil) }
         }
-        return GitHubWorkPage(items: items, isIncomplete: true, observedRepository: observedRepository, issueCursor: issueAfter, pullCursor: pullAfter)
+        return GitHubWorkPage(items: merging(priorityItems, with: items), isIncomplete: true, observedRepository: observedRepository, issueCursor: issueAfter, pullCursor: pullAfter)
     }
 
-    private func page(token: String, repositoryID: Int64, fullName: String, nodeID: String?, issueAfter: String?, pullAfter: String?, loadIssues: Bool, loadPulls: Bool) async throws -> GitHubWorkPage {
+    private func merging(_ priority: [GitHubWorkItem], with later: [GitHubWorkItem]) -> [GitHubWorkItem] {
+        var result: [GitHubWorkItem] = []
+        var indices: [String: Int] = [:]
+        for item in priority + later {
+            if let index = indices[item.id] {
+                if item.updatedAt >= result[index].updatedAt { result[index] = item }
+            } else { indices[item.id] = result.count; result.append(item) }
+        }
+        return result
+    }
+
+    private func page(token: String, repositoryID: Int64, fullName: String, nodeID: String?, issueAfter: String?, pullAfter: String?, loadIssues: Bool, loadPulls: Bool, openOnly: Bool = false) async throws -> GitHubWorkPage {
         let names = fullName.split(separator: "/", omittingEmptySubsequences: false)
         guard names.count == 2, names.allSatisfy({ !$0.isEmpty }), repositoryID > 0,
               !token.isEmpty, !token.contains("\n"), !token.contains("\r") else { throw WorkFetchError.invalidRequest }
@@ -140,15 +159,17 @@ public struct GitHubWorkClient: Sendable {
         let locationArguments = nodeID == nil ? "$owner:String!, $name:String!" : "$nodeID:ID!"
         let selector = nodeID == nil ? "repository(owner:$owner, name:$name)" : "node(id:$nodeID) { ... on Repository"
         let selectorClose = nodeID == nil ? "}" : "} }"
+        let issueStates = openOnly ? "[OPEN]" : "[OPEN,CLOSED]"
+        let pullStates = openOnly ? "[OPEN]" : "[OPEN,CLOSED,MERGED]"
         let query = """
         query Work(\(locationArguments), $issueAfter:String, $pullAfter:String, $loadIssues:Boolean!, $loadPulls:Boolean!) {
           \(selector) {
             id fullDatabaseId nameWithOwner isPrivate
-            issues(first:100, after:$issueAfter, states:[OPEN,CLOSED], orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadIssues) {
+            issues(first:100, after:$issueAfter, states:\(issueStates), orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadIssues) {
               nodes { id number title url state updatedAt closedAt stateReason }
               pageInfo { hasNextPage endCursor }
             }
-            pullRequests(first:100, after:$pullAfter, states:[OPEN,CLOSED,MERGED], orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadPulls) {
+            pullRequests(first:100, after:$pullAfter, states:\(pullStates), orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadPulls) {
               nodes {
                 id number title url state updatedAt closedAt mergedAt isDraft headRefOid reviewDecision
                 statusCheckRollup { state contexts(first:1) { totalCount checkRunCountsByState { state count } statusContextCountsByState { state count } } }
