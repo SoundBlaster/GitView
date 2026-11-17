@@ -30,12 +30,14 @@ public enum WorkCacheError: Error, Equatable { case invalidAccount, invalidStore
         try container.persistentStoreCoordinator.addPersistentStore(ofType: storeType, configurationName: nil, at: url)
     }
 
-    public func save(accountID: Int64, projectID: UUID, payload: Data, observedAt: Date, complete: Bool) throws {
+    @discardableResult
+    public func save(accountID: Int64, projectID: UUID, payload: Data, observedAt: Date, complete: Bool) throws -> Bool {
         guard accountID > 0 else { throw WorkCacheError.invalidAccount }
         let existing = try object(accountID: accountID, projectID: projectID)
         if let existing {
+            container.viewContext.refresh(existing, mergeChanges: false)
             guard let oldDate = existing.value(forKey: "observedAt") as? Date else { throw WorkCacheError.invalidStoredData }
-            if oldDate > observedAt || !complete { return }
+            if oldDate > observedAt || !complete { return false }
         }
         let entry = existing ?? NSEntityDescription.insertNewObject(forEntityName: "WorkSnapshot", into: container.viewContext)
         entry.setValue(accountID, forKey: "accountID")
@@ -45,11 +47,13 @@ public enum WorkCacheError: Error, Equatable { case invalidAccount, invalidStore
         entry.setValue(complete, forKey: "complete")
         do { try container.viewContext.save() }
         catch { container.viewContext.rollback(); throw error }
+        return true
     }
 
     public func load(accountID: Int64, projectID: UUID) throws -> WorkSnapshot? {
         guard accountID > 0 else { throw WorkCacheError.invalidAccount }
         guard let entry = try object(accountID: accountID, projectID: projectID) else { return nil }
+        container.viewContext.refresh(entry, mergeChanges: false)
         guard let payload = entry.value(forKey: "payload") as? Data,
               let date = entry.value(forKey: "observedAt") as? Date,
               let complete = entry.value(forKey: "complete") as? Bool else { throw WorkCacheError.invalidStoredData }

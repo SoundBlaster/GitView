@@ -230,8 +230,7 @@ struct ProjectWorkPage: View {
                 if let snapshot, snapshot.observedAt > now {
                     saved = false
                 } else if complete || snapshot == nil {
-                    try cache.save(accountID: project.accountID, projectID: project.id, payload: data, observedAt: now, complete: complete)
-                    saved = true
+                    saved = try cache.save(accountID: project.accountID, projectID: project.id, payload: data, observedAt: now, complete: complete)
                 } else if let snapshot {
                     saved = try cache.replacePayload(accountID: project.accountID, projectID: project.id, expected: snapshot, payload: data)
                 }

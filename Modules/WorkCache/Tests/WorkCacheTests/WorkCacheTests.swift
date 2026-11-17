@@ -3,6 +3,22 @@ import Testing
 @testable import WorkCache
 
 @MainActor struct WorkCacheTests {
+    @Test func completeRefreshDoesNotOverwriteNewerSnapshotFromAnotherStore() throws {
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let url = directory.appendingPathComponent("cache.sqlite")
+        let project = UUID()
+        let first = try WorkCache(url: url)
+        let second = try WorkCache(url: url)
+        try first.save(accountID: 1, projectID: project, payload: Data("old".utf8), observedAt: Date(timeIntervalSince1970: 10), complete: true)
+        _ = try first.load(accountID: 1, projectID: project)
+        try second.save(accountID: 1, projectID: project, payload: Data("new".utf8), observedAt: Date(timeIntervalSince1970: 30), complete: true)
+        #expect(try !first.save(accountID: 1, projectID: project, payload: Data("stale".utf8), observedAt: Date(timeIntervalSince1970: 20), complete: true))
+        #expect(try first.load(accountID: 1, projectID: project)?.payload == Data("new".utf8))
+        let reopened = try WorkCache(url: url)
+        #expect(try reopened.load(accountID: 1, projectID: project)?.payload == Data("new".utf8))
+    }
     @Test func enrichesPartialSnapshotWithoutClaimingNewProjectObservation() throws {
         let cache = try WorkCache(inMemory: true)
         let id = UUID()
