@@ -1,6 +1,26 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testConfiguredGitHubConnectionStartsAuthorization() throws {
+        let app = XCUIApplication()
+        app.launch()
+        let connect = app.buttons["Connect GitHub"]
+        XCTAssertTrue(connect.waitForExistence(timeout: 10))
+        connect.tap()
+        if app.staticTexts["GitHub App is not configured yet."].waitForExistence(timeout: 2) {
+            throw XCTSkip("Local GitHub App credentials are not configured.")
+        }
+        let system = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let prompt = system.alerts.firstMatch
+        XCTAssertTrue(prompt.waitForExistence(timeout: 15))
+        let screenshot = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        screenshot.name = "GitHub authorization system prompt"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+        XCTAssertTrue(prompt.label.localizedCaseInsensitiveContains("github"))
+        XCTAssertTrue(prompt.label.contains("GitGrid"))
+    }
+
     func testPreviewCanOpenTheSameWorkItem() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-dense")

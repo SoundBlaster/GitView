@@ -26,6 +26,7 @@ targets:
       path: Config/Info.plist
       properties:
         CFBundleDisplayName: GitGrid
+        CFBundleName: GitGrid
         BGTaskSchedulerPermittedIdentifiers:
           - ru.egormerkushev.gitview.refresh
         UIBackgroundModes:
@@ -44,6 +45,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ru.egormerkushev.gitview
+        PRODUCT_NAME: GitGrid
+        PRODUCT_MODULE_NAME: GitView
         GENERATE_INFOPLIST_FILE: YES
         SWIFT_VERSION: "6.0"
         TARGETED_DEVICE_FAMILY: "1,2"
@@ -58,6 +61,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ru.egormerkushev.gitview.integrationtests
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/GitGrid.app/GitGrid
         GENERATE_INFOPLIST_FILE: YES
         SWIFT_VERSION: "6.0"
   GitViewUITests:

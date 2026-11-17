@@ -464,6 +464,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ru.egormerkushev.gitview;
+				PRODUCT_MODULE_NAME = GitView;
+				PRODUCT_NAME = GitGrid;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -547,7 +549,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GitView.app/GitView";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GitGrid.app/GitGrid";
 			};
 			name = Debug;
 		};
@@ -565,7 +567,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GitView.app/GitView";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GitGrid.app/GitGrid";
 			};
 			name = Release;
 		};
@@ -674,6 +676,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ru.egormerkushev.gitview;
+				PRODUCT_MODULE_NAME = GitView;
+				PRODUCT_NAME = GitGrid;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
