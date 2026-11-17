@@ -34,6 +34,11 @@ import XCTest
         add(screenshot)
         XCTAssertTrue(prompt.label.localizedCaseInsensitiveContains("github"))
         XCTAssertTrue(prompt.label.contains("GitGrid"))
+        prompt.buttons["Cancel"].tap()
+        let enabled = NSPredicate(format: "isEnabled == true")
+        expectation(for: enabled, evaluatedWith: connect)
+        waitForExpectations(timeout: 10)
+        XCTAssertFalse(app.staticTexts["Could not complete GitHub connection. Please try again."].exists)
     }
 
     func testPreviewCanOpenTheSameWorkItem() throws {

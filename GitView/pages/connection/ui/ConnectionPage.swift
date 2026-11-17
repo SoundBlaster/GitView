@@ -140,6 +140,7 @@ struct ConnectionPage: View {
             return
         }
         isConnecting = true
+        status = nil
         defer { isConnecting = false }
         do {
             let attempt = try OAuthAttempt.make(clientID: id, redirectURI: redirectURI)
@@ -164,6 +165,10 @@ struct ConnectionPage: View {
                 await coordinator.cancel(attemptID)
                 throw error
             }
+        } catch is CancellationError {
+            status = nil
+        } catch let error as ASWebAuthenticationSessionError where error.code == .canceledLogin {
+            status = nil
         } catch {
             status = "Could not complete GitHub connection. Please try again."
         }
