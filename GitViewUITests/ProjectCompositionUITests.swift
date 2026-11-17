@@ -1,6 +1,45 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testProjectThreadSignalKeepsItsPartialOrigin() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.press(forDuration: 1)
+        let signal = app.buttons["Show unresolved review threads"]
+        XCTAssertTrue(signal.waitForExistence(timeout: 5))
+        signal.tap()
+        XCTAssertTrue(app.staticTexts["Failed fixture"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["The origin observation was partial or had unavailable data."].exists)
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Origin: 1 pull requests")).firstMatch.exists)
+    }
+    func testProjectSignalOpensItsSelectionWithoutChangingGridFilter() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        XCTAssertTrue(app.buttons["work.P2"].waitForExistence(timeout: 10))
+        app.buttons["project.filters"].tap()
+        app.buttons["Open"].tap()
+        XCTAssertTrue(app.buttons["work.P2"].waitForNonExistence(timeout: 5))
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(project.waitForExistence(timeout: 5))
+        project.press(forDuration: 1)
+        let signal = app.buttons["Show failed CI"]
+        XCTAssertTrue(signal.waitForExistence(timeout: 5))
+        signal.tap()
+        XCTAssertTrue(app.staticTexts["Failed fixture"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Origin: 1 pull requests")).firstMatch.exists)
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Origin snapshot saved")).firstMatch.exists)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(app.navigationBars["Project metrics"].waitForExistence(timeout: 5))
+        app.buttons["Done"].tap()
+        XCTAssertTrue(app.buttons["work.P2"].waitForNonExistence(timeout: 5))
+    }
     func testIssueOutcomeSelectionIgnoresSavedGridFilter() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")

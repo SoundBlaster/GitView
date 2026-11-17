@@ -23,6 +23,7 @@ struct ProjectWorkPage: View {
     @State private var selectedItem: GitHubWorkItem?
     @State private var showProjectSettings = false
     @State private var showMetrics = false
+    @State private var pendingAttention: ProjectAttentionOrigin?
     @State private var zoomHint = false
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @AppStorage private var showOpen: Bool
@@ -31,10 +32,12 @@ struct ProjectWorkPage: View {
     @AppStorage private var showIssues: Bool
     @AppStorage private var showPullRequests: Bool
 
-    init(project: StoredProject, sessionManager: GitHubSessionManager, library: ProjectLibrary) {
+    init(project: StoredProject, sessionManager: GitHubSessionManager, library: ProjectLibrary, initialAttention: ProjectAttentionOrigin? = nil) {
         self.project = project
         self.sessionManager = sessionManager
         self.library = library
+        _pendingAttention = State(initialValue: initialAttention)
+        _showMetrics = State(initialValue: initialAttention != nil)
         let prefix = "project.\(project.id.uuidString).filters."
         _showOpen = AppStorage(wrappedValue: true, prefix + "open")
         _showMerged = AppStorage(wrappedValue: true, prefix + "merged")
@@ -137,10 +140,19 @@ struct ProjectWorkPage: View {
         .sheet(isPresented: $showMetrics) {
             if let archive {
                 ProjectMetricsSheet(project: project, archive: archive, sessionManager: sessionManager, refreshWarning: warning,
-                    onThreads: persistThreads, onDetails: persistDetails)
+                    onThreads: persistThreads, onDetails: persistDetails, initialAttention: pendingAttention)
             }
         }
-        .task { restore(); await load() }
+        .task {
+            restore()
+            if pendingAttention != nil && archive == nil {
+                showMetrics = false
+                warning = "The saved signal is unavailable. Refresh the project to inspect it."
+                pendingAttention = nil
+            }
+            await load()
+        }
+        .onChange(of: showMetrics) { if !showMetrics { pendingAttention = nil } }
         .refreshable { await load() }
         .onChange(of: project.repositories.map(\.id)) {
             warning = "Project membership changed; updating its overview."
@@ -315,9 +327,12 @@ private struct ProjectMetricsSheet: View {
     let refreshWarning: String?
     let onThreads: @MainActor (GitHubWorkItem, GitHubReviewThreads, Date) -> Bool
     let onDetails: @MainActor (GitHubWorkItem, GitHubWorkDetails) -> Bool
+    let initialAttention: ProjectAttentionOrigin?
     @Environment(\.dismiss) private var dismiss
     @State private var now = Date()
     @State private var selectedItem: GitHubWorkItem?
+    @State private var showInitialSelection = false
+    @State private var initialSelectionOpened = false
 
     private var summary: ProjectWorkSummary {
         let records = archive.items.map(\.metricRecord)
@@ -403,6 +418,18 @@ private struct ProjectMetricsSheet: View {
                 }
             }
             .navigationTitle("Project metrics")
+            .navigationDestination(isPresented: $showInitialSelection) {
+                if let initialAttention {
+                    attentionSelection(title: initialAttentionTitle(initialAttention.signal), signal: initialAttention.signal,
+                        origin: initialAttention.metric, unit: "pull requests", source: initialAttention)
+                }
+            }
+            .task {
+                if initialAttention != nil && !initialSelectionOpened {
+                    initialSelectionOpened = true
+                    showInitialSelection = true
+                }
+            }
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
             .sheet(item: $selectedItem) { item in
                 WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID,
@@ -458,7 +485,17 @@ private struct ProjectMetricsSheet: View {
         .navigationTitle(title)
     }
 
-    private func attentionSelection(title: String, signal: AttentionSignal, origin: ObservedMetric, unit: String) -> some View {
+    private func initialAttentionTitle(_ signal: AttentionSignal) -> String {
+        switch signal {
+        case .failedCI: "Failed CI"
+        case .unresolvedThreads: "PRs with unresolved threads"
+        case .changesRequested: "Changes requested"
+        case .reviewRequested: "Review requested"
+        }
+    }
+
+    private func attentionSelection(title: String, signal: AttentionSignal, origin: ObservedMetric, unit: String,
+                                    source: ProjectAttentionOrigin? = nil) -> some View {
         let rule = AttentionSignalSpecification(signal: signal)
         var seen = Set<String>()
         let unique = archive.items.filter { seen.insert($0.id).inserted }
@@ -468,6 +505,13 @@ private struct ProjectMetricsSheet: View {
             Section {
                 Text("\(project.name) · current membership · open pull requests")
                 Text("Origin: \(origin.count) \(unit). Selection contains distinct pull requests; saved grid filters do not apply.")
+                if let source {
+                    Text("Origin snapshot saved \(source.snapshotAt.formatted(date: .abbreviated, time: .shortened)).")
+                    if source.partial { Text("The origin observation was partial or had unavailable data.") }
+                    if source.repositoryIDs != Set(project.repositories.map(\.id)) {
+                        Text("Project membership changed since the origin snapshot; this selection uses current membership.")
+                    }
+                }
                 if let refreshWarning { Text(refreshWarning) }
                 if !summary.coverageComplete || unknown > 0 || origin.unavailable > 0 {
                     Label("Evidence is incomplete: \(unknown) PRs cannot be classified; \(origin.unavailable) PRs have unavailable or partial source data, or repository coverage is incomplete.", systemImage: "exclamationmark.triangle")

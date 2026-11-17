@@ -1,5 +1,14 @@
 import GitHubAPI
 import WorkDomain
+import Foundation
+
+struct ProjectAttentionOrigin {
+    let signal: AttentionSignal
+    let metric: ObservedMetric
+    let snapshotAt: Date
+    let repositoryIDs: Set<Int64>
+    let partial: Bool
+}
 
 extension GitHubWorkItem {
     var metricRecord: WorkMetricRecord {

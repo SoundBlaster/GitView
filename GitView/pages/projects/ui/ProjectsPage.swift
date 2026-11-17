@@ -11,7 +11,7 @@ struct ProjectsPage: View {
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @State private var columns = 4
     @State private var width: CGFloat = 0
-    @State private var selectedProject: StoredProject?
+    @State private var selectedRoute: ProjectRoute?
     @State private var zoomHint = false
     @State private var overviews: [UUID: ProjectOverview] = [:]
     @State private var cacheError = false
@@ -31,13 +31,25 @@ struct ProjectsPage: View {
                 if zoomHint { Text("Choose a project to open it.").font(.footnote).foregroundStyle(.secondary) }
                 LazyVGrid(columns: gridColumns, spacing: 6) {
                     ForEach(library.projects) { project in
-                        Button { selectedProject = project } label: {
+                        Button { selectedRoute = ProjectRoute(project: project, attention: nil) } label: {
                             ProjectCell(project: project, overview: overviews[project.id], expanded: effectiveColumns <= 2)
                         }
                         .buttonStyle(.plain)
                         .accessibilityIdentifier("project.\(project.id.uuidString)")
                         .contextMenu {
-                            Button("Open Project", systemImage: "arrow.up.right.square") { selectedProject = project }
+                            Button("Open Project", systemImage: "arrow.up.right.square") { selectedRoute = ProjectRoute(project: project, attention: nil) }
+                            if let overview = overviews[project.id] {
+                                if overview.summary.failedCI.count > 0 {
+                                    Button("Show failed CI", systemImage: "xmark.circle.fill") {
+                                        open(project, signal: .failedCI, metric: overview.summary.failedCI, overview: overview)
+                                    }
+                                }
+                                if overview.summary.affectedByThreads.count > 0 {
+                                    Button("Show unresolved review threads", systemImage: "text.bubble.fill") {
+                                        open(project, signal: .unresolvedThreads, metric: overview.summary.affectedByThreads, overview: overview)
+                                    }
+                                }
+                            }
                         } preview: {
                             ProjectCell(project: project, overview: overviews[project.id], expanded: true).padding()
                         }
@@ -57,8 +69,9 @@ struct ProjectsPage: View {
                 Button("Smaller", systemImage: "minus.magnifyingglass") { changeZoom(.smaller) }
             }
         }
-        .navigationDestination(item: $selectedProject) { project in
-            ProjectWorkPage(project: library.projects.first(where: { $0.id == project.id }) ?? project, sessionManager: sessionManager, library: library)
+        .navigationDestination(item: $selectedRoute) { route in
+            ProjectWorkPage(project: library.projects.first(where: { $0.id == route.project.id }) ?? route.project,
+                sessionManager: sessionManager, library: library, initialAttention: route.attention)
         }
         .onAppear { loadOverviews() }
         .onChange(of: library.projects) { loadOverviews() }
@@ -68,8 +81,18 @@ struct ProjectsPage: View {
         let next = GridDensity.next(current: effectiveColumns, direction: direction, width: Double(width), maxCellWidth: 320)
         withAnimation(.easeInOut(duration: 0.2)) { columns = next }
         guard direction == .larger, GridDensity.isAtMaximum(columns: next, width: Double(width), maxCellWidth: 320) else { zoomHint = false; return }
-        if library.projects.count == 1 { selectedProject = library.projects.first; zoomHint = false }
+        if let project = library.projects.first, library.projects.count == 1 { selectedRoute = ProjectRoute(project: project, attention: nil); zoomHint = false }
         else if !library.projects.isEmpty { zoomHint = true }
+    }
+
+    @MainActor private func open(_ project: StoredProject, signal: AttentionSignal, metric: ObservedMetric, overview: ProjectOverview) {
+        let threadPartial: Bool
+        if case .unresolvedThreads = signal { threadPartial = overview.summary.unresolvedThreads.unavailable > 0 }
+        else { threadPartial = false }
+        let partial = !overview.summary.coverageComplete || metric.unavailable > 0 || threadPartial
+        let attention = ProjectAttentionOrigin(signal: signal, metric: metric, snapshotAt: overview.date,
+            repositoryIDs: Set(project.repositories.map(\.id)), partial: partial)
+        selectedRoute = ProjectRoute(project: project, attention: attention)
     }
 
     @MainActor private func loadOverviews() {
@@ -101,6 +124,14 @@ struct ProjectsPage: View {
 private struct ProjectOverview {
     let summary: ProjectWorkSummary
     let date: Date
+}
+
+private struct ProjectRoute: Identifiable, Hashable {
+    let project: StoredProject
+    let attention: ProjectAttentionOrigin?
+    var id: UUID { project.id }
+    static func == (lhs: ProjectRoute, rhs: ProjectRoute) -> Bool { lhs.id == rhs.id }
+    func hash(into hasher: inout Hasher) { hasher.combine(id) }
 }
 
 private struct ProjectCell: View {
