@@ -61,6 +61,11 @@ struct RepositoryDiscoveryPage: View {
             let session = try await sessionManager.usableSession(for: accountID)
             let updated = try await GitHubDiscovery().load(token: session.accessToken)
             try Task.checkCancellation()
+            guard try await sessionManager.isCurrent(accountID: accountID, accessToken: session.accessToken) else {
+                errorMessage = "The GitHub session changed. Refresh repositories for the active account."
+                return
+            }
+            try Task.checkCancellation()
             var metadataProblem = false
             if let library {
                 do {

@@ -214,6 +214,10 @@ struct ProjectWorkPage: View {
             RepositoryReference(id: $0.id, fullName: $0.fullName, isPrivate: $0.isPrivate, nodeID: $0.nodeID)
         }
         guard !Task.isCancelled else { return }
+        do {
+            guard try await sessionManager.isCurrent(accountID: project.accountID, accessToken: accessToken) else { return }
+        } catch { warning = "Could not verify the current GitHub session. Showing saved work."; return }
+        guard !Task.isCancelled else { return }
         guard library.projects.first(where: { $0.id == project.id })?.repositories.map(\.id) == requestedRepositories.map(\.id) else { return }
         var metadataProblem = false
         if !observedRepositories.isEmpty {
@@ -776,6 +780,8 @@ private struct WorkDetailSheet: View {
             let credential = try await sessionManager.usableSession(for: accountID)
             let result = try await GitHubWorkDetailClient().load(token: credential.accessToken, id: item.id, kind: item.kind, expectedHead: item.headRevision)
             try Task.checkCancellation()
+            guard try await sessionManager.isCurrent(accountID: accountID, accessToken: credential.accessToken) else { throw SessionRefreshError.sessionChanged }
+            try Task.checkCancellation()
             details = result
             if !onDetails(item, result) { storageError = true }
         } catch is CancellationError {
@@ -790,6 +796,8 @@ private struct WorkDetailSheet: View {
         do {
             let credential = try await sessionManager.usableSession(for: accountID)
             let result = try await GitHubReviewThreadsClient().load(token: credential.accessToken, pullRequestID: item.id, expectedHead: head)
+            try Task.checkCancellation()
+            guard try await sessionManager.isCurrent(accountID: accountID, accessToken: credential.accessToken) else { throw SessionRefreshError.sessionChanged }
             try Task.checkCancellation()
             let now = Date()
             expandedThreads = result
@@ -810,6 +818,8 @@ private struct WorkDetailSheet: View {
             let credential = try await sessionManager.usableSession(for: accountID)
             let links = try await GitHubWorkDetailClient().loadIssuePullRequestReferences(token: credential.accessToken, id: item.id, maxPages: linkPageLimit)
             try Task.checkCancellation()
+            guard try await sessionManager.isCurrent(accountID: accountID, accessToken: credential.accessToken) else { throw SessionRefreshError.sessionChanged }
+            try Task.checkCancellation()
             guard let updated = (details ?? item.details)?.replacingPullRequestReferences(links) else { linkError = true; return }
             details = updated
             if !links.isComplete || links.manualLinksComplete == false { linkPageLimit += 10 }
@@ -827,6 +837,8 @@ private struct WorkDetailSheet: View {
             let credential = try await sessionManager.usableSession(for: accountID)
             let limit = relationPageLimits[kind] ?? 10
             let page = try await GitHubWorkDetailClient().loadIssueRelation(token: credential.accessToken, id: item.id, kind: kind, maxPages: limit)
+            try Task.checkCancellation()
+            guard try await sessionManager.isCurrent(accountID: accountID, accessToken: credential.accessToken) else { throw SessionRefreshError.sessionChanged }
             try Task.checkCancellation()
             guard let updated = (details ?? item.details)?.replacingIssueRelation(page, kind: kind) else { relationError = kind; return }
             details = updated

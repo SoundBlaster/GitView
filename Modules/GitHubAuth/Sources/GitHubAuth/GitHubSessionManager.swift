@@ -38,6 +38,12 @@ public actor GitHubSessionManager {
         pending = nil
     }
 
+    /// Checks a response against the credential currently stored for the active account.
+    public func isCurrent(accountID: Int64, accessToken: String) throws -> Bool {
+        guard let current = try load() else { return false }
+        return current.identity.id == accountID && current.accessToken == accessToken
+    }
+
     public func usableSession(for accountID: Int64? = nil, now: Date = .now) async throws -> SavedGitHubCredential {
         if let pending {
             guard accountID == nil || pending.original.identity.id == accountID else { throw SessionRefreshError.sessionChanged }

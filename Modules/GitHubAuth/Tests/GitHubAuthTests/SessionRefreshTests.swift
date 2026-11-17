@@ -3,6 +3,16 @@ import Testing
 @testable import GitHubAuth
 
 struct SessionRefreshTests {
+    @Test func responseSessionStopsMatchingAfterDisconnect() async throws {
+        let credential = SavedGitHubCredential(identity: GitHubIdentity(id: 1, login: "a"), accessToken: "first", refreshToken: nil, accessTokenExpiresAt: nil, refreshTokenExpiresAt: nil)
+        let store = DisconnectStore(credential: credential)
+        let manager = GitHubSessionManager(load: { store.load() }, save: { _, _, _ in }, refresh: { _ in throw TestError.failed })
+        #expect(try await manager.isCurrent(accountID: 1, accessToken: "first"))
+        #expect(try await !manager.isCurrent(accountID: 2, accessToken: "first"))
+        #expect(try await !manager.isCurrent(accountID: 1, accessToken: "other"))
+        try await manager.disconnect { store.clear() }
+        #expect(try await !manager.isCurrent(accountID: 1, accessToken: "first"))
+    }
     @Test func refreshUsesCorrectGrantAndReturnsRotatedTokens() async throws {
         let client = OAuthClient(clientID: "id", clientSecret: "secret", redirectURI: URL(string: "gitview://oauth/callback")!) { request in
             let body = String(data: request.httpBody!, encoding: .utf8)!
