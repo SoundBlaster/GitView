@@ -1,6 +1,20 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testRepositoryDiscoveryOffersGitHubAccessManagementOffline() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        XCTAssertTrue(app.buttons["project.settings"].waitForExistence(timeout: 10))
+        app.buttons["project.settings"].tap()
+        app.buttons["Add Repository"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["discovery.manageAccess"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts["Could not refresh repositories for connected account."].waitForExistence(timeout: 10))
+    }
+
     func testConfiguredGitHubConnectionStartsAuthorization() throws {
         let app = XCUIApplication()
         app.launch()
