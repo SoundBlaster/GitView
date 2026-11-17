@@ -186,8 +186,12 @@ struct ProjectWorkPage: View {
                         source: archive?.repositoryObservationsByWorkID[item.id]).padding()
                     Button("Open in GitGrid", systemImage: "doc.text") { previewToOpen = item; accessiblePreview = nil }
                         .buttonStyle(.borderedProminent)
-                    Link("Open on GitHub", destination: item.url).padding()
-                    ShareLink(item: item.url).padding()
+                    if let url = GitHubSourceLink.eligible(item.url, repository: repositoryNames[item.id], kind: item.kind, number: item.number) {
+                        Link("Open on GitHub", destination: url).padding()
+                        ShareLink(item: url).accessibilityIdentifier("source.share").padding()
+                    } else {
+                        Text("Source link unavailable").foregroundStyle(.secondary)
+                    }
                 }
                 .navigationTitle("Preview")
                 .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { accessiblePreview = nil } } }
@@ -886,8 +890,12 @@ private struct WorkGridCell: View {
         .contextMenu {
             Button("Preview", systemImage: "eye", action: preview)
             Button("Open in GitGrid", systemImage: "doc.text") { open() }
-            Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
-            ShareLink(item: item.url)
+            if let url = GitHubSourceLink.eligible(item.url, repository: repositoryName, kind: item.kind, number: item.number) {
+                Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(url) }
+                ShareLink(item: url).accessibilityIdentifier("source.share")
+            } else {
+                Text("Source link unavailable")
+            }
         } preview: {
             WorkPreviewContent(item: item, repositoryName: repositoryName, source: source).padding()
         }
@@ -1018,8 +1026,12 @@ private struct WorkDetailSheet: View {
                         .disabled(loadingDetails)
                         .accessibilityIdentifier("detail.retry")
                 }
-                Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
-                ShareLink(item: item.url)
+                if let url = GitHubSourceLink.eligible(item.url, repository: repositoryName, kind: item.kind, number: item.number) {
+                    Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(url) }
+                    ShareLink(item: url).accessibilityIdentifier("source.share")
+                } else {
+                    Text("Source link unavailable").foregroundStyle(.secondary)
+                }
             }
             .navigationTitle(item.kind == .pullRequest ? "Pull Request" : "Issue")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
@@ -1146,15 +1158,12 @@ private struct IssueRelationshipDetails: View {
         Section("Linked pull requests") {
             if let page = relationships?.pullRequests {
                 ForEach(page.items) { pull in
-                    Link(destination: pull.url) {
+                    if let url = GitHubSourceLink.eligible(pull.url, repository: pull.repository, kind: .pullRequest, number: pull.number) {
+                        Link(destination: url) { pullDescription(pull) }
+                    } else {
                         VStack(alignment: .leading) {
-                            Text(pull.title)
-                            Text("\(pull.repository) · #\(pull.number) · \(pull.state)").font(.caption).foregroundStyle(.secondary)
-                            if pull.crossReferenced ?? true {
-                                Text(pull.willCloseTarget ? "Cross-reference · closes this issue on merge" : "Cross-reference")
-                                    .font(.caption).foregroundStyle(.secondary)
-                            }
-                            if pull.manuallyLinked == true { Text("Manually linked on GitHub").font(.caption).foregroundStyle(.secondary) }
+                            pullDescription(pull)
+                            Text("Source link unavailable").font(.caption).foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -1207,11 +1216,34 @@ private struct IssueRelationshipDetails: View {
     }
 
     private func issueLink(_ issue: GitHubIssueReference) -> some View {
-        Link(destination: issue.url) {
-            VStack(alignment: .leading) {
-                Text(issue.title)
-                Text("\(issue.repository) · #\(issue.number) · \(issue.state)").font(.caption).foregroundStyle(.secondary)
+        Group {
+            if let url = GitHubSourceLink.eligible(issue.url, repository: issue.repository, kind: .issue, number: issue.number) {
+                Link(destination: url) { issueDescription(issue) }
+            } else {
+                VStack(alignment: .leading) {
+                    issueDescription(issue)
+                    Text("Source link unavailable").font(.caption).foregroundStyle(.secondary)
+                }
             }
+        }
+    }
+
+    private func issueDescription(_ issue: GitHubIssueReference) -> some View {
+        VStack(alignment: .leading) {
+            Text(issue.title)
+            Text("\(issue.repository) · #\(issue.number) · \(issue.state)").font(.caption).foregroundStyle(.secondary)
+        }
+    }
+
+    private func pullDescription(_ pull: GitHubPullRequestReference) -> some View {
+        VStack(alignment: .leading) {
+            Text(pull.title)
+            Text("\(pull.repository) · #\(pull.number) · \(pull.state)").font(.caption).foregroundStyle(.secondary)
+            if pull.crossReferenced ?? true {
+                Text(pull.willCloseTarget ? "Cross-reference · closes this issue on merge" : "Cross-reference")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
+            if pull.manuallyLinked == true { Text("Manually linked on GitHub").font(.caption).foregroundStyle(.secondary) }
         }
     }
 }

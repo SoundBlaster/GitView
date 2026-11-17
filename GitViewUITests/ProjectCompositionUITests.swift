@@ -1,6 +1,39 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testKnownSourceLinkRemainsAvailable() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let item = app.buttons["work.I1"]
+        XCTAssertTrue(item.waitForExistence(timeout: 10))
+        item.tap()
+        XCTAssertTrue(app.navigationBars["Issue"].waitForExistence(timeout: 5))
+        let open = app.buttons["Open on GitHub"]
+        for _ in 0..<6 where !open.exists { app.swipeUp() }
+        XCTAssertTrue(open.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.descendants(matching: .any)["source.share"].exists)
+    }
+    func testUnsafeSourceLinkKeepsObjectVisibleWithoutHandoff() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-unsafe-source-link"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let item = app.buttons["work.I1"]
+        XCTAssertTrue(item.waitForExistence(timeout: 10))
+        item.tap()
+        XCTAssertTrue(app.navigationBars["Issue"].waitForExistence(timeout: 5))
+        let unavailable = app.staticTexts["Source link unavailable"].firstMatch
+        for _ in 0..<6 where !unavailable.exists { app.swipeUp() }
+        XCTAssertTrue(unavailable.waitForExistence(timeout: 5))
+        XCTAssertFalse(app.buttons["Open on GitHub"].exists)
+        XCTAssertFalse(app.descendants(matching: .any)["source.share"].exists)
+    }
     func testHistoricalMetricFollowsChangedProjectMembership() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-history-membership"]
