@@ -82,8 +82,10 @@ struct ProjectsPage: View {
             for project in library.projects {
                 do {
                     if let snapshot = try cache.load(accountID: library.accountID, projectID: project.id) {
-                        let items = try JSONDecoder().decode([GitHubWorkItem].self, from: snapshot.payload)
-                        results[project.id] = ProjectOverview(openPulls: items.filter { $0.kind == .pullRequest && $0.state == "OPEN" }.count, openIssues: items.filter { $0.kind == .issue && $0.state == "OPEN" }.count, date: snapshot.observedAt, complete: snapshot.complete)
+                        let archive = try ProjectWorkArchive.decode(snapshot.payload)
+                        var seen = Set<String>()
+                        let items = archive.items.filter { seen.insert($0.id).inserted }
+                        results[project.id] = ProjectOverview(openPulls: items.filter { $0.kind == .pullRequest && $0.state == "OPEN" }.count, openIssues: items.filter { $0.kind == .issue && $0.state == "OPEN" }.count, date: snapshot.observedAt, complete: snapshot.complete && !archive.hasRefreshProblems)
                     }
                 } catch { failures = true }
             }

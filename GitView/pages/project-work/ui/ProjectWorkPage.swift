@@ -14,6 +14,7 @@ struct ProjectWorkPage: View {
     @State private var warning: String?
     @State private var observedAt: Date?
     @State private var cache: WorkCache?
+    @State private var archive: ProjectWorkArchive?
     @State private var columns = 8
     @State private var gridWidth: CGFloat = 0
     @State private var selectedItem: GitHubWorkItem?
@@ -56,12 +57,26 @@ struct ProjectWorkPage: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 if let observedAt {
-                    Text("Last updated \(observedAt.formatted(date: .abbreviated, time: .shortened))")
+                    Text("Last complete update \(observedAt.formatted(date: .abbreviated, time: .shortened))")
                         .font(.footnote).foregroundStyle(.secondary)
                 }
                 if let warning {
                     Label(warning, systemImage: "exclamationmark.triangle")
                         .font(.footnote).foregroundStyle(.secondary)
+                }
+                if let archive {
+                    if !archive.legacyItems.isEmpty && archive.hasRefreshProblems {
+                        Text("Some older saved work could not yet be attributed to a repository.")
+                            .font(.footnote).foregroundStyle(.secondary)
+                    }
+                    ForEach(archive.repositories.filter { $0.refreshProblem != nil }, id: \.id) { repository in
+                        VStack(alignment: .leading) {
+                            Text("\(repository.name): \(repository.refreshProblem ?? "")")
+                            if let date = repository.observedAt {
+                                Text("Last observed \(date.formatted(date: .abbreviated, time: .shortened))")
+                            } else { Text("No saved observation") }
+                        }.font(.footnote).foregroundStyle(.secondary)
+                    }
                 }
                 if isLoading && !hasLoaded { ProgressView("Loading work") }
                 if hasLoaded && items.isEmpty && warning == nil {
@@ -131,47 +146,51 @@ struct ProjectWorkPage: View {
             warning = "Could not refresh the GitHub session. Showing saved work."
             return
         }
-        var collected: [GitHubWorkItem] = []
-        var incomplete = false
-        var failure: String?
+        var results: [RepositoryWorkRefresh] = []
         for repository in project.repositories {
             do {
                 let page = try await GitHubWorkClient().load(token: accessToken, repositoryID: repository.id, fullName: repository.fullName)
-                collected.append(contentsOf: page.items)
-                incomplete = incomplete || page.isIncomplete
+                results.append(.init(id: repository.id, name: repository.fullName, outcome: .received(page.items, complete: !page.isIncomplete)))
             } catch is CancellationError { return }
             catch let WorkFetchError.httpStatus(code) {
-                incomplete = true
-                failure = "GitHub returned HTTP \(code)."
+                results.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub HTTP \(code)")))
             } catch {
-                incomplete = true
-                failure = "Could not update work from GitHub."
+                results.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("Could not update from GitHub")))
             }
         }
-        if incomplete && hasLoaded {
-            warning = (failure ?? "Refresh incomplete.") + " Showing previous results."
-            return
-        }
+        guard !Task.isCancelled else { return }
         let now = Date()
-        guard let cache else {
-            warning = "Updated data could not be saved locally."
-            present(collected, now: now)
-            hasLoaded = true
-            return
-        }
+        let snapshot: WorkSnapshot?
         do {
-            let data = try JSONEncoder().encode(collected)
-            try cache.save(accountID: project.accountID, projectID: project.id, payload: data, observedAt: now, complete: !incomplete)
+            snapshot = try cache?.load(accountID: project.accountID, projectID: project.id)
         } catch {
-            warning = "Updated data could not be saved locally."
-            present(collected, now: now)
-            hasLoaded = true
+            warning = "Saved work could not be read; the refresh was not saved."
             return
         }
-        present(collected, now: now)
-        observedAt = now
+        let previous: ProjectWorkArchive
+        do { previous = try snapshot.map { try ProjectWorkArchive.decode($0.payload) } ?? archive ?? ProjectWorkArchive() }
+        catch { warning = "Saved work could not be read; the refresh was not saved."; return }
+        let updated = previous.applying(results, at: now)
+        let complete = !updated.hasRefreshProblems
+        var saved = false
+        if let cache {
+            do {
+                let data = try JSONEncoder().encode(updated)
+                if let snapshot, snapshot.observedAt > now {
+                    saved = false
+                } else if complete || snapshot == nil {
+                    try cache.save(accountID: project.accountID, projectID: project.id, payload: data, observedAt: now, complete: complete)
+                    saved = true
+                } else if let snapshot {
+                    saved = try cache.replacePayload(accountID: project.accountID, projectID: project.id, expected: snapshot, payload: data)
+                }
+            } catch { saved = false }
+        }
+        archive = updated
+        present(updated.items, now: now)
+        if saved && complete { observedAt = now }
         hasLoaded = true
-        warning = incomplete ? (failure ?? "Some work could not be loaded or more pages are available.") : nil
+        warning = !saved ? "Updated data could not be saved locally." : (complete ? nil : "Some repositories could not be fully refreshed.")
     }
 
     @MainActor private func restore() {
@@ -182,11 +201,12 @@ struct ProjectWorkPage: View {
             let store = try WorkCache(url: directory.appendingPathComponent("WorkCache.sqlite"))
             cache = store
             if let snapshot = try store.load(accountID: project.accountID, projectID: project.id) {
-                let saved = try JSONDecoder().decode([GitHubWorkItem].self, from: snapshot.payload)
-                present(saved, now: .now)
-                observedAt = snapshot.observedAt
+                let saved = try ProjectWorkArchive.decode(snapshot.payload)
+                archive = saved
+                present(saved.items, now: .now)
+                if snapshot.complete { observedAt = snapshot.observedAt }
                 hasLoaded = true
-                if !snapshot.complete { warning = "Saved work is incomplete." }
+                if !snapshot.complete || saved.hasRefreshProblems { warning = "Saved work includes incomplete or unsuccessful updates." }
             }
         } catch {
             warning = "Saved work could not be read."
@@ -197,12 +217,11 @@ struct ProjectWorkPage: View {
         guard let cache, let head = item.headRevision else { return false }
         do {
             guard let snapshot = try cache.load(accountID: project.accountID, projectID: project.id) else { return false }
-            var stored = try JSONDecoder().decode([GitHubWorkItem].self, from: snapshot.payload)
-            guard let index = stored.firstIndex(where: { $0.id == item.id }),
-                  let enriched = stored[index].withReviewThreads(threads, forHead: head, observedAt: observedAt) else { return false }
-            stored[index] = enriched
+            var stored = try ProjectWorkArchive.decode(snapshot.payload)
+            guard stored.updateThreadObservation(itemID: item.id, head: head, threads: threads, at: observedAt) else { return false }
             let payload = try JSONEncoder().encode(stored)
             guard try cache.replacePayload(accountID: project.accountID, projectID: project.id, expected: snapshot, payload: payload) else { return false }
+            archive = stored
             if let visible = items.firstIndex(where: { $0.id == item.id && $0.headRevision == head }),
                let updated = items[visible].withReviewThreads(threads, forHead: head, observedAt: observedAt) {
                 items[visible] = updated
