@@ -1,7 +1,9 @@
 import SwiftUI
 #if DEBUG
 import GitHubAuth
+import GitHubAPI
 import ProjectStore
+import WorkCache
 #endif
 
 @main
@@ -37,6 +39,12 @@ private struct ProjectTestFixture: View {
                 try library.create(name: "Fixture Project", repository: RepositoryReference(id: 101, fullName: "fixture/one", isPrivate: false))
                 guard let id = library.projects.first?.id else { return }
                 try library.add(repository: RepositoryReference(id: 102, fullName: "fixture/two", isPrivate: true), to: id)
+                let base = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                let directory = base.appendingPathComponent("GitGrid", isDirectory: true)
+                try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+                let cache = try WorkCache(url: directory.appendingPathComponent("WorkCache.sqlite"))
+                let json = #"[{"id":"I1","number":1,"title":"Offline fixture","url":"https://github.com/fixture/one/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue","details":{"body":"Saved synthetic description","observedAt":0}}]"#
+                try cache.save(accountID: 1, projectID: id, payload: Data(json.utf8), observedAt: .now, complete: false)
                 self.library = library
             } catch { assertionFailure("Could not create UI test fixture: \(error)") }
         }

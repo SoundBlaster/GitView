@@ -35,6 +35,7 @@ public struct GitHubWorkItem: Codable, Identifiable, Sendable {
     public let reviewThreads: GitHubReviewThreads?
     public let reviewRequestCount: Int?
     public let reviewThreadObservedAt: Date?
+    public let details: GitHubWorkDetails?
 
     public func withReviewThreads(_ threads: GitHubReviewThreads, forHead head: String, observedAt: Date) -> GitHubWorkItem? {
         guard kind == .pullRequest, headRevision == head,
@@ -42,7 +43,16 @@ public struct GitHubWorkItem: Codable, Identifiable, Sendable {
         return GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt,
             closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft, kind: kind, headRevision: headRevision,
             checkStatus: checkStatus, reviewDecision: reviewDecision, checkCounts: checkCounts,
-            reviewThreads: threads, reviewRequestCount: reviewRequestCount, reviewThreadObservedAt: observedAt)
+            reviewThreads: threads, reviewRequestCount: reviewRequestCount, reviewThreadObservedAt: observedAt, details: details)
+    }
+
+    public func withDetails(_ details: GitHubWorkDetails, forHead head: String?) -> GitHubWorkItem? {
+        guard kind != .pullRequest || (head != nil && headRevision == head),
+              self.details.map({ $0.observedAt <= details.observedAt }) ?? true else { return nil }
+        return GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt,
+            closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft, kind: kind, headRevision: headRevision,
+            checkStatus: checkStatus, reviewDecision: reviewDecision, checkCounts: checkCounts,
+            reviewThreads: reviewThreads, reviewRequestCount: reviewRequestCount, reviewThreadObservedAt: reviewThreadObservedAt, details: details)
     }
 }
 
@@ -170,7 +180,7 @@ public struct GitHubWorkClient: Sendable {
         let headRefOid: String?; let reviewDecision: String?; let statusCheckRollup: CheckRollup?
         let reviewThreads: ThreadConnection?; let reviewRequests: CountConnection?
         func item(kind: GitHubWorkKind) -> GitHubWorkItem {
-            GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt, closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft ?? false, kind: kind, headRevision: headRefOid, checkStatus: statusCheckRollup?.state, reviewDecision: reviewDecision, checkCounts: statusCheckRollup?.contexts?.counts, reviewThreads: reviewThreads?.summary, reviewRequestCount: reviewRequests?.totalCount, reviewThreadObservedAt: reviewThreads == nil ? nil : .now)
+            GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt, closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft ?? false, kind: kind, headRevision: headRefOid, checkStatus: statusCheckRollup?.state, reviewDecision: reviewDecision, checkCounts: statusCheckRollup?.contexts?.counts, reviewThreads: reviewThreads?.summary, reviewRequestCount: reviewRequests?.totalCount, reviewThreadObservedAt: reviewThreads == nil ? nil : .now, details: nil)
         }
     }
     private struct CheckRollup: Decodable { let state: String; let contexts: CheckContexts? }

@@ -123,7 +123,7 @@ struct ProjectWorkPage: View {
             }
         }
         .sheet(item: $selectedItem) { item in
-            WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID, onThreads: persistThreads)
+            WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID, onThreads: persistThreads, onDetails: persistDetails)
         }
         .sheet(isPresented: $showProjectSettings) {
             ProjectSettingsSheet(project: project, library: library, sessionManager: sessionManager)
@@ -267,6 +267,21 @@ struct ProjectWorkPage: View {
         } catch { return false }
     }
 
+    @MainActor private func persistDetails(_ item: GitHubWorkItem, _ details: GitHubWorkDetails) -> Bool {
+        guard let cache else { return false }
+        do {
+            guard let snapshot = try cache.load(accountID: project.accountID, projectID: project.id) else { return false }
+            var stored = try ProjectWorkArchive.decode(snapshot.payload)
+            guard stored.updateDetails(itemID: item.id, head: item.headRevision, details: details) else { return false }
+            let payload = try JSONEncoder().encode(stored)
+            guard try cache.replacePayload(accountID: project.accountID, projectID: project.id, expected: snapshot, payload: payload) else { return false }
+            archive = stored
+            if let index = items.firstIndex(where: { $0.id == item.id }),
+               let updated = items[index].withDetails(details, forHead: item.headRevision) { items[index] = updated }
+            return true
+        } catch { return false }
+    }
+
     @MainActor private func present(_ collected: [GitHubWorkItem], now: Date) {
         let calendar = Calendar.current
         let policy = TodayEligibility(now: now, calendar: calendar)
@@ -364,6 +379,7 @@ private struct WorkGridCell: View {
                 }
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("work.\(item.id)")
         .accessibilityLabel(item.kind == .pullRequest
             ? "Pull request \(item.number), \(item.title), \(item.state), CI \(item.checkStatus ?? "unavailable")"
             : "Issue \(item.number), \(item.title), \(item.state)")
@@ -388,6 +404,7 @@ private struct WorkDetailSheet: View {
     let sessionManager: GitHubSessionManager
     let accountID: Int64
     let onThreads: @MainActor (GitHubWorkItem, GitHubReviewThreads, Date) -> Bool
+    let onDetails: @MainActor (GitHubWorkItem, GitHubWorkDetails) -> Bool
     @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
     @State private var expandedThreads: GitHubReviewThreads?
@@ -395,6 +412,9 @@ private struct WorkDetailSheet: View {
     @State private var loadingThreads = false
     @State private var threadObservedAt: Date?
     @State private var storageError = false
+    @State private var details: GitHubWorkDetails?
+    @State private var detailError = false
+    @State private var loadingDetails = false
 
     var body: some View {
         NavigationStack {
@@ -403,20 +423,46 @@ private struct WorkDetailSheet: View {
                     Text(item.title).font(.headline)
                     LabeledContent("Number", value: "#\(item.number)")
                     LabeledContent("State", value: item.state)
+                    if item.kind == .pullRequest && item.isDraft { Text("Draft").foregroundStyle(.secondary) }
                     if item.kind == .pullRequest {
                         WorkSignalDetails(item: item, threadsOverride: expandedThreads, observedAtOverride: threadObservedAt)
                         if loadingThreads { ProgressView("Loading review threads") }
                         if threadError { Text("Could not complete the thread count. Refresh the project and try again.").foregroundStyle(.secondary) }
-                        if storageError { Text("Updated thread count could not be saved locally.").foregroundStyle(.secondary) }
                     }
+                    if storageError { Text("Updated details could not be saved locally.").foregroundStyle(.secondary) }
+                }
+                if let details = details ?? item.details {
+                    WorkDescriptionDetails(details: details)
+                }
+                if loadingDetails { ProgressView("Loading details") }
+                if detailError {
+                    Text(item.details == nil ? "Details could not be loaded." : "Could not update details. Showing saved details.")
+                        .foregroundStyle(.secondary)
                 }
                 Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
                 ShareLink(item: item.url)
             }
             .navigationTitle(item.kind == .pullRequest ? "Pull Request" : "Issue")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
-            .task { await loadThreadsIfNeeded() }
+            .task {
+                async let detail: Void = loadDetails()
+                async let threads: Void = loadThreadsIfNeeded()
+                _ = await (detail, threads)
+            }
         }
+    }
+
+    @MainActor private func loadDetails() async {
+        loadingDetails = true
+        defer { loadingDetails = false }
+        do {
+            let credential = try await sessionManager.usableSession(for: accountID)
+            let result = try await GitHubWorkDetailClient().load(token: credential.accessToken, id: item.id, kind: item.kind, expectedHead: item.headRevision)
+            try Task.checkCancellation()
+            details = result
+            if !onDetails(item, result) { storageError = true }
+        } catch is CancellationError {
+        } catch { detailError = true }
     }
 
     @MainActor private func loadThreadsIfNeeded() async {
@@ -431,10 +477,34 @@ private struct WorkDetailSheet: View {
             let now = Date()
             expandedThreads = result
             threadObservedAt = now
-            storageError = !onThreads(item, result, now)
+            if !onThreads(item, result, now) { storageError = true }
         } catch is CancellationError {
         } catch {
             threadError = true
+        }
+    }
+}
+
+private struct WorkDescriptionDetails: View {
+    let details: GitHubWorkDetails
+    var body: some View {
+        Section("Context") {
+            if let author = details.author { LabeledContent("Author", value: author) }
+            if let created = details.createdAt { LabeledContent("Created", value: created.formatted(date: .abbreviated, time: .shortened)) }
+            if let base = details.baseRepository { LabeledContent("Target repository", value: base) }
+            if let head = details.headRepository { LabeledContent("Source repository", value: head) }
+            if let base = details.baseBranch { LabeledContent("Target branch", value: base) }
+            if let head = details.headBranch { LabeledContent("Source branch", value: head) }
+            if let labels = details.labels, !labels.isEmpty { LabeledContent("Labels", value: labels.joined(separator: ", ")) }
+            if details.labelsComplete == false { Text("Some labels are not shown.").foregroundStyle(.secondary) }
+            if let count = details.additions { LabeledContent("Added lines", value: "\(count)") }
+            if let count = details.deletions { LabeledContent("Deleted lines", value: "\(count)") }
+            if let count = details.changedFiles { LabeledContent("Changed files", value: "\(count)") }
+            if let count = details.commits { LabeledContent("Commits", value: "\(count)") }
+            Text("Details observed \(details.observedAt.formatted(date: .abbreviated, time: .shortened))").font(.footnote).foregroundStyle(.secondary)
+        }
+        if let body = details.body, !body.isEmpty {
+            Section("Description") { Text(verbatim: body).textSelection(.enabled) }
         }
     }
 }

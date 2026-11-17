@@ -50,7 +50,12 @@ public struct ProjectWorkArchive: Codable, Sendable {
             let old = previous[result.id]
             switch result.outcome {
             case let .received(items, complete: true):
-                return RepositoryWorkObservation(id: result.id, name: result.name, items: items, observedAt: date, complete: true, refreshProblem: nil)
+                let oldItems = Dictionary(((old?.items ?? []) + legacyItems).map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+                let enriched = items.map { item -> GitHubWorkItem in
+                    guard let oldItem = oldItems[item.id], let details = oldItem.details else { return item }
+                    return item.withDetails(details, forHead: oldItem.headRevision) ?? item
+                }
+                return RepositoryWorkObservation(id: result.id, name: result.name, items: enriched, observedAt: date, complete: true, refreshProblem: nil)
             case let .received(items, complete: false):
                 return RepositoryWorkObservation(id: result.id, name: result.name, items: old?.items ?? items,
                     observedAt: old?.observedAt ?? date, complete: old?.complete ?? false, refreshProblem: "Incomplete GitHub response")
@@ -97,6 +102,22 @@ public struct ProjectWorkArchive: Codable, Sendable {
         }
         guard let index = legacyItems.firstIndex(where: { $0.id == itemID }),
               let item = legacyItems[index].withReviewThreads(threads, forHead: head, observedAt: date) else { return false }
+        legacyItems[index] = item
+        return true
+    }
+
+    public mutating func updateDetails(itemID: String, head: String?, details: GitHubWorkDetails) -> Bool {
+        for index in repositories.indices {
+            guard let itemIndex = repositories[index].items.firstIndex(where: { $0.id == itemID }),
+                  let item = repositories[index].items[itemIndex].withDetails(details, forHead: head) else { continue }
+            let old = repositories[index]
+            var items = old.items
+            items[itemIndex] = item
+            repositories[index] = RepositoryWorkObservation(id: old.id, name: old.name, items: items, observedAt: old.observedAt, complete: old.complete, refreshProblem: old.refreshProblem)
+            return true
+        }
+        guard let index = legacyItems.firstIndex(where: { $0.id == itemID }),
+              let item = legacyItems[index].withDetails(details, forHead: head) else { return false }
         legacyItems[index] = item
         return true
     }

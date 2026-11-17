@@ -19,6 +19,8 @@ scope:
     - Decode GitHub check rollup buckets and bounded review thread observations with explicit coverage.
     - Page through one pull request's review threads while checking revision and collection consistency.
     - Attach a thread observation time to the same pull request head revision.
+    - Fetch source-linked Issue and PR details, keeping fork context and unavailable values distinct.
+    - Preserve previously observed details across refreshes when the PR head remains the same.
     - Retain per-repository refresh outcomes and preserve prior data for failed or incomplete sources.
     - Read previous unscoped work snapshots until a complete refresh replaces them.
     - Retain observations for repositories removed from a project and restore them if re-added.
