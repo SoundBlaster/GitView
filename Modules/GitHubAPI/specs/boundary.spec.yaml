@@ -35,7 +35,7 @@ scope:
     - Read previous unscoped work snapshots until a complete refresh replaces them.
     - Retain observations for repositories removed from a project and restore them if re-added.
     - Validate next-page links and report HTTP failures.
-    - Defer default GitHub API transport requests after observed rate-limit responses until the source-directed deadline; retain the deadline across launches.
+    - Report an observed rate-limit failure on the triggering request and defer later default GitHub API transport requests until the source-directed deadline; retain the deadline across launches without discarding a successful final response.
     - Aggregate pages while preserving partial independent results.
   excludes:
     - Persist selection, project creation and user interface.

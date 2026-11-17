@@ -16,7 +16,8 @@ actor GitHubRateLimitGate {
     func perform(_ request: URLRequest, send: GitHubDiscoveryClient.Transport) async throws -> (Data, HTTPURLResponse) {
         try check()
         let (data, response) = try await send(request)
-        observe(response, data: data)
+        let limited = observe(response, data: data)
+        if limited && (response.statusCode >= 400 || Self.hasGraphQLErrors(data)) { try check() }
         return (data, response)
     }
 
@@ -29,13 +30,13 @@ actor GitHubRateLimitGate {
         if persistent { UserDefaults.standard.removeObject(forKey: Self.storageKey) }
     }
 
-    func observe(_ response: HTTPURLResponse, data: Data, now: Date = .now) {
+    @discardableResult func observe(_ response: HTTPURLResponse, data: Data, now: Date = .now) -> Bool {
         let remaining = response.value(forHTTPHeaderField: "x-ratelimit-remaining")
         let retry = response.value(forHTTPHeaderField: "retry-after").flatMap(Double.init)
         let exhausted = remaining == "0"
         let secondary = Self.hasSecondaryLimitMessage(data)
         let statusLimited = response.statusCode == 429 || (response.statusCode == 403 && retry != nil)
-        guard exhausted || secondary || statusLimited else { return }
+        guard exhausted || secondary || statusLimited else { return false }
 
         var deadlines: [Date] = []
         if let retry, retry.isFinite, retry >= 0 { deadlines.append(now.addingTimeInterval(max(retry, 1))) }
@@ -45,6 +46,13 @@ actor GitHubRateLimitGate {
         let deadline = max(deadlines.max() ?? now.addingTimeInterval(60), now.addingTimeInterval(1))
         until = max(until ?? deadline, deadline)
         if persistent { UserDefaults.standard.set(until, forKey: Self.storageKey) }
+        return true
+    }
+
+    private static func hasGraphQLErrors(_ data: Data) -> Bool {
+        guard let object = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
+              let errors = object["errors"] as? [Any] else { return false }
+        return !errors.isEmpty
     }
 
     private static func hasSecondaryLimitMessage(_ data: Data) -> Bool {

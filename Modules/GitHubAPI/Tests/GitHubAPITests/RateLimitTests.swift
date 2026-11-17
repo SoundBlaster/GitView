@@ -8,7 +8,10 @@ struct RateLimitTests {
         let url = URL(string: "https://api.github.com/graphql")!
         let request = URLRequest(url: url)
         let response = HTTPURLResponse(url: url, statusCode: 429, httpVersion: nil, headerFields: ["Retry-After": "120"])!
-        _ = try await gate.perform(request) { _ in (Data(), response) }
+        do {
+            _ = try await gate.perform(request) { _ in (Data(), response) }
+            Issue.record("Expected the first limited response to report deferral")
+        } catch GitHubRateLimitError.deferred { }
         do {
             _ = try await gate.perform(request) { _ in
                 Issue.record("Transport must not run while GitHub's limit applies")
@@ -17,6 +20,27 @@ struct RateLimitTests {
             Issue.record("Expected deferred request")
         } catch GitHubRateLimitError.deferred { }
         catch { Issue.record("Unexpected error: \(error)") }
+    }
+
+    @Test func successfulResponseAtLimitIsReturnedButStopsLaterRequests() async throws {
+        let gate = GitHubRateLimitGate()
+        let url = URL(string: "https://api.github.com/graphql")!
+        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil,
+                                       headerFields: ["x-ratelimit-remaining": "0", "x-ratelimit-reset": "\(Int(Date().timeIntervalSince1970) + 120)"])!
+        let data = Data(#"{"data":{"repository":{"id":"ok"}}}"#.utf8)
+        let result = try await gate.perform(URLRequest(url: url)) { _ in (data, response) }
+        #expect(result.0 == data)
+        await #expect(throws: GitHubRateLimitError.self) { try await gate.check() }
+    }
+
+    @Test func graphQLSecondaryLimitReportsDeferralOnFirstResponse() async throws {
+        let gate = GitHubRateLimitGate()
+        let url = URL(string: "https://api.github.com/graphql")!
+        let response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!
+        let body = Data(#"{"errors":[{"message":"You have exceeded a secondary rate limit"}]}"#.utf8)
+        await #expect(throws: GitHubRateLimitError.self) {
+            try await gate.perform(URLRequest(url: url)) { _ in (body, response) }
+        }
     }
     @Test func primaryLimitUsesResetEvenForHTTP200() async throws {
         let now = Date(timeIntervalSince1970: 1_000)
