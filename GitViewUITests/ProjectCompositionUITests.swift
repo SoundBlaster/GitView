@@ -1,6 +1,38 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testZoomKeepsVisibleWorkAfterScrolling() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-dense")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let scroll = app.scrollViews.firstMatch
+        XCTAssertTrue(app.buttons["work.D1"].waitForExistence(timeout: 10))
+        scroll.pinch(withScale: 1.6, velocity: 1)
+        scroll.pinch(withScale: 1.6, velocity: 1)
+        scroll.swipeUp()
+        scroll.swipeUp()
+        let cells = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "work.D")).allElementsBoundByIndex
+        let visible = cells.filter { $0.isHittable && scroll.frame.contains(CGPoint(x: $0.frame.midX, y: $0.frame.midY)) }
+            .sorted { $0.frame.midY < $1.frame.midY }
+        XCTAssertGreaterThan(visible.count, 4)
+        guard visible.count > 4 else { return }
+        let target = app.buttons[visible[visible.count / 2].identifier]
+        let name = target.identifier
+        scroll.pinch(withScale: 1.6, velocity: 1)
+        let expected = NSPredicate(format: "isHittable == true")
+        expectation(for: expected, evaluatedWith: app.buttons[name])
+        waitForExpectations(timeout: 5)
+        scroll.pinch(withScale: 0.6, velocity: -1)
+        expectation(for: expected, evaluatedWith: app.buttons[name])
+        waitForExpectations(timeout: 5)
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "Grid after zoom in and out"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+    }
     func testPausedRepositoryCanResumeFromProjectSettings() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-paused-repository"]

@@ -21,6 +21,9 @@ struct ProjectWorkPage: View {
     @State private var archive: ProjectWorkArchive?
     @State private var columns = 8
     @State private var gridWidth: CGFloat = 0
+    @State private var workPosition = ScrollPosition(idType: String.self)
+    @State private var visibleWorkIDs = Set<String>()
+    @State private var zoomRevision = 0
     @State private var selectedItem: GitHubWorkItem?
     @State private var accessiblePreview: GitHubWorkItem?
     @State private var previewToOpen: GitHubWorkItem?
@@ -127,10 +130,13 @@ struct ProjectWorkPage: View {
                             .accessibilityFocused($focusedWorkID, equals: item.id)
                     }
                 }
+                .scrollTargetLayout()
                 .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { gridWidth = $0 }
             }
             .padding()
         }
+        .scrollPosition($workPosition, anchor: .center)
+        .onScrollTargetVisibilityChange(idType: String.self, threshold: 0.5) { visibleWorkIDs = Set($0) }
         .highPriorityGesture(MagnifyGesture().onEnded { value in
             if value.magnification > 1.15 { changeZoom(.larger) }
             else if value.magnification < 0.85 { changeZoom(.smaller) }
@@ -230,7 +236,18 @@ struct ProjectWorkPage: View {
 
     @MainActor private func changeZoom(_ direction: GridZoomDirection) {
         let next = GridDensity.next(current: effectiveColumns, direction: direction, width: Double(gridWidth), maxCellWidth: 320)
-        withAnimation(.easeInOut(duration: 0.2)) { columns = next }
+        let densityChanged = next != effectiveColumns
+        zoomRevision += 1
+        let revision = zoomRevision
+        let visible = visibleItems.filter { visibleWorkIDs.contains($0.id) }
+        let anchor = visible.isEmpty ? workPosition.viewID(type: String.self) : visible[visible.count / 2].id
+        withAnimation(.easeInOut(duration: 0.2), completionCriteria: .logicallyComplete) {
+            columns = next
+        } completion: {
+            if densityChanged, revision == zoomRevision, let anchor, visibleItems.contains(where: { $0.id == anchor }) {
+                workPosition.scrollTo(id: anchor, anchor: .center)
+            }
+        }
         guard direction == .larger, GridDensity.isAtMaximum(columns: next, width: Double(gridWidth), maxCellWidth: 320) else {
             zoomHint = false
             return
