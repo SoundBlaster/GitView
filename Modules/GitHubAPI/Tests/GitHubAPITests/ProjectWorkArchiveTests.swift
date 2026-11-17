@@ -22,6 +22,8 @@ struct ProjectWorkArchiveTests {
         #expect(updated.repositories[0].observedAt == newDate)
         #expect(updated.repositories[1].observedAt == oldDate)
         #expect(updated.repositories[1].refreshProblem == "HTTP 403")
+        #expect(updated.coversRepositories([1, 2]))
+        #expect(!updated.coversRepositories([1, 2, 3]))
         let restored = try ProjectWorkArchive.decode(JSONEncoder().encode(updated))
         #expect(restored.items.map(\.id) == ["a-new", "b-old"] && restored.hasRefreshProblems)
     }
@@ -43,6 +45,7 @@ struct ProjectWorkArchiveTests {
 
     @Test func legacyDataSurvivesPartialAndGoesAwayAfterCompleteRefresh() throws {
         let legacy = try ProjectWorkArchive.decode(JSONEncoder().encode([try item("old")]))
+        #expect(!legacy.coversRepositories([1]))
         let partial = legacy.applying([.init(id: 1, name: "a", outcome: .failed("offline"))], at: .now)
         #expect(partial.items.map(\.id) == ["old"])
         let complete = partial.applying([.init(id: 1, name: "a", outcome: .received([try item("new")], complete: true))], at: .now)

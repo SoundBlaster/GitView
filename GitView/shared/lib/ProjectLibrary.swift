@@ -27,4 +27,13 @@ import ProjectStore
         projects.append(project)
         projects.sort { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
+
+    func add(repository: RepositoryReference, to projectID: UUID) throws {
+        guard let project = projects.first(where: { $0.id == projectID }) else { throw ProjectStoreError.invalidProject }
+        var repositories = project.repositories
+        if let index = repositories.firstIndex(where: { $0.id == repository.id }) { repositories[index] = repository }
+        else { repositories.append(repository) }
+        _ = try store.updateRepositories(accountID: accountID, projectID: projectID, repositories: repositories)
+        try reload()
+    }
 }

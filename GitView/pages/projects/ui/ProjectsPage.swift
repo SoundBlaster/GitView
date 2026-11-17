@@ -57,7 +57,7 @@ struct ProjectsPage: View {
             }
         }
         .navigationDestination(item: $selectedProject) { project in
-            ProjectWorkPage(project: project, sessionManager: sessionManager)
+            ProjectWorkPage(project: library.projects.first(where: { $0.id == project.id }) ?? project, sessionManager: sessionManager, library: library)
         }
         .onAppear { loadOverviews() }
         .onChange(of: library.projects) { loadOverviews() }
@@ -85,7 +85,8 @@ struct ProjectsPage: View {
                         let archive = try ProjectWorkArchive.decode(snapshot.payload)
                         var seen = Set<String>()
                         let items = archive.items.filter { seen.insert($0.id).inserted }
-                        results[project.id] = ProjectOverview(openPulls: items.filter { $0.kind == .pullRequest && $0.state == "OPEN" }.count, openIssues: items.filter { $0.kind == .issue && $0.state == "OPEN" }.count, date: snapshot.observedAt, complete: snapshot.complete && !archive.hasRefreshProblems)
+                        let coversProject = archive.coversRepositories(Set(project.repositories.map(\.id)))
+                        results[project.id] = ProjectOverview(openPulls: items.filter { $0.kind == .pullRequest && $0.state == "OPEN" }.count, openIssues: items.filter { $0.kind == .issue && $0.state == "OPEN" }.count, date: snapshot.observedAt, complete: snapshot.complete && !archive.hasRefreshProblems && coversProject)
                     }
                 } catch { failures = true }
             }

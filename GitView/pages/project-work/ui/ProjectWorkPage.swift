@@ -8,9 +8,11 @@ import WorkCache
 struct ProjectWorkPage: View {
     let project: StoredProject
     let sessionManager: GitHubSessionManager
+    let library: ProjectLibrary
     @State private var items: [GitHubWorkItem] = []
     @State private var hasLoaded = false
     @State private var isLoading = false
+    @State private var refreshPending = false
     @State private var warning: String?
     @State private var observedAt: Date?
     @State private var cache: WorkCache?
@@ -18,6 +20,7 @@ struct ProjectWorkPage: View {
     @State private var columns = 8
     @State private var gridWidth: CGFloat = 0
     @State private var selectedItem: GitHubWorkItem?
+    @State private var showProjectSettings = false
     @State private var zoomHint = false
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @AppStorage private var showOpen: Bool
@@ -26,9 +29,10 @@ struct ProjectWorkPage: View {
     @AppStorage private var showIssues: Bool
     @AppStorage private var showPullRequests: Bool
 
-    init(project: StoredProject, sessionManager: GitHubSessionManager) {
+    init(project: StoredProject, sessionManager: GitHubSessionManager, library: ProjectLibrary) {
         self.project = project
         self.sessionManager = sessionManager
+        self.library = library
         let prefix = "project.\(project.id.uuidString).filters."
         _showOpen = AppStorage(wrappedValue: true, prefix + "open")
         _showMerged = AppStorage(wrappedValue: true, prefix + "merged")
@@ -103,6 +107,7 @@ struct ProjectWorkPage: View {
         }
         .navigationTitle(project.name)
         .toolbar {
+            Button("Project settings", systemImage: "gearshape") { showProjectSettings = true }
             Menu("Zoom", systemImage: "plus.magnifyingglass") {
                 Button("Larger", systemImage: "plus.magnifyingglass") { changeZoom(.larger) }
                 Button("Smaller", systemImage: "minus.magnifyingglass") { changeZoom(.smaller) }
@@ -119,8 +124,19 @@ struct ProjectWorkPage: View {
         .sheet(item: $selectedItem) { item in
             WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID, onThreads: persistThreads)
         }
+        .sheet(isPresented: $showProjectSettings) {
+            ProjectSettingsSheet(project: project, library: library, sessionManager: sessionManager)
+        }
         .task { restore(); await load() }
         .refreshable { await load() }
+        .onChange(of: project.repositories) {
+            warning = "Project membership changed; updating its overview."
+            observedAt = nil
+            if isLoading { refreshPending = true } else { Task { await load() } }
+        }
+        .onChange(of: isLoading) {
+            if !isLoading && refreshPending { refreshPending = false; Task { await load() } }
+        }
     }
 
     @MainActor private func changeZoom(_ direction: GridZoomDirection) {
@@ -136,6 +152,7 @@ struct ProjectWorkPage: View {
 
     @MainActor private func load() async {
         guard !isLoading else { return }
+        let requestedRepositories = project.repositories
         isLoading = true
         defer { isLoading = false }
         let accessToken: String
@@ -147,7 +164,7 @@ struct ProjectWorkPage: View {
             return
         }
         var results: [RepositoryWorkRefresh] = []
-        for repository in project.repositories {
+        for repository in requestedRepositories {
             do {
                 let page = try await GitHubWorkClient().load(token: accessToken, repositoryID: repository.id, fullName: repository.fullName)
                 results.append(.init(id: repository.id, name: repository.fullName, outcome: .received(page.items, complete: !page.isIncomplete)))
@@ -159,6 +176,7 @@ struct ProjectWorkPage: View {
             }
         }
         guard !Task.isCancelled else { return }
+        guard library.projects.first(where: { $0.id == project.id })?.repositories == requestedRepositories else { return }
         let now = Date()
         let snapshot: WorkSnapshot?
         do {
@@ -204,9 +222,10 @@ struct ProjectWorkPage: View {
                 let saved = try ProjectWorkArchive.decode(snapshot.payload)
                 archive = saved
                 present(saved.items, now: .now)
-                if snapshot.complete { observedAt = snapshot.observedAt }
+                let coversProject = saved.coversRepositories(Set(project.repositories.map(\.id)))
+                if snapshot.complete && coversProject { observedAt = snapshot.observedAt }
                 hasLoaded = true
-                if !snapshot.complete || saved.hasRefreshProblems { warning = "Saved work includes incomplete or unsuccessful updates." }
+                if !snapshot.complete || saved.hasRefreshProblems || !coversProject { warning = "Saved work includes incomplete or unsuccessful updates." }
             }
         } catch {
             warning = "Saved work could not be read."
@@ -241,6 +260,34 @@ struct ProjectWorkPage: View {
             if item.state == "CLOSED", let closed = item.closedAt { return calendar.isDate(closed, inSameDayAs: now) && closed <= now }
             return true
         }.sorted { $0.updatedAt > $1.updatedAt }
+    }
+}
+
+private struct ProjectSettingsSheet: View {
+    let project: StoredProject
+    let library: ProjectLibrary
+    let sessionManager: GitHubSessionManager
+    @Environment(\.dismiss) private var dismiss
+    private var currentProject: StoredProject { library.projects.first(where: { $0.id == project.id }) ?? project }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section("Repositories") {
+                    ForEach(currentProject.repositories, id: \.id) { repository in
+                        Label(repository.fullName, systemImage: repository.isPrivate ? "lock" : "book.closed")
+                    }
+                    NavigationLink {
+                        RepositoryDiscoveryPage(sessionManager: sessionManager, accountID: library.accountID,
+                            account: "connected account", library: library, preferredProjectID: project.id)
+                    } label: {
+                        Label("Add Repository", systemImage: "plus")
+                    }
+                }
+            }
+            .navigationTitle(project.name)
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+        }
     }
 }
 

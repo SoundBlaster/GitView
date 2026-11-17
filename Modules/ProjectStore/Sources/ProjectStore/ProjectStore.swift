@@ -82,6 +82,21 @@ public enum ProjectStoreError: Error, Equatable {
         }
     }
 
+    public func updateRepositories(accountID: Int64, projectID: UUID, repositories: [RepositoryReference]) throws -> StoredProject {
+        guard accountID > 0, !repositories.isEmpty,
+              repositories.allSatisfy({ $0.id > 0 && !$0.fullName.isEmpty }),
+              Set(repositories.map(\.id)).count == repositories.count else { throw ProjectStoreError.invalidProject }
+        let request = NSFetchRequest<NSManagedObject>(entityName: "ProjectRecord")
+        request.predicate = NSPredicate(format: "id == %@ AND accountID == %lld", projectID as CVarArg, accountID)
+        request.fetchLimit = 1
+        guard let object = try container.viewContext.fetch(request).first,
+              let name = object.value(forKey: "name") as? String else { throw ProjectStoreError.invalidProject }
+        object.setValue(try JSONEncoder().encode(repositories), forKey: "repositories")
+        do { try container.viewContext.save() }
+        catch { container.viewContext.rollback(); throw error }
+        return StoredProject(id: projectID, accountID: accountID, name: name, repositories: repositories)
+    }
+
     private static func attribute(_ name: String, _ type: NSAttributeType) -> NSAttributeDescription {
         let attribute = NSAttributeDescription()
         attribute.name = name; attribute.attributeType = type; attribute.isOptional = false

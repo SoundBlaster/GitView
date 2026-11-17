@@ -14,8 +14,9 @@ scope:
   includes:
     - Create nonempty projects and query them by account.
     - Persist repository identity and last observed name and privacy.
+    - Update repository membership within a specified account and project.
   excludes:
-    - Repository access verification, synchronization, editing and migration.
+    - Repository access verification, synchronization, project renaming and migration.
 provides:
   capabilities:
     - id: gitview.projects.local_storage

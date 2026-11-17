@@ -8,6 +8,7 @@ struct RepositoryDiscoveryPage: View {
     let accountID: Int64
     let account: String
     let library: ProjectLibrary?
+    var preferredProjectID: UUID? = nil
     @State private var result: DiscoveryResult?
     @State private var isLoading = false
     @State private var errorMessage: String?
@@ -46,7 +47,7 @@ struct RepositoryDiscoveryPage: View {
         .refreshable { await load() }
         .sheet(item: $selected) { repository in
             if let library {
-                ProjectCreationSheet(repository: repository, library: library, canSave: isFresh && !isLoading)
+                ProjectCreationSheet(repository: repository, library: library, canSave: isFresh && !isLoading, preferredProjectID: preferredProjectID)
             }
         }
     }

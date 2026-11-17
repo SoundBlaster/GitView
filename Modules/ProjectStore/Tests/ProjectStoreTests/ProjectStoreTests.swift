@@ -3,6 +3,19 @@ import Testing
 @testable import ProjectStore
 
 @MainActor struct ProjectStoreTests {
+    @Test func updatesMembershipWithoutAffectingOtherProjectsOrAccounts() throws {
+        let store = try ProjectStore(inMemory: true)
+        let a = RepositoryReference(id: 11, fullName: "org/a", isPrivate: false)
+        let b = RepositoryReference(id: 12, fullName: "other/b", isPrivate: true)
+        let project = try store.create(accountID: 1, name: "Project", repositories: [a])
+        let other = try store.create(accountID: 1, name: "Other", repositories: [a])
+        let updated = try store.updateRepositories(accountID: 1, projectID: project.id, repositories: [a, b])
+        #expect(updated.repositories == [a, b])
+        #expect(try store.projects(accountID: 1).first(where: { $0.id == other.id })?.repositories == [a])
+        #expect(throws: ProjectStoreError.invalidProject) { try store.updateRepositories(accountID: 2, projectID: project.id, repositories: [b]) }
+        #expect(throws: ProjectStoreError.invalidProject) { try store.updateRepositories(accountID: 1, projectID: project.id, repositories: []) }
+        #expect(try store.projects(accountID: 1).first(where: { $0.id == project.id })?.repositories == [a, b])
+    }
     @Test func savesAProjectAndKeepsAccountsSeparate() throws {
         let store = try ProjectStore(inMemory: true)
         let repo = RepositoryReference(id: 11, fullName: "org/repo", isPrivate: true)

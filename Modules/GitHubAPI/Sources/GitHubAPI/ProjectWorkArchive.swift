@@ -30,6 +30,9 @@ public struct ProjectWorkArchive: Codable, Sendable {
     }
     public var items: [GitHubWorkItem] { repositories.flatMap(\.items) + legacyItems }
     public var hasRefreshProblems: Bool { repositories.contains { $0.refreshProblem != nil } }
+    public func coversRepositories(_ ids: Set<Int64>) -> Bool {
+        legacyItems.isEmpty && Set(repositories.map(\.id)) == ids
+    }
 
     public func applying(_ results: [RepositoryWorkRefresh], at date: Date) -> ProjectWorkArchive {
         let previous = Dictionary(repositories.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
