@@ -23,11 +23,15 @@ public struct GitHubPullRequestReference: Codable, Identifiable, Sendable {
     public let state: String
     public let repository: String
     public let willCloseTarget: Bool
+    /// Nil on older cached cross-reference records.
+    public let crossReferenced: Bool?
+    public let manuallyLinked: Bool?
 }
 
 public struct GitHubPullRequestReferences: Codable, Sendable {
     public let items: [GitHubPullRequestReference]
     public let isComplete: Bool
+    public let manualLinksComplete: Bool?
 }
 
 public struct GitHubIssueRelationships: Codable, Sendable {
@@ -88,6 +92,9 @@ public struct GitHubWorkDetailClient: Sendable {
                 } }
                 pageInfo { hasNextPage }
               }
+              closedByPullRequestsReferences(first:20, includeClosedPrs:true, userLinkedOnly:true) {
+                nodes { id number title url state repository { nameWithOwner } } pageInfo { hasNextPage }
+              }
             }
             ... on PullRequest {
               id body createdAt author { login } labels(first:30) { nodes { name } pageInfo { hasNextPage } }
@@ -120,7 +127,7 @@ public struct GitHubWorkDetailClient: Sendable {
             issueRelationships: kind == .issue ? GitHubIssueRelationships(parent: node.parent?.reference,
                 parentObserved: node.blockedBy != nil && node.blocking != nil && node.subIssues != nil,
                 blockedBy: node.blockedBy?.page, blocking: node.blocking?.page, subIssues: node.subIssues?.page,
-                pullRequests: node.timelineItems?.references) : nil,
+                pullRequests: node.pullRequestReferences) : nil,
             observedAt: observedAt)
     }
 
@@ -136,8 +143,28 @@ public struct GitHubWorkDetailClient: Sendable {
         let additions: Int?; let deletions: Int?; let changedFiles: Int?; let commits: Count?
         let parent: RelatedIssue?; let blockedBy: IssueConnection?; let blocking: IssueConnection?; let subIssues: IssueConnection?
         let timelineItems: TimelineConnection?
-        enum CodingKeys: String, CodingKey { case typename = "__typename", id, body, createdAt, author, labels, headRefOid, headRefName, baseRefName, headRepository, baseRepository, additions, deletions, changedFiles, commits, parent, blockedBy, blocking, subIssues, timelineItems }
+        let closedByPullRequestsReferences: ManualPullRequests?
+        enum CodingKeys: String, CodingKey { case typename = "__typename", id, body, createdAt, author, labels, headRefOid, headRefName, baseRefName, headRepository, baseRepository, additions, deletions, changedFiles, commits, parent, blockedBy, blocking, subIssues, timelineItems, closedByPullRequestsReferences }
+        var pullRequestReferences: GitHubPullRequestReferences? {
+            guard timelineItems != nil || closedByPullRequestsReferences != nil else { return nil }
+            let cross = timelineItems?.references
+            var items = cross?.items ?? []
+            var positions = Dictionary(uniqueKeysWithValues: items.enumerated().map { ($0.element.id, $0.offset) })
+            var manualComplete = closedByPullRequestsReferences.map { !$0.pageInfo.hasNextPage && $0.nodes.allSatisfy { $0 != nil } }
+            for entry in closedByPullRequestsReferences?.nodes ?? [] {
+                guard let entry else { continue }
+                let index = positions[entry.id]
+                let old = index.map { items[$0] }
+                let value = GitHubPullRequestReference(id: entry.id, number: entry.number, title: entry.title, url: entry.url,
+                    state: entry.state, repository: entry.repository.nameWithOwner, willCloseTarget: old?.willCloseTarget ?? false,
+                    crossReferenced: old != nil, manuallyLinked: true)
+                if let index { items[index] = value } else { positions[entry.id] = items.count; items.append(value) }
+            }
+            if let connection = closedByPullRequestsReferences, Set(connection.nodes.compactMap { $0?.id }).count != connection.nodes.count { manualComplete = false }
+            return .init(items: items, isComplete: cross?.isComplete ?? false, manualLinksComplete: manualComplete)
+        }
     }
+    private struct ManualPullRequests: Decodable { let nodes: [RelatedIssue?]; let pageInfo: PageInfo }
     private struct TimelineConnection: Decodable {
         let nodes: [CrossReference?]; let pageInfo: PageInfo
         var references: GitHubPullRequestReferences {
@@ -153,10 +180,10 @@ public struct GitHubWorkDetailClient: Sendable {
                 let index = positions[id]
                 let combined = closes || index.map { items[$0].willCloseTarget } == true
                 let reference = GitHubPullRequestReference(id: id, number: number, title: title, url: url, state: state,
-                                                          repository: repository, willCloseTarget: combined)
+                                                          repository: repository, willCloseTarget: combined, crossReferenced: true, manuallyLinked: nil)
                 if let index { items[index] = reference } else { positions[id] = items.count; items.append(reference) }
             }
-            return .init(items: items, isComplete: complete)
+            return .init(items: items, isComplete: complete, manualLinksComplete: nil)
         }
     }
     private struct CrossReference: Decodable {

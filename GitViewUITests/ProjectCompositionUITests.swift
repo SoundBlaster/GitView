@@ -96,6 +96,7 @@ import XCTest
         for _ in 0..<4 where !linked.isHittable { app.swipeUp() }
         XCTAssertTrue(linked.waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Cross-reference · closes this issue on merge"].exists)
+        XCTAssertTrue(app.staticTexts["Manually linked on GitHub"].exists)
         XCTAssertTrue(app.staticTexts["Some cross-references are not shown."].exists)
         for _ in 0..<6 where !app.staticTexts["Saved synthetic description"].isHittable { app.swipeDown() }
         XCTAssertTrue(app.staticTexts["Saved synthetic description"].waitForExistence(timeout: 10))

@@ -768,21 +768,28 @@ private struct IssueRelationshipDetails: View {
         relationSection("Blocked by", page: relationships?.blockedBy)
         relationSection("Blocking", page: relationships?.blocking)
         relationSection("Direct sub-issues", page: relationships?.subIssues)
-        Section("Pull request cross-references") {
+        Section("Linked pull requests") {
             if let page = relationships?.pullRequests {
                 ForEach(page.items) { pull in
                     Link(destination: pull.url) {
                         VStack(alignment: .leading) {
                             Text(pull.title)
                             Text("\(pull.repository) · #\(pull.number) · \(pull.state)").font(.caption).foregroundStyle(.secondary)
-                            Text(pull.willCloseTarget ? "Cross-reference · closes this issue on merge" : "Cross-reference")
-                                .font(.caption).foregroundStyle(.secondary)
+                            if pull.crossReferenced ?? true {
+                                Text(pull.willCloseTarget ? "Cross-reference · closes this issue on merge" : "Cross-reference")
+                                    .font(.caption).foregroundStyle(.secondary)
+                            }
+                            if pull.manuallyLinked == true { Text("Manually linked on GitHub").font(.caption).foregroundStyle(.secondary) }
                         }
                     }
                 }
                 if !page.isComplete { Text("Some cross-references are not shown.").foregroundStyle(.secondary) }
-                else if page.items.isEmpty { Text("No pull request cross-references observed.").foregroundStyle(.secondary) }
-            } else { Text("Cross-references unavailable").foregroundStyle(.secondary) }
+                if page.manualLinksComplete == false { Text("Some manually linked pull requests are not shown.").foregroundStyle(.secondary) }
+                if page.manualLinksComplete == nil { Text("Manual links unavailable.").foregroundStyle(.secondary) }
+                if page.isComplete && page.manualLinksComplete == true && page.items.isEmpty {
+                    Text("No linked pull requests observed.").foregroundStyle(.secondary)
+                }
+            } else { Text("Pull request links unavailable.").foregroundStyle(.secondary) }
         }
     }
 

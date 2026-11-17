@@ -3,6 +3,23 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkDetailTests {
+    @Test func mergesManualAndCrossReferenceWithoutCallingManualLinkAClosingReference() async throws {
+        let client = GitHubWorkDetailClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            #expect((body["query"] as! String).contains("userLinkedOnly:true"))
+            let json = #"{"data":{"node":{"__typename":"Issue","id":"I1","timelineItems":{"nodes":[{"__typename":"CrossReferencedEvent","willCloseTarget":true,"source":{"__typename":"PullRequest","id":"P1","number":4,"title":"Shared","url":"https://github.com/a/b/pull/4","state":"OPEN","repository":{"nameWithOwner":"a/b"}}}],"pageInfo":{"hasNextPage":false}},"closedByPullRequestsReferences":{"nodes":[{"id":"P1","number":4,"title":"Shared","url":"https://github.com/a/b/pull/4","state":"OPEN","repository":{"nameWithOwner":"a/b"}},{"id":"P2","number":5,"title":"Manual","url":"https://github.com/a/b/pull/5","state":"OPEN","repository":{"nameWithOwner":"a/b"}}],"pageInfo":{"hasNextPage":true}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let details = try await client.load(token: "token", id: "I1", kind: .issue)
+        let page = try #require(details.issueRelationships?.pullRequests)
+        #expect(page.items.count == 2 && page.isComplete && page.manualLinksComplete == false)
+        let shared = try #require(page.items.first { $0.id == "P1" })
+        #expect(shared.crossReferenced == true && shared.manuallyLinked == true && shared.willCloseTarget)
+        let manual = try #require(page.items.first { $0.id == "P2" })
+        #expect(manual.crossReferenced == false && manual.manuallyLinked == true && !manual.willCloseTarget)
+        let cached = try JSONDecoder().decode(GitHubWorkDetails.self, from: JSONEncoder().encode(details))
+        #expect(cached.issueRelationships?.pullRequests?.items.count == 2)
+    }
     @Test func issueCrossReferencesCombinePullRequestEvidenceWithoutInventingCoverage() async throws {
         let client = GitHubWorkDetailClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
