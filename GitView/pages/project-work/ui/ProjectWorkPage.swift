@@ -193,21 +193,15 @@ struct ProjectWorkPage: View {
             warning = "Could not refresh the GitHub session. Showing saved work."
             return
         }
-        var results: [RepositoryWorkRefresh] = []
-        var observedRepositories: [RepositoryReference] = []
-        for repository in requestedRepositories {
-            do {
-                let page = try await GitHubWorkClient().load(token: accessToken, repositoryID: repository.id, fullName: repository.fullName, nodeID: repository.nodeID)
-                if let source = page.observedRepository {
-                    observedRepositories.append(RepositoryReference(id: source.id, fullName: source.fullName, isPrivate: source.isPrivate, nodeID: source.nodeID))
-                }
-                results.append(.init(id: repository.id, name: page.observedRepository?.fullName ?? repository.fullName, outcome: .received(page.items, complete: !page.isIncomplete), observedAt: .now))
-            } catch is CancellationError { return }
-            catch let WorkFetchError.httpStatus(code) {
-                results.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub HTTP \(code)")))
-            } catch {
-                results.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("Could not update from GitHub")))
-            }
+        let batch: ProjectRefreshResults
+        do {
+            batch = try await GitHubProjectRefresh().fetch(token: accessToken, repositories: requestedRepositories.map {
+                RefreshRepository(id: $0.id, fullName: $0.fullName, nodeID: $0.nodeID)
+            })
+        } catch { return }
+        let results = batch.observations
+        let observedRepositories = batch.observedRepositories.map {
+            RepositoryReference(id: $0.id, fullName: $0.fullName, isPrivate: $0.isPrivate, nodeID: $0.nodeID)
         }
         guard !Task.isCancelled else { return }
         guard library.projects.first(where: { $0.id == project.id })?.repositories.map(\.id) == requestedRepositories.map(\.id) else { return }
