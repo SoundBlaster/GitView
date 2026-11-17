@@ -1,6 +1,37 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testHundredItemGridPinchAndPreviewKeepFilter() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-dense")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let first = app.buttons["work.D1"]
+        XCTAssertTrue(first.waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["work.D2"].exists)
+        app.buttons["project.filters"].tap()
+        app.buttons["Merged"].tap()
+        XCTAssertTrue(app.buttons["work.D2"].waitForNonExistence(timeout: 5))
+        let initialWidth = first.frame.width
+        app.scrollViews.firstMatch.pinch(withScale: 1.6, velocity: 1)
+        XCTAssertGreaterThan(first.frame.width, initialWidth)
+        XCTAssertFalse(app.navigationBars["Pull Request"].exists)
+        XCTAssertFalse(app.buttons["work.D2"].exists)
+        let expandedWidth = first.frame.width
+        app.scrollViews.firstMatch.pinch(withScale: 0.6, velocity: -1)
+        XCTAssertLessThan(first.frame.width, expandedWidth)
+        XCTAssertFalse(app.navigationBars["Pull Request"].exists)
+        XCTAssertFalse(app.buttons["work.D2"].exists)
+        first.press(forDuration: 1)
+        XCTAssertTrue(app.staticTexts["Synthetic work 1"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Open on GitHub"].exists)
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "100 item grid long press preview"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+    }
     func testHundredItemGridKeepsSelectionAcrossOpenAndFilter() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-dense")
