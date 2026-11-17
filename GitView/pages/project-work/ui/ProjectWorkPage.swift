@@ -211,31 +211,17 @@ struct ProjectWorkPage: View {
             catch { metadataProblem = true }
         }
         let now = Date()
-        let snapshot: WorkSnapshot?
+        let result: ProjectRefreshPersistence.Result
         do {
-            snapshot = try cache?.load(accountID: project.accountID, projectID: project.id)
+            result = try ProjectRefreshPersistence.commit(cache: cache, accountID: project.accountID, projectID: project.id,
+                observations: results, fallback: archive, at: now)
         } catch {
             warning = "Saved work could not be read; the refresh was not saved."
             return
         }
-        let previous: ProjectWorkArchive
-        do { previous = try snapshot.map { try ProjectWorkArchive.decode($0.payload) } ?? archive ?? ProjectWorkArchive() }
-        catch { warning = "Saved work could not be read; the refresh was not saved."; return }
-        let updated = previous.applying(results, at: now)
-        let complete = !updated.hasRefreshProblems
-        var saved = false
-        if let cache {
-            do {
-                let data = try JSONEncoder().encode(updated)
-                if let snapshot, snapshot.observedAt > now {
-                    saved = false
-                } else if complete || snapshot == nil {
-                    saved = try cache.save(accountID: project.accountID, projectID: project.id, payload: data, observedAt: now, complete: complete)
-                } else if let snapshot {
-                    saved = try cache.replacePayload(accountID: project.accountID, projectID: project.id, expected: snapshot, payload: data)
-                }
-            } catch { saved = false }
-        }
+        let updated = result.archive
+        let complete = result.complete
+        let saved = result.saved
         archive = updated
         present(updated.items, now: now)
         if saved && complete { observedAt = now }

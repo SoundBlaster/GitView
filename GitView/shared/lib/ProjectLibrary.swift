@@ -1,6 +1,37 @@
 import Foundation
+import GitHubAPI
 import Observation
 import ProjectStore
+import WorkCache
+
+@MainActor enum ProjectRefreshPersistence {
+    struct Result {
+        let archive: ProjectWorkArchive
+        let saved: Bool
+        let complete: Bool
+    }
+
+    static func commit(cache: WorkCache?, accountID: Int64, projectID: UUID, observations: [RepositoryWorkRefresh],
+                       fallback: ProjectWorkArchive?, at date: Date) throws -> Result {
+        let snapshot = try cache?.load(accountID: accountID, projectID: projectID)
+        let previous = try snapshot.map { try ProjectWorkArchive.decode($0.payload) } ?? fallback ?? ProjectWorkArchive()
+        let updated = previous.applying(observations, at: date)
+        let complete = !updated.hasRefreshProblems
+        var saved = false
+        if let cache {
+            do {
+                let data = try JSONEncoder().encode(updated)
+                if let snapshot, snapshot.observedAt > date { saved = false }
+                else if complete || snapshot == nil {
+                    saved = try cache.save(accountID: accountID, projectID: projectID, payload: data, observedAt: date, complete: complete)
+                } else if let snapshot {
+                    saved = try cache.replacePayload(accountID: accountID, projectID: projectID, expected: snapshot, payload: data)
+                }
+            } catch { saved = false }
+        }
+        return Result(archive: updated, saved: saved, complete: complete)
+    }
+}
 
 @MainActor @Observable final class ProjectLibrary {
     private let store: ProjectStore

@@ -1,7 +1,33 @@
 import Foundation
 import GitHubAuth
+import GitHubAPI
 import Security
+import WorkCache
 import XCTest
+@testable import GitView
+
+@MainActor final class ProjectRefreshPersistenceTests: XCTestCase {
+    func testPartialRefreshKeepsCompleteSnapshotTimeAndEarlierData() throws {
+        let cache = try WorkCache(inMemory: true)
+        let projectID = UUID()
+        let originalTime = Date(timeIntervalSince1970: 1_000)
+        let original = ProjectWorkArchive().applying([
+            .init(id: 1, name: "owner/repo", outcome: .received([], complete: true), observedAt: originalTime)
+        ], at: originalTime)
+        try cache.save(accountID: 1, projectID: projectID, payload: JSONEncoder().encode(original), observedAt: originalTime, complete: true)
+        let result = try ProjectRefreshPersistence.commit(cache: cache, accountID: 1, projectID: projectID,
+            observations: [.init(id: 1, name: "owner/repo", outcome: .failed("Offline"))], fallback: nil,
+            at: originalTime.addingTimeInterval(30))
+        XCTAssertTrue(result.saved)
+        XCTAssertFalse(result.complete)
+        let snapshot = try XCTUnwrap(cache.load(accountID: 1, projectID: projectID))
+        XCTAssertEqual(snapshot.observedAt, originalTime)
+        XCTAssertTrue(snapshot.complete)
+        let archive = try ProjectWorkArchive.decode(snapshot.payload)
+        XCTAssertEqual(archive.repositories.first?.refreshProblem, "Offline")
+        XCTAssertEqual(archive.repositories.first?.observedAt, originalTime)
+    }
+}
 
 final class KeychainIntegrationTests: XCTestCase {
     func testSaveLoadAndUpdateSyntheticCredential() throws {
