@@ -12,6 +12,9 @@ struct ProjectsPage: View {
     @Environment(\.scenePhase) private var scenePhase
     @State private var columns = 4
     @State private var width: CGFloat = 0
+    @State private var projectPosition = ScrollPosition(idType: UUID.self)
+    @State private var visibleProjectIDs = Set<UUID>()
+    @State private var zoomRevision = 0
     @State private var selectedRoute: ProjectRoute?
     @State private var zoomHint = false
     @State private var overviews: [UUID: ProjectOverview] = [:]
@@ -63,9 +66,12 @@ struct ProjectsPage: View {
                         }
                     }
                 }
+                .scrollTargetLayout()
                 .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width = $0 }
             }.padding()
         }
+        .scrollPosition($projectPosition, anchor: .center)
+        .onScrollTargetVisibilityChange(idType: UUID.self, threshold: 0.5) { visibleProjectIDs = Set($0) }
         .highPriorityGesture(MagnifyGesture().onEnded { value in
             if value.magnification > 1.15 { changeZoom(.larger) }
             else if value.magnification < 0.85 { changeZoom(.smaller) }
@@ -91,7 +97,18 @@ struct ProjectsPage: View {
 
     @MainActor private func changeZoom(_ direction: GridZoomDirection) {
         let next = GridDensity.next(current: effectiveColumns, direction: direction, width: Double(width), maxCellWidth: 320)
-        withAnimation(.easeInOut(duration: 0.2)) { columns = next }
+        let densityChanged = next != effectiveColumns
+        zoomRevision += 1
+        let revision = zoomRevision
+        let visible = library.projects.filter { visibleProjectIDs.contains($0.id) }
+        let anchor = visible.isEmpty ? projectPosition.viewID(type: UUID.self) : visible[visible.count / 2].id
+        withAnimation(.easeInOut(duration: 0.2), completionCriteria: .logicallyComplete) {
+            columns = next
+        } completion: {
+            if densityChanged, revision == zoomRevision, let anchor, library.projects.contains(where: { $0.id == anchor }) {
+                projectPosition.scrollTo(id: anchor, anchor: .center)
+            }
+        }
         guard direction == .larger, GridDensity.isAtMaximum(columns: next, width: Double(width), maxCellWidth: 320) else { zoomHint = false; return }
         if let project = library.projects.first, library.projects.count == 1 { selectedRoute = ProjectRoute(project: project, attention: nil); zoomHint = false }
         else if !library.projects.isEmpty { zoomHint = true }

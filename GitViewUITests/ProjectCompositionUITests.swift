@@ -1,6 +1,29 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testProjectZoomKeepsVisibleProjectAfterScrolling() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project-grid")
+        app.launch()
+        let scroll = app.scrollViews.firstMatch
+        let query = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project."))
+        XCTAssertTrue(query.firstMatch.waitForExistence(timeout: 10))
+        scroll.pinch(withScale: 1.6, velocity: 1)
+        scroll.swipeUp()
+        let visible = query.allElementsBoundByIndex.filter {
+            $0.isHittable && scroll.frame.contains(CGPoint(x: $0.frame.midX, y: $0.frame.midY))
+        }.sorted { $0.frame.midY < $1.frame.midY }
+        XCTAssertGreaterThan(visible.count, 1)
+        guard visible.count > 1 else { return }
+        let name = visible[visible.count / 2].identifier
+        scroll.pinch(withScale: 1.6, velocity: 1)
+        expectation(for: NSPredicate(format: "isHittable == true"), evaluatedWith: app.buttons[name])
+        waitForExpectations(timeout: 5)
+        scroll.pinch(withScale: 0.6, velocity: -1)
+        expectation(for: NSPredicate(format: "isHittable == true"), evaluatedWith: app.buttons[name])
+        waitForExpectations(timeout: 5)
+        XCTAssertFalse(app.buttons["project.settings"].exists)
+    }
     func testZoomKeepsVisibleWorkAfterScrolling() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-dense")
