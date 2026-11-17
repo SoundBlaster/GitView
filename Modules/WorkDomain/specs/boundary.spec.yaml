@@ -8,12 +8,14 @@ metadata:
   authors:
     - name: GitView
 intent:
-  summary: Evaluate Today time eligibility against supplied work progress and local calendar.
+  summary: Evaluate Today visibility and project work summaries from supplied observations.
 scope:
   boundedContext: GitView
   includes:
     - Time-based Today eligibility for known progress and explicit unknown result.
     - Filter work by object kind and lifecycle state.
+    - Count unique observed work and independent attention signals with explicit unknowns.
+    - Build local-calendar merged PR counts only when history coverage is sufficient.
   excludes:
     - GitHub integration, persistence, identity, UI and additional inclusion conditions.
 provides:
@@ -24,6 +26,9 @@ provides:
     - id: gitview.today.visibility_filter
       role: secondary
       summary: Narrow work by lifecycle and kind while preserving unknown states.
+    - id: gitview.work.project_summary
+      role: secondary
+      summary: Summarize supplied work observations and coverage without fabricating history.
 requires:
   capabilities: []
 interfaces:

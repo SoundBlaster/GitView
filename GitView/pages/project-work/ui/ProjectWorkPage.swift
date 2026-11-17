@@ -1,5 +1,6 @@
 import GitHubAPI
 import GitHubAuth
+import Charts
 import ProjectStore
 import SwiftUI
 import WorkDomain
@@ -21,6 +22,7 @@ struct ProjectWorkPage: View {
     @State private var gridWidth: CGFloat = 0
     @State private var selectedItem: GitHubWorkItem?
     @State private var showProjectSettings = false
+    @State private var showMetrics = false
     @State private var zoomHint = false
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @AppStorage private var showOpen: Bool
@@ -109,6 +111,9 @@ struct ProjectWorkPage: View {
         .toolbar {
             Button("Project settings", systemImage: "gearshape") { showProjectSettings = true }
                 .accessibilityIdentifier("project.settings")
+            Button("Metrics", systemImage: "chart.bar") { showMetrics = true }
+                .disabled(archive == nil)
+                .accessibilityIdentifier("project.metrics")
             Menu("Zoom", systemImage: "plus.magnifyingglass") {
                 Button("Larger", systemImage: "plus.magnifyingglass") { changeZoom(.larger) }
                 Button("Smaller", systemImage: "minus.magnifyingglass") { changeZoom(.smaller) }
@@ -121,12 +126,19 @@ struct ProjectWorkPage: View {
                 Toggle("Issues", isOn: $showIssues)
                 Toggle("Pull requests", isOn: $showPullRequests)
             }
+            .accessibilityIdentifier("project.filters")
         }
         .sheet(item: $selectedItem) { item in
             WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID, onThreads: persistThreads, onDetails: persistDetails)
         }
         .sheet(isPresented: $showProjectSettings) {
             ProjectSettingsSheet(project: project, library: library, sessionManager: sessionManager)
+        }
+        .sheet(isPresented: $showMetrics) {
+            if let archive {
+                ProjectMetricsSheet(project: project, archive: archive, sessionManager: sessionManager,
+                    onThreads: persistThreads, onDetails: persistDetails)
+            }
         }
         .task { restore(); await load() }
         .refreshable { await load() }
@@ -177,7 +189,7 @@ struct ProjectWorkPage: View {
                 if let source = page.observedRepository {
                     observedRepositories.append(RepositoryReference(id: source.id, fullName: source.fullName, isPrivate: source.isPrivate, nodeID: source.nodeID))
                 }
-                results.append(.init(id: repository.id, name: page.observedRepository?.fullName ?? repository.fullName, outcome: .received(page.items, complete: !page.isIncomplete)))
+                results.append(.init(id: repository.id, name: page.observedRepository?.fullName ?? repository.fullName, outcome: .received(page.items, complete: !page.isIncomplete), observedAt: .now))
             } catch is CancellationError { return }
             catch let WorkFetchError.httpStatus(code) {
                 results.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub HTTP \(code)")))
@@ -293,6 +305,121 @@ struct ProjectWorkPage: View {
             if item.state == "CLOSED", let closed = item.closedAt { return calendar.isDate(closed, inSameDayAs: now) && closed <= now }
             return true
         }.sorted { $0.updatedAt > $1.updatedAt }
+    }
+}
+
+private struct ProjectMetricsSheet: View {
+    let project: StoredProject
+    let archive: ProjectWorkArchive
+    let sessionManager: GitHubSessionManager
+    let onThreads: @MainActor (GitHubWorkItem, GitHubReviewThreads, Date) -> Bool
+    let onDetails: @MainActor (GitHubWorkItem, GitHubWorkDetails) -> Bool
+    @Environment(\.dismiss) private var dismiss
+    @State private var now = Date()
+    @State private var selectedItem: GitHubWorkItem?
+
+    private var summary: ProjectWorkSummary {
+        let records = archive.items.map { item in
+            let kind: WorkKind = item.kind == .pullRequest ? .pullRequest : .issue
+            let state: WorkState = switch item.state {
+            case "OPEN": .open
+            case "MERGED": .merged
+            case "CLOSED": .closed
+            default: .unknown
+            }
+            return WorkMetricRecord(id: item.id, kind: kind, state: state, isDraft: item.isDraft,
+                checkStatus: item.checkStatus, reviewDecision: item.reviewDecision, reviewRequestCount: item.reviewRequestCount,
+                unresolvedThreads: item.reviewThreads?.observedUnresolved, threadsComplete: item.reviewThreads?.isComplete, mergedAt: item.mergedAt)
+        }
+        let complete = archive.hasCompleteObservation(for: Set(project.repositories.map(\.id))) && !archive.hasRefreshProblems
+        return ProjectWorkSummary(records: records, coverageComplete: complete, now: now, calendar: .current)
+    }
+
+    private func metricValue(_ metric: ObservedMetric) -> String {
+        metric.unavailable == 0 ? "\(metric.count)" : "\(metric.count) · \(metric.unavailable) unknown or partial"
+    }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    Text("Current Project membership · saved grid filters do not apply")
+                        .font(.footnote).foregroundStyle(.secondary)
+                    if !summary.coverageComplete {
+                        Label("Incomplete repository coverage; counts are observed values.", systemImage: "exclamationmark.triangle")
+                            .foregroundStyle(.secondary)
+                    }
+                    ForEach(archive.repositories.filter { $0.observedAt != nil }, id: \.id) { repository in
+                        if let date = repository.observedAt {
+                            Text("\(repository.name): observed \(date.formatted(date: .abbreviated, time: .shortened))")
+                                .font(.footnote).foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                Section("Current work") {
+                    LabeledContent("Open pull requests", value: "\(summary.openPullRequests)")
+                    LabeledContent("Draft pull requests", value: "\(summary.draftPullRequests)")
+                    LabeledContent("Open issues", value: "\(summary.openIssues)")
+                }
+                Section("Attention · open PRs") {
+                    LabeledContent("Failed CI · PRs", value: metricValue(summary.failedCI))
+                    LabeledContent("Changes requested · PRs", value: metricValue(summary.changesRequested))
+                    LabeledContent("Review requested · PRs", value: metricValue(summary.waitingForReview))
+                    LabeledContent("Unresolved threads", value: metricValue(summary.unresolvedThreads))
+                    LabeledContent("PRs with unresolved threads", value: metricValue(summary.affectedByThreads))
+                }
+                Section("Merged pull requests · last 7 local days") {
+                    if let days = summary.mergedByDay {
+                        Chart(days) { day in
+                            BarMark(x: .value("Day", day.day, unit: .day), y: .value("Merged PRs", day.count))
+                                .accessibilityLabel(day.day.formatted(date: .abbreviated, time: .omitted))
+                                .accessibilityValue("\(day.count) merged pull requests")
+                        }
+                        .chartYScale(domain: 0...max(1, days.map(\.count).max() ?? 0))
+                        .frame(height: 160)
+                        NavigationLink {
+                            mergedSelection(days: days)
+                        } label: {
+                            LabeledContent("View merged PRs", value: "\(days.reduce(0) { $0 + $1.count })")
+                        }
+                        .accessibilityIdentifier("metrics.merged.selection")
+                        Text("Based on current Project membership and available GitHub observations.")
+                            .font(.footnote).foregroundStyle(.secondary)
+                    } else {
+                        Text("History is unavailable or incomplete; no zero values are assumed.")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            }
+            .navigationTitle("Project metrics")
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+            .sheet(item: $selectedItem) { item in
+                WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID,
+                    onThreads: onThreads, onDetails: onDetails)
+            }
+        }
+    }
+
+    private func mergedSelection(days: [MergedDay]) -> some View {
+        let firstDay = days.first?.day ?? now
+        var seen = Set<String>()
+        let selected = archive.items.filter { item in
+            guard seen.insert(item.id).inserted, item.kind == .pullRequest, item.state == "MERGED", let date = item.mergedAt else { return false }
+            return date >= firstDay && date <= now
+        }.sorted { ($0.mergedAt ?? .distantPast) > ($1.mergedAt ?? .distantPast) }
+        return List(selected) { item in
+            Button { selectedItem = item } label: {
+                VStack(alignment: .leading) {
+                    Text(item.title)
+                    if let repository = archive.repositories.first(where: { $0.items.contains(where: { $0.id == item.id }) }) {
+                        Text("\(repository.name) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
+                    } else {
+                        Text("#\(item.number)").font(.caption).foregroundStyle(.secondary)
+                    }
+                }
+            }
+        }
+        .navigationTitle("Merged PRs")
     }
 }
 

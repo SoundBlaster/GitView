@@ -118,11 +118,11 @@ public struct GitHubWorkClient: Sendable {
         query Work(\(locationArguments), $issueAfter:String, $pullAfter:String, $loadIssues:Boolean!, $loadPulls:Boolean!) {
           \(selector) {
             id fullDatabaseId nameWithOwner isPrivate
-            issues(first:100, after:$issueAfter, orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadIssues) {
+            issues(first:100, after:$issueAfter, states:[OPEN,CLOSED], orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadIssues) {
               nodes { id number title url state updatedAt closedAt }
               pageInfo { hasNextPage endCursor }
             }
-            pullRequests(first:100, after:$pullAfter, orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadPulls) {
+            pullRequests(first:100, after:$pullAfter, states:[OPEN,CLOSED,MERGED], orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadPulls) {
               nodes {
                 id number title url state updatedAt closedAt mergedAt isDraft headRefOid reviewDecision
                 statusCheckRollup { state contexts(first:1) { totalCount checkRunCountsByState { state count } statusContextCountsByState { state count } } }

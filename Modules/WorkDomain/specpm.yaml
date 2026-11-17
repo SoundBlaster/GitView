@@ -4,7 +4,7 @@ metadata:
   id: gitview.work-domain
   name: Work domain
   version: 0.1.0
-  summary: Evaluate Today time eligibility against supplied work progress and local calendar.
+  summary: Evaluate Today visibility and project work summaries from supplied observations.
   license: Apache-2.0
   authors:
     - name: GitView
@@ -15,6 +15,7 @@ index:
     capabilities:
       - gitview.today.time_eligibility
       - gitview.today.visibility_filter
+      - gitview.work.project_summary
   requires:
     capabilities: []
 compatibility:

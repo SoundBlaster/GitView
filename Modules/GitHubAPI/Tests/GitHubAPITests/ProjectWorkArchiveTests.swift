@@ -34,6 +34,16 @@ struct ProjectWorkArchiveTests {
         #expect(!archive.repositories[0].complete && archive.repositories[0].refreshProblem == "offline")
     }
 
+    @Test func recordsEachRepositoryObservationTimeSeparately() {
+        let first = Date(timeIntervalSince1970: 10), second = Date(timeIntervalSince1970: 20)
+        let archive = ProjectWorkArchive().applying([
+            .init(id: 1, name: "a", outcome: .received([], complete: true), observedAt: first),
+            .init(id: 2, name: "b", outcome: .received([], complete: true), observedAt: second)
+        ], at: Date(timeIntervalSince1970: 30))
+        #expect(archive.repositories[0].observedAt == first)
+        #expect(archive.repositories[1].observedAt == second)
+    }
+
     @Test func incompletePageDoesNotEraseEarlierCompleteData() throws {
         let oldDate = Date(timeIntervalSince1970: 10), next = Date(timeIntervalSince1970: 20)
         let old = ProjectWorkArchive().applying([.init(id: 1, name: "a", outcome: .received([try item("old")], complete: true))], at: oldDate)

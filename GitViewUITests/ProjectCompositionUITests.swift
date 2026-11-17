@@ -1,6 +1,32 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testMergedMetricOpensItsOwnSelectionDespiteSavedGridFilter() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        XCTAssertTrue(app.buttons["work.P1"].waitForExistence(timeout: 10))
+        app.buttons["project.filters"].tap()
+        app.buttons["Merged"].tap()
+        XCTAssertTrue(app.buttons["work.P1"].waitForNonExistence(timeout: 5))
+        app.buttons["project.metrics"].tap()
+        let selection = app.buttons["metrics.merged.selection"]
+        for _ in 0..<3 where !selection.isHittable { app.swipeUp() }
+        XCTAssertTrue(selection.waitForExistence(timeout: 5))
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "Merged PR metric"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+        selection.tap()
+        XCTAssertTrue(app.staticTexts["Merged fixture"].waitForExistence(timeout: 5))
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        app.buttons["Done"].tap()
+        XCTAssertTrue(app.buttons["work.P1"].waitForNonExistence(timeout: 5))
+    }
+
     func testSavedIssueDetailsRemainVisibleOffline() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")

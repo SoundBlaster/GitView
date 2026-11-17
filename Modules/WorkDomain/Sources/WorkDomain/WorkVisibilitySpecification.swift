@@ -1,7 +1,7 @@
 import SpecificationCore
 
-public enum WorkKind: Sendable { case issue, pullRequest }
-public enum WorkState: Sendable { case open, merged, closed, unknown }
+public enum WorkKind: Sendable, Equatable { case issue, pullRequest }
+public enum WorkState: Sendable, Equatable { case open, merged, closed, unknown }
 
 public struct WorkVisibilityContext: Sendable {
     public let kind: WorkKind

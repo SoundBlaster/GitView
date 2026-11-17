@@ -43,8 +43,15 @@ private struct ProjectTestFixture: View {
                 let directory = base.appendingPathComponent("GitGrid", isDirectory: true)
                 try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
                 let cache = try WorkCache(url: directory.appendingPathComponent("WorkCache.sqlite"))
-                let json = #"[{"id":"I1","number":1,"title":"Offline fixture","url":"https://github.com/fixture/one/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue","details":{"body":"Saved synthetic description","observedAt":0}}]"#
-                try cache.save(accountID: 1, projectID: id, payload: Data(json.utf8), observedAt: .now, complete: false)
+                let now = Date()
+                let stamp = now.timeIntervalSinceReferenceDate
+                let json = #"[{"id":"I1","number":1,"title":"Offline fixture","url":"https://github.com/fixture/one/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue","details":{"body":"Saved synthetic description","observedAt":0}},{"id":"P1","number":2,"title":"Merged fixture","url":"https://github.com/fixture/one/pull/2","state":"MERGED","updatedAt":\#(stamp),"mergedAt":\#(stamp),"isDraft":false,"kind":"pullRequest"}]"#
+                let items = try JSONDecoder().decode([GitHubWorkItem].self, from: Data(json.utf8))
+                let archive = ProjectWorkArchive().applying([
+                    .init(id: 101, name: "fixture/one", outcome: .received(items, complete: true)),
+                    .init(id: 102, name: "fixture/two", outcome: .received([], complete: true))
+                ], at: now)
+                try cache.save(accountID: 1, projectID: id, payload: JSONEncoder().encode(archive), observedAt: now, complete: true)
                 self.library = library
             } catch { assertionFailure("Could not create UI test fixture: \(error)") }
         }

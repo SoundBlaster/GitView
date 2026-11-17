@@ -17,7 +17,10 @@ public struct RepositoryWorkRefresh: Sendable {
     public let id: Int64
     public let name: String
     public let outcome: Outcome
-    public init(id: Int64, name: String, outcome: Outcome) { self.id = id; self.name = name; self.outcome = outcome }
+    public let observedAt: Date?
+    public init(id: Int64, name: String, outcome: Outcome, observedAt: Date? = nil) {
+        self.id = id; self.name = name; self.outcome = outcome; self.observedAt = observedAt
+    }
 }
 
 /// Durable per-repository observations; legacy unscoped entries remain until a complete refresh.
@@ -55,10 +58,10 @@ public struct ProjectWorkArchive: Codable, Sendable {
                     guard let oldItem = oldItems[item.id], let details = oldItem.details else { return item }
                     return item.withDetails(details, forHead: oldItem.headRevision) ?? item
                 }
-                return RepositoryWorkObservation(id: result.id, name: result.name, items: enriched, observedAt: date, complete: true, refreshProblem: nil)
+                return RepositoryWorkObservation(id: result.id, name: result.name, items: enriched, observedAt: result.observedAt ?? date, complete: true, refreshProblem: nil)
             case let .received(items, complete: false):
                 return RepositoryWorkObservation(id: result.id, name: result.name, items: old?.items ?? items,
-                    observedAt: old?.observedAt ?? date, complete: old?.complete ?? false, refreshProblem: "Incomplete GitHub response")
+                    observedAt: old?.observedAt ?? result.observedAt ?? date, complete: old?.complete ?? false, refreshProblem: "Incomplete GitHub response")
             case let .failed(problem):
                 return RepositoryWorkObservation(id: result.id, name: result.name, items: old?.items ?? [],
                     observedAt: old?.observedAt, complete: old?.complete ?? false, refreshProblem: problem)
