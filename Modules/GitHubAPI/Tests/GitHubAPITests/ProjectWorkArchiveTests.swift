@@ -10,11 +10,13 @@ struct ProjectWorkArchiveTests {
             .init(id: 1, name: "a/one", outcome: .received([item], complete: true))
         ], at: .now)
         #expect(one.repositoryNamesByWorkID["I1"] == "a/one")
+        #expect(one.repositoryObservationsByWorkID["I1"]?.id == 1)
         let conflicting = ProjectWorkArchive().applying([
             .init(id: 1, name: "a/one", outcome: .received([item], complete: true)),
             .init(id: 2, name: "a/two", outcome: .received([item], complete: true))
         ], at: .now)
         #expect(conflicting.repositoryNamesByWorkID["I1"] == nil)
+        #expect(conflicting.repositoryObservationsByWorkID["I1"] == nil)
     }
     @Test func boundedRefreshPreservesUnvisitedRepositoriesAndTheirObservationTimes() throws {
         let start = Date(timeIntervalSince1970: 100)

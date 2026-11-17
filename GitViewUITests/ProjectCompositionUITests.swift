@@ -1,6 +1,22 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testIssuePreviewKeepsSavedDescriptionAndSourceLimitation() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-preview-failure"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let issue = app.buttons["work.I1"]
+        XCTAssertTrue(issue.waitForExistence(timeout: 10))
+        issue.press(forDuration: 1)
+        app.buttons["Preview"].tap()
+        XCTAssertTrue(app.navigationBars["Preview"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["preview.description"].label, "Saved synthetic description")
+        XCTAssertTrue(app.descendants(matching: .any)["preview.sourceProblem"].label.contains("GitHub HTTP 403"))
+        XCTAssertTrue(app.staticTexts["preview.sourceObservedAt"].label.hasPrefix("Last complete observation"))
+    }
     func testPreviewActionKeepsTheSelectedWorkItem() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")

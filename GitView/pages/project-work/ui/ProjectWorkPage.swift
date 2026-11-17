@@ -109,9 +109,11 @@ struct ProjectWorkPage: View {
                     Text("Choose an item to open it.").font(.footnote).foregroundStyle(.secondary)
                 }
                 let sources = repositoryNames
+                let observations = archive?.repositoryObservationsByWorkID ?? [:]
                 LazyVGrid(columns: gridColumns, spacing: 4) {
                     ForEach(visibleItems) { item in
                         WorkGridCell(item: item, repositoryName: sources[item.id], showDetails: effectiveColumns <= 2,
+                            source: observations[item.id],
                             open: { selectedItem = item }, preview: { previewOriginID = item.id; accessiblePreview = item })
                             .accessibilityFocused($focusedWorkID, equals: item.id)
                     }
@@ -159,7 +161,8 @@ struct ProjectWorkPage: View {
         }) { item in
             NavigationStack {
                 ScrollView {
-                    WorkPreviewContent(item: item, repositoryName: repositoryNames[item.id]).padding()
+                    WorkPreviewContent(item: item, repositoryName: repositoryNames[item.id],
+                        source: archive?.repositoryObservationsByWorkID[item.id]).padding()
                     Button("Open in GitGrid", systemImage: "doc.text") { previewToOpen = item; accessiblePreview = nil }
                         .buttonStyle(.borderedProminent)
                     Link("Open on GitHub", destination: item.url).padding()
@@ -665,6 +668,7 @@ private struct WorkGridCell: View {
     let item: GitHubWorkItem
     let repositoryName: String?
     let showDetails: Bool
+    let source: RepositoryWorkObservation?
     let open: () -> Void
     let preview: () -> Void
     @Environment(\.openURL) private var openURL
@@ -716,7 +720,7 @@ private struct WorkGridCell: View {
             Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
             ShareLink(item: item.url)
         } preview: {
-            WorkPreviewContent(item: item, repositoryName: repositoryName).padding()
+            WorkPreviewContent(item: item, repositoryName: repositoryName, source: source).padding()
         }
     }
 
@@ -725,12 +729,35 @@ private struct WorkGridCell: View {
 private struct WorkPreviewContent: View {
     let item: GitHubWorkItem
     let repositoryName: String?
+    let source: RepositoryWorkObservation?
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(item.title).font(.headline)
             Text("\(item.kind == .issue ? "Issue" : "Pull request") #\(item.number) · \(item.state)").foregroundStyle(.secondary)
             Text(repositoryName ?? "Repository unavailable").font(.subheadline).foregroundStyle(.secondary)
             if item.kind == .pullRequest { WorkSignalDetails(item: item) }
+            if let details = item.details {
+                if let type = details.issueContext?.type { LabeledContent("Issue type", value: type) }
+                if let count = details.issueContext?.commentCount { LabeledContent("Comments", value: "\(count)") }
+                if let body = details.body, !body.isEmpty {
+                    Text(verbatim: body).lineLimit(5).accessibilityIdentifier("preview.description")
+                }
+                Text("Details observed \(details.observedAt.formatted(date: .abbreviated, time: .shortened))")
+                    .font(.footnote).foregroundStyle(.secondary)
+            }
+            if let problem = source?.refreshProblem {
+                Label(problem, systemImage: "exclamationmark.triangle").foregroundStyle(.secondary)
+                    .accessibilityIdentifier("preview.sourceProblem")
+            }
+            if let source, let date = source.observedAt {
+                if source.complete {
+                    Text("Last complete observation \(date.formatted(date: .abbreviated, time: .shortened))")
+                        .font(.footnote).foregroundStyle(.secondary).accessibilityIdentifier("preview.sourceObservedAt")
+                } else {
+                    Text("Partial observation \(date.formatted(date: .abbreviated, time: .shortened))")
+                        .font(.footnote).foregroundStyle(.secondary).accessibilityIdentifier("preview.sourceObservedAt")
+                }
+            }
         }
     }
 }

@@ -66,10 +66,15 @@ private struct ProjectTestFixture: View {
                 } else {
                     items = try JSONDecoder().decode([GitHubWorkItem].self, from: Data(json.utf8))
                 }
-                let archive = ProjectWorkArchive().applying([
+                var archive = ProjectWorkArchive().applying([
                     .init(id: 101, name: "fixture/one", outcome: .received(items, complete: true)),
                     .init(id: 102, name: "fixture/two", outcome: .received([], complete: true))
                 ], at: now)
+                if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-preview-failure") {
+                    archive = archive.applyingPartial([
+                        .init(id: 101, name: "fixture/one", outcome: .failed("GitHub HTTP 403"))
+                    ], in: [101, 102], at: now)
+                }
                 try cache.save(accountID: 1, projectID: id, payload: JSONEncoder().encode(archive), observedAt: now, complete: true)
                 self.library = library
             } catch { assertionFailure("Could not create UI test fixture: \(error)") }
