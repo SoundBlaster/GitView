@@ -100,18 +100,19 @@ public struct GitHubWorkClient: Sendable {
         var observedRepository: GitHubRepository?
         var pagesLoaded = 0
         var priorityItems: [GitHubWorkItem] = []
-        if maxRequests > 1 {
-            let priority = try await page(token: token, repositoryID: repositoryID, fullName: fullName, nodeID: nodeID,
-                                          issueAfter: nil, pullAfter: nil, loadIssues: true, loadPulls: true, openOnly: true)
-            priorityItems = priority.items
-            observedRepository = priority.observedRepository
-            pagesLoaded = 1
-        }
-        for _ in pagesLoaded..<maxRequests {
+        var priorityIssueAfter: String?, priorityPullAfter: String?
+        var loadPriorityIssues = true, loadPriorityPulls = true
+        var priorityIssueCursors: Set<String> = [], priorityPullCursors: Set<String> = []
+        for index in 0..<maxRequests {
             try Task.checkCancellation()
+            let usePriority = maxRequests > 1 && index.isMultiple(of: 2) && (loadPriorityIssues || loadPriorityPulls)
             let result: GitHubWorkPage
             do {
-                result = try await page(token: token, repositoryID: repositoryID, fullName: fullName, nodeID: nodeID, issueAfter: issueAfter, pullAfter: pullAfter, loadIssues: loadIssues, loadPulls: loadPulls)
+                result = try await page(token: token, repositoryID: repositoryID, fullName: fullName, nodeID: nodeID,
+                                        issueAfter: usePriority ? priorityIssueAfter : issueAfter,
+                                        pullAfter: usePriority ? priorityPullAfter : pullAfter,
+                                        loadIssues: usePriority ? loadPriorityIssues : loadIssues,
+                                        loadPulls: usePriority ? loadPriorityPulls : loadPulls, openOnly: usePriority)
             } catch is CancellationError { throw CancellationError() }
             catch WorkFetchError.repositoryIdentityMismatch { throw WorkFetchError.repositoryIdentityMismatch }
             catch {
@@ -128,6 +129,16 @@ public struct GitHubWorkClient: Sendable {
             }
             pagesLoaded += 1
             observedRepository = result.observedRepository ?? observedRepository
+            if usePriority {
+                priorityItems = merging(priorityItems, with: result.items)
+                priorityIssueAfter = result.issueCursor
+                priorityPullAfter = result.pullCursor
+                if let priorityIssueAfter, !priorityIssueCursors.insert(priorityIssueAfter).inserted { throw WorkFetchError.invalidResponse }
+                if let priorityPullAfter, !priorityPullCursors.insert(priorityPullAfter).inserted { throw WorkFetchError.invalidResponse }
+                loadPriorityIssues = priorityIssueAfter != nil
+                loadPriorityPulls = priorityPullAfter != nil
+                continue
+            }
             for item in result.items where seen.insert(item.id).inserted { items.append(item) }
             issueAfter = result.issueCursor
             pullAfter = result.pullCursor

@@ -3,6 +3,24 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkItemsTests {
+    @Test func boundedRefreshPagesOpenAndGeneralStreamsIndependently() async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let variables = body["variables"] as! [String: Any]
+            let openOnly = (body["query"] as! String).contains("states:[OPEN]")
+            let after = variables["pullAfter"] as? String
+            let id = openOnly ? (after == nil ? "open-1" : "open-2") : (after == nil ? "merged-1" : "merged-2")
+            if openOnly && after != nil { #expect(variables["loadIssues"] as? Bool == false) }
+            let state = openOnly ? "OPEN" : "MERGED"
+            let json = """
+            {"data":{"repository":{"databaseId":42,"issues":\(variables["loadIssues"] as? Bool == true ? #"{"nodes":[],"pageInfo":{"hasNextPage":false}}"# : "null"),"pullRequests":{"nodes":[{"id":"\(id)","number":1,"title":"Work","url":"https://github.com/a/b/pull/1","state":"\(state)","updatedAt":"2026-11-17T10:00:00Z"}],"pageInfo":{"hasNextPage":true,"endCursor":"\(openOnly ? "open" : "general")-\(after == nil ? "1" : "2")"}}}}}
+            """
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let result = try await client.load(token: "token", repositoryID: 42, fullName: "a/b", maxRequests: 4)
+        #expect(Set(result.items.map(\.id)) == ["open-1", "open-2", "merged-1", "merged-2"])
+        #expect(result.isIncomplete)
+    }
     @Test func boundedRefreshIncludesOldOpenWorkAlongsideRecentCompletions() async throws {
         let client = GitHubWorkClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]

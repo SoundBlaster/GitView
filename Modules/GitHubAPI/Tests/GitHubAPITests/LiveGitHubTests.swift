@@ -11,9 +11,14 @@ struct LiveGitHubTests {
         let rawID = try #require(environment["GITGRID_LIVE_REPOSITORY_ID"])
         let repositoryID = try #require(Int64(rawID))
         let nodeID = try #require(environment["GITGRID_LIVE_REPOSITORY_NODE_ID"])
+        let repositoryName = environment["GITGRID_LIVE_REPOSITORY_NAME"] ?? "SoundBlaster/GitView"
         let page = try await GitHubWorkClient().load(token: token, repositoryID: repositoryID,
-                                                     fullName: "SoundBlaster/GitView", nodeID: nodeID, maxRequests: 2)
+                                                     fullName: repositoryName, nodeID: nodeID, maxRequests: 4)
         #expect(page.observedRepository?.id == repositoryID)
+        if environment["GITGRID_LIVE_EXPECT_LARGE"] == "1" {
+            #expect(page.isIncomplete)
+            #expect(page.items.filter { $0.kind == .issue && $0.state == "OPEN" }.count > 100)
+        }
         let pull = try #require(page.items.first { $0.kind == .pullRequest && $0.headRevision != nil })
         let head = try #require(pull.headRevision)
         let details = try await GitHubWorkDetailClient().load(token: token, id: pull.id, kind: .pullRequest, expectedHead: head)
