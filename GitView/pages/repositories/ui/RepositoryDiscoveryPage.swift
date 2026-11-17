@@ -76,6 +76,10 @@ struct RepositoryDiscoveryPage: View {
                 isFresh = true
                 errorMessage = metadataProblem ? "Saved repository metadata could not be updated." : nil
             }
+            if let until = updated.rateLimitUntil {
+                let limitMessage = "GitHub rate limit. Retry after \(until.formatted(date: .abbreviated, time: .shortened))."
+                errorMessage = [errorMessage, limitMessage].compactMap { $0 }.joined(separator: " ")
+            }
         } catch is CancellationError {
         } catch {
             errorMessage = "Could not refresh repositories for \(account)."

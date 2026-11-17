@@ -37,6 +37,7 @@ scope:
     - Validate next-page links and report HTTP failures.
     - Report an observed rate-limit failure on the triggering request and defer later default GitHub API transport requests until the source-directed deadline; retain the deadline across launches without discarding a successful final response.
     - Aggregate pages while preserving partial independent results.
+    - Preserve the source retry deadline and earlier discoveries when a rate limit interrupts repository discovery.
   excludes:
     - Persist selection, project creation and user interface.
 provides:

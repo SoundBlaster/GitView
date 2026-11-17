@@ -3,6 +3,20 @@ import Testing
 @testable import GitHubAPI
 
 struct DiscoveryAggregateTests {
+    @Test func rateLimitPreservesEarlierResultsAndDeadline() async throws {
+        let deadline = Date(timeIntervalSince1970: 2_000)
+        let client = GitHubDiscoveryClient { request in
+            let path = request.url!.path
+            if path.contains("/2/") { throw GitHubRateLimitError.deferred(until: deadline) }
+            let json = path == "/user/installations" ? #"{"total_count":3,"installations":[{"id":1},{"id":2},{"id":3}]}"# : #"{"total_count":1,"repositories":[{"id":3,"full_name":"a/r","private":false}]}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let result = try await GitHubDiscovery(client: client).load(token: "token")
+        #expect(result.repositories.map(\.id) == [3])
+        #expect(result.failures == [.rateLimited(until: deadline)])
+        #expect(result.rateLimitUntil == deadline)
+        #expect(!result.isComplete)
+    }
     @Test func aggregatesAndDeduplicatesAcrossInstallations() async throws {
         let client = GitHubDiscoveryClient { request in
             let path = request.url!.path
