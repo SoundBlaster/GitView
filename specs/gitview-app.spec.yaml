@@ -14,6 +14,7 @@ scope:
   includes:
     - SwiftUI app composition and demo grid.
     - Present Projects and their saved work, refresh outcomes and observation limitations.
+    - Restore the active account's Project overview at launch without waiting for a network refresh; keep the account screen reachable and do not navigate on a missing session or unreadable project store.
     - Compose source discovery, Keychain-backed sessions, project storage and cached work through their modules.
     - Share one in-process session manager between foreground and background consumers to coordinate token rotation.
     - Prepare a usable session for the active account only when a Project has an unpaused Repository; abort fetching and saving if preparation fails, is cancelled or the account changes.

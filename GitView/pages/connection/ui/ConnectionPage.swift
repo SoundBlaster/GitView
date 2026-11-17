@@ -11,9 +11,21 @@ struct ConnectionPage: View {
     @State private var credential: SavedGitHubCredential?
     @State private var library: ProjectLibrary?
     @State private var sessionManager: GitHubSessionManager?
+    @State private var initialRestoreStarted = false
+    @State private var showProjects = false
 
     private let redirectURI = URL(string: "gitview://oauth/callback")!
-    private let store = KeychainCredentialStore(service: "ru.egormerkushev.gitview.github", account: "current")
+    private let store: KeychainCredentialStore
+    private let injectedSessionManager: GitHubSessionManager?
+    private let libraryLoader: @MainActor (Int64) throws -> ProjectLibrary
+
+    init(store: KeychainCredentialStore = KeychainCredentialStore(service: "ru.egormerkushev.gitview.github", account: "current"),
+         sessionManager: GitHubSessionManager? = nil,
+         libraryLoader: @escaping @MainActor (Int64) throws -> ProjectLibrary = { try ProjectLibrary.open(accountID: $0) }) {
+        self.store = store
+        self.injectedSessionManager = sessionManager
+        self.libraryLoader = libraryLoader
+    }
 
     var body: some View {
         NavigationStack {
@@ -61,7 +73,14 @@ struct ConnectionPage: View {
                 }
             }
             .padding()
-            .onAppear { Task { await restoreSession() } }
+            .navigationDestination(isPresented: $showProjects) {
+                if let library, let sessionManager { ProjectsPage(library: library, sessionManager: sessionManager) }
+            }
+            .task {
+                guard !initialRestoreStarted else { return }
+                initialRestoreStarted = true
+                await restoreSession(openProjects: true)
+            }
         }
     }
 
@@ -85,7 +104,7 @@ struct ConnectionPage: View {
         }
     }
 
-    @MainActor private func restoreSession() async {
+    @MainActor private func restoreSession(openProjects: Bool = false) async {
         guard !isConnecting else { return }
         isConnecting = true
         defer { isConnecting = false }
@@ -95,10 +114,12 @@ struct ConnectionPage: View {
             identity = saved.identity
             openLibrary(accountID: saved.identity.id)
             if sessionManager == nil { sessionManager = makeSessionManager() }
+            if openProjects, library != nil, sessionManager != nil { showProjects = true }
             guard let expiry = saved.accessTokenExpiresAt, expiry <= .now else { return }
             guard let sessionManager else { return }
             do {
                 credential = try await sessionManager.usableSession(for: saved.identity.id)
+            } catch is CancellationError {
             } catch {
                 status = "Could not refresh the GitHub session. Saved projects remain available."
             }
@@ -109,12 +130,12 @@ struct ConnectionPage: View {
     }
 
     private func makeSessionManager() -> GitHubSessionManager {
-        GitHubSessionRuntime.manager
+        injectedSessionManager ?? GitHubSessionRuntime.manager
     }
 
     @MainActor private func openLibrary(accountID: Int64) {
         do {
-            library = try ProjectLibrary.open(accountID: accountID)
+            library = try libraryLoader(accountID)
             status = nil
         } catch {
             library = nil
@@ -146,7 +167,10 @@ struct ConnectionPage: View {
                 sessionManager = makeSessionManager()
                 do {
                     credential = try store.load()
-                    if let credential { openLibrary(accountID: credential.identity.id) }
+                    if let credential {
+                        openLibrary(accountID: credential.identity.id)
+                        if library != nil { showProjects = true }
+                    }
                     else { status = "Connected, but the saved session could not be found." }
                 } catch {
                     status = "Connected, but the saved session could not be read."

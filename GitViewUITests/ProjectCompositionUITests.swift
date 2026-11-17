@@ -1,6 +1,50 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testFirstLaunchWithoutSessionStaysOnConnectionScreen() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-session-restore", "--gitgrid-ui-test-session-empty"]
+        app.launchEnvironment["GITGRID_UI_FIXTURE_ID"] = UUID().uuidString
+        app.launch()
+        XCTAssertTrue(app.buttons["Connect GitHub"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.staticTexts["Connect GitHub to see your work across projects."].exists)
+        XCTAssertFalse(app.navigationBars["Projects"].exists)
+    }
+
+    func testSessionDoesNotNavigateWhenProjectStoreCannotOpen() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-session-restore", "--gitgrid-ui-test-session-store-failure"]
+        app.launchEnvironment["GITGRID_UI_FIXTURE_ID"] = UUID().uuidString
+        app.launch()
+        XCTAssertTrue(app.staticTexts["Could not open saved projects."].waitForExistence(timeout: 15))
+        XCTAssertFalse(app.navigationBars["Projects"].exists)
+    }
+    func testSavedSessionOpensProjectsAfterRelaunchWithoutTrappingBackNavigation() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-session-restore")
+        app.launchEnvironment["GITGRID_UI_FIXTURE_ID"] = UUID().uuidString
+        app.launch()
+        XCTAssertTrue(app.navigationBars["Projects"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Restored Project,")).firstMatch.waitForExistence(timeout: 10))
+        app.navigationBars["Projects"].buttons.firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["Connected as fixture"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.navigationBars["Projects"].exists)
+        app.terminate()
+        app.launch()
+        XCTAssertTrue(app.navigationBars["Projects"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Restored Project,")).firstMatch.waitForExistence(timeout: 10))
+    }
+
+    func testExpiredSavedSessionStillOpensLocalProjects() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-session-restore", "--gitgrid-ui-test-session-expired"]
+        app.launchEnvironment["GITGRID_UI_FIXTURE_ID"] = UUID().uuidString
+        app.launch()
+        XCTAssertTrue(app.navigationBars["Projects"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Restored Project,")).firstMatch.waitForExistence(timeout: 10))
+        app.navigationBars["Projects"].buttons.firstMatch.tap()
+        XCTAssertTrue(app.staticTexts["Saved session expired. Reconnect or retry to refresh access."].waitForExistence(timeout: 5))
+    }
     func testDenseProjectGridRetainsAttentionNavigation() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-dense", "--gitgrid-ui-test-large-summary", "--gitgrid-ui-test-project-grid"]

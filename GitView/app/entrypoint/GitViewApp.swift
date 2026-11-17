@@ -14,7 +14,9 @@ struct GitViewApp: App {
         WindowGroup {
             Group {
             #if DEBUG
-            if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-dense") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project-grid") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-empty-projects") {
+            if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-session-restore") {
+                SessionRestoreFixture()
+            } else if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-dense") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-project-grid") || ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-empty-projects") {
                 ProjectTestFixture()
             } else {
                 ConnectionPage()
@@ -32,6 +34,51 @@ struct GitViewApp: App {
 }
 
 #if DEBUG
+private struct SessionRestoreFixture: View {
+    @State private var configured: Configuration?
+    private struct Configuration {
+        let store: KeychainCredentialStore
+        let manager: GitHubSessionManager
+        let projectURL: URL
+    }
+
+    var body: some View {
+        Group {
+            if let configured {
+                ConnectionPage(store: configured.store, sessionManager: configured.manager, libraryLoader: { account in
+                    if ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-session-store-failure") { throw ProjectStoreError.invalidStoredData }
+                    return try ProjectLibrary(accountID: account, store: ProjectStore(url: configured.projectURL))
+                })
+            } else { ProgressView() }
+        }
+        .task {
+            do {
+                let fixtureID = ProcessInfo.processInfo.environment["GITGRID_UI_FIXTURE_ID"].flatMap(UUID.init(uuidString:)) ?? UUID()
+                let base = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                let directory = base.appendingPathComponent("GitGridUITests/\(fixtureID.uuidString)", isDirectory: true)
+                try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+                let url = directory.appendingPathComponent("restore-projects.sqlite")
+                let existing = FileManager.default.fileExists(atPath: url.path)
+                let store = KeychainCredentialStore(service: "gitgrid.ui.restore.\(fixtureID.uuidString)", account: "fixture")
+                if !existing {
+                    let library = try ProjectLibrary(accountID: 1, store: ProjectStore(url: url))
+                    try library.create(name: "Restored Project", repository: RepositoryReference(id: 101, fullName: "fixture/one", isPrivate: false))
+                    guard let project = library.projects.first else { return }
+                    try library.setSyncPaused(true, repositoryID: 101, projectID: project.id)
+                    let expired = ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-session-expired")
+                    if !ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-session-empty") {
+                        try store.save(identity: GitHubIdentity(id: 1, login: "fixture"),
+                            token: OAuthToken(accessToken: "synthetic", refreshToken: "synthetic-refresh", expiresIn: expired ? 1 : nil, refreshTokenExpiresIn: nil),
+                            now: expired ? .distantPast : .now)
+                    }
+                }
+                let manager = GitHubSessionManager(load: { try store.load() }, save: { _, _, _ in }, refresh: { _ in throw SessionRefreshError.reauthorizationRequired })
+                configured = Configuration(store: store, manager: manager, projectURL: url)
+            } catch { assertionFailure("Could not create session restoration fixture: \(error)") }
+        }
+    }
+}
+
 private struct ProjectTestFixture: View {
     @State private var library: ProjectLibrary?
     @State private var previewSourceTransitions = 0
