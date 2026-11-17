@@ -239,16 +239,30 @@ private struct ProjectCell: View {
             Text(project.name).font(.caption.weight(.semibold)).lineLimit(expanded ? 3 : 1)
             if let overview {
                 HStack(spacing: 6) {
+                    Label("\(overview.summary.openPullRequests)", systemImage: "arrow.trianglehead.pull")
+                    Label("\(overview.summary.openIssues)", systemImage: "circle.dotted")
+                }
+                .font(.caption2.monospacedDigit())
+                .foregroundStyle(.primary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                HStack(spacing: 6) {
                     if overview.summary.failedCI.count > 0 {
-                        Label("\(overview.summary.failedCI.count)", systemImage: "xmark.circle.fill").foregroundStyle(.red)
+                        HStack(spacing: 2) {
+                            Image(systemName: "xmark.circle.fill").foregroundStyle(.red)
+                            Text("\(overview.summary.failedCI.count)")
+                        }
                     }
                     if overview.summary.affectedByThreads.count > 0 {
-                        Label("\(overview.summary.affectedByThreads.count)", systemImage: "text.bubble.fill").foregroundStyle(.orange)
+                        HStack(spacing: 2) {
+                            Image(systemName: "text.bubble.fill").foregroundStyle(.orange)
+                            Text("\(overview.summary.affectedByThreads.count)")
+                        }
                     }
                     if !overview.summary.coverageComplete || overview.hasPausedRepositories || overview.summary.failedCI.unavailable > 0 || overview.summary.unresolvedThreads.unavailable > 0 {
                         Text("?").foregroundStyle(.secondary)
                     }
-                }.font(.caption2)
+                }.font(.caption2).lineLimit(1).minimumScaleFactor(0.7)
             } else if project.repositories.contains(where: \.syncPaused) {
                 Image(systemName: "pause.circle").foregroundStyle(.secondary)
             }

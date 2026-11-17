@@ -1,6 +1,21 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testProjectGridShowsCurrentWorkSummary() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        let loaded = NSPredicate(format: "label CONTAINS %@", "1 open pull requests")
+        expectation(for: loaded, evaluatedWith: project)
+        waitForExpectations(timeout: 10)
+        XCTAssertTrue(project.label.contains("1 open issues"))
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "Project overview with current work"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+    }
     func testProjectOverviewReloadsAfterReturningFromUpdatedProject() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-return-overview"]
