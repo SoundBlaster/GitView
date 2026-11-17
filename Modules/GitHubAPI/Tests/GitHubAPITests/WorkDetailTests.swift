@@ -3,6 +3,26 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkDetailTests {
+    @Test func issueRelationshipsPreserveDirectionCoverageAndCache() async throws {
+        let client = GitHubWorkDetailClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let query = body["query"] as! String
+            #expect(query.contains("blockedBy(first:20)"))
+            #expect(query.contains("blocking(first:20)"))
+            let json = #"{"data":{"node":{"__typename":"Issue","id":"I1","body":"Problem","parent":{"id":"IP","number":3,"title":"Parent","url":"https://github.com/a/b/issues/3","state":"OPEN","repository":{"nameWithOwner":"a/b"}},"blockedBy":{"totalCount":2,"nodes":[{"id":"IB","number":4,"title":"Blocker","url":"https://github.com/a/b/issues/4","state":"OPEN","repository":{"nameWithOwner":"a/b"}}],"pageInfo":{"hasNextPage":true}},"blocking":{"totalCount":0,"nodes":[],"pageInfo":{"hasNextPage":false}},"subIssues":{"totalCount":1,"nodes":[null],"pageInfo":{"hasNextPage":false}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let details = try await client.load(token: "token", id: "I1", kind: .issue)
+        let links = try #require(details.issueRelationships)
+        #expect(links.parent?.id == "IP" && links.parentObserved)
+        #expect(links.blockedBy?.items.first?.id == "IB" && links.blockedBy?.isComplete == false)
+        #expect(links.blocking?.total == 0 && links.blocking?.isComplete == true)
+        #expect(links.subIssues?.items.isEmpty == true && links.subIssues?.isComplete == false)
+        let cached = try JSONDecoder().decode(GitHubWorkDetails.self, from: JSONEncoder().encode(details))
+        #expect(cached.issueRelationships?.blockedBy?.items.first?.repository == "a/b")
+        let old = #"{"body":"Old","observedAt":0}"#
+        #expect(try JSONDecoder().decode(GitHubWorkDetails.self, from: Data(old.utf8)).issueRelationships == nil)
+    }
     @Test func loadsPullRequestDetailsWithoutConflatingForkRepositories() async throws {
         let client = GitHubWorkDetailClient { request in
             let json = ###"{"data":{"node":{"__typename":"PullRequest","id":"P1","body":"## Motivation\nFix it","createdAt":"2026-11-17T10:00:00Z","author":{"login":"alice"},"labels":{"nodes":[{"name":"bug"}],"pageInfo":{"hasNextPage":false}},"headRefOid":"abc","headRefName":"work","baseRefName":"main","baseRepository":{"nameWithOwner":"org/base"},"headRepository":{"nameWithOwner":"alice/fork"},"additions":12,"deletions":3,"changedFiles":2,"commits":{"totalCount":4}}}}"###

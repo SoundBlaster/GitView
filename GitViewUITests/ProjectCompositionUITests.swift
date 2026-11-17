@@ -87,7 +87,14 @@ import XCTest
         let cell = app.buttons["work.I1"]
         XCTAssertTrue(cell.waitForExistence(timeout: 10))
         cell.tap()
+        XCTAssertTrue(app.staticTexts["Parent fixture"].waitForExistence(timeout: 10))
+        let blocker = app.staticTexts["Blocker fixture"]
+        for _ in 0..<4 where !blocker.isHittable { app.swipeUp() }
+        XCTAssertTrue(blocker.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Some related issues are not shown."].exists)
+        for _ in 0..<4 where !app.staticTexts["Saved synthetic description"].isHittable { app.swipeUp() }
         XCTAssertTrue(app.staticTexts["Saved synthetic description"].waitForExistence(timeout: 10))
+        for _ in 0..<4 where !app.staticTexts["Could not update details. Showing saved details."].isHittable { app.swipeUp() }
         XCTAssertTrue(app.staticTexts["Could not update details. Showing saved details."].waitForExistence(timeout: 10))
         let screenshot = XCTAttachment(screenshot: app.screenshot())
         screenshot.name = "Offline issue details"

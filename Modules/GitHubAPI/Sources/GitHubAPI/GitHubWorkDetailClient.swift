@@ -1,5 +1,28 @@
 import Foundation
 
+public struct GitHubIssueReference: Codable, Identifiable, Sendable {
+    public let id: String
+    public let number: Int
+    public let title: String
+    public let url: URL
+    public let state: String
+    public let repository: String
+}
+
+public struct GitHubIssueRelationPage: Codable, Sendable {
+    public let items: [GitHubIssueReference]
+    public let total: Int
+    public let isComplete: Bool
+}
+
+public struct GitHubIssueRelationships: Codable, Sendable {
+    public let parent: GitHubIssueReference?
+    public let parentObserved: Bool
+    public let blockedBy: GitHubIssueRelationPage?
+    public let blocking: GitHubIssueRelationPage?
+    public let subIssues: GitHubIssueRelationPage?
+}
+
 public struct GitHubWorkDetails: Codable, Sendable {
     public let body: String?
     public let createdAt: Date?
@@ -14,6 +37,7 @@ public struct GitHubWorkDetails: Codable, Sendable {
     public let deletions: Int?
     public let changedFiles: Int?
     public let commits: Int?
+    public let issueRelationships: GitHubIssueRelationships?
     public let observedAt: Date
 }
 
@@ -36,7 +60,13 @@ public struct GitHubWorkDetailClient: Sendable {
         query Detail($id:ID!) {
           node(id:$id) {
             __typename
-            ... on Issue { id body createdAt author { login } labels(first:30) { nodes { name } pageInfo { hasNextPage } } }
+            ... on Issue {
+              id body createdAt author { login } labels(first:30) { nodes { name } pageInfo { hasNextPage } }
+              parent { id number title url state repository { nameWithOwner } }
+              blockedBy(first:20) { totalCount nodes { id number title url state repository { nameWithOwner } } pageInfo { hasNextPage } }
+              blocking(first:20) { totalCount nodes { id number title url state repository { nameWithOwner } } pageInfo { hasNextPage } }
+              subIssues(first:20) { totalCount nodes { id number title url state repository { nameWithOwner } } pageInfo { hasNextPage } }
+            }
             ... on PullRequest {
               id body createdAt author { login } labels(first:30) { nodes { name } pageInfo { hasNextPage } }
               headRefOid headRefName baseRefName baseRepository { nameWithOwner } headRepository { nameWithOwner }
@@ -64,7 +94,11 @@ public struct GitHubWorkDetailClient: Sendable {
             headBranch: node.headRefName, baseBranch: node.baseRefName,
             headRepository: node.headRepository?.nameWithOwner, baseRepository: node.baseRepository?.nameWithOwner,
             additions: node.additions, deletions: node.deletions, changedFiles: node.changedFiles,
-            commits: node.commits?.totalCount, observedAt: observedAt)
+            commits: node.commits?.totalCount,
+            issueRelationships: kind == .issue ? GitHubIssueRelationships(parent: node.parent?.reference,
+                parentObserved: node.blockedBy != nil && node.blocking != nil && node.subIssues != nil,
+                blockedBy: node.blockedBy?.page, blocking: node.blocking?.page, subIssues: node.subIssues?.page) : nil,
+            observedAt: observedAt)
     }
 
     private struct Query: Encodable { let query: String; let variables: Variables }
@@ -77,7 +111,21 @@ public struct GitHubWorkDetailClient: Sendable {
         let labels: Labels?; let headRefOid: String?; let headRefName: String?; let baseRefName: String?
         let headRepository: Repository?; let baseRepository: Repository?
         let additions: Int?; let deletions: Int?; let changedFiles: Int?; let commits: Count?
-        enum CodingKeys: String, CodingKey { case typename = "__typename", id, body, createdAt, author, labels, headRefOid, headRefName, baseRefName, headRepository, baseRepository, additions, deletions, changedFiles, commits }
+        let parent: RelatedIssue?; let blockedBy: IssueConnection?; let blocking: IssueConnection?; let subIssues: IssueConnection?
+        enum CodingKeys: String, CodingKey { case typename = "__typename", id, body, createdAt, author, labels, headRefOid, headRefName, baseRefName, headRepository, baseRepository, additions, deletions, changedFiles, commits, parent, blockedBy, blocking, subIssues }
+    }
+    private struct RelatedIssue: Decodable {
+        let id: String; let number: Int; let title: String; let url: URL; let state: String; let repository: Repository
+        var reference: GitHubIssueReference { .init(id: id, number: number, title: title, url: url, state: state, repository: repository.nameWithOwner) }
+    }
+    private struct IssueConnection: Decodable {
+        let totalCount: Int; let nodes: [RelatedIssue?]; let pageInfo: PageInfo
+        var page: GitHubIssueRelationPage {
+            var seen = Set<String>()
+            let items = nodes.compactMap { $0?.reference }.filter { seen.insert($0.id).inserted }
+            return .init(items: items, total: totalCount,
+                         isComplete: totalCount >= 0 && !pageInfo.hasNextPage && items.count == totalCount && nodes.count == items.count)
+        }
     }
     private struct Actor: Decodable { let login: String }
     private struct Labels: Decodable { let nodes: [Label?]; let pageInfo: PageInfo }

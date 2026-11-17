@@ -674,6 +674,9 @@ private struct WorkDetailSheet: View {
                     Text(item.title).font(.headline)
                     LabeledContent("Number", value: "#\(item.number)")
                     LabeledContent("State", value: item.state)
+                    if item.kind == .issue && item.state == "CLOSED" {
+                        LabeledContent("Closure reason", value: issueClosureLabel(item.closureReason))
+                    }
                     if item.kind == .pullRequest && item.isDraft { Text("Draft").foregroundStyle(.secondary) }
                     if item.kind == .pullRequest {
                         WorkSignalDetails(item: item, threadsOverride: expandedThreads, observedAtOverride: threadObservedAt)
@@ -684,6 +687,9 @@ private struct WorkDetailSheet: View {
                 }
                 if let details = details ?? item.details {
                     WorkDescriptionDetails(details: details)
+                    if item.kind == .issue {
+                        IssueRelationshipDetails(relationships: details.issueRelationships)
+                    }
                 }
                 if loadingDetails { ProgressView("Loading details") }
                 if detailError {
@@ -700,6 +706,16 @@ private struct WorkDetailSheet: View {
                 async let threads: Void = loadThreadsIfNeeded()
                 _ = await (detail, threads)
             }
+        }
+    }
+
+    private func issueClosureLabel(_ reason: String?) -> String {
+        switch reason {
+        case "COMPLETED": "Completed"
+        case "NOT_PLANNED": "Not planned"
+        case "DUPLICATE": "Duplicate"
+        case nil, "": "Unavailable"
+        default: reason ?? "Unavailable"
         }
     }
 
@@ -732,6 +748,46 @@ private struct WorkDetailSheet: View {
         } catch is CancellationError {
         } catch {
             threadError = true
+        }
+    }
+}
+
+private struct IssueRelationshipDetails: View {
+    let relationships: GitHubIssueRelationships?
+
+    var body: some View {
+        Section("Parent issue") {
+            if let parent = relationships?.parent {
+                issueLink(parent)
+            } else if relationships?.parentObserved == true {
+                Text("No parent issue").foregroundStyle(.secondary)
+            } else {
+                Text("Parent issue unavailable").foregroundStyle(.secondary)
+            }
+        }
+        relationSection("Blocked by", page: relationships?.blockedBy)
+        relationSection("Blocking", page: relationships?.blocking)
+        relationSection("Direct sub-issues", page: relationships?.subIssues)
+    }
+
+    private func relationSection(_ title: String, page: GitHubIssueRelationPage?) -> some View {
+        Section(title) {
+            if let page {
+                LabeledContent("Reported total", value: "\(page.total)")
+                ForEach(page.items) { issue in issueLink(issue) }
+                if !page.isComplete { Text("Some related issues are not shown.").foregroundStyle(.secondary) }
+            } else {
+                Text("Relationships unavailable").foregroundStyle(.secondary)
+            }
+        }
+    }
+
+    private func issueLink(_ issue: GitHubIssueReference) -> some View {
+        Link(destination: issue.url) {
+            VStack(alignment: .leading) {
+                Text(issue.title)
+                Text("\(issue.repository) · #\(issue.number) · \(issue.state)").font(.caption).foregroundStyle(.secondary)
+            }
         }
     }
 }

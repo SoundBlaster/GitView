@@ -80,7 +80,7 @@ struct ProjectWorkArchiveTests {
         }
         let details = GitHubWorkDetails(body: "Description", createdAt: nil, author: nil, labels: nil, labelsComplete: nil,
             headBranch: nil, baseBranch: nil, headRepository: nil, baseRepository: nil,
-            additions: nil, deletions: nil, changedFiles: nil, commits: nil, observedAt: Date(timeIntervalSince1970: 20))
+            additions: nil, deletions: nil, changedFiles: nil, commits: nil, issueRelationships: nil, observedAt: Date(timeIntervalSince1970: 20))
         var archive = ProjectWorkArchive().applying([.init(id: 1, name: "a", outcome: .received([try pull("abc")], complete: true))], at: .now)
         let didUpdate = archive.updateDetails(itemID: "P1", head: "abc", details: details)
         #expect(didUpdate)
