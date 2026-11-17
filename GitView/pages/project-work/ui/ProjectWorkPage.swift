@@ -22,6 +22,10 @@ struct ProjectWorkPage: View {
     @State private var columns = 8
     @State private var gridWidth: CGFloat = 0
     @State private var selectedItem: GitHubWorkItem?
+    @State private var accessiblePreview: GitHubWorkItem?
+    @State private var previewToOpen: GitHubWorkItem?
+    @State private var previewOriginID: String?
+    @AccessibilityFocusState private var focusedWorkID: String?
     @State private var showProjectSettings = false
     @State private var showMetrics = false
     @State private var pendingAttention: ProjectAttentionOrigin?
@@ -107,7 +111,9 @@ struct ProjectWorkPage: View {
                 let sources = repositoryNames
                 LazyVGrid(columns: gridColumns, spacing: 4) {
                     ForEach(visibleItems) { item in
-                        WorkGridCell(item: item, repositoryName: sources[item.id], showDetails: effectiveColumns <= 2) { selectedItem = item }
+                        WorkGridCell(item: item, repositoryName: sources[item.id], showDetails: effectiveColumns <= 2,
+                            open: { selectedItem = item }, preview: { previewOriginID = item.id; accessiblePreview = item })
+                            .accessibilityFocused($focusedWorkID, equals: item.id)
                     }
                 }
                 .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { gridWidth = $0 }
@@ -141,6 +147,27 @@ struct ProjectWorkPage: View {
         }
         .sheet(item: $selectedItem) { item in
             WorkDetailSheet(item: item, repositoryName: repositoryNames[item.id], sessionManager: sessionManager, accountID: project.accountID, onThreads: persistThreads, onDetails: persistDetails)
+        }
+        .sheet(item: $accessiblePreview, onDismiss: {
+            if let item = previewToOpen {
+                previewToOpen = nil
+                selectedItem = item
+            } else if let id = previewOriginID, visibleItems.contains(where: { $0.id == id }) {
+                focusedWorkID = id
+            }
+            previewOriginID = nil
+        }) { item in
+            NavigationStack {
+                ScrollView {
+                    WorkPreviewContent(item: item, repositoryName: repositoryNames[item.id]).padding()
+                    Button("Open in GitGrid", systemImage: "doc.text") { previewToOpen = item; accessiblePreview = nil }
+                        .buttonStyle(.borderedProminent)
+                    Link("Open on GitHub", destination: item.url).padding()
+                    ShareLink(item: item.url).padding()
+                }
+                .navigationTitle("Preview")
+                .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { accessiblePreview = nil } } }
+            }
         }
         .sheet(isPresented: $showProjectSettings) {
             ProjectSettingsSheet(project: project, library: library, sessionManager: sessionManager)
@@ -639,6 +666,7 @@ private struct WorkGridCell: View {
     let repositoryName: String?
     let showDetails: Bool
     let open: () -> Void
+    let preview: () -> Void
     @Environment(\.openURL) private var openURL
 
     private var tint: Color {
@@ -681,22 +709,30 @@ private struct WorkGridCell: View {
         .accessibilityLabel((repositoryName.map { "\($0), " } ?? "Repository unavailable, ") + (item.kind == .pullRequest
             ? "Pull request \(item.number), \(item.title), \(item.state)\(item.isDraft ? ", draft" : ""), CI \(item.checkStatus ?? "unavailable")"
             : "Issue \(item.number), \(item.title), \(item.state)"))
+        .accessibilityAction(named: Text("Preview"), preview)
         .contextMenu {
+            Button("Preview", systemImage: "eye", action: preview)
             Button("Open in GitGrid", systemImage: "doc.text") { open() }
             Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
             ShareLink(item: item.url)
         } preview: {
-            VStack(alignment: .leading, spacing: 10) {
-                Text(item.title).font(.headline)
-                Text("\(item.kind == .issue ? "Issue" : "Pull request") #\(item.number) · \(item.state)").foregroundStyle(.secondary)
-                Text(repositoryName ?? "Repository unavailable").font(.subheadline).foregroundStyle(.secondary)
-                if item.kind == .pullRequest {
-                    WorkSignalDetails(item: item)
-                }
-            }.padding()
+            WorkPreviewContent(item: item, repositoryName: repositoryName).padding()
         }
     }
 
+}
+
+private struct WorkPreviewContent: View {
+    let item: GitHubWorkItem
+    let repositoryName: String?
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(item.title).font(.headline)
+            Text("\(item.kind == .issue ? "Issue" : "Pull request") #\(item.number) · \(item.state)").foregroundStyle(.secondary)
+            Text(repositoryName ?? "Repository unavailable").font(.subheadline).foregroundStyle(.secondary)
+            if item.kind == .pullRequest { WorkSignalDetails(item: item) }
+        }
+    }
 }
 
 private struct WorkDetailSheet: View {

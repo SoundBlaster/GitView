@@ -1,6 +1,25 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testPreviewActionKeepsTheSelectedWorkItem() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-project")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        let item = app.buttons["work.P2"]
+        XCTAssertTrue(item.waitForExistence(timeout: 10))
+        item.press(forDuration: 1)
+        let preview = app.buttons["Preview"]
+        XCTAssertTrue(preview.waitForExistence(timeout: 5))
+        preview.tap()
+        XCTAssertTrue(app.navigationBars["Preview"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Failed fixture"].exists)
+        app.buttons["Open in GitGrid"].tap()
+        XCTAssertTrue(app.navigationBars["Pull Request"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Failed fixture"].exists)
+    }
     func testRepositoryDiscoveryOffersGitHubAccessManagementOffline() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-project")
