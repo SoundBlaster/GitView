@@ -1,6 +1,35 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testPreviouslyAddedRepositoryRemainsVisibleWhenNotInCompleteDiscovery() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-mock-discovery"]
+        app.launch()
+        let add = app.buttons["projects.addRepository"]
+        XCTAssertTrue(add.waitForExistence(timeout: 10))
+        add.tap()
+        XCTAssertTrue(app.buttons["discovery.repository.101"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.descendants(matching: .any)["discovery.previouslyAdded.102"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["fixture/two"].exists)
+        XCTAssertTrue(app.staticTexts["Not returned by the last complete GitHub App discovery. Saved Project data remains available."].exists)
+        app.navigationBars["Repositories"].buttons.firstMatch.tap()
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch.waitForExistence(timeout: 5))
+    }
+
+    func testIncompleteDiscoveryDoesNotClaimPreviouslyAddedRepositoryIsUnlisted() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-discovery-partial"]
+        app.launch()
+        let add = app.buttons["projects.addRepository"]
+        XCTAssertTrue(add.waitForExistence(timeout: 10))
+        add.tap()
+        XCTAssertTrue(app.buttons["discovery.repository.102"].waitForExistence(timeout: 10))
+        app.buttons["discovery.toolbarRefresh"].tap()
+        XCTAssertTrue(app.buttons["discovery.repository.103"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["discovery.repository.102"].exists)
+        XCTAssertFalse(app.descendants(matching: .any)["discovery.previouslyAdded.102"].exists)
+    }
+
     func testPartialDiscoveryKeepsPriorRepositoriesAndAllowsFreshOnes() throws {
         let app = XCUIApplication()
         app.launchArguments += ["--gitgrid-ui-test-empty-projects", "--gitgrid-ui-test-mock-discovery", "--gitgrid-ui-test-discovery-partial"]

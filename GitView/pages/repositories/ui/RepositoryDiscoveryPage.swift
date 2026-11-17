@@ -13,10 +13,19 @@ struct RepositoryDiscoveryPage: View {
     @State private var result: DiscoveryResult?
     @State private var repositories: [GitHubRepository] = []
     @State private var freshRepositoryIDs = Set<Int64>()
+    @State private var completeCurrentDiscovery = false
     @State private var isLoading = false
     @State private var errorMessage: String?
     @State private var query = ""
     @State private var selected: GitHubRepository?
+
+    private var previouslyAddedButUnlisted: [RepositoryReference] {
+        guard completeCurrentDiscovery, let library else { return [] }
+        var seen = Set<Int64>()
+        return library.projects.flatMap(\.repositories).filter {
+            seen.insert($0.id).inserted && !freshRepositoryIDs.contains($0.id)
+        }.sorted { $0.fullName.localizedCaseInsensitiveCompare($1.fullName) == .orderedAscending }
+    }
 
     var body: some View {
         List {
@@ -41,6 +50,19 @@ struct RepositoryDiscoveryPage: View {
                 }
                 if repositories.isEmpty && result.isComplete {
                     ContentUnavailableView("No accessible repositories", systemImage: "tray", description: Text("Install the GitHub App for repositories you want to view."))
+                }
+                if !previouslyAddedButUnlisted.isEmpty {
+                    Section {
+                        ForEach(previouslyAddedButUnlisted, id: \.id) { repository in
+                            VStack(alignment: .leading) {
+                                Label(repository.fullName, systemImage: repository.isPrivate ? "lock" : "book.closed")
+                                Text("Not returned by the last complete GitHub App discovery. Saved Project data remains available.")
+                                    .font(.caption).foregroundStyle(.secondary)
+                            }.accessibilityIdentifier("discovery.previouslyAdded.\(repository.id)")
+                        }
+                    } header: {
+                        Text("Previously added")
+                    }
                 }
             } else if isLoading {
                 ProgressView("Loading repositories")
@@ -86,6 +108,7 @@ struct RepositoryDiscoveryPage: View {
         guard !isLoading else { return }
         isLoading = true
         freshRepositoryIDs = []
+        completeCurrentDiscovery = false
         defer { isLoading = false }
         do {
             let session = try await sessionManager.usableSession(for: accountID)
@@ -117,6 +140,7 @@ struct RepositoryDiscoveryPage: View {
             }
             result = updated
             freshRepositoryIDs = Set(updated.repositories.map(\.id))
+            completeCurrentDiscovery = updated.isComplete
             errorMessage = metadataProblem ? "Saved repository metadata could not be updated." : nil
             if let until = updated.rateLimitUntil {
                 let limitMessage = "GitHub rate limit. Retry after \(until.formatted(date: .abbreviated, time: .shortened))."
