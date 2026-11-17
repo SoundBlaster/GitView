@@ -7,9 +7,17 @@ public struct RepositoryWorkObservation: Codable, Sendable {
     public let observedAt: Date?
     public let complete: Bool
     public let refreshProblem: String?
+    public let openContinuation: GitHubOpenContinuation?
+
+    init(id: Int64, name: String, items: [GitHubWorkItem], observedAt: Date?, complete: Bool,
+         refreshProblem: String?, openContinuation: GitHubOpenContinuation? = nil) {
+        self.id = id; self.name = name; self.items = items; self.observedAt = observedAt
+        self.complete = complete; self.refreshProblem = refreshProblem; self.openContinuation = openContinuation
+    }
 }
 
 public struct RepositoryWorkRefresh: Sendable {
+    public enum ContinuationUpdate: Sendable { case unchanged, replace(GitHubOpenContinuation?) }
     public enum Outcome: Sendable {
         case received([GitHubWorkItem], complete: Bool)
         case failed(String)
@@ -19,8 +27,11 @@ public struct RepositoryWorkRefresh: Sendable {
     public let outcome: Outcome
     public let observedAt: Date?
     public let refreshProblem: String?
-    public init(id: Int64, name: String, outcome: Outcome, observedAt: Date? = nil, refreshProblem: String? = nil) {
-        self.id = id; self.name = name; self.outcome = outcome; self.observedAt = observedAt; self.refreshProblem = refreshProblem
+    public let continuationUpdate: ContinuationUpdate
+    public init(id: Int64, name: String, outcome: Outcome, observedAt: Date? = nil, refreshProblem: String? = nil,
+                continuationUpdate: ContinuationUpdate = .unchanged) {
+        self.id = id; self.name = name; self.outcome = outcome; self.observedAt = observedAt
+        self.refreshProblem = refreshProblem; self.continuationUpdate = continuationUpdate
     }
 }
 
@@ -78,6 +89,11 @@ public struct ProjectWorkArchive: Codable, Sendable {
         let previous = Dictionary((repositories + (detachedRepositories ?? [])).map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let updated = results.map { result -> RepositoryWorkObservation in
             let old = previous[result.id]
+            let continuation: GitHubOpenContinuation?
+            switch result.continuationUpdate {
+            case .unchanged: continuation = old?.openContinuation
+            case .replace(let value): continuation = value
+            }
             switch result.outcome {
             case let .received(items, complete: true):
                 let oldItems = Dictionary(((old?.items ?? []) + legacyItems).map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
@@ -102,10 +118,11 @@ public struct ProjectWorkArchive: Codable, Sendable {
                     }
                 }
                 return RepositoryWorkObservation(id: result.id, name: result.name, items: merged,
-                    observedAt: old?.observedAt ?? result.observedAt ?? date, complete: old?.complete ?? false, refreshProblem: result.refreshProblem ?? "Incomplete GitHub response")
+                    observedAt: old?.observedAt ?? result.observedAt ?? date, complete: old?.complete ?? false,
+                    refreshProblem: result.refreshProblem ?? "Incomplete GitHub response", openContinuation: continuation)
             case let .failed(problem):
                 return RepositoryWorkObservation(id: result.id, name: result.name, items: old?.items ?? [],
-                    observedAt: old?.observedAt, complete: old?.complete ?? false, refreshProblem: problem)
+                    observedAt: old?.observedAt, complete: old?.complete ?? false, refreshProblem: problem, openContinuation: continuation)
             }
         }
         let allComplete = results.allSatisfy { result in
@@ -153,7 +170,7 @@ public struct ProjectWorkArchive: Codable, Sendable {
             let old = repositories[index]
             var items = old.items
             items[itemIndex] = item
-            repositories[index] = RepositoryWorkObservation(id: old.id, name: old.name, items: items, observedAt: old.observedAt, complete: old.complete, refreshProblem: old.refreshProblem)
+            repositories[index] = RepositoryWorkObservation(id: old.id, name: old.name, items: items, observedAt: old.observedAt, complete: old.complete, refreshProblem: old.refreshProblem, openContinuation: old.openContinuation)
             return true
         }
         guard let index = legacyItems.firstIndex(where: { $0.id == itemID }),
@@ -169,7 +186,7 @@ public struct ProjectWorkArchive: Codable, Sendable {
             let old = repositories[index]
             var items = old.items
             items[itemIndex] = item
-            repositories[index] = RepositoryWorkObservation(id: old.id, name: old.name, items: items, observedAt: old.observedAt, complete: old.complete, refreshProblem: old.refreshProblem)
+            repositories[index] = RepositoryWorkObservation(id: old.id, name: old.name, items: items, observedAt: old.observedAt, complete: old.complete, refreshProblem: old.refreshProblem, openContinuation: old.openContinuation)
             return true
         }
         guard let index = legacyItems.firstIndex(where: { $0.id == itemID }),

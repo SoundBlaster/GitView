@@ -62,13 +62,24 @@ public struct GitHubWorkPage: Sendable {
     public let isIncomplete: Bool
     public let observedRepository: GitHubRepository?
     public let refreshProblem: String?
+    public let openContinuation: GitHubOpenContinuation?
     let issueCursor: String?
     let pullCursor: String?
 
     init(items: [GitHubWorkItem], isIncomplete: Bool, observedRepository: GitHubRepository?,
-         issueCursor: String?, pullCursor: String?, refreshProblem: String? = nil) {
+         issueCursor: String?, pullCursor: String?, refreshProblem: String? = nil, openContinuation: GitHubOpenContinuation? = nil) {
         self.items = items; self.isIncomplete = isIncomplete; self.observedRepository = observedRepository
-        self.issueCursor = issueCursor; self.pullCursor = pullCursor; self.refreshProblem = refreshProblem
+        self.issueCursor = issueCursor; self.pullCursor = pullCursor; self.refreshProblem = refreshProblem; self.openContinuation = openContinuation
+    }
+}
+
+/// A best-effort continuation for open work; it is never evidence of complete coverage across refreshes.
+public struct GitHubOpenContinuation: Codable, Sendable, Equatable {
+    public let issueAfter: String?
+    public let pullAfter: String?
+    public init?(issueAfter: String?, pullAfter: String?) {
+        guard issueAfter != nil || pullAfter != nil else { return nil }
+        self.issueAfter = issueAfter; self.pullAfter = pullAfter
     }
 }
 
@@ -90,7 +101,8 @@ public struct GitHubWorkClient: Sendable {
     }
 
     /// Limits requests per repository; truncated results are explicitly incomplete.
-    public func load(token: String, repositoryID: Int64, fullName: String, nodeID: String? = nil, maxRequests: Int = 20) async throws -> GitHubWorkPage {
+    public func load(token: String, repositoryID: Int64, fullName: String, nodeID: String? = nil, maxRequests: Int = 20,
+                     openContinuation: GitHubOpenContinuation? = nil) async throws -> GitHubWorkPage {
         guard maxRequests > 0 else { throw WorkFetchError.invalidRequest }
         var issueAfter: String?, pullAfter: String?
         var loadIssues = true, loadPulls = true
@@ -100,9 +112,11 @@ public struct GitHubWorkClient: Sendable {
         var observedRepository: GitHubRepository?
         var pagesLoaded = 0
         var priorityItems: [GitHubWorkItem] = []
-        var priorityIssueAfter: String?, priorityPullAfter: String?
-        var loadPriorityIssues = true, loadPriorityPulls = true
-        var priorityIssueCursors: Set<String> = [], priorityPullCursors: Set<String> = []
+        var priorityIssueAfter = openContinuation?.issueAfter, priorityPullAfter = openContinuation?.pullAfter
+        var loadPriorityIssues = openContinuation == nil || priorityIssueAfter != nil
+        var loadPriorityPulls = openContinuation == nil || priorityPullAfter != nil
+        var priorityIssueCursors = Set([priorityIssueAfter].compactMap { $0 })
+        var priorityPullCursors = Set([priorityPullAfter].compactMap { $0 })
         for index in 0..<maxRequests {
             try Task.checkCancellation()
             let usePriority = maxRequests > 1 && index.isMultiple(of: 2) && (loadPriorityIssues || loadPriorityPulls)
@@ -124,8 +138,11 @@ public struct GitHubWorkClient: Sendable {
                 } else if case WorkFetchError.httpStatus(let code) = error {
                     problem = "GitHub HTTP \(code)"
                 } else { problem = "Could not load all GitHub pages" }
+                let continuation = usePriority && !(error is GitHubRateLimitError)
+                    ? nil : GitHubOpenContinuation(issueAfter: priorityIssueAfter, pullAfter: priorityPullAfter)
                 return GitHubWorkPage(items: merging(priorityItems, with: items), isIncomplete: true, observedRepository: observedRepository,
-                                      issueCursor: issueAfter, pullCursor: pullAfter, refreshProblem: problem)
+                                      issueCursor: issueAfter, pullCursor: pullAfter, refreshProblem: problem,
+                                      openContinuation: continuation)
             }
             pagesLoaded += 1
             observedRepository = result.observedRepository ?? observedRepository
@@ -148,7 +165,9 @@ public struct GitHubWorkClient: Sendable {
             loadPulls = pullAfter != nil
             if !loadIssues && !loadPulls { return GitHubWorkPage(items: items, isIncomplete: false, observedRepository: observedRepository, issueCursor: nil, pullCursor: nil) }
         }
-        return GitHubWorkPage(items: merging(priorityItems, with: items), isIncomplete: true, observedRepository: observedRepository, issueCursor: issueAfter, pullCursor: pullAfter)
+        return GitHubWorkPage(items: merging(priorityItems, with: items), isIncomplete: true, observedRepository: observedRepository,
+                              issueCursor: issueAfter, pullCursor: pullAfter,
+                              openContinuation: GitHubOpenContinuation(issueAfter: priorityIssueAfter, pullAfter: priorityPullAfter))
     }
 
     private func merging(_ priority: [GitHubWorkItem], with later: [GitHubWorkItem]) -> [GitHubWorkItem] {

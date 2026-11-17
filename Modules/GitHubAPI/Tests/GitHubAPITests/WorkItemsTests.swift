@@ -3,6 +3,44 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkItemsTests {
+    @Test func failingPriorityContinuationResetsCursorForNextRefresh() async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let variables = body["variables"] as! [String: Any]
+            let openOnly = (body["query"] as! String).contains("states:[OPEN]")
+            if openOnly && variables["pullAfter"] != nil {
+                return (Data(#"{"errors":[{"message":"bad cursor"}]}"#.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+            }
+            let json = #"{"data":{"repository":{"databaseId":42,"issues":{"nodes":[],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[],"pageInfo":{"hasNextPage":true,"endCursor":"next"}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let result = try await client.load(token: "token", repositoryID: 42, fullName: "a/b", maxRequests: 3)
+        #expect(result.isIncomplete)
+        #expect(result.refreshProblem != nil)
+        #expect(result.openContinuation == nil)
+    }
+    @Test func nextRefreshResumesOpenPagesButRestartsGeneralStream() async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let variables = body["variables"] as! [String: Any]
+            let openOnly = (body["query"] as! String).contains("states:[OPEN]")
+            let after = variables["pullAfter"] as? String
+            if !openOnly { #expect(after == nil) }
+            let id = openOnly ? (after == nil ? "open-first" : "open-next") : "recent"
+            let cursor = openOnly ? (after == nil ? "open-cursor-1" : "open-cursor-2") : "general-cursor"
+            let json = """
+            {"data":{"repository":{"databaseId":42,"issues":\(variables["loadIssues"] as? Bool == true ? #"{"nodes":[],"pageInfo":{"hasNextPage":false}}"# : "null"),"pullRequests":{"nodes":[{"id":"\(id)","number":1,"title":"Work","url":"https://github.com/a/b/pull/1","state":"OPEN","updatedAt":"2026-11-17T10:00:00Z"}],"pageInfo":{"hasNextPage":true,"endCursor":"\(cursor)"}}}}}
+            """
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let first = try await client.load(token: "token", repositoryID: 42, fullName: "a/b", maxRequests: 2)
+        let continuation = try #require(first.openContinuation)
+        #expect(continuation.pullAfter == "open-cursor-1")
+        let second = try await client.load(token: "token", repositoryID: 42, fullName: "a/b", maxRequests: 2, openContinuation: continuation)
+        #expect(Set(second.items.map(\.id)) == ["open-next", "recent"])
+        #expect(second.openContinuation?.pullAfter == "open-cursor-2")
+        #expect(second.isIncomplete)
+    }
     @Test func boundedRefreshPagesOpenAndGeneralStreamsIndependently() async throws {
         let client = GitHubWorkClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]

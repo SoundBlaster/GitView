@@ -3,6 +3,17 @@ import Testing
 @testable import GitHubAPI
 
 struct ProjectWorkArchiveTests {
+    @Test func continuationSurvivesReopenAndUntrackedRefreshButIsClearedByCompleteRefresh() throws {
+        let cursor = try #require(GitHubOpenContinuation(issueAfter: nil, pullAfter: "next"))
+        let first = ProjectWorkArchive().applying([.init(id: 1, name: "a/b", outcome: .received([], complete: false),
+            continuationUpdate: .replace(cursor))], at: .now)
+        let reopened = try ProjectWorkArchive.decode(JSONEncoder().encode(first))
+        #expect(reopened.repositories.first?.openContinuation == cursor)
+        let background = reopened.applying([.init(id: 1, name: "a/b", outcome: .received([], complete: false))], at: .now)
+        #expect(background.repositories.first?.openContinuation == cursor)
+        let complete = background.applying([.init(id: 1, name: "a/b", outcome: .received([], complete: true))], at: .now)
+        #expect(complete.repositories.first?.openContinuation == nil)
+    }
     @Test func forgettingOneRepositoryKeepsOtherRepositoryAndInvalidatesCoverage() throws {
         let archive = ProjectWorkArchive().applying([
             .init(id: 1, name: "a/one", outcome: .received([try item("one")], complete: true)),

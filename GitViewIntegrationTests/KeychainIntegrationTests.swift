@@ -9,6 +9,20 @@ import XCTest
 @testable import GitView
 
 @MainActor final class ProjectRefreshPersistenceTests: XCTestCase {
+    func testOpenPageProgressIsSavedPerProjectWithoutClaimingCompleteCoverage() throws {
+        let cache = try WorkCache(inMemory: true)
+        let project = UUID(), other = UUID()
+        let cursor = try XCTUnwrap(GitHubOpenContinuation(issueAfter: "next-issues", pullAfter: nil))
+        let result = try ProjectRefreshPersistence.commit(cache: cache, accountID: 1, projectID: project,
+            observations: [.init(id: 42, name: "owner/repo", outcome: .received([], complete: false),
+                                 continuationUpdate: .replace(cursor))], fallback: nil, at: .now, scope: [42])
+        XCTAssertTrue(result.saved)
+        XCTAssertFalse(result.complete)
+        let snapshot = try XCTUnwrap(cache.load(accountID: 1, projectID: project))
+        XCTAssertFalse(snapshot.complete)
+        XCTAssertEqual(try ProjectWorkArchive.decode(snapshot.payload).repositories.first?.openContinuation, cursor)
+        XCTAssertNil(try cache.load(accountID: 1, projectID: other))
+    }
     func testEraseSavedWorkIsScopedToOneProjectAndPausesSync() throws {
         let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
         let repository = RepositoryReference(id: 1, fullName: "owner/repo", isPrivate: true)

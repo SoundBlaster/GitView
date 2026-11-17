@@ -276,8 +276,15 @@ struct ProjectWorkPage: View {
             return
         }
         let batch: ProjectRefreshResults
+        let continuations = Dictionary((archive?.repositories ?? []).compactMap { observation in
+            observation.openContinuation.map { (observation.id, $0) }
+        }, uniquingKeysWith: { first, _ in first })
         do {
-            batch = try await GitHubProjectRefresh().fetch(token: accessToken, repositories: activeRepositories.map {
+            let service = GitHubProjectRefresh(tracksOpenContinuation: true) { token, repository in
+                try await GitHubWorkClient().load(token: token, repositoryID: repository.id, fullName: repository.fullName,
+                    nodeID: repository.nodeID, openContinuation: continuations[repository.id])
+            }
+            batch = try await service.fetch(token: accessToken, repositories: activeRepositories.map {
                 RefreshRepository(id: $0.id, fullName: $0.fullName, nodeID: $0.nodeID)
             })
         } catch { return }

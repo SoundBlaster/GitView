@@ -18,6 +18,12 @@ struct LiveGitHubTests {
         if environment["GITGRID_LIVE_EXPECT_LARGE"] == "1" {
             #expect(page.isIncomplete)
             #expect(page.items.filter { $0.kind == .issue && $0.state == "OPEN" }.count > 100)
+            let continuation = try #require(page.openContinuation)
+            let next = try await GitHubWorkClient().load(token: token, repositoryID: repositoryID,
+                fullName: repositoryName, nodeID: nodeID, maxRequests: 2, openContinuation: continuation)
+            let firstIDs = Set(page.items.map(\.id))
+            #expect(next.isIncomplete)
+            #expect(next.items.contains { $0.kind == .issue && $0.state == "OPEN" && !firstIDs.contains($0.id) })
         }
         let pull = try #require(page.items.first { $0.kind == .pullRequest && $0.headRevision != nil })
         let head = try #require(pull.headRevision)

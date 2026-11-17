@@ -21,11 +21,13 @@ public struct ProjectRefreshResults: Sendable {
 public struct GitHubProjectRefresh: Sendable {
     public typealias Load = @Sendable (String, RefreshRepository) async throws -> GitHubWorkPage
     private let load: Load
+    private let tracksOpenContinuation: Bool
 
-    public init(load: @escaping Load = { token, repository in
+    public init(tracksOpenContinuation: Bool = false, load: @escaping Load = { token, repository in
         try await GitHubWorkClient().load(token: token, repositoryID: repository.id, fullName: repository.fullName, nodeID: repository.nodeID)
     }) {
         self.load = load
+        self.tracksOpenContinuation = tracksOpenContinuation
     }
 
     public func fetch(token: String, repositories: [RefreshRepository]) async throws -> ProjectRefreshResults {
@@ -38,15 +40,16 @@ public struct GitHubProjectRefresh: Sendable {
                 if let observed = page.observedRepository { observedRepositories.append(observed) }
                 observations.append(.init(id: repository.id, name: page.observedRepository?.fullName ?? repository.fullName,
                                           outcome: .received(page.items, complete: !page.isIncomplete), observedAt: .now,
-                                          refreshProblem: page.refreshProblem))
+                                          refreshProblem: page.refreshProblem,
+                                          continuationUpdate: tracksOpenContinuation ? .replace(page.openContinuation) : .unchanged))
             } catch is CancellationError { throw CancellationError() }
             catch let GitHubRateLimitError.deferred(until) {
-                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub rate limit; retry after \(until.formatted())")))
+                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub rate limit; retry after \(until.formatted())"), continuationUpdate: tracksOpenContinuation ? .replace(nil) : .unchanged))
             }
             catch let WorkFetchError.httpStatus(code) {
-                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub HTTP \(code)")))
+                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub HTTP \(code)"), continuationUpdate: tracksOpenContinuation ? .replace(nil) : .unchanged))
             } catch {
-                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("Could not update from GitHub")))
+                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("Could not update from GitHub"), continuationUpdate: tracksOpenContinuation ? .replace(nil) : .unchanged))
             }
         }
         try Task.checkCancellation()
