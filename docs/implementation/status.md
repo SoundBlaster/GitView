@@ -4,14 +4,15 @@ This is a code-progress record, not a claim that a product specification is full
 
 | Product specification | Implemented slice | Evidence | Remaining |
 | --- | --- | --- | --- |
-| GITVIEW-SPEC-0007 | Time eligibility, identity-checked paginated work grid and project-scoped filters | WorkDomain and GitHubWorkClient tests and iOS build | Live verification, full refresh recovery, accessibility and pinch interaction |
+| GITVIEW-SPEC-0007 | Time eligibility, identity-checked paginated work grid and project-scoped filters | WorkDomain and GitHubWorkClient tests; iPhone Air Simulator UI tests with 100 synthetic work items, filtering and foreground return | Live verification, full refresh recovery and accessibility review |
 | GITVIEW-SPEC-0058 | PKCE attempt, token exchange, identity lookup and Keychain adapter | GitHubAuth sources and tests; synthetic Keychain write/read/update passed on a signed iOS 27.0 simulator | Live GitHub authorization, token refresh, saved session restoration and lifecycle |
-| GITVIEW-SPEC-0059 | GitHub App installation and repository page fetch with partial-result aggregation | GitHubAPI DiscoveryTests and DiscoveryAggregateTests | UI, selection, persistence and live integration |
-| GITVIEW-SPEC-0045 | Account-scoped Core Data project creation and retrieval, explicit single-repository creation UI | ProjectStoreTests including SQLite reopen; iOS build | Live source admission, UI tests, editing, recovery and synchronization |
-| GITVIEW-SPEC-0023 | Account and project-scoped local work snapshot with freshness | WorkCacheTests, API Codable roundtrip, iOS build | Per-repository merge, revocation attribution, background refresh, real integration and UI tests |
-| GITVIEW-SPEC-0014 | Discrete density steps, zoom menu, tap detail and ambiguous-target fallback | GridDensityTests and iOS build | Interactive pinch animation, position preservation and device/UI verification |
-| GITVIEW-SPEC-0004 | Project grid with cached observed open PR and Issue counts and explicit coverage | iOS build; actual UI still under verification | Refresh orchestration, attention signals, chart/navigation and revocation status |
-| GITVIEW-SPEC-0005 | Demo-only compact grid | TodayPage, injected DemoWork data | Navigation, pinch, previews, real data and full grid behavior |
+| GITVIEW-SPEC-0059 | GitHub App installation and repository page fetch, partial-result aggregation and repository selection | GitHubAPI DiscoveryTests and DiscoveryAggregateTests; simulator UI flows | Live GitHub App integration and broader error recovery |
+| GITVIEW-SPEC-0045 | Account-scoped Core Data project creation, retrieval and repository membership editing | ProjectStoreTests including SQLite reopen; simulator UI tests | Live source admission and broader recovery verification |
+| GITVIEW-SPEC-0023 | Account and project-scoped local work snapshot, per-repository merge and freshness | WorkCache and ProjectWorkArchive tests, simulator integration tests | Live revocation attribution, real integration and on-device verification |
+| GITVIEW-SPEC-0048 | Manual and foreground refresh, bounded background task request and rate-limit deferral | GitHubAPI and WorkDomain tests; simulator integration tests for batching, account-change cancellation and preserved observations; plist configuration check | Physical-device BGTaskScheduler registration and execution, live GitHub rate-limit behavior and further orchestration verification |
+| GITVIEW-SPEC-0014 | Discrete density steps, zoom menu, tap detail, long-press preview and ambiguous-target fallback | GridDensityTests; iPhone Air Simulator UI tests for pinch in both directions, preview and selection preservation | Transition anchoring, physical-device performance and broader accessibility verification |
+| GITVIEW-SPEC-0004 | Project grid with cached summaries, attention signals and scoped navigation | Simulator UI tests for project preview, signal navigation and zoom | Live refresh and revocation status, physical-device review |
+| GITVIEW-SPEC-0005 | Project work grid and separate labeled demo grid | Simulator UI tests with synthetic project data, pinch, previews and filters | Live GitHub data and full grid behavior |
 
 The demo data is deliberately labeled and is not a GitHub integration. SpecGraph `next-move` and `lint` describe graph structure; they are not implementation evidence. Module boundaries are recorded in SpecPM packages next to their code.
 
@@ -28,6 +29,8 @@ SPECGRAPH=/Users/egor/.local/share/specgraph/runtime-aa9f6cb9-py313/specgraph-ru
 ```
 
 The resulting local `runs/implementation_work_index.json` is derived, ignored, and reproducible; it reports `blocked_by_trace_gap` with missing trace and evidence baselines. It does not establish that this whole spec has been implemented or tested. The implementation table above provides direct code/test links until a supported binding is established.
+
+The same `--build-implementation-delta-snapshot` command was run for `GITVIEW-SPEC-0048` on 2026-11-17. It returned `ready_for_planning` and `tracked_artifacts_written: false`: this is a planning result, not a trace binding or evidence that system background execution occurred. The simulator reports `BGTaskScheduler` unavailable; the scheduler registration test is therefore skipped there and remains a device check.
 
 ## Initial delivery sequence
 
