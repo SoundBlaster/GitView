@@ -39,6 +39,9 @@ public struct GitHubProjectRefresh: Sendable {
                 observations.append(.init(id: repository.id, name: page.observedRepository?.fullName ?? repository.fullName,
                                           outcome: .received(page.items, complete: !page.isIncomplete), observedAt: .now))
             } catch is CancellationError { throw CancellationError() }
+            catch let GitHubRateLimitError.deferred(until) {
+                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub rate limit; retry after \(until.formatted())")))
+            }
             catch let WorkFetchError.httpStatus(code) {
                 observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub HTTP \(code)")))
             } catch {

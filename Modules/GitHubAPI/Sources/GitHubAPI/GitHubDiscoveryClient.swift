@@ -74,6 +74,10 @@ public struct GitHubDiscoveryClient: Sendable {
     }
 
     public static func send(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
+        try await GitHubRateLimitGate.shared.perform(request, send: sendUnchecked)
+    }
+
+    private static func sendUnchecked(_ request: URLRequest) async throws -> (Data, HTTPURLResponse) {
         let session = URLSession(configuration: .ephemeral, delegate: NoRedirect(), delegateQueue: nil)
         defer { session.invalidateAndCancel() }
         let (data, response) = try await session.data(for: request)
