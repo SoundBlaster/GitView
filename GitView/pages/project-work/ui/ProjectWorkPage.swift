@@ -248,8 +248,7 @@ private struct WorkGridCell: View {
                 Text(item.title).font(.headline)
                 Text("#\(item.number) · \(item.state)").foregroundStyle(.secondary)
                 if item.kind == .pullRequest {
-                    Text("CI: \(item.checkStatus ?? "Unavailable")")
-                    Text("Review: \(item.reviewDecision ?? "Unavailable")")
+                    WorkSignalDetails(item: item)
                 }
             }.padding()
         }
@@ -270,8 +269,7 @@ private struct WorkDetailSheet: View {
                     LabeledContent("Number", value: "#\(item.number)")
                     LabeledContent("State", value: item.state)
                     if item.kind == .pullRequest {
-                        LabeledContent("CI", value: item.checkStatus ?? "Unavailable")
-                        LabeledContent("Review", value: item.reviewDecision ?? "Unavailable")
+                        WorkSignalDetails(item: item)
                     }
                 }
                 Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
@@ -279,6 +277,29 @@ private struct WorkDetailSheet: View {
             }
             .navigationTitle(item.kind == .pullRequest ? "Pull Request" : "Issue")
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
+        }
+    }
+}
+
+private struct WorkSignalDetails: View {
+    let item: GitHubWorkItem
+
+    var body: some View {
+        LabeledContent("CI", value: item.checkStatus ?? "Unavailable")
+        if let counts = item.checkCounts {
+            LabeledContent("Checks (GitHub rollup)", value: "\(counts.red) failed · \(counts.yellow) pending · \(counts.green) passed · \(counts.total) total")
+            if counts.other > 0 { LabeledContent("Other check results", value: "\(counts.other)") }
+            if !counts.isComplete { Text("Check counts may be incomplete.").foregroundStyle(.secondary) }
+        } else {
+            Text("Check counts unavailable.").foregroundStyle(.secondary)
+        }
+        LabeledContent("Review", value: item.reviewDecision ?? "Unavailable")
+        if let count = item.reviewRequestCount { LabeledContent("Review requests", value: "\(count)") }
+        if let threads = item.reviewThreads {
+            LabeledContent("Review threads", value: "\(threads.total)")
+            LabeledContent(threads.isComplete ? "Unresolved" : "Unresolved observed (partial)", value: "\(threads.observedUnresolved)")
+        } else {
+            Text("Review thread counts unavailable.").foregroundStyle(.secondary)
         }
     }
 }

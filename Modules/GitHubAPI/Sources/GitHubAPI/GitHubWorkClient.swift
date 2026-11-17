@@ -2,6 +2,21 @@ import Foundation
 
 public enum GitHubWorkKind: String, Codable, Sendable { case issue, pullRequest }
 
+public struct GitHubCheckCounts: Codable, Sendable {
+    public let total: Int
+    public let red: Int
+    public let yellow: Int
+    public let green: Int
+    public let other: Int
+    public let isComplete: Bool
+}
+
+public struct GitHubReviewThreads: Codable, Sendable {
+    public let total: Int
+    public let observedUnresolved: Int
+    public let isComplete: Bool
+}
+
 public struct GitHubWorkItem: Codable, Identifiable, Sendable {
     public let id: String
     public let number: Int
@@ -16,6 +31,9 @@ public struct GitHubWorkItem: Codable, Identifiable, Sendable {
     public let headRevision: String?
     public let checkStatus: String?
     public let reviewDecision: String?
+    public let checkCounts: GitHubCheckCounts?
+    public let reviewThreads: GitHubReviewThreads?
+    public let reviewRequestCount: Int?
 }
 
 public struct GitHubWorkPage: Sendable {
@@ -78,7 +96,12 @@ public struct GitHubWorkClient: Sendable {
               pageInfo { hasNextPage endCursor }
             }
             pullRequests(first:100, after:$pullAfter, orderBy:{field:UPDATED_AT,direction:DESC}) @include(if:$loadPulls) {
-              nodes { id number title url state updatedAt closedAt mergedAt isDraft headRefOid reviewDecision statusCheckRollup { state } }
+              nodes {
+                id number title url state updatedAt closedAt mergedAt isDraft headRefOid reviewDecision
+                statusCheckRollup { state contexts(first:1) { totalCount checkRunCountsByState { state count } statusContextCountsByState { state count } } }
+                reviewRequests(first:1) { totalCount }
+                reviewThreads(first:20) { totalCount nodes { isResolved } pageInfo { hasNextPage } }
+              }
               pageInfo { hasNextPage endCursor }
             }
           }
@@ -123,9 +146,43 @@ public struct GitHubWorkClient: Sendable {
         let id: String; let number: Int; let title: String; let url: URL; let state: String
         let updatedAt: Date; let closedAt: Date?; let mergedAt: Date?; let isDraft: Bool?
         let headRefOid: String?; let reviewDecision: String?; let statusCheckRollup: CheckRollup?
+        let reviewThreads: ThreadConnection?; let reviewRequests: CountConnection?
         func item(kind: GitHubWorkKind) -> GitHubWorkItem {
-            GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt, closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft ?? false, kind: kind, headRevision: headRefOid, checkStatus: statusCheckRollup?.state, reviewDecision: reviewDecision)
+            GitHubWorkItem(id: id, number: number, title: title, url: url, state: state, updatedAt: updatedAt, closedAt: closedAt, mergedAt: mergedAt, isDraft: isDraft ?? false, kind: kind, headRevision: headRefOid, checkStatus: statusCheckRollup?.state, reviewDecision: reviewDecision, checkCounts: statusCheckRollup?.contexts?.counts, reviewThreads: reviewThreads?.summary, reviewRequestCount: reviewRequests?.totalCount)
         }
     }
-    private struct CheckRollup: Decodable { let state: String }
+    private struct CheckRollup: Decodable { let state: String; let contexts: CheckContexts? }
+    private struct StateCount: Decodable { let state: String; let count: Int }
+    private struct CheckContexts: Decodable {
+        let totalCount: Int
+        let checkRunCountsByState: [StateCount]?
+        let statusContextCountsByState: [StateCount]?
+        var counts: GitHubCheckCounts? {
+            guard totalCount >= 0 else { return nil }
+            var red = 0, yellow = 0, green = 0, other = 0
+            let entries = (checkRunCountsByState ?? []) + (statusContextCountsByState ?? [])
+            guard entries.allSatisfy({ $0.count >= 0 }) else { return nil }
+            for entry in entries {
+                switch entry.state {
+                case "FAILURE", "ERROR", "STARTUP_FAILURE", "TIMED_OUT": red += entry.count
+                case "PENDING", "EXPECTED", "QUEUED", "IN_PROGRESS", "WAITING": yellow += entry.count
+                case "SUCCESS": green += entry.count
+                default: other += entry.count
+                }
+            }
+            let complete = checkRunCountsByState != nil && statusContextCountsByState != nil && red + yellow + green + other == totalCount
+            return GitHubCheckCounts(total: totalCount, red: red, yellow: yellow, green: green, other: other, isComplete: complete)
+        }
+    }
+    private struct CountConnection: Decodable { let totalCount: Int }
+    private struct ThreadNode: Decodable { let isResolved: Bool }
+    private struct ThreadConnection: Decodable {
+        let totalCount: Int; let nodes: [ThreadNode?]; let pageInfo: PageInfo
+        var summary: GitHubReviewThreads? {
+            guard totalCount >= 0 else { return nil }
+            let observed = nodes.compactMap { $0 }
+            return GitHubReviewThreads(total: totalCount, observedUnresolved: observed.filter { !$0.isResolved }.count,
+                isComplete: !pageInfo.hasNextPage && observed.count == totalCount)
+        }
+    }
 }

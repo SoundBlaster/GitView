@@ -3,6 +3,37 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkItemsTests {
+    @Test func distinguishesPartialThreadsAndSpecialChecks() async throws {
+        let client = GitHubWorkClient { request in
+            let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+            let query = body["query"] as! String
+            #expect(query.contains("checkRunCountsByState"))
+            #expect(query.contains("reviewThreads"))
+            let json = #"{"data":{"repository":{"databaseId":42,"issues":{"nodes":[],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[{"id":"P1","number":2,"title":"Fix","url":"https://github.com/a/b/pull/2","state":"OPEN","closedAt":null,"mergedAt":null,"updatedAt":"2026-11-17T10:00:00Z","isDraft":false,"headRefOid":"abc","statusCheckRollup":{"state":"FAILURE","contexts":{"totalCount":6,"checkRunCountsByState":[{"state":"SUCCESS","count":2},{"state":"FAILURE","count":1},{"state":"SKIPPED","count":1}],"statusContextCountsByState":[{"state":"PENDING","count":2}]}},"reviewThreads":{"totalCount":3,"nodes":[{"isResolved":false},{"isResolved":true}],"pageInfo":{"hasNextPage":true}},"reviewRequests":{"totalCount":1}}],"pageInfo":{"hasNextPage":false}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let item = try #require(await client.firstPage(token: "token", repositoryID: 42, fullName: "a/b").items.first)
+        let checks = try #require(item.checkCounts)
+        #expect(checks.total == 6)
+        #expect(checks.red == 1 && checks.yellow == 2 && checks.green == 2 && checks.other == 1)
+        let threads = try #require(item.reviewThreads)
+        #expect(threads.total == 3 && threads.observedUnresolved == 1 && !threads.isComplete)
+        #expect(item.reviewRequestCount == 1)
+        let restored = try JSONDecoder().decode(GitHubWorkItem.self, from: JSONEncoder().encode(item))
+        #expect(restored.reviewThreads?.isComplete == false)
+    }
+
+    @Test func doesNotPresentMissingCheckBucketsAsComplete() async throws {
+        let client = GitHubWorkClient { request in
+            let json = #"{"data":{"repository":{"databaseId":42,"issues":{"nodes":[],"pageInfo":{"hasNextPage":false}},"pullRequests":{"nodes":[{"id":"P1","number":2,"title":"Fix","url":"https://github.com/a/b/pull/2","state":"OPEN","updatedAt":"2026-11-17T10:00:00Z","isDraft":false,"headRefOid":"abc","statusCheckRollup":{"state":"SUCCESS","contexts":{"totalCount":1,"checkRunCountsByState":[{"state":"SUCCESS","count":1}],"statusContextCountsByState":null}},"reviewThreads":{"totalCount":0,"nodes":[],"pageInfo":{"hasNextPage":false}}}],"pageInfo":{"hasNextPage":false}}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let item = try #require(await client.firstPage(token: "token", repositoryID: 42, fullName: "a/b").items.first)
+        #expect(item.checkCounts?.isComplete == false)
+        #expect(item.reviewThreads?.total == 0)
+        #expect(item.reviewThreads?.isComplete == true)
+        #expect(item.reviewThreads?.observedUnresolved == 0)
+    }
     @Test func oldCachedItemWithoutSignalsRemainsReadable() throws {
         let json = #"{"id":"P1","number":2,"title":"Fix","url":"https://github.com/a/b/pull/2","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"pullRequest"}"#
         let item = try JSONDecoder().decode(GitHubWorkItem.self, from: Data(json.utf8))
