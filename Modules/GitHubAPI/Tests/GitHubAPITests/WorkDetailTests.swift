@@ -3,6 +3,22 @@ import Testing
 @testable import GitHubAPI
 
 struct WorkDetailTests {
+    @Test func issueContextSeparatesCountsAndPartialAssignees() async throws {
+        let client = GitHubWorkDetailClient { request in
+            let json = #"{"data":{"node":{"__typename":"Issue","id":"I1","repository":{"nameWithOwner":"a/b"},"issueType":{"name":"Bug"},"assignees":{"totalCount":2,"nodes":[{"login":"alice"}],"pageInfo":{"hasNextPage":true}},"milestone":{"title":"First release"},"participants":{"totalCount":7},"comments":{"totalCount":4,"nodes":[{"createdAt":"2026-11-17T10:00:00Z"}]}}}}"#
+            return (Data(json.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+        }
+        let details = try await client.load(token: "token", id: "I1", kind: .issue)
+        let context = try #require(details.issueContext)
+        #expect(context.repository == "a/b" && context.type == "Bug")
+        #expect(context.assignees == ["alice"] && context.assigneesTotal == 2 && context.assigneesComplete == false)
+        #expect(context.milestone == "First release")
+        #expect(context.commentCount == 4 && context.participantCount == 7 && context.lastCommentAt != nil)
+        let restored = try JSONDecoder().decode(GitHubWorkDetails.self, from: JSONEncoder().encode(details))
+        #expect(restored.issueContext?.assignees == ["alice"])
+        let old = #"{"body":"Old","observedAt":0}"#
+        #expect(try JSONDecoder().decode(GitHubWorkDetails.self, from: Data(old.utf8)).issueContext == nil)
+    }
     @Test func pagesIssueDependenciesAndDetectsChangingCounts() async throws {
         let client = GitHubWorkDetailClient { request in
             let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]

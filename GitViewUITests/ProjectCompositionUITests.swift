@@ -87,6 +87,16 @@ import XCTest
         let cell = app.buttons["work.I1"]
         XCTAssertTrue(cell.waitForExistence(timeout: 10))
         cell.tap()
+        let assignees = app.descendants(matching: .any)["issue.assignees"]
+        for _ in 0..<3 where !assignees.isHittable { app.swipeUp() }
+        XCTAssertTrue(assignees.waitForExistence(timeout: 10))
+        XCTAssertTrue((assignees.label + String(describing: assignees.value)).contains("alice"))
+        let milestone = app.descendants(matching: .any)["issue.milestone"]
+        for _ in 0..<3 where !milestone.isHittable { app.swipeUp() }
+        XCTAssertTrue(milestone.waitForExistence(timeout: 5))
+        XCTAssertTrue((milestone.label + String(describing: milestone.value)).contains("First release"))
+        XCTAssertTrue(app.staticTexts["Some assignees are not shown."].exists)
+        for _ in 0..<5 where !app.staticTexts["Parent fixture"].isHittable { app.swipeUp() }
         XCTAssertTrue(app.staticTexts["Parent fixture"].waitForExistence(timeout: 10))
         let blocker = app.staticTexts["Blocker fixture"]
         for _ in 0..<4 where !blocker.isHittable { app.swipeUp() }

@@ -680,6 +680,8 @@ private struct WorkDetailSheet: View {
                     Text(item.title).font(.headline)
                     LabeledContent("Number", value: "#\(item.number)")
                     LabeledContent("State", value: item.state)
+                    LabeledContent("Updated", value: item.updatedAt.formatted(date: .abbreviated, time: .shortened))
+                    if item.state != "OPEN", let closedAt = item.closedAt { LabeledContent("Closed", value: closedAt.formatted(date: .abbreviated, time: .shortened)) }
                     if item.kind == .issue && item.state == "CLOSED" {
                         LabeledContent("Closure reason", value: issueClosureLabel(item.closureReason))
                     }
@@ -895,6 +897,19 @@ private struct WorkDescriptionDetails: View {
         Section("Context") {
             if let author = details.author { LabeledContent("Author", value: author) }
             if let created = details.createdAt { LabeledContent("Created", value: created.formatted(date: .abbreviated, time: .shortened)) }
+            if let issue = details.issueContext {
+                if let repository = issue.repository { LabeledContent("Repository", value: repository) }
+                if let type = issue.type { LabeledContent("Issue type", value: type) }
+                if let names = issue.assignees {
+                    if names.isEmpty && issue.assigneesComplete == true { LabeledContent("Assignees", value: "None") }
+                    else if !names.isEmpty { LabeledContent("Assignees", value: names.joined(separator: ", ")).accessibilityIdentifier("issue.assignees") }
+                }
+                if issue.assigneesComplete == false { Text("Some assignees are not shown.").foregroundStyle(.secondary) }
+                if let milestone = issue.milestone { LabeledContent("Milestone", value: milestone).accessibilityIdentifier("issue.milestone") }
+                if let count = issue.commentCount { LabeledContent("Comments", value: "\(count)") }
+                if let count = issue.participantCount { LabeledContent("Participants", value: "\(count)") }
+                if let date = issue.lastCommentAt { LabeledContent("Last comment", value: date.formatted(date: .abbreviated, time: .shortened)) }
+            }
             if let base = details.baseRepository { LabeledContent("Target repository", value: base) }
             if let head = details.headRepository { LabeledContent("Source repository", value: head) }
             if let base = details.baseBranch { LabeledContent("Target branch", value: base) }

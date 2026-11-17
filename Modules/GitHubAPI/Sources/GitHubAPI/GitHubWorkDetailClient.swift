@@ -49,6 +49,18 @@ public struct GitHubIssueRelationships: Codable, Sendable {
     public let pullRequests: GitHubPullRequestReferences?
 }
 
+public struct GitHubIssueContext: Codable, Sendable {
+    public let repository: String?
+    public let type: String?
+    public let assignees: [String]?
+    public let assigneesTotal: Int?
+    public let assigneesComplete: Bool?
+    public let milestone: String?
+    public let participantCount: Int?
+    public let commentCount: Int?
+    public let lastCommentAt: Date?
+}
+
 public struct GitHubWorkDetails: Codable, Sendable {
     public let body: String?
     public let createdAt: Date?
@@ -64,6 +76,7 @@ public struct GitHubWorkDetails: Codable, Sendable {
     public let changedFiles: Int?
     public let commits: Int?
     public let issueRelationships: GitHubIssueRelationships?
+    public let issueContext: GitHubIssueContext?
     public let observedAt: Date
 
     public func replacingPullRequestReferences(_ references: GitHubPullRequestReferences) -> GitHubWorkDetails? {
@@ -72,7 +85,7 @@ public struct GitHubWorkDetails: Codable, Sendable {
             headBranch: headBranch, baseBranch: baseBranch, headRepository: headRepository, baseRepository: baseRepository,
             additions: additions, deletions: deletions, changedFiles: changedFiles, commits: commits,
             issueRelationships: GitHubIssueRelationships(parent: relations.parent, parentObserved: relations.parentObserved,
-                blockedBy: relations.blockedBy, blocking: relations.blocking, subIssues: relations.subIssues, pullRequests: references),
+                blockedBy: relations.blockedBy, blocking: relations.blocking, subIssues: relations.subIssues, pullRequests: references), issueContext: issueContext,
             observedAt: observedAt)
     }
 
@@ -83,7 +96,7 @@ public struct GitHubWorkDetails: Codable, Sendable {
             additions: additions, deletions: deletions, changedFiles: changedFiles, commits: commits,
             issueRelationships: GitHubIssueRelationships(parent: relations.parent, parentObserved: relations.parentObserved,
                 blockedBy: kind == .blockedBy ? page : relations.blockedBy, blocking: kind == .blocking ? page : relations.blocking,
-                subIssues: kind == .subIssues ? page : relations.subIssues, pullRequests: relations.pullRequests), observedAt: observedAt)
+                subIssues: kind == .subIssues ? page : relations.subIssues, pullRequests: relations.pullRequests), issueContext: issueContext, observedAt: observedAt)
     }
 }
 
@@ -220,6 +233,9 @@ public struct GitHubWorkDetailClient: Sendable {
             __typename
             ... on Issue {
               id body createdAt author { login } labels(first:30) { nodes { name } pageInfo { hasNextPage } }
+              repository { nameWithOwner } issueType { name } milestone { title }
+              assignees(first:20) { totalCount nodes { login } pageInfo { hasNextPage } }
+              participants(first:1) { totalCount } comments(last:1) { totalCount nodes { createdAt } }
               parent { id number title url state repository { nameWithOwner } }
               blockedBy(first:20) { totalCount nodes { id number title url state repository { nameWithOwner } } pageInfo { hasNextPage } }
               blocking(first:20) { totalCount nodes { id number title url state repository { nameWithOwner } } pageInfo { hasNextPage } }
@@ -266,6 +282,7 @@ public struct GitHubWorkDetailClient: Sendable {
                 parentObserved: node.blockedBy != nil && node.blocking != nil && node.subIssues != nil,
                 blockedBy: node.blockedBy?.page, blocking: node.blocking?.page, subIssues: node.subIssues?.page,
                 pullRequests: node.pullRequestReferences) : nil,
+            issueContext: kind == .issue ? node.issueContext : nil,
             observedAt: observedAt)
     }
 
@@ -286,7 +303,19 @@ public struct GitHubWorkDetailClient: Sendable {
         let parent: RelatedIssue?; let blockedBy: IssueConnection?; let blocking: IssueConnection?; let subIssues: IssueConnection?
         let timelineItems: TimelineConnection?
         let closedByPullRequestsReferences: ManualPullRequests?
-        enum CodingKeys: String, CodingKey { case typename = "__typename", id, body, createdAt, author, labels, headRefOid, headRefName, baseRefName, headRepository, baseRepository, additions, deletions, changedFiles, commits, parent, blockedBy, blocking, subIssues, timelineItems, closedByPullRequestsReferences }
+        let repository: Repository?; let issueType: Named?; let milestone: Milestone?; let assignees: Assignees?
+        let participants: Count?; let comments: Comments?
+        enum CodingKeys: String, CodingKey { case typename = "__typename", id, body, createdAt, author, labels, headRefOid, headRefName, baseRefName, headRepository, baseRepository, additions, deletions, changedFiles, commits, parent, blockedBy, blocking, subIssues, timelineItems, closedByPullRequestsReferences, repository, issueType, milestone, assignees, participants, comments }
+        var issueContext: GitHubIssueContext {
+            let names = assignees?.nodes.compactMap { $0?.login }
+            let complete = assignees.map { $0.totalCount >= 0 && !$0.pageInfo.hasNextPage && names?.count == $0.totalCount && $0.nodes.count == names?.count }
+            return GitHubIssueContext(repository: repository?.nameWithOwner, type: issueType?.name,
+                assignees: names, assigneesTotal: assignees.flatMap { $0.totalCount >= 0 ? $0.totalCount : nil },
+                assigneesComplete: complete, milestone: milestone?.title,
+                participantCount: participants.flatMap { $0.totalCount >= 0 ? $0.totalCount : nil },
+                commentCount: comments.flatMap { $0.totalCount >= 0 ? $0.totalCount : nil },
+                lastCommentAt: comments.flatMap { $0.totalCount > 0 ? $0.nodes.first.flatMap { $0?.createdAt } : nil })
+        }
         var pullRequestReferences: GitHubPullRequestReferences? {
             guard timelineItems != nil || closedByPullRequestsReferences != nil else { return nil }
             let cross = timelineItems?.references
@@ -357,6 +386,11 @@ public struct GitHubWorkDetailClient: Sendable {
         }
     }
     private struct Actor: Decodable { let login: String }
+    private struct Named: Decodable { let name: String }
+    private struct Milestone: Decodable { let title: String }
+    private struct Assignees: Decodable { let totalCount: Int; let nodes: [Actor?]; let pageInfo: PageInfo }
+    private struct Comments: Decodable { let totalCount: Int; let nodes: [Comment?] }
+    private struct Comment: Decodable { let createdAt: Date }
     private struct Labels: Decodable { let nodes: [Label?]; let pageInfo: PageInfo }
     private struct Label: Decodable { let name: String }
     private struct PageInfo: Decodable { let hasNextPage: Bool; let endCursor: String? }
