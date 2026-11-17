@@ -12,3 +12,5 @@ runs/
 /conversation_memory/sketches/gitview/revisions/.pending-*/
 
 /Config/Local.xcconfig
+
+xcuserdata/
