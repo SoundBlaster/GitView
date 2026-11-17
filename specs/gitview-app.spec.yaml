@@ -16,7 +16,7 @@ scope:
     - Present Projects and their saved work, refresh outcomes and observation limitations.
     - Compose source discovery, Keychain-backed sessions, project storage and cached work through their modules.
     - Share one in-process session manager between foreground and background consumers to coordinate token rotation.
-    - Prepare a usable session before a bounded background refresh; abort fetching and saving if preparation fails or is cancelled.
+    - Prepare a usable session for the active account only when a Project has an unpaused Repository; abort fetching and saving if preparation fails, is cancelled or the account changes.
   excludes:
     - Implement the authentication, network and storage adapters owned by the respective modules.
     - Guarantee when iOS schedules or executes a background refresh.

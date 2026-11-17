@@ -69,7 +69,7 @@ import WorkCache
             let result = try ProjectRefreshPersistence.commit(cache: cache, accountID: project.accountID, projectID: project.id,
                 observations: observations, fallback: nil, at: .now, scope: Set(project.repositories.map(\.id)))
             guard result.saved else { throw BackgroundRefreshCoordinator.Failure.couldNotSave }
-        }, prepare: { _ = try await GitHubSessionRuntime.manager.usableSession() })
+        }, prepare: { account in _ = try await GitHubSessionRuntime.manager.usableSession(for: account) })
         do {
             let previous = defaults.string(forKey: lastProjectKey).flatMap(UUID.init(uuidString:))
             let result = try await coordinator.run(after: previous, repositoryAfter: { projectID in
@@ -134,13 +134,16 @@ struct BackgroundRefreshSession: Equatable {
     let projects: (Int64) throws -> [StoredProject]
     let fetch: (String, StoredProject, [RepositoryReference]) async throws -> [RepositoryWorkRefresh]
     let save: (StoredProject, [RepositoryWorkRefresh]) throws -> Void
-    var prepare: () async throws -> Void = {}
+    var prepare: (Int64) async throws -> Void = { _ in }
 
     func run(after previous: UUID?, repositoryAfter: (UUID) -> Int64? = { _ in nil }, now: Date = .now) async throws -> Outcome {
         try Task.checkCancellation()
-        try await prepare()
+        guard let before = try session() else { return .unavailable }
+        guard try projects(before.accountID).contains(where: { $0.repositories.contains(where: { !$0.syncPaused }) }) else { return .unavailable }
+        try await prepare(before.accountID)
         try Task.checkCancellation()
-        guard let initial = try session(), initial.expiresAt.map({ $0 > now }) ?? true else { return .unavailable }
+        guard let initial = try session(), initial.accountID == before.accountID else { return .superseded }
+        guard initial.expiresAt.map({ $0 > now }) ?? true else { return .unavailable }
         let candidates = try projects(initial.accountID).filter { $0.repositories.contains(where: { !$0.syncPaused }) }
             .sorted { $0.id.uuidString < $1.id.uuidString }
         guard !candidates.isEmpty else { return .unavailable }

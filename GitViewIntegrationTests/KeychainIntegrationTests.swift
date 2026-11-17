@@ -36,7 +36,7 @@ private enum BackgroundPreparationTestError: Error { case rejected }
         }, projects: { _ in [project] }, fetch: { token, _, repositories in
             fetchedToken = token
             return repositories.map { .init(id: $0.id, name: $0.fullName, outcome: .received([], complete: true)) }
-        }, save: { _, _ in saved = true }, prepare: { _ = try await manager.usableSession() })
+        }, save: { _, _ in saved = true }, prepare: { account in _ = try await manager.usableSession(for: account) })
         async let foreground = manager.usableSession(for: 1)
         async let background = coordinator.run(after: nil)
         let (foregroundResult, backgroundResult) = try await (foreground, background)
@@ -55,7 +55,7 @@ private enum BackgroundPreparationTestError: Error { case rejected }
         var saved = false
         let coordinator = BackgroundRefreshCoordinator(session: { .init(accountID: 1, token: "expired", expiresAt: .distantPast) },
             projects: { _ in library.projects }, fetch: { _, _, _ in fetched = true; return [] },
-            save: { _, _ in saved = true }, prepare: { throw BackgroundPreparationTestError.rejected })
+            save: { _, _ in saved = true }, prepare: { _ in throw BackgroundPreparationTestError.rejected })
         do {
             _ = try await coordinator.run(after: nil)
             XCTFail("Expected session preparation failure")
@@ -71,12 +71,42 @@ private enum BackgroundPreparationTestError: Error { case rejected }
         let coordinator = BackgroundRefreshCoordinator(session: { .init(accountID: 1, token: "valid", expiresAt: nil) },
             projects: { _ in library.projects }, fetch: { _, _, _ in fetched = true; return [] },
             save: { _, _ in XCTFail("Cancelled refresh must not save") },
-            prepare: { withUnsafeCurrentTask { $0?.cancel() } })
+            prepare: { _ in withUnsafeCurrentTask { $0?.cancel() } })
         let task = Task { try await coordinator.run(after: nil) }
         do {
             _ = try await task.value
             XCTFail("Expected cancellation")
         } catch is CancellationError { }
+        XCTAssertFalse(fetched)
+    }
+
+    func testBackgroundSkipsPreparationWhenNoProjectCanSynchronize() async throws {
+        let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+        try library.create(name: "Project", repository: .init(id: 1, fullName: "owner/repo", isPrivate: false))
+        let project = try XCTUnwrap(library.projects.first)
+        try library.setSyncPaused(true, repositoryID: 1, projectID: project.id)
+        var prepared = false
+        let coordinator = BackgroundRefreshCoordinator(session: { .init(accountID: 1, token: "expired", expiresAt: .distantPast) },
+            projects: { _ in library.projects }, fetch: { _, _, _ in XCTFail("Paused projects must not fetch"); return [] },
+            save: { _, _ in XCTFail("Paused projects must not save") }, prepare: { _ in prepared = true })
+        let result = try await coordinator.run(after: nil)
+        XCTAssertEqual(result, .unavailable)
+        XCTAssertFalse(prepared)
+    }
+
+    func testBackgroundStopsIfAccountChangesDuringPreparation() async throws {
+        let library = try ProjectLibrary(accountID: 1, store: ProjectStore(inMemory: true))
+        try library.create(name: "Project", repository: .init(id: 1, fullName: "owner/repo", isPrivate: true))
+        var session: BackgroundRefreshSession? = .init(accountID: 1, token: "old", expiresAt: .distantPast)
+        var fetched = false
+        let coordinator = BackgroundRefreshCoordinator(session: { session }, projects: { _ in library.projects },
+            fetch: { _, _, _ in fetched = true; return [] }, save: { _, _ in XCTFail("Changed account must not save") },
+            prepare: { account in
+                XCTAssertEqual(account, 1)
+                session = .init(accountID: 2, token: "new", expiresAt: nil)
+            })
+        let result = try await coordinator.run(after: nil)
+        XCTAssertEqual(result, .superseded)
         XCTAssertFalse(fetched)
     }
     func testHistorySurvivesSQLiteReopenAndAdvancesAfterRecovery() throws {
