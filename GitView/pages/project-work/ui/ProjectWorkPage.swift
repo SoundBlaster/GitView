@@ -26,6 +26,7 @@ struct ProjectWorkPage: View {
     @State private var pendingAttention: ProjectAttentionOrigin?
     @State private var zoomHint = false
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.scenePhase) private var scenePhase
     @AppStorage private var showOpen: Bool
     @AppStorage private var showMerged: Bool
     @AppStorage private var showClosed: Bool
@@ -154,6 +155,13 @@ struct ProjectWorkPage: View {
         }
         .onChange(of: showMetrics) { if !showMetrics { pendingAttention = nil } }
         .refreshable { await load() }
+        .onChange(of: scenePhase) {
+            guard scenePhase == .active else { return }
+            restore()
+            if ForegroundRefreshSpecification(now: .now, maximumAge: 15 * 60).isSatisfiedBy(observedAt) {
+                Task { await load() }
+            }
+        }
         .onChange(of: project.repositories.map(\.id)) {
             warning = "Project membership changed; updating its overview."
             observedAt = nil

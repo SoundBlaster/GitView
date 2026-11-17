@@ -14,6 +14,7 @@ scope:
   includes:
     - Time-based Today eligibility for known progress and explicit unknown result.
     - Filter work by object kind and lifecycle state.
+    - Decide whether a saved observation is stale for a caller-supplied foreground refresh age.
     - Count unique observed work and independent attention signals with explicit unknowns.
     - Use the same attention specification for summary counts and corresponding PR selections.
     - Build local-calendar merged PR counts only when history coverage is sufficient.

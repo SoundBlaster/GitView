@@ -1,6 +1,24 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testProjectRestoresGridAndFilterAfterReturningToForeground() throws {
+        let app = XCUIApplication()
+        app.launchArguments.append("--gitgrid-ui-test-dense")
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        project.tap()
+        XCTAssertTrue(app.buttons["work.D1"].waitForExistence(timeout: 10))
+        app.buttons["project.filters"].tap()
+        app.buttons["Merged"].tap()
+        XCTAssertTrue(app.buttons["work.D2"].waitForNonExistence(timeout: 5))
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(app.buttons["work.D1"].waitForExistence(timeout: 10))
+        XCTAssertFalse(app.buttons["work.D2"].exists)
+        XCTAssertTrue(app.buttons["project.filters"].exists)
+    }
+
     func testDemoGridPinchDoesNotOpenDetails() throws {
         let app = XCUIApplication()
         app.launch()
