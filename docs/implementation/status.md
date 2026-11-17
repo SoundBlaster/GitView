@@ -5,7 +5,7 @@ This is a code-progress record, not a claim that a product specification is full
 | Product specification | Implemented slice | Evidence | Remaining |
 | --- | --- | --- | --- |
 | GITVIEW-SPEC-0007 | Time eligibility, identity-checked paginated work grid and project-scoped filters | WorkDomain and GitHubWorkClient tests; iPhone Air Simulator UI tests with 100 synthetic work items, filtering and foreground return | Live verification, full refresh recovery and accessibility review |
-| GITVIEW-SPEC-0058 | PKCE attempt, token exchange, identity lookup and Keychain adapter | GitHubAuth sources and tests; synthetic Keychain write/read/update passed on a signed iOS 27.0 simulator | Live GitHub authorization, token refresh, saved session restoration and lifecycle |
+| GITVIEW-SPEC-0058 | PKCE attempt, token exchange, identity lookup and Keychain adapter | GitHubAuth tests; synthetic Keychain write/read/update and system GitHub sign-in prompt on signed iOS 27.0 simulator | Live GitHub authorization, callback, token refresh and saved session lifecycle |
 | GITVIEW-SPEC-0059 | GitHub App installation and repository page fetch, partial-result aggregation and repository selection | GitHubAPI DiscoveryTests and DiscoveryAggregateTests; simulator UI flows | Live GitHub App integration and broader error recovery |
 | GITVIEW-SPEC-0045 | Account-scoped Core Data project creation, retrieval and repository membership editing | ProjectStoreTests including SQLite reopen; simulator UI tests | Live source admission and broader recovery verification |
 | GITVIEW-SPEC-0023 | Account and project-scoped local work snapshot, per-repository merge and freshness | WorkCache and ProjectWorkArchive tests, simulator integration tests | Live revocation attribution, real integration and on-device verification |
@@ -42,9 +42,9 @@ The same `--build-implementation-delta-snapshot` command was run for `GITVIEW-SP
 
 Order within later slices may change with the dependency and product decisions; none are reported complete merely because a node exists.
 
-OAuth decision: web authorization with PKCE, no backend; a bundled GitHub client secret is extractable and is not treated as proof of client identity. Actual GitHub registration and connection remain to be completed.
+OAuth decision: web authorization with PKCE, no backend; a bundled GitHub client secret is extractable and is not treated as proof of client identity. A development GitHub App has been registered and installed on one account, and its credentials configured locally. This does not establish a successful user authorization.
 
-A native connection screen now invokes the system web authentication session; it requires a separately registered GitHub App and local build configuration. No live authorization has been verified.
+A native connection screen invokes the system web authentication session. A signed Simulator UI test confirmed the GitGrid system prompt; a separate live probe found GitHub's sign-in accessibility element, although its screenshot was still loading. No live authorization, callback, token exchange, or repository access has been verified.
 
 Simulator startup comparison: on the same clean iPhone Air simulator, the ad-hoc signed app started without the Keychain read error, while the linker-signed build displayed it. This is a signing-dependent observation, not verification of saving a token or real GitHub authorization. The connection screen now distinguishes Keychain errors from project-store errors and logs only a Keychain status code.
 
