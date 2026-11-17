@@ -10,6 +10,7 @@
 		2275FFE59202DF0D49324C67 /* GitViewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C40176654F1E273ABC0A272 /* GitViewApp.swift */; };
 		4FB8D85838BF0EF1C15388EB /* ProjectCompositionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5766C9D43B39207B1375CEB1 /* ProjectCompositionUITests.swift */; };
 		5CDF11806EED5E8F3335981D /* DemoWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32DD4F22341DAC9CCC8436A /* DemoWork.swift */; };
+		605D4830CB0EFEEB18B8F4D4 /* WorkMetricMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = E71EE3975E5BCC77261839A1 /* WorkMetricMapping.swift */; };
 		8D83F038A785FE39D0367FEA /* ConnectionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304BC11F781174761613A45B /* ConnectionPage.swift */; };
 		8FA4270CA7C94B99685D5B9E /* GitHubAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 0F22E316020BE5F81DA209C8 /* GitHubAPI */; };
 		96973C0CA07285EC1C979776 /* WorkDomain in Frameworks */ = {isa = PBXBuildFile; productRef = D5344541634F0BA91A64E2BD /* WorkDomain */; };
@@ -63,6 +64,7 @@
 		BA6B5D57EE13AEF8E966822B /* WorkDomain */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WorkDomain; path = Modules/WorkDomain; sourceTree = SOURCE_ROOT; };
 		C81274194CAA96C3B6D7E76C /* WorkCache */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WorkCache; path = Modules/WorkCache; sourceTree = SOURCE_ROOT; };
 		D05D2525479CFB3D4862FAC4 /* ProjectsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsPage.swift; sourceTree = "<group>"; };
+		E71EE3975E5BCC77261839A1 /* WorkMetricMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkMetricMapping.swift; sourceTree = "<group>"; };
 		EA898349FB0502F063312F60 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				0C3FD75F6FFA595CBB4207E3 /* ProjectLibrary.swift */,
+				E71EE3975E5BCC77261839A1 /* WorkMetricMapping.swift */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				F481C786097E1E5D11C17147 /* ProjectsPage.swift in Sources */,
 				B03025184D326113D8A4C00B /* RepositoryDiscoveryPage.swift in Sources */,
 				E3BA2C27A632D48C1DB6E26B /* TodayPage.swift in Sources */,
+				605D4830CB0EFEEB18B8F4D4 /* WorkMetricMapping.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

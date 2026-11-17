@@ -7,6 +7,9 @@ import XCTest
         app.launch()
         let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
         XCTAssertTrue(project.waitForExistence(timeout: 10))
+        XCTAssertTrue(project.label.contains("1 pull requests with failed CI"))
+        XCTAssertTrue(project.label.contains("1 pull requests with unresolved threads"))
+        XCTAssertTrue(project.label.contains("some data unavailable or partial"))
         project.tap()
         XCTAssertTrue(app.buttons["work.I2"].waitForExistence(timeout: 10))
         app.buttons["project.filters"].tap()

@@ -84,10 +84,11 @@ struct ProjectsPage: View {
                 do {
                     if let snapshot = try cache.load(accountID: library.accountID, projectID: project.id) {
                         let archive = try ProjectWorkArchive.decode(snapshot.payload).restricting(to: Set(project.repositories.map(\.id)))
-                        var seen = Set<String>()
-                        let items = archive.items.filter { seen.insert($0.id).inserted }
                         let coversProject = archive.hasCompleteObservation(for: Set(project.repositories.map(\.id)))
-                        results[project.id] = ProjectOverview(openPulls: items.filter { $0.kind == .pullRequest && $0.state == "OPEN" }.count, openIssues: items.filter { $0.kind == .issue && $0.state == "OPEN" }.count, date: snapshot.observedAt, complete: snapshot.complete && !archive.hasRefreshProblems && coversProject)
+                        let summary = ProjectWorkSummary(records: archive.items.map(\.metricRecord),
+                            coverageComplete: snapshot.complete && !archive.hasRefreshProblems && coversProject,
+                            now: .now, calendar: .current)
+                        results[project.id] = ProjectOverview(summary: summary, date: snapshot.observedAt)
                     }
                 } catch { failures = true }
             }
@@ -98,10 +99,8 @@ struct ProjectsPage: View {
 }
 
 private struct ProjectOverview {
-    let openPulls: Int
-    let openIssues: Int
+    let summary: ProjectWorkSummary
     let date: Date
-    let complete: Bool
 }
 
 private struct ProjectCell: View {
@@ -113,12 +112,25 @@ private struct ProjectCell: View {
         VStack(alignment: .leading, spacing: 6) {
             Image(systemName: "folder")
             Text(project.name).font(.caption.weight(.semibold)).lineLimit(expanded ? 3 : 1)
+            if let overview {
+                HStack(spacing: 6) {
+                    if overview.summary.failedCI.count > 0 {
+                        Label("\(overview.summary.failedCI.count)", systemImage: "xmark.circle.fill").foregroundStyle(.red)
+                    }
+                    if overview.summary.affectedByThreads.count > 0 {
+                        Label("\(overview.summary.affectedByThreads.count)", systemImage: "text.bubble.fill").foregroundStyle(.orange)
+                    }
+                    if !overview.summary.coverageComplete || overview.summary.failedCI.unavailable > 0 || overview.summary.unresolvedThreads.unavailable > 0 {
+                        Text("?").foregroundStyle(.secondary)
+                    }
+                }.font(.caption2)
+            }
             if expanded {
                 Text("\(project.repositories.count) repositories").font(.caption2).foregroundStyle(.secondary)
                 if let overview {
-                    Text("Observed: \(overview.openPulls) open PR · \(overview.openIssues) open issues")
+                    Text("Observed: \(overview.summary.openPullRequests) open PR · \(overview.summary.openIssues) open issues")
                         .font(.caption2).foregroundStyle(.secondary)
-                    Text(overview.complete ? "Updated \(overview.date.formatted(date: .abbreviated, time: .shortened))" : "Partial · \(overview.date.formatted(date: .abbreviated, time: .shortened))")
+                    Text(overview.summary.coverageComplete ? "Snapshot \(overview.date.formatted(date: .abbreviated, time: .shortened))" : "Partial · \(overview.date.formatted(date: .abbreviated, time: .shortened))")
                         .font(.caption2).foregroundStyle(.secondary)
                 } else {
                     Text("No cached work").font(.caption2).foregroundStyle(.secondary)
@@ -131,5 +143,13 @@ private struct ProjectCell: View {
         .aspectRatio(1, contentMode: .fit)
         .background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
         .accessibilityElement(children: .combine)
+        .accessibilityLabel(accessibilitySummary)
+    }
+
+    private var accessibilitySummary: String {
+        guard let overview else { return "\(project.name), no cached work" }
+        let summary = overview.summary
+        let uncertain = !summary.coverageComplete || summary.failedCI.unavailable > 0 || summary.unresolvedThreads.unavailable > 0
+        return "\(project.name), \(summary.openPullRequests) open pull requests, \(summary.openIssues) open issues, \(summary.failedCI.count) pull requests with failed CI, \(summary.affectedByThreads.count) pull requests with unresolved threads" + (uncertain ? ", some data unavailable or partial" : "") + ", snapshot saved \(overview.date.formatted(date: .abbreviated, time: .shortened))"
     }
 }
