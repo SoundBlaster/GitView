@@ -18,6 +18,7 @@ import XCTest
         app.buttons["Open in GitGrid"].tap()
         XCTAssertTrue(app.navigationBars["Pull Request"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts["Synthetic work 1"].exists)
+        XCTAssertTrue(app.descendants(matching: .any)["work.repository"].label.contains("fixture/one"))
     }
 
     func testOpenProjectLoadsChangedSnapshotAfterForegroundReturn() throws {
@@ -213,6 +214,10 @@ import XCTest
         XCTAssertTrue(app.staticTexts["Failed fixture"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Origin: 1 pull requests")).firstMatch.exists)
         XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Origin snapshot saved")).firstMatch.exists)
+        app.staticTexts["Failed fixture"].tap()
+        XCTAssertTrue(app.navigationBars["Pull Request"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.descendants(matching: .any)["work.repository"].label.contains("fixture/one"))
+        app.buttons["Done"].tap()
         app.navigationBars.buttons.element(boundBy: 0).tap()
         XCTAssertTrue(app.navigationBars["Project metrics"].waitForExistence(timeout: 5))
         app.buttons["Done"].tap()

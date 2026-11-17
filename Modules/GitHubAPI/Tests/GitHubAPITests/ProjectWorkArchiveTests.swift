@@ -3,6 +3,19 @@ import Testing
 @testable import GitHubAPI
 
 struct ProjectWorkArchiveTests {
+    @Test func repositoryContextIsUnavailableWhenSourceIdentityIsAmbiguous() throws {
+        let json = #"{"id":"I1","number":1,"title":"Issue","url":"https://github.com/a/one/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue"}"#
+        let item = try JSONDecoder().decode(GitHubWorkItem.self, from: Data(json.utf8))
+        let one = ProjectWorkArchive().applying([
+            .init(id: 1, name: "a/one", outcome: .received([item], complete: true))
+        ], at: .now)
+        #expect(one.repositoryNamesByWorkID["I1"] == "a/one")
+        let conflicting = ProjectWorkArchive().applying([
+            .init(id: 1, name: "a/one", outcome: .received([item], complete: true)),
+            .init(id: 2, name: "a/two", outcome: .received([item], complete: true))
+        ], at: .now)
+        #expect(conflicting.repositoryNamesByWorkID["I1"] == nil)
+    }
     @Test func boundedRefreshPreservesUnvisitedRepositoriesAndTheirObservationTimes() throws {
         let start = Date(timeIntervalSince1970: 100)
         let previous = ProjectWorkArchive().applying([

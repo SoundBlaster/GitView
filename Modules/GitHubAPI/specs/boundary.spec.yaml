@@ -34,6 +34,7 @@ scope:
     - Collect independent repository refresh outcomes sequentially through an injectable loader; cancellation stops the batch without returning partial results.
     - Read previous unscoped work snapshots until a complete refresh replaces them.
     - Retain observations for repositories removed from a project and restore them if re-added.
+    - Provide repository context for work objects only when its source association is unambiguous.
     - Validate next-page links and report HTTP failures.
     - Report an observed rate-limit failure on the triggering request and defer later default GitHub API transport requests until the source-directed deadline; retain the deadline across launches without discarding a successful final response.
     - Aggregate pages while preserving partial independent results.

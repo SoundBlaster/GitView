@@ -62,18 +62,7 @@ struct ProjectWorkPage: View {
     }
     private var effectiveColumns: Int { dynamicTypeSize.isAccessibilitySize ? min(columns, 2) : columns }
     private var gridColumns: [GridItem] { Array(repeating: GridItem(.flexible(), spacing: 4), count: effectiveColumns) }
-    private var repositoryNames: [String: String] {
-        var result: [String: String] = [:]
-        var ambiguous = Set<String>()
-        for repository in archive?.repositories ?? [] {
-            for item in repository.items {
-                if result[item.id] != nil { ambiguous.insert(item.id) }
-                else { result[item.id] = repository.name }
-            }
-        }
-        for id in ambiguous { result.removeValue(forKey: id) }
-        return result
-    }
+    private var repositoryNames: [String: String] { archive?.repositoryNamesByWorkID ?? [:] }
 
     var body: some View {
         ScrollView {
@@ -146,7 +135,7 @@ struct ProjectWorkPage: View {
             .accessibilityIdentifier("project.filters")
         }
         .sheet(item: $selectedItem) { item in
-            WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID, onThreads: persistThreads, onDetails: persistDetails)
+            WorkDetailSheet(item: item, repositoryName: repositoryNames[item.id], sessionManager: sessionManager, accountID: project.accountID, onThreads: persistThreads, onDetails: persistDetails)
         }
         .sheet(isPresented: $showProjectSettings) {
             ProjectSettingsSheet(project: project, library: library, sessionManager: sessionManager)
@@ -432,7 +421,7 @@ private struct ProjectMetricsSheet: View {
             }
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } } }
             .sheet(item: $selectedItem) { item in
-                WorkDetailSheet(item: item, sessionManager: sessionManager, accountID: project.accountID,
+                WorkDetailSheet(item: item, repositoryName: archive.repositoryNamesByWorkID[item.id], sessionManager: sessionManager, accountID: project.accountID,
                     onThreads: onThreads, onDetails: onDetails)
             }
         }
@@ -459,6 +448,7 @@ private struct ProjectMetricsSheet: View {
         var seen = Set<String>()
         let selected = archive.items.filter { seen.insert($0.id).inserted && rule.isSatisfiedBy($0.metricRecord) }
             .sorted { ($0.closedAt ?? .distantPast) > ($1.closedAt ?? .distantPast) }
+        let repositoryNames = archive.repositoryNamesByWorkID
         return List {
             Section {
                 Text("\(project.name) · current membership · last 7 local days")
@@ -475,8 +465,8 @@ private struct ProjectMetricsSheet: View {
                 Button { selectedItem = item } label: {
                     VStack(alignment: .leading) {
                         Text(item.title)
-                        if let repository = archive.repositories.first(where: { $0.items.contains(where: { $0.id == item.id }) }) {
-                            Text("\(repository.name) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
+                        if let repository = repositoryNames[item.id] {
+                            Text("\(repository) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
                         }
                     }
                 }
@@ -501,6 +491,7 @@ private struct ProjectMetricsSheet: View {
         let unique = archive.items.filter { seen.insert($0.id).inserted }
         let selected = unique.filter { rule.isSatisfiedBy($0.metricRecord) }
         let unknown = unique.filter { rule.evaluate($0.metricRecord) == .unknown }.count
+        let repositoryNames = archive.repositoryNamesByWorkID
         return List {
             Section {
                 Text("\(project.name) · current membership · open pull requests")
@@ -530,8 +521,8 @@ private struct ProjectMetricsSheet: View {
                 Button { selectedItem = item } label: {
                     VStack(alignment: .leading) {
                         Text(item.title)
-                        if let repository = archive.repositories.first(where: { $0.items.contains(where: { $0.id == item.id }) }) {
-                            Text("\(repository.name) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
+                        if let repository = repositoryNames[item.id] {
+                            Text("\(repository) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
                         } else { Text("#\(item.number)").font(.caption).foregroundStyle(.secondary) }
                     }
                 }
@@ -547,6 +538,7 @@ private struct ProjectMetricsSheet: View {
             guard seen.insert(item.id).inserted, item.kind == .pullRequest, item.state == "MERGED", let date = item.mergedAt else { return false }
             return date >= firstDay && date <= now
         }.sorted { ($0.mergedAt ?? .distantPast) > ($1.mergedAt ?? .distantPast) }
+        let repositoryNames = archive.repositoryNamesByWorkID
         return List {
             Section {
                 Text("\(project.name) · current membership · \(firstDay.formatted(date: .abbreviated, time: .omitted))–\(now.formatted(date: .abbreviated, time: .omitted))")
@@ -562,8 +554,8 @@ private struct ProjectMetricsSheet: View {
                 Button { selectedItem = item } label: {
                     VStack(alignment: .leading) {
                         Text(item.title)
-                        if let repository = archive.repositories.first(where: { $0.items.contains(where: { $0.id == item.id }) }) {
-                            Text("\(repository.name) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
+                        if let repository = repositoryNames[item.id] {
+                            Text("\(repository) · #\(item.number)").font(.caption).foregroundStyle(.secondary)
                         } else {
                             Text("#\(item.number)").font(.caption).foregroundStyle(.secondary)
                         }
@@ -693,6 +685,7 @@ private struct WorkGridCell: View {
 
 private struct WorkDetailSheet: View {
     let item: GitHubWorkItem
+    let repositoryName: String?
     let sessionManager: GitHubSessionManager
     let accountID: Int64
     let onThreads: @MainActor (GitHubWorkItem, GitHubReviewThreads, Date) -> Bool
@@ -720,6 +713,10 @@ private struct WorkDetailSheet: View {
                 Section {
                     Text(item.title).font(.headline)
                     LabeledContent("Number", value: "#\(item.number)")
+                    LabeledContent("Repository", value: repositoryName ?? "Unavailable")
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel("Repository, \(repositoryName ?? "Unavailable")")
+                        .accessibilityIdentifier("work.repository")
                     LabeledContent("State", value: item.state)
                     LabeledContent("Updated", value: item.updatedAt.formatted(date: .abbreviated, time: .shortened))
                     if item.state != "OPEN", let closedAt = item.closedAt { LabeledContent("Closed", value: closedAt.formatted(date: .abbreviated, time: .shortened)) }

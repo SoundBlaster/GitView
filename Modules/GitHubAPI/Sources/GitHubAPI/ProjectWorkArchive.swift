@@ -39,6 +39,20 @@ public struct ProjectWorkArchive: Codable, Sendable {
         self.completeScopeIDs = completeScopeIDs
     }
     public var items: [GitHubWorkItem] { repositories.flatMap(\.items) + legacyItems }
+    /// Unambiguous source names for observed objects; conflicting ownership remains unavailable.
+    public var repositoryNamesByWorkID: [String: String] {
+        var names: [String: String] = [:]
+        var owners: [String: Int64] = [:]
+        var ambiguous = Set<String>()
+        for repository in repositories {
+            for item in repository.items {
+                if let owner = owners[item.id], owner != repository.id { ambiguous.insert(item.id) }
+                else { owners[item.id] = repository.id; names[item.id] = repository.name }
+            }
+        }
+        for id in ambiguous { names.removeValue(forKey: id) }
+        return names
+    }
     public var hasRefreshProblems: Bool { repositories.contains { $0.refreshProblem != nil } }
     public func coversRepositories(_ ids: Set<Int64>) -> Bool {
         legacyItems.isEmpty && Set(repositories.map(\.id)) == ids
