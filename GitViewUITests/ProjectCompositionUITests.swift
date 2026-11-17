@@ -10,9 +10,11 @@ import XCTest
         project.tap()
         let item = app.buttons["work.D1"]
         XCTAssertTrue(item.waitForExistence(timeout: 10))
+        XCTAssertTrue(item.label.contains("fixture/one"))
         item.press(forDuration: 1)
         let preview = app.staticTexts["Synthetic work 1"]
         XCTAssertTrue(preview.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["fixture/one"].exists)
         app.buttons["Open in GitGrid"].tap()
         XCTAssertTrue(app.navigationBars["Pull Request"].waitForExistence(timeout: 10))
         XCTAssertTrue(app.staticTexts["Synthetic work 1"].exists)

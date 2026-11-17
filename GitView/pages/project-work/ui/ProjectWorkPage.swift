@@ -62,6 +62,18 @@ struct ProjectWorkPage: View {
     }
     private var effectiveColumns: Int { dynamicTypeSize.isAccessibilitySize ? min(columns, 2) : columns }
     private var gridColumns: [GridItem] { Array(repeating: GridItem(.flexible(), spacing: 4), count: effectiveColumns) }
+    private var repositoryNames: [String: String] {
+        var result: [String: String] = [:]
+        var ambiguous = Set<String>()
+        for repository in archive?.repositories ?? [] {
+            for item in repository.items {
+                if result[item.id] != nil { ambiguous.insert(item.id) }
+                else { result[item.id] = repository.name }
+            }
+        }
+        for id in ambiguous { result.removeValue(forKey: id) }
+        return result
+    }
 
     var body: some View {
         ScrollView {
@@ -98,9 +110,10 @@ struct ProjectWorkPage: View {
                 if zoomHint {
                     Text("Choose an item to open it.").font(.footnote).foregroundStyle(.secondary)
                 }
+                let sources = repositoryNames
                 LazyVGrid(columns: gridColumns, spacing: 4) {
                     ForEach(visibleItems) { item in
-                        WorkGridCell(item: item, showDetails: effectiveColumns <= 2) { selectedItem = item }
+                        WorkGridCell(item: item, repositoryName: sources[item.id], showDetails: effectiveColumns <= 2) { selectedItem = item }
                     }
                 }
                 .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { gridWidth = $0 }
@@ -615,6 +628,7 @@ private struct ProjectSettingsSheet: View {
 
 private struct WorkGridCell: View {
     let item: GitHubWorkItem
+    let repositoryName: String?
     let showDetails: Bool
     let open: () -> Void
     @Environment(\.openURL) private var openURL
@@ -656,9 +670,9 @@ private struct WorkGridCell: View {
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("work.\(item.id)")
-        .accessibilityLabel(item.kind == .pullRequest
+        .accessibilityLabel((repositoryName.map { "\($0), " } ?? "Repository unavailable, ") + (item.kind == .pullRequest
             ? "Pull request \(item.number), \(item.title), \(item.state)\(item.isDraft ? ", draft" : ""), CI \(item.checkStatus ?? "unavailable")"
-            : "Issue \(item.number), \(item.title), \(item.state)")
+            : "Issue \(item.number), \(item.title), \(item.state)"))
         .contextMenu {
             Button("Open in GitGrid", systemImage: "doc.text") { open() }
             Button("Open on GitHub", systemImage: "arrow.up.right.square") { openURL(item.url) }
@@ -666,7 +680,8 @@ private struct WorkGridCell: View {
         } preview: {
             VStack(alignment: .leading, spacing: 10) {
                 Text(item.title).font(.headline)
-                Text("#\(item.number) · \(item.state)").foregroundStyle(.secondary)
+                Text("\(item.kind == .issue ? "Issue" : "Pull request") #\(item.number) · \(item.state)").foregroundStyle(.secondary)
+                Text(repositoryName ?? "Repository unavailable").font(.subheadline).foregroundStyle(.secondary)
                 if item.kind == .pullRequest {
                     WorkSignalDetails(item: item)
                 }
