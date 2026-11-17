@@ -1,6 +1,20 @@
 import XCTest
 
 @MainActor final class ProjectCompositionUITests: XCTestCase {
+    func testProjectOverviewLoadsChangedSnapshotAfterForegroundReturn() throws {
+        let app = XCUIApplication()
+        app.launchArguments += ["--gitgrid-ui-test-project", "--gitgrid-ui-test-overview-refresh"]
+        app.launch()
+        let project = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", "project.")).firstMatch
+        XCTAssertTrue(project.waitForExistence(timeout: 10))
+        XCTAssertTrue(project.label.contains("1 pull requests with failed CI"))
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        let updated = NSPredicate(format: "label CONTAINS %@", "0 pull requests with failed CI")
+        expectation(for: updated, evaluatedWith: project)
+        waitForExpectations(timeout: 10)
+    }
+
     func testProjectRestoresGridAndFilterAfterReturningToForeground() throws {
         let app = XCUIApplication()
         app.launchArguments.append("--gitgrid-ui-test-dense")

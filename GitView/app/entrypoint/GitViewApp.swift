@@ -34,6 +34,7 @@ struct GitViewApp: App {
 #if DEBUG
 private struct ProjectTestFixture: View {
     @State private var library: ProjectLibrary?
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         NavigationStack {
@@ -72,6 +73,19 @@ private struct ProjectTestFixture: View {
                 try cache.save(accountID: 1, projectID: id, payload: JSONEncoder().encode(archive), observedAt: now, complete: true)
                 self.library = library
             } catch { assertionFailure("Could not create UI test fixture: \(error)") }
+        }
+        .onChange(of: scenePhase) {
+            guard scenePhase == .background, ProcessInfo.processInfo.arguments.contains("--gitgrid-ui-test-overview-refresh"),
+                  let project = library?.projects.first else { return }
+            do {
+                let base = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+                let cache = try WorkCache(url: base.appendingPathComponent("GitGrid/WorkCache.sqlite"))
+                let now = Date()
+                let archive = ProjectWorkArchive().applying(project.repositories.map {
+                    .init(id: $0.id, name: $0.fullName, outcome: .received([], complete: true), observedAt: now)
+                }, at: now)
+                try cache.save(accountID: project.accountID, projectID: project.id, payload: JSONEncoder().encode(archive), observedAt: now, complete: true)
+            } catch { assertionFailure("Could not update UI test overview: \(error)") }
         }
     }
 

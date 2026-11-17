@@ -9,6 +9,7 @@ struct ProjectsPage: View {
     let library: ProjectLibrary
     let sessionManager: GitHubSessionManager
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.scenePhase) private var scenePhase
     @State private var columns = 4
     @State private var width: CGFloat = 0
     @State private var selectedRoute: ProjectRoute?
@@ -74,6 +75,7 @@ struct ProjectsPage: View {
                 sessionManager: sessionManager, library: library, initialAttention: route.attention)
         }
         .onAppear { loadOverviews() }
+        .onChange(of: scenePhase) { if scenePhase == .active { loadOverviews() } }
         .onChange(of: library.projects) { loadOverviews() }
     }
 
