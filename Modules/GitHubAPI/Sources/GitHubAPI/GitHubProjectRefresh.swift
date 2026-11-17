@@ -1,5 +1,29 @@
 import Foundation
 
+enum GitHubWorkFailureDescription {
+    static func describe(_ error: Error) -> String {
+        if case GitHubRateLimitError.deferred(let until) = error {
+            return "GitHub rate limit; retry after \(until.formatted())"
+        }
+        if case WorkFetchError.httpStatus(let code) = error {
+            switch code {
+            case 401: return "GitHub HTTP 401: authentication was rejected."
+            case 403: return "GitHub HTTP 403: request was forbidden. Check access and rate limits."
+            case 404: return "GitHub HTTP 404: repository or requested resource was not found or is inaccessible."
+            default: return "GitHub HTTP \(code)"
+            }
+        }
+        if let error = error as? URLError {
+            switch error.code {
+            case .notConnectedToInternet, .networkConnectionLost: return "Network unavailable. Could not update from GitHub."
+            case .timedOut: return "GitHub request timed out."
+            default: break
+            }
+        }
+        return "Could not update from GitHub"
+    }
+}
+
 public struct RefreshRepository: Sendable {
     public let id: Int64
     public let fullName: String
@@ -47,12 +71,12 @@ public struct GitHubProjectRefresh: Sendable {
                                           continuationUpdate: tracksOpenContinuation ? .advance(from: expected, to: page.openContinuation) : .unchanged))
             } catch is CancellationError { throw CancellationError() }
             catch let GitHubRateLimitError.deferred(until) {
-                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub rate limit; retry after \(until.formatted())")))
+                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed(GitHubWorkFailureDescription.describe(GitHubRateLimitError.deferred(until: until)))))
             }
             catch let WorkFetchError.httpStatus(code) {
-                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("GitHub HTTP \(code)"), continuationUpdate: tracksOpenContinuation ? .advance(from: expected, to: nil) : .unchanged))
+                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed(GitHubWorkFailureDescription.describe(WorkFetchError.httpStatus(code))), continuationUpdate: tracksOpenContinuation ? .advance(from: expected, to: nil) : .unchanged))
             } catch {
-                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed("Could not update from GitHub"), continuationUpdate: tracksOpenContinuation ? .advance(from: expected, to: nil) : .unchanged))
+                observations.append(.init(id: repository.id, name: repository.fullName, outcome: .failed(GitHubWorkFailureDescription.describe(error)), continuationUpdate: tracksOpenContinuation ? .advance(from: expected, to: nil) : .unchanged))
             }
         }
         try Task.checkCancellation()

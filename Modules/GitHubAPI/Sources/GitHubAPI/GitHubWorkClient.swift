@@ -132,12 +132,7 @@ public struct GitHubWorkClient: Sendable {
             catch {
                 try Task.checkCancellation()
                 guard pagesLoaded > 0 else { throw error }
-                let problem: String
-                if case GitHubRateLimitError.deferred(let until) = error {
-                    problem = "GitHub rate limit; retry after \(until.formatted())"
-                } else if case WorkFetchError.httpStatus(let code) = error {
-                    problem = "GitHub HTTP \(code)"
-                } else { problem = "Could not load all GitHub pages" }
+                let problem = GitHubWorkFailureDescription.describe(error)
                 let continuation = usePriority && !(error is GitHubRateLimitError)
                     ? nil : GitHubOpenContinuation(issueAfter: priorityIssueAfter, pullAfter: priorityPullAfter)
                 return GitHubWorkPage(items: merging(priorityItems, with: items), isIncomplete: true, observedRepository: observedRepository,

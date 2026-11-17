@@ -8,6 +8,31 @@ private actor RequestLog {
 }
 
 struct ProjectRefreshTests {
+    @Test(arguments: [401, 403, 404]) func deniedOrMissingResponseDoesNotAssertRevocation(code: Int) async throws {
+        let priorJSON = #"{"id":"I1","number":1,"title":"Saved","url":"https://github.com/a/b/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue"}"#
+        let saved = try JSONDecoder().decode(GitHubWorkItem.self, from: Data(priorJSON.utf8))
+        let previous = ProjectWorkArchive().applying([.init(id: 1, name: "a/b", outcome: .received([saved], complete: true))], at: .distantPast)
+        let service = GitHubProjectRefresh { _, _ in throw WorkFetchError.httpStatus(code) }
+        let result = try await service.fetch(token: "token", repositories: [.init(id: 1, fullName: "a/b", nodeID: nil)])
+        let archive = previous.applying(result.observations, at: .now)
+        let problem = try #require(archive.repositories.first?.refreshProblem)
+        #expect(problem.contains("GitHub HTTP \(code)"))
+        #expect(!problem.localizedCaseInsensitiveContains("revoked"))
+        #expect(archive.items.map(\.id) == ["I1"])
+        #expect(archive.repositories.first?.observedAt == .distantPast)
+    }
+
+    @Test func offlineRefreshIdentifiesNetworkFailureAndPreservesSavedWork() async throws {
+        let priorJSON = #"{"id":"I1","number":1,"title":"Saved","url":"https://github.com/a/b/issues/1","state":"OPEN","updatedAt":0,"isDraft":false,"kind":"issue"}"#
+        let saved = try JSONDecoder().decode(GitHubWorkItem.self, from: Data(priorJSON.utf8))
+        let previous = ProjectWorkArchive().applying([.init(id: 1, name: "a/b", outcome: .received([saved], complete: true))], at: .distantPast)
+        let service = GitHubProjectRefresh { _, _ in throw URLError(.notConnectedToInternet) }
+        let result = try await service.fetch(token: "token", repositories: [.init(id: 1, fullName: "a/b", nodeID: nil)])
+        let archive = previous.applying(result.observations, at: .now)
+        #expect(archive.repositories.first?.refreshProblem == "Network unavailable. Could not update from GitHub.")
+        #expect(archive.items.map(\.id) == ["I1"])
+        #expect(archive.repositories.first?.observedAt == .distantPast)
+    }
     @Test func trackedRefreshAdvancesOnlyFromItsOwnStartingCursor() async throws {
         let original = try #require(GitHubOpenContinuation(issueAfter: "old", pullAfter: nil))
         let next = try #require(GitHubOpenContinuation(issueAfter: "next", pullAfter: nil))
@@ -78,7 +103,7 @@ struct ProjectRefreshTests {
         #expect(result.observations.map(\.id) == [1, 2, 3])
         if case .received(_, let complete) = result.observations[0].outcome { #expect(complete) }
         else { Issue.record("First repository should be complete") }
-        if case .failed(let message) = result.observations[1].outcome { #expect(message == "GitHub HTTP 403") }
+        if case .failed(let message) = result.observations[1].outcome { #expect(message.contains("GitHub HTTP 403")) }
         else { Issue.record("A failed repository must remain visible") }
         if case .received(_, let complete) = result.observations[2].outcome { #expect(!complete) }
         else { Issue.record("Partial result should remain partial") }
