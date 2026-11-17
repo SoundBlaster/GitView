@@ -108,6 +108,7 @@ struct ProjectWorkPage: View {
         .navigationTitle(project.name)
         .toolbar {
             Button("Project settings", systemImage: "gearshape") { showProjectSettings = true }
+                .accessibilityIdentifier("project.settings")
             Menu("Zoom", systemImage: "plus.magnifyingglass") {
                 Button("Larger", systemImage: "plus.magnifyingglass") { changeZoom(.larger) }
                 Button("Smaller", systemImage: "minus.magnifyingglass") { changeZoom(.smaller) }
@@ -296,6 +297,7 @@ private struct ProjectSettingsSheet: View {
                 Section {
                     ForEach(currentProject.repositories, id: \.id) { repository in
                         Label(repository.fullName, systemImage: repository.isPrivate ? "lock" : "book.closed")
+                            .accessibilityIdentifier("repository.\(repository.id)")
                             .swipeActions {
                                 Button("Remove", role: .destructive) { pendingRemoval = repository; showRemovalConfirmation = true }
                                     .disabled(currentProject.repositories.count <= 1)

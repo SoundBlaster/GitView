@@ -35,6 +35,7 @@ struct ProjectsPage: View {
                             ProjectCell(project: project, overview: overviews[project.id], expanded: effectiveColumns <= 2)
                         }
                         .buttonStyle(.plain)
+                        .accessibilityIdentifier("project.\(project.id.uuidString)")
                         .contextMenu {
                             Button("Open Project", systemImage: "arrow.up.right.square") { selectedProject = project }
                         } preview: {

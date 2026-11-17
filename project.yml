@@ -56,6 +56,17 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: ru.egormerkushev.gitview.integrationtests
         GENERATE_INFOPLIST_FILE: YES
         SWIFT_VERSION: "6.0"
+  GitViewUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [GitViewUITests]
+    dependencies:
+      - target: GitView
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ru.egormerkushev.gitview.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
 schemes:
   GitView:
     build:
@@ -65,3 +76,11 @@ schemes:
     test:
       targets:
         - GitViewIntegrationTests
+  GitViewUI:
+    build:
+      targets:
+        GitView: all
+        GitViewUITests: [test]
+    test:
+      targets:
+        - GitViewUITests
